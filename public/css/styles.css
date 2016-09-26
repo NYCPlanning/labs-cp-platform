@@ -1,0 +1,44 @@
+body, html, .full-height {
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+}
+
+.left {
+  background-color: #444;
+  padding: 0;
+}
+
+.right {
+  background-color: #ccc;
+}
+
+/*padding-top to account for static nav*/
+.main-column {
+  
+}
+
+#main-container {
+  height: 100%;
+  padding-top:50px;
+  padding-right: 0;
+  padding-left: 0;
+  overflow: hidden;
+}
+
+.half-height {
+  height:50%;
+}
+
+
+
+.mapContainer {
+  background: green;
+}
+
+.map {
+  height: 100%;
+}
+
