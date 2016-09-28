@@ -30,6 +30,7 @@ var AgencyDashboardContainer = React.createClass({
   },
 
   render() {
+    console.log('render in container')
     return this.state.data.length > 0 ?
       <AgencyDashboard data={this.state.data} refresh={this.getData} params={this.props.params}/> :
       null

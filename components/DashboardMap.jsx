@@ -18,32 +18,6 @@ var ListMap = React.createClass({
     return false
   },
 
-  getInitialState() {
-   return {
-    mapData: null
-   } 
-  },
-
-  componentWillReceiveProps(nextProps) {
-    var self=this;
-
-    // this.map.invalidateSize();
-    if(nextProps.data) {
-      if(JSON.stringify(nextProps.data)!=JSON.stringify(this.props.data)) {
-        this.renderData(nextProps.data)
-      }
-    }
-
-    //find highlighted layer
-    if(nextProps.highlightID) {
-      this.geojsonLayer.eachLayer(function(layer) {
-        self.geojsonLayer.resetStyle(layer)
-        if (layer.feature.properties[self.props.highlightProperty] == nextProps.highlightID) {
-          self.props.highlightFeature(layer)
-        } 
-      });
-    }
-  },
 
   renderData(data) {
     var self=this;
@@ -64,21 +38,21 @@ var ListMap = React.createClass({
       // })
     }
 
-    if(!Array.isArray(data)) {
-      data = [data]
-    }
+    // if(!Array.isArray(data)) {
+    //   data = [data]
+    // }
+
 
     var FeatureCollection = {
           type: 'FeatureCollection',
           features: data
         }
 
-        console.log('FeatureCollection',FeatureCollection)
 
-        //get rid of existing features
-        if(this.geojsonLayer) {
-          this.map.removeLayer(this.geojsonLayer) 
-        }
+        // //get rid of existing features
+        // if(this.geojsonLayer) {
+        //   this.map.removeLayer(this.geojsonLayer) 
+        // }
 
         function style(feature) {
           return {
@@ -93,15 +67,15 @@ var ListMap = React.createClass({
 
         var mapOptions = {
           style: style,
-          // onEachFeature: onEachFeature,
+          onEachFeature: onEachFeature,
           pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
-              // radius: 4,
-              // fillColor: "#FFF",
-              // color: "#69899f",
-              // weight: 0.5,
-              // opacity: 1,
-              // fillOpacity: 0.8
+              radius: 4,
+              fillColor: "#FFF",
+              color: "#69899f",
+              weight: 0.5,
+              opacity: 1,
+              fillOpacity: 0.8
             });
           }
         }
@@ -147,23 +121,7 @@ var ListMap = React.createClass({
 
   },
 
-  mergeGeometries(FeatureCollection) {
-    console.log('mergeGeometries', FeatureCollection)
 
-    var MultiPoint = {
-      type: 'MultiPoint',
-      coordinates: []
-    }
-    FeatureCollection.features.forEach(function(feature) {
-      MultiPoint.coordinates.push(feature.geometry.coordinates)
-    })
-
-    this.setState({
-      mapData: MultiPoint
-    })
-
-
-  },
 
   renderMap() {
     var self=this;

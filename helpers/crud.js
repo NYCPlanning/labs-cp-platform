@@ -30,15 +30,16 @@ var crud = {
       })
     },
 
-    // update: function(data) {
-    //   return ajax({
-    //     type: 'GET',
-    //     url: Mustache.render("{{{api_host}}}/api/projects/?{{{agencies}}}", {
-    //       api_host: appConfig,
-    //       agencies: agencies
-    //     })
-    //   }) 
-    // }
+    update: function(data) {
+      return ajax({
+        type: 'PUT',
+        url: Mustache.render("{{{api_host}}}/api/projecteditor", {
+          api_host: appConfig
+        }),
+        contentType: "application/json",
+        data: JSON.stringify(data)
+      }) 
+    }
   }
 }
 
