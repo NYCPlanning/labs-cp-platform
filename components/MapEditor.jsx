@@ -94,7 +94,7 @@ var MapEditor = React.createClass({
     var map = this.map = L.map(this.refs.map, {
       center: [40.7,-73.953094],
       zoom: 11,
-      scrollWheelZoom: false
+      scrollWheelZoom: true
     });
 
     //add basemap
