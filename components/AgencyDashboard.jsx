@@ -24,15 +24,26 @@ var AgencyDashboard = React.createClass({
     console.log('render in dashboard')
     var self=this;
     var agency = this.props.params.agency.toUpperCase()
-    var gridData = this.props.data.map(function(feature, i) {
+  
+
+    //hacky, need to find a way to add some temporary properties for display, or if that can happen in the grid Component
+    var gridData = JSON.parse(JSON.stringify(this.props.data))
+
+
+    gridData = gridData.map(function(feature, i) {
       if(feature.geometry != null) {
         feature.properties.geom = feature.geometry.type
       }
 
+      //add a number for reference
       feature.properties.number = i+1
 
       return feature.properties
     })
+
+    console.log('COMPARE')
+    console.log(gridData, this.props.data)
+
 
     var columns = [
       { name: 'number', width: 60},
