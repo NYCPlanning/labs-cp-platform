@@ -20,36 +20,6 @@ var AgencyDashboard = React.createClass({
     })
   },
 
-  componentWillMount() {
-    // //set up crossfilters, add dimensions 
-    // this.store = {}
-
-    // var filter = this.store.filter = crossfilter(this.props.data);
-    // var all = this.store.all = filter.groupAll();
-
-    // this.store.everything = filter.dimension(function(d) { return d });
-
-    // this.store.geom = filter.dimension(function (d) { 
-    //   return (d.geometry.type == 'Point') ? 'Point' :
-    //     (d.geometry.type == 'LineString') ? 'Line' :
-    //     (d.geometry.type == 'Polygon') ? 'Polygon' : 
-    //     (d.geometry.type == 'MultiPoint') ? 'Multipoint' :
-    //     (d.geometry.type == 'MultiLineString') ? 'MultiLine' :
-    //     (d.geometry.type == 'MultiPolygon') ? 'MutiPolygon' : 
-    //     'No Geom'
-    // });
-
-    // this.store.geomCount = this.store.geom.group();
-
-    // this.store.discrete = filter.dimension(function(d) {
-    //   return (d.properties.discrete==true) ? 'Discrete' :
-    //     (d.properties.discrete==false) ? 'Nondiscrete' :
-    //     'Null'
-    // })
-    // this.store.discreteCount = this.store.discrete.group();
-
-  },
-
   render() {
     console.log('render in dashboard')
     var self=this;
@@ -66,8 +36,8 @@ var AgencyDashboard = React.createClass({
       { name: 'maprojectid', width: 150 },
       { name: 'sagency', width: 50 },
       { name: 'magency', width: 50  },
-      { name: 'name', width: 400 },
-      { name: 'locationstatus' }
+      { name: 'name' },
+      { name: 'locationstatus', width: 150 }
     ]
 
     var totalProjects = gridData.length
@@ -200,6 +170,7 @@ var AgencyDashboard = React.createClass({
             style={{height: 500}}
             emptyText={'No records'}
             selected={this.state.selected}
+            withColumnMenu={false}
           />
         </div>
         <Modal show={this.state.showModal} onHide={this.closeModal}>
@@ -239,20 +210,3 @@ var AgencyDashboard = React.createClass({
 
 module.exports=AgencyDashboard;
 
-//TODO use this google sign-in
-// {
-//   this.state.loggedIn ? 
-//     (
-//       <AgencyDashboard/>
-//     ) :
-//     (
-//       <div className="main-column">
-//         <GoogleLogin
-//           clientId="755447712627-dm9dbsoevk9f4rvcch1hr0m853ai8f18.apps.googleusercontent.com"
-//           buttonText="Login"
-//           onSuccess={this.handleGoogleSuccess}
-//           onFailure={this.handleGoogleFailure}
-//         />
-//       </div>
-//     )
-// }

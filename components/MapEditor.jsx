@@ -108,6 +108,11 @@ var MapEditor = React.createClass({
     //add basemap
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',{ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>' }).addTo(map);
 
+    L.control.geocoder('search-zTuXMNE', {
+      position: 'bottomleft',
+      expanded: true
+    }).addTo(map);
+
     L.Icon.Default.imagePath = 'https://npmcdn.com/leaflet@0.7.7/dist/images/';
 
     // Initialise the FeatureGroup to store editable layers

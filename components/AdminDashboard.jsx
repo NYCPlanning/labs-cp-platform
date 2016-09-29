@@ -1,5 +1,7 @@
 import React from 'react'
 import {VictoryChart, VictoryBar, VictoryTooltip} from 'victory'
+import {Link} from 'react-router'
+import {Button} from 'react-bootstrap'
 
 var AdminDashboard = React.createClass({
 
@@ -42,34 +44,34 @@ var AgencyStats = React.createClass({
       var locationStatusChartArray = [
       {
         x:1,
-        y:d.locationstatus.discrete || 0,
-        label: 'Discrete\n' + (d.locationstatus.discrete || 0)
+        y:d.discrete || 0,
+        label: 'Discrete\n' + (d.discrete || 0)
       },
       {
         x:2,
-        y:d.locationstatus.nondiscrete || 0,
-        label: 'Nondiscrete\n' + (d.locationstatus.nondiscrete || 0)
+        y:d.nondiscrete || 0,
+        label: 'Nondiscrete\n' + (d.nondiscrete || 0)
       },
       {
         x:3,
-        y:d.locationstatus.tbd || 0,
-        label: 'TBD\n' + (d.locationstatus.tbd || 0)
+        y:d.tbd || 0,
+        label: 'TBD\n' + (d.tbd || 0)
       },
       {
         x:4,
-        y:d.locationstatus.nonspatial || 0,
-        label: 'Nonspatial\n' + (d.locationstatus.nonspatial || 0)
+        y:d.nonspatial || 0,
+        label: 'Nonspatial\n' + (d.nonspatial || 0)
       },
       {
         x:5,
-        y:d.locationstatus.null || 0,
-        label: 'Null\n' + (d.locationstatus.null || 0)
+        y:d.null || 0,
+        label: 'Null\n' + (d.null || 0)
       }
     ]
 
     return (
       <div className='col-md-4'> 
-        <h3>{d.sagency}</h3>
+        <h3>{d.sagency} <Link to={'/agency/' + d.sagency}><Button bsStyle="success" bsSize="xsmall" >Go</Button></Link></h3> 
         <h4>Location Status</h4>
      
           <VictoryBar
@@ -85,7 +87,7 @@ var AgencyStats = React.createClass({
               margin: 0
             }}    
           />  
-        <h4>Discrete Projects Geocoded: {d.discretegeoms.hasgeom}/{d.discretegeoms.hasgeom + d.discretegeoms.nogeom}</h4>      
+        <h4>Discrete Projects Geocoded: {d.hasgeom}/{d.hasgeom + d.totalprojects}</h4>      
         <hr/>
       </div> 
     )

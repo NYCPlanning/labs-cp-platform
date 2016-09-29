@@ -5,7 +5,6 @@
 // highlightFeature - function to call when highlightID is specified
 
 import React from 'react'
-import turf from 'turf'
 
 var ListMap = React.createClass({
   render() {
