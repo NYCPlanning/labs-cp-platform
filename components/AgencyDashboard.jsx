@@ -24,14 +24,18 @@ var AgencyDashboard = React.createClass({
     console.log('render in dashboard')
     var self=this;
     var agency = this.props.params.agency.toUpperCase()
-    var gridData = this.props.data.map(function(feature) {
+    var gridData = this.props.data.map(function(feature, i) {
       if(feature.geometry != null) {
         feature.properties.geom = feature.geometry.type
       }
+
+      feature.properties.number = i+1
+
       return feature.properties
     })
 
     var columns = [
+      { name: 'number', width: 60},
       { name: 'geom', width: 80 },
       { name: 'maprojectid', width: 150 },
       { name: 'sagency', width: 50 },
@@ -87,6 +91,8 @@ var AgencyDashboard = React.createClass({
         (d.locationstatus == 'discrete' && d.geom == null) ? 'nogeom': null
     })
 
+    console.log(geomCounts)
+
     // var geomChartArray = [
     //   {
     //     x:1,
@@ -122,36 +128,10 @@ var AgencyDashboard = React.createClass({
                   margin: 0
                 }}    
               />
-            <h4>Discrete Projects Geocoded: {geomCounts.geom}/{geomCounts.geom + geomCounts.nogeom}</h4>
-            {/*<h4>Discrete Projects</h4>
-              <VictoryBar
-                data={geomChartArray}  
-                height={200}
-                style={{
-                  data: {
-                    width: 60,
-                    fill: '#D96B27'
-                  },
-                  labels: {fontSize: 20}
-                }}
-                colorScale={"qualitative"}       
-              />*/}
-           
+            <h4>Discrete Projects Geocoded: {geomCounts.geom}/{counts.discrete || 0}</h4>
+     
 
-             {/* <DcColumnChart 
-                title={'Geometries'}
-                dimension={this.store.geom}
-                group={this.store.geomCount}
-                margins={{top: 10, right: 50, bottom: 30, left: 40}}
-                update={this.update}
-              />
-              <DcColumnChart 
-                title={'Discrete Projects'}
-                dimension={this.store.discrete}
-                group={this.store.discreteCount}
-                margins={{top: 10, right: 50, bottom: 30, left: 40}}
-                update={this.update}
-              />*/}
+ 
           </div>
           <div className="mapContainer half-height">
             <DashboardMap data={this.props.data.filter(function(feature){

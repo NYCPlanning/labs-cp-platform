@@ -32,14 +32,6 @@ var MapEditor = React.createClass({
     )
   },
 
-  componentWillReceiveProps(nextProps) {
-    var self=this;
-    if(nextProps.data) {
-      if(JSON.stringify(nextProps.data)!=JSON.stringify(this.props.data)) {
-        this.renderData(nextProps.data)
-      }
-    }
-  },
 
   componentWillMount() {
     this.setState({
@@ -143,6 +135,15 @@ var MapEditor = React.createClass({
             rectangle: false
         }
     });
+
+    map.on('click', function (e) {
+      if(self.state.showNoGeomMessage) {
+        self.setState({
+          showNoGeomMessage: false
+        })       
+      }
+
+    })
 
     //when a new feature is added, add it to the featuregroup and log the geoJson
     map.on('draw:created', function (e) {

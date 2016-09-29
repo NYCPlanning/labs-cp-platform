@@ -28,6 +28,7 @@ var ProjectEditor = React.createClass({
   },
 
   postData() {
+    console.log('posting...')
     var self=this
     crud.projects.update(this.state.validData)
       .done((res) => {
@@ -43,7 +44,7 @@ var ProjectEditor = React.createClass({
 
     //get rid of commitid, which will be autoincremented by the db
     delete feature.properties.commitid
-    //add username
+    delete feature.properties.committime
     feature.properties.commituser = Auth.getProfile().email
 
 

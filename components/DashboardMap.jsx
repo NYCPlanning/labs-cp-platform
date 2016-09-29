@@ -82,27 +82,6 @@ var ListMap = React.createClass({
 
         this.geojsonLayer = L.geoJson(FeatureCollection, mapOptions).addTo(this.map) 
 
-        // //get centroids of all features
-        // var centroids = FeatureCollection.features.map(function(feature) {
-        //   var centroidFeature = turf.centroid(feature);
-        //   //append the properties 
-        //   centroidFeature.properties.rid = feature.properties.rid;
-        //   return centroidFeature
-        // });
-
-        // this.centroidLayer = L.geoJson(centroids,{
-        //   pointToLayer: function(feature,latlng) {
-        //     return L.circleMarker(latlng, {
-        //       radius: 4,
-        //       fillColor: "#FFF",
-        //       color: "#69899f",
-        //       weight: 2,
-        //       opacity: 0.7,
-        //       fillOpacity: 0.7
-        //     });
-        //   }
-        // }).addTo(this.map) 
-
 
      this.map.fitBounds(this.geojsonLayer.getBounds())   
   },
@@ -120,6 +99,15 @@ var ListMap = React.createClass({
 
   },
 
+
+  componentWillReceiveProps(nextProps) {
+    var self=this;
+    if(nextProps.data) {
+      if(JSON.stringify(nextProps.data)!=JSON.stringify(this.props.data)) {
+        this.renderData(nextProps.data)
+      }
+    }
+  },
 
 
   renderMap() {
