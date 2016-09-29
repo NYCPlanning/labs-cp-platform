@@ -12,16 +12,6 @@ var ProjectForm = React.createClass({
 
   render() {
     var d = this.props.data
-
-    function FieldGroup({ id, label, help }) {
-      return (
-        <FormGroup controlId={id}>
-          <ControlLabel>{label}</ControlLabel>
-          <FormControl/>
-          {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
-      );
-    }
     
     return(
       <div className="col-md-12">
@@ -46,13 +36,30 @@ var ProjectForm = React.createClass({
               onChange={this.handleChange} 
               defaultValue={d.locationstatus}
             >
-              <option value="null">null</option>
+              <option value="null">Null</option>
               <option value="discrete">discrete</option>
               <option value="nondiscrete">nondiscrete</option>
               <option value="tbd">tbd</option>
               <option value="nonspatial">nonspatial</option>
             </FormControl>
           </FormGroup>
+
+          <FormGroup controlId="neighborhooddevelopment">
+            <ControlLabel>Neighborhood Development</ControlLabel>
+            <FormControl 
+              componentClass="select" 
+              placeholder="select" 
+              onChange={this.handleChange} 
+              defaultValue={d.neighborhooddevelopment}
+            >
+              <option value="null">Null</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+     
+            </FormControl>
+          </FormGroup>
+
+  
 
           <FormGroup controlId="description">
             <ControlLabel>Description</ControlLabel>

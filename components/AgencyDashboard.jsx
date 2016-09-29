@@ -48,11 +48,11 @@ var AgencyDashboard = React.createClass({
     var columns = [
       { name: 'number', width: 60},
       { name: 'geom', width: 80 },
-      { name: 'maprojectid', width: 150 },
+      { name: 'maprojectid', width: 130 },
       { name: 'sagency', width: 50 },
       { name: 'magency', width: 50  },
       { name: 'name' },
-      { name: 'locationstatus', width: 150 }
+      { name: 'locationstatus', width: 70 }
     ]
 
     var totalProjects = gridData.length
@@ -117,6 +117,19 @@ var AgencyDashboard = React.createClass({
     //   }
     // ]
 
+    function rowStyle(data, props) {
+      var style = {}
+      // if (props.index % 4 == 0){
+      //   style.color = 'blue'
+      // }
+
+      if (data.locationstatus == null){
+        style.background = '#FFD3D3'
+      }
+
+      return style     
+    }
+
 
     return(
       <div className="full-height">
@@ -162,6 +175,7 @@ var AgencyDashboard = React.createClass({
             emptyText={'No records'}
             selected={this.state.selected}
             withColumnMenu={false}
+            rowStyle={rowStyle}
           />
         </div>
         <Modal show={this.state.showModal} onHide={this.closeModal}>

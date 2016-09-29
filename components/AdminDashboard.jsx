@@ -88,7 +88,7 @@ var AgencyStats = React.createClass({
               margin: 0
             }}    
           />  
-        <h4>Discrete Projects Geocoded: {d.hasgeom}/{d.hasgeom + d.totalprojects}</h4>      
+        <h4>Discrete Projects Geocoded: {d.hasgeom}/{d.hasgeom + (d.nogeom || 0)}</h4>      
         <hr/>
       </div> 
     )
