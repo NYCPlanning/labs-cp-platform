@@ -2,6 +2,6 @@ module.exports= function() {
   if (process.env.NODE_ENV == 'development'){
     return 'http://localhost:3000';
   } else {
-    return 'http://cpdb.reallysimpleopendata.com';
+    return 'http://api.reallysimpleopendata.com';
   }
 }

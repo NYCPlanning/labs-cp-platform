@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Router,browserHistory, IndexRedirect} from 'react-router'
-import GoogleLogin from 'react-google-login'
 import routes from './config/routes.jsx'
 import { createHistory, useBasename } from 'history'
 

@@ -4,6 +4,8 @@ import ProjectForm from './ProjectForm.jsx'
 import $ from 'jquery'
 import {Modal, Button} from 'react-bootstrap'
 import crud from '../helpers/crud.js'
+import Auth from '../helpers/Auth.js'
+
 
 var ProjectEditor = React.createClass({
 
@@ -38,6 +40,13 @@ var ProjectEditor = React.createClass({
   validate() {
     var feature = this.gatherData()
     console.log(feature)
+
+    //get rid of commitid, which will be autoincremented by the db
+    delete feature.properties.commitid
+    //add username
+    feature.properties.commituser = Auth.getProfile().email
+
+
     //if locationstatus is something other than discrete and geom is valid
     if(feature.properties.locationstatus != 'discrete' && !$.isEmptyObject(feature.geometry)) {
       this.setState({

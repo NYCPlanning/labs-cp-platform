@@ -2,6 +2,7 @@ import React from 'react'
 import {VictoryChart, VictoryBar, VictoryTooltip} from 'victory'
 import {Link} from 'react-router'
 import {Button} from 'react-bootstrap'
+import crud from '../helpers/crud.js'
 
 var AdminDashboard = React.createClass({
 
@@ -13,16 +14,16 @@ var AdminDashboard = React.createClass({
 
   componentDidMount() {
     var self=this
-    $.getJSON('http://localhost:3000/api/projecteditor/allstats', function(res) {
-      console.log(res.data)
-      self.setState({
-        agencyData: res.data
+    crud.projects.getStats()
+      .then(function(res) {
+        var response = JSON.parse(res)
+        self.setState({
+          agencyData: response.data
+        })
       })
-    })
   },
 
   render() {
-
 
     var agencyCharts = this.state.agencyData != null ? this.state.agencyData.map(function(agency, i) {
       return (<AgencyStats data={agency} key={i}/>)

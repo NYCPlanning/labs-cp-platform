@@ -16,7 +16,6 @@ function ajax(options) {
     data: options.data
   })
 }
-http://localhost:3000/api/projecteditor/dot
 
 var crud = {
   projects: {
@@ -39,7 +38,18 @@ var crud = {
         contentType: "application/json",
         data: JSON.stringify(data)
       }) 
+    },
+
+    getStats: function() {
+      return ajax({
+        type: 'GET',
+        url: Mustache.render("{{{api_host}}}/api/projecteditor/allstats", {
+          api_host: appConfig
+        }),
+        contentType: "application/json",
+      }) 
     }
+
   }
 }
 
