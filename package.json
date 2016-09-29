@@ -21,6 +21,7 @@
     "jquery": "^3.1.1",
     "jwt-decode": "^2.1.0",
     "leaflet-draw": "^0.3.2",
+    "mustache": "^2.2.1",
     "react": "^15.3.0",
     "react-bootstrap": "^0.30.2",
     "react-datagrid": "^2.1.1",
