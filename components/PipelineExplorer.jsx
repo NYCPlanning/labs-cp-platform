@@ -8,12 +8,19 @@ var PipelineExplorer = React.createClass({
   getInitialState() {
     return({
       modalHeading: null,
-      modalContent: null
+      modalContent: null,
+      modalCloseText: null
     })
   },
 
   componentDidMount: function() {
     document.title = "NYC Residential Development Pipeline";
+
+    this.showModal({
+      modalHeading: 'Welcome!',
+      modalContent: splashContent,
+      modalCloseText: 'Got it.  Let me in!'
+    }) 
   },
 
   updateSQL(sql) {
@@ -23,7 +30,8 @@ var PipelineExplorer = React.createClass({
   showAbout() {
     this.showModal({
       modalHeading: 'About this Tool',
-      modalContent: aboutContent
+      modalContent: aboutContent,
+      modalCloseText: 'Got it!'
     })
   },
 
@@ -115,6 +123,13 @@ var PipelineExplorer = React.createClass({
             />
           </div>
           <div id="content">
+            <div className="messageOverlay mapOverlay">
+              <div className="message">Hover over a property, or click for full details</div>
+              <div className="message">Data Freshness:</div>
+              <div className="message-mini">DOB Permits-5/19/2016</div>
+              <div className="message-mini">DOB Certificates of Occupancy-8/25/2016</div>
+              <div className="message-mini">HPD Projects-5/20/2016</div>
+            </div>
             <CartoMap
              vizJson="data/pipelineViz.json"
              handleFeatureClick={this.handleFeatureClick}
@@ -123,6 +138,7 @@ var PipelineExplorer = React.createClass({
             <Modal
               heading={this.state.modalHeading}
               body={this.state.modalContent}
+              closeText={this.state.modalCloseText}
               ref="modal"
             />
         </div>
@@ -168,6 +184,15 @@ var aboutContent = (
 
     <p>We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at CapitalPlanning_DL@planning.nyc.gov with any suggestions.</p>
 
+  </div>
+)
+
+var splashContent = (
+  <div>
+    "Welcome Beta Tester!" 
+    This interactive explorer of the XYZ dataset is currently under development by the Department of City Planning. 
+    You are likelyt to find some bugs and even some less-than-accurate data. These are works in progress! 
+    If you're here, it means we want to improve this data and this map with your help! Please get in touch...
   </div>
 )
 

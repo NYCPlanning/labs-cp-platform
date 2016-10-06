@@ -14,7 +14,8 @@ html, body, #main-container {
 }
 
 .full-height {
-  height:100%;
+  height:100%;    
+  overflow-y: scroll;
 }
 
 /*Nav Component*/
@@ -104,6 +105,28 @@ ul.navbar-right {
 }
 /*End Map*/
 
+/*Map Overlays*/
+.mapOverlay {
+  padding: 10px;
+  font-family: 'Oswald', sans-serif;
+  z-index: 10;
+  position: absolute;
+  min-width: 90px;
+  background: rgba(230, 230, 230, 0.65);
+  font-size: 15px;
+}
+
+.messageOverlay {
+  border-radius: 0 0 10px 0;
+}
+
+.message-mini {
+  font-family: 'Open Sans';
+  font-size: 12px;
+} 
+
+/*End Map Overlays*/
+
 /*Custom Carto Tooltip*/
 
 .cartodb-tooltip .name {
@@ -128,6 +151,7 @@ ul.navbar-right {
   background-color: #f5f5f5;
   text-transform: uppercase;
   font-weight: bold;
+  cursor: pointer;
 }
   
 .nav-sub-container {
@@ -148,9 +172,10 @@ ul.nav-stacked ul.nav-stacked > li > a {
   font-family: 'open sans', sans-serif;
   padding: 3px 15px 3px 50px;
   font-size: 12px;
+  cursor: pointer;
 }
 
-a.nav-container {
+.nav-container {
    color: #101011;
    font-family: 'Oswald', sans-serif;
 }
@@ -195,6 +220,18 @@ input[type=checkbox] {
   border-left: 6px solid transparent;
 }
 
+.caret-container {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.nav-sub-container .caret-container {
+  top: 3px;
+  right: 11px;
+}
+
 /*End Collapsible Menu Sidebar*/
 
 
@@ -233,5 +270,43 @@ input[type=checkbox] {
 
 .ui-rangeSlider-bar {
     background: #d96b27;
-
+}
 /*End Jquery UI Range Slider Customization*/
+
+/*Beta Banner*/
+
+body:after {
+    content: "beta";
+    position: fixed;
+    width: 80px;
+    height: 25px;
+    background: #e7ff1e;
+    top: 7px;
+    left: -20px;
+    text-align: center;
+    font-size: 13px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #818181;
+    line-height: 27px;
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    z-index: 10000;
+    border-bottom: 1px solid #b4b4b4;
+    border-top: 1px solid #b4b4b4;
+}
+
+/*End Beta Banner*/
+
+/*Homepage*/
+
+.portfolio-item h3 {
+  color: #db691b
+}
+
+.main-content {
+  padding: 0;
+  overflow: scroll;
+}

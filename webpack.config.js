@@ -5,7 +5,7 @@ module.exports = {
     './main.jsx'
   ],
   output: {
-    path: 'public/js',
+    path: 'js',
     filename: 'bundle.js',
     publicPath: '/js/'
   },

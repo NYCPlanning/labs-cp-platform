@@ -15,10 +15,12 @@ var Component = React.createClass({
   },
 
   render() {
-    console.log('render modal', this.props.body)
+    console.log('render modal', this.props)
+
+    var closeText = this.props.closeText ? this.props.closeText : 'Close'
 
     return (
-   
+    
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -28,7 +30,7 @@ var Component = React.createClass({
             {this.props.body}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+            <Button onClick={this.close}>{closeText}</Button>
           </Modal.Footer>
         </Modal>
     );

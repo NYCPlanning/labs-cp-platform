@@ -483,9 +483,9 @@ var LayerSelector = React.createClass({
                     checked={domain.checked} 
                     indeterminate={domain.indeterminate}
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                  <a className="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} style={{backgroundColor: domain.color}}>
-                  {domain.name}
-                  <div className="caret-container"><span className="caret arrow"></span></div></a>    
+                  <a className="nav-container" style={{backgroundColor: domain.color}}>
+                  <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
+                  <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} ><span className="caret arrow"></span></div></a>    
                   <ul className="nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
                   {
                     domain.children.map(function(group, j) {
@@ -496,11 +496,11 @@ var LayerSelector = React.createClass({
                               checked={group.checked} 
                               indeterminate={group.indeterminate}
                               onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
-                          <li data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} >
+                          <li>
 
                             <a className="nav-sub-container" style={{backgroundColor: domain.subColor}}>    
-                              {group.name}
-                              <div className="caret-container"><span className="caret arrow"></span></div>
+                              <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{display:'inline-block'}}>{group.name}</div>
+                              <div className="caret-container" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
                             </a>
                           </li>
                               
@@ -509,7 +509,7 @@ var LayerSelector = React.createClass({
                               group.children.map(function(subgroup, k) {
                                 return(
                                   <li className='subgroup' key={k}>
-                                    <a href="#">
+                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} >
                                       <Checkbox 
                                         value={subgroup.name} 
                                         checked={subgroup.checked} 
