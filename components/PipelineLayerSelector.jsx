@@ -339,7 +339,7 @@ var LayerSelector = React.createClass({
             })
           }
         </ul>
-        <h4>Completion Date*</h4>
+        <h4>Completion Date*<small>Applies to completed and partially completed projects only</small></h4>
           <div id="dateSlider" ref="dateSlider"></div>
           <h4>Number of Units</h4>
           <div id="unitsSlider" ref="unitsSlider"></div>

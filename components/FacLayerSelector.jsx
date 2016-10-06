@@ -4,49 +4,7 @@ import ReactDOM from 'react-dom'
 //object for the hierarchy of domains, groups and subgroups
 //includes colors to be used in display
 var layerStructure = [
-  {
-    name: 'Administration of Government',
-    color: '#8dd3c7',
-    subColor: 'rgba(141, 211, 199, 0.29)',
-    children: [
-      {
-        name: 'Offices',
-        children: [
-          {
-            name: 'Offices'
-          }
-        ]
-      },
-      {
-        name: 'Other Property',
-        children: [
-          {
-            name: 'Miscellaneous Use'
-          },
-          {
-            name: 'No Use'
-          },
-          {
-            name: 'Undeveloped'
-          }
-        ]
-      },
-      {
-        name: 'Parking, Maintenance, and Storage',
-        children: [
-          {
-            name: 'Maintenance'
-          },
-          {
-            name: 'Parking'
-          },
-          {
-            name: 'Storage'
-          }
-        ]
-      }
-    ]
-  },
+  
   {
     name: 'Core Infrastructure and Transportation',
     color: '#ffff36',
@@ -140,15 +98,12 @@ var layerStructure = [
   }, 
   {
     name: 'Parks, Cultural, and Other Community Facilities',
-    color: '#fb8072',
+    color: '#8dd3c7',
     subColor: 'rgba(251, 128, 114, 0.3)',
     children: [
       {
         name: 'Cultural Institutions',
         children: [
-          {
-            name: 'Cultural Institutions'
-          },
           {
             name: 'Historical Societies'
           },
@@ -306,6 +261,49 @@ var layerStructure = [
           }
         ]
       },
+    ]
+  },
+{
+    name: 'Administration of Government',
+    color: '#fb8072',
+    subColor: 'rgba(141, 211, 199, 0.29)',
+    children: [
+      {
+        name: 'Offices',
+        children: [
+          {
+            name: 'Offices'
+          }
+        ]
+      },
+      {
+        name: 'Other Property',
+        children: [
+          {
+            name: 'Miscellaneous Use'
+          },
+          {
+            name: 'No Use'
+          },
+          {
+            name: 'Undeveloped'
+          }
+        ]
+      },
+      {
+        name: 'Parking, Maintenance, and Storage',
+        children: [
+          {
+            name: 'Maintenance'
+          },
+          {
+            name: 'Parking'
+          },
+          {
+            name: 'Storage'
+          }
+        ]
+      }
     ]
   }
 ]
@@ -486,7 +484,7 @@ var LayerSelector = React.createClass({
                   <a className="nav-container" style={{backgroundColor: domain.color}}>
                   <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
                   <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} ><span className="caret arrow"></span></div></a>    
-                  <ul className="nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
+                  <ul className="nav nav-pills nav-stacked collapse " id={"p" + (i)} style={{height: 'auto'}}>
                   {
                     domain.children.map(function(group, j) {
                       return (

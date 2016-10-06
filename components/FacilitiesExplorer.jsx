@@ -19,7 +19,7 @@ var FacilitiesExplorer = React.createClass({
     this.showModal({
       modalHeading: 'Welcome!',
       modalContent: splashContent,
-      modalCloseText: 'Got it!'
+      modalCloseText: 'Got it.  Let me in!'
     }) 
   },
 
@@ -30,7 +30,8 @@ var FacilitiesExplorer = React.createClass({
   showAbout() {
     this.showModal({
       modalHeading: 'About this Tool',
-      modalContent: aboutContent
+      modalContent: aboutContent,
+      modalCloseText: 'Close'
     })
   },
 
@@ -41,6 +42,7 @@ var FacilitiesExplorer = React.createClass({
 
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
+    console.log(d)
 
     var content = (
       <div>
@@ -48,16 +50,28 @@ var FacilitiesExplorer = React.createClass({
         <p>{d.address}</p>
 
         <hr/>
+        <p className='modal-label'>Categories</p>
+        <dl className="dl-horizontal">
+          <dt>Domain</dt>
+          <dd>{d.domain}</dd>
+          <dt>Group</dt>
+          <dd>{d.facilitygroup}</dd>
+          <dt>Subgroup</dt>
+          <dd>{d.facilitysubgroup}</dd>
+          <dt>Type</dt>
+          <dd>{d.facilitytype}</dd>
+          
+        </dl> 
 
-        <p className='modal-label'>Domain / Group / Subgroup / Type</p>
-        <p>{d.domain} / {d.facilitygroup} / {d.facilitysubgroup} / {d.facilitytype}</p>
-
-        <p className='modal-label'>Operator</p>
-        <p>{d.oversightabbrev} - {d.operatorname}</p>
-
-        <p className='modal-label'>Oversight Agency</p>
-        <p>{d.oversightabbrev} - {d.oversightagency}</p>
-
+        <p className='modal-label'>Capacity & Utilization Details</p>
+          <dl className="dl-horizontal">
+            <dt>Capacity</dt>
+            <dd>{d.capacity ? d.capacity : d.capacitytype}</dd>
+            <dt>Utilization</dt>
+            <dd>{d.utilization}</dd>
+            <dt>Utilization Rate</dt>
+            <dd>{d.utilization}</dd>
+          </dl>
         <hr/>
 
         <p className='modal-label'>Data Source</p>
@@ -89,7 +103,7 @@ var FacilitiesExplorer = React.createClass({
           <div id="content">
             <div className="messageOverlay mapOverlay">
               <div className="message">Hover over a facility, or click for full details</div>
-              <div className="message">Data are current as of X/X/XXXX</div>
+              <div className="message">Data current as of 09/05/2014 - 08/20/2016</div>
             </div>
             <CartoMap
              vizJson="data/facViz.json"

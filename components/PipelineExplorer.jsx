@@ -69,7 +69,8 @@ var PipelineExplorer = React.createClass({
 
     this.showModal({
       modalHeading: 'Facility Details',
-      modalContent: content
+      modalContent: content,
+      modalCloseText: 'Close'
     })
 
 

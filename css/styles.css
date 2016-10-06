@@ -302,7 +302,7 @@ body:after {
 
 /*Homepage*/
 
-.portfolio-item h3 {
+.portfolio-item h3 a{
   color: #db691b
 }
 

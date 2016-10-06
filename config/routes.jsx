@@ -7,6 +7,7 @@ import Login from '../components/Login.jsx'
 import Auth from '../helpers/Auth.js'
 
 import HomePage from '../components/HomePage.jsx'
+import CapitalProjectsExplorer from '../components/CapitalProjectsExplorer.jsx'
 import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
 import PipelineExplorer from '../components/PipelineExplorer.jsx'
 
@@ -25,6 +26,7 @@ module.exports = (
     <Route path="login" component={Login} />
     <Route path="facilities" component={FacilitiesExplorer} />
     <Route path="pipeline" component={PipelineExplorer} />
+    <Route path="capitalprojects" component={CapitalProjectsExplorer} />
   </Route>
 )
 

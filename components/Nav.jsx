@@ -11,7 +11,7 @@ var Nav = React.createClass({
               <li><Link to="/"><i className="fa fa-home" aria-hidden="true"></i> Home</Link></li>
               {this.props.children}
               <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdQgNxsIJ4H9YkK2Dcj7Hc_vAnJkW1QK4BDwOPILyLaei70BQ/viewform"><i className="fa fa-comment" aria-hidden="true"></i> Feedback</a></li>
-              <li><a href="https://github.com/nycplanning/facdb-explore"><i className="fa fa-github" aria-hidden="true"></i> Fork Me on GitHub</a></li>
+              {/*<li><a href="https://github.com/nycplanning/facdb-explore"><i className="fa fa-github" aria-hidden="true"></i> Fork Me on GitHub</a></li>*/}
            </ul>
         </div>
          

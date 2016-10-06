@@ -21,11 +21,11 @@ var HomePage = React.createClass({
               </div>
             </div>
             <div className="col-md-4 portfolio-item">
-                <a href="#">
+                <Link to='/capitalprojects'>
                     <img className="img-responsive" src="img/cpdb.png" alt=""/>
-                </a>
+                </Link>
                 <h3>
-                    <a href="#">Capital Projects</a>
+                    <Link to='/capitalprojects'>Capital Projects</Link>
                 </h3>
                 <p>View citywide capital projects compiled from 15 different agencies, including funding, timeline, and location</p>
             </div>
