@@ -466,7 +466,7 @@ var LayerSelector = React.createClass({
             <h3>Layers</h3>
           </div>
           <div className='col-md-6'>
-            <div className='btn btn-default btn-sm pull-right' onClick={this.hideAll}>Hide All</div>
+            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll}>Hide All</div>
           </div>
         </div>
         

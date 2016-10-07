@@ -42,6 +42,7 @@ var PipelineExplorer = React.createClass({
 
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
+    console.log('d',d)
 
     var content = (
       <div>
@@ -49,21 +50,20 @@ var PipelineExplorer = React.createClass({
         <p>{d.address}</p>
 
         <hr/>
+        <p className='modal-label'>Categories</p>
+        <dl className="dl-horizontal">
+          <dt>Domain</dt>
+          <dd>{d.domain}</dd>
+          <dt>Group</dt>
+          <dd>{d.facilitygroup}</dd>
+          <dt>Subgroup</dt>
+          <dd>{d.facilitysubgroup}</dd>
+          <dt>Type</dt>
+          <dd>{d.facilitytype}</dd>
+          
+        </dl> 
 
-        <p class='modal-label'>Domain / Group / Subgroup / Type</p>
-        <p>{d.domain} / {d.facilitygroup} / {d.facilitysubgroup} / {d.facilitytype}</p>
-
-        <p class='modal-label'>Operator</p>
-        <p>{d.oversightabbrev} - {d.operatorname}</p>
-
-        <p class='modal-label'>Oversight Agency</p>
-        <p>{d.oversightabbrev} - {d.oversightagency}</p>
-
-        <hr/>
-
-        <p class='modal-label'>Data Source</p>
-        <p>Source Dataset: {d.sourcedatasetname}</p>
-        <p>Last Update: {d.datesourceupdated}</p>
+      
       </div>
     )
 
@@ -79,33 +79,58 @@ var PipelineExplorer = React.createClass({
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
 
+    console.log(d)
+
     var content = (
       <div>
-        <h3>{d.facilityname}</h3>
-        <p>{d.address}</p>
+        <h3>{d.dob_address}</h3>
+
+        <hr/>
+          <p className='modal-label'>Pipeline Information</p>
+          <dl className="dl-horizontal">
+            <dt>Number of Units</dt>
+            <dd>{d.dcp_pipeline_units}</dd>
+            <dt>Category</dt>
+            <dd>{d.dcp_pipeline_category}</dd>
+            <dt>Status</dt>
+            <dd>{d.dcp_pipeline_status}</dd>
+            
+          </dl>
 
         <hr/>
 
-        <p className='modal-label'>Domain / Group / Subgroup / Type</p>
-        <p>{d.domain} / {d.facilitygroup} / {d.facilitysubgroup} / {d.facilitytype}</p>
-
-        <p className='modal-label'>Operator</p>
-        <p>{d.oversightabbrev} - {d.operatorname}</p>
-
-        <p className='modal-label'>Oversight Agency</p>
-        <p>{d.oversightabbrev} - {d.oversightagency}</p>
+          <p className='modal-label'>Site Information</p>
+          <dl className="dl-horizontal">
+            <dt>BBL</dt>
+            <dd>{d.dob_bbl}</dd>
+            <dt>Building Id Number (BIN)</dt>
+            <dd>{d.dob_bin}</dd>
+            
+            
+          </dl>
 
         <hr/>
 
-        <p className='modal-label'>Data Source</p>
-        <p>Source Dataset: {d.sourcedatasetname}</p>
-        <p>Last Update: {d.datesourceupdated}</p>
+          <p className='modal-label'>Permit Info</p>
+          <dl className="dl-horizontal">
+            <dt>Issue Date</dt>
+            <dd>{d.dob_issue_date}</dd>
+            <dt>Job Number</dt>
+            <dd>{d.dob_jobnumber}</dd>
+            <dt>Job Type</dt>
+            <dd>{d.dob_jobtype}</dd>
+            <dt>C of O Date</dt>
+            <dd>{d.dob_co_date}</dd>
+            
+            
+          </dl>
       </div>
     )
 
     this.showModal({
-      modalHeading: 'Facility Details',
-      modalContent: content
+      modalHeading: 'Pipeline Details',
+      modalContent: content,
+      modalCloseText: 'Close'
     })
 
 
@@ -190,10 +215,11 @@ var aboutContent = (
 
 var splashContent = (
   <div>
-    "Welcome Beta Tester!" 
-    This interactive explorer of the XYZ dataset is currently under development by the Department of City Planning. 
-    You are likelyt to find some bugs and even some less-than-accurate data. These are works in progress! 
-    If you're here, it means we want to improve this data and this map with your help! Please get in touch...
+    <h4>Welcome Beta Tester!</h4>
+    <p>This interactive explorer of the new Housing Pipeline Dataset is currently under development by the Department of City Planning. 
+    You are likely to find some bugs and even some less-than-accurate data. These are works in progress!</p> 
+    
+    <p>If you're here, it means we want to improve this product, and its underlying data, with your help! Please get use the feedback link in the menu bar to let us know what you think.</p>
   </div>
 )
 

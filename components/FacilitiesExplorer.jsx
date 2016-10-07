@@ -44,6 +44,46 @@ var FacilitiesExplorer = React.createClass({
     var d = data
     console.log(d)
 
+    var CapacityUtilization = function() {
+      return (
+        <div>
+          <p className='modal-label'>Capacity & Utilization Details</p>
+            <dl className="dl-horizontal">
+              <dt>Capacity</dt>
+              <dd>{d.capacity ? d.capacity + ' ' + d.capacitytype : 'Unknown'}</dd>
+              <dt>Utilization</dt>
+              <dd>{d.utilization ? d.utilization + ' ' + d.utilizationtype : 'Unknown'}</dd>
+              {d.capacity && d.utilization ? <dt>Utilization Rate</dt> : null}
+              {d.capacity && d.utilization ? <dd>{d.utilization/d.capacity}</dd> : null}
+              
+            </dl>
+          <hr/>
+        </div>
+      ) 
+    }
+
+  
+
+<p>CONCAT('Oversight Agency: ', oversightabbrev,' - ',oversightagency)</p>
+
+  var OperationsAndOversight = function() {
+    return(
+      <div>
+        <p className='modal-label'>Operations and Oversight</p>
+          <dl className="dl-horizontal">
+            <dt>Operator</dt>
+            <dd>{d.operatorabbrev + ' - ' + d.operatorname}</dd>
+            <dt>Oversight Agency</dt>
+            <dd>{d.oversightabbrev + ' - ' + d.oversightagency}</dd>
+            
+          </dl>
+        <hr/>
+      </div>
+
+    )
+  }
+
+
     var content = (
       <div>
         <h3>{d.facilityname}</h3>
@@ -63,15 +103,8 @@ var FacilitiesExplorer = React.createClass({
           
         </dl> 
 
-        <p className='modal-label'>Capacity & Utilization Details</p>
-          <dl className="dl-horizontal">
-       
-            <dt>Utilization</dt>
-            <dd>{d.utilization}</dd>
-            <dt>Utilization Rate</dt>
-            <dd>{d.utilization}</dd>
-          </dl>
-        <hr/>
+       <CapacityUtilization/>
+       <OperationsAndOversight/>
 
         <p className='modal-label'>Data Source</p>
         <p>Source Dataset: {d.sourcedatasetname}</p>
@@ -81,7 +114,8 @@ var FacilitiesExplorer = React.createClass({
 
     this.showModal({
       modalHeading: 'Facility Details',
-      modalContent: content
+      modalContent: content,
+      modalCloseText: 'Close'
     })
 
 
@@ -168,9 +202,10 @@ var aboutContent = (
 
 var splashContent = (
   <div>
-    "Welcome Beta Tester!" 
-    This interactive explorer of the XYZ dataset is currently under development by the Department of City Planning. 
-    You are likelyt to find some bugs and even some less-than-accurate data. These are works in progress! 
-    If you're here, it means we want to improve this data and this map with your help! Please get in touch...
+    <h4>Welcome Beta Tester!</h4>
+    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. 
+    You are likely to find some bugs and even some less-than-accurate data. These are works in progress!</p> 
+    
+    <p>If you're here, it means we want to improve this product, and its underlying data, with your help! Please get use the feedback link in the menu bar to let us know what you think.</p>
   </div>
 )
