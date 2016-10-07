@@ -122,7 +122,6 @@ var PipelineExplorer = React.createClass({
             <dt>C of O Date</dt>
             <dd>{d.dob_co_date}</dd>
             
-            
           </dl>
       </div>
     )

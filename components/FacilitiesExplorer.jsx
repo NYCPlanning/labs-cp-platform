@@ -63,9 +63,6 @@ var FacilitiesExplorer = React.createClass({
     }
 
   
-
-<p>CONCAT('Oversight Agency: ', oversightabbrev,' - ',oversightagency)</p>
-
   var OperationsAndOversight = function() {
     return(
       <div>
