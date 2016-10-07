@@ -30,7 +30,7 @@ var Component = React.createClass({
             {this.props.body}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>{closeText}</Button>
+            <div className="btn dcp-orange" onClick={this.close}>{closeText}</div>
           </Modal.Footer>
         </Modal>
     );

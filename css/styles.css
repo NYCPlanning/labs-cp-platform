@@ -18,6 +18,18 @@ html, body, #main-container {
   overflow-y: scroll;
 }
 
+.dcp-orange {
+  background-color: #d96b27;
+  border-color: #d96b27;
+  color: #FFF;
+}
+
+.dcp-orange:hover, .dcp-orange:active  {
+  background-color: #a5501b;
+  border-color: #a5501b;
+  color: #FFF;
+}
+
 /*Nav Component*/
 
 nav {
@@ -309,4 +321,10 @@ body:after {
 .main-content {
   padding: 0;
   overflow: scroll;
+}
+
+.jumbotron {
+  background-image: url(/img/nyc.jpg);
+  background-size: cover;
+  color: white; 
 }

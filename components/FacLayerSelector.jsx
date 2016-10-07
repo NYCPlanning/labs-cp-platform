@@ -99,7 +99,7 @@ var layerStructure = [
   {
     name: 'Parks, Cultural, and Other Community Facilities',
     color: '#8dd3c7',
-    subColor: 'rgba(251, 128, 114, 0.3)',
+    subColor: 'rgba(141, 211, 199, 0.29)',
     children: [
       {
         name: 'Cultural Institutions',
@@ -266,7 +266,7 @@ var layerStructure = [
 {
     name: 'Administration of Government',
     color: '#fb8072',
-    subColor: 'rgba(141, 211, 199, 0.29)',
+    subColor: 'rgba(251, 128, 114, 0.3)',
     children: [
       {
         name: 'Offices',

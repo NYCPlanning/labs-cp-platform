@@ -65,8 +65,7 @@ var FacilitiesExplorer = React.createClass({
 
         <p className='modal-label'>Capacity & Utilization Details</p>
           <dl className="dl-horizontal">
-            <dt>Capacity</dt>
-            <dd>{d.capacity ? d.capacity : d.capacitytype}</dd>
+       
             <dt>Utilization</dt>
             <dd>{d.utilization}</dd>
             <dt>Utilization Rate</dt>
