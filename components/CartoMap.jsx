@@ -6,7 +6,7 @@ var Component = React.createClass({
     var self=this 
 
     var map = new L.Map(this.refs.map, {
-      center: [40.662931,-73.934555],
+      center: [40.71,-73.934555],
       zoomControl: false,
       zoom: 11
     })
