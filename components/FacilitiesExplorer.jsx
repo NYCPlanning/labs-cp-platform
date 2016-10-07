@@ -107,7 +107,7 @@ var FacilitiesExplorer = React.createClass({
        <OperationsAndOversight/>
 
         <p className='modal-label'>Data Source</p>
-        <p>Source Dataset: {d.sourcedatasetname}</p>
+        <p>Source Dataset: {d.agencysource + ': "' + d.sourcedatasetname + '"'}</p>
         <p>Last Update: {d.datesourceupdated}</p>
       </div>
     )
