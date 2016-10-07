@@ -136,7 +136,7 @@ var FacilitiesExplorer = React.createClass({
               <div className="message">Data current as of 09/05/2014 - 08/20/2016</div>
             </div>
             <CartoMap
-             vizJson="data/facViz.json"
+             vizJson="http://reallysimpleopendata.org/user/hkates/api/v2/viz/c8d2c9f6-7a00-11e6-85c0-0242ac110002/viz.json"
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>

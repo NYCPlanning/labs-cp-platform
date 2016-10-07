@@ -156,7 +156,7 @@ var PipelineExplorer = React.createClass({
               <div className="message-mini">HPD Projects-5/20/2016</div>
             </div>
             <CartoMap
-             vizJson="data/pipelineViz.json"
+             vizJson="http://reallysimpleopendata.org/user/nchatterjee/api/v2/viz/02c7c7e4-8be8-11e6-bc56-0242ac110002/viz.json"
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>
