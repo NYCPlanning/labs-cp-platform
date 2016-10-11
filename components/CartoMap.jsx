@@ -20,9 +20,9 @@ var Component = React.createClass({
     var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>' })
       .addTo(map)
 
-    $.getJSON(this.props.vizJson, function(vizjson) {
-      
-      cartodb.createLayer(map, vizjson)
+  
+
+      cartodb.createLayer(map, this.props.vizJson)
         .addTo(map)
         .on('done', function(layer) {
           self.cartoLayer = layer.getSubLayer(0)
@@ -35,11 +35,12 @@ var Component = React.createClass({
               $('#map').css('cursor','-webkit-grab'); 
             })
             .on('featureClick', self.props.handleFeatureClick)
+
         })
         .on('error', function(err) {
           alert("some error occurred: " + err);
         });
-    })
+  
     
   },
 
