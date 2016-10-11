@@ -68,12 +68,12 @@ var HomePage = React.createClass({
             <div className='container portfolio'>
                 <div className="col-md-4 portfolio-item">
                     <h3>
-                        <Link to='/https://nycplanning.github.io/travelsheds'>Travelshed Generator</Link>
+                        <Link to='https://nycplanning.github.io/travelsheds'>Travelshed Generator</Link>
                     </h3>
                     <Link to='https://nycplanning.github.io/travelsheds'>
                         <div className="portfolio-image" style={{backgroundImage: "url('img/travelsheds.png')"}}/>
                     </Link>
-                    <p>Use OpenTripPlanner's routing technology to view travel time isochrones for any spot in the city.</p>
+                    <p>Use OpenTripPlanner's routing technology to view graduated travel-time areas (isochrones) from any spot in the city.</p>
                 </div>
                 <div className="col-md-4 portfolio-item">
                     <h3>
