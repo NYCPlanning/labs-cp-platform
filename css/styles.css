@@ -314,8 +314,16 @@ body:after {
 
 /*Homepage*/
 
+.portfolio {
+  margin-bottom: 30px;
+}
+
 .portfolio-item h3 a{
   color: #db691b
+}
+
+.portfolio-item h3 {
+  margin-bottom: 15px;
 }
 
 .main-content {
@@ -328,4 +336,36 @@ body:after {
   background-size: cover;
   color: white; 
   text-shadow: 1px 1px 2px rgb(128, 128, 128);
+  margin-bottom: 0;
+}
+
+.paragraphs {
+  line-height: 23px;
+  padding: 50px 200px;
+  background-color: #d96b27;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+
+
+.paragraphs a {
+  color: #FFF;
+  text-decoration: none;
+  border-bottom: 1.5px dashed #FFF;
+}
+
+.paragraphs a:hover {
+  background: #ebebeb;
+  color: #db691b;
+  border-bottom: none;
+}
+
+.portfolio-image {
+  display: block;
+  max-width: 100%;
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  margin-bottom: 15px;
 }
