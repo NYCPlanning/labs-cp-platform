@@ -65,23 +65,25 @@ var HomePage = React.createClass({
             <p>We’re always testing out new technologies that can help meet planners’ needs. Explore some of these tools below and join the <Link to="http://github.com/nycplanning">NYC Planning Organization on github</Link>.</p>
 
             </section>
-            <div className="col-md-4 portfolio-item">
-                <h3>
-                    <Link to='/https://nycplanning.github.io/travelsheds'>Travelshed Generator</Link>
-                </h3>
-                <Link to='https://nycplanning.github.io/travelsheds'>
-                    <div className="portfolio-image" style={{backgroundImage: "url('img/travelsheds.png')"}}/>
-                </Link>
-                <p>Use OpenTripPlanner's routing technology to view travel time isochrones for any spot in the city.</p>
-            </div>
-            <div className="col-md-4 portfolio-item">
-                <h3>
-                    <Link to='https://nycplanning.github.io/postgis-preview'>PostGIS Preview</Link>
-                </h3>
-                <Link to='https://nycplanning.github.io/postgis-preview'>
-                    <div className="portfolio-image" style={{backgroundImage: "url('https://pbs.twimg.com/media/ChefMyAWgAEIDu1.jpg')"}}/>
-                </Link>
-                <p>A simple web-map preview tool for your local postGIS database.</p>
+            <div className='container portfolio'>
+                <div className="col-md-4 portfolio-item">
+                    <h3>
+                        <Link to='/https://nycplanning.github.io/travelsheds'>Travelshed Generator</Link>
+                    </h3>
+                    <Link to='https://nycplanning.github.io/travelsheds'>
+                        <div className="portfolio-image" style={{backgroundImage: "url('img/travelsheds.png')"}}/>
+                    </Link>
+                    <p>Use OpenTripPlanner's routing technology to view travel time isochrones for any spot in the city.</p>
+                </div>
+                <div className="col-md-4 portfolio-item">
+                    <h3>
+                        <Link to='https://nycplanning.github.io/postgis-preview'>PostGIS Preview</Link>
+                    </h3>
+                    <Link to='https://nycplanning.github.io/postgis-preview'>
+                        <div className="portfolio-image" style={{backgroundImage: "url('https://pbs.twimg.com/media/ChefMyAWgAEIDu1.jpg')"}}/>
+                    </Link>
+                    <p>A simple web-map preview tool for your local postGIS database.</p>
+                </div>
             </div>
         </div>
 
