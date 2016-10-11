@@ -334,6 +334,7 @@ body:after {
 .jumbotron {
   background-image: url(../img/nyc.jpg);
   background-size: cover;
+  background-position-y: 25%;
   color: white; 
   text-shadow: 1px 1px 2px rgb(128, 128, 128);
   margin-bottom: 0;
@@ -341,7 +342,7 @@ body:after {
 
 .paragraphs {
   line-height: 23px;
-  padding: 50px 200px;
+  padding: 50px 300px;
   background-color: #d96b27;
   color: #fff;
   margin-bottom: 30px;
@@ -368,4 +369,27 @@ body:after {
   width: 100%;
   background-size: cover;
   margin-bottom: 15px;
+}
+
+.footer {
+  background: white;
+  width: 100%;
+  padding: 30px 15px;
+  border-top: 3px solid #d96b27;
+  color: #d96b27;
+}
+
+.footer-logo {
+  background-image: url(../img/logo_80.png);
+  background-repeat: no-repeat;
+  background-position: 16px 0;
+  height: 62px;
+}
+
+.footer ul {
+  padding-left: 12px;
+}
+
+.footer li {
+  list-style: none;
 }

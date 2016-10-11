@@ -52,7 +52,7 @@ var HomePage = React.createClass({
                         <Link to='/pipeline'>New Housing developments</Link>
                     </h3>
                     <Link to='/pipeline'>
-                        <div className="portfolio-image" style={{backgroundImage: "url(http://casestudies.uli.org/wp-content/uploads/sites/98/2014/01/1_ViaV_BrookAveFacade21.jpg)"}}/>
+                        <div className="portfolio-image" style={{backgroundImage: "url(img/pipeline.jpg)"}}/>
                     </Link>
                     <p>Compiled from DOB Permit data, the housing pipeline is a best-estimate of new housing units coming online throughout the city</p>
                 </div>
@@ -83,6 +83,36 @@ var HomePage = React.createClass({
                         <div className="portfolio-image" style={{backgroundImage: "url('https://pbs.twimg.com/media/ChefMyAWgAEIDu1.jpg')"}}/>
                     </Link>
                     <p>A simple web-map preview tool for your local postGIS database.</p>
+                </div>
+            </div>
+            <div className="footer container">
+                <div className="col-md-3">
+                    <div className="footer-logo"/>
+                </div>
+                <div className="col-md-3">
+                    <h4>Content</h4>
+                    <ul>
+                        <li>Link 1</li>
+                        <li>Link 2</li>
+                        <li>Link 3</li>
+                    </ul>
+                </div>
+
+                <div className="col-md-3">
+                    <h4>Content</h4>
+                    <ul>
+                        <li>Link 1</li>
+                        <li>Link 2</li>
+                        <li>Link 3</li>
+                    </ul></div>
+
+                <div className="col-md-3">
+                    <h4>Content</h4>
+                    <ul>
+                        <li>Link 1</li>
+                        <li>Link 2</li>
+                        <li>Link 3</li>
+                    </ul>
                 </div>
             </div>
         </div>
