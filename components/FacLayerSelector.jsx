@@ -460,10 +460,13 @@ var LayerSelector = React.createClass({
     return(
       <div className="col-md-12">
         <div className = 'row sidebar-header'>
-          <div className='col-md-6'>
+          <div className='col-md-4'>
             <h3>Layers</h3>
           </div>
-          <div className='col-md-6'>
+          <div className='col-md-8'>
+            <div className='btn dcp-orange btn-sm ' onClick={this.hideAll}>Expand All</div>
+            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll}>Show All</div>
+            <div className='btn dcp-orange btn-sm ' onClick={this.hideAll}>Collapse All</div>
             <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll}>Hide All</div>
           </div>
         </div>
