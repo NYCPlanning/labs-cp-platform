@@ -11,7 +11,7 @@ export default class AuthService {
       closable: false,
       allowSignUp: true,
       auth: {
-        redirectUrl: (process.env.NODE_ENV == 'production') ? 'http://cpp.reallysimpleopendata.com' : 'http://localhost:8080/authsuccess',
+        redirectUrl: (process.env.NODE_ENV == 'development') ? 'http://localhost:8080/authsuccess' : 'http://cpp.reallysimpleopendata.com',
         responseType: 'token'
       },
       theme: {
