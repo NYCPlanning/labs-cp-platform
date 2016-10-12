@@ -83,22 +83,25 @@ ul.navbar-right {
 
 
 #sidebar {
+  box-sizing: border-box;
   width: 340px;
   height: 100%;
-  position:fixed;
-  left: 340px;
   overflow-y: scroll;
-  margin-left: -340px;
+  float: left;
 }
 
 
-.sidebar-header h3 {
+.sidebar-content h3 {
   margin-top: 10px;
  
 }
 
-.sidebar-header .btn {
+.sidebar-content .btn {
   margin-top: 10px;
+}
+
+.sidebar-content {
+  margin-bottom: 15px;
 }
 
 #content {
@@ -290,6 +293,13 @@ input[type=checkbox] {
   top: 3px;
   right: 11px;
 }
+
+.filter-count {
+  background-color: hsla(0, 0%, 86%, 0.86);
+  padding: 7.5px;
+  border-radius: 6px;
+}
+
 
 /*End Collapsible Menu Sidebar*/
 
