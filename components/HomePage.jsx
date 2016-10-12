@@ -10,7 +10,7 @@ var HomePage = React.createClass({
   render() {
     return(
       <div>
-         <Nav title='NYC Capital Planning Platform'/>
+        <Nav title='NYC Capital Planning Platform' auth={this.props.auth}/>
 
         <div className="col-md-12 main-content">
             {/* Photo Credit https://www.flickr.com/photos/jayant81/*/}

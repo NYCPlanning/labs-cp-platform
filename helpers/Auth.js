@@ -1,28 +1,67 @@
 import { isTokenExpired } from './jwtHelper'
 import Auth0Lock from 'auth0-lock'
-
+import {browserHistory} from 'react-router'
 
 
 
 export default class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0
-    this.lock = new Auth0Lock(clientId, domain)
+    this.lock = new Auth0Lock(clientId, domain, {
+      closable: false,
+      allowSignUp: true,
+      auth: {
+        redirectUrl: 'http://localhost:8080/authsuccess',
+        responseType: 'token'
+      },
+      theme: {
+        logo: 'img/logo_80.png'
+      },
+      languageDictionary: {
+        title: "Log me in"
+      } 
+      
+    })
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', this._doAuthentication.bind(this))
     // binds login functions to keep this context
     this.login = this.login.bind(this)
+
+    this.getProfile = this.getProfile.bind(this)
+
+    this.requestedURL=null
+
   }
 
+
   _doAuthentication(authResult){
-    console.log('DOING AUTH', authResult)
-    // Saves the user token
-    this.setToken(authResult.idToken)
+    console.log('DOING AUTH', authResult, this)
+
+    this.lock.getProfile(authResult.idToken, function(error, profile) {
+    if (error) {
+      // Handle error
+      return;
+    }
+
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('profile', JSON.stringify(profile));
+
+    browserHistory.push(authResult.state || '/')
+
+  });
   }
 
   login() {
     // Call the show method to display the widget.
-    this.lock.show()
+    console.log('auth', this)
+
+    this.lock.show({
+      auth: {
+        params: {
+          state: this.requestedURL
+        } 
+      }
+    })
   }
 
   loggedIn(){
@@ -30,18 +69,21 @@ export default class AuthService {
     return !!this.getToken()
   }
 
-  setToken(idToken){
-    // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken)
-  }
 
   getToken(){
     // Retrieves the user token from localStorage
     return localStorage.getItem('id_token')
   }
 
+  getProfile() {
+    // Retrieves the profile data from localStorage
+    const profile = localStorage.getItem('profile')
+    return profile ? JSON.parse(localStorage.profile) : {}
+  }
+
   logout(){
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
+    browserHistory.push('/')
   }
 }

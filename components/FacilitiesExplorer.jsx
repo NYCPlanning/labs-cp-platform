@@ -121,7 +121,7 @@ var FacilitiesExplorer = React.createClass({
   render() {
     return(
       <div className="full-height">
-        <Nav title="NYC Facilities Explorer">
+        <Nav title="NYC Facilities Explorer" auth={this.props.auth}>
           <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
         </Nav>
         <div id="main-container">

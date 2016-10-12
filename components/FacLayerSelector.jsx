@@ -337,7 +337,6 @@ var LayerSelector = React.createClass({
 
     //update state
     if(type=='subgroup') {
-      console.log('subgroup')
       
       layers[domain].children[group].children[subgroup].checked = !layers[domain].children[group].children[subgroup].checked
 
@@ -458,7 +457,6 @@ var LayerSelector = React.createClass({
 
   render: function(){
     var self=this;
-    console.log('render', this.state.layers)
     return(
       <div className="col-md-12">
         <div className = 'row sidebar-header'>

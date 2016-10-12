@@ -15,8 +15,6 @@ var Component = React.createClass({
   },
 
   render() {
-    console.log('render modal', this.props)
-
     var closeText = this.props.closeText ? this.props.closeText : 'Close'
 
     return (

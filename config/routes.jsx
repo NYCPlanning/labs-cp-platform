@@ -14,26 +14,38 @@ import Sample from '../components/Sample.jsx'
  var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
 
-const auth = new Auth(auth0_client_id, auth0_domain);
+const auth = new Auth(auth0_client_id, auth0_domain)
 
 const requireAuth = (nextState, replace) => {
-  // console.log('requireAuth')
-  // if (!Auth.loggedIn()) {
-  //   replace({ nextPathname: nextState.location.pathname }, '/login')
-  //   //auth.requestedURL = nextState.location.pathname
-  // }
+  auth.requestedURL = nextState.location.pathname
+
+  if (!auth.loggedIn()) {
+    replace({ pathname: '/login' })
+  }
 }
 
+const rerouteLoggedIn = (nextState, replace) => {
+  if (auth.loggedIn()) {
+    replace({ pathname: '/' })
+  }
+}
 
+var AuthSuccess = function() {
+  return (
+    <div>
+    </div>
+  )
+} 
 
 
 module.exports = (
   <Route path="/" component={App} auth={auth} >
-    <IndexRoute component={HomePage}/>
-    <Route path="login" component={Login} />
-    <Route path="facilities" component={FacilitiesExplorer} />
-    <Route path="pipeline" component={PipelineExplorer} />
-    <Route path="capitalprojects" component={CapitalProjectsExplorer} />
+    <IndexRoute component={HomePage} />
+    <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
+    <Route path="facilities" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
+    <Route path="capitalprojects" component={CapitalProjectsExplorer} onEnter={requireAuth}/>
+    <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
   </Route>
 )
 

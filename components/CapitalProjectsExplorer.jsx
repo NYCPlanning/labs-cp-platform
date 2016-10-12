@@ -40,7 +40,7 @@ var CapitalProjectsExplorer = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title="NYC Capital Projects Map">
+        <Nav title="NYC Capital Projects Map" auth={this.props.auth}>
           <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
         </Nav>
         <Iframe src={'https://nycplanning.github.io/cpdb-explore'} height={'100%'} width={'100%'} frameborder={'0'}/>

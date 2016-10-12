@@ -138,7 +138,7 @@ var PipelineExplorer = React.createClass({
   render() {
     return(
       <div className="full-height">
-        <Nav title='NYC Residential Development Pipeline'>
+        <Nav title='NYC Residential Development Pipeline' auth={this.props.auth}>
           <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
         </Nav>
         <div id="main-container">

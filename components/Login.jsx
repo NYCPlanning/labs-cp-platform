@@ -5,17 +5,6 @@ import {browserHistory} from 'react-router'
 
 
 var Login = React.createClass({
-  handleSuccess(res) {
-    console.log('success', res)
-
-    Auth.setToken(res.tokenId)
-    Auth.setProfile(res.profileObj)
-    browserHistory.push('/');
-  },
-
-  handleFailure(res) {
-    console.log('failure', res)
-  },
 
   componentDidMount() {
     this.props.auth.login()
