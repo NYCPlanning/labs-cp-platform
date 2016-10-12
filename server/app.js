@@ -6,8 +6,7 @@ var app = express();
 
 
 
-const PUBLIC_DIR_PATH = require('path').resolve('public');
-console.log(PUBLIC_DIR_PATH)
+const PUBLIC_DIR_PATH = require('path').resolve('.');
 app.use(express.static(PUBLIC_DIR_PATH));
 app.use(spa(PUBLIC_DIR_PATH + "/index.html"));
 

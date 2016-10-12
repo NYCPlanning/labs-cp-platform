@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Moment from 'moment'
 
 
 //object for the hierarchy of domains, groups and subgroups
@@ -52,10 +53,6 @@ layerStructure = layerStructure.map(function(domain) {
   domain.checked = true
   domain.children = domain.children.map(function(group) {
     group.checked = true
-    // group.children = group.children.map(function(subgroup) {
-    //   subgroup.checked = true
-    //   return subgroup
-    // })
     return group
   })
   return domain
@@ -77,7 +74,6 @@ var LayerSelector = React.createClass({
 
     //update state
     if(type=='subgroup') {
-      console.log('subgroup')
       
       layers[domain].children[group].children[subgroup].checked = !layers[domain].children[group].children[subgroup].checked
 
@@ -176,11 +172,9 @@ var LayerSelector = React.createClass({
         })
 
         chunk = '(' + chunk + ')'
-        console.log(chunk)
 
         self.sqlChunks[columnSelected.column] = chunk
       } 
-
       self.buildSQL()
 
 
@@ -215,8 +209,8 @@ var LayerSelector = React.createClass({
       };
 
       var dateRangeFormatted = {
-        min:moment(dateRange.min).format('YYYY-MM-DD'),
-        max:moment(dateRange.max).format('YYYY-MM-DD')
+        min:Moment(dateRange.min).format('YYYY-MM-DD'),
+        max:Moment(dateRange.max).format('YYYY-MM-DD')
       }
 
       self.sqlChunks.dob_co_date = Mustache.render('((dob_co_date >= \'{{min}}\' AND dob_co_date <= \'{{max}}\') OR (dob_co_date IS NULL))', dateRangeFormatted)
@@ -235,7 +229,7 @@ var LayerSelector = React.createClass({
       step:10
     });
 
-    $(this.refs.unitsSlider).bind("valuesChanged", function(e, data){  
+    $(this.refs.unitsSlider).bind("valuesChanged", function(e, data){ 
       var range = {
         min: data.values.min,
         max: data.values.max
@@ -247,7 +241,6 @@ var LayerSelector = React.createClass({
   },
 
   buildSQL: function() {
-    console.log(this.sqlChunks)
 
     var sqlTemplate = 'SELECT * FROM residential_pipeline_100416_v1_users WHERE '
 
@@ -263,7 +256,6 @@ var LayerSelector = React.createClass({
 
 
     var sql = sqlTemplate + chunksString
-    console.log(sql)
     console.log('Setting SQL to ' + sql);
     this.props.updateSQL(sql)
 
@@ -285,7 +277,6 @@ var LayerSelector = React.createClass({
 
   render: function(){
     var self=this;
-    console.log('render', this.state.layers)
     return(
       <div className="col-md-12">
         <div className = 'row sidebar-header'>

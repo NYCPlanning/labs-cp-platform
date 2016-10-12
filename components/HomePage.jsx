@@ -18,7 +18,7 @@ var HomePage = React.createClass({
               <div className="container">
                 <h1>Welcome, Beta Tester!</h1>
                 <p>We’re working to foster better, more collaborative capital planning through data and technology. </p>
-                <p><a className="btn btn-lg dcp-orange" href="#first-item" role="button">Explore »</a></p>
+               
               </div>
             </div>
             <section className="paragraphs">

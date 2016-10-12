@@ -15,12 +15,17 @@ var App = React.createClass({
   },
 
   render() {
-    var profile = Auth.getProfile()
-    console.log(profile)
+ 
+    let children = null;
+    if (this.props.children) {
+      children = React.cloneElement(this.props.children, {
+        auth: this.props.route.auth //sends auth instance from route to children
+      })
+    }
 
     return(
       <div className="full-height">
-       {this.props.children}
+       {children}
       </div>
     )
   }
