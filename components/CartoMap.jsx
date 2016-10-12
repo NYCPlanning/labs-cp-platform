@@ -8,7 +8,9 @@ var Component = React.createClass({
     var map = new L.Map(this.refs.map, {
       center: [40.71,-73.934555],
       zoomControl: false,
-      zoom: 11
+      zoom: 11,
+      maxZoom: 18,
+      minZoom: 10
     })
 
     //add zoom control
