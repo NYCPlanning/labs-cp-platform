@@ -327,7 +327,8 @@ var LayerSelector = React.createClass({
 
   getInitialState: function() {
     return ({
-      layers:layerStructure
+      layers:layerStructure,
+      checked: 'all' //all, none, or null
     })
   },
 
@@ -344,8 +345,6 @@ var LayerSelector = React.createClass({
 
     } else if(type=='group') {
 
-     
-
       var thisGroup = layers[domain].children[group]
        //figure out if new state is checked or not checked
 
@@ -355,10 +354,8 @@ var LayerSelector = React.createClass({
         child.checked = thisGroup.checked 
         return child
       })
-
     
       this.processChecked(layers)
-
 
     } else {
     
@@ -379,13 +376,12 @@ var LayerSelector = React.createClass({
 
       this.processChecked(layers)
     }
-
-
-
   },
 
   processChecked: function(layers) {
 
+    var allChecked = 0,
+      allIndeterminate = 0
     //set indeterminate states, start from the bottom and work up
     layers.map(function(domain) {
       var domainChecked=0
@@ -403,14 +399,24 @@ var LayerSelector = React.createClass({
       })
 
       domain.checked = (domainChecked==domain.children.length) ? true : false
+      domain.checked ? allChecked++ : null
       domain.indeterminate = (domainChecked < domain.children.length && domainChecked > 0) ? true : false
-
+      domain.indeterminate ? allIndeterminate++ : null
     })
+    var checkedStatus
+    //figure out whether all, none, or some are checked
+    if(allChecked == layers.length) {
+      checkedStatus = 'all'
+    } else if (allChecked == 0 && allIndeterminate == 0) {
+      checkedStatus = 'none'
+    } else {
+      checkedStatus = null
+    }
 
     this.setState({
-      layers: layers
+      layers: layers,
+      checked: checkedStatus
     })
-
 
     var selectedLayers = []
 
@@ -423,7 +429,6 @@ var LayerSelector = React.createClass({
     })
 
     this.buildSQL(selectedLayers)
-
   },
 
   buildSQL(layers) {
@@ -438,7 +443,20 @@ var LayerSelector = React.createClass({
     }
 
     this.props.updateSQL(sql)
-    
+  },
+
+  showAll: function() {
+    var layers = this.state.layers
+
+    layers.map(function(domain) {
+      domain.children.map(function(group) {
+        group.children.map(function(subgroup) {
+          (subgroup.checked) = true
+        })
+      })
+    })
+
+    this.processChecked(layers)
   },
 
   hideAll: function() {
@@ -455,19 +473,29 @@ var LayerSelector = React.createClass({
     this.processChecked(layers)
   },
 
+  expandAll: function() {
+    //geez, just do it with jQuery
+    $('.caret-container.collapsed').click()
+  },
+
+  collapseAll: function() {
+    $('.caret-container:not(.collapsed)').click()
+  },
+
   render: function(){
     var self=this;
     return(
       <div className="col-md-12">
-        <div className = 'row sidebar-header'>
+        <div className='row sidebar-header'>
           <div className='col-md-4'>
             <h3>Layers</h3>
           </div>
           <div className='col-md-8'>
-            <div className='btn dcp-orange btn-sm ' onClick={this.hideAll}>Expand All</div>
-            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll}>Show All</div>
-            <div className='btn dcp-orange btn-sm ' onClick={this.hideAll}>Collapse All</div>
-            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll}>Hide All</div>
+            <div className='btn dcp-orange btn-sm ' 
+              onClick={this.expandAll} >Expand All</div>
+            <div className='btn dcp-orange btn-sm pull-right' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
+            <div className='btn dcp-orange btn-sm ' onClick={this.collapseAll}>Collapse All</div>
+            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
           </div>
         </div>
         
@@ -484,8 +512,8 @@ var LayerSelector = React.createClass({
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
                   <a className="nav-container" style={{backgroundColor: domain.color}}>
                   <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
-                  <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} ><span className="caret arrow"></span></div></a>    
-                  <ul className="nav nav-pills nav-stacked collapse " id={"p" + (i)} style={{height: 'auto'}}>
+                  <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
+                  <ul className="group-container nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
                   {
                     domain.children.map(function(group, j) {
                       return (
@@ -499,22 +527,21 @@ var LayerSelector = React.createClass({
 
                             <a className="nav-sub-container" style={{backgroundColor: domain.subColor}}>    
                               <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{display:'inline-block'}}>{group.name}</div>
-                              <div className="caret-container" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
+                              <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
                             </a>
                           </li>
                               
-                            <ul className="nav nav-pills nav-stacked collapse" id={'pv' + i + j} style={{height: 'auto'}} >
+                            <ul className="subgroup-container nav nav-pills nav-stacked collapse" id={'pv' + i + j} style={{height: 'auto'}} >
                             {
                               group.children.map(function(subgroup, k) {
                                 return(
                                   <li className='subgroup' key={k}>
-                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} >
-                                      <Checkbox 
+                                  <Checkbox 
                                         value={subgroup.name} 
                                         checked={subgroup.checked} 
                                         indeterminate={false}
                                         onChange={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} />
-
+                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} >
                                       {subgroup.name}
                                     </a>
                                   </li>
