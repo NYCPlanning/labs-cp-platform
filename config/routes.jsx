@@ -6,7 +6,7 @@ import Login from '../components/Login.jsx'
 import Auth from '../helpers/Auth.js'
 
 import HomePage from '../components/HomePage.jsx'
-import CapitalProjectsExplorer from '../components/CapitalProjectsExplorer.jsx'
+import CapitalProjectsExplorerContainer from '../components/CapitalProjectsExplorerContainer.jsx'
 import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
 import PipelineExplorer from '../components/PipelineExplorer.jsx'
 import Sample from '../components/Sample.jsx'
@@ -44,7 +44,7 @@ module.exports = (
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="facilities" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
-    <Route path="capitalprojects" component={CapitalProjectsExplorer} onEnter={requireAuth}/>
+    <Route path="capitalprojects" component={CapitalProjectsExplorerContainer} onEnter={requireAuth}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
   </Route>
 )
