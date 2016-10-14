@@ -261,20 +261,6 @@ var LayerSelector = React.createClass({
 
   },
 
-  hideAll: function() {
-    var layers = this.state.layers
-
-    layers.map(function(domain) {
-      domain.children.map(function(group) {
-        group.children.map(function(subgroup) {
-          (subgroup.checked) = false
-        })
-      })
-    })
-
-    this.processChecked(layers)
-  },
-
   render: function(){
     var self=this;
     return(
@@ -282,9 +268,6 @@ var LayerSelector = React.createClass({
         <div className = 'row sidebar-header'>
           <div className='col-md-6'>
             <h3>Filters</h3>
-          </div>
-          <div className='col-md-6'>
-            <div className='btn btn-default btn-sm pull-right' onClick={this.hideAll}>Hide All</div>
           </div>
         </div>
         

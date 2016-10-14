@@ -55,7 +55,7 @@ ul.navbar-right {
 .navbar-default .navbar-brand {
   padding: 30px 18px;
   color: #db691b;
-  background-image: url("../img/logo_80.png");
+  background-image: url("/../img/logo_80.png");
   background-repeat: no-repeat;
   background-position: 16px 0;
   padding-left: 109px;
@@ -255,7 +255,7 @@ ul.nav-stacked ul.nav-stacked > li > a {
 
 
 
-input[type=checkbox] {
+#stacked-menu input[type=checkbox] {
   position: absolute;
   z-index: 10;
   top: 10px;
@@ -407,7 +407,7 @@ body:after {
 }
 
 .jumbotron {
-  background-image: url(../img/nyc.jpg);
+  background-image: url(/../img/nyc.jpg);
   background-size: cover;
   background-position-y: 25%;
   color: white; 
@@ -455,7 +455,7 @@ body:after {
 }
 
 .footer-logo {
-  background-image: url(../img/logo_80.png);
+  background-image: url(img/logo_80.png);
   background-repeat: no-repeat;
   background-position: 16px 0;
   height: 62px;

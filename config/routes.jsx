@@ -10,6 +10,8 @@ import CapitalProjectsExplorerContainer from '../components/CapitalProjectsExplo
 import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
 import PipelineExplorer from '../components/PipelineExplorer.jsx'
 import Sample from '../components/Sample.jsx'
+import DistrictSelection from '../components/DistrictSelection.jsx'
+import CDPage from '../components/CDPage.jsx'
 
  var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
@@ -46,6 +48,8 @@ module.exports = (
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     <Route path="capitalprojects" component={CapitalProjectsExplorerContainer} onEnter={requireAuth}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
+    <Route path="districtmap" component={DistrictSelection} onEnter={requireAuth}/>
+    <Route path="cd/:borocd" component={CDPage} onEnter={requireAuth}/>
   </Route>
 )
 
