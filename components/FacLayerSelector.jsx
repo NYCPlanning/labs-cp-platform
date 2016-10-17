@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 var layerStructure = [
   
   {
-    name: 'Health Care and Human Services',
+    name: 'Health and Human Services',
     color: '#bebada',
     subColor: 'rgba(190, 186, 218, 0.3)',
     children: [
