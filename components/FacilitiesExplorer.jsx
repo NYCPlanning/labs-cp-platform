@@ -132,8 +132,8 @@ var FacilitiesExplorer = React.createClass({
           </div>
           <div id="content">
             <div className="messageOverlay mapOverlay">
-              <div className="message">Hover over a facility, or click for full details</div>
-              <div className="message">Data current as of 09/05/2014 - 08/20/2016</div>
+              <div className="message">Hover over a facility or click for full details</div>
+              <div className="message">Data current as of 09/05/2014 - 10/01/2016</div>
             </div>
             <CartoMap
              vizJson="https://reallysimpleopendata.org/user/hkates/api/v2/viz/c8d2c9f6-7a00-11e6-85c0-0242ac110002/viz.json"
@@ -179,7 +179,7 @@ var aboutContent = (
               The facilities which are included are valuable for planning purposes because of the social services they provide and their role in land use typology which impacts activity in the neighborhood. For example parking lots and garages (including commerical garages) are captured in the database, both because they are an asset that residents and visitors use and because they could indicate increased vehicular traffic in the area.
             </p>
 
-            <h5>Limitations and Disclaimers</h5>
+            <h4>Limitations and Disclaimers</h4>
             <p>
               The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. For more detailed information on a specific facility please reach out to the respective oversight agency.
             </p>
@@ -192,17 +192,16 @@ var aboutContent = (
 
             <h4>Feedback</h4>
             <p>
-              We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at CapitalPlanning_DL@planning.nyc.gov with any suggestions.
+              We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at capital@planning.nyc.gov with any suggestions.
             </p>
   </div>
 )
 
 var splashContent = (
   <div>
-    <h4>Welcome Beta Tester!</h4>
-    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. 
-    You are likely to find some bugs and even some less-than-accurate data. These are works in progress!</p> 
+    <h4>Welcome, Beta Tester!</h4>
+    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to read more about the data powering this map <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">here</a>.</p> 
     
-    <p>If you're here, it means we want to improve this product, and its underlying data, with your help! Please get use the feedback link in the menu bar to let us know what you think.</p>
+    <p>If you're seeing this message, it means we want your help to improve this product. Please email us at capital@planning.nyc.gov.</p>
   </div>
 )
