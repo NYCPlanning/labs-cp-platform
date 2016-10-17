@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom' 
+import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 
 //object for the hierarchy of domains, groups and subgroups
@@ -528,28 +529,40 @@ var LayerSelector = React.createClass({
     return(
       <div className="col-md-12">
         <div className='row sidebar-content'>
-          <div className='col-md-4'>
-            <h3>Layers</h3>
+          <div className='col-md-12'>
+            <h3>Facility Types</h3>
+            <Tooltip id="tooltip"> Learn more about facility types</Tooltip>
+            <p>
+              Select facility types to display on the map. 
+              <OverlayTrigger placement="top" overlay={ <Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
+                <a href="https://nycplanning.github.io/cpdocs/facdb/"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
+              </OverlayTrigger>
+            </p>
+            
           </div>
-          <div className='col-md-8'>
-            <div className='btn dcp-orange btn-sm ' 
-              onClick={this.expandAll} >Expand All</div>
-            <div className='btn dcp-orange btn-sm pull-right' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
-            <div className='btn dcp-orange btn-sm ' onClick={this.collapseAll}>Collapse All</div>
-            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
-          </div>
-        </div>
-        <div className='row sidebar-content'>
+
           <div className="col-md-12">
             <div className="filter-count">
               {
                 (this.state.selectedCount == this.state.totalCount) ? 
-                  <span>Showing All {this.state.totalCount} Facilities</span> :
+                  <span>Showing all {this.state.totalCount} Facilities</span> :
                   <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
               }
             </div>
-          </div>
+              <div className="btn-group btn-group-xs" role="group">
+                <div className='btn dcp-orange btn-xs ' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
+                <div className='btn dcp-orange btn-xs ' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
+              </div>
+              <br/>
+              <div className="btn-group btn-group-xs" role="group">
+                <div className='btn dcp-orange btn-xs ' 
+                onClick={this.expandAll} >Expand All</div>
+                <div className='btn dcp-orange btn-xs ' onClick={this.collapseAll}>Collapse All</div>
+              </div>
         </div>
+
+        </div>
+        
         
         <ul className="nav nav-pills nav-stacked" id="stacked-menu">
           { 

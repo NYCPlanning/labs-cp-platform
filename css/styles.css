@@ -20,14 +20,29 @@ html, body, #main-container {
 
 .dcp-orange {
   background-color: #d96b27;
-  border-color: #d96b27;
+  border-color: #d68a40;
   color: #FFF;
+  
 }
 
 .dcp-orange:hover, .dcp-orange:active  {
   background-color: #a5501b;
   border-color: #a5501b;
   color: #FFF;
+}
+
+.fa-info-circle {
+  color: #d96b27;
+}
+
+
+.tooltip-inner {
+  color: #464646;
+  background-color: #ebebeb;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #ebebeb;
 }
 
 /*Nav Component*/
@@ -601,3 +616,6 @@ body:after {
   height: 100% !important;
 }
 /*End Auth0 Lock*/
+
+
+
