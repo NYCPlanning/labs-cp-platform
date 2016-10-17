@@ -8,48 +8,7 @@ import Numeral from 'numeral'
 var layerStructure = [
   
   {
-    name: 'Core Infrastructure and Transportation',
-    color: '#ffff36',
-    subColor: 'rgba(255, 255, 54, 0.29)',
-    children: [
-      {
-        name: 'Transportation',
-        children: [
-          {
-            name: 'Airports and Heliports'
-          },
-          {
-            name: 'Bus Depots and Terminals'
-          },
-          {
-            name: 'Parking Lots and Garages'
-          },
-          {
-            name: 'Ports and Ferry Landings'
-          },
-          {
-            name: 'Rail Yards and Maintenance'
-          }
-        ]
-      },
-      {
-        name: 'Wastewater and Waste Management',
-        children: [
-          {
-            name: 'Solid Waste Processing'
-          },
-          {
-            name: 'Solid Waste Transfer and Carting'
-          },
-          {
-            name: 'Wastewater Treatment Plant'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Health Care and Human Services',
+    name: 'Health and Human Services',
     color: '#bebada',
     subColor: 'rgba(190, 186, 218, 0.3)',
     children: [
@@ -98,6 +57,76 @@ var layerStructure = [
       }
     ]
   }, 
+  {
+    name: 'Education, Child Welfare, and Youth',
+    color: '#fdb462',
+    subColor: 'rgba(253, 180, 98, 0.3)',
+    children: [
+      {
+        name: 'Camps',
+        children: [
+          {
+            name: 'Camps'
+          }
+        ]
+      },
+      {
+        name: 'Child Welfare',
+        children: [
+          {
+            name: 'Child Nutrition'
+          }
+        ]
+      },
+      {
+        name: 'Childcare',
+        children: [
+          {
+            name: 'Childcare'
+          }
+        ]
+      },
+      {
+        name: 'Childrens Services',
+        children: [
+          {
+            name: 'Childrens Services'
+          }
+        ]
+      },
+      {
+        name: 'Schools',
+        children: [
+          {
+            name: 'Colleges or Universities'
+          },
+          {
+            name: 'Non-public Schools'
+          },
+          {
+            name: 'Other Schools Serving Students with Disabilities'
+          },
+          {
+            name: 'Preschools'
+          },
+          {
+            name: 'Proprietary Schools'
+          },
+          {
+            name: 'Public Schools'
+          }
+        ]
+      },
+      {
+        name: 'Youth Services',
+        children: [
+          {
+            name: 'Youth Services'
+          }
+        ]
+      },
+    ]
+  },
   {
     name: 'Parks, Cultural, and Other Community Facilities',
     color: '#8dd3c7',
@@ -196,76 +225,47 @@ var layerStructure = [
     ]
   }, 
   {
-    name: 'Youth, Education, and Child Welfare',
-    color: '#fdb462',
-    subColor: 'rgba(253, 180, 98, 0.3)',
+    name: 'Core Infrastructure and Transportation',
+    color: '#ffff36',
+    subColor: 'rgba(255, 255, 54, 0.29)',
     children: [
       {
-        name: 'Camps',
+        name: 'Transportation',
         children: [
           {
-            name: 'Camps'
+            name: 'Airports and Heliports'
+          },
+          {
+            name: 'Bus Depots and Terminals'
+          },
+          {
+            name: 'Parking Lots and Garages'
+          },
+          {
+            name: 'Ports and Ferry Landings'
+          },
+          {
+            name: 'Rail Yards and Maintenance'
           }
         ]
       },
       {
-        name: 'Child Welfare',
+        name: 'Wastewater and Waste Management',
         children: [
           {
-            name: 'Child Nutrition'
-          }
-        ]
-      },
-      {
-        name: 'Childcare',
-        children: [
-          {
-            name: 'Childcare'
-          }
-        ]
-      },
-      {
-        name: 'Childrens Services',
-        children: [
-          {
-            name: 'Childrens Services'
-          }
-        ]
-      },
-      {
-        name: 'Schools',
-        children: [
-          {
-            name: 'Colleges or Universities'
+            name: 'Solid Waste Processing'
           },
           {
-            name: 'Non-public Schools'
+            name: 'Solid Waste Transfer and Carting'
           },
           {
-            name: 'Other Schools Serving Students with Disabilities'
-          },
-          {
-            name: 'Preschools'
-          },
-          {
-            name: 'Proprietary Schools'
-          },
-          {
-            name: 'Public Schools'
+            name: 'Wastewater Treatment Plant'
           }
         ]
-      },
-      {
-        name: 'Youth Services',
-        children: [
-          {
-            name: 'Youth Services'
-          }
-        ]
-      },
+      }
     ]
   },
-{
+  {
     name: 'Administration of Government',
     color: '#fb8072',
     subColor: 'rgba(251, 128, 114, 0.3)',
