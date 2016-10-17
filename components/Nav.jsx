@@ -31,7 +31,7 @@ var Nav = React.createClass({
            <ul className="nav navbar-nav navbar-right ">
               <li><Link to="/"><i className="fa fa-home" aria-hidden="true"></i> Home</Link></li>
               {this.props.children}
-              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdQgNxsIJ4H9YkK2Dcj7Hc_vAnJkW1QK4BDwOPILyLaei70BQ/viewform"><i className="fa fa-comment" aria-hidden="true"></i> Feedback</a></li>
+              <li><a href="mailto:capital@planning.nyc.gov"><i className="fa fa-comment" aria-hidden="true"></i> Email Feedback</a></li>
               
               {userMenu}
 
