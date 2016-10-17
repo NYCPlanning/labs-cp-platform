@@ -32,7 +32,17 @@ var CDPage = React.createClass({
       self.map.fitBounds(this.cdBoundary.getBounds())
     })
 
-    this.LayerService = new LayerService(this.map)
+    //a template for modifying the sql to fit the current geometry
+    var sqlMod = `
+      WITH x as ({{originalSQL}})
+      SELECT x.* FROM x, (
+        SELECT the_geom 
+        FROM cpadmin.dcp_cdboundaries 
+        WHERE borocd='` + this.props.params.borocd + `'
+      ) y 
+      WHERE ST_Within(x.the_geom, y.the_geom)`
+
+    this.LayerService = new LayerService(this.map, sqlMod)
   },
 
   onLayerUpdate(layers) {

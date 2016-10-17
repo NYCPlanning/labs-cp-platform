@@ -18,7 +18,7 @@ export default class AuthService {
         logo: 'img/logo_80.png'
       },
       languageDictionary: {
-        title: "Log me in"
+        title: "Please log in with your NYC email address"
       } 
       
     })

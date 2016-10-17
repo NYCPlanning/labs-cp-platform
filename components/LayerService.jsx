@@ -3,9 +3,11 @@
 
 export default class LayerService {
 
-  constructor(mapObject) {
+  constructor(mapObject, sqlMod) {
     this.map=mapObject
     this.addedLayers = {}
+    this.sqlMod = sqlMod
+    console.log(this.sqlMod)
   }
 
   update(layers) {
@@ -37,6 +39,15 @@ export default class LayerService {
 
         self.addedLayers[layerName] = layer
         self.map.addLayer(self.addedLayers[layerName])
+
+        var originalSQL = layer.getSubLayer(0).getSQL()
+        console.log(self.sqlMod)
+        var newSQL = Mustache.render(self.sqlMod, {
+          originalSQL: originalSQL
+        })
+        console.log('new SQL', newSQL)
+
+        self.addedLayers[layerName].getSubLayer(0).setSQL(newSQL)
 
       })   
   }
