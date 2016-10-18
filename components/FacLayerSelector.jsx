@@ -3,342 +3,57 @@ import ReactDOM from 'react-dom'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 
-//object for the hierarchy of domains, groups and subgroups
-//includes colors to be used in display
-var layerStructure = [
-  
-  {
-    name: 'Health and Human Services',
-    color: '#bebada',
-    subColor: 'rgba(190, 186, 218, 0.3)',
-    children: [
-      {
-        name: 'Health Care',
-        children: [
-          {
-            name: 'Chemical Dependency'
-          },
-          {
-            name: 'Hospitals and Clinics'
-          },
-          {
-            name: 'Mental Health'
-          },
-          {
-            name: 'Other Health Care'
-          },
-          {
-            name: 'Residential Health Care'
-          }
-        ]
-      },
-      {
-        name: 'Human Services',
-        children: [
-          {
-            name: 'Housing and Homeless Services'
-          },
-          {
-            name: 'Legal and Intervention Services'
-          },
-          {
-            name: 'Programs for People with Disabilities'
-          },
-          {
-            name: 'Senior Services'
-          },
-          {
-            name: 'Soup Kitchens and Food Pantries'
-          },
-          {
-            name: 'Workforce Development'
-          }
-        ]
-      }
-    ]
-  }, 
-  {
-    name: 'Education, Child Welfare, and Youth',
-    color: '#fdb462',
-    subColor: 'rgba(253, 180, 98, 0.3)',
-    children: [
-      {
-        name: 'Camps',
-        children: [
-          {
-            name: 'Camps'
-          }
-        ]
-      },
-      {
-        name: 'Child Welfare',
-        children: [
-          {
-            name: 'Child Nutrition'
-          }
-        ]
-      },
-      {
-        name: 'Childcare',
-        children: [
-          {
-            name: 'Childcare'
-          }
-        ]
-      },
-      {
-        name: 'Childrens Services',
-        children: [
-          {
-            name: 'Childrens Services'
-          }
-        ]
-      },
-      {
-        name: 'Schools',
-        children: [
-          {
-            name: 'Colleges or Universities'
-          },
-          {
-            name: 'Non-public Schools'
-          },
-          {
-            name: 'Other Schools Serving Students with Disabilities'
-          },
-          {
-            name: 'Preschools'
-          },
-          {
-            name: 'Proprietary Schools'
-          },
-          {
-            name: 'Public Schools'
-          }
-        ]
-      },
-      {
-        name: 'Youth Services',
-        children: [
-          {
-            name: 'Youth Services'
-          }
-        ]
-      },
-    ]
-  },
-  {
-    name: 'Parks, Cultural, and Other Community Facilities',
-    color: '#8dd3c7',
-    subColor: 'rgba(141, 211, 199, 0.29)',
-    children: [
-      {
-        name: 'Cultural Institutions',
-        children: [
-          {
-            name: 'Historical Societies'
-          },
-          {
-            name: 'Museums'
-          },
-          {
-            name: 'Other Cultural Institutions'
-          }
-        ]
-      },
-      {
-        name: 'Historical Sites',
-        children: [
-          {
-            name: 'Historical Sites'
-          }
-        ]
-      },
-      {
-        name: 'Libraries',
-        children: [
-          {
-            name: 'Academic Libraries'
-          },
-          {
-            name: 'Public Libraries'
-          }
-        ]
-      },
-      {
-        name: 'Parks and Plazas',
-        children: [
-          {
-            name: 'Cemeteries'
-          },
-          {
-            name: 'Gardens'
-          },
-          {
-            name: 'Parks'
-          },
-          {
-            name: 'Preserves and Conservation Areas'
-          },
-          {
-            name: 'Recreation and Waterfront Sites'
-          },
-          {
-            name: 'Streetscapes, Plazas, and Malls'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Public Safety, Emergency Services, and Administration of Justice',
-    color: '#80b1d3',
-    subColor: 'rgba(128, 177, 211, 0.3)',
-    children: [
-      {
-        name: 'Emergency Services',
-        children: [
-          {
-            name: 'Emergency Services'
-          }
-        ]
-      },
-      {
-        name: 'Justice and Corrections',
-        children: [
-          {
-            name: 'Courthouses and Judicial'
-          },
-          {
-            name: 'Detention and Correctional'
-          }
-        ]
-      },
-      {
-        name: 'Public Safety',
-        children: [
-          {
-            name: 'Police Services'
-          }
-        ]
-      }
-    ]
-  }, 
-  {
-    name: 'Core Infrastructure and Transportation',
-    color: '#ffff36',
-    subColor: 'rgba(255, 255, 54, 0.29)',
-    children: [
-      {
-        name: 'Transportation',
-        children: [
-          {
-            name: 'Airports and Heliports'
-          },
-          {
-            name: 'Bus Depots and Terminals'
-          },
-          {
-            name: 'Parking Lots and Garages'
-          },
-          {
-            name: 'Ports and Ferry Landings'
-          },
-          {
-            name: 'Rail Yards and Maintenance'
-          }
-        ]
-      },
-      {
-        name: 'Wastewater and Waste Management',
-        children: [
-          {
-            name: 'Solid Waste Processing'
-          },
-          {
-            name: 'Solid Waste Transfer and Carting'
-          },
-          {
-            name: 'Wastewater Treatment Plant'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Administration of Government',
-    color: '#fb8072',
-    subColor: 'rgba(251, 128, 114, 0.3)',
-    children: [
-      {
-        name: 'Offices',
-        children: [
-          {
-            name: 'Offices'
-          }
-        ]
-      },
-      {
-        name: 'Other Property',
-        children: [
-          {
-            name: 'Miscellaneous Use'
-          },
-          {
-            name: 'No Use'
-          },
-          {
-            name: 'Undeveloped'
-          }
-        ]
-      },
-      {
-        name: 'Parking, Maintenance, and Storage',
-        children: [
-          {
-            name: 'Maintenance'
-          },
-          {
-            name: 'Parking'
-          },
-          {
-            name: 'Storage'
-          }
-        ]
-      }
-    ]
-  }
-]
 
-//to start, add checked = true to everything in the layerStructure object
-layerStructure = layerStructure.map(function(domain) {
-  domain.checked = true
-  domain.children = domain.children.map(function(group) {
-    group.checked = true
-    group.children = group.children.map(function(subgroup) {
-      subgroup.checked = true
-      return subgroup
-    })
-    return group
-  })
-  return domain
-})
+var colors = ['#bebada','#fdb462', '#8dd3c7', '#80b1d3', '#ffff36', '#fb8072' ]
 
 
 var LayerSelector = React.createClass({
 
-  getInitialState: function() {
+  getInitialState() {
     return ({
-      layers:layerStructure,
+      layers: null,
       selectedCount: '__',
       totalCount:'__',
       checked: 'all' //all, none, or null
     })
   },
 
-  componentDidMount: function() {
+  componentWillMount() {
+    //to start, add checked = true to everything in the layerStructure object
+    var layerStructure = this.props.layerStructure.map(function(domain) {
+      domain.checked = true
+      domain.children = domain.children.map(function(group) {
+        group.checked = true
+        group.children = group.children.map(function(subgroup) {
+          subgroup.checked = true
+          return subgroup
+        })
+        return group
+      })
+      return domain
+    })
+
+    this.setState({
+      layers: layerStructure
+    })
+
+  },
+
+  componentDidMount() {
+    //if a domain page, expand all
+    if(this.props.layerStructure.length == 1) {
+      this.expandAll()
+    }
+
+    this.updateCounts() 
+  },
+
+  updateCounts() {
     var self=this
-    var totalCountSQL = 'SELECT count(*) as total FROM table_20160930_facilitiesdraft'
+
+    //get a count of "select all"
+    var SQL = encodeURI(this.props.initialSQL)
+    var totalCountSQL = "SELECT count(*) as total FROM (" + SQL + ") a"
 
     this.cartoSQLCall(totalCountSQL, function(data) {
       var total = data.rows[0].total
@@ -352,12 +67,12 @@ var LayerSelector = React.createClass({
     })
   },
 
-  cartoSQLCall: function(sql, cb) {
+  cartoSQLCall(sql, cb) {
      var apiCall = 'https://reallysimpleopendata.org/user/hkates/api/v2/sql?q=' + sql
      $.getJSON(apiCall, cb)
   },
 
-  toggleCheckbox: function(type, domain, group, subgroup, e) {
+  toggleCheckbox(type, domain, group, subgroup, e) {
 
     var layers = this.state.layers;
 
@@ -403,7 +118,7 @@ var LayerSelector = React.createClass({
     }
   },
 
-  processChecked: function(layers) {
+  processChecked(layers) {
 
     var allChecked = 0,
       allIndeterminate = 0
@@ -471,7 +186,7 @@ var LayerSelector = React.createClass({
     this.getCount(sql)
   },
 
-  getCount: function(sql) {
+  getCount(sql) {
     var self=this
     
     var countSQL = 'SELECT count(a.*) as selected FROM ( ' + sql + ') a'
@@ -487,7 +202,7 @@ var LayerSelector = React.createClass({
     })
   },
 
-  showAll: function() {
+  showAll() {
     var layers = this.state.layers
 
     layers.map(function(domain) {
@@ -501,7 +216,7 @@ var LayerSelector = React.createClass({
     this.processChecked(layers)
   },
 
-  hideAll: function() {
+  hideAll() {
     var layers = this.state.layers
 
     layers.map(function(domain) {
@@ -515,23 +230,23 @@ var LayerSelector = React.createClass({
     this.processChecked(layers)
   },
 
-  expandAll: function() {
+  expandAll() {
     //geez, just do it with jQuery
     $('.caret-container.collapsed').click()
   },
 
-  collapseAll: function() {
+  collapseAll() {
     $('.caret-container:not(.collapsed)').click()
   },
 
-  render: function(){
+  render() {
     var self=this;
     return(
       <div className="col-md-12">
         <div className='row sidebar-content'>
           <div className='col-md-12'>
             <h3>Facility Types</h3>
-            <Tooltip id="tooltip"> Learn more about facility types</Tooltip>
+    
             <p>
               Select facility types to display on the map. 
               <OverlayTrigger placement="top" overlay={ <Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
@@ -575,7 +290,7 @@ var LayerSelector = React.createClass({
                     checked={domain.checked} 
                     indeterminate={domain.indeterminate}
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                  <a className="nav-container" style={{backgroundColor: domain.color}}>
+                  <a className="nav-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
                   <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
                   <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
                   <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
@@ -590,7 +305,7 @@ var LayerSelector = React.createClass({
                               onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
                           <li>
 
-                            <a className="nav-sub-container" style={{backgroundColor: domain.subColor}}>    
+                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color : domain.subColor}}>    
                               <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{display:'inline-block'}}>{group.name}</div>
                               <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
                             </a>

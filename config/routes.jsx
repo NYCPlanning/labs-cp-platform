@@ -45,6 +45,7 @@ module.exports = (
     <IndexRoute component={HomePage} />
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="facilities" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    <Route path="facilities/domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     <Route path="capitalprojects" component={CapitalProjectsExplorerContainer} onEnter={requireAuth}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
