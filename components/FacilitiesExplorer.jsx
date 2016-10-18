@@ -3,6 +3,69 @@ import Nav from './Nav.jsx'
 import CartoMap from './CartoMap.jsx'
 import FacLayerSelector from './FacLayerSelector.jsx'
 import Modal from './Modal.jsx'
+import Link from 'react-router'
+import FacilitiesLayers from '../config/FacilitiesLayers.js'
+
+
+var vizJson = {  
+   "type":"layergroup",
+   "options":{  
+      "user_name":"hkates",
+      "maps_api_template":"https://reallysimpleopendata.org:443/user/{user}",
+      "sql_api_template":"https://reallysimpleopendata.org:443/user/{user}",
+      "tiler_protocol":"https",
+      "tiler_domain":"reallysimpleopendata.org",
+      "tiler_port":"443",
+      "sql_api_protocol":"https",
+      "sql_api_domain":"reallysimpleopendata.org",
+      "sql_api_endpoint":"/api/v2/sql",
+      "sql_api_port":443,
+      "filter":"mapnik",
+      "layer_definition":{  
+         "version":"1.0.1",
+         "layers":[  
+            {  
+               "id":"751e70d2-77dc-4db8-b310-824fcb00e27a",
+               "type":"CartoDB",
+               "tooltip": {
+                  "fields":[  
+                     {  
+                        "position":1.7976931348623157e+308,
+                        "name":"facilityname",
+                        "title":true
+                     },
+                     {  
+                        "position":1.7976931348623157e+308,
+                        "name":"facilitytype",
+                        "title":true
+                     },
+                     {  
+                        "position":1.7976931348623157e+308,
+                        "name":"operatortype",
+                        "title":true
+                     }
+                    
+                  ],
+                "template":"<div class=\"cartodb-tooltip-content-wrapper\">\n  <div class=\"cartodb-tooltip-content\">\n  <div class='name'>{{facilityname}}</div>\n  <div class='classification'><b>Facility Type:</b></div>\n  <div class='classification'>{{facilitytype}}</div>\n  <div class='classification'><b>Operator:</b></div>\n  <div class='classification'>{{operatorname}}</div>"
+               },
+               "order":1,
+               "visible":true,
+               "options":{  
+                  "sql":"select * from table_20160930_facilitiesdraft",
+                  "layer_name":"table_20160930_facilitiesdraft",
+                  "cartocss":"/** this cartoCSS has been processed in order to be compatible with the new cartodb 2.0 */\n\n/** category visualization */#table_20160930_facilitiesdraft {\n     marker-fill-opacity: 0.8;\n     marker-line-color: #012700;\n     marker-line-width: 0.5;\n     marker-line-opacity: 0.9;\n     marker-placement: point;\n     marker-type: ellipse;\n     marker-width: 6;\n     marker-allow-overlap: true;\n}\n#table_20160930_facilitiesdraft[domain=\"Administration of Government\"] {\n     marker-fill: #fb8072;\n}\n#table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {\n     marker-fill: #ffff36;\n}\n#table_20160930_facilitiesdraft[domain=\"Health and Human Services\"] {\n     marker-fill: #bebada;\n}\n#table_20160930_facilitiesdraft[domain=\"Parks, Cultural, and Other Community Facilities\"] {\n     marker-fill: #8dd3c7;\n}\n#table_20160930_facilitiesdraft[domain=\"Public Safety, Emergency Services, and Administration of Justice\"] {\n     marker-fill: #80b1d3;\n}\n#table_20160930_facilitiesdraft[domain=\"Education, Child Welfare, and Youth\"] {\n     marker-fill: #fdb462;\n}",
+                  "cartocss_version":"2.1.1",
+                  "interactivity":"cartodb_id,address,addressnumber,agencyclass1,agencyclass2,agencysource,area,areatype,bbl,bin,borough,boroughcode,buildingid,buildingname,capacity,capacitytype,children,city,colpusetype,creator,datatype,dateactive,datecreated,dateedited,dateinactive,datesourcereceived,datesourceupdated,disabilities,domain,dropouts,editor,facilitygroup,facilityname,facilitysubgroup,facilitytype,family,groupquarters,guid,homeless,id,idagency,idold,immigrants,inactivestatus,latitude,linkdata,linkdownload,longitude,notes,operatorabbrev,operatorname,operatortype,oversightabbrev,oversightagency,parkid,processingflag,refreshfrequency,refreshmeans,schoolorganizationlevel,senior,servicearea,sourcedatasetname,streetname,tags,unemployed,utilization,utilizationrate,xcoord,ycoord,youth,zipcode"
+               }
+            }
+         ]
+      },
+      "attribution":""
+   }
+}
+
+
+
 
 var FacilitiesExplorer = React.createClass({
   getInitialState() {
@@ -13,9 +76,33 @@ var FacilitiesExplorer = React.createClass({
     })
   },
 
+  componentWillMount() {
+    //default is select *, and show all layers in layer selector
+    this.layerStructure = FacilitiesLayers
+    this.initialSQL = 'SELECT * FROM table_20160930_facilitiesdraft'
+
+    //logic to modify initial sql and cartoCSS based on route
+    var domain = this.props.params.domain
+
+    if(domain) {
+      var firstFive = domain.substr(0,5);
+
+      var layerOptions = vizJson.options.layer_definition.layers[0].options
+      this.initialSQL=layerOptions.sql="SELECT * FROM table_20160930_facilitiesdraft WHERE domain ILIKE '" + firstFive + "%'"
+
+      this.layerStructure = FacilitiesLayers.filter(function(layer) {
+        console.log(layer.slug, domain)
+        return (layer.slug == domain)
+      })
+    }
+
+    console.log(vizJson)
+  },
+
   componentDidMount: function() {
     document.title = "NYC Facilities Explorer";
 
+    if(!this.props.params.domain)
     this.showModal({
       modalHeading: 'Welcome!',
       modalContent: splashContent,
@@ -127,6 +214,8 @@ var FacilitiesExplorer = React.createClass({
         <div id="main-container">
           <div id="sidebar">
             <FacLayerSelector
+              initialSQL={this.initialSQL}
+              layerStructure={this.layerStructure}
               updateSQL={this.updateSQL}
             />
           </div>
@@ -136,7 +225,7 @@ var FacilitiesExplorer = React.createClass({
               <div className="message">Data current as of 09/05/2014 - 10/01/2016</div>
             </div>
             <CartoMap
-             vizJson="https://reallysimpleopendata.org/user/hkates/api/v2/viz/c8d2c9f6-7a00-11e6-85c0-0242ac110002/viz.json"
+             vizJson={vizJson}
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>
@@ -200,6 +289,12 @@ var aboutContent = (
 var splashContent = (
   <div>
     <h4>Welcome, Beta Tester!</h4>
+    <a href="/facilities/domain/health_and_human_services"><p>Health and Human Services</p></a>
+    <a href="/facilities/domain/education_child_welfare_and_youth"><p>Education, Child Welfare, and Youth</p></a>
+    <a href="/facilities/domain/parks_cultural_institutions_and_other_community_facilities"><p>Parks, Cultural Institutions, and Other Community Facilities</p></a>
+    <a href="/facilities/domain/public_safety_emergency_services_and_administration_of_justice"><p>Public Safety, Emergency Services, and Administration of Justice</p></a>
+    <a href="/facilities/domain/core_infrastructure_and_transportation"><p>Core Infrastructure and Transportation</p></a>
+    <a href="/facilities/domain/administration_of_government"><p>Administration of Government</p></a>
     <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to read more about the data powering this map <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">here</a>.</p> 
     
     <p>If you're seeing this message, it means we want your help to improve this product. Please email us at capital@planning.nyc.gov.</p>
