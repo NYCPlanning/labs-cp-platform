@@ -90,16 +90,55 @@ var FacilitiesExplorer = React.createClass({
       var layerOptions = vizJson.options.layer_definition.layers[0].options
       this.initialSQL=layerOptions.sql="SELECT * FROM table_20160930_facilitiesdraft WHERE domain ILIKE '" + firstFive + "%'"
 
+
+
+
       this.layerStructure = FacilitiesLayers.filter(function(layer) {
         console.log(layer.slug, domain)
         return (layer.slug == domain)
       })
+
+      layerOptions.cartocss = this.buildCartoCSS(this.layerStructure)
     }
 
     console.log(vizJson)
   },
 
-  componentDidMount: function() {
+  buildCartoCSS(layerStructure) {
+    var cartocss = 
+      `#table_20160930_facilitiesdraft {
+         marker-fill-opacity: 0.8;
+         marker-line-color: #012700;
+         marker-line-width: 0.5;
+         marker-line-opacity: 0.9;
+         marker-placement: point;
+         marker-type: ellipse;
+         marker-width: 6;
+         marker-allow-overlap: true;
+      }`
+
+    layerStructure[0].children.map(function(group, i) {
+      var groupRuleTemplate =
+        `
+        #table_20160930_facilitiesdraft[facilitygroup="{{name}}"] {
+           marker-fill: {{color}};
+        }
+        `
+
+      var groupRule = Mustache.render(groupRuleTemplate, {
+        name: group.name,
+        color: group.color
+      })
+
+      cartocss += groupRule + '\n'
+    })
+
+
+    console.log(cartocss)
+    return cartocss
+  },
+
+  componentDidMount() {
     document.title = "NYC Facilities Explorer";
 
     if(!this.props.params.domain)

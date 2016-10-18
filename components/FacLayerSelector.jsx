@@ -4,7 +4,7 @@ import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 
 
-
+var colors = ['#bebada','#fdb462', '#8dd3c7', '#80b1d3', '#ffff36', '#fb8072' ]
 
 
 var LayerSelector = React.createClass({
@@ -40,6 +40,11 @@ var LayerSelector = React.createClass({
   },
 
   componentDidMount() {
+    //if a domain page, expand all
+    if(this.props.layerStructure.length == 1) {
+      this.expandAll()
+    }
+
     this.updateCounts() 
   },
 
@@ -285,7 +290,7 @@ var LayerSelector = React.createClass({
                     checked={domain.checked} 
                     indeterminate={domain.indeterminate}
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                  <a className="nav-container" style={{backgroundColor: domain.color}}>
+                  <a className="nav-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
                   <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
                   <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
                   <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
@@ -300,7 +305,7 @@ var LayerSelector = React.createClass({
                               onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
                           <li>
 
-                            <a className="nav-sub-container" style={{backgroundColor: domain.subColor}}>    
+                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color : domain.subColor}}>    
                               <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{display:'inline-block'}}>{group.name}</div>
                               <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
                             </a>

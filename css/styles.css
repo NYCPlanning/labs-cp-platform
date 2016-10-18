@@ -286,7 +286,9 @@ ul.nav-stacked ul.nav-stacked > li > a {
   left: 16px;
 }
 
-.subgroup input[type=checkbox]{
+
+
+#stacked-menu .subgroup input[type=checkbox]{
   top: 1px;
   left: 25px;
 }
