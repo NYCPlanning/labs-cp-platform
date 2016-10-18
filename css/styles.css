@@ -22,7 +22,7 @@ html, body, #main-container {
   background-color: #d96b27;
   border-color: #d68a40;
   color: #FFF;
-  width: 86px;
+  min-width: 86px;
 }
 
 
