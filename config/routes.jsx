@@ -13,6 +13,8 @@ import Sample from '../components/Sample.jsx'
 import DistrictSelection from '../components/DistrictSelection.jsx'
 import CDPage from '../components/CDPage.jsx'
 
+import FacilitiesLanding from '../components/FacilitiesLanding.jsx'
+
  var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
 
@@ -51,6 +53,8 @@ module.exports = (
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
     <Route path="districtmap" component={DistrictSelection} onEnter={requireAuth}/>
     <Route path="cd/:borocd" component={CDPage} onEnter={requireAuth}/>
+
+    <Route path="facilitieslanding" component={FacilitiesLanding} onEnter={requireAuth}/>
   </Route>
 )
 

@@ -46,6 +46,14 @@ html, body, #main-container {
   border-top-color: #ebebeb;
 }
 
+section {
+  padding: 100px 0;
+}
+
+.bg-primary {
+    background-color: #d96b27;
+}
+
 /*Nav Component*/
 
 nav {
