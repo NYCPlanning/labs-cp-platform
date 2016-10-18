@@ -1,19 +1,15 @@
 //simple express app to serve up custom APIs
 
 var express = require('express');
+var compression = require('compression');
 var spa = require('express-spa');
 var app = express();
 
-
+app.use(compression());
 
 const PUBLIC_DIR_PATH = require('path').resolve('.');
 app.use(express.static(PUBLIC_DIR_PATH));
 app.use(spa(PUBLIC_DIR_PATH + "/index.html"));
-
-
-//app.use(expressValidator());
-
-
 
 
 // catch 404 and forward to error handler

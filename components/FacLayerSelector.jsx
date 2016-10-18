@@ -1,5 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom' 
+import {OverlayTrigger, Tooltip} from 'react-bootstrap'
+import Numeral from 'numeral'
 
 //object for the hierarchy of domains, groups and subgroups
 //includes colors to be used in display
@@ -328,8 +330,31 @@ var LayerSelector = React.createClass({
   getInitialState: function() {
     return ({
       layers:layerStructure,
+      selectedCount: '__',
+      totalCount:'__',
       checked: 'all' //all, none, or null
     })
+  },
+
+  componentDidMount: function() {
+    var self=this
+    var totalCountSQL = 'SELECT count(*) as total FROM table_20160930_facilitiesdraft'
+
+    this.cartoSQLCall(totalCountSQL, function(data) {
+      var total = data.rows[0].total
+
+      total = Numeral(total).format('0,0')
+      
+      self.setState({
+        selectedCount: total,
+        totalCount: total
+      })
+    })
+  },
+
+  cartoSQLCall: function(sql, cb) {
+     var apiCall = 'https://reallysimpleopendata.org/user/hkates/api/v2/sql?q=' + sql
+     $.getJSON(apiCall, cb)
   },
 
   toggleCheckbox: function(type, domain, group, subgroup, e) {
@@ -443,6 +468,23 @@ var LayerSelector = React.createClass({
     }
 
     this.props.updateSQL(sql)
+    this.getCount(sql)
+  },
+
+  getCount: function(sql) {
+    var self=this
+    
+    var countSQL = 'SELECT count(a.*) as selected FROM ( ' + sql + ') a'
+
+    this.cartoSQLCall(countSQL, function(data) {
+      var selected = data.rows[0].selected
+
+      selected = Numeral(selected).format('0,0')
+      
+      self.setState({
+        selectedCount: selected
+      })
+    })
   },
 
   showAll: function() {
@@ -486,18 +528,41 @@ var LayerSelector = React.createClass({
     var self=this;
     return(
       <div className="col-md-12">
-        <div className='row sidebar-header'>
-          <div className='col-md-4'>
-            <h3>Layers</h3>
+        <div className='row sidebar-content'>
+          <div className='col-md-12'>
+            <h3>Facility Types</h3>
+            <Tooltip id="tooltip"> Learn more about facility types</Tooltip>
+            <p>
+              Select facility types to display on the map. 
+              <OverlayTrigger placement="top" overlay={ <Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
+                <a href="https://nycplanning.github.io/cpdocs/facdb/"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
+              </OverlayTrigger>
+            </p>
+            
           </div>
-          <div className='col-md-8'>
-            <div className='btn dcp-orange btn-sm ' 
-              onClick={this.expandAll} >Expand All</div>
-            <div className='btn dcp-orange btn-sm pull-right' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
-            <div className='btn dcp-orange btn-sm ' onClick={this.collapseAll}>Collapse All</div>
-            <div className='btn dcp-orange btn-sm pull-right' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
-          </div>
+
+          <div className="col-md-12">
+            <div className="filter-count">
+              {
+                (this.state.selectedCount == this.state.totalCount) ? 
+                  <span>Showing all {this.state.totalCount} Facilities</span> :
+                  <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
+              }
+            </div>
+              <div className="btn-group btn-group-xs" role="group">
+                <div className='btn dcp-orange btn-xs ' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
+                <div className='btn dcp-orange btn-xs ' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
+              </div>
+              <br/>
+              <div className="btn-group btn-group-xs" role="group">
+                <div className='btn dcp-orange btn-xs ' 
+                onClick={this.expandAll} >Expand All</div>
+                <div className='btn dcp-orange btn-xs ' onClick={this.collapseAll}>Collapse All</div>
+              </div>
         </div>
+
+        </div>
+        
         
         <ul className="nav nav-pills nav-stacked" id="stacked-menu">
           { 
@@ -512,8 +577,8 @@ var LayerSelector = React.createClass({
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
                   <a className="nav-container" style={{backgroundColor: domain.color}}>
                   <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
-                  <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
-                  <ul className="group-container nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
+                  <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
+                  <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
                   {
                     domain.children.map(function(group, j) {
                       return (

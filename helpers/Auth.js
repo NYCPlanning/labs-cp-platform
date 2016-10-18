@@ -11,14 +11,14 @@ export default class AuthService {
       closable: false,
       allowSignUp: true,
       auth: {
-        redirectUrl: (process.env.NODE_ENV == 'development') ? 'http://localhost:8080/authsuccess' : 'http://cpp.reallysimpleopendata.com/authsuccess',
+        redirectUrl: (process.env.NODE_ENV == 'development') ? 'http://localhost:8080/authsuccess' : 'http://cpp.capitalplanning.nyc/authsuccess',
         responseType: 'token'
       },
       theme: {
         logo: 'img/logo_80.png'
       },
       languageDictionary: {
-        title: "Log me in"
+        title: "Please log in with your NYC email address"
       } 
       
     })

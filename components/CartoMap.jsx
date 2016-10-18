@@ -34,24 +34,24 @@ var Component = React.createClass({
     }).addTo(map);
 
     var MyControl = L.Control.extend({
-        options: {
-          position: 'topright'
-        },
+      options: {
+        position: 'topright'
+      },
 
-        onAdd: function (map) {
-          // create the control container with a particular class name
-          // ** you can add the image to the div as a background image using css
-          var container = L.DomUtil.create('div', 'map-loader');
-          container.innerHTML = `
-            <div class="spinner-container">
-              <div class="spinner">
-                <div class="double-bounce1"></div>
-                <div class="double-bounce2"></div>
-              </div>
-            </div>`
+      onAdd: function (map) {
+        // create the control container with a particular class name
+        // ** you can add the image to the div as a background image using css
+        var container = L.DomUtil.create('div', 'map-loader');
+        container.innerHTML = `
+          <div class="spinner-container">
+            <div class="spinner">
+              <div class="double-bounce1"></div>
+              <div class="double-bounce2"></div>
+            </div>
+          </div>`
 
-          return container;
-        }
+        return container;
+      }
     });
 
     map.addControl(new MyControl());
