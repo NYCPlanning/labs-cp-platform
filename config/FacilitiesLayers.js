@@ -279,6 +279,7 @@ var FacilitiesLayers = [
       {
         name: 'Public Safety',
         description: 'Services provided by New York Police Dept. and New York Housing Authority Police',
+        color: '#8dd3c7',
         children: [
           {
             name: 'Police Services',

@@ -22,8 +22,9 @@ html, body, #main-container {
   background-color: #d96b27;
   border-color: #d68a40;
   color: #FFF;
-  
+  min-width: 86px;
 }
+
 
 .dcp-orange:hover, .dcp-orange:active  {
   background-color: #a5501b;
@@ -43,6 +44,14 @@ html, body, #main-container {
 
 .tooltip.top .tooltip-arrow {
   border-top-color: #ebebeb;
+}
+
+section {
+  padding: 100px 0;
+}
+
+.bg-primary {
+    background-color: #d96b27;
 }
 
 /*Nav Component*/
