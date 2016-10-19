@@ -18,15 +18,19 @@ html, body, #main-container {
   overflow-y: scroll;
 }
 
-.dcp-orange {
+.btn.dcp-orange {
   background-color: #d96b27;
   border-color: #d68a40;
   color: #FFF;
   min-width: 86px;
 }
 
+.dcp-orange {
+  color: #d96b27;
+}
 
-.dcp-orange:hover, .dcp-orange:active  {
+
+.btn.dcp-orange:hover, .btn.dcp-orange:active  {
   background-color: #a5501b;
   border-color: #a5501b;
   color: #FFF;

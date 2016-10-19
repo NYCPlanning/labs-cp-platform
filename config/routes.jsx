@@ -14,6 +14,8 @@ import DistrictSelection from '../components/DistrictSelection.jsx'
 import CDPage from '../components/CDPage.jsx'
 
 import FacilitiesLanding from '../components/FacilitiesLanding.jsx'
+import NotFound from '../components/NotFound.jsx'
+
 
  var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
@@ -55,6 +57,8 @@ module.exports = (
     <Route path="cd/:borocd" component={CDPage} onEnter={requireAuth}/>
 
     <Route path="facilitieslanding" component={FacilitiesLanding} onEnter={requireAuth}/>
+
+    <Route path='*' component={NotFound} />
   </Route>
 )
 
