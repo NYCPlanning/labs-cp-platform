@@ -705,4 +705,32 @@ body:after {
 /*End Auth0 Lock*/
 
 
+/*FacDB Content Selection*/
+
+.content-selection h3 {
+  color: #d96b27;
+  padding: 20px 0;
+}
+
+.content-selection h4 {
+  color: #6e6e6e;
+}
+
+
+.content-selection .text-primary {
+  color: rgb(217, 107, 39);
+  text-shadow: 2px 2px #cfcfcf;
+}
+
+.content-selection .service-box {
+  padding: 20px;
+}
+
+.content-selection .service-box:hover {
+  background: #ececec;
+}
+
+.content-selection a:hover {
+  text-decoration: none;
+}
 
