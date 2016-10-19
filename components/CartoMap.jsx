@@ -13,7 +13,22 @@ var Component = React.createClass({
       minZoom: 10
     })
 
-    //add zoom control
+    // add transparent grey layer outside NYC
+    // NOTE: Carto is using an older version of leaflet. When they update their code
+    // in the future, this feature may break. The older method we are currently using is 
+    // L.geoJson. The new method is L.geoJSON: http://leafletjs.com/examples/geojson/
+    $.getJSON('/data/greyOutsideNYC.geojson', function(data) {
+      console.log(data)
+      var test = L.geoJson(data, {
+        style: {
+          color: "black",
+          weight: 0,
+          opacity: 0.15
+        }
+      }).addTo(map)
+    })
+
+    // add zoom control
     L.control.zoom({
          position:'topright'
     }).addTo(map);
