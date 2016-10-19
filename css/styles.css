@@ -12,6 +12,10 @@ html, body, #main-container {
     overflow: hidden;
 }
 
+#main-container {
+  padding-top:80px;
+}
+
 .full-height {
   height:100%;    
   overflow-y: scroll;
@@ -479,6 +483,7 @@ body:after {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  width: 100%;
 }
 
 .bg-primary a {
