@@ -57,6 +57,22 @@ section {
     background-color: #d96b27;
 }
 
+ hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    border-width: 3px;
+    max-width: 50px;
+    border-color: #fff;
+}
+
+.bg-primary p {
+  font-size: 19px;
+  color: #ececec;
+}
+
+
 /*Nav Component*/
 
 nav {
@@ -436,34 +452,45 @@ body:after {
 }
 
 .jumbotron {
+  color: white;
+  text-shadow: 1px 1px 2px rgb(128, 128, 128);
+  margin-bottom: 0;
+  min-height: calc(100vh - 80px);
+  position: relative;
+  padding: 0;
+}
+
+.jumbotron:before {
   background-image: url(/../img/nyc.jpg);
   background-size: cover;
   background-position-y: 25%;
-  color: white; 
-  text-shadow: 1px 1px 2px rgb(128, 128, 128);
-  margin-bottom: 0;
+  content: "";
+  display: block;
+  min-height: calc(100vh - 80px);
+  
+  -webkit-filter: opacity(70%);
+  -moz-filter: opacity(70%);
+  -o-filter: opacity(70%);
+  -ms-filter: opacity(70%);
+  filter: opacity(70%);
 }
 
-.paragraphs {
-  line-height: 23px;
-  padding: 50px 300px;
-  background-color: #d96b27;
-  color: #fff;
-  margin-bottom: 30px;
+.jumbotron .container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-
-
-.paragraphs a {
+.bg-primary a {
   color: #FFF;
   text-decoration: none;
-  border-bottom: 1.5px dashed #FFF;
+  
 }
 
-.paragraphs a:hover {
-  background: #ebebeb;
-  color: #db691b;
+.bg-primary a:hover {
   border-bottom: none;
+  border-bottom: 1.5px dashed #FFF;
+  cursor: pointer;
 }
 
 .portfolio-image {
