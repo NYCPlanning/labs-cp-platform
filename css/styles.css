@@ -40,6 +40,8 @@ html, body, #main-container {
 .tooltip-inner {
   color: #464646;
   background-color: #ebebeb;
+  text-align: left;
+  font-size: 11px;
 }
 
 .tooltip.top .tooltip-arrow {
@@ -260,7 +262,7 @@ ul.navbar-right {
 /*second tier indentation*/
 div.nav-stacked>li>a {
   font-family: 'open sans', sans-serif;
-  padding: 3px 15px 3px 40px;
+  padding: 3px 30px 3px 40px;
 }
 
 
@@ -335,6 +337,22 @@ ul.nav-stacked ul.nav-stacked > li > a {
   background-color: hsla(0, 0%, 86%, 0.86);
   padding: 7.5px;
   border-radius: 6px;
+}
+
+.nav-sub-container .fa {
+    float: right;
+    margin-top: 3px;
+    border-color: #EBEBEB;
+}
+
+.subgroup .fa {
+    float: right;
+    margin-top: 2px;
+    border-color: #EBEBEB;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #ebebeb;
 }
 
 

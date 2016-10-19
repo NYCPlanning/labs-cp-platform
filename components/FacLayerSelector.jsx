@@ -117,7 +117,6 @@ var LayerSelector = React.createClass({
       this.processChecked(layers)
     }
   },
-
   processChecked(layers) {
 
     var allChecked = 0,
@@ -277,8 +276,10 @@ var LayerSelector = React.createClass({
         </div>
 
         </div>
-        
-        
+
+
+
+
         <ul className="nav nav-pills nav-stacked" id="stacked-menu">
           { 
             this.state.layers.map(function(domain, i) {
@@ -306,6 +307,9 @@ var LayerSelector = React.createClass({
                           <li>
 
                             <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color : domain.subColor}}>    
+                              <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
+                                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                              </OverlayTrigger>
                               <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{display:'inline-block'}}>{group.name}</div>
                               <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
                             </a>
@@ -323,6 +327,9 @@ var LayerSelector = React.createClass({
                                         onChange={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} />
                                     <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} >
                                       {subgroup.name}
+                                      <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
+                                        <i className="fa fa-info-circle" aria-hidden="true"></i>
+                                      </OverlayTrigger>
                                     </a>
                                   </li>
                                 )
