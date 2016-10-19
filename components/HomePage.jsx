@@ -1,6 +1,8 @@
 import React from 'react'
-import Nav from './Nav.jsx'
 import {Link} from 'react-router'
+
+import Nav from './Nav.jsx'
+import Footer from './Footer.jsx'
 
 var HomePage = React.createClass({
   componentDidMount: function() {
@@ -85,36 +87,7 @@ var HomePage = React.createClass({
                     <p>A simple web-map preview tool for your local postGIS database.</p>
                 </div>
             </div>
-            <div className="footer container">
-                <div className="col-md-3">
-                    <div className="footer-logo"/>
-                </div>
-                <div className="col-md-3">
-                    <h4>Content</h4>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
-
-                <div className="col-md-3">
-                    <h4>Content</h4>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul></div>
-
-                <div className="col-md-3">
-                    <h4>Content</h4>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                    </ul>
-                </div>
-            </div>
+            <Footer/>
         </div>
 
 

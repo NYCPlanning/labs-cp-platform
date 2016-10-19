@@ -1,5 +1,4 @@
 body {
-  padding-top: 80px;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -66,7 +65,7 @@ nav {
 }
 
 .navbar-default {
-  background-color: #EBEBEB;
+  background-color: rgba(235, 235, 235, 0.92);
 }
 
 
@@ -432,7 +431,7 @@ body:after {
 }
 
 .main-content {
-  padding: 0;
+  padding: 80px 0 0 0;
   overflow: scroll;
 }
 
@@ -476,27 +475,68 @@ body:after {
   margin-bottom: 15px;
 }
 
+/*Footer inspired by https://www.engineyard.com/*/
+
 .footer {
-  background: white;
-  width: 100%;
-  padding: 30px 15px;
-  border-top: 3px solid #d96b27;
+  background: #ececec;
+  padding-top: 56px;
+  padding-bottom: 56px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.footer h4 {
   color: #d96b27;
+  font-weight: 100;
 }
 
-.footer-logo {
-  background-image: url(img/logo_80.png);
-  background-repeat: no-repeat;
-  background-position: 16px 0;
-  height: 62px;
+.footer dl {
+  border-right: 1px solid #8f8f8f;
+  height: 200px;
 }
 
-.footer ul {
-  padding-left: 12px;
+.footer dt, .footer dd {
+    line-height: 32px;
 }
 
-.footer li {
-  list-style: none;
+.footer dd a {
+  color: #8f8f8f;
+}
+
+.footer dd a:hover {
+  color: #464646;
+}
+
+.copyright {
+  font-size: 11px;
+}
+
+.footer .social-icons li {
+    border: 1px solid #696D7D;
+    border-radius: 24px;
+    width: 48px;
+    height: 48px;
+    position: relative;
+    margin-right: 5px;
+}
+
+.footer .social-icons li a.twitter {
+    top: 15px;
+    left: 15px;
+}
+
+.footer .social-icons li a.facebook {
+    top: 14px;
+    left: 14px;
+}
+
+.footer .social-icons li a.github {
+    top: 14px;
+    left: 14px;
+}
+
+.footer .social-icons li a {
+    position: absolute;
 }
 
 /*Captial Projects Explorer*/
