@@ -22,7 +22,7 @@ var HomePage = React.createClass({
                         <div className="col-lg-8 col-lg-offset-2 text-center" style={{background: "#A0A0A0"}}>
                             <h2 className="section-heading">The NYC Facilities Database</h2>
                             <hr className="light"/>
-                            <p className="text-faded">The facilities database is a comprehensive dataset that captures the locations and descriptions of public and private facilities ranging from the provision of social services, recreation, education, to solid waste management. All the facilities are operated, funded, or licensed by a City, State, or Federal agency. </p>                            
+                            <p className="text-faded">A comprehensive dataset that captures the locations and descriptions of public and private facilities ranging from education to health care, social services, recreation, and solid waste management. All the facilities are operated, funded, or licensed by a City, State, or Federal agency.</p>                            
                         </div>
                     </div>
                 </div>
