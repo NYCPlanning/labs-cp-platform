@@ -181,14 +181,37 @@ ul.navbar-right {
 }
 
 .popup {
-  padding: 10px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   z-index: 10;
   position: absolute;
-  min-width: 120px;
-  max-width: 180px;
   background: rgba(255,255,255,.9);
-  font-size: 15px;
+  font-size: 12px;
+  padding: 0;
+  -webkit-box-shadow: 1px 1px 2px 0px #bdbdbd;
+  -moz-box-shadow: 1px 1px 2px 0px #bdbdbd;
+  box-shadow: 1px 1px 2px 0px #bdbdbd;
+}
+
+.popupRow {
+  border-bottom: 0.5px solid rgba(234, 234, 234, 0.98);
+  padding: 3px 6px;
+}
+
+.popupRow:last-child {
+  border-bottom: none;
+}
+
+.popupRow:hover {
+  background: #e4e4e4;
+  cursor: pointer;
+}
+
+.badge {
+  min-width: 50px;
+  margin-right: 10px;
+  font-size: 10px;
+  position: relative;
+  top: -1px;
 }
 
 .messageOverlay {
@@ -200,7 +223,9 @@ ul.navbar-right {
   font-size: 12px;
 } 
 
-
+.legendItemText {
+  font-family: 'Open Sans';
+}
 
 /*spinkit*/
 .spinner {
