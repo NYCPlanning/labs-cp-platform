@@ -59,6 +59,10 @@ section {
   padding: 100px 0;
 }
 
+section.content-selection {
+  padding: 10px 0;
+}
+
 .bg-primary {
     background-color: #d96b27;
 }
