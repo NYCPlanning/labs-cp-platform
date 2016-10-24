@@ -3,12 +3,16 @@ import Crossfilter from 'crossfilter'
 import dc from 'dc'
 import {Button} from 'react-bootstrap'
 
+
+
 import Nav from './Nav.jsx'
 import Modal from './Modal.jsx'
 import ModalMap from './ModalMap.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import DcColumnChart from './DcColumnChart.jsx'
 import Agencies from '../helpers/agencies.js'
+import AgencySelector from './AgencySelector.jsx'
+
 
 
 var CapitalProjectsExplorer = React.createClass({
@@ -165,6 +169,11 @@ var CapitalProjectsExplorer = React.createClass({
     this.refs.modal.open()
   },
 
+  updateFilters(values) {
+    //takes an array of sponsor agency codes, filters map data by that array
+    this.refs.map.applyFilters(values)
+  },
+
 
   render() {
     var Iframe = 'iframe'
@@ -176,48 +185,11 @@ var CapitalProjectsExplorer = React.createClass({
         </Nav>
         <div id="main-container">
           <div id="sidebar">
-            {/*<div className='chart-menu'>
-               <CountWidget
-                dimension={this.store.filter}
-                group={this.store.all}
-                reset={this.reset}
-              />             
-            </div>
-              <div className='chartPane'>
-              <DcColumnChart 
-                title={'Sponsor Agency'}
-                dimension={this.store.sponsorAgency}
-                group={this.store.sponsorAgencyCount}
-                margins={{top: 10, right: 10, bottom: 30, left: 30}}
-                update={this.update}
-              />
-              <DcColumnChart 
-                title={'Current Status'}
-                dimension={this.store.currentStatus}
-                group={this.store.currentStatusCount}
-                margins={{top: 10, right: 10, bottom: 40, left: 30}}
-                update={this.update}
-              />
-              <DcColumnChart 
-                title={'Funding Amount'}
-                dimension={this.store.fundingAmount}
-                group={this.store.fundingAmountCount}
-                margins={{top: 10, right: 10, bottom: 30, left: 30}}
-                update={this.update}
-              />
-
-              <DcColumnChart 
-                title={'Managing Agency'}
-                dimension={this.store.agency}
-                group={this.store.agencyCount}
-                margins={{top: 10, right: 10, bottom: 25, left: 30}}
-                update={this.update}
-              />
-            </div>*/}
+            <AgencySelector updateFilters={this.updateFilters}/>
           </div>
           <div id="content">
             <div className={'full-height'}>
-              <MapboxGLMap data={this.state.mapData} handleClick={this.handleMapClick} ref={'Map'}/>
+              <MapboxGLMap data={this.state.mapData} handleClick={this.handleMapClick} ref='map'/>
             </div>
           </div>
         </div>

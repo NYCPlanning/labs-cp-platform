@@ -46,6 +46,23 @@ var MapboxGLMap = React.createClass({
     this.map.setStyle('mapbox://styles/mapbox/' + style + '-v9')
   },
 
+  applyFilters(values) {
+    //build "in" membership filter from values array
+    var filter = [
+      "in",
+      "sponsoragency"
+    ]
+
+    values.map(function(value) {
+      filter.push(value.value)
+    })
+
+
+    this.map.setFilter('points', filter);
+    this.map.setFilter('points-outline', filter);
+    this.map.setFilter('polygons', filter);
+  },
+
   componentDidMount() {
     this.renderMap();
   },
@@ -148,6 +165,23 @@ var MapboxGLMap = React.createClass({
           self.refs.popup.forceUpdate()
         } 
       })
+
+      //highlight on hover
+      map.on('mousemove', function (e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ['points', 'polygons'] });
+     
+        map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+
+        // if (features.length) {
+        //   map.setFilter("polygons-hover", ["==", "guid", features[0].properties.guid]);
+        //   map.setFilter("points-hover", ["==", "guid", features[0].properties.guid]);
+        // } else {
+        //   map.setFilter("points-hover", ["==", "guid", ""]);
+        //   map.setFilter("polygons-hover", ["==", "guid", ""]);
+        // }
+
+
+      })      
     })
   },
 
