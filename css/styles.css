@@ -59,10 +59,6 @@ section {
   padding: 100px 0;
 }
 
-section.content-selection {
-  padding: 10px 0;
-}
-
 .bg-primary {
     background-color: #d96b27;
 }
@@ -727,25 +723,36 @@ body:after {
 /*End Auth0 Lock*/
 
 
-/*FacDB Content Selection*/
+/*FacDB Content Selection / Landing Page*/
+
+.col-lg-8 {
+  border-radius: 6px;
+}
+
+section.content-selection {
+  padding: 10px 0;
+}
 
 .content-selection h3 {
   color: #d96b27;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .content-selection h4 {
   color: #6e6e6e;
 }
 
-
 .content-selection .text-primary {
   color: rgb(217, 107, 39);
-  text-shadow: 2px 2px #cfcfcf;
+  text-shadow: 1px 2px #cfcfcf;
 }
 
 .content-selection .service-box {
   padding: 20px;
+  height: 204px;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .content-selection .service-box:hover {
@@ -755,4 +762,8 @@ body:after {
 .content-selection a:hover {
   text-decoration: none;
 }
+
+
+
+
 
