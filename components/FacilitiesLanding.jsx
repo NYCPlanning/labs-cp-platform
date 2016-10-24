@@ -16,14 +16,13 @@ var HomePage = React.createClass({
         <Nav title='NYC Capital Planning Platform' auth={this.props.auth}/>
 
         <div className="main-content">
-            <section className="bg-primary" id="about">
+            <section className="bg-primary" id="about" style={{backgroundImage: "url(gif/facilitiesdemo.gif)"}}>
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-8 col-lg-offset-2 text-center">
+                        <div className="col-lg-8 col-lg-offset-2 text-center" style={{background: "#A0A0A0"}}>
                             <h2 className="section-heading">The NYC Facilities Database</h2>
                             <hr className="light"/>
-                            <p className="text-faded">The facilities database is a comprehensive dataset of government-run or funded community facilites and programs. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus. </p>
-                            
+                            <p className="text-faded">A comprehensive dataset that captures the locations and descriptions of public and private facilities ranging from education to health care, social services, recreation, and solid waste management. All the facilities are operated, funded, or licensed by a City, State, or Federal agency.</p>                            
                         </div>
                     </div>
                 </div>
@@ -31,79 +30,109 @@ var HomePage = React.createClass({
             <section className="content-selection">
                 <div className="container">
                     <div className="row">
-                        <h3 className="section-heading">Explore a Facility Category</h3>
+                        <h3 className="section-heading">Explore All Facilities </h3>
+                        <div className="col-lg-10 col-lg-offset-1 text-center">
+                            <a href="/facilities/all">
+                                <i className="fa fa-4x fa-building-o wow bounceIn text-primary" ></i>
+                                <h4>View an interactive map of all 34,000 facilities in the database.</h4>
+                                <p className="text-muted">Toggle Groups and Subgroups on and off to see only the data that is relevant to you.</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <h3 className="section-heading">Or Explore a Facility Domain</h3>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/health_and_human_services">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#bebada'}}>
                                     <i className="fa fa-4x fa-heart wow bounceIn text-primary" ></i>
                                     <h4>Health & Human Services</h4>
-                                    <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus.</p>
+                                    <p className="text-muted">Health and social service providers, including hospitals, legal services, and homeless shelters.</p>
                                 </div>
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/education_child_welfare_and_youth">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#fdb462'}}>
                                     <i className="fa fa-4x fa-graduation-cap wow bounceIn text-primary" ></i>
                                     <h4>Education, Child Welfare, & Youth</h4>
-                                    <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus.</p>
+                                    <p className="text-muted">Providers of children and youth services and all schools, including higher education facilities.</p>
                                 </div>
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/parks_cultural_institutions_and_other_community_facilities">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#8dd3c7'}}>
                                     <i className="fa fa-4x fa-pagelines wow bounceIn text-primary" ></i>
                                     <h4>Parks, Cultural, & Other Community Facilities</h4>
-                                    <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus.</p>
+                                    <p className="text-muted">Cultural institutions, historic sites, recreational areas, parks, and nature preserves.</p>
                                 </div>
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/public_safety_emergency_services_and_administration_of_justice">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#80b1d3'}}>
                                     <i className="fa fa-4x fa-ambulance wow bounceIn text-primary" ></i>
                                     <h4>Public Safety, Emergency Services, & Administration of Justice</h4>
-                                    <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus.</p>
+                                    <p className="text-muted">Police services, emergency response, courthouses, and correctional facilities.</p>
                                 </div>
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/core_infrastructure_and_transportation">
-                                <div className="service-box">
-                                    <i className="fa fa-4x fa-train wow bounceIn text-primary" ></i>
+                                <div className="service-box" style={{'background': '#ffff36'}}>
+                                    <i className="fa fa-4x fa-bus wow bounceIn text-primary" ></i>
                                     <h4>Core Infrastructure & Transportation</h4>
-                                    <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus.</p>
+                                    <p className="text-muted">Train and bus yards, parking lots, solid waste processors, and wastewater treatment plants.</p>
                                 </div>
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/administration_of_government">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#fb8072'}}>
                                     <i className="fa fa-4x fa-bar-chart wow bounceIn text-primary" ></i>
                                     <h4>Administration of Government</h4>
-                                    <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id urna fermentum, pellentesque nunc ac, sagittis neque. Aliquam porttitor dapibus ex porta luctus.</p>
+                                    <p className="text-muted">Sites owned or leased by the City for administration, operations, and maintenance.</p>
                                 </div>
                             </a>
                         </div>
                     </div>
                     <div className="row">
-                        <h3 className="section-heading">See it all!</h3> 
-                 
-                        <div className="col-sm-4 text-center" >
-                            <a href="/facilities/all">
+                        <h3 className="section-heading">Explore Customized Facility Groupings</h3>
+                        <div className="col-sm-4 text-center">
+                            <a href="/facilities/domain/children_seniors_and_people_with_disabilities">
                                 <div className="service-box">
-                                    <i className="fa fa-4x fa-building wow bounceIn text-primary" ></i>
-                                    <h4>All Facilities</h4>
-                                    <p className="text-muted">View an interactive map of all 34,000 facilities in the database.  Toggle Groups and Sub-groups to see only the data that's relevant to you.</p>
+                                    <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
+                                    <h4>Children, Seniors, & People with Disabilities</h4>
+                                    <p className="text-muted">All facilities focused on serving children, seniors, or people with disabilities.</p>
                                 </div>
                             </a>
                         </div>
-                    </div>
-                    <div className="row">
-                        <h3 className="section-heading">Explore Customized Facility Groups</h3>
-                        <div className="col-md-12 text-center">
-                            <div className="btn btn-lg dcp-orange">Coming Soon!</div>
+                        <div className="col-sm-4 text-center">
+                            <a href="/facilities/domain/community_facilities_ceqr">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-hospital-o wow bounceIn text-primary" ></i>
+                                    <h4>Community Facilities for CEQR Analysis</h4>
+                                    <p className="text-muted">Public or publicly funded schools, libraries, child care centers, health care facilities, and fire and police protection.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-sm-4 text-center">
+                            <a href="/facilities/domain/government_owned_or_operated">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
+                                    <h4>Government Owned or Operated</h4>
+                                    <p className="text-muted"> All facilities owned or operated by City, State, or Federal agencies.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-lg-4 col-lg-offset-4 text-center">
+                            <a href="mailto:capital@planning.nyc.gov">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-envelope-o wow bounceIn text-primary" ></i>
+                                    <h4>Recommend Additional Groupings!</h4>
+                                    <p className="text-muted">What other groupings would be useful for you? Send us an email at Capital@planning.nyc.gov</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div className="row">
