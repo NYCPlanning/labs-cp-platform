@@ -8,23 +8,23 @@ var DashboardContainer = React.createClass({
     return({})
   },
 
-  componentDidMount() {
-    var self=this;
-    $.getJSON('data/projects.geojson', function(data) {
-      self.setState({
-        data: data
-      })
-    })
-  },
+  // componentDidMount() {
+  //   var self=this;
+  //   $.getJSON('data/projects.geojson', function(data) {
+  //     self.setState({
+  //       data: data
+  //     })
+  //   })
+  // },
 
   render() {
-    if(this.state.data) {
+    // if(this.state.data) {
       return(
-        <CapitalProjectsExplorer data={this.state.data} auth={this.props.auth}/>
+        <CapitalProjectsExplorer auth={this.props.auth}/>
       );     
-    } else {
-      return null
-    }
+    // } else {
+    //   return null
+    // }
   }
 });
 

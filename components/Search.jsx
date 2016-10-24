@@ -1,6 +1,8 @@
 import React from 'react' 
 import Autosuggest from 'react-autosuggest';
 
+import carto from '../helpers/carto.js'
+
 function getSuggestionValue(suggestion) {
   return suggestion.properties.idfms + ' - ' + suggestion.properties.projectname;
 }
@@ -26,37 +28,24 @@ var Search = React.createClass({
   },
 
   getSuggestions(value) {
-    var self=this
-    const inputValue = value.value.trim().toLowerCase();
-
-    var matches = [];
-    var regexp = new RegExp(inputValue, 'gi');
-
-    this.props.data.forEach(function(d) {
-      var p = d.properties;
-      var match = false;
-
-      //match project name
-      if(p.projectname) {
-        if (p.projectname.match(regexp)) match=true 
-      }
-
-      //match project description
-      if(p.idfms) {
-        if (p.idfms.match(regexp)) match=true 
-      }
-
-      if(match) matches.push(d);
-    })
-
-    return matches;
-
+    // returns a promise
+    return carto.autoComplete(value.value)
   },
 
   onSuggestionsFetchRequested(value) {
-    this.setState({
-      suggestions: this.getSuggestions(value)
-    });
+    var self=this
+    this.getSuggestions(value)
+      .done(function(res) {
+        var suggestions = res.features
+
+        console.log(suggestions)
+
+        self.setState({
+          suggestions: suggestions
+        });   
+      })
+
+
   },
 
   // Autosuggest will call this function every time you need to clear suggestions.

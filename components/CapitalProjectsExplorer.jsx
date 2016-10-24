@@ -8,102 +8,16 @@ import Modal from './Modal.jsx'
 import ModalMap from './ModalMap.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import DcColumnChart from './DcColumnChart.jsx'
+import Agencies from '../helpers/agencies.js'
 
 
 var CapitalProjectsExplorer = React.createClass({
   getInitialState() {
     return({
-      mapData: this.props.data.features,
       modalHeading: null,
       modalContent: null,
       modalCloseText: null
     })
-  },
-
-  componentWillMount() {
-    //set up crossfilters, add dimensions 
-    this.store = {}
-
-    var primaryAgencies = [
-      'SCA', 'DOT', 'DEP', 'DCLA', 'NYPL', 'BPL', 'DPR', 'DCAS', 'FDNY'
-    ]
-
-    var filter = this.store.filter = Crossfilter(this.props.data.features);
-    var all = this.store.all = filter.groupAll();
-    
-    //dimension that gets all, used for updating the map
-    this.store.everything = filter.dimension(function(d) { return d });
-
-    //not sure why, but counts are all off if you don't prepend something to the returned value
-    //when making these dimensions.  I think it may be due to the existence of nulls.
-    this.store.agency = filter.dimension(function (d) { 
-
-      if(primaryAgencies.indexOf(d.properties.managingagency) > -1) {
-        return d.properties.managingagency
-      } else {
-        return 'Others'
-      }
-
-    });
-    this.store.agencyCount = this.store.agency.group();
-
-    this.store.sponsorAgency = filter.dimension(function(d) {
-      if(primaryAgencies.indexOf(d.properties.sponsoragency) > -1) {
-        return d.properties.sponsoragency
-      } else {
-        return 'Others'
-      }
-    })
-    this.store.sponsorAgencyCount = this.store.sponsorAgency.group()
-
-    this.store.currentStatus = filter.dimension(function(d) {
-      //add spaces to force custom ordering of columns
-      switch(d.properties.currentstatus) {
-        case 'Planning':
-          return '        Planning'
-          break
-        case 'Proposed':
-          return '       Proposed'
-          break
-        case 'Procurement':
-          return '      Procurement'
-          break
-        case 'Design':
-          return '     Design'
-          break
-        case 'Construction':
-          return '    Construction'
-          break
-        case 'Complete':
-          return '   Complete'
-          break
-        case 'Cancelled':
-          return '  Cancelled'
-          break
-        case 'Other':
-          return ' Other'
-          break
-        default:
-          return ' Unknown'
-      }
-    })
-    this.store.currentStatusCount = this.store.currentStatus.group()
-
-    this.store.fundingAmount = filter.dimension(function(d) {
-      var f = d.properties.fundingamount
-      if(f != null) {
-       return f == 0 ? '0' :
-        f > 0 && f < 500000 ? '0-500k' :
-        f >= 500000 && f < 1000000 ? '500k-1M' :
-        f >= 1000000 && f < 5000000 ? '1M-5M' :
-        f >= 5000000 && f < 10000000 ? '5M-10M' :
-        '>10M'       
-      } else {
-        return 'Unknown'
-      }
-    })
-
-    this.store.fundingAmountCount = this.store.fundingAmount.group() 
   },
 
   componentDidMount: function() {
@@ -128,31 +42,7 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   buildModalContent(feature) {
-    var agencyColors = {
-      property: 'sponsoragency',
-      type: 'categorical',
-      stops: [
-        ['Others','#8dd3c7'],
-        ['SCA','#ffffb3'],
-        ['DOT','#bebada'],
-        ['DEP','#fb8072'],
-        ['DCLA','#80b1d3'],
-        ['NYPL','#fdb462'],
-        ['BPL','#b3de69'],
-        ['DPR','#fccde5'],
-        ['DCAS','#d9d9d9'],
-        ['FDNY','#bc80bd']
-      ]
-    }
 
-    //uses the agencyColors object for one-off color assignments
-    //used for adding inline styles to non-map things
-    function getAgencyColor(agency) {
-      var match = agencyColors.stops.filter(function(stop) {
-        return stop[0] == agency;
-      })
-      return match.length>0 ? match[0][1] : '#8dd3c7';
-    }
 
     var d = feature.properties
     return (
@@ -164,14 +54,14 @@ var CapitalProjectsExplorer = React.createClass({
               <div className="agencybadges">
                 <span 
                   className={'badge'} 
-                  style={{'backgroundColor': getAgencyColor(d.sponsoragency)}}>{d.sponsoragency}
+                  style={{'backgroundColor': Agencies.getAgencyColor(d.sponsoragency)}}>{d.sponsoragency}
                 </span>
                 { d.sponsoragency != d.managingagency ? 
                   <div className='managedby'> 
                   <div className='managedby-text'>managed by</div>
                     <span 
                       className={'badge'} 
-                      style={{'backgroundColor': getAgencyColor(d.managingagency)}}>{d.managingagency}
+                      style={{'backgroundColor': Agencies.getAgencyColor(d.managingagency)}}>{d.managingagency}
                     </span>
                   </div> :
                   null
@@ -242,23 +132,23 @@ var CapitalProjectsExplorer = React.createClass({
       ) 
   },
 
-  handleMapClick(guid) {
-    console.log('in dashboard', guid)
+  handleMapClick(feature) {
+    console.log('handleMapClick', feature)
 
-    //get feature for this guid
-    var feature = this.props.data.features.filter(function(feature) {
-      return feature.properties.guid == guid
-    })[0]
+    // //get feature for this guid
+    // var feature = this.props.data.features.filter(function(feature) {
+    //   return feature.properties.guid == guid
+    // })[0]
 
-   
+   //make an api call to carto to get the full feature, build content from it, show modal
 
-    var modalContent = this.buildModalContent(feature)
+    // var modalContent = this.buildModalContent(feature)
 
-    this.showModal({
-      modalHeading: 'Capital Project Details',
-      modalContent: modalContent,
-      modalCloseText: 'Close'
-    })
+    // this.showModal({
+    //   modalHeading: 'Capital Project Details',
+    //   modalContent: modalContent,
+    //   modalCloseText: 'Close'
+    // })
 
   },
 
@@ -286,7 +176,7 @@ var CapitalProjectsExplorer = React.createClass({
         </Nav>
         <div id="main-container">
           <div id="sidebar">
-            <div className='chart-menu'>
+            {/*<div className='chart-menu'>
                <CountWidget
                 dimension={this.store.filter}
                 group={this.store.all}
@@ -323,7 +213,7 @@ var CapitalProjectsExplorer = React.createClass({
                 margins={{top: 10, right: 10, bottom: 25, left: 30}}
                 update={this.update}
               />
-            </div>
+            </div>*/}
           </div>
           <div id="content">
             <div className={'full-height'}>
