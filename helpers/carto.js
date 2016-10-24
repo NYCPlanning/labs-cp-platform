@@ -4,7 +4,7 @@ module.exports = {
   autoComplete: function(value) {
 
 
-    var sqlTemplate = "SELECT st_centroid(the_geom) as the_geom, sponsorage as sponsoragency, cartodb_id, idfms, projectnam as projectname FROM adoyle.capeprojectspolygons WHERE projectnam ILIKE '%{{value}}%' OR idfms ILIKE '%{{value}}%'"
+    var sqlTemplate = "SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM adoyle.capeprojectspolygons WHERE name ILIKE '%{{value}}%' OR projectid ILIKE '%{{value}}%'"
 
     var sql = Mustache.render(sqlTemplate, {value: value})
 
@@ -15,6 +15,59 @@ module.exports = {
     apiCall=encodeURI(apiCall)
 
     return $.getJSON(apiCall)
+
+  },
+
+  getVectorTileUrls: function(vizJsons) {
+    //takes an array of vizJsons
+    //returns an promise, resolve returns array of vector tile templates
+    //TODO add logic so this works with both anonymous and named maps
+
+
+    var promises = vizJsons.map(function(vizJson) {
+      return new Promise(function(resolve, reject) {
+        $.getJSON(vizJson, function(vizJsonData) {
+          console.log(vizJsonData)
+          var sourceOptions = vizJsonData.layers[1].options.layer_definition.layers[0].options
+
+
+          var layerConfig = {
+            version: "1.0.1",
+            layers: [
+              {
+                type: 'cartodb',
+                options: {
+                  sql: sourceOptions.sql,
+                  cartocss: sourceOptions.cartocss,
+                  cartocss_version: sourceOptions.cartocss_version
+                }
+              }
+            ]
+          }
+
+          console.log(layerConfig)
+          console.log(JSON.stringify(layerConfig))
+
+          $.ajax({
+            type: 'POST',
+            url: 'https://reallysimpleopendata.org/user/cpadmin/api/v1/map',
+            data: JSON.stringify(layerConfig),
+            dataType: 'text',
+            contentType: "application/json",
+            success: function(data) { 
+              data = JSON.parse(data);
+              var layergroupid = data.layergroupid
+
+              var template = "https://reallysimpleopendata.org/user/cpadmin/api/v1/map/" + layergroupid + "/0/{z}/{x}/{y}.mvt"
+
+              resolve(template)
+            }
+          })
+        })
+      })
+    })
+
+    return Promise.all(promises)
 
   }
 }

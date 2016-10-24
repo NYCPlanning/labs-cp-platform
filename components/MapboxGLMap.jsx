@@ -6,6 +6,7 @@ import extent from 'turf-extent'
 
 import Agencies from '../helpers/agencies.js'
 import Search from './Search.jsx'
+import carto from '../helpers/carto.js'
 
 
 var MapboxGLMap = React.createClass({
@@ -50,7 +51,7 @@ var MapboxGLMap = React.createClass({
     //build "in" membership filter from values array
     var filter = [
       "in",
-      "sponsoragency"
+      "sagency"
     ]
 
     values.map(function(value) {
@@ -64,7 +65,17 @@ var MapboxGLMap = React.createClass({
   },
 
   componentDidMount() {
-    this.renderMap();
+    var self=this
+
+    carto.getVectorTileUrls([
+        'https://reallysimpleopendata.org/user/cpadmin/api/v2/viz/92bc20a0-9a27-11e6-b600-0242ac110002/viz.json',
+        'https://reallysimpleopendata.org/user/cpadmin/api/v2/viz/ad142984-9a27-11e6-b600-0242ac110002/viz.json',
+    ])
+      .then(function(templates) {
+        self.templates = templates
+        self.renderMap();
+      })
+    
   },
 
   renderMap() {
@@ -86,19 +97,33 @@ var MapboxGLMap = React.createClass({
       map.addSource('pointFeatures', {
         'type': 'vector',
         "tiles": [
-          'https://reallysimpleopendata.org/user/cpadmin/api/v1/map/named/tpl_cc8de21c_96ff_11e6_b600_0242ac110002/mapnik/{z}/{x}/{y}.mvt'
+          self.templates[0]
         ]
       })
 
       map.addSource('polygonFeatures', {
         'type': 'vector',
         "tiles": [
-            'https://reallysimpleopendata.org/user/cpadmin/api/v1/map/named/tpl_89a2ad1a_96dd_11e6_b600_0242ac110002/mapnik/{z}/{x}/{y}.mvt'
+          self.templates[1]
         ]
       })
  
       //add map layers based on the data sources above
       //points gets two layers, one for fill, one for a pseudo-stroke
+
+      map.addLayer({
+        "id": "polygons",
+        'type':'fill',
+        "source": 'polygonFeatures',
+        "source-layer": "layer0",
+        'paint': {
+            'fill-color': Agencies.agencyColors,
+            'fill-opacity': 0.75,
+            'fill-outline-color': '#838763',
+            'fill-antialias': true 
+        }
+      });
+
       map.addLayer({
         "id": "points-outline",
         "source": 'pointFeatures',
@@ -133,18 +158,7 @@ var MapboxGLMap = React.createClass({
         }
       });
 
-      map.addLayer({
-        "id": "polygons",
-        'type':'fill',
-        "source": 'polygonFeatures',
-        "source-layer": "layer0",
-        'paint': {
-            'fill-color': Agencies.agencyColors,
-            'fill-opacity': 0.75,
-            'fill-outline-color': '#838763',
-            'fill-antialias': true 
-        }
-      });
+
 
       //popup on click
       map.on('click', function (e) {
@@ -254,8 +268,8 @@ var ProjectsPopup = React.createClass({
       return(
         <div className='popupRow' key={i} onClick={self.showDetails.bind(self, feature)}>
           
-          <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sponsoragency)}}>{d.sponsoragency}</span> 
-          {d.idfms} - {d.projectname}
+          <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
+          {d.projectid} - {d.name}
           
         </div>
       ) 
