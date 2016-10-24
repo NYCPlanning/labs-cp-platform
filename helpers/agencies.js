@@ -1,6 +1,6 @@
 module.exports={
   agencyColors: {
-    property: 'sponsoragency',
+    property: 'sagency',
     type: 'categorical',
     stops: [
       ['Others','#ffcc00'],

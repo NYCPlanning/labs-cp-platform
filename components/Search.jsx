@@ -4,12 +4,12 @@ import Autosuggest from 'react-autosuggest';
 import carto from '../helpers/carto.js'
 
 function getSuggestionValue(suggestion) {
-  return suggestion.properties.idfms + ' - ' + suggestion.properties.projectname;
+  return suggestion.properties.projectid + ' - ' + suggestion.properties.name;
 }
 
 function renderSuggestion(suggestion) {
   return (
-    <span>{suggestion.properties.idfms} - {suggestion.properties.projectname}</span>
+    <span>{suggestion.properties.projectid} - {suggestion.properties.name}</span>
   );
 }
 
@@ -38,7 +38,6 @@ var Search = React.createClass({
       .done(function(res) {
         var suggestions = res.features
 
-        console.log(suggestions)
 
         self.setState({
           suggestions: suggestions
