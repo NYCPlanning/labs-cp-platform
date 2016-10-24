@@ -31,12 +31,12 @@ var HomePage = React.createClass({
                 <div className="container">
                     <div className="row">
                         <h3 className="section-heading">Explore All Facilities</h3>    
-                        <div className="col-lg-4 col-lg-offset-4 text-center" >
+                        <div className="col-lg-10 col-lg-offset-1 text-center" >
                             <a href="/facilities/all">
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-building wow bounceIn text-primary" ></i>
-                                    <h4>All Facilities</h4>
-                                    <p className="text-muted">View an interactive map of all 34,000 facilities in the database.  Toggle Groups and Sub-groups to see only the data that is relevant to you.</p>
+                                    <h4>View an interactive map of all 34,000 facilities in the database.</h4>
+                                    <p className="text-muted">Toggle Groups and Sub-groups on and off to see only the data that is relevant to you.</p>
                                 </div>
                             </a>
                         </div>
@@ -99,9 +99,42 @@ var HomePage = React.createClass({
                         </div>
                     </div>
                     <div className="row">
-                        <h3 className="section-heading">Explore Customized Facility Groups</h3>
-                        <div className="col-md-12 text-center">
-                            <div className="btn btn-lg dcp-orange">Coming Soon!</div>
+                        <h3 className="section-heading">Explore Customized Facility Groupings</h3>
+                        <div className="col-sm-4 text-center">
+                            <a href="/facilities/domain/children_seniors_and_people_with_disabilities">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
+                                    <h4>Children, Seniors, & People with Disabilities</h4>
+                                    <p className="text-muted">All facilities focused on serving children, seniors, or people with disabilities.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-sm-4 text-center">
+                            <a href="/facilities/domain/community_facilities_ceqr">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-hospital-o wow bounceIn text-primary" ></i>
+                                    <h4>Community Facilities for CEQR Analysis</h4>
+                                    <p className="text-muted">Public or publicly funded schools, libraries, child care centers, health care facilities, and fire and police protection.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-sm-4 text-center">
+                            <a href="/facilities/domain/government_owned_or_operated">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
+                                    <h4>Government Owned or Operated</h4>
+                                    <p className="text-muted">Properties owned or operated by City, State, or Federal agencies.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="col-lg-4 col-lg-offset-4 text-center">
+                            <a href="mailto:capital@planning.nyc.gov">
+                                <div className="service-box">
+                                    <i className="fa fa-4x fa-envelope-o wow bounceIn text-primary" ></i>
+                                    <h4>Recommend Additional Groupings!</h4>
+                                    <p className="text-muted">What other groupings would be useful for you? Send us an email at Capital@planning.nyc.gov</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div className="row">
