@@ -121,7 +121,7 @@ var HomePage = React.createClass({
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
                                     <h4>Government Owned or Operated</h4>
-                                    <p className="text-muted"> All properties owned or operated by City, State, or Federal agencies.</p>
+                                    <p className="text-muted"> All facilities owned or operated by City, State, or Federal agencies.</p>
                                 </div>
                             </a>
                         </div>
