@@ -76,11 +76,11 @@ var vizJson = {
                        marker-width: 7;
                        marker-allow-overlap: true;
                      }
+                  #table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {
+                       marker-fill: #b0dae8;
+                     }
                   #table_20160930_facilitiesdraft[domain=\"Administration of Government\"] {
                        marker-fill: #da664f;
-                     }
-                  #table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {
-                       marker-fill: #e0fc83;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Health and Human Services\"] {
                        marker-fill: #b67eb7;

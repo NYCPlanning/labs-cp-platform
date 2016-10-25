@@ -105,7 +105,7 @@ var FacilitiesLayers = [
       {
         name: 'Childcare',
         description: 'Childcare centers overseen by NYC Administration for Childrens Services and NYC Dept. of Mental Health and Hygiene',
-        color: '#e0fc83',
+        color: '#b0dae8',
         children: [
           {
             name: 'Childcare',
@@ -291,13 +291,13 @@ var FacilitiesLayers = [
   {
     name: 'Core Infrastructure and Transportation',
     slug: 'core_infrastructure_and_transportation',
-    color: '#e0fc83',
-    subColor: '#f7ffe0',
+    color: '#b0dae8',
+    subColor: '#e3eef2',
     children: [
       {
         name: 'Transportation',
         description: 'Sites operated or overseen by Metropolitan Transportation Authority, Port Authority of NY and NJ, NYC Dept. of Transportation, NYC Dept. of Consumer Affairs, US Dept. of Transportation, and others',
-        color: '#e0fc83',
+        color: '#b0dae8',
         children: [
           {
             name: 'Parking Lots and Garages',
@@ -362,7 +362,7 @@ var FacilitiesLayers = [
       {
         name: 'Parking, Maintenance, and Storage',
         description: 'City owned or leased properites used for City vehicle and equipment-related operations by Dept. of Citywide Administrative Services',
-        color: '#e0fc83',
+        color: '#b0dae8',
         children: [
           {
             name: 'Maintenance',
