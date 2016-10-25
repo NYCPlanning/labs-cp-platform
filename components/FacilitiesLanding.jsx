@@ -37,7 +37,7 @@ var HomePage = React.createClass({
                         <h3 className="section-heading">Explore a Facility Domain</h3>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/health_and_human_services">
-                                <div className="service-box" style={{'background': '#bebada'}}>
+                                <div className="service-box" style={{'background': "#D3D3D3"}}>
                                     <i className="fa fa-4x fa-heart wow bounceIn text-primary" ></i>
                                     <h4>Health & Human Services</h4>
                                     <p className="text-muted">Health and social service providers, including hospitals, legal services, and homeless shelters.</p>
@@ -46,7 +46,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/education_child_welfare_and_youth">
-                                <div className="service-box" style={{'background': '#fdb462'}}>
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-graduation-cap wow bounceIn text-primary" ></i>
                                     <h4>Education, Child Welfare, & Youth</h4>
                                     <p className="text-muted">Providers of children and youth services and all schools, including higher education facilities.</p>
@@ -55,7 +55,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/parks_cultural_institutions_and_other_community_facilities">
-                                <div className="service-box" style={{'background': '#8dd3c7'}}>
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-pagelines wow bounceIn text-primary" ></i>
                                     <h4>Parks, Cultural, & Other Community Facilities</h4>
                                     <p className="text-muted">Cultural institutions, historic sites, recreational areas, parks, and nature preserves.</p>
@@ -64,7 +64,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/public_safety_emergency_services_and_administration_of_justice">
-                                <div className="service-box" style={{'background': '#80b1d3'}}>
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-ambulance wow bounceIn text-primary" ></i>
                                     <h4>Public Safety, Emergency Services, & Administration of Justice</h4>
                                     <p className="text-muted">Police services, emergency response, courthouses, and correctional facilities.</p>
@@ -73,7 +73,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/core_infrastructure_and_transportation">
-                                <div className="service-box" style={{'background': '#ffff36'}}>
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-bus wow bounceIn text-primary" ></i>
                                     <h4>Core Infrastructure & Transportation</h4>
                                     <p className="text-muted">Train and bus yards, parking lots, solid waste processors, and wastewater treatment plants.</p>
@@ -82,7 +82,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/administration_of_government">
-                                <div className="service-box" style={{'background': '#fb8072'}}>
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-bar-chart wow bounceIn text-primary" ></i>
                                     <h4>Administration of Government</h4>
                                     <p className="text-muted">Sites owned or leased by the City for administration, operations, and maintenance.</p>
@@ -94,7 +94,7 @@ var HomePage = React.createClass({
                         <h3 className="section-heading">Explore Customized Facility Groupings</h3>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/subset/government_owned_or_operated">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
                                     <h4>Government Owned or Operated</h4>
                                     <p className="text-muted"> All facilities owned or operated by City, State, or Federal agencies.</p>
@@ -103,7 +103,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/subset/community_facilities_ceqr">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-hospital-o wow bounceIn text-primary" ></i>
                                     <h4>Community Facilities for CEQR Analysis</h4>
                                     <p className="text-muted">Public or publicly funded schools, libraries, child care centers, health care facilities, and fire and police protection.</p>
@@ -112,7 +112,7 @@ var HomePage = React.createClass({
                         </div>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/subset/children_seniors_and_people_with_disabilities">
-                                <div className="service-box">
+                                <div className="service-box" style={{'background': '#D3D3D3'}}>
                                     <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
                                     <h4>Children, Seniors, & People with Disabilities</h4>
                                     <p className="text-muted">All facilities focused on serving children, seniors, or people with disabilities.</p>
