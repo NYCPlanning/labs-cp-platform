@@ -16,13 +16,17 @@ var HomePage = React.createClass({
         <Nav title='NYC Capital Planning Platform' auth={this.props.auth}/>
 
         <div className="main-content">
-            <section className="bg-primary" id="about" style={{backgroundImage: "url(gif/facilitiesdemo.gif)"}}>
+            <section className="bg-primary" id="about" style={{'backgroundImage': "url(gif/facilitiesdemo.gif)"}}>
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-8 col-lg-offset-2 text-center" style={{background: "#A0A0A0"}}>
+                        <div className="col-lg-8 col-lg-offset-2 text-center" style={{'background': "#A0A0A0"}}>
                             <h2 className="section-heading">The NYC Facilities Database</h2>
                             <hr className="light"/>
                             <p className="text-faded">A comprehensive dataset that captures the locations and descriptions of public and private facilities ranging from education to health care, social services, recreation, and solid waste management. All the facilities are operated, funded, or licensed by a City, State, or Federal agency.</p>                            
+                            <hr className="light"/>
+                            <a href="/facilities/all">
+                                <h4 style={{'color': '#DC6B27','background': '#D3D3D3','padding': '6px', 'border-radius': '6px'}}>Click here to explore an interactive map of all 34,000 facilities.</h4>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -30,17 +34,7 @@ var HomePage = React.createClass({
             <section className="content-selection">
                 <div className="container">
                     <div className="row">
-                        <h3 className="section-heading">Explore All Facilities </h3>
-                        <div className="col-lg-10 col-lg-offset-1 text-center">
-                            <a href="/facilities/all">
-                                <i className="fa fa-4x fa-building-o wow bounceIn text-primary" ></i>
-                                <h4>View an interactive map of all 34,000 facilities in the database.</h4>
-                                <p className="text-muted">Toggle Groups and Subgroups on and off to see only the data that is relevant to you.</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <h3 className="section-heading">Or Explore a Facility Domain</h3>
+                        <h3 className="section-heading">Explore a Facility Domain</h3>
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/domain/health_and_human_services">
                                 <div className="service-box" style={{'background': '#bebada'}}>
