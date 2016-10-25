@@ -11,10 +11,6 @@ var FacilitiesLayers = [
         color: '#bebada',
         children: [
           {
-            name: 'Chemical Dependency',
-            description: 'Monitored support, inpatient, outpatient, and crisis services'
-          },
-          {
             name: 'Hospitals and Clinics',
             description: 'Urgent care hospitals, diagnostic and treatment centers, and school-based health facilities'
           },
@@ -27,10 +23,13 @@ var FacilitiesLayers = [
             description: 'Nursing homes, hospice care, and supportive housing'
           },
           {
+            name: 'Chemical Dependency',
+            description: 'Monitored support, inpatient, outpatient, and crisis services'
+          },
+          {
             name: 'Other Health Care',
             description: 'Rehab, respite servies, vaccination services, AIDS counseling, and home health centers'
-          }
-          
+          }        
         ]
       },
       {
@@ -43,24 +42,24 @@ var FacilitiesLayers = [
             description: 'Shelters and homelessness prevention services'
           },
           {
-            name: 'Legal and Intervention Services',
-            description: 'Early intervention, criminal defense, and mediation services'
+            name: 'Senior Services',
+            description: 'Neighborhood senior centers, meal delivery programs, and other services for seniors'
           },
           {
             name: 'Programs for People with Disabilities',
             description: 'Specialized child care, caregiver support, and recreational services'
           },
           {
-            name: 'Senior Services',
-            description: 'Neighborhood senior centers, meal delivery programs, and other services for seniors'
+            name: 'Workforce Development',
+            description: 'Workforce 1 Centers and other vocational services for adults'
           },
           {
             name: 'Soup Kitchens and Food Pantries',
             description: 'Soup kitchens and food pantries'
           },
           {
-            name: 'Workforce Development',
-            description: 'Workforce 1 Centers and other vocational services for adults'
+            name: 'Legal and Intervention Services',
+            description: 'Early intervention, criminal defense, and mediation services'
           }
         ]
       }
@@ -73,24 +72,33 @@ var FacilitiesLayers = [
     subColor: 'rgba(253, 180, 98, 0.3)',
     children: [
       {
-        name: 'Camps',
-        description: 'Camps overseen by NYC Dept. of Mental Health and Hygiene',
-        color: '#bebada',
+        name: 'Schools',
+        description: 'Preschools, K-12 schools, and higher education overseen by NYC Dept. of Education and NYS Education Department',
+        color: '#ffff36',
         children: [
           {
-            name: 'Camps',
-            description: 'Preschool age and all age camps'
-          }
-        ]
-      },
-      {
-        name: 'Child Welfare',
-        description: 'Child feeding centers tracked by New York State Education Department',
-        color: '#fdb462',
-        children: [
+            name: 'Public Schools',
+            description: 'Public and charter elementary, middle, and high schools'
+          },
           {
-            name: 'Child Nutrition',
-            description: 'Summer and year-round child feeding sites'
+            name: 'Non-public Schools',
+            description: 'Private elementary, middle, and high schools'
+          },
+          {
+            name: 'Preschools',
+            description: 'Early Learn NYC and Universal Pre-K sites'
+          },
+          {
+            name: 'Other Schools Serving Students with Disabilities',
+            description: 'Specialized schools and educational services for students with disabilities'
+          },
+          {
+            name: 'Colleges or Universities',
+            description: 'Public and privately operated 2 and 4 year colleges and universities'
+          },
+          {
+            name: 'Proprietary Schools',
+            description: 'ESL schools and trade colleges'
           }
         ]
       },
@@ -117,33 +125,13 @@ var FacilitiesLayers = [
         ]
       },
       {
-        name: 'Schools',
-        description: 'Preschools, K-12 schools, and higher education overseen by NYC Dept. of Education and NYS Education Department',
-        color: '#ffff36',
+        name: 'Child Welfare',
+        description: 'Child feeding centers tracked by New York State Education Department',
+        color: '#fdb462',
         children: [
           {
-            name: 'Colleges or Universities',
-            description: 'Public and privately operated 2 and 4 year colleges and universities'
-          },
-          {
-            name: 'Non-public Schools',
-            description: 'Private elementary, middle, and high schools'
-          },
-          {
-            name: 'Preschools',
-            description: 'Early Learn NYC and Universal Pre-K sites'
-          },
-          {
-            name: 'Proprietary Schools',
-            description: 'ESL schools and trade colleges'
-          },
-          {
-            name: 'Public Schools',
-            description: 'Public and charter elementary, middle, and high schools'
-          },
-          {
-            name: 'Other Schools Serving Students with Disabilities',
-            description: 'Specialized schools and educational services for students with disabilities'
+            name: 'Child Nutrition',
+            description: 'Summer and year-round child feeding sites'
           }
         ]
       },
@@ -158,6 +146,17 @@ var FacilitiesLayers = [
           }
         ]
       },
+      {
+        name: 'Camps',
+        description: 'Camps overseen by NYC Dept. of Mental Health and Hygiene',
+        color: '#bebada',
+        children: [
+          {
+            name: 'Camps',
+            description: 'Preschool age and all age camps'
+          }
+        ]
+      }
     ]
   },
   {
@@ -167,17 +166,63 @@ var FacilitiesLayers = [
     subColor: 'rgba(141, 211, 199, 0.29)',
     children: [
       {
+        name: 'Parks and Plazas',
+        description: 'Properties operated by NYC Parks, NYC Dept. of Transportation, NYS Office of Parks, Recreation and Historic Preservation, NYS Dept. of Conservation, and City-State corporations and trusts',
+        color: '#80b1d3',
+        children: [
+          {
+            name: 'Parks',
+            description: 'Flagship parks, community parks, state parks, and city-state parks'
+          },
+          {
+            name: 'Recreation and Waterfront Sites',
+            description: 'Playgrounds, waterfront facilities, and recreation fields and courts'
+          },
+          {
+            name: 'Streetscapes, Plazas, and Malls',
+            description: 'Pedestrian plazas, malls, triangle plazas, and parkways'
+          },
+          {
+            name: 'Gardens',
+            description: 'Community gardens'
+          },
+          {
+            name: 'Preserves and Conservation Areas',
+            description: 'Nature areas, preserves, wetlands, and state forests'
+          },
+          {
+            name: 'Cemeteries',
+            description: 'Cemeteries operated by NYC Parks'
+          }
+        ]
+      },
+      {
+        name: 'Libraries',
+        description: 'Libraries operated by New York Public Libraries, Queens Public Libraries, and Brooklyn Public Libraries and academic institutions',
+        color: '#8dd3c7',
+        children: [
+          {
+            name: 'Public Libraries',
+            description: 'All public libaries'
+          },
+          {
+            name: 'Academic Libraries',
+            description: 'Libraries operated by academic institutions'
+          }
+        ]
+      },
+      {
         name: 'Cultural Institutions',
         description: 'Institutions licensed or funded by the NYC Dept. of Cultural Affairs',
         color: '#bebada',
         children: [
           {
-            name: 'Historical Societies',
-            description: 'Historical societies'
-          },
-          {
             name: 'Museums',
             description: 'Publicly and privately operated museums'
+          },
+          {
+            name: 'Historical Societies',
+            description: 'Historical societies'
           },
           {
             name: 'Other Cultural Institutions',
@@ -193,52 +238,6 @@ var FacilitiesLayers = [
           {
             name: 'Historical Sites',
             description: 'Historic house parks, State historic places, national monuments, and national memorials'
-          }
-        ]
-      },
-      {
-        name: 'Libraries',
-        description: 'Libraries operated by New York Public Libraries, Queens Public Libraries, and Brooklyn Public Libraries and academic institutions',
-        color: '#8dd3c7',
-        children: [
-          {
-            name: 'Academic Libraries',
-            description: 'Libraries operated by academic institutions'
-          },
-          {
-            name: 'Public Libraries',
-            description: 'All public libaries'
-          }
-        ]
-      },
-      {
-        name: 'Parks and Plazas',
-        description: 'Properties operated by NYC Parks, NYC Dept. of Transportation, NYS Office of Parks, Recreation and Historic Preservation, NYS Dept. of Conservation, and City-State corporations and trusts',
-        color: '#80b1d3',
-        children: [
-          {
-            name: 'Cemeteries',
-            description: 'Cemeteries operated by NYC Parks'
-          },
-          {
-            name: 'Gardens',
-            description: 'Community gardens'
-          },
-          {
-            name: 'Parks',
-            description: 'Flagship parks, community parks, state parks, and city-state parks'
-          },
-          {
-            name: 'Preserves and Conservation Areas',
-            description: 'Nature areas, preserves, wetlands, and state forests'
-          },
-          {
-            name: 'Recreation and Waterfront Sites',
-            description: 'Playgrounds, waterfront facilities, and recreation fields and courts'
-          },
-          {
-            name: 'Streetscapes, Plazas, and Malls',
-            description: 'Pedestrian plazas, malls, triangle plazas, and parkways'
           }
         ]
       }
@@ -262,6 +261,17 @@ var FacilitiesLayers = [
         ]
       },
       {
+        name: 'Public Safety',
+        description: 'Services provided by New York Police Dept. and New York Housing Authority Police',
+        color: '#8dd3c7',
+        children: [
+          {
+            name: 'Police Services',
+            description: 'Police stations, training facilities, and other support centers'
+          }
+        ]
+      },
+      {
         name: 'Justice and Corrections',
         description: 'Courts and correctional facilities operated by NYC. Dept. of Correction, NYS Unified Court System, NYS Dept. of Corrections and Community Supervision, US Courts, and Federal Bureau of Prisons',
         color: '#fdb462',
@@ -273,17 +283,6 @@ var FacilitiesLayers = [
           {
             name: 'Detention and Correctional',
             description: 'Correctional and dentention centers'
-          }
-        ]
-      },
-      {
-        name: 'Public Safety',
-        description: 'Services provided by New York Police Dept. and New York Housing Authority Police',
-        color: '#8dd3c7',
-        children: [
-          {
-            name: 'Police Services',
-            description: 'Police stations, training facilities, and other support centers'
           }
         ]
       }
@@ -301,24 +300,24 @@ var FacilitiesLayers = [
         color: '#bebada',
         children: [
           {
-            name: 'Airports and Heliports',
-            description: 'Publicly and privately operated airports, heliports, and seaplane bases'
+            name: 'Parking Lots and Garages',
+            description: 'Public and commercial parking lots and garages'
           },
           {
             name: 'Bus Depots and Terminals',
             description: 'School bus depots, MTA bus depots, and Port Authority bus terminals'
           },
           {
-            name: 'Parking Lots and Garages',
-            description: 'Public and commercial parking lots and garages'
+            name: 'Rail Yards and Maintenance',
+            description: 'Rail yards and maintenance facilities'
           },
           {
             name: 'Ports and Ferry Landings',
             description: 'Ferry landings, cruise terminals, and ports'
           },
           {
-            name: 'Rail Yards and Maintenance',
-            description: 'Rail yards and maintenance facilities'
+            name: 'Airports and Heliports',
+            description: 'Publicly and privately operated airports, heliports, and seaplane bases'
           }
         ]
       },
@@ -385,12 +384,12 @@ var FacilitiesLayers = [
         color: '#fdb462',
         children: [
           {
-            name: 'Miscellaneous Use',
-            description: 'Property without a categorized use'
-          },
-          {
             name: 'No Use',
             description: 'Property and structures without a designated use'
+          },
+          {
+            name: 'Miscellaneous Use',
+            description: 'Property without a categorized use'
           },
           {
             name: 'Undeveloped',
