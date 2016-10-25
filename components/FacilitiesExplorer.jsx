@@ -328,14 +328,7 @@ var aboutContent = (
 var splashContent = (
   <div>
     <h4>Welcome, Beta Tester!</h4>
-    <a href="/facilities/domain/health_and_human_services"><p>Health and Human Services</p></a>
-    <a href="/facilities/domain/education_child_welfare_and_youth"><p>Education, Child Welfare, and Youth</p></a>
-    <a href="/facilities/domain/parks_cultural_institutions_and_other_community_facilities"><p>Parks, Cultural Institutions, and Other Community Facilities</p></a>
-    <a href="/facilities/domain/public_safety_emergency_services_and_administration_of_justice"><p>Public Safety, Emergency Services, and Administration of Justice</p></a>
-    <a href="/facilities/domain/core_infrastructure_and_transportation"><p>Core Infrastructure and Transportation</p></a>
-    <a href="/facilities/domain/administration_of_government"><p>Administration of Government</p></a>
-    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to read more about the data powering this map <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">here</a>.</p> 
-    
-    <p>If you're seeing this message, it means we want your help to improve this product. Please email us at capital@planning.nyc.gov.</p>
+    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to read more about the data powering this map <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">here</a>.</p>     
+    <p>If you're seeing this message, it means we want your help improving this product. Please email us at capital@planning.nyc.gov.</p>
   </div>
 )
