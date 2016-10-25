@@ -99,11 +99,11 @@ var HomePage = React.createClass({
                     <div className="row">
                         <h3 className="section-heading">Explore Customized Facility Groupings</h3>
                         <div className="col-sm-4 text-center">
-                            <a href="/facilities/domain/children_seniors_and_people_with_disabilities">
+                            <a href="/facilities/domain/government_owned_or_operated">
                                 <div className="service-box">
-                                    <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
-                                    <h4>Children, Seniors, & People with Disabilities</h4>
-                                    <p className="text-muted">All facilities focused on serving children, seniors, or people with disabilities.</p>
+                                    <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
+                                    <h4>Government Owned or Operated</h4>
+                                    <p className="text-muted"> All facilities owned or operated by City, State, or Federal agencies.</p>
                                 </div>
                             </a>
                         </div>
@@ -117,11 +117,11 @@ var HomePage = React.createClass({
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
-                            <a href="/facilities/domain/government_owned_or_operated">
+                            <a href="/facilities/domain/children_seniors_and_people_with_disabilities">
                                 <div className="service-box">
-                                    <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
-                                    <h4>Government Owned or Operated</h4>
-                                    <p className="text-muted"> All facilities owned or operated by City, State, or Federal agencies.</p>
+                                    <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
+                                    <h4>Children, Seniors, & People with Disabilities</h4>
+                                    <p className="text-muted">All facilities focused on serving children, seniors, or people with disabilities.</p>
                                 </div>
                             </a>
                         </div>
