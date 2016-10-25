@@ -47,14 +47,54 @@ var vizJson = {
                      }
                     
                   ],
-                "template":"<div class=\"cartodb-tooltip-content-wrapper\">\n  <div class=\"cartodb-tooltip-content\">\n  <div class='name'>{{facilityname}}</div>\n  <div class='classification'><b>Facility Type:</b></div>\n  <div class='classification'>{{facilitytype}}</div>\n  <div class='classification'><b>Operator:</b></div>\n  <div class='classification'>{{operatorname}}</div>"
+                "template":
+                ` <div class=\"cartodb-tooltip-content-wrapper\">
+                  <div class=\"cartodb-tooltip-content\">
+                  <div class='name'>{{facilityname}}</div>
+                  <div class='classification'><b>Facility Type:</b></div>
+                  <div class='classification'>{{facilitytype}}</div>
+                  <div class='classification'><b>Operator:</b></div>
+                  <div class='classification'>{{operatorname}}</div>
+                `
                },
                "order":1,
                "visible":true,
                "options":{  
                   "sql":"select * from table_20160930_facilitiesdraft",
                   "layer_name":"table_20160930_facilitiesdraft",
-                  "cartocss":"/** this cartoCSS has been processed in order to be compatible with the new cartodb 2.0 */\n\n/** category visualization */#table_20160930_facilitiesdraft {\n     marker-fill-opacity: 0.8;\n     marker-line-color: #012700;\n     marker-line-width: 0.5;\n     marker-line-opacity: 0.9;\n     marker-placement: point;\n     marker-type: ellipse;\n     marker-width: 6;\n     marker-allow-overlap: true;\n}\n#table_20160930_facilitiesdraft[domain=\"Administration of Government\"] {\n     marker-fill: #fb8072;\n}\n#table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {\n     marker-fill: #ffff36;\n}\n#table_20160930_facilitiesdraft[domain=\"Health and Human Services\"] {\n     marker-fill: #bebada;\n}\n#table_20160930_facilitiesdraft[domain=\"Parks, Cultural, and Other Community Facilities\"] {\n     marker-fill: #8dd3c7;\n}\n#table_20160930_facilitiesdraft[domain=\"Public Safety, Emergency Services, and Administration of Justice\"] {\n     marker-fill: #80b1d3;\n}\n#table_20160930_facilitiesdraft[domain=\"Education, Child Welfare, and Youth\"] {\n     marker-fill: #fdb462;\n}",
+                  "cartocss":
+                  `
+                  /** this cartoCSS has been processed in order to be compatible with the new cartodb 2.0 */
+
+                  /** category visualization */#table_20160930_facilitiesdraft {
+                       marker-fill-opacity: 0.8;
+                       marker-line-color: #012700;
+                       marker-line-width: 0.5;
+                       marker-line-opacity: 0.9;
+                       marker-placement: point;
+                       marker-type: ellipse;
+                       marker-width: 6;
+                       marker-allow-overlap: true;
+                     }
+                  #table_20160930_facilitiesdraft[domain=\"Administration of Government\"] {
+                       marker-fill: #fb8072;
+                     }
+                  #table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {
+                       marker-fill: #ffff36;
+                     }
+                  #table_20160930_facilitiesdraft[domain=\"Health and Human Services\"] {
+                       marker-fill: #bebada;
+                     }
+                  #table_20160930_facilitiesdraft[domain=\"Parks, Cultural, and Other Community Facilities\"] {
+                       marker-fill: #82a67b;
+                     }
+                  #table_20160930_facilitiesdraft[domain=\"Public Safety, Emergency Services, and Administration of Justice\"] {
+                       marker-fill: #80b1d3;
+                     }
+                  #table_20160930_facilitiesdraft[domain=\"Education, Child Welfare, and Youth\"] {
+                       marker-fill: #fdb462;
+                     }
+                  `,
                   "cartocss_version":"2.1.1",
                   "interactivity":"cartodb_id,address,addressnumber,agencyclass1,agencyclass2,agencysource,area,areatype,bbl,bin,borough,boroughcode,buildingid,buildingname,capacity,capacitytype,children,city,colpusetype,creator,datatype,dateactive,datecreated,dateedited,dateinactive,datesourcereceived,datesourceupdated,disabilities,domain,dropouts,editor,facilitygroup,facilityname,facilitysubgroup,facilitytype,family,groupquarters,guid,homeless,id,idagency,idold,immigrants,inactivestatus,latitude,linkdata,linkdownload,longitude,notes,operatorabbrev,operatorname,operatortype,oversightabbrev,oversightagency,parkid,processingflag,refreshfrequency,refreshmeans,schoolorganizationlevel,senior,servicearea,sourcedatasetname,streetname,tags,unemployed,utilization,utilizationrate,xcoord,ycoord,youth,zipcode"
                }
