@@ -48,15 +48,22 @@ var MapboxGLMap = React.createClass({
   },
 
   applyFilters(values) {
-    //build "in" membership filter from values array
-    var filter = [
-      "in",
-      "sagency"
-    ]
+    console.log(values)
 
-    values.map(function(value) {
-      filter.push(value.value)
-    })
+    if(values.length > 0) {
+      //build "in" membership filter from values array
+      var filter = [
+        "in",
+        "sagency"
+      ]
+
+      values.map(function(value) {
+        filter.push(value.value)
+      })
+    } else {
+      var filter = null
+    }
+
 
 
     this.map.setFilter('points', filter);
@@ -214,7 +221,7 @@ var MapboxGLMap = React.createClass({
     return(
       <div id='map' ref='map'>
         <div className='legend mapOverlay'>
-          <h4>Managing Agency</h4>
+          <h4>Sponsor Agency</h4>
           {legendItems}
         </div>
         <div className='basemap mapOverlay'>
@@ -256,6 +263,24 @@ var ProjectsPopup = React.createClass({
     this.props.handleClick(feature)
   },
 
+  getInitialState() {
+    return({
+      visible:true
+    })
+  },
+
+  componentWillReceiveProps() {
+    this.setState({
+      visible: true
+    })
+  },
+
+  hide() {
+    this.setState({
+      visible: false
+    })
+  },
+
   render() {
     var self=this
 
@@ -265,7 +290,7 @@ var ProjectsPopup = React.createClass({
 
     var rows=this.props.features.map(function(feature, i) {
       var d=feature.properties
-      return(
+      return (
         <div className='popupRow' key={i} onClick={self.showDetails.bind(self, feature)}>
           
           <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
@@ -274,11 +299,20 @@ var ProjectsPopup = React.createClass({
         </div>
       ) 
     })
-    return(<div className={'popup mapOverlay'} style={{'left': point.x, 'top': point.y}}>
-      <div className='popupRowContainer'>
-       {rows}
-      </div>
-    </div>)
+
+    if(this.state.visible) {
+      return (
+        <div className={'popup mapOverlay'} style={{'left': point.x, 'top': point.y}}>
+          <div className='popupRowContainer'>
+            <div className="closeButton" onClick={this.hide}>&#10006;</div>
+           {rows}
+          </div>
+        </div>
+      )      
+    } else {
+      return <div></div>
+    }
+
   }
 })
 

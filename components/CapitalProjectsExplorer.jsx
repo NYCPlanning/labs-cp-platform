@@ -2,8 +2,8 @@ import React from 'react'
 import Crossfilter from 'crossfilter'
 import dc from 'dc'
 import {Button} from 'react-bootstrap'
-
-
+import Numeral from 'numeral'
+import Moment from 'moment'
 
 import Nav from './Nav.jsx'
 import Modal from './Modal.jsx'
@@ -12,6 +12,7 @@ import MapboxGLMap from './MapboxGLMap.jsx'
 import DcColumnChart from './DcColumnChart.jsx'
 import Agencies from '../helpers/agencies.js'
 import AgencySelector from './AgencySelector.jsx'
+import carto from '../helpers/carto.js'
 
 
 
@@ -46,32 +47,32 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   buildModalContent(feature) {
-
+    console.log(feature)
 
     var d = feature.properties
     return (
         <div className={'row'}> 
           <div className={'col-md-12'}>
             <h3>
-              {d.projectname} - {d.idfms}
+              {d.name} - {d.projectid}
             </h3>
               <div className="agencybadges">
                 <span 
                   className={'badge'} 
-                  style={{'backgroundColor': Agencies.getAgencyColor(d.sponsoragency)}}>{d.sponsoragency}
+                  style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}
                 </span>
-                { d.sponsoragency != d.managingagency ? 
+                { d.sagency != d.magency ? 
                   <div className='managedby'> 
                   <div className='managedby-text'>managed by</div>
                     <span 
                       className={'badge'} 
-                      style={{'backgroundColor': Agencies.getAgencyColor(d.managingagency)}}>{d.managingagency}
+                      style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.maagency}
                     </span>
                   </div> :
                   null
                 } 
               </div>
-              <div id="projectdescription">{d.projectdescription}</div> 
+              <div id="projectdescription">{d.descriptio}</div> 
           </div>
 
           <div className={'col-md-6'}>
@@ -84,18 +85,23 @@ var CapitalProjectsExplorer = React.createClass({
               <h4>General</h4>
               <dl className="dl-horizontal">
                 <dt>CurrentStatus</dt>
-                <dd>{d.currentstatus}</dd>
+                <dd>{d.astatus}</dd>
+
                 <dt>Contact</dt>
                 <dd>{d.contact}</dd>
-                <dt>FMS Project ID</dt>
-                <dd>{d.idfms}</dd>
-                <dt>Location Status</dt>
-                <dd>{d.locationstatus}</dd>
-                <dt>Source Agency</dt>
-                <dd>{d.sourceagency}</dd>
-                <dt>Source Dataset</dt>
-                <dd>{d.sourcedataset}</dd>
-           
+
+                <dt>MA + Project ID</dt>
+                <dd>{d.maprojid}</dd>
+
+                <dt>Contact</dt>
+                <dd>{d.contact}</dd>
+
+                <dt>Type</dt>
+                <dd>{d.type}</dd>
+
+                <dt>Category</dt>
+                <dd>{d.type}</dd>
+
               </dl> 
             </li>
 
@@ -103,11 +109,15 @@ var CapitalProjectsExplorer = React.createClass({
               <h4>Timeline</h4>
               <dl className="dl-horizontal">
                 <dt>Construction Start</dt>
-                <dd>{d.constructionstart}</dd>   
-                <dt>Construction Complete</dt>
-                <dd>{d.constructioncomplete}</dd>
-                <dt>Construction Complete FY</dt>
-                <dd>{d.fyconstructioncomplete}</dd>
+                <dd>{Moment(d.constart).format('MMMM YYYY')}</dd>  
+
+                <dt>Construction End</dt>
+                <dd>{Moment(d.conend).format('MMMM YYYY')}</dd>
+
+                <dt>Construction End FY</dt>
+                <dd>{d.fyconend}</dd>
+
+
 
               </dl>              
             </li>
@@ -116,15 +126,33 @@ var CapitalProjectsExplorer = React.createClass({
               <h4>Funding</h4>
               <dl className="dl-horizontal">
                 <dt>Funding Amount</dt>
-                <dd>{d.fundingamount}</dd>
+                <dd>{Numeral(d.fundamount).format('($ 0.00 a)')}</dd>
+
                 <dt>Funding Maximum</dt>
-                <dd>{d.fundingmax}</dd> 
+                <dd>{Numeral(d.fundmax).format('($ 0.00 a)')}</dd> 
+
                 <dt>Funding Minimum</dt>
-                <dd>{d.fundingmin}</dd> 
+                <dd>{Numeral(d.fundmin).format('($ 0.00 a)')}</dd> 
+
                 <dt>Funding Source</dt>
-                <dd>{d.fundingsource}</dd> 
+                <dd>{d.fundsource}</dd> 
+
                 <dt>Funding Status</dt>
-                <dd>{d.fundingstatus}</dd>  
+                <dd>{d.fundstatus}</dd>  
+              </dl>              
+            </li>
+
+            <li className="list-group-item">
+              <h4>Data Source</h4>
+              <dl className="dl-horizontal">
+                <dt>Source Agency</dt>
+                <dd>{d.source}</dd>
+
+                <dt>Source Dataset</dt>
+                <dd>{d.sourcedata}</dd>
+
+                <dt>Source Link</dt>
+                <dd>{d.sourcelink}</dd>
               </dl>              
             </li>
 
@@ -137,22 +165,27 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   handleMapClick(feature) {
+    var self=this
     console.log('handleMapClick', feature)
 
-    // //get feature for this guid
-    // var feature = this.props.data.features.filter(function(feature) {
-    //   return feature.properties.guid == guid
-    // })[0]
+    var tableName = feature.layer.source == 'pointFeatures' ? 'adoyle.capeprojectspoints' : 'adoyle.capeprojectspolygons'
 
    //make an api call to carto to get the full feature, build content from it, show modal
+   carto.getRow(tableName, feature.properties.cartodb_id)
+    .done(function(data) {
+      var feature = data.features[0]
 
-    // var modalContent = this.buildModalContent(feature)
+      var modalContent = self.buildModalContent(feature)
 
-    // this.showModal({
-    //   modalHeading: 'Capital Project Details',
-    //   modalContent: modalContent,
-    //   modalCloseText: 'Close'
-    // })
+      self.showModal({
+        modalHeading: 'Capital Project Details',
+        modalContent: modalContent,
+        modalCloseText: 'Close'
+      })
+
+    })
+
+
 
   },
 

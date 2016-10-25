@@ -18,12 +18,22 @@ var AgencySelector = React.createClass({
   },
 
   handleChange(values) {
+    //before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
+
+    var abbreviated = values.map(function(value) {
+      return {
+        value: value.value,
+        label: value.value
+      }
+    })
+
     this.setState({
-      values: values
+      values: abbreviated
     })
 
     this.props.updateFilters(values)
   },
+
 
   render() {
     return(
@@ -37,6 +47,7 @@ var AgencySelector = React.createClass({
               name="form-field-name"
               options={options}
               onChange={this.handleChange}
+              onInputChange={this.changeInput}
             />
           </div>
         </div>
@@ -50,7 +61,7 @@ module.exports=AgencySelector
 var options = [  
    {  
       "value":"ACS",
-      "label":"Administration for Children's Services - ACS"
+      "label":"Administration for Children's Services"
    },
    {  
       "value":"BBPC",
