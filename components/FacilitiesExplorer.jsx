@@ -67,32 +67,32 @@ var vizJson = {
                   /** this cartoCSS has been processed in order to be compatible with the new cartodb 2.0 */
 
                   /** category visualization */#table_20160930_facilitiesdraft {
-                       marker-fill-opacity: 0.8;
+                       marker-fill-opacity: 0.9;
                        marker-line-color: #012700;
                        marker-line-width: 0.5;
                        marker-line-opacity: 0.9;
                        marker-placement: point;
                        marker-type: ellipse;
-                       marker-width: 6;
+                       marker-width: 7;
                        marker-allow-overlap: true;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Administration of Government\"] {
-                       marker-fill: #fb8072;
+                       marker-fill: #da664f;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {
-                       marker-fill: #ffff36;
+                       marker-fill: #e0fc83;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Health and Human Services\"] {
-                       marker-fill: #bebada;
+                       marker-fill: #b67eb7;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Parks, Cultural, and Other Community Facilities\"] {
-                       marker-fill: #82a67b;
+                       marker-fill: #6f9568;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Public Safety, Emergency Services, and Administration of Justice\"] {
-                       marker-fill: #80b1d3;
+                       marker-fill: #3182bd;
                      }
                   #table_20160930_facilitiesdraft[domain=\"Education, Child Welfare, and Youth\"] {
-                       marker-fill: #fdb462;
+                       marker-fill: #f7ca00;
                      }
                   `,
                   "cartocss_version":"2.1.1",

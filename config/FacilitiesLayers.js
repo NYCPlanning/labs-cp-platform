@@ -2,13 +2,13 @@ var FacilitiesLayers = [
   {
     name: 'Health and Human Services',
     slug: 'health_and_human_services',
-    color: '#bebada',
-    subColor: 'rgba(190, 186, 218, 0.3)',
+    color: '#b67eb7',
+    subColor: '#f7e6f7',
     children: [
       {
         name: 'Health Care',
         description: 'Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Alcoholism and Substance Abuse Services',
-        color: '#bebada',
+        color: '#b67eb7',
         children: [
           {
             name: 'Hospitals and Clinics',
@@ -35,7 +35,7 @@ var FacilitiesLayers = [
       {
         name: 'Human Services',
         description: 'Services overseen by NYC Dept. of Homeless Services, NYC Dept. of Human Resources, NYC Mayorality, and others',
-        color: '#fdb462',
+        color: '#3182bd',
         children: [
           {
             name: 'Housing and Homeless Services',
@@ -68,13 +68,13 @@ var FacilitiesLayers = [
   {
     name: 'Education, Child Welfare, and Youth',
     slug: 'education_child_welfare_and_youth',
-    color: '#fdb462',
-    subColor: 'rgba(253, 180, 98, 0.3)',
+    color: '#f7ca00',
+    subColor: '#fff8dd',
     children: [
       {
         name: 'Schools',
         description: 'Preschools, K-12 schools, and higher education overseen by NYC Dept. of Education and NYS Education Department',
-        color: '#ffff36',
+        color: '#f7ca00',
         children: [
           {
             name: 'Public Schools',
@@ -105,7 +105,7 @@ var FacilitiesLayers = [
       {
         name: 'Childcare',
         description: 'Childcare centers overseen by NYC Administration for Childrens Services and NYC Dept. of Mental Health and Hygiene',
-        color: '#8dd3c7',
+        color: '#e0fc83',
         children: [
           {
             name: 'Childcare',
@@ -116,7 +116,7 @@ var FacilitiesLayers = [
       {
         name: 'Childrens Services',
         description: 'Services overseen by NYC Health and Human Services',
-        color: '#80b1d3',
+        color: '#da664f',
         children: [
           {
             name: 'Childrens Services',
@@ -127,7 +127,7 @@ var FacilitiesLayers = [
       {
         name: 'Child Welfare',
         description: 'Child feeding centers tracked by New York State Education Department',
-        color: '#fdb462',
+        color: '#5bb12f',
         children: [
           {
             name: 'Child Nutrition',
@@ -138,7 +138,7 @@ var FacilitiesLayers = [
       {
         name: 'Youth Services',
         description: 'Services overseen by NYC Dept. of Youth and Community Development',
-        color: '#fb8072',
+        color: '#b67eb7',
         children: [
           {
             name: 'Youth Services',
@@ -149,7 +149,7 @@ var FacilitiesLayers = [
       {
         name: 'Camps',
         description: 'Camps overseen by NYC Dept. of Mental Health and Hygiene',
-        color: '#bebada',
+        color: '#3182bd',
         children: [
           {
             name: 'Camps',
@@ -162,13 +162,13 @@ var FacilitiesLayers = [
   {
     name: 'Parks, Cultural, and Other Community Facilities',
     slug: 'parks_cultural_institutions_and_other_community_facilities',
-    color: '#8dd3c7',
-    subColor: 'rgba(141, 211, 199, 0.29)',
+    color: '#6f9568',
+    subColor: '#dfeddc',
     children: [
       {
         name: 'Parks and Plazas',
         description: 'Properties operated by NYC Parks, NYC Dept. of Transportation, NYS Office of Parks, Recreation and Historic Preservation, NYS Dept. of Conservation, and City-State corporations and trusts',
-        color: '#8dd3c7',
+        color: '#6f9568',
         children: [
           {
             name: 'Parks',
@@ -199,7 +199,7 @@ var FacilitiesLayers = [
       {
         name: 'Libraries',
         description: 'Libraries operated by New York Public Libraries, Queens Public Libraries, and Brooklyn Public Libraries and academic institutions',
-        color: '#80b1d3',
+        color: '#b67eb7',
         children: [
           {
             name: 'Public Libraries',
@@ -214,7 +214,7 @@ var FacilitiesLayers = [
       {
         name: 'Cultural Institutions',
         description: 'Institutions licensed or funded by the NYC Dept. of Cultural Affairs',
-        color: '#bebada',
+        color: '#f7ca00',
         children: [
           {
             name: 'Museums',
@@ -233,7 +233,7 @@ var FacilitiesLayers = [
       {
         name: 'Historical Sites',
         description: 'Sites operated by NYC Parks, NYS Office of Parks, Recreation and Historic Preservation, and US National Park Service',
-        color: '#fdb462',
+        color: '#da664f',
         children: [
           {
             name: 'Historical Sites',
@@ -246,13 +246,13 @@ var FacilitiesLayers = [
   {
     name: 'Public Safety, Emergency Services, and Administration of Justice',
     slug: 'public_safety_emergency_services_and_administration_of_justice',
-    color: '#80b1d3',
+    color: 'rgba(49,130,189,0.9)',
     subColor: 'rgba(128, 177, 211, 0.3)',
     children: [
       {
         name: 'Emergency Services',
         description: 'Services provided by Fire Dept. of New York',
-        color: '#bebada',
+        color: 'rgba(49,130,189,0.9)',
         children: [
           {
             name: 'Emergency Services',
@@ -263,7 +263,7 @@ var FacilitiesLayers = [
       {
         name: 'Public Safety',
         description: 'Services provided by New York Police Dept. and New York Housing Authority Police',
-        color: '#8dd3c7',
+        color: '#b67eb7',
         children: [
           {
             name: 'Police Services',
@@ -274,7 +274,7 @@ var FacilitiesLayers = [
       {
         name: 'Justice and Corrections',
         description: 'Courts and correctional facilities operated by NYC. Dept. of Correction, NYS Unified Court System, NYS Dept. of Corrections and Community Supervision, US Courts, and Federal Bureau of Prisons',
-        color: '#fdb462',
+        color: '#da664f',
         children: [
           {
             name: 'Courthouses and Judicial',
@@ -291,13 +291,13 @@ var FacilitiesLayers = [
   {
     name: 'Core Infrastructure and Transportation',
     slug: 'core_infrastructure_and_transportation',
-    color: '#ffff36',
-    subColor: 'rgba(255, 255, 54, 0.29)',
+    color: '#e0fc83',
+    subColor: '#f7ffe0',
     children: [
       {
         name: 'Transportation',
         description: 'Sites operated or overseen by Metropolitan Transportation Authority, Port Authority of NY and NJ, NYC Dept. of Transportation, NYC Dept. of Consumer Affairs, US Dept. of Transportation, and others',
-        color: '#bebada',
+        color: '#e0fc83',
         children: [
           {
             name: 'Parking Lots and Garages',
@@ -324,7 +324,7 @@ var FacilitiesLayers = [
       {
         name: 'Wastewater and Waste Management',
         description: 'Sites overseen and operated by NYC Dept. of Sanitation, NYC Dept. of Environmental Protection, NYC Business Integrity Commission, and NYS Dept. of Conservation',
-        color: '#fdb462',
+        color: '#da664f',
         children: [
           {
             name: 'Solid Waste Processing',
@@ -345,13 +345,13 @@ var FacilitiesLayers = [
   {
     name: 'Administration of Government',
     slug: 'administration_of_government',
-    color: '#fb8072',
+    color: '#da664f',
     subColor: 'rgba(251, 128, 114, 0.3)',
     children: [
       {
         name: 'Offices',
         description: 'All City owned or leased offices overseen by Dept. of Citywide Administrative Services',
-        color: '#bebada',
+        color: '#da664f',
         children: [
           {
             name: 'Offices',
@@ -362,7 +362,7 @@ var FacilitiesLayers = [
       {
         name: 'Parking, Maintenance, and Storage',
         description: 'City owned or leased properites used for City vehicle and equipment-related operations by Dept. of Citywide Administrative Services',
-        color: '#8dd3c7',
+        color: '#e0fc83',
         children: [
           {
             name: 'Maintenance',
@@ -381,7 +381,7 @@ var FacilitiesLayers = [
       {
         name: 'Other Property',
         description: 'City owned or leased property without a categorized use overseen by Dept. of Citywide Administrative Services',
-        color: '#fdb462',
+        color: '#b67eb7',
         children: [
           {
             name: 'No Use',
