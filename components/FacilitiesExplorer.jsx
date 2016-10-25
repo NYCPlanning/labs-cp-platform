@@ -6,6 +6,7 @@ import Modal from './Modal.jsx'
 import Link from 'react-router'
 import FacilitiesLayers from '../config/FacilitiesLayers.js'
 
+/* CREATING viz.json */
 
 var vizJson = {  
    "type":"layergroup",
@@ -65,7 +66,7 @@ var vizJson = {
 }
 
 
-
+/* BUILDING PAGE */
 
 var FacilitiesExplorer = React.createClass({
   getInitialState() {
@@ -76,35 +77,79 @@ var FacilitiesExplorer = React.createClass({
     })
   },
 
+  /* SETTING SQL FOR MAP CONTENTS */
+
   componentWillMount() {
-    //default is select *, and show all layers in layer selector
+
+    //default: select * and show all layers in layer selector
     this.layerStructure = FacilitiesLayers
     this.initialSQL = 'SELECT * FROM table_20160930_facilitiesdraft'
 
     //logic to modify initial sql and cartoCSS based on route
+    /*Domain Subsets*/
     var domain = this.props.params.domain
-
     if(domain) {
       var firstFive = domain.substr(0,5);
 
       var layerOptions = vizJson.options.layer_definition.layers[0].options
       this.initialSQL=layerOptions.sql="SELECT * FROM table_20160930_facilitiesdraft WHERE domain ILIKE '" + firstFive + "%'"
-
-
-
-
       this.layerStructure = FacilitiesLayers.filter(function(layer) {
         console.log(layer.slug, domain)
         return (layer.slug == domain)
       })
-
       layerOptions.cartocss = this.buildCartoCSS(this.layerStructure)
+    }
+
+    /*Custom Subset Queries*/
+    var subset = this.props.params.subset
+    if(subset) {
+      var config = {
+        government_owned_or_operated: {
+          sql: "SELECT * FROM table_20160930_facilitiesdraft WHERE operatortype='Public'"
+        },
+        community_facilities_ceqr: {
+          sql:
+          `
+          SELECT * FROM table_20160930_facilitiesdraft
+          WHERE facilitysubgroup = 'Public Schools'
+          OR facilitysubgroup = 'Public Libraries'
+          OR agencysource = 'NYCACS'
+          OR facilitygroup = 'Health Care'
+          OR facilitytype = 'Firehouse'
+          OR facilitytype = 'Police Station'
+          OR facilitytype = 'NYCHA Police Services'
+          `
+        },
+        children_seniors_and_people_with_disabilities: {
+          sql: 
+          `
+          SELECT * FROM table_20160930_facilitiesdraft
+          WHERE facilitygroup = 'Camps'
+          OR facilitygroup = 'Child Welfare'
+          OR facilitygroup = 'Childcare'
+          OR facilitygroup = 'Childrens Services'
+          OR facilitysubgroup = 'Non-public Schools'
+          OR facilitysubgroup = 'Other Schools Serving Students with Disabilities'
+          OR facilitysubgroup = 'Preschools'
+          OR facilitysubgroup = 'Public Schools'
+          OR facilitysubgroup = 'Senior Services'
+          OR facilitysubgroup = 'Programs for People with Disabilities'
+          OR children = 't'
+          OR senior = 't'
+          OR disabilities = 't'
+          `
+        }
+      }
+      var layerOptions = vizJson.options.layer_definition.layers[0].options
+      this.initialSQL=layerOptions.sql=config[subset].sql
     }
 
     console.log(vizJson)
   },
 
   buildCartoCSS(layerStructure) {
+    
+    /* DEFINING BASIC SYMBOLOGY */
     var cartocss = 
       `#table_20160930_facilitiesdraft {
          marker-fill-opacity: 0.8;
@@ -117,6 +162,7 @@ var FacilitiesExplorer = React.createClass({
          marker-allow-overlap: true;
       }`
 
+    /* CREATING LAYER STRUCTURE */
     layerStructure[0].children.map(function(group, i) {
       var groupRuleTemplate =
         `
@@ -132,7 +178,6 @@ var FacilitiesExplorer = React.createClass({
 
       cartocss += groupRule + '\n'
     })
-
 
     console.log(cartocss)
     return cartocss
@@ -153,6 +198,8 @@ var FacilitiesExplorer = React.createClass({
     this.refs.map.setSQL(sql)
   },
 
+  /* "ABOUT" MODAL */
+
   showAbout() {
     this.showModal({
       modalHeading: 'About this Tool',
@@ -160,6 +207,9 @@ var FacilitiesExplorer = React.createClass({
       modalCloseText: 'Close'
     })
   },
+
+  /* "FACILITIES DETAILS" MODAL */
+  /* Creates each section of the modal as a variable, then compiles them in the "content" var */
 
   showModal(options) {
     this.setState(options)
@@ -236,7 +286,6 @@ var FacilitiesExplorer = React.createClass({
       )
     }
 
-
     var content = (
       <div>
         <h3>{d.facilityname}</h3>
@@ -254,7 +303,6 @@ var FacilitiesExplorer = React.createClass({
       modalContent: content,
       modalCloseText: 'Close'
     })
-
 
   },
 
@@ -296,48 +344,51 @@ var FacilitiesExplorer = React.createClass({
 
 module.exports=FacilitiesExplorer
 
+/* SETTING THE CONTENT OF THE "ABOUT" MODAL IN TOP NAV BAR */
 
 var aboutContent = (
   <div>
     <h4>What's included?</h4>
-            <p>
-              The City Planning Facilities Database (FacDB), a data product produced by the New York City (NYC) Department of City Planning (DCP) Capital Planning Division, captures the location, type, and capacity of public and private facilities ranging across six domains:
-              <ul type={"disc"}>
-                <li>Health Care and Human Services</li>
-                <li>Youth, Education, and Child Welfare</li>
-                <li>Public Safety, Emergency Services, and Administration of Justice</li>
-                <li>Core Infrastructure and Transportation</li>
-                <li>Parks, Cultural, and Other Community Facilities</li>
-                <li>Administration of Government (See note in Disclaimers)</li>
-              </ul>
-              Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 31,000 facilities throughout NYC. Details on the facility categories, fields in the database, the database update process, and data sources is provided on NYC Planning’s <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Capital Planning Docs</a> site.
-            </p>
+    <p>
+      The City Planning Facilities Database (FacDB), a data product produced by the New York City (NYC) Department of City Planning (DCP) Capital Planning Division, captures the location, type, and capacity of public and private facilities ranging across six domains:
+      <ul type={"disc"}>
+        <li>Health Care and Human Services</li>
+        <li>Youth, Education, and Child Welfare</li>
+        <li>Public Safety, Emergency Services, and Administration of Justice</li>
+        <li>Core Infrastructure and Transportation</li>
+        <li>Parks, Cultural, and Other Community Facilities</li>
+        <li>Administration of Government (See note in Disclaimers)</li>
+      </ul>
+      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 31,000 facilities throughout NYC. Details on the facility categories, fields in the database, the database update process, and data sources is provided on NYC Planning’s <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Capital Planning Docs</a> site.
+    </p>
 
-            <h4>How is this useful?</h4>
-            <p>
-              This data resource provides agencies and communities with easy access to data and neighborhood context needed for site planning, assessing service delivery, preparing neighborhood plans, or informing capital investment decisions. The facilities and program sites are generally operated, funded, licensed, or certified by a City, State, or Federal government agency.
-            </p>
-            <p>
-              The facilities which are included are valuable for planning purposes because of the social services they provide and their role in land use typology which impacts activity in the neighborhood. For example parking lots and garages (including commerical garages) are captured in the database, both because they are an asset that residents and visitors use and because they could indicate increased vehicular traffic in the area.
-            </p>
+    <h4>How is this useful?</h4>
+    <p>
+      This data resource provides agencies and communities with easy access to data and neighborhood context needed for site planning, assessing service delivery, preparing neighborhood plans, or informing capital investment decisions. The facilities and program sites are generally operated, funded, licensed, or certified by a City, State, or Federal government agency.
+    </p>
+    <p>
+      The facilities which are included are valuable for planning purposes because of the social services they provide and their role in land use typology which impacts activity in the neighborhood. For example parking lots and garages (including commerical garages) are captured in the database, both because they are an asset that residents and visitors use and because they could indicate increased vehicular traffic in the area.
+    </p>
 
-            <h4>Limitations and Disclaimers</h4>
-            <p>
-              The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. For more detailed information on a specific facility please reach out to the respective oversight agency.
-            </p>
-            <p>
-              <b>Duplicates.</b> Please be aware that this beta version of the database also includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these duplicate records and retain the most up-to-date and detailed record.
-            </p>
-            <p>
-              <b>Admin. of Government.</b> Please note that this domain currently only contains data from NYPD and FDNY in addition to a few DPR properties. After the 2016 version of the <a href="https://www1.nyc.gov/site/planning/about/publications/colp.page">City-Owned and Leased Properties</a> (COLP) database is realeased, all of its contents will also be added to FacDB.
-            </p>
+    <h4>Limitations and Disclaimers</h4>
+    <p>
+      The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. For more detailed information on a specific facility please reach out to the respective oversight agency.
+    </p>
+    <p>
+      <b>Duplicates.</b> Please be aware that this beta version of the database also includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these duplicate records and retain the most up-to-date and detailed record.
+    </p>
+    <p>
+      <b>Admin. of Government.</b> Please note that this domain currently only contains data from NYPD and FDNY in addition to a few DPR properties. After the 2016 version of the <a href="https://www1.nyc.gov/site/planning/about/publications/colp.page">City-Owned and Leased Properties</a> (COLP) database is realeased, all of its contents will also be added to FacDB.
+    </p>
 
-            <h4>Feedback</h4>
-            <p>
-              We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at capital@planning.nyc.gov with any suggestions.
-            </p>
+    <h4>Feedback</h4>
+    <p>
+      We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at capital@planning.nyc.gov with any suggestions.
+    </p>
   </div>
 )
+
+/* SETTING THE CONTENT OF THE SPLASH "WELCOME" MODAL */
 
 var splashContent = (
   <div>
