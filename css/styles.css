@@ -206,6 +206,26 @@ ul.navbar-right {
   cursor: pointer;
 }
 
+/*from http://enjoycss.com/gallery/shapes/gn*/
+.popup .closeButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #db691b;
+  border-radius: 10px;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  color: white;
+  line-height: 15px;
+  font-size: 9px;
+}
+
+.popup .closeButton:hover {
+  cursor: pointer;
+  background-color: #af4c0f;
+}
+
 .badge {
   min-width: 50px;
   margin-right: 10px;

@@ -1,47 +1,15 @@
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import turf from 'turf'
 import extent from 'turf-extent'
 
-
-import Search from './Search.jsx'
-
+import Agencies from '../helpers/agencies.js'
 
 
-//object used in mapboxgl data-driven styling
-var agencyColors = {
-  property: 'sponsoragency',
-  type: 'categorical',
-  stops: [
-    ['Others','#8dd3c7'],
-    ['SCA','#ffffb3'],
-    ['DOT','#bebada'],
-    ['DEP','#fb8072'],
-    ['DCLA','#80b1d3'],
-    ['NYPL','#fdb462'],
-    ['BPL','#b3de69'],
-    ['DPR','#fccde5'],
-    ['DCAS','#d9d9d9'],
-    ['FDNY','#bc80bd']
-  ]
-}
 
-//uses the agencyColors object for one-off color assignments
-//used for adding inline styles to non-map things
-function getAgencyColor(agency) {
-  var match = agencyColors.stops.filter(function(stop) {
-    return stop[0] == agency;
-  })
-  return match.length>0 ? match[0][1] : '#8dd3c7';
-}
 
-var Map = React.createClass({
-  getInitialState() {
-    return {
-      basemap: 'light'
-    }
-  },
+
+var ModalMap = React.createClass({
+
 
   flyMap() {
     var self=this;
@@ -49,9 +17,9 @@ var Map = React.createClass({
     var feature = this.props.data;
 
     //single points get flyTo(), everything else gets fitBounds()
-    if(feature.geometry.type=='MultiPoint' && feature.geometry.coordinates.length == 1) {
+    if(feature.geometry.type=='Point') {
       this.map.flyTo({
-        center: feature.geometry.coordinates[0],
+        center: feature.geometry.coordinates,
         zoom: 14
       })
     } else {
@@ -64,18 +32,6 @@ var Map = React.createClass({
   },
 
   render() {
-
-    //dynamically create a legend
-    var legendItems = agencyColors.stops.map(function(stop,i) {
-      return (
-          <div key={i} className='legendItem'>
-            <div className='colorBox' style={{'backgroundColor': stop[1]}}/>
-            <div className='legendItemText'>{stop[0]}</div> 
-          </div>
-      )
-    })
-
-    //draw map, legend, basemap toggle, and searchbox
     return(
       <div id='modalmap'>
       </div>
@@ -104,7 +60,7 @@ var Map = React.createClass({
 
     this.map.on('style.load', function() {
 
-      if(self.props.data.geometry.type == 'MultiPoint') {
+      if(self.props.data.geometry.type == 'Point') {
         map.addSource('pointFeatures', {
           'type': 'geojson',
           'data': self.props.data
@@ -121,8 +77,7 @@ var Map = React.createClass({
                   [15,6]
                 ]
               },
-              "circle-color": '#8dd3c7',
-              "circle-color": agencyColors,
+              "circle-color": Agencies.agencyColors,
               "circle-opacity": 0.8
           }
         });
@@ -137,7 +92,7 @@ var Map = React.createClass({
           'type':'fill',
           "source": 'polygonFeatures',
           'paint': {
-              'fill-color': agencyColors,
+              'fill-color': Agencies.agencyColors,
               'fill-opacity': 0.8,
           }
           
@@ -149,4 +104,4 @@ var Map = React.createClass({
   }
 });
 
-module.exports=Map;
+module.exports=ModalMap;
