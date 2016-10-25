@@ -93,7 +93,7 @@ var HomePage = React.createClass({
                     <div className="row">
                         <h3 className="section-heading">Explore Customized Facility Groupings</h3>
                         <div className="col-sm-4 text-center">
-                            <a href="/facilities/domain/government_owned_or_operated">
+                            <a href="/facilities/subset/government_owned_or_operated">
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
                                     <h4>Government Owned or Operated</h4>
@@ -102,7 +102,7 @@ var HomePage = React.createClass({
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
-                            <a href="/facilities/domain/community_facilities_ceqr">
+                            <a href="/facilities/subset/community_facilities_ceqr">
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-hospital-o wow bounceIn text-primary" ></i>
                                     <h4>Community Facilities for CEQR Analysis</h4>
@@ -111,7 +111,7 @@ var HomePage = React.createClass({
                             </a>
                         </div>
                         <div className="col-sm-4 text-center">
-                            <a href="/facilities/domain/children_seniors_and_people_with_disabilities">
+                            <a href="/facilities/subset/children_seniors_and_people_with_disabilities">
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
                                     <h4>Children, Seniors, & People with Disabilities</h4>
