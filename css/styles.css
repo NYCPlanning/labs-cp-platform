@@ -85,7 +85,7 @@ nav {
 }
 
 .navbar-default {
-  background-color: rgba(235, 235, 235, 0.92);
+  background-color: rgba(255, 255, 255, 0.94);
 }
 
 
@@ -109,7 +109,7 @@ ul.navbar-right {
 }
 
 #navbar {
-  border-bottom: 1.5px solid #db691b;
+  border-bottom: 0.5px solid rgba(219, 105, 27, 0);
 }
 .navbar-brand {
   font-size: 28px;
@@ -464,7 +464,17 @@ body:after {
 /*Homepage*/
 
 .portfolio {
-  margin-bottom: 30px;
+  width: 100%;
+  padding:0;
+}
+
+.section-portfolio {
+  padding: 0;
+}
+
+.portfolio-item {
+  padding: 0;
+  height: 380px;
 }
 
 .portfolio-item h3 a{
@@ -472,6 +482,68 @@ body:after {
 }
 
 .portfolio-item h3 {
+  margin: 0;
+}
+
+.portfolio-item .title {
+  background-color: #d96b27;
+  padding: 11px 20px;
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  margin: 0 auto;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.portfolio-item .hover-panel {
+  display: none;
+  background-color: #d96b27;
+  padding: 11px 20px;
+  color: #fff;
+  top: 60px;
+  left: 60px;
+  right: 60px;
+  bottom: 60px;
+  position: absolute;
+  margin: 0 auto;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.portfolio-item:hover .hover-panel {
+  display: block;
+}
+
+.portfolio-item:hover .title {
+  display: none;
+}
+
+.hover-panel-explore {
+  background: #FFF;
+  color: #db691b;
+  display: inline-block;
+  padding: 10px 19px;
+  opacity: 1;
+}
+
+.hover-panel-explore .fa {
+  font-weight: 800;
+  font-size: 24px;
+  padding-left: 10px;
+}
+
+
+.portfolio-image {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
   margin-bottom: 15px;
 }
 
@@ -517,20 +589,30 @@ body:after {
   
 }
 
+.headline-section {
+  background-color: #FFF;
+  color: #d96b27;
+}
+
+.headline-section h2 {
+  margin-bottom: 50px;
+}
+
+.headline-section p {
+  color: #000;
+}
+
+.headline-section a {
+  color: #8d8d8d;
+}
+
 .bg-primary a:hover {
   border-bottom: none;
   border-bottom: 1.5px dashed #FFF;
   cursor: pointer;
 }
 
-.portfolio-image {
-  display: block;
-  max-width: 100%;
-  height: 200px;
-  width: 100%;
-  background-size: cover;
-  margin-bottom: 15px;
-}
+
 
 /*Footer inspired by https://www.engineyard.com/*/
 
