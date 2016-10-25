@@ -168,7 +168,7 @@ var FacilitiesLayers = [
       {
         name: 'Parks and Plazas',
         description: 'Properties operated by NYC Parks, NYC Dept. of Transportation, NYS Office of Parks, Recreation and Historic Preservation, NYS Dept. of Conservation, and City-State corporations and trusts',
-        color: '#80b1d3',
+        color: '#8dd3c7',
         children: [
           {
             name: 'Parks',
@@ -199,7 +199,7 @@ var FacilitiesLayers = [
       {
         name: 'Libraries',
         description: 'Libraries operated by New York Public Libraries, Queens Public Libraries, and Brooklyn Public Libraries and academic institutions',
-        color: '#8dd3c7',
+        color: '#80b1d3',
         children: [
           {
             name: 'Public Libraries',
