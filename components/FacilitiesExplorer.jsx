@@ -170,6 +170,25 @@ var FacilitiesExplorer = React.createClass({
     var d = data
     console.log(d)
 
+    var Categories = function() {
+      return(
+        <div>
+          <p className='modal-label'>Categories</p>
+            <dl className="dl-horizontal">
+              <dt>Domain</dt>
+              <dd>{d.domain}</dd>
+              <dt>Group</dt>
+              <dd>{d.facilitygroup}</dd>
+              <dt>Subgroup</dt>
+              <dd>{d.facilitysubgroup}</dd>
+              <dt>Type</dt>
+              <dd>{d.facilitytype}</dd>           
+            </dl>
+          <hr/>
+        </div>
+      )
+    }
+
     var CapacityUtilization = function() {
       return (
         <div>
@@ -180,58 +199,53 @@ var FacilitiesExplorer = React.createClass({
               <dt>Utilization</dt>
               <dd>{d.utilization ? d.utilization + ' ' + d.utilizationtype : 'Unknown'}</dd>
               {d.capacity && d.utilization ? <dt>Utilization Rate</dt> : null}
-              {d.capacity && d.utilization ? <dd>{d.utilization/d.capacity}</dd> : null}
-              
+              {d.capacity && d.utilization ? <dd>{d.utilization/d.capacity}</dd> : null}              
             </dl>
           <hr/>
         </div>
       ) 
     }
-
   
-  var OperationsAndOversight = function() {
-    return(
-      <div>
-        <p className='modal-label'>Operations and Oversight</p>
-          <dl className="dl-horizontal">
-            <dt>Operator</dt>
-            <dd>{d.operatorabbrev + ' - ' + d.operatorname}</dd>
-            <dt>Oversight Agency</dt>
-            <dd>{d.oversightabbrev + ' - ' + d.oversightagency}</dd>
-            
-          </dl>
-        <hr/>
-      </div>
+    var OperationsAndOversight = function() {
+      return(
+        <div>
+          <p className='modal-label'>Operations & Oversight</p>
+            <dl className="dl-horizontal">
+              <dt>Operator</dt>
+              <dd>{d.operatorabbrev + ' - ' + d.operatorname}</dd>
+              <dt>Oversight Agency</dt>
+              <dd>{d.oversightabbrev + ' - ' + d.oversightagency}</dd>            
+            </dl>
+          <hr/>
+        </div>
+      )
+    }
 
-    )
-  }
+    var DataSource = function() {
+      return(
+        <div>
+          <p className='modal-label'>Data Source</p>
+            <dl className="dl-horizontal">
+              <dt>Source Dataset</dt>
+              <dd>{d.agencysource + ' - ' + d.sourcedatasetname}</dd>
+              <dt>Last Update</dt>
+              <dd>{d.datesourceupdated}</dd>           
+            </dl>
+          <hr/>
+        </div>
+      )
+    }
 
 
     var content = (
       <div>
         <h3>{d.facilityname}</h3>
         <p>{d.address}</p>
-
-        <hr/>
-        <p className='modal-label'>Categories</p>
-        <dl className="dl-horizontal">
-          <dt>Domain</dt>
-          <dd>{d.domain}</dd>
-          <dt>Group</dt>
-          <dd>{d.facilitygroup}</dd>
-          <dt>Subgroup</dt>
-          <dd>{d.facilitysubgroup}</dd>
-          <dt>Type</dt>
-          <dd>{d.facilitytype}</dd>
-          
-        </dl> 
-
-       <CapacityUtilization/>
-       <OperationsAndOversight/>
-
-        <p className='modal-label'>Data Source</p>
-        <p>Source Dataset: {d.agencysource + ' - ' + d.sourcedatasetname}</p>
-        <p>Last Update: {d.datesourceupdated}</p>
+        <hr/> 
+        <Categories/>
+        <CapacityUtilization/>
+        <OperationsAndOversight/>
+        <DataSource/>
       </div>
     )
 
