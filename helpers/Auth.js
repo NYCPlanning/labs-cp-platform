@@ -17,7 +17,7 @@ export default class AuthService {
         responseType: 'token'
       },
       theme: {
-        logo: 'img/logo_80.png'
+        logo: '/img/logo_80.png'
       },
       languageDictionary: {
         title: "Please log in with your NYC email address"
