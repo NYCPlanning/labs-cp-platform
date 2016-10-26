@@ -120,11 +120,11 @@ var HomePage = React.createClass({
                             </a>
                         </div>
                         <div className="col-lg-4 col-lg-offset-4 text-center">
-                            <a href="mailto:capital@planning.nyc.gov">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">
                                 <div className="service-box">
                                     <i className="fa fa-4x fa-envelope-o wow bounceIn text-primary" ></i>
                                     <h4>Recommend Additional Groupings!</h4>
-                                    <p className="text-muted">What other groupings would be useful for you? Send us an email at Capital@planning.nyc.gov</p>
+                                    <p className="text-muted">What other groupings would be useful for you? Please share your suggestions.</p>
                                 </div>
                             </a>
                         </div>

@@ -4,10 +4,9 @@ import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 
 
-var colors = ['#bebada','#fdb462', '#8dd3c7', '#80b1d3', '#ffff36', '#fb8072' ]
-
-
 var LayerSelector = React.createClass({
+
+  /* SETTING INITIAL STATE */
 
   getInitialState() {
     return ({
@@ -19,7 +18,8 @@ var LayerSelector = React.createClass({
   },
 
   componentWillMount() {
-    //to start, add checked = true to everything in the layerStructure object
+    /* interates through each domain in the layerStructure object */
+    /* to start, add checked = true to everything in the layerStructure object */
     var layerStructure = this.props.layerStructure.map(function(domain) {
       domain.checked = true
       domain.children = domain.children.map(function(group) {
@@ -36,23 +36,25 @@ var LayerSelector = React.createClass({
     this.setState({
       layers: layerStructure
     })
-
   },
 
+  /*checks to see if there is only one domain.*/
+  /*if it's a domain subset page (only one domain), expands all and then requests that count be updated*/
   componentDidMount() {
-    //if a domain page, expand all
     if(this.props.layerStructure.length == 1) {
       this.expandAll()
     }
-
     this.updateCounts() 
   },
 
+  /*NEED TO FIND ANOTHER WAY TO CHECK IF IT'S A SUBSET*/
+
+  
   updateCounts() {
     var self=this
 
-    //get a count of "select all"
-    var SQL = encodeURI(this.props.initialSQL)
+    /* get a count of "select all" from entire dataset */
+    var SQL = encodeURI(this.props.initialSQL) /* where does initial SQL get defined? */
     var totalCountSQL = "SELECT count(*) as total FROM (" + SQL + ") a"
 
     this.cartoSQLCall(totalCountSQL, function(data) {
