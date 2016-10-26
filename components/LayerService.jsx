@@ -66,8 +66,8 @@ export default class LayerService {
   }
 
   getConfig(layerName) {
-    if (layerName == 'pipeline') return 'https://reallysimpleopendata.org/user/nchatterjee/api/v2/viz/02c7c7e4-8be8-11e6-bc56-0242ac110002/viz.json'
-    else if (layerName == 'facilities') return 'https://reallysimpleopendata.org/user/hkates/api/v2/viz/c8d2c9f6-7a00-11e6-85c0-0242ac110002/viz.json'
+    if (layerName == 'pipeline') return 'https://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/02c7c7e4-8be8-11e6-bc56-0242ac110002/viz.json'
+    else if (layerName == 'facilities') return 'https://carto.capitalplanning.nyc/user/hkates/api/v2/viz/c8d2c9f6-7a00-11e6-85c0-0242ac110002/viz.json'
   }
 }
 
