@@ -211,18 +211,15 @@ var aboutContent = (
 
     <h4>Feedback</h4>
 
-    <p>We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at <a href="mailto:CapitalPlanning_DL@planning.nyc.gov"> CapitalPlanning_DL@planning.nyc.gov</a> with any suggestions.</p>
+    <p>We are constantly looking for ways to improve this product. <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a> with Capital Planning.</p>
 
   </div>
 )
 
 var splashContent = (
   <div>
-    <h4>Welcome Beta Tester!</h4>
-    <p>This interactive explorer of the new Housing Pipeline Dataset is currently under development by the Department of City Planning. 
-    You are likely to find some bugs and even some less-than-accurate data. These are works in progress!</p> 
-    
-    <p>If you're here, it means we want to improve this product, and its underlying data, with your help! Please get use the feedback link in the menu bar to let us know what you think.</p>
+    <h4>Welcome, Beta Tester!</h4>
+    <p>This interactive explorer of the new Housing Pipeline Dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress.
+    <p>If you're seeing this message, it means we want your help improving this product! <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a>.</p>
   </div>
 )
-
