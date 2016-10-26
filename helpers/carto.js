@@ -46,7 +46,7 @@ module.exports = {
 
           $.ajax({
             type: 'POST',
-            url: 'https://reallysimpleopendata.org/user/cpadmin/api/v1/map',
+            url: 'https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map',
             data: JSON.stringify(layerConfig),
             dataType: 'text',
             contentType: "application/json",
@@ -54,7 +54,7 @@ module.exports = {
               data = JSON.parse(data);
               var layergroupid = data.layergroupid
 
-              var template = "https://reallysimpleopendata.org/user/cpadmin/api/v1/map/" + layergroupid + "/0/{z}/{x}/{y}.mvt"
+              var template = "https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map/" + layergroupid + "/0/{z}/{x}/{y}.mvt"
 
               resolve(template)
             }
@@ -87,7 +87,7 @@ module.exports = {
 
   sqlAPICall(sql) {
 
-    var apiCallTemplate = "https://reallysimpleopendata.org/user/cpadmin/api/v2/sql?q={{{sql}}}&format=geojson"
+    var apiCallTemplate = "https://carto.capitalplanning.nyc/user/cpadmin/api/v2/sql?q={{{sql}}}&format=geojson"
     var apiCall = Mustache.render(apiCallTemplate, {sql:sql})
     apiCall=encodeURI(apiCall)
 
