@@ -188,6 +188,7 @@ ul.navbar-right {
   -webkit-box-shadow: 1px 1px 2px 0px #bdbdbd;
   -moz-box-shadow: 1px 1px 2px 0px #bdbdbd;
   box-shadow: 1px 1px 2px 0px #bdbdbd;
+  display: inline-table;
 }
 
 .popupRow {
@@ -510,9 +511,12 @@ body:after {
   bottom: 60px;
   position: absolute;
   margin: 0 auto;
-  text-transform: uppercase;
   text-align: center;
   opacity: 0.9;
+}
+
+.portfolio-item .hover-panel h4{
+line-height: 30px;
 }
 
 .portfolio-item:hover .hover-panel {
@@ -537,7 +541,6 @@ body:after {
   padding-left: 10px;
 }
 
-
 .portfolio-image {
   display: block;
   max-width: 100%;
@@ -546,6 +549,67 @@ body:after {
   background-size: cover;
   margin-bottom: 15px;
 }
+
+.portfolio-item .fa-quote-left {
+  font-size: 114px;
+}
+
+.building-image {
+  height: 180px;
+  margin-bottom: 14px;
+}
+
+.building-item {
+  background: #fff;
+  margin-top: 100px;
+}
+
+.building-item h3{
+  color: #d96b27;
+}
+
+.building-item p {
+  color: #626262;
+  font-size: 14px;
+  min-height: 68px;
+}
+
+.blockquote {
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: #9f9a9a;
+}
+
+.coming-soon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(217, 107, 39, 0.5);
+  color: #fff;
+  text-align: center;
+}
+
+.coming-soon p {
+  text-transform: uppercase;
+  font-size: 37px;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.portfolio-item-quote h1{
+  display: inline-block;
+  position: relative;
+  top: -28px;
+  margin-left: 15px;
+}
+
 
 .main-content {
   padding: 80px 0 0 0;
