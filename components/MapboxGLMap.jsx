@@ -217,6 +217,10 @@ var MapboxGLMap = React.createClass({
       )
     })
 
+    //hack to move "others" to the bottom of the legend, it must be first in the array to be a catchall for mapbox gl symbology
+    var others = legendItems.shift()
+    legendItems.push(others)
+
     //draw map, legend, basemap toggle, and searchbox
     return(
       <div id='map' ref='map'>

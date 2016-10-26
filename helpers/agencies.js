@@ -3,11 +3,11 @@ module.exports={
     property: 'sagency',
     type: 'categorical',
     stops: [
+      ['Others','#ffcc00'],
       ['DPR','#33a02c'],
       ['DOT','#cab2d6'],
       ['DEP','#1f78b4'],
       ['SCA','#ff7f00'],
-      ['Others','#ffcc00']
     ]
   },
 
