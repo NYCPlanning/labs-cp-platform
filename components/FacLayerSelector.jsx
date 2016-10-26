@@ -306,14 +306,14 @@ var LayerSelector = React.createClass({
                               onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
                           <li>
 
-                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color : domain.subColor}}>    
-                              <a onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)}>
+                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color: domain.subColor}}>    
+                              <a onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
                                 <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
                                     <i className="fa fa-info-circle" aria-hidden="true"></i>
                                 </OverlayTrigger>
                                 {group.name}
                               </a>
-                              <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
+                              <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} style={{'color':'black'}}><span className="caret arrow"></span></div>
                             </a>
                           </li>
                               
@@ -327,7 +327,7 @@ var LayerSelector = React.createClass({
                                         checked={subgroup.checked} 
                                         indeterminate={false}
                                         onChange={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} />
-                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} >
+                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} style={{'color':'black'}}>
                                       <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
                                         <i className="fa fa-info-circle" aria-hidden="true"></i>
                                       </OverlayTrigger>
