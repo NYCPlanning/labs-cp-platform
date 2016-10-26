@@ -6,13 +6,14 @@ import {browserHistory} from 'react-router'
 
 export default class AuthService {
   constructor(clientId, domain) {
+
+
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
       closable: false,
       allowSignUp: true,
       auth: {
-        redirectUrl: (process.env.NODE_ENV == 'development') ? 'http://localhost:8080/authsuccess' : 
-          (process.env.NODE_ENV == 'staging') ? 'http://staging.capitalplanning.nyc/authsuccess' : 'http://cpp.capitalplanning.nyc/authsuccess',
+        redirectUrl: document.location.origin + '/authsuccess',
         responseType: 'token'
       },
       theme: {
