@@ -10,11 +10,7 @@ module.exports = {
 
     console.log(sql)
 
-    var apiCallTemplate = "https://reallysimpleopendata.org/user/cpadmin/api/v2/sql?q={{{sql}}}&format=geojson"
-    var apiCall = Mustache.render(apiCallTemplate, {sql:sql})
-    apiCall=encodeURI(apiCall)
-
-    return $.getJSON(apiCall)
+    return this.sqlAPICall(sql)
 
   },
 
@@ -69,5 +65,32 @@ module.exports = {
 
     return Promise.all(promises)
 
+  },
+
+  //get a full row from a table as geojson
+  getRow(tableName, cartodb_id) {
+
+    var sqlTemplate = "SELECT *  FROM {{tableName}} WHERE cartodb_id = {{cartodb_id}}"
+
+    var sql = Mustache.render(sqlTemplate, {
+      tableName: tableName,
+      cartodb_id: cartodb_id
+    })
+
+    console.log(sql)
+
+    //returns a promise
+    return this.sqlAPICall(sql)
+
+
+  },
+
+  sqlAPICall(sql) {
+
+    var apiCallTemplate = "https://reallysimpleopendata.org/user/cpadmin/api/v2/sql?q={{{sql}}}&format=geojson"
+    var apiCall = Mustache.render(apiCallTemplate, {sql:sql})
+    apiCall=encodeURI(apiCall)
+
+    return $.getJSON(apiCall)
   }
 }

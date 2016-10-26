@@ -117,7 +117,6 @@ var LayerSelector = React.createClass({
       this.processChecked(layers)
     }
   },
-
   processChecked(layers) {
 
     var allChecked = 0,
@@ -277,8 +276,10 @@ var LayerSelector = React.createClass({
         </div>
 
         </div>
-        
-        
+
+
+
+
         <ul className="nav nav-pills nav-stacked" id="stacked-menu">
           { 
             this.state.layers.map(function(domain, i) {
@@ -291,7 +292,7 @@ var LayerSelector = React.createClass({
                     indeterminate={domain.indeterminate}
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
                   <a className="nav-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
-                  <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{display:'inline-block'}}>{domain.name}</div>
+                  <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{'display':'inline-block', 'width': '240px'}}>{domain.name}</div>
                   <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
                   <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
                   {
@@ -305,9 +306,14 @@ var LayerSelector = React.createClass({
                               onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
                           <li>
 
-                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color : domain.subColor}}>    
-                              <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{display:'inline-block'}}>{group.name}</div>
-                              <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j}><span className="caret arrow"></span></div>
+                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color: domain.subColor}}>    
+                              <a onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
+                                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
+                                    <i className="fa fa-info-circle" aria-hidden="true"></i>
+                                </OverlayTrigger>
+                                {group.name}
+                              </a>
+                              <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} style={{'color':'black'}}><span className="caret arrow"></span></div>
                             </a>
                           </li>
                               
@@ -321,7 +327,10 @@ var LayerSelector = React.createClass({
                                         checked={subgroup.checked} 
                                         indeterminate={false}
                                         onChange={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} />
-                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} >
+                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} style={{'color':'black'}}>
+                                      <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
+                                        <i className="fa fa-info-circle" aria-hidden="true"></i>
+                                      </OverlayTrigger>
                                       {subgroup.name}
                                     </a>
                                   </li>

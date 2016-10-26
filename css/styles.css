@@ -47,6 +47,8 @@ html, body, #main-container {
 .tooltip-inner {
   color: #464646;
   background-color: #ebebeb;
+  text-align: left;
+  font-size: 11px;
 }
 
 .tooltip.top .tooltip-arrow {
@@ -205,6 +207,26 @@ ul.navbar-right {
   cursor: pointer;
 }
 
+/*from http://enjoycss.com/gallery/shapes/gn*/
+.popup .closeButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #db691b;
+  border-radius: 10px;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  color: white;
+  line-height: 15px;
+  font-size: 9px;
+}
+
+.popup .closeButton:hover {
+  cursor: pointer;
+  background-color: #af4c0f;
+}
+
 .badge {
   min-width: 50px;
   margin-right: 10px;
@@ -309,7 +331,7 @@ ul.navbar-right {
 /*second tier indentation*/
 div.nav-stacked>li>a {
   font-family: 'open sans', sans-serif;
-  padding: 3px 15px 3px 40px;
+  padding: 3px 30px 3px 40px;
 }
 
 
@@ -384,6 +406,22 @@ ul.nav-stacked ul.nav-stacked > li > a {
   background-color: hsla(0, 0%, 86%, 0.86);
   padding: 7.5px;
   border-radius: 6px;
+}
+
+.nav-sub-container .fa {
+    float: right;
+    margin-top: 3px;
+    border-color: #EBEBEB;
+}
+
+.subgroup .fa {
+    float: right;
+    margin-top: 2px;
+    border-color: #EBEBEB;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #ebebeb;
 }
 
 
@@ -876,25 +914,36 @@ line-height: 30px;
 /*End Auth0 Lock*/
 
 
-/*FacDB Content Selection*/
+/*FacDB Content Selection / Landing Page*/
+
+.col-lg-8 {
+  border-radius: 6px;
+}
+
+section.content-selection {
+  padding: 10px 0;
+}
 
 .content-selection h3 {
   color: #d96b27;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .content-selection h4 {
   color: #6e6e6e;
 }
 
-
 .content-selection .text-primary {
   color: rgb(217, 107, 39);
-  text-shadow: 2px 2px #cfcfcf;
+  text-shadow: 1px 2px #cfcfcf;
 }
 
 .content-selection .service-box {
   padding: 20px;
+  height: 204px;
+  border-radius: 6px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .content-selection .service-box:hover {
@@ -904,4 +953,8 @@ line-height: 30px;
 .content-selection a:hover {
   text-decoration: none;
 }
+
+
+
+
 
