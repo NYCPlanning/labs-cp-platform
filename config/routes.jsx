@@ -46,19 +46,22 @@ var AuthSuccess = function() {
 
 module.exports = (
   <Route path="/" component={App} auth={auth} >
-    <IndexRoute component={HomePage} />
-    <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
-    <Route path="facilities" component={FacilitiesLanding} />
-    <Route path="facilities/all" component={FacilitiesExplorer} />
+    <IndexRoute component={HomePage} onEnter={requireAuth}/>
+
+    <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}/>
+    <Route path="facilities/all" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="facilities/domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
+    
     <Route path="capitalprojects" component={CapitalProjectsExplorerContainer} onEnter={requireAuth}/>
-    <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
+
     <Route path="districtmap" component={DistrictSelection} onEnter={requireAuth}/>
     <Route path="cd/:borocd" component={CDPage} onEnter={requireAuth}/>
 
-    <Route path="facilitieslanding" component={FacilitiesLanding} onEnter={requireAuth}/>
+    <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
+    <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
 
     <Route path='*' component={NotFound} />
   </Route>

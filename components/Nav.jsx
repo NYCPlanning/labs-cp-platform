@@ -13,7 +13,7 @@ var Nav = React.createClass({
 
     var userMenu = auth.loggedIn() ? (
         <li className="dropdown">
-          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i className="fa fa-user" aria-hidden="true"></i> {profile.email}<span className="caret"></span></a>
+          <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {profile.email}<span className="caret"></span></a>
           <ul className="dropdown-menu">
             <li><a onClick={auth.logout}>Log Out</a></li>
           </ul>
@@ -29,15 +29,12 @@ var Nav = React.createClass({
         <div className="navbar-header"><button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><span className="sr-only">Toggle navigation</span><span className="icon-bar"></span><span className="icon-bar"></span><span className="icon-bar"></span></button><a className="navbar-brand" href="#">{this.props.title}</a></div>
         <div id="navbar" className="navbar-collapse collapse">
            <ul className="nav navbar-nav navbar-right ">
-              <li><Link to="/"><i className="fa fa-home" aria-hidden="true"></i> Home</Link></li>
+              <li><Link to="/"> Home</Link></li>
               {this.props.children}
-              <li><a href="mailto:capital@planning.nyc.gov"><i className="fa fa-comment" aria-hidden="true"></i> Send Feedback</a></li>
+              <li><a href="mailto:capital@planning.nyc.gov"> Send Feedback</a></li>
               
               {userMenu}
-
-
-
-              
+ 
            </ul>
         </div>
          
