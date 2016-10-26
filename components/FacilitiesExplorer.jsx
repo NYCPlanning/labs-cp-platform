@@ -390,7 +390,9 @@ var aboutContent = (
   <div>
     <h4>What's included?</h4>
     <p>
-      The City Planning Facilities Database (FacDB), a data product produced by the New York City (NYC) Department of City Planning (DCP) Capital Planning Division, captures the location, type, and capacity of public and private facilities ranging across six domains:
+      The City Planning Facilities Database (FacDB) is produced by the New York City Department of City Planning (NYC Planning) Capital Planning Division. The database captures the location, type, and capacity of public and private facilities ranging across six domains:
+    </p>
+    <p>
       <ul type={"disc"}>
         <li>Health Care and Human Services</li>
         <li>Youth, Education, and Child Welfare</li>
@@ -399,7 +401,7 @@ var aboutContent = (
         <li>Parks, Cultural, and Other Community Facilities</li>
         <li>Administration of Government (See note in Disclaimers)</li>
       </ul>
-      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 31,000 facilities throughout NYC. Details on the facility categories, fields in the database, the database update process, and data sources is provided on NYC Planning’s <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Capital Planning Docs</a> site.
+      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 31,000 facilities throughout NYC. Details on the facility categories, fields in the database, data sources, and the database update process is provided on NYC Planning’s <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Capital Planning Docs</a> site.
     </p>
 
     <h4>How is this useful?</h4>
@@ -418,12 +420,12 @@ var aboutContent = (
       <b>Duplicates.</b> Please be aware that this beta version of the database also includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these duplicate records and retain the most up-to-date and detailed record.
     </p>
     <p>
-      <b>Admin. of Government.</b> Please note that this domain currently only contains data from NYPD and FDNY in addition to a few DPR properties. After the 2016 version of the <a href="https://www1.nyc.gov/site/planning/about/publications/colp.page">City-Owned and Leased Properties</a> (COLP) database is realeased, all of its contents will also be added to FacDB.
+      <b>Admin. of Government.</b> Please note that this domain currently only contains data from NYPD and FDNY in addition to a few DPR properties. After the 2016 version of the <a href="https://www1.nyc.gov/site/planning/about/publications/colp.page">City-Owned and Leased Properties</a> (COLP) database is released, all of its contents will also be added to FacDB.
     </p>
 
     <h4>Feedback</h4>
     <p>
-      We are constantly looking for ways to improve and add additional value to the database. Please reach out to the NYC DCP Capital Planning team at capital@planning.nyc.gov with any suggestions.
+      We are constantly looking for ways to improve this product. <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a> with Capital Planning.
     </p>
   </div>
 )
@@ -433,7 +435,7 @@ var aboutContent = (
 var splashContent = (
   <div>
     <h4>Welcome, Beta Tester!</h4>
-    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to read more about the data powering this map <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">here</a>.</p>     
-    <p>If you're seeing this message, it means we want your help improving this product. Please email us at capital@planning.nyc.gov.</p>
+    <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">read more about the data</a> powering this map.</p>     
+    <p>If you're seeing this message, it means we want your help improving this product! <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a>.</p>
   </div>
 )
