@@ -70,7 +70,7 @@ var LayerSelector = React.createClass({
   },
 
   cartoSQLCall(sql, cb) {
-     var apiCall = 'https://reallysimpleopendata.org/user/hkates/api/v2/sql?q=' + sql
+     var apiCall = 'https://carto.capitalplanning.nyc/user/hkates/api/v2/sql?q=' + sql
      $.getJSON(apiCall, cb)
   },
 
@@ -309,12 +309,12 @@ var LayerSelector = React.createClass({
                           <li>
 
                             <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color: domain.subColor}}>    
-                              <a onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
+                              <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
                                 <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
                                     <i className="fa fa-info-circle" aria-hidden="true"></i>
                                 </OverlayTrigger>
                                 {group.name}
-                              </a>
+                              </div>
                               <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} style={{'color':'black'}}><span className="caret arrow"></span></div>
                             </a>
                           </li>
