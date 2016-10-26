@@ -1,7 +1,7 @@
 import React from 'react'
 import turf from 'turf'
 import extent from 'turf-extent'
-
+import {Button, ButtonGroup} from 'react-bootstrap'
 import Agencies from '../helpers/agencies.js'
 
 
@@ -9,7 +9,18 @@ import Agencies from '../helpers/agencies.js'
 
 
 var ModalMap = React.createClass({
+  getInitialState() {
+    return {
+      basemap: 'light'
+    }
+  },
 
+  setBasemap(style) {
+    this.setState({
+      basemap: style
+    })
+    this.map.setStyle('mapbox://styles/mapbox/' + style + '-v9')
+  },
 
   flyMap() {
     var self=this;
@@ -34,6 +45,13 @@ var ModalMap = React.createClass({
   render() {
     return(
       <div id='modalmap'>
+        <div className='basemap mapOverlay'>
+          <h4>Basemap</h4>
+          <ButtonGroup>
+            <Button active={this.state.basemap=='light'} onClick={this.setBasemap.bind(this, 'light')} bsSize="xsmall"> Streets</Button>
+            <Button active={this.state.basemap=='satellite'} onClick={this.setBasemap.bind(this, 'satellite')} bsSize="xsmall"> Aerial</Button>
+          </ButtonGroup>
+        </div>
       </div>
     )
   },

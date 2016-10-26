@@ -95,10 +95,23 @@ ul.navbar-right {
     margin-right: 0;
 }
 
-.navbar-default .navbar-nav>li>a {
+.navbar-default .navbar-nav>li>a, .dropdown-menu>li>a {
   padding: 30px 18px;
   color: #db691b;
   font-size: 16px;
+  font-weight: 300;
+}
+
+.dropdown-menu>li>a {
+  padding: 3px 15px;
+}
+
+.dropdown-menu>li>a: hover {
+  cursor: pointer;
+}
+
+.navbar-default .navbar-nav>li:hover{
+  background: #eeeeee;
 }
 
 .navbar-default .navbar-brand {
@@ -166,6 +179,10 @@ ul.navbar-right {
 #map {
   height: 100%;
   width: calc(100% - 340px);
+}
+
+.mapbox-improve-map {
+  display: none;
 }
 /*End Map*/
 
@@ -462,7 +479,14 @@ ul.nav-stacked ul.nav-stacked > li > a {
   max-width: 900px;
 }
 
-
+.modal-logo {
+  background-image: url(/../img/logo_80.png);
+  height: 62px;
+  width: 80px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto;
+}
 
 /*End Modal*/
 

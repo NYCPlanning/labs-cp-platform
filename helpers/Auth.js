@@ -11,7 +11,8 @@ export default class AuthService {
       closable: false,
       allowSignUp: true,
       auth: {
-        redirectUrl: (process.env.NODE_ENV == 'development') ? 'http://localhost:8080/authsuccess' : 'http://cpp.capitalplanning.nyc/authsuccess',
+        redirectUrl: (process.env.NODE_ENV == 'development') ? 'http://localhost:8080/authsuccess' : 
+          (process.env.NODE_ENV == 'staging') ? 'http://staging.capitalplanning.nyc/authsuccess' : 'http://cpp.capitalplanning.nyc/authsuccess',
         responseType: 'token'
       },
       theme: {

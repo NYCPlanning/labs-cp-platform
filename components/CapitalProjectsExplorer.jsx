@@ -50,6 +50,16 @@ var CapitalProjectsExplorer = React.createClass({
     console.log(feature)
 
     var d = feature.properties
+
+    //pre-process funding to show a discrete value or a range
+    var funding 
+    if (d.fundamount != null) {
+      funding = Numeral(d.fundamount).format('($ 0.0 a)')
+    } else {
+      funding = Numeral(d.fundmin).format('($ 0.0 a)') + ' - ' + Numeral(d.fundmax).format('($ 0.0 a)')
+    }
+
+
     return (
         <div className={'row'}> 
           <div className={'col-md-12'}>
@@ -109,30 +119,18 @@ var CapitalProjectsExplorer = React.createClass({
               <h4>Timeline</h4>
               <dl className="dl-horizontal">
                 <dt>Construction Start</dt>
-                <dd>{Moment(d.constart).format('MMMM YYYY')}</dd>  
+                <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'Agency does not report'}</dd>  
 
                 <dt>Construction End</dt>
-                <dd>{Moment(d.conend).format('MMMM YYYY')}</dd>
-
-                <dt>Construction End FY</dt>
-                <dd>{d.fyconend}</dd>
-
-
-
+                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'Agency does not report'}</dd>
               </dl>              
             </li>
 
             <li className="list-group-item">
               <h4>Funding</h4>
               <dl className="dl-horizontal">
-                <dt>Funding Amount</dt>
-                <dd>{Numeral(d.fundamount).format('($ 0.00 a)')}</dd>
-
-                <dt>Funding Maximum</dt>
-                <dd>{Numeral(d.fundmax).format('($ 0.00 a)')}</dd> 
-
-                <dt>Funding Minimum</dt>
-                <dd>{Numeral(d.fundmin).format('($ 0.00 a)')}</dd> 
+                <dt>Funding</dt>
+                <dd>{funding}</dd>
 
                 <dt>Funding Source</dt>
                 <dd>{d.fundsource}</dd> 

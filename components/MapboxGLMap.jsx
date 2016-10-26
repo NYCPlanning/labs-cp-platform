@@ -126,7 +126,7 @@ var MapboxGLMap = React.createClass({
         'paint': {
             'fill-color': Agencies.agencyColors,
             'fill-opacity': 0.75,
-            'fill-outline-color': '#838763',
+            //'fill-outline-color': '#838763',
             'fill-antialias': true 
         }
       });
@@ -217,6 +217,10 @@ var MapboxGLMap = React.createClass({
       )
     })
 
+    //hack to move "others" to the bottom of the legend, it must be first in the array to be a catchall for mapbox gl symbology
+    var others = legendItems.shift()
+    legendItems.push(others)
+
     //draw map, legend, basemap toggle, and searchbox
     return(
       <div id='map' ref='map'>
@@ -224,6 +228,7 @@ var MapboxGLMap = React.createClass({
           <h4>Sponsor Agency</h4>
           {legendItems}
         </div>
+      {/*TODO: Make this a component so it can be easily added to other maps*/}
         <div className='basemap mapOverlay'>
           <h4>Basemap</h4>
           <ButtonGroup>
