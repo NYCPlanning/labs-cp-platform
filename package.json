@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devserve": "webpack-dev-server --config webpack.dev.config.js --hot --progress --colors --history-api-fallback --inline",
-    "probuild": "NODE_ENV=production webpack --config webpack.config.js --progress --colors",
+    "probuild": "webpack --config webpack.config.js --progress --colors",
     "postinstall": "npm run probuild"
   },
   "author": "",
