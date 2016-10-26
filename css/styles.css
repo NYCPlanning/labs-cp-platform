@@ -167,6 +167,10 @@ ul.navbar-right {
   height: 100%;
   width: calc(100% - 340px);
 }
+
+.mapbox-improve-map {
+  display: none;
+}
 /*End Map*/
 
 /*Map Overlays*/

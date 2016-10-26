@@ -228,6 +228,7 @@ var MapboxGLMap = React.createClass({
           <h4>Sponsor Agency</h4>
           {legendItems}
         </div>
+      {/*TODO: Make this a component so it can be easily added to other maps*/}
         <div className='basemap mapOverlay'>
           <h4>Basemap</h4>
           <ButtonGroup>
