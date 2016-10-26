@@ -1,6 +1,4 @@
 import React from 'react'
-import Crossfilter from 'crossfilter'
-import dc from 'dc'
 import {Button} from 'react-bootstrap'
 import Numeral from 'numeral'
 import Moment from 'moment'
@@ -9,7 +7,6 @@ import Nav from './Nav.jsx'
 import Modal from './Modal.jsx'
 import ModalMap from './ModalMap.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
-import DcColumnChart from './DcColumnChart.jsx'
 import Agencies from '../helpers/agencies.js'
 import AgencySelector from './AgencySelector.jsx'
 import carto from '../helpers/carto.js'
@@ -212,7 +209,7 @@ var CapitalProjectsExplorer = React.createClass({
     return(
       <div className="full-height">
         <Nav title="NYC Capital Projects Map" auth={this.props.auth}>
-          <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
+          <li onClick={this.showAbout}><a> About</a></li>
         </Nav>
         <div id="main-container">
           <div id="sidebar">
