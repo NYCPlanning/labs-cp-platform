@@ -1,3 +1,5 @@
 /node_modules
 notes.txt
 npm-debug.log
+/js/bundle.js
+/js/bundle.map.js
