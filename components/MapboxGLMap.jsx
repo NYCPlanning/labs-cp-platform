@@ -126,7 +126,7 @@ var MapboxGLMap = React.createClass({
         'paint': {
             'fill-color': Agencies.agencyColors,
             'fill-opacity': 0.75,
-            'fill-outline-color': '#838763',
+            //'fill-outline-color': '#838763',
             'fill-antialias': true 
         }
       });
