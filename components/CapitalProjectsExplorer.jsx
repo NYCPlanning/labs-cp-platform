@@ -109,10 +109,10 @@ var CapitalProjectsExplorer = React.createClass({
               <h4>Timeline</h4>
               <dl className="dl-horizontal">
                 <dt>Construction Start</dt>
-                <dd>{Moment(d.constart).format('MMMM YYYY')}</dd>  
+                <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'Agency does not report'}</dd>  
 
                 <dt>Construction End</dt>
-                <dd>{Moment(d.conend).format('MMMM YYYY')}</dd>
+                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'Agency does not report'}</dd>
 
                 <dt>Construction End FY</dt>
                 <dd>{d.fyconend}</dd>
