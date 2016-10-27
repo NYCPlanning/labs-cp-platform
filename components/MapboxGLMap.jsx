@@ -47,28 +47,13 @@ var MapboxGLMap = React.createClass({
     this.map.setStyle('mapbox://styles/mapbox/' + style + '-v9')
   },
 
-  applyFilters(values) {
-    console.log(values)
+  applyFilters(filters) {
 
-    if(values.length > 0) {
-      //build "in" membership filter from values array
-      var filter = [
-        "in",
-        "sagency"
-      ]
+    console.log('applying Filters', filters)
 
-      values.map(function(value) {
-        filter.push(value.value)
-      })
-    } else {
-      var filter = null
-    }
-
-
-
-    this.map.setFilter('points', filter);
-    this.map.setFilter('points-outline', filter);
-    this.map.setFilter('polygons', filter);
+    this.map.setFilter('points', filters);
+    this.map.setFilter('points-outline', filters);
+    this.map.setFilter('polygons', filters);
   },
 
   componentDidMount() {
@@ -186,7 +171,6 @@ var MapboxGLMap = React.createClass({
             "circle-opacity": 0.75
         }
       });
-
 
 
       //popup on click

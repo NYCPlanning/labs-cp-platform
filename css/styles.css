@@ -201,6 +201,10 @@ ul.navbar-right {
   font-size: 15px;
 }
 
+.mapOverlay .btn {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .popup {
   font-family: 'Open Sans', sans-serif;
   z-index: 10;
