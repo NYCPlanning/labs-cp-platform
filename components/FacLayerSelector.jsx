@@ -246,7 +246,7 @@ var LayerSelector = React.createClass({
       <div className="col-md-12">
         <div className='row sidebar-content'>
           <div className='col-md-12'>
-            <h3>Facility Types</h3>
+            <h3>Explore by Facility Types</h3>
     
             <p>
               Select facility types to display on the map. 
