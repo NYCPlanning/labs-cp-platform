@@ -184,6 +184,10 @@ ul.navbar-right {
 .mapbox-improve-map {
   display: none;
 }
+
+.mapboxgl-map .mapboxgl-ctrl-top-right {
+  top: 82px;
+}
 /*End Map*/
 
 /*Map Overlays*/
@@ -195,6 +199,10 @@ ul.navbar-right {
   min-width: 90px;
   background: rgba(230, 230, 230, 0.65);
   font-size: 15px;
+}
+
+.mapOverlay .btn {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .popup {

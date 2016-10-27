@@ -10,7 +10,7 @@ module.exports = {
 
     console.log(sql)
 
-    return this.sqlAPICall(sql)
+    return this.SQL(sql)
 
   },
 
@@ -80,17 +80,28 @@ module.exports = {
     console.log(sql)
 
     //returns a promise
-    return this.sqlAPICall(sql)
+    return this.SQL(sql)
 
 
   },
 
-  sqlAPICall(sql) {
+  SQL(sql, format) {
 
-    var apiCallTemplate = "https://carto.capitalplanning.nyc/user/cpadmin/api/v2/sql?q={{{sql}}}&format=geojson"
-    var apiCall = Mustache.render(apiCallTemplate, {sql:sql})
+    format = format ? format : 'geojson'
+
+    var apiCallTemplate = "https://carto.capitalplanning.nyc/user/cpadmin/api/v2/sql?q={{{sql}}}&format={{format}}"
+    var apiCall = Mustache.render(apiCallTemplate, {
+      sql:sql, 
+      format:format
+    })
+
     apiCall=encodeURI(apiCall)
 
-    return $.getJSON(apiCall)
+    return new Promise(function(resolve, reject) {
+      $.getJSON(apiCall)
+        .done(function(data) {
+          format=='geojson'? resolve(data) : resolve(data.rows)
+        })
+    })
   }
 }

@@ -1,16 +1,19 @@
+//AgencySelector should be passed a list of input options and return what is selected,
+//All of the logic for filtering the data should happen in this component
+
+
 import React from 'react'
 import {Button} from 'react-bootstrap'
 import Numeral from 'numeral'
 import Moment from 'moment'
+import Select from 'react-select'
 
 import Nav from './Nav.jsx'
 import Modal from './Modal.jsx'
 import ModalMap from './ModalMap.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import Agencies from '../helpers/agencies.js'
-import AgencySelector from './AgencySelector.jsx'
 import carto from '../helpers/carto.js'
-
 
 
 var CapitalProjectsExplorer = React.createClass({
@@ -18,11 +21,19 @@ var CapitalProjectsExplorer = React.createClass({
     return({
       modalHeading: null,
       modalContent: null,
-      modalCloseText: null
+      modalCloseText: null,
+      filters: {
+        sagency: [],
+        magency: [],
+        source: []
+      }, 
+      selectedCount: '__',
+      totalCount:'__'
     })
   },
 
   componentDidMount: function() {
+    var self=this
     document.title = "NYC Capital Projects Map";
 
     this.showModal({
@@ -30,6 +41,15 @@ var CapitalProjectsExplorer = React.createClass({
       modalContent: splashContent,
       modalCloseText: 'Got it.  Let me in!'
     }) 
+
+    carto.SQL('SELECT count(*) FROM (SELECT * FROM adoyle.capeprojectspoints UNION ALL SELECT * FROM adoyle.capeprojectspolygons) a', 'json')
+      .then(function(data) {
+        self.setState({
+          selectedCount: data[0].count,
+          totalCount: data[0].count
+        })
+      })
+
   },
 
   reset() {
@@ -70,10 +90,10 @@ var CapitalProjectsExplorer = React.createClass({
                 </span>
                 { d.sagency != d.magency ? 
                   <div className='managedby'> 
-                  <div className='managedby-text'>managed by</div>
+                    <div className='managedby-text'>managed by</div>
                     <span 
                       className={'badge'} 
-                      style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.maagency}
+                      style={{'backgroundColor': Agencies.getAgencyColor(d.magency)}}>{d.magency}
                     </span>
                   </div> :
                   null
@@ -167,7 +187,7 @@ var CapitalProjectsExplorer = React.createClass({
 
    //make an api call to carto to get the full feature, build content from it, show modal
    carto.getRow(tableName, feature.properties.cartodb_id)
-    .done(function(data) {
+    .then(function(data) {
       var feature = data.features[0]
 
       var modalContent = self.buildModalContent(feature)
@@ -197,11 +217,82 @@ var CapitalProjectsExplorer = React.createClass({
     this.refs.modal.open()
   },
 
-  updateFilters(values) {
-    //takes an array of sponsor agency codes, filters map data by that array
-    this.refs.map.applyFilters(values)
+  filterService() {
+    var self=this
+    //filter builder, eventually should be a helper module
+    //for now creates mapboxGL filters based on arrays of values
+    //can eventually build SQL as well for updating counts
+
+    //get arrays of filterable options from state and assemble mapboxGL filter
+
+    var dimensions = []
+
+    for(var key in this.state.filters) {
+      dimensions.push(key)
+    }
+
+    var filters = dimensions.map(function(dimension) {
+
+
+
+      var values = self.state.filters[dimension],
+        filter
+
+      console.log(values)
+
+      if(values.length>0) {
+        filter = [
+          "in",
+          dimension
+        ]
+
+        values.map(function(value) {
+          filter.push(value.value)
+        })
+      } else {
+        filter = []
+      }
+
+      return filter
+    })
+
+
+    //combine all filters
+    var allFilters = [
+      'all'
+    ]
+
+    filters.map(function(filter) {
+      if(filter.length>0) allFilters.push(filter)
+    })
+
+    console.log(allFilters)
+
+     //takes an array of sponsor agency codes, filters map data by that array
+    this.refs.map.applyFilters(allFilters)
   },
 
+
+  updateFilter(key, values) {
+    var self=this
+
+    //before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
+    var abbreviated = values.map(function(value) {
+      return {
+        value: value.value,
+        label: value.value
+      }
+    })
+
+    console.log(abbreviated)
+    this.state.filters[key] = abbreviated
+
+    this.setState({
+      filters: this.state.filters
+    }, function() {
+      self.filterService()
+    })
+  },
 
   render() {
     var Iframe = 'iframe'
@@ -213,7 +304,47 @@ var CapitalProjectsExplorer = React.createClass({
         </Nav>
         <div id="main-container">
           <div id="sidebar">
-            <AgencySelector updateFilters={this.updateFilters}/>
+            <div className="col-md-12">
+              <div className="row sidebar-content">
+                <div className="filter-count">
+                {
+                  (this.state.selectedCount == this.state.totalCount) ? 
+                    <span>Showing all {this.state.totalCount} Projects</span> :
+                    <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
+                }
+              </div>
+                <div className="col-md-12">
+                  <h3>Filter by Sponsor Agency</h3>
+                    <Select
+                      multi
+                      value={this.state.filters.sagency}
+                      name="form-field-name"
+                      options={sponsorAgencies}
+                      onChange={this.updateFilter.bind(this, 'sagency')}
+                    />
+                </div>
+                <div className="col-md-12">
+                  <h3>Filter by Managing Agency</h3>
+                    <Select
+                      multi
+                      value={this.state.filters.magency}
+                      name="form-field-name"
+                      options={managingAgencies}
+                      onChange={this.updateFilter.bind(this, 'magency')}
+                    />
+                </div>
+                <div className="col-md-12">
+                  <h3>Filter by Source Agency</h3>
+                    <Select
+                      multi
+                      value={this.state.filters.source}
+                      name="form-field-name"
+                      options={sourceAgencies}
+                      onChange={this.updateFilter.bind(this, 'source')}
+                    />
+                </div>
+              </div>
+            </div>
           </div>
           <div id="content">
             <div className={'full-height'}>
@@ -273,3 +404,205 @@ var splashContent = (
 var aboutContent = (
   <div>About</div>
 )
+
+var managingAgencies = [
+  {  
+    "value":"DOT",
+    "label":"Department of Transportation - DOT"
+  },
+  {  
+    "value":"DDC",
+    "label":"Department of Design and Construction - DDC"
+  },
+  {  
+    "value":"SCA",
+    "label":"School Construction Authority - SCA"
+  }
+]
+
+var sourceAgencies = [
+  {  
+    "value":"DOT",
+    "label":"Department of Transportation - DOT"
+  },
+  {  
+    "value":"DDC",
+    "label":"Department of Design and Construction - DDC"
+  },
+  {  
+    "value":"SCA",
+    "label":"School Construction Authority - SCA"
+  },
+  {  
+    "value":"DPR",
+    "label":"Department of Parks and Recreation - DPR"
+  },
+  {  
+    "value":"ORR",
+    "label":"Office of Resilliency - ORR"
+  }
+]
+
+
+var sponsorAgencies = [  
+   {  
+      "value":"ACS",
+      "label":"Administration for Children's Services"
+   },
+   {  
+      "value":"BBPC",
+      "label":"Brooklyn Bridge Park Corporation - BBPC"
+   },
+   {  
+      "value":"BNYDC",
+      "label":"Brooklyn Navy Yard Development Corportation - BNYDC"
+   },
+   {  
+      "value":"BOE",
+      "label":"Board of Elections - BOE"
+   },
+   {  
+      "value":"BPL",
+      "label":"Brooklyn Public Library - BPL"
+   },
+   {  
+      "value":"CME",
+      "label":"Office of the Chief Medical Examiner - CME"
+   },
+   {  
+      "value":"Courts",
+      "label":"New York State Unified Court System - Courts"
+   },
+   {  
+      "value":"CUNY",
+      "label":"City University of New York - CUNY"
+   },
+   {  
+      "value":"DCAS",
+      "label":"Department of Citywide Administrative Services"
+   },
+   {  
+      "value":"DCLA",
+      "label":"Department of Cultural Affairs - DCLA"
+   },
+   {  
+      "value":"DCP",
+      "label":"Department of City Planning - DCP"
+   },
+   {  
+      "value":"DDC",
+      "label":"Department of Design and Construction - DDC"
+   },
+   {  
+      "value":"DEP",
+      "label":"Department of Environmental Protection - DEP"
+   },
+   {  
+      "value":"DFTA",
+      "label":"Department for the Aging - DFTA"
+   },
+   {  
+      "value":"DHP",
+      "label":"Department of Housing, Preservation, and Development - DHP"
+   },
+   {  
+      "value":"DHS",
+      "label":"Department of Homeless Services - DHS"
+   },
+   {  
+      "value":"DJJ",
+      "label":"Department of Juvenile Justice - DJJ"
+   },
+   {  
+      "value":"DOC",
+      "label":"Department of Corrections - DOC"
+   },
+   {  
+      "value":"DOE",
+      "label":"Department of Education - DOE"
+   },
+   {  
+      "value":"DOHMH",
+      "label":"Department of Health and Mental Hygiene - DOHMH"
+   },
+   {  
+      "value":"DOI",
+      "label":"Department of Investigation - DOI"
+   },
+   {  
+      "value":"DOT",
+      "label":"Department of Transportation - DOT"
+   },
+   {  
+      "value":"DPR",
+      "label":"Department of Parks and Recreation - DPR"
+   },
+   {  
+      "value":"DSNY",
+      "label":"Department of Sanitation - DNSY"
+   },
+   {  
+      "value":"EDC",
+      "label":"Economic Development Corportation - EDC"
+   },
+   {  
+      "value":"FDNY",
+      "label":"Fire Department - FDNY"
+   },
+   {  
+      "value":"HHC",
+      "label":"Health and Hospitals Corporation - HHC"
+   },
+   {  
+      "value":"HRA",
+      "label":"Human Resources Administration - HRA"
+   },
+   {  
+      "value":"Miscellaneous",
+      "label":1
+   },
+   {  
+      "value":"MO",
+      "label":"Mayor's Office - MO"
+   },
+   {  
+      "value":"Non-City",
+      "label":"Non-City Agencies"
+   },
+   {  
+      "value":"NYCHA",
+      "label":"New York City Housing Authority - NYCHA"
+   },
+   {  
+      "value":"NYPD",
+      "label":"Police Department - NYPD"
+   },
+   {  
+      "value":"NYPL",
+      "label":"New York Public Library - NYPL"
+   },
+   {  
+      "value":"NYS",
+      "label":"New York State - NYS"
+   },
+   {  
+      "value":"ORR",
+      "label":"Office of Recovery and Resilliency - ORR"
+   },
+   {  
+      "value":"QBPL",
+      "label":"Queens Borough Public Library - QBPL"
+   },
+   {  
+      "value":"SBS",
+      "label":"Department of Small Business Services - SBS"
+   },
+   {  
+      "value":"SCA",
+      "label":"School Construction Authority - SCA"
+   },
+   {  
+      "value":"TGI",
+      "label":"Trust for Governor's Island"
+   }
+]

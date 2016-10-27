@@ -47,28 +47,13 @@ var MapboxGLMap = React.createClass({
     this.map.setStyle('mapbox://styles/mapbox/' + style + '-v9')
   },
 
-  applyFilters(values) {
-    console.log(values)
+  applyFilters(filters) {
 
-    if(values.length > 0) {
-      //build "in" membership filter from values array
-      var filter = [
-        "in",
-        "sagency"
-      ]
+    console.log('applying Filters', filters)
 
-      values.map(function(value) {
-        filter.push(value.value)
-      })
-    } else {
-      var filter = null
-    }
-
-
-
-    this.map.setFilter('points', filter);
-    this.map.setFilter('points-outline', filter);
-    this.map.setFilter('polygons', filter);
+    this.map.setFilter('points', filters);
+    this.map.setFilter('points-outline', filters);
+    this.map.setFilter('polygons', filters);
   },
 
   componentDidMount() {
@@ -93,10 +78,12 @@ var MapboxGLMap = React.createClass({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v9',
         zoom: 10,
-        minZoom: 1,
+        minZoom: 10,
         center: [-74.024849,40.705628],
         pitch: 0
     });
+
+    map.addControl(new mapboxgl.Navigation());
 
     this.map.on('style.load', function() {
 
@@ -114,7 +101,27 @@ var MapboxGLMap = React.createClass({
           self.templates[1]
         ]
       })
- 
+
+      //add geojson layer to gray areas outside of NYC
+      $.getJSON('data/greyOutsideNYC.geojson', function(data) {
+        console.log(data)
+        map.addSource('grey-outside', {
+          type: 'geojson',
+          data: data
+        })
+
+        map.addLayer({
+          "id": "grey-outside",
+          "type": "fill",
+          "source": "grey-outside",
+          "paint": {
+            'fill-color': '#000',
+            'fill-opacity': 0.15   
+          }
+        });          
+      })
+      
+
       //add map layers based on the data sources above
       //points gets two layers, one for fill, one for a pseudo-stroke
 
@@ -164,7 +171,6 @@ var MapboxGLMap = React.createClass({
             "circle-opacity": 0.75
         }
       });
-
 
 
       //popup on click
