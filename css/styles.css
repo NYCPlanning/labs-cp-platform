@@ -184,6 +184,10 @@ ul.navbar-right {
 .mapbox-improve-map {
   display: none;
 }
+
+.mapboxgl-map .mapboxgl-ctrl-top-right {
+  top: 82px;
+}
 /*End Map*/
 
 /*Map Overlays*/
