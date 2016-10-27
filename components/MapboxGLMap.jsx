@@ -75,8 +75,8 @@ var MapboxGLMap = React.createClass({
     var self=this
 
     carto.getVectorTileUrls([
-        'https://reallysimpleopendata.org/user/cpadmin/api/v2/viz/92bc20a0-9a27-11e6-b600-0242ac110002/viz.json',
-        'https://reallysimpleopendata.org/user/cpadmin/api/v2/viz/ad142984-9a27-11e6-b600-0242ac110002/viz.json',
+        'https://carto.capitalplanning.nyc/user/cpadmin/api/v2/viz/92bc20a0-9a27-11e6-b600-0242ac110002/viz.json',
+        'https://carto.capitalplanning.nyc/user/cpadmin/api/v2/viz/ad142984-9a27-11e6-b600-0242ac110002/viz.json',
     ])
       .then(function(templates) {
         self.templates = templates
