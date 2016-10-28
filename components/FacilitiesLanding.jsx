@@ -23,10 +23,9 @@ var HomePage = React.createClass({
                             <h2 className="section-heading" style={{'font-size': '32px'}}>The NYC Facilities Database</h2>
                             <hr className="light"/>
                             <h3 className="section-heading" style={{'padding-bottom': '30px', 'font-size': '28px'}}>The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>                            
-                            <p className="text-muted">
-                                Explore the <a href="/facilities/all" style={{'text-decoration': 'underline'}}>interactive map</a> of of all facilities or scroll down for customized views.
-                            </p>
+                            
                             <p className="text-muted">Read more about this dataset <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database" style={{'text-decoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'text-decoration': 'underline'}}>improve it.</a></p>
+                            <a href="/facilities/all"> <div className="btn btn-lg dcp-orange">View ALL Facilities <i className="fa fa-arrow-right" aria-hidden="true"></i></div></a>
                         </div>
                     </div>
                 </div>

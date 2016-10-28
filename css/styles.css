@@ -418,6 +418,14 @@ ul.nav-stacked ul.nav-stacked > li > a {
   cursor: pointer;
 }
 
+#stacked-menu {
+  margin-bottom: 20px;
+}
+
+.sidebar-buttons .btn {
+  margin-bottom: 15px;
+}
+
 .nav-container {
    color: #101011;
    font-family: 'Oswald', sans-serif;
