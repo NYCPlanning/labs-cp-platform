@@ -4,9 +4,9 @@ import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import turf from 'turf'
 import extent from 'turf-extent'
 
-import Agencies from '../helpers/agencies.js'
+import Agencies from '../../helpers/agencies.js'
 import Search from './Search.jsx'
-import carto from '../helpers/carto.js'
+import carto from '../../helpers/carto.js'
 
 
 var MapboxGLMap = React.createClass({
@@ -305,7 +305,7 @@ var ProjectsPopup = React.createClass({
         <div className='popupRow' key={i} onClick={self.showDetails.bind(self, feature)}>
           
           <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-          {d.projectid} - {d.name}
+          {d.projectid} - {d.name} <i className="fa fa-angle-right" aria-hidden="true"></i> 
           
         </div>
       ) 

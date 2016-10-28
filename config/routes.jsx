@@ -6,7 +6,7 @@ import Login from '../components/Login.jsx'
 import Auth from '../helpers/Auth.js'
 
 import HomePage from '../components/HomePage.jsx'
-import CapitalProjectsExplorerContainer from '../components/CapitalProjectsExplorerContainer.jsx'
+import CapitalProjectsExplorer from '../components/capitalprojects/CapitalProjectsExplorer.jsx'
 import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
 import PipelineExplorer from '../components/PipelineExplorer.jsx'
 import Sample from '../components/Sample.jsx'
@@ -55,7 +55,7 @@ module.exports = (
     
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     
-    <Route path="capitalprojects" component={CapitalProjectsExplorerContainer} onEnter={requireAuth}/>
+    <Route path="capitalprojects" component={CapitalProjectsExplorer} onEnter={requireAuth}/>
 
     <Route path="districtmap" component={DistrictSelection} onEnter={requireAuth}/>
     <Route path="cd/:borocd" component={CDPage} onEnter={requireAuth}/>

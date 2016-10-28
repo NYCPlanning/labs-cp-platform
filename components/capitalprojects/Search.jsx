@@ -1,7 +1,7 @@
 import React from 'react' 
 import Autosuggest from 'react-autosuggest';
 
-import carto from '../helpers/carto.js'
+import carto from '../../helpers/carto.js'
 
 function getSuggestionValue(suggestion) {
   return suggestion.properties.projectid + ' - ' + suggestion.properties.name;
@@ -35,7 +35,7 @@ var Search = React.createClass({
   onSuggestionsFetchRequested(value) {
     var self=this
     this.getSuggestions(value)
-      .done(function(res) {
+      .then(function(res) {
         var suggestions = res.features
 
 
@@ -71,7 +71,7 @@ var Search = React.createClass({
 
       // Autosuggest will pass through all these props to the input field.
       const inputProps = {
-        placeholder: 'Search for FMS ID, Project Name, or Project Description',
+        placeholder: 'Search for FMS ID or Project Name',
         value: this.state.value,
         onChange: this.onChange
       };
