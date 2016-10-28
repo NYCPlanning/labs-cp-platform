@@ -3,6 +3,7 @@ import Nav from './Nav.jsx'
 import CartoMap from './CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
 import Modal from './Modal.jsx'
+import SimpleMarkerMap from './SimpleMarkerMap.jsx'
 
 var PipelineExplorer = React.createClass({
   getInitialState() {
@@ -79,56 +80,62 @@ var PipelineExplorer = React.createClass({
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
 
-    console.log(d)
+    console.log(d, latlng)
 
-    var content = (
-      <div>
-        <h3>{d.dob_address}</h3>
+    var modalContent = (
+      <div className="row">
+        <div className="col-md-12">
+          <h3>{d.dob_address} - {d.dcp_pipeline_units} Units</h3>
+        </div>
+        <div className="col-md-6">
+          <SimpleMarkerMap point={latlng}/>
+        </div>
+        <div className="col-md-6">
+          <ul className="list-group">
+            <li className="list-group-item">
+              <h4>Pipeline Information</h4>
+              <dl className="dl-horizontal">
+                <dt>Number of Units</dt>
+                <dd>{d.dcp_pipeline_units}</dd>
+                <dt>Category</dt>
+                <dd>{d.dcp_pipeline_category}</dd>
+                <dt>Status</dt>
+                <dd>{d.dcp_pipeline_status}</dd>
+              </dl>
+            </li>
+          
 
-        <hr/>
-          <p className='modal-label'>Pipeline Information</p>
-          <dl className="dl-horizontal">
-            <dt>Number of Units</dt>
-            <dd>{d.dcp_pipeline_units}</dd>
-            <dt>Category</dt>
-            <dd>{d.dcp_pipeline_category}</dd>
-            <dt>Status</dt>
-            <dd>{d.dcp_pipeline_status}</dd>
-            
-          </dl>
-
-        <hr/>
-
-          <p className='modal-label'>Site Information</p>
-          <dl className="dl-horizontal">
-            <dt>BBL</dt>
-            <dd>{d.dob_bbl}</dd>
-            <dt>Building Id Number (BIN)</dt>
-            <dd>{d.dob_bin}</dd>
-            
-            
-          </dl>
-
-        <hr/>
-
-          <p className='modal-label'>Permit Info</p>
-          <dl className="dl-horizontal">
-            <dt>Issue Date</dt>
-            <dd>{d.dob_issue_date}</dd>
-            <dt>Job Number</dt>
-            <dd>{d.dob_jobnumber}</dd>
-            <dt>Job Type</dt>
-            <dd>{d.dob_jobtype}</dd>
-            <dt>C of O Date</dt>
-            <dd>{d.dob_co_date}</dd>
-            
-          </dl>
+            <li className="list-group-item">
+              <h4>Site Information</h4>
+              <dl className="dl-horizontal">
+                <dt>BBL</dt>
+                <dd>{d.dob_bbl}</dd>
+                <dt>Building Id (BIN)</dt>
+                <dd>{d.dob_bin}</dd>
+              </dl>
+            </li>
+          
+            <li className="list-group-item">
+              <h4>Permit Info</h4>
+              <dl className="dl-horizontal">
+                <dt>Issue Date</dt>
+                <dd>{d.dob_issue_date}</dd>
+                <dt>Job Number</dt>
+                <dd>{d.dob_jobnumber}</dd>
+                <dt>Job Type</dt>
+                <dd>{d.dob_jobtype}</dd>
+                <dt>C of O Date</dt>
+                <dd>{d.dob_co_date}</dd>
+              </dl>
+            </li>
+          </ul>
+        </div>
       </div>
     )
 
     this.showModal({
       modalHeading: 'Pipeline Details',
-      modalContent: content,
+      modalContent: modalContent,
       modalCloseText: 'Close'
     })
 
@@ -155,7 +162,7 @@ var PipelineExplorer = React.createClass({
               <div className="message-mini">DOB Certificates of Occupancy-8/25/2016</div>
             </div>
             <CartoMap
-             vizJson="https://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/02c7c7e4-8be8-11e6-bc56-0242ac110002/viz.json"
+             vizJson="http://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/3ed486e4-8a55-11e6-bc56-0242ac110002/viz.json"
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>
