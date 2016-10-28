@@ -325,7 +325,7 @@ var aboutContent = (
       <b>Different update frequencies.</b> As a result of the different project management systems the data feeding CAPE are updated at various frequencies, ranging from daily updates to unknown.  As a result, the freshness of the data in CAPE varies depending on the data source.
     </p>
     <p>
-    As a result of these data limitations and inconsistencies CAPE is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses.  Please consult NYC Planning’s Capital Planning Docs for more details about these data limitations.
+    As a result of these data limitations and inconsistencies CAPE is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses.  Please consult <a href="https://nycplanning.github.io/cpdocs/cape/">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
     </p>
 
 
