@@ -668,6 +668,8 @@ line-height: 30px;
   width: 100%;
   background-size: cover;
   margin-bottom: 15px;
+  background-position-y: 50%;
+  background-position-x: 50%;
 }
 
 .portfolio-item .fa-quote-left {
@@ -677,6 +679,7 @@ line-height: 30px;
 .building-image {
   height: 180px;
   margin-bottom: 14px;
+  background-size: cover;
 }
 
 .building-item {

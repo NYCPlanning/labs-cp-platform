@@ -15,7 +15,7 @@ var PipelineExplorer = React.createClass({
   },
 
   componentDidMount: function() {
-    document.title = "NYC Residential Development Pipeline";
+    document.title = "Housing Development Explorer";
 
     this.showModal({
       modalHeading: 'Welcome!',
@@ -43,8 +43,6 @@ var PipelineExplorer = React.createClass({
 
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
-    console.log('d',d)
-
     var content = (
       <div>
         <h3>{d.facilityname}</h3>
@@ -80,7 +78,6 @@ var PipelineExplorer = React.createClass({
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
 
-    console.log(d, latlng)
 
     var modalContent = (
       <div className="row">
@@ -145,7 +142,7 @@ var PipelineExplorer = React.createClass({
   render() {
     return(
       <div className="full-height">
-        <Nav title='NYC Residential Development Pipeline' auth={this.props.auth}>
+        <Nav title='Housing Development Explorer' auth={this.props.auth}>
           <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
         </Nav>
         <div id="main-container">
@@ -188,7 +185,7 @@ var aboutContent = (
 
     The Development Pipeline, a data product produced by the New York City (NYC) Department of City Planning (DCP) Capital Planning division, aims to help City agencies (and the general public) understand land use changes resulting from building activity. The underlying database integrates all City knowledge regarding these developments, enabling citywide analyses of land use over time and space. 
 
-    The Residential Pipeline is a subset of the broader Development Pipeline, and includes both new construction as well building renovations that impact the housing supply. Currently, it integrates data from the NYC Department of Buildings (DOB). Going forward, it will encompass data gathered from Housing Preservation and Development (HPD), DCP’s land use approval procedure (ULURP), and other sources if / as they are identified
+    The Residential Pipeline is a subset of the broader Development Pipeline, and includes both new wtruction as well building renovations that impact the housing supply. Currently, it integrates data from the NYC Department of Buildings (DOB). Going forward, it will encompass data gathered from Housing Preservation and Development (HPD), DCP’s land use approval procedure (ULURP), and other sources if / as they are identified
 
     <h4>How is this useful?</h4>
 

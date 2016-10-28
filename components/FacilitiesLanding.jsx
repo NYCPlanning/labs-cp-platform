@@ -7,13 +7,13 @@ import Footer from './Footer.jsx'
 
 var HomePage = React.createClass({
   componentDidMount: function() {
-    document.title = "NYC Capital Planning Platform";
+    document.title = "Capital Planning Platform";
   },
 
   render() {
     return(
       <div >
-        <Nav title='NYC Capital Planning Platform' auth={this.props.auth}/>
+        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth}/>
 
         <div className="main-content">
             <section className="bg-primary" id="about" style={{'backgroundImage': "url(gif/facilitiesdemo.gif)"}}>
