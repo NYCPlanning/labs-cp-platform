@@ -1,7 +1,7 @@
 import React from 'react' 
 import Autosuggest from 'react-autosuggest';
 
-import carto from '../helpers/carto.js'
+import carto from '../../helpers/carto.js'
 
 function getSuggestionValue(suggestion) {
   return suggestion.properties.projectid + ' - ' + suggestion.properties.name;

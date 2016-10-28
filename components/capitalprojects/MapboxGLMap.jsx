@@ -4,9 +4,9 @@ import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import turf from 'turf'
 import extent from 'turf-extent'
 
-import Agencies from '../helpers/agencies.js'
+import Agencies from '../../helpers/agencies.js'
 import Search from './Search.jsx'
-import carto from '../helpers/carto.js'
+import carto from '../../helpers/carto.js'
 
 
 var MapboxGLMap = React.createClass({
