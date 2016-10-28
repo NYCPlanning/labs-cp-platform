@@ -4,7 +4,7 @@ module.exports = {
   autoComplete: function(value) {
 
 
-    var sqlTemplate = "SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM adoyle.capeprojectspolygons WHERE name ILIKE '%{{value}}%' OR projectid ILIKE '%{{value}}%'"
+    var sqlTemplate = "SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE name ILIKE '%{{value}}%' OR projectid ILIKE '%{{value}}%'"
 
     var sql = Mustache.render(sqlTemplate, {value: value})
 
@@ -68,13 +68,14 @@ module.exports = {
   },
 
   //get a full row from a table as geojson
-  getRow(tableName, cartodb_id) {
+  getRow(tableName, column, value) {
 
-    var sqlTemplate = "SELECT *  FROM {{tableName}} WHERE cartodb_id = {{cartodb_id}}"
+    var sqlTemplate = "SELECT *  FROM {{tableName}} WHERE {{column}} = '{{value}}'"
 
     var sql = Mustache.render(sqlTemplate, {
       tableName: tableName,
-      cartodb_id: cartodb_id
+      column: column,
+      value: value
     })
 
     console.log(sql)

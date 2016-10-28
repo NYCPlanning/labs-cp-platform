@@ -3,7 +3,7 @@
 
 
 import React from 'react'
-import {Button} from 'react-bootstrap'
+import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 import Moment from 'moment'
 import Select from 'react-select'
@@ -14,6 +14,7 @@ import ModalMap from './ModalMap.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import Agencies from '../helpers/agencies.js'
 import carto from '../helpers/carto.js'
+import FilterService from '../helpers/FilterService.js'
 
 
 var CapitalProjectsExplorer = React.createClass({
@@ -25,7 +26,9 @@ var CapitalProjectsExplorer = React.createClass({
       filters: {
         sagency: [],
         magency: [],
-        source: []
+        source: [],
+        cpstatus: [],
+        type: []
       }, 
       selectedCount: '__',
       totalCount:'__'
@@ -42,6 +45,7 @@ var CapitalProjectsExplorer = React.createClass({
       modalCloseText: 'Got it.  Let me in!'
     }) 
 
+    //get totalCount of rows
     carto.SQL('SELECT count(*) FROM (SELECT * FROM adoyle.capeprojectspoints UNION ALL SELECT * FROM adoyle.capeprojectspolygons) a', 'json')
       .then(function(data) {
         self.setState({
@@ -52,10 +56,10 @@ var CapitalProjectsExplorer = React.createClass({
 
   },
 
-  reset() {
-    dc.filterAll()
-    dc.redrawAll()
-  },
+  // reset() {
+  //   dc.filterAll()
+  //   dc.redrawAll()
+  // },
 
   update() {
     this.setState({
@@ -64,7 +68,6 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   buildModalContent(feature) {
-    console.log(feature)
 
     var d = feature.properties
 
@@ -181,12 +184,11 @@ var CapitalProjectsExplorer = React.createClass({
 
   handleMapClick(feature) {
     var self=this
-    console.log('handleMapClick', feature)
 
-    var tableName = feature.layer.source == 'pointFeatures' ? 'adoyle.capeprojectspoints' : 'adoyle.capeprojectspolygons'
+    var tableName = '(SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a'
 
    //make an api call to carto to get the full feature, build content from it, show modal
-   carto.getRow(tableName, feature.properties.cartodb_id)
+   carto.getRow(tableName, 'projectid', feature.properties.projectid)
     .then(function(data) {
       var feature = data.features[0]
 
@@ -199,9 +201,6 @@ var CapitalProjectsExplorer = React.createClass({
       })
 
     })
-
-
-
   },
 
   showAbout() {
@@ -218,58 +217,34 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   filterService() {
-    var self=this
-    //filter builder, eventually should be a helper module
-    //for now creates mapboxGL filters based on arrays of values
-    //can eventually build SQL as well for updating counts
 
-    //get arrays of filterable options from state and assemble mapboxGL filter
 
-    var dimensions = []
+    var mapboxGLFilters = FilterService.mapboxGL(this.state.filters)
+    this.refs.map.applyFilters(mapboxGLFilters)
+    
 
-    for(var key in this.state.filters) {
-      dimensions.push(key)
+    var sqlFilters = FilterService.SQL(this.state.filters)
+
+  
+    
+    if(sqlFilters != null) {
+      this.updateCount(sqlFilters)
+    } else {
+      this.setState({
+        selectedCount: this.state.totalCount
+      })
     }
+  },
 
-    var filters = dimensions.map(function(dimension) {
+  updateCount(sqlFilters) {
 
-
-
-      var values = self.state.filters[dimension],
-        filter
-
-      console.log(values)
-
-      if(values.length>0) {
-        filter = [
-          "in",
-          dimension
-        ]
-
-        values.map(function(value) {
-          filter.push(value.value)
+    carto.SQL('SELECT count(*) FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE ' + sqlFilters, 'json')
+      .then(function(data) {
+        console.log(data)
+        this.setState({
+          selectedCount: data[0].count
         })
-      } else {
-        filter = []
-      }
-
-      return filter
-    })
-
-
-    //combine all filters
-    var allFilters = [
-      'all'
-    ]
-
-    filters.map(function(filter) {
-      if(filter.length>0) allFilters.push(filter)
-    })
-
-    console.log(allFilters)
-
-     //takes an array of sponsor agency codes, filters map data by that array
-    this.refs.map.applyFilters(allFilters)
+      }.bind(this))
   },
 
 
@@ -284,7 +259,6 @@ var CapitalProjectsExplorer = React.createClass({
       }
     })
 
-    console.log(abbreviated)
     this.state.filters[key] = abbreviated
 
     this.setState({
@@ -305,45 +279,67 @@ var CapitalProjectsExplorer = React.createClass({
         <div id="main-container">
           <div id="sidebar">
             <div className="col-md-12">
-              <div className="row sidebar-content">
-                <div className="filter-count">
+              <h3>Explore Capital Projects</h3>
+              <p>
+                Filter the data by choosing from the following attributes: 
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip"> Learn more about the data</Tooltip>}>
+                  <a href="https://nycplanning.github.io/cpdocs/cpdb/"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
+                </OverlayTrigger>
+              </p>
+            </div>
+            <div className="col-md-12">
+              <div className="filter-count">
                 {
                   (this.state.selectedCount == this.state.totalCount) ? 
                     <span>Showing all {this.state.totalCount} Projects</span> :
-                    <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
+                    <span>Showing {this.state.selectedCount} of {this.state.totalCount} projects</span>
                 }
               </div>
-                <div className="col-md-12">
-                  <h3>Filter by Sponsor Agency</h3>
-                    <Select
-                      multi
-                      value={this.state.filters.sagency}
-                      name="form-field-name"
-                      options={sponsorAgencies}
-                      onChange={this.updateFilter.bind(this, 'sagency')}
-                    />
-                </div>
-                <div className="col-md-12">
-                  <h3>Filter by Managing Agency</h3>
-                    <Select
-                      multi
-                      value={this.state.filters.magency}
-                      name="form-field-name"
-                      options={managingAgencies}
-                      onChange={this.updateFilter.bind(this, 'magency')}
-                    />
-                </div>
-                <div className="col-md-12">
-                  <h3>Filter by Source Agency</h3>
-                    <Select
-                      multi
-                      value={this.state.filters.source}
-                      name="form-field-name"
-                      options={sourceAgencies}
-                      onChange={this.updateFilter.bind(this, 'source')}
-                    />
-                </div>
-              </div>
+              <h5>Show projects where Sponsor Agency includes</h5>
+              <Select
+                multi
+                placeholder='All sponsor agencies'
+                value={this.state.filters.sagency}
+                name="form-field-name"
+                options={sponsorAgencies}
+                onChange={this.updateFilter.bind(this, 'sagency')}
+              />
+              <h5>and Managing Agency includes</h5>
+              <Select
+                multi
+                placeholder='All managing agencies'
+                value={this.state.filters.magency}
+                name="form-field-name"
+                options={managingAgencies}
+                onChange={this.updateFilter.bind(this, 'magency')}
+              />
+              <h5>and Source Agency includes</h5>
+              <Select
+                multi
+                placeholder='All sourcing agencies'
+                value={this.state.filters.source}
+                name="form-field-name"
+                options={sourceAgencies}
+                onChange={this.updateFilter.bind(this, 'source')}
+              />
+              <h5>and Status includes</h5>
+              <Select
+                multi
+                placeholder='All statuses'
+                value={this.state.filters.cpstatus}
+                name="form-field-name"
+                options={statuses}
+                onChange={this.updateFilter.bind(this, 'cpstatus')}
+              />
+              <h5>and Type includes</h5>
+              <Select
+                multi
+                placeholder='All types'
+                value={this.state.filters.type}
+                name="form-field-name"
+                options={types}
+                onChange={this.updateFilter.bind(this, 'type')}
+              />
             </div>
           </div>
           <div id="content">
@@ -606,3 +602,185 @@ var sponsorAgencies = [
       "label":"Trust for Governor's Island"
    }
 ]
+
+var types = [  
+      {  
+         "label":"Street",
+         "value":"Street"
+      },
+      {  
+         "label":"Water",
+         "value":"Water"
+      },
+      {  
+         "label":"Neighborhoods",
+         "value":"Neighborhoods"
+      },
+      {  
+         "label":"Route",
+         "value":"Route"
+      },
+      {  
+         "label":"Street Reconstruction",
+         "value":"Street Reconstruction"
+      },
+      {  
+         "label":"Ramp, Ramp, Ramp",
+         "value":"Ramp, Ramp, Ramp"
+      },
+      {  
+         "label":"Accessibility Program",
+         "value":"Accessibility Program"
+      },
+      {  
+         "label":"Infrastructure",
+         "value":"Infrastructure"
+      },
+      {  
+         "label":"Projects Advanced To FY2014",
+         "value":"Projects Advanced To FY2014"
+      },
+      {  
+         "label":"Ramp",
+         "value":"Ramp"
+      },
+      {  
+         "label":"CapacityProjects - Updated, ReplacementProjects",
+         "value":"CapacityProjects - Updated, ReplacementProjects"
+      },
+      {  
+         "label":"Agency does not report",
+         "value":"Agency does not report"
+      },
+      {  
+         "label":"ReplacementProjects",
+         "value":"ReplacementProjects"
+      },
+      {  
+         "label":"Coastal Defense",
+         "value":"Coastal Defense"
+      },
+      {  
+         "label":"Ped Ramps",
+         "value":"Ped Ramps"
+      },
+      {  
+         "label":"Renovation",
+         "value":"Renovation"
+      },
+      {  
+         "label":"Cancelled Projects",
+         "value":"Cancelled Projects"
+      },
+      {  
+         "label":"Added Projects",
+         "value":"Added Projects"
+      },
+      {  
+         "label":"Road",
+         "value":"Road"
+      },
+      {  
+         "label":"New Construction",
+         "value":"New Construction"
+      },
+      {  
+         "label":"Buildings",
+         "value":"Buildings"
+      },
+      {  
+         "label":"CapacityInProcess",
+         "value":"CapacityInProcess"
+      },
+      {  
+         "label":"Upgrade",
+         "value":"Upgrade"
+      },
+      {  
+         "label":"Lighting Fixture Replacements",
+         "value":"Lighting Fixture Replacements"
+      },
+      {  
+         "label":"CapacityProjects - Updated",
+         "value":"CapacityProjects - Updated"
+      },
+      {  
+         "label":"Sewer",
+         "value":"Sewer"
+      },
+      {  
+         "label":"PreKCapacityProjects",
+         "value":"PreKCapacityProjects"
+      },
+      {  
+         "label":"Route, Road, Route, Route, Route, Route, Route, Road, Route, Route, Route, Route, Road, Route, Route, Road, Route, Road",
+         "value":"Route, Road, Route, Route, Route, Route, Route, Road, Route, Route, Route, Route, Road, Route, Route, Road, Route, Road"
+      },
+      {  
+         "label":"Feasibility Study",
+         "value":"Feasibility Study"
+      },
+      {  
+         "label":"Street Resurfacing",
+         "value":"Street Resurfacing"
+      },
+      {  
+         "label":"Other",
+         "value":"Other"
+      },
+      {  
+         "label":"Student Bathroom Upgrades",
+         "value":"Student Bathroom Upgrades"
+      },
+      {  
+         "label":"Sidewalks",
+         "value":"Sidewalks"
+      },
+      {  
+         "label":"Science Lab Program",
+         "value":"Science Lab Program"
+      },
+      {  
+         "label":"Sandy Storm Replacements",
+         "value":"Sandy Storm Replacements"
+      }
+   ]
+
+var statuses = [  
+      {  
+         "value":"Design",
+         "label":"Design"
+      },
+      {  
+         "value":"Agency does not report",
+         "label":"Agency does not report"
+      },
+      {  
+         "value":"Cancelled",
+         "label":"Cancelled"
+      },
+      {  
+         "value":"Procurement",
+         "label":"Procurement"
+      },
+      {  
+         "value":"Proposed",
+         "label":"Proposed"
+      },
+      {  
+         "value":"Construction",
+         "label":"Construction"
+      },
+      {  
+         "value":"Complete",
+         "label":"Complete"
+      },
+      {  
+         "value":"Other",
+         "label":"Other"
+      },
+      {  
+         "value":"Planning",
+         "label":"Planning"
+      }
+   ]

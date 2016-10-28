@@ -305,7 +305,7 @@ var ProjectsPopup = React.createClass({
         <div className='popupRow' key={i} onClick={self.showDetails.bind(self, feature)}>
           
           <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-          {d.projectid} - {d.name}
+          {d.projectid} - {d.name} <i className="fa fa-angle-right" aria-hidden="true"></i> 
           
         </div>
       ) 
