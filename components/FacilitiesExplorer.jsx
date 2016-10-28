@@ -347,9 +347,22 @@ var FacilitiesExplorer = React.createClass({
   },
 
   render() {
+
+    //dynamic title based on route
+    var titleMap = {
+      health_and_human_services: 'Health and Human Services Facilities',
+      education_child_welfare_and_youth: 'Education, Child Welfare, and Youth Facilities',
+      parks_cultural_institutions_and_other_community_facilities: 'Parks, Cultural, and Other Facilities',
+      public_safety_emergency_services_and_administration_of_justice: 'Public Safety, Emergency, and Justice Facilities',
+      core_infrastructure_and_transportation: 'Core Infrastructure and Transportation Facilities',
+      administration_of_government: 'Government Administration Facilities'
+    }
+
+    var title = this.props.params.domain ? titleMap[this.props.params.domain] : 'Facilities and Program Sites Explorer'
+
     return(
       <div className="full-height">
-        <Nav title="Facilities and Program Sites Explorer" auth={this.props.auth}>
+        <Nav title={title} auth={this.props.auth}>
           <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
         </Nav>
         <div id="main-container">
