@@ -224,7 +224,7 @@ var FacilitiesExplorer = React.createClass({
   },
 
   componentDidMount() {
-    document.title = "NYC Facilities Explorer";
+    document.title = "Facilities and Program Sites Explorer";
 
     if(!this.props.params.domain)
     this.showModal({
@@ -349,7 +349,7 @@ var FacilitiesExplorer = React.createClass({
   render() {
     return(
       <div className="full-height">
-        <Nav title="NYC Facilities Explorer" auth={this.props.auth}>
+        <Nav title="Facilities and Program Sites Explorer" auth={this.props.auth}>
           <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
         </Nav>
         <div id="main-container">

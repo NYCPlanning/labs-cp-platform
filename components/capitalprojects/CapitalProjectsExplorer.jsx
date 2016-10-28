@@ -154,7 +154,7 @@ var CapitalProjectsExplorer = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title="NYC Capital Projects Map" auth={this.props.auth}>
+        <Nav title="Capital Projects Explorer" auth={this.props.auth}>
           <li onClick={this.showAbout}><a> About</a></li>
         </Nav>
         <div id="main-container">

@@ -7,7 +7,7 @@ var NotFound = React.createClass({
   render() {
     return(
       <div>
-        <Nav title='NYC Capital Planning Platform' auth={this.props.auth}/>
+        <Nav title='Capital Planning Platform' auth={this.props.auth}/>
         <div className="col-md-12 main-content" >
           <section className='bg-primary text-center'>
             <div className="container">
