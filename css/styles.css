@@ -334,6 +334,54 @@ ul.navbar-right {
 
 /*End Custom Carto Tooltip*/
 
+/*Override Carto Default Legend Styles*/
+
+div.cartodb-legend.category ul li, div.cartodb-legend.color ul li, div.cartodb-legend.custom ul li {
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: initial;
+    font-weight: 200;
+    color: #333;
+}
+
+div.cartodb-legend.category ul li .bullet {
+  width: 10px;
+  height: 10px;
+}
+
+
+div.cartodb-legend-stack {
+  display: block;
+  padding: 10px;
+  font-family: 'Oswald', sans-serif;
+  z-index: 10;
+  position: absolute;
+  min-width: 90px;
+  background: rgba(230, 230, 230, 0.65);
+  font-size: 15px;
+  bottom: 0;
+  left: 0;
+  right: initial;
+  box-shadow: none;
+  webkit-box-shadow: none;
+  border: none;
+  padding-bottom: 30px;
+}
+
+div.cartodb-legend .legend-title {
+    font-family: 'Oswald', sans-serif;
+    color: #333;
+    font-size: 18px;
+    font-weight:500;
+    text-transform: capitalize;
+}
+
+div.cartodb-legend {
+  padding: 0;
+}
+
+/*End Override Carto Default Legend Styles*/
+
 /*Collapsible Menu Sidebar from http://www.bootply.com/G2XMjMr27Y*/
 
 .caret-container {

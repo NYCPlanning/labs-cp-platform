@@ -30,19 +30,20 @@ var layerStructure = [
     ]
   },
   {
-    name: 'Pipeline Category',
+    name: 'Type of Development',
     column: 'dcp_pipeline_category',
-    color: '#ebebeb',
-    subColor: '#ebebeb',
     children: [
       {
-        name: 'Residential New'
+        name: 'Residential New',
+        color: '#ebebeb'
       },
       {
-        name: 'Residential New - Hotel'
+        name: 'Residential New - Hotel',
+        color: '#ebebeb'
       },
       {
-        name: 'Residential renovation'
+        name: 'Residential renovation',
+        color: '#ebebeb'
       }
     ]
   }
@@ -256,7 +257,6 @@ var LayerSelector = React.createClass({
 
 
     var sql = sqlTemplate + chunksString
-    console.log('Setting SQL to ' + sql);
     this.props.updateSQL(sql)
 
   },
@@ -264,59 +264,58 @@ var LayerSelector = React.createClass({
   render: function(){
     var self=this;
     return(
-      <div className="col-md-12">
-        <div className = 'row sidebar-header'>
-          <div className='col-md-6'>
-            <h3>Filters</h3>
-          </div>
+      <div>
+        <div className='col-md-12'>
+            <h3>Explore by Project Type and Status</h3>
         </div>
-        
-        <ul className="nav nav-pills nav-stacked" id="stacked-menu">
-          { 
-            this.state.layers.map(function(domain, i) {
-              return(
+        <div className="col-md-12">  
+          <ul className="nav nav-pills nav-stacked" id="stacked-menu">
+            { 
+              this.state.layers.map(function(domain, i) {
+                return(
 
-                <li key={'domain' + i}>
-                  <Checkbox 
-                    value={domain.name} 
-                    checked={domain.checked} 
-                    indeterminate={domain.indeterminate}
-                    onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                  <a className="nav-container" style={{backgroundColor: domain.color}}>
-                  <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)}>{domain.name}</div>
-                  <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} ><span className="caret arrow"></span></div></a>    
-                  <ul className="nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
-                  {
-                    domain.children.map(function(group, j) {
-                      return (
-                          <div className="group nav nav-pills nav-stacked collapse in" key={j}>
-                          <Checkbox 
-                              value={group.name} 
-                              checked={group.checked} 
-                              indeterminate={group.indeterminate}
-                              onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
-                          <li data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} >
+                  <li key={'domain' + i}>
+                    <Checkbox 
+                      value={domain.name} 
+                      checked={domain.checked} 
+                      indeterminate={domain.indeterminate}
+                      onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
+                    <a className="nav-container" style={{backgroundColor: domain.color}}>
+                    <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)}>{domain.name}</div>
+                    <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} ><span className="caret arrow"></span></div></a>    
+                    <ul className="nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
+                    {
+                      domain.children.map(function(group, j) {
+                        return (
+                            <div className="group nav nav-pills nav-stacked collapse in" key={j}>
+                            <Checkbox 
+                                value={group.name} 
+                                checked={group.checked} 
+                                indeterminate={group.indeterminate}
+                                onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
+                            <li data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} >
 
-                            <a className="nav-sub-container" style={{backgroundColor: domain.subColor}} onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)}>    
-                              {group.name}
-                            </a>
-                          </li>
-                              
-                      
-                            </div>
-                      ) 
-                    })
-                  }
-                  </ul>
-                </li>
-              )
-            })
-          }
-        </ul>
-        <h4>Completion Date*<small>Applies to completed and partially completed projects only</small></h4>
-          <div id="dateSlider" ref="dateSlider"></div>
+                              <a className="nav-sub-container" style={{backgroundColor: domain.subColor}} onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)}>    
+                                {group.name}
+                              </a>
+                            </li>
+                                
+                        
+                              </div>
+                        ) 
+                      })
+                    }
+                    </ul>
+                  </li>
+                )
+              })
+            }
+          </ul>
           <h4>Number of Units</h4>
           <div id="unitsSlider" ref="unitsSlider"></div>
+          <h4>Completion Date*<br/><small>*Applies to completed and partially completed projects only</small></h4>
+          <div id="dateSlider" ref="dateSlider"></div>
+        </div>
       </div>
     )
   }
