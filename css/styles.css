@@ -278,7 +278,9 @@ ul.navbar-right {
 
 .legendItemText {
   font-family: 'Open Sans';
+  display: inline-block;
 }
+
 
 /*spinkit*/
 .spinner {
@@ -508,6 +510,10 @@ ul.nav-stacked ul.nav-stacked > li > a {
     border-color: #EBEBEB;
 }
 
+h5 .fa {
+  margin-left: 5px;
+}
+
 .tooltip.right .tooltip-arrow {
   border-right-color: #ebebeb;
 }
@@ -525,6 +531,11 @@ ul.nav-stacked ul.nav-stacked > li > a {
 .modal-body h5, {
   font-family: 'Oswald';
   font-size: 17px;
+}
+
+h3.modal-opener {
+  line-height: 35px;
+  margin-bottom: 35px;
 }
 
 .modal-body h3 {

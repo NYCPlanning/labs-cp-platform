@@ -131,7 +131,7 @@ var MapboxGLMap = React.createClass({
         "source": 'polygonFeatures',
         "source-layer": "layer0",
         'paint': {
-            'fill-color': Agencies.agencyColors,
+            'fill-color': Agencies.mapboxGLStyle,
             'fill-opacity': 0.75,
             //'fill-outline-color': '#838763',
             'fill-antialias': true 
@@ -167,7 +167,7 @@ var MapboxGLMap = React.createClass({
                 [15,5]
               ]
             },
-            "circle-color": Agencies.agencyColors,
+            "circle-color": Agencies.mapboxGLStyle,
             "circle-opacity": 0.75
         }
       });
@@ -214,11 +214,11 @@ var MapboxGLMap = React.createClass({
 
   render() {
     //dynamically create a legend
-    var legendItems = Agencies.agencyColors.stops.map(function(stop,i) {
+    var legendItems = Agencies.agencies.map(function(agency,i) {
       return (
           <div key={i} className='legendItem'>
-            <div className='colorBox' style={{'backgroundColor': stop[1]}}/>
-            <div className='legendItemText'>{stop[0]}</div> 
+            <div className='colorBox' style={{'backgroundColor': agency.color}}/>
+            <div className='legendItemText'>{agency.name} - ({agency.acronym})</div> 
           </div>
       )
     })

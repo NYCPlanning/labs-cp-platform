@@ -63,9 +63,6 @@ var ModalContent = React.createClass({
                 <dt>MA + Project ID</dt>
                 <dd>{d.maprojid}</dd>
 
-                <dt>Contact</dt>
-                <dd>{d.contact}</dd>
-
                 <dt>Type</dt>
                 <dd>{d.type}</dd>
 

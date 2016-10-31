@@ -1,21 +1,51 @@
+//Agency color mapping for agencies in the capital projects explorer
+//includes 4 major capital agencies and "Others"
+
+var agencies = [
+    {
+      name: 'All Other Agencies',
+      acronym: 'Others',
+      color: '#ffcc00'
+    },
+    {
+      name: 'Dept. of Parks and Recreation',
+      acronym: 'DPR',
+      color: '#33a02c'
+    },
+    {
+      name: 'Dept. of Transportation',
+      acronym: 'DOT',
+      color: '#cab2d6'
+    },
+    {
+      name: 'Dept. of Environmental Protection',
+      acronym: 'DEP',
+      color: '#1f78b4'
+    },
+    {
+      name: 'School Construction Authority',
+      acronym: 'SCA',
+      color: '#ff7f00'
+    }
+  ]
+
+
 module.exports={
-  agencyColors: {
+  agencies: agencies,
+
+  mapboxGLStyle: {
     property: 'sagency',
     type: 'categorical',
-    stops: [
-      ['Others','#ffcc00'],
-      ['DPR','#33a02c'],
-      ['DOT','#cab2d6'],
-      ['DEP','#1f78b4'],
-      ['SCA','#ff7f00'],
-    ]
+    stops: agencies.map(function(agency) {
+      return [agency.acronym, agency.color]
+    })
   },
 
-  getAgencyColor: function(agency) {
-    var match = this.agencyColors.stops.filter(function(stop) {
-      return stop[0] == agency;
+  getAgencyColor: function(acronym) {
+    var match = agencies.filter(function(agency) {
+      return agency.acronym == acronym;
     })
 
-    return match.length>0 ? match[0][1] : '#ffcc00';
+    return match.length>0 ? match[0].color : '#ffcc00';
   } 
 }

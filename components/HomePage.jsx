@@ -200,7 +200,7 @@ module.exports=HomePage;
 
 var aboutContent = (
   <div>
-    <p>The Capital Planning Platform, currently in beta, is a place for capital planners across city agencies to access interactive maps, data, and analytical tools to inform capital investment planning and priorities.</p>
+    <h3 className="modal-opener">The Capital Planning Platform, currently in beta, is a place for capital planners across city agencies to access interactive maps, data, and analytical tools to inform capital investment planning and priorities.</h3>
 
 
     <p>Since we started the Capital Planning team at DCP in 2014, we’ve heard consistently that access to better data and mapping technologies can help improve interagency coordination and neighborhood-based planning. This platform is a work-in-progress that aims to meet these needs.</p>
@@ -214,14 +214,14 @@ var aboutContent = (
 
     <p>We hope you find this effort useful, and let us know how we can improve this resource here.</p>
 
-    <div className='modal-logo'></div>
+    <div className="modal-logo"></div>
 
   </div>
 )
 
 var collaborateContent = (
   <div>
-    <p>The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</p>
+    <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
 
 
     <p>Indeed, as with most complex data products and new web tools, the data and maps on this site aren’t perfect. What’s important is that we make them as authoritative as possible, pulling from the best available data sources, that everyone understands the methodologies and the limitations of this work, and that we encourage users of this platform - a burgeoning community of planning professionals - to report any errors and suggest improvements.</p>
