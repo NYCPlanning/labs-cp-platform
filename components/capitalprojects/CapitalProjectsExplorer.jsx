@@ -164,7 +164,7 @@ var CapitalProjectsExplorer = React.createClass({
               <p>
                 Filter the data by choosing from the following attributes: 
                 <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip"> Learn more about the data</Tooltip>}>
-                  <a href="https://nycplanning.github.io/cpdocs/cpdb/"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
+                  <a href="https://docs.capitalplanning.nyc/cpdbv1/" target="_blank"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
                 </OverlayTrigger>
               </p>
             </div>
