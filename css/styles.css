@@ -531,6 +531,11 @@ h5 .fa {
   font-size: 17px;
 }
 
+h3.modal-opener {
+  line-height: 35px;
+  margin-bottom: 35px;
+}
+
 .modal-body h3 {
   font-family: 'Oswald';
 }
