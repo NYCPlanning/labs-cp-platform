@@ -40,7 +40,7 @@ var Nav = React.createClass({
            <ul className="nav navbar-nav navbar-right ">
               <li><Link to="/"> Home</Link></li>
               {this.props.children}
-              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform"> Send Feedback</a></li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" target='_blank'> Send Feedback</a></li>
               
               {userMenu}
  
