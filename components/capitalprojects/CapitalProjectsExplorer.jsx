@@ -5,6 +5,7 @@
 import React from 'react'
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Select from 'react-select'
+import Numeral from 'numeral'
 
 import Nav from '../Nav.jsx'
 import Modal from '../Modal.jsx'
@@ -171,8 +172,8 @@ var CapitalProjectsExplorer = React.createClass({
               <div className="filter-count">
                 {
                   (this.state.selectedCount == this.state.totalCount) ? 
-                    <span>Showing all {this.state.totalCount} Projects</span> :
-                    <span>Showing {this.state.selectedCount} of {this.state.totalCount} projects</span>
+                    <span>Showing all {Numeral(this.state.totalCount).format('0,0')} Projects</span> :
+                    <span>Showing {Numeral(this.state.selectedCount).format('0,0')} of {Numeral(this.state.totalCount).format('0,0')} projects</span>
                 }
               </div>
               <h5>
@@ -264,32 +265,6 @@ var CapitalProjectsExplorer = React.createClass({
 
 module.exports=CapitalProjectsExplorer
 
-
-var CountWidget=React.createClass({
-
-  render() {
-    var selected = this.props.group.value();
-    var total = this.props.dimension.size();
-
-    var all = (selected == total)
-
-    return(
-      <div>
-        { all ? 
-          'Showing all projects (' + total + '). Click the charts to filter the data.' :
-          'Showing ' + selected + ' of ' + total + ' projects.' 
-        }
-
-        { all ? 
-          null :
-          <Button bsSize="xsmall" className="reset-button" onClick={this.props.reset}>Reset All</Button>
-        }
-        
-         
-      </div>
-    )
-  }
-})
 
 var splashContent = (
   <div>
