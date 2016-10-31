@@ -338,7 +338,6 @@ var aboutContent = (
       <b>What's a project?</b> As a result of inconsistent data standards, capital agencies define capital projects differently, which vary in size, scope, and impact.  The inconsistent definition of a capital project has the potential to skew analyses generated from these data.
     </p>
     <p>
-<<<<<<< HEAD
       <b>Completeness.</b> This dataset does not capture the entirety of NYC's Capital Budget.  The Capital Projects Explorer is built using records from agencies' project management systems, which do not always maintain a link to budget lines, making it impossible to account for the whole Capital Budget.
     </p>
     <p>
