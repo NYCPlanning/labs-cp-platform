@@ -5,9 +5,9 @@ import FacLayerSelector from './FacLayerSelector.jsx'
 import Modal from './Modal.jsx'
 import Link from 'react-router'
 import FacilitiesLayers from '../config/FacilitiesLayers.js'
+import SimpleMarkerMap from './SimpleMarkerMap.jsx'
 
 /* CREATING viz.json */
-
 var vizJson = {  
    "type":"layergroup",
    "options":{  
@@ -263,18 +263,17 @@ var FacilitiesExplorer = React.createClass({
     var Categories = function() {
       return(
         <div>
-          <p className='modal-label'>Categories</p>
-            <dl className="dl-horizontal">
-              <dt>Domain</dt>
-              <dd>{d.domain}</dd>
-              <dt>Group</dt>
-              <dd>{d.facilitygroup}</dd>
-              <dt>Subgroup</dt>
-              <dd>{d.facilitysubgroup}</dd>
-              <dt>Type</dt>
-              <dd>{d.facilitytype}</dd>           
-            </dl>
-          <hr/>
+          <h4>Categories</h4>
+          <dl className="dl-horizontal">
+            <dt>Domain</dt>
+            <dd>{d.domain}</dd>
+            <dt>Group</dt>
+            <dd>{d.facilitygroup}</dd>
+            <dt>Subgroup</dt>
+            <dd>{d.facilitysubgroup}</dd>
+            <dt>Type</dt>
+            <dd>{d.facilitytype}</dd>           
+          </dl>
         </div>
       )
     }
@@ -282,16 +281,15 @@ var FacilitiesExplorer = React.createClass({
     var CapacityUtilization = function() {
       return (
         <div>
-          <p className='modal-label'>Capacity & Utilization Details</p>
-            <dl className="dl-horizontal">
-              <dt>Capacity</dt>
-              <dd>{d.capacity ? d.capacity + ' ' + d.capacitytype : 'Unknown'}</dd>
-              <dt>Utilization</dt>
-              <dd>{d.utilization ? d.utilization + ' ' + d.utilizationtype : 'Unknown'}</dd>
-              {d.capacity && d.utilization ? <dt>Utilization Rate</dt> : null}
-              {d.capacity && d.utilization ? <dd>{d.utilization/d.capacity}</dd> : null}              
-            </dl>
-          <hr/>
+          <h4>Capacity & Utilization Details</h4>
+          <dl className="dl-horizontal">
+            <dt>Capacity</dt>
+            <dd>{d.capacity ? d.capacity + ' ' + d.capacitytype : 'Unknown'}</dd>
+            <dt>Utilization</dt>
+            <dd>{d.utilization ? d.utilization + ' ' + d.utilizationtype : 'Unknown'}</dd>
+            {d.capacity && d.utilization ? <dt>Utilization Rate</dt> : null}
+            {d.capacity && d.utilization ? <dd>{d.utilization/d.capacity}</dd> : null}              
+          </dl>
         </div>
       ) 
     }
@@ -299,14 +297,13 @@ var FacilitiesExplorer = React.createClass({
     var OperationsAndOversight = function() {
       return(
         <div>
-          <p className='modal-label'>Operations & Oversight</p>
-            <dl className="dl-horizontal">
-              <dt>Operator</dt>
-              <dd>{d.operatorabbrev + ' - ' + d.operatorname}</dd>
-              <dt>Oversight Agency</dt>
-              <dd>{d.oversightabbrev + ' - ' + d.oversightagency}</dd>            
-            </dl>
-          <hr/>
+          <h4>Operations & Oversight</h4>
+          <dl className="dl-horizontal">
+            <dt>Operator</dt>
+            <dd>{d.operatorabbrev + ' - ' + d.operatorname}</dd>
+            <dt>Oversight Agency</dt>
+            <dd>{d.oversightabbrev + ' - ' + d.oversightagency}</dd>            
+          </dl>
         </div>
       )
     }
@@ -314,27 +311,42 @@ var FacilitiesExplorer = React.createClass({
     var DataSource = function() {
       return(
         <div>
-          <p className='modal-label'>Data Source</p>
-            <dl className="dl-horizontal">
-              <dt>Source Dataset</dt>
-              <dd>{d.agencysource + ' - ' + d.sourcedatasetname}</dd>
-              <dt>Last Update</dt>
-              <dd>{d.datesourceupdated}</dd>           
-            </dl>
-          <hr/>
+          <h4>Data Source</h4>
+          <dl className="dl-horizontal">
+            <dt>Source Dataset</dt>
+            <dd>{d.agencysource + ' - ' + d.sourcedatasetname}</dd>
+            <dt>Last Update</dt>
+            <dd>{d.datesourceupdated}</dd>           
+          </dl>
         </div>
       )
     }
 
     var content = (
-      <div>
-        <h3>{d.facilityname}</h3>
-        <p>{d.address}</p>
-        <hr/> 
-        <Categories/>
-        <CapacityUtilization/>
-        <OperationsAndOversight/>
-        <DataSource/>
+      <div className="row">
+        <div className="col-md-12">
+          <h3>{d.facilityname}</h3>
+          <p>{d.address}</p>
+        </div>
+        <div className="col-md-6">
+          <SimpleMarkerMap point={latlng}/>
+        </div>
+        <div className="col-md-6">
+          <ul className="list-group">
+            <li className="list-group-item">
+              <Categories/>
+            </li>
+            <li className="list-group-item">
+              <CapacityUtilization/>
+            </li>
+            <li className="list-group-item">
+              <OperationsAndOversight/>
+            </li>
+            <li className="list-group-item">
+              <DataSource/>
+            </li>
+          </ul>
+        </div>
       </div>
     )
 
