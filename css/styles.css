@@ -508,6 +508,10 @@ ul.nav-stacked ul.nav-stacked > li > a {
     border-color: #EBEBEB;
 }
 
+h5 .fa {
+  margin-left: 5px;
+}
+
 .tooltip.right .tooltip-arrow {
   border-right-color: #ebebeb;
 }

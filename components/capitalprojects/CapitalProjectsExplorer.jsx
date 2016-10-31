@@ -4,7 +4,6 @@
 
 import React from 'react'
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
-
 import Select from 'react-select'
 
 import Nav from '../Nav.jsx'
@@ -176,7 +175,11 @@ var CapitalProjectsExplorer = React.createClass({
                     <span>Showing {this.state.selectedCount} of {this.state.totalCount} projects</span>
                 }
               </div>
-              <h5>Show projects where Sponsor Agency includes</h5>
+              <h5>
+                Show projects where Sponsor Agency includes 
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </OverlayTrigger></h5>
               <Select
                 multi
                 placeholder='All sponsor agencies'
@@ -185,7 +188,12 @@ var CapitalProjectsExplorer = React.createClass({
                 options={config.sponsorAgencies}
                 onChange={this.updateFilter.bind(this, 'sagency')}
               />
-              <h5>and Managing Agency includes</h5>
+              <h5>
+                and Managing Agency includes 
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </OverlayTrigger>
+              </h5>
               <Select
                 multi
                 placeholder='All managing agencies'
@@ -194,7 +202,12 @@ var CapitalProjectsExplorer = React.createClass({
                 options={config.managingAgencies}
                 onChange={this.updateFilter.bind(this, 'magency')}
               />
-              <h5>and Source Agency includes</h5>
+              <h5>
+                and Source Agency includes
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </OverlayTrigger>
+              </h5>
               <Select
                 multi
                 placeholder='All sourcing agencies'
@@ -203,7 +216,11 @@ var CapitalProjectsExplorer = React.createClass({
                 options={config.sourceAgencies}
                 onChange={this.updateFilter.bind(this, 'source')}
               />
-              <h5>and Status includes</h5>
+              <h5>
+                and Status includes 
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </OverlayTrigger></h5>
               <Select
                 multi
                 placeholder='All statuses'
@@ -212,7 +229,12 @@ var CapitalProjectsExplorer = React.createClass({
                 options={config.statuses}
                 onChange={this.updateFilter.bind(this, 'cpstatus')}
               />
-              <h5>and Type includes</h5>
+              <h5>
+                and Type includes 
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </OverlayTrigger>
+              </h5>
               <Select
                 multi
                 placeholder='All types'
