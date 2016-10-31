@@ -45,7 +45,7 @@ var CapitalProjectsExplorer = React.createClass({
     }) 
 
     //get totalCount of rows
-    carto.SQL('SELECT count(*) FROM (SELECT * FROM adoyle.capeprojectspoints UNION ALL SELECT * FROM adoyle.capeprojectspolygons) a', 'json')
+    carto.SQL('SELECT count(*) FROM (SELECT * FROM cpadmin.capeprojectspoints UNION ALL SELECT * FROM cpadmin.capeprojectspolygons) a', 'json')
       .then(function(data) {
         self.setState({
           selectedCount: data[0].count,
@@ -69,7 +69,7 @@ var CapitalProjectsExplorer = React.createClass({
   handleMapClick(feature) {
     var self=this
 
-    var tableName = '(SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a'
+    var tableName = '(SELECT * FROM cpadmin.capeprojectspolygons UNION ALL SELECT * FROM cpadmin.capeprojectspoints) a'
 
    //make an api call to carto to get the full feature, build content from it, show modal
    carto.getRow(tableName, 'projectid', feature.properties.projectid)
@@ -119,7 +119,7 @@ var CapitalProjectsExplorer = React.createClass({
 
   updateCount(sqlFilters) {
 
-    carto.SQL('SELECT count(*) FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE ' + sqlFilters, 'json')
+    carto.SQL('SELECT count(*) FROM (SELECT * FROM cpadmin.capeprojectspolygons UNION ALL SELECT * FROM cpadmin.capeprojectspoints) a WHERE ' + sqlFilters, 'json')
       .then(function(data) {
         console.log(data)
         this.setState({
@@ -164,7 +164,7 @@ var CapitalProjectsExplorer = React.createClass({
               <p>
                 Filter the data by choosing from the following attributes: 
                 <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip"> Learn more about the data</Tooltip>}>
-                  <a href="https://docs.capitalplanning.nyc/cpdbv1/" target="_blank"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
+                  <a href="http://docs.capitalplanning.nyc/cpdbv1/" target="_blank"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
                 </OverlayTrigger>
               </p>
             </div>
@@ -269,9 +269,9 @@ module.exports=CapitalProjectsExplorer
 var splashContent = (
   <div>
     <h4>Hello, Beta Tester!</h4>
-    <p>The Capital Projects Explorer is currently under development by the New York City Department of City Planning Capital Planning Team.</p>
+    <p>The Capital Projects Explorer is currently under development by the NYC Department of City Planning Capital Planning Team.</p>
     <p>The Capital Projects Explorer’s goal is to act as a starting point for planners exploring what capital projects are taking place within an area, means to identify potential conflicts and synergies among capital projects, and resource for all City agencies learn more about capital projects.  To know about the uses and limitations of the Capital Projects Explorer we encourage you to <a href="http://docs.capitalplanning.nyc/cpdbv1/">read more about the data</a> powering this map.</p>
-    <p>Likely, you’ll find some bugs and uncover some less-than-accurate data since this is a work in progress, so we’re soliciting your help improving this product.  <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please get in touch!</a></p>
+    <p>Likely, you’ll find some bugs and uncover some less-than-accurate data since this is a work in progress, so we’re soliciting your help improving this product.  <a href="http://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please get in touch!</a></p>
   </div>
 )
 var aboutContent = (
@@ -316,7 +316,7 @@ var aboutContent = (
     </p>
     <h4>Feedback</h4>
     <p>
-      We are constantly looking for ways to improve this product.  <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions </a> with Capital Planning.
+      We are constantly looking for ways to improve this product.  <a href="http://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions </a> with Capital Planning.
     </p>
   </div>
 )
