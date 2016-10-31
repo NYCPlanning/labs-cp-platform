@@ -278,7 +278,9 @@ ul.navbar-right {
 
 .legendItemText {
   font-family: 'Open Sans';
+  display: inline-block;
 }
+
 
 /*spinkit*/
 .spinner {

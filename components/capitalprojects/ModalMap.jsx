@@ -95,7 +95,7 @@ var ModalMap = React.createClass({
                   [15,6]
                 ]
               },
-              "circle-color": Agencies.agencyColors,
+              "circle-color": Agencies.mapboxGLStyle,
               "circle-opacity": 0.8
           }
         });
@@ -110,7 +110,7 @@ var ModalMap = React.createClass({
           'type':'fill',
           "source": 'polygonFeatures',
           'paint': {
-              'fill-color': Agencies.agencyColors,
+              'fill-color': Agencies.mapboxGLStyle,
               'fill-opacity': 0.8,
           }
           
