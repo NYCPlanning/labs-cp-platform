@@ -3,17 +3,54 @@ import {Link} from 'react-router'
 
 import Nav from './Nav.jsx'
 import Footer from './Footer.jsx'
+import Modal from './Modal.jsx'
+
+var aboutContent = 'About'
+
+var collaborateContent = "Collaborate"
 
 
-var HomePage = React.createClass({
+var FacilitiesLandingPage = React.createClass({
+  getInitialState() {
+    return({
+      modalHeading: null,
+      modalContent: null,
+      modalCloseText: null
+    })
+  },
+
   componentDidMount: function() {
     document.title = "Capital Planning Platform";
+  },
+
+  showAbout() {
+    this.showModal({
+      modalHeading: 'About this Tool',
+      modalContent: aboutContent,
+      modalCloseText: 'Got it!'
+    })
+  },
+
+  showCollaborate() {
+    this.showModal({
+      modalHeading: 'About this Tool',
+      modalContent: collaborateContent,
+      modalCloseText: 'Got it!'
+    })
+  },
+
+  showModal(options) {
+    this.setState(options)
+    this.refs.modal.open()
   },
 
   render() {
     return(
       <div >
-        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth}/>
+        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth}>
+            <li onClick={this.showAbout}><a> About</a></li>
+            <li onClick={this.showCollaborate}><a> Collaborate</a></li>
+        </Nav>
 
         <div className="main-content">
             <section className="bg-primary" id="about" style={{'backgroundImage': "url(/img/facilities_landing_background.png)", 'padding': '60px'}}>
@@ -139,10 +176,16 @@ var HomePage = React.createClass({
         </div>
 
         <Footer/>
+        <Modal
+          heading={this.state.modalHeading}
+          body={this.state.modalContent}
+          closeText={this.state.modalCloseText}
+          ref="modal"
+        />
       </div>
     );
   }
 
 });
 
-module.exports=HomePage;
+module.exports=FacilitiesLandingPage;
