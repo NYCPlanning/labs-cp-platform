@@ -272,13 +272,11 @@ var CountWidget=React.createClass({
 var splashContent = (
   <div>
     <h4>Hello, Beta Tester!</h4>
-<<<<<<< HEAD
     <p>The Capital Projects Explorer is currently under development by the New York City Department of City Planning Capital Planning Team.</p>
     <p>The Capital Projects Explorer’s goal is to act as a starting point for planners exploring what capital projects are taking place within an area, means to identify potential conflicts and synergies among capital projects, and resource for all City agencies learn more about capital projects.  To know about the uses and limitations of the Capital Projects Explorer we encourage you to <a href="http://docs.capitalplanning.nyc/cpdbv1/">read more about the data</a> powering this map.</p>
 =======
     <p>The Capital Projects Explorer is currently under development by the New York City Department of City Planning Capital Planning Team.</p>
     <p>The Capital Projects Explorer’s goal is to act as a starting point for planners exploring what capital projects are taking place within an area, means to identify potential conflicts and synergies among capital projects, and resource for all City agencies learn more about capital projects.  To know about the uses and limitations of the Capital Projects Explorer we encourage you to <a href="http://docs.capitalplanning.nyc/cpdbv1/">read more about the data</a> powering this map.</p>
->>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
     <p>Likely, you’ll find some bugs and uncover some less-than-accurate data since this is a work in progress, so we’re soliciting your help improving this product.  <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please get in touch!</a></p>
   </div>
 )
@@ -286,7 +284,6 @@ var aboutContent = (
   <div>
     <h4>What's included?</h4>
     <p>
-<<<<<<< HEAD
     The New York City Department of City Planning (NYC Planning) Capital Planning Team produces the Capital Projects Explorer by integrating dispersed spatial datasets of capital projects published by capital agencies into one database and inclusive data explorer.
     </p>
     <p>
@@ -310,7 +307,7 @@ var aboutContent = (
     </p>
     <p>
       <b>Inconsistent data standards.</b> Capital agencies manage their capital projects data separately and have varying data standards that meet their needs; therefore, the Capital Projects Explorer make some assumptions to reconcile key common attributes across datasets and integrate the data into one database.
-=======
+
     The New York City Department of City Planning (NYC Planning) Capital Planning Team produces the Capital Projects Explorer by integrating dispersed spatial datasets of capital projects published by capital agencies into one database and inclusive data explorer.
     </p>
     <p>
@@ -332,7 +329,6 @@ var aboutContent = (
     </p>
     <p>
       <b>Inconsistent data standards.</b> Capital agencies manage their capital projects data separately and have varying data standards that meet their needs; therefore, the Capital Projects Explorer make some assumptions to reconcile key common attributes across datasets and integrate the data into one database.
->>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
     </p>
     <p>
       <b>What's a project?</b> As a result of inconsistent data standards, capital agencies define capital projects differently, which vary in size, scope, and impact.  The inconsistent definition of a capital project has the potential to skew analyses generated from these data.
@@ -348,7 +344,7 @@ var aboutContent = (
     </p>
 
 
-=======
+
       <b>Completeness.</b> This dataset does not capture the entirety of NYC's Capital Budget.  the Capital Projects Explorer is built using records from agencies' project management systems, which do not always maintain a link to budget lines, making it impossible to account for the whole Capital Budget.
     </p>
     <p>
@@ -357,15 +353,9 @@ var aboutContent = (
     <p>
     As a result of these data limitations and inconsistencies the Capital Projects Explorer is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses.  Please consult <a href="http://docs.capitalplanning.nyc/cpdbv1/">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
     </p>
->>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
     <h4>Feedback</h4>
     <p>
       We are constantly looking for ways to improve this product.  <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions </a> with Capital Planning.
     </p>
   </div>
-<<<<<<< HEAD
 )
-
-=======
-)
->>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
