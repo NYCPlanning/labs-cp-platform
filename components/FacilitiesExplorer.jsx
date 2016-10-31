@@ -375,7 +375,7 @@ var FacilitiesExplorer = React.createClass({
     return(
       <div className="full-height">
         <Nav title={title} auth={this.props.auth}>
-          <li onClick={this.showAbout}><a><span className="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li>
+          <li onClick={this.showAbout}><a>About</a></li>
         </Nav>
         <div id="main-container">
           <div id="sidebar">
