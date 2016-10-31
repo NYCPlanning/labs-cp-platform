@@ -193,7 +193,7 @@ ul.navbar-right {
 }
 
 .mapboxgl-map .mapboxgl-ctrl-top-right {
-  top: 82px;
+  top: 60px;
 }
 /*End Map*/
 
@@ -898,6 +898,8 @@ line-height: 30px;
 .search {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  right: 0;
+  border-radius: 0 0 0 10px;
 }
 
 
@@ -948,9 +950,11 @@ line-height: 30px;
 }
 
 .basemap {
-    top: 0;
-    right: 0;
-    border-radius: 0 0 0 10px;
+  bottom: 0;
+  right: 0;
+  border-radius: 10px 0 0 0;
+  padding-bottom: 28px;
+  z-index: 2;
 }
 
 .legend {
