@@ -3,30 +3,66 @@ import {Link} from 'react-router'
 
 import Nav from './Nav.jsx'
 import Footer from './Footer.jsx'
+import Modal from './Modal.jsx'
+
+var aboutContent = 'About'
+
+var collaborateContent = "Collaborate"
 
 
-var HomePage = React.createClass({
+var FacilitiesLandingPage = React.createClass({
+  getInitialState() {
+    return({
+      modalHeading: null,
+      modalContent: null,
+      modalCloseText: null
+    })
+  },
+
   componentDidMount: function() {
-    document.title = "NYC Capital Planning Platform";
+    document.title = "Capital Planning Platform";
+  },
+
+  showAbout() {
+    this.showModal({
+      modalHeading: 'About this Tool',
+      modalContent: aboutContent,
+      modalCloseText: 'Got it!'
+    })
+  },
+
+  showCollaborate() {
+    this.showModal({
+      modalHeading: 'About this Tool',
+      modalContent: collaborateContent,
+      modalCloseText: 'Got it!'
+    })
+  },
+
+  showModal(options) {
+    this.setState(options)
+    this.refs.modal.open()
   },
 
   render() {
     return(
       <div >
-        <Nav title='NYC Capital Planning Platform' auth={this.props.auth}/>
+        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth}>
+            <li onClick={this.showAbout}><a> About</a></li>
+            <li onClick={this.showCollaborate}><a> Collaborate</a></li>
+        </Nav>
 
         <div className="main-content">
             <section className="bg-primary" id="about" style={{'backgroundImage': "url(/img/facilities_landing_background.png)", 'padding': '60px'}}>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-10 col-lg-offset-1 text-center" style={{'background': "#606060", 'opacity':'0.9', 'padding': '40px'}}>
-                            <h2 className="section-heading" style={{'font-size': '32px'}}>The NYC Facilities Database</h2>
+                            <h2 className="section-heading" style={{'fontSize': '32px'}}>The NYC Facilities Database</h2>
                             <hr className="light"/>
-                            <h3 className="section-heading" style={{'padding-bottom': '30px', 'font-size': '28px'}}>The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>                            
-                            <p className="text-muted">
-                                Explore the <a href="/facilities/all" style={{'text-decoration': 'underline'}}>interactive map</a> of of all facilities or scroll down for customized views.
-                            </p>
-                            <p className="text-muted">Read more about this dataset <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database" style={{'text-decoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'text-decoration': 'underline'}}>improve it.</a></p>
+                            <h3 className="section-heading" style={{'paddingBottom': '30px', 'fontSize': '28px'}}>The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>                            
+                            
+                            <p className="text-muted">Read more about this dataset <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database" style={{'textDecoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'textDecoration': 'underline'}}>improve it.</a></p>
+                            <a href="/facilities/all"> <div className="btn btn-lg dcp-orange">View ALL Facilities <i className="fa fa-arrow-right" aria-hidden="true"></i></div></a>
                         </div>
                     </div>
                 </div>
@@ -140,10 +176,16 @@ var HomePage = React.createClass({
         </div>
 
         <Footer/>
+        <Modal
+          heading={this.state.modalHeading}
+          body={this.state.modalContent}
+          closeText={this.state.modalCloseText}
+          ref="modal"
+        />
       </div>
     );
   }
 
 });
 
-module.exports=HomePage;
+module.exports=FacilitiesLandingPage;

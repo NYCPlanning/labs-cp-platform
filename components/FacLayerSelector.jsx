@@ -242,6 +242,7 @@ var LayerSelector = React.createClass({
 
   render() {
     var self=this;
+
     return(
       <div className="col-md-12">
         <div className='row sidebar-content'>
@@ -350,6 +351,10 @@ var LayerSelector = React.createClass({
             })
           }
         </ul>
+        <div className='sidebar-buttons'>
+          <a href="/facilities"><div className='btn btn-sm dcp-orange' > <i className="fa fa-arrow-left" aria-hidden="true"></i> Back to Facilities Home</div><br/></a>
+          <a href="/facilities/all"><div className='btn btn-sm dcp-orange' > <i className="fa fa-map-marker" aria-hidden="true"></i> All Facilities Map</div></a>
+        </div>
       </div>
     )
   }

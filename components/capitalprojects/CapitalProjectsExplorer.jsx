@@ -154,7 +154,7 @@ var CapitalProjectsExplorer = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title="NYC Capital Projects Map" auth={this.props.auth}>
+        <Nav title="Capital Projects Explorer" auth={this.props.auth}>
           <li onClick={this.showAbout}><a> About</a></li>
         </Nav>
         <div id="main-container">
@@ -272,16 +272,21 @@ var CountWidget=React.createClass({
 var splashContent = (
   <div>
     <h4>Hello, Beta Tester!</h4>
+<<<<<<< HEAD
     <p>The Capital Projects Explorer is currently under development by the New York City Department of City Planning Capital Planning Team.</p>
     <p>The Capital Projects Explorer’s goal is to act as a starting point for planners exploring what capital projects are taking place within an area, means to identify potential conflicts and synergies among capital projects, and resource for all City agencies learn more about capital projects.  To know about the uses and limitations of the Capital Projects Explorer we encourage you to <a href="http://docs.capitalplanning.nyc/cpdbv1/">read more about the data</a> powering this map.</p>
+=======
+    <p>The Capital Projects Explorer (CAPE) is currently under development by the New York City Department of City Planning Capital Planning Team.</p>
+    <p>CAPE’s goal is to act as a starting point for planners exploring what capital projects are taking place within an area, means to identify potential conflicts and synergies among capital projects, and resource for all City agencies learn more about capital projects.  To know about the uses and limitations of CAPE we encourage you to <a href="https://nycplanning.github.io/cpdocs/cape/">read more about the data</a> powering this map.</p>
+>>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
     <p>Likely, you’ll find some bugs and uncover some less-than-accurate data since this is a work in progress, so we’re soliciting your help improving this product.  <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please get in touch!</a></p>
   </div>
 )
-
 var aboutContent = (
   <div>
     <h4>What's included?</h4>
     <p>
+<<<<<<< HEAD
     The New York City Department of City Planning (NYC Planning) Capital Planning Team produces the Capital Projects Explorer by integrating dispersed spatial datasets of capital projects published by capital agencies into one database and inclusive data explorer.
     </p>
     <p>
@@ -305,11 +310,35 @@ var aboutContent = (
     </p>
     <p>
       <b>Inconsistent data standards.</b> Capital agencies manage their capital projects data separately and have varying data standards that meet their needs; therefore, the Capital Projects Explorer make some assumptions to reconcile key common attributes across datasets and integrate the data into one database.
+=======
+    The New York City Department of City Planning (NYC Planning) Capital Planning Team produces the Capital Projects Explorer (CAPE) by integrating dispersed spatial datasets of capital projects published by capital agencies into one database and inclusive data explorer.
+    </p>
+    <p>
+    The source datasets currently feeding into CAPE report over 6,000 capital projects that span over a multitude of sites. <a href="https://nycplanning.github.io/cpdocs/cape/">NYC Planning’s Capital Planning Docs</a> site provides more details on CAPE’s data sources, database fields, and creation and update processes.
+    </p>
+    <h4>How is this useful?</h4>
+    <p>
+      CAPE’s primary function is to enable a user to view all of the capital projects with spatial data collected from the various data sources on a one map and explore key data points associated with a capital project.  The explorer facilitates the identification of a capital project and access to more detailed information.
+    </p>
+    <p>
+      CAPE as a data resource and explorer provides Planners, City Hall, and Agencies easy centralized access to high-level information on capital projects in NYC.  It’s a robust starting point for knowing what capital projects are occurring within neighborhoods, which can in turn better inform neighborhood planning and reduce situations where projects conflict and increase opportunities for interagency coordination.
+    </p>
+    <h4>Limitations and Disclaimers</h4>
+    <p>
+      CAPE is only as good as the source data it aggregates.  Currently, CAPE is the most comprehensive map of recently completed, active, and future City capital construction sites, but it does not claim to capture every past, present, or planned capital project in NYC.
+    </p>
+    <p>
+      <b>Duplicates.</b> This version of CAPE includes cases of duplicate records for the same capital project because some of the source datasets have overlapping content, but different unique identifiers for a project making it difficult to systematically identify and reconcile duplicate records.
+    </p>
+    <p>
+      <b>Inconsistent data standards.</b> Capital agencies manage their capital projects data separately and have varying data standards that meet their needs; therefore, CAPE make some assumptions to reconcile key common attributes across datasets and integrate the data into one database.
+>>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
     </p>
     <p>
       <b>What's a project?</b> As a result of inconsistent data standards, capital agencies define capital projects differently, which vary in size, scope, and impact.  The inconsistent definition of a capital project has the potential to skew analyses generated from these data.
     </p>
     <p>
+<<<<<<< HEAD
       <b>Completeness.</b> This dataset does not capture the entirety of NYC's Capital Budget.  The Capital Projects Explorer is built using records from agencies' project management systems, which do not always maintain a link to budget lines, making it impossible to account for the whole Capital Budget.
     </p>
     <p>
@@ -320,10 +349,24 @@ var aboutContent = (
     </p>
 
 
+=======
+      <b>Completeness.</b> This dataset does not capture the entirety of NYC's Capital Budget.  CAPE is built using records from agencies' project management systems, which do not always maintain a link to budget lines, making it impossible to account for the whole Capital Budget.
+    </p>
+    <p>
+      <b>Different update frequencies.</b> As a result of the different project management systems the data feeding CAPE are updated at various frequencies, ranging from daily updates to unknown.  As a result, the freshness of the data in CAPE varies depending on the data source.
+    </p>
+    <p>
+    As a result of these data limitations and inconsistencies CAPE is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses.  Please consult <a href="https://nycplanning.github.io/cpdocs/cape/">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
+    </p>
+>>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127
     <h4>Feedback</h4>
     <p>
       We are constantly looking for ways to improve this product.  <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions </a> with Capital Planning.
     </p>
   </div>
+<<<<<<< HEAD
 )
 
+=======
+)
+>>>>>>> 5d6d7b81cc6d7cb79a2453d1a4dafacaa0bc4127

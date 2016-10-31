@@ -115,12 +115,19 @@ ul.navbar-right {
 }
 
 .navbar-default .navbar-brand {
-  padding: 30px 18px;
-  color: #db691b;
-  background-image: url("/../img/logo_80.png");
+  background-image: url(/../img/logo_120.png);
   background-repeat: no-repeat;
-  background-position: 16px 0;
-  padding-left: 109px;
+  background-position: 16px 12px;
+  background-size: 112px;
+  height: 80px;
+  width: 144px;
+}
+
+.navbar-title {
+  float: left;
+  color: #d96b27;
+  font-size: 28px;
+  line-height: 80px;
 }
 
 #navbar {
@@ -186,7 +193,7 @@ ul.navbar-right {
 }
 
 .mapboxgl-map .mapboxgl-ctrl-top-right {
-  top: 82px;
+  top: 60px;
 }
 /*End Map*/
 
@@ -334,6 +341,54 @@ ul.navbar-right {
 
 /*End Custom Carto Tooltip*/
 
+/*Override Carto Default Legend Styles*/
+
+div.cartodb-legend.category ul li, div.cartodb-legend.color ul li, div.cartodb-legend.custom ul li {
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: initial;
+    font-weight: 200;
+    color: #333;
+}
+
+div.cartodb-legend.category ul li .bullet {
+  width: 10px;
+  height: 10px;
+}
+
+
+div.cartodb-legend-stack {
+  display: block;
+  padding: 10px;
+  font-family: 'Oswald', sans-serif;
+  z-index: 10;
+  position: absolute;
+  min-width: 90px;
+  background: rgba(230, 230, 230, 0.65);
+  font-size: 15px;
+  bottom: 0;
+  left: 0;
+  right: initial;
+  box-shadow: none;
+  webkit-box-shadow: none;
+  border: none;
+  padding-bottom: 30px;
+}
+
+div.cartodb-legend .legend-title {
+    font-family: 'Oswald', sans-serif;
+    color: #333;
+    font-size: 18px;
+    font-weight:500;
+    text-transform: capitalize;
+}
+
+div.cartodb-legend {
+  padding: 0;
+}
+
+/*End Override Carto Default Legend Styles*/
+
 /*Collapsible Menu Sidebar from http://www.bootply.com/G2XMjMr27Y*/
 
 .caret-container {
@@ -366,6 +421,14 @@ ul.nav-stacked ul.nav-stacked > li > a {
   padding: 3px 15px 3px 50px;
   font-size: 12px;
   cursor: pointer;
+}
+
+#stacked-menu {
+  margin-bottom: 20px;
+}
+
+.sidebar-buttons .btn {
+  margin-bottom: 15px;
 }
 
 .nav-container {
@@ -618,6 +681,8 @@ line-height: 30px;
   width: 100%;
   background-size: cover;
   margin-bottom: 15px;
+  background-position-y: 50%;
+  background-position-x: 50%;
 }
 
 .portfolio-item .fa-quote-left {
@@ -627,6 +692,7 @@ line-height: 30px;
 .building-image {
   height: 180px;
   margin-bottom: 14px;
+  background-size: cover;
 }
 
 .building-item {
@@ -832,6 +898,8 @@ line-height: 30px;
 .search {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  right: 0;
+  border-radius: 0 0 0 10px;
 }
 
 
@@ -882,9 +950,11 @@ line-height: 30px;
 }
 
 .basemap {
-    top: 0;
-    right: 0;
-    border-radius: 0 0 0 10px;
+  bottom: 0;
+  right: 0;
+  border-radius: 10px 0 0 0;
+  padding-bottom: 28px;
+  z-index: 2;
 }
 
 .legend {
