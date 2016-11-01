@@ -5,11 +5,19 @@ import Moment from 'moment'
 
 import Agencies from '../../helpers/agencies.js'
 import ModalMap from './ModalMap.jsx'
+import config from './config.js'
 
 
 var ModalContent = React.createClass({
   render() {
     var d = this.props.feature.properties
+
+    function getAgencyName(acronym) {
+       var match = config.sponsorAgencies.filter(function(agency) {
+        return agency.value == acronym
+      })
+      return match[0].label
+    }
 
     //pre-process funding to show a discrete value or a range
     var funding 
@@ -57,9 +65,9 @@ var ModalContent = React.createClass({
                 <dt>MA + Project ID</dt>
                 <dd>{d.maprojid}</dd>
                 <dt>Sponsor Agency</dt>
-                <dd>{d.sagency}</dd>
+                <dd>{getAgencyName(d.sagency)}</dd>
                 <dt>Managing Agency</dt>
-                <dd>{d.magency}</dd>
+                <dd>{getAgencyName(d.magency)}</dd>
                 <dt>Contact</dt>
                 <dd>{d.contact}</dd>
                 <dt>Current Status</dt>
@@ -74,10 +82,10 @@ var ModalContent = React.createClass({
               <h4>Timeline</h4>
               <dl className="dl-horizontal">
                 <dt>Construction Start</dt>
-                <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : ''}</dd>  
+                <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'unknown'}</dd>  
 
                 <dt>Construction End</dt>
-                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : ''}</dd>
+                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'unknown'}</dd>
               </dl>              
             </li>
 
