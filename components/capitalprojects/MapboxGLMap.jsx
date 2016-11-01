@@ -76,7 +76,7 @@ var MapboxGLMap = React.createClass({
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q';
     var map = this.map = new mapboxgl.Map({
-        container: 'map',
+        container: 'mapboxGLmap',
         style: 'mapbox://styles/mapbox/light-v9',
         zoom: 10,
         minZoom: 10,
@@ -234,7 +234,7 @@ var MapboxGLMap = React.createClass({
 
     //draw map, legend, basemap toggle, and searchbox
     return(
-      <div id='map' ref='map'>
+      <div id='mapboxGLmap' ref='map'>
         <div className='legend mapOverlay'>
           <h4>Sponsor Agency</h4>
           {legendItems}
