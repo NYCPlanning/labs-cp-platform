@@ -61,13 +61,13 @@ var vizJson = {
                "order":1,
                "visible":true,
                "options":{  
-                  "sql":"select * from table_20160930_facilitiesdraft",
-                  "layer_name":"table_20160930_facilitiesdraft",
+                  "sql":"select * from facilities_data",
+                  "layer_name":"facilities_data",
                   "cartocss":
                   `
                   /** this cartoCSS has been processed in order to be compatible with the new cartodb 2.0 */
 
-                  /** category visualization */#table_20160930_facilitiesdraft {
+                  /** category visualization */#facilities_data {
                        marker-fill-opacity: 0.9;
                        marker-line-color: #012700;
                        marker-line-width: 0.5;
@@ -77,22 +77,22 @@ var vizJson = {
                        marker-width: 7;
                        marker-allow-overlap: true;
                      }
-                  #table_20160930_facilitiesdraft[domain=\"Core Infrastructure and Transportation\"] {
+                  #facilities_data[domain=\"Core Infrastructure and Transportation\"] {
                        marker-fill: #b0dae8;
                      }
-                  #table_20160930_facilitiesdraft[domain=\"Administration of Government\"] {
+                  #facilities_data[domain=\"Administration of Government\"] {
                        marker-fill: #da664f;
                      }
-                  #table_20160930_facilitiesdraft[domain=\"Health and Human Services\"] {
+                  #facilities_data[domain=\"Health and Human Services\"] {
                        marker-fill: #b67eb7;
                      }
-                  #table_20160930_facilitiesdraft[domain=\"Parks, Cultural, and Other Community Facilities\"] {
+                  #facilities_data[domain=\"Parks, Cultural, and Other Community Facilities\"] {
                        marker-fill: #6f9568;
                      }
-                  #table_20160930_facilitiesdraft[domain=\"Public Safety, Emergency Services, and Administration of Justice\"] {
+                  #facilities_data[domain=\"Public Safety, Emergency Services, and Administration of Justice\"] {
                        marker-fill: #3182bd;
                      }
-                  #table_20160930_facilitiesdraft[domain=\"Education, Child Welfare, and Youth\"] {
+                  #facilities_data[domain=\"Education, Child Welfare, and Youth\"] {
                        marker-fill: #f7ca00;
                      }
                   `,
@@ -124,7 +124,7 @@ var FacilitiesExplorer = React.createClass({
 
     //default: select * and show all layers in layer selector
     this.layerStructure = FacilitiesLayers
-    this.initialSQL = 'SELECT * FROM table_20160930_facilitiesdraft'
+    this.initialSQL = 'SELECT * FROM facilities_data'
 
     //logic to modify initial sql and cartoCSS based on route
     /*Domain Subsets*/
@@ -133,7 +133,7 @@ var FacilitiesExplorer = React.createClass({
       var firstFive = domain.substr(0,5);
 
       var layerOptions = vizJson.options.layer_definition.layers[0].options
-      this.initialSQL=layerOptions.sql="SELECT * FROM table_20160930_facilitiesdraft WHERE domain ILIKE '" + firstFive + "%'"
+      this.initialSQL=layerOptions.sql="SELECT * FROM facilities_data WHERE domain ILIKE '" + firstFive + "%'"
       this.layerStructure = FacilitiesLayers.filter(function(layer) {
         return (layer.slug == domain)
       })
@@ -145,12 +145,12 @@ var FacilitiesExplorer = React.createClass({
     if(subset) {
       var config = {
         government_owned_or_operated: {
-          sql: "SELECT * FROM table_20160930_facilitiesdraft WHERE operatortype='Public'"
+          sql: "SELECT * FROM facilities_data WHERE operatortype='Public'"
         },
         community_facilities_ceqr: {
           sql:
           `
-          SELECT * FROM table_20160930_facilitiesdraft
+          SELECT * FROM facilities_data
           WHERE facilitysubgroup = 'Public Schools'
           OR facilitysubgroup = 'Public Libraries'
           OR agencysource = 'NYCACS'
@@ -163,7 +163,7 @@ var FacilitiesExplorer = React.createClass({
         children_seniors_and_people_with_disabilities: {
           sql: 
           `
-          SELECT * FROM table_20160930_facilitiesdraft
+          SELECT * FROM facilities_data
           WHERE facilitygroup = 'Camps'
           OR facilitygroup = 'Child Welfare'
           OR facilitygroup = 'Childcare'
@@ -190,7 +190,7 @@ var FacilitiesExplorer = React.createClass({
     
     /* DEFINING BASIC SYMBOLOGY */
     var cartocss = 
-      `#table_20160930_facilitiesdraft {
+      `#facilities_data {
          marker-fill-opacity: 0.8;
          marker-line-color: #012700;
          marker-line-width: 0.5;
@@ -205,7 +205,7 @@ var FacilitiesExplorer = React.createClass({
     layerStructure[0].children.map(function(group, i) {
       var groupRuleTemplate =
         `
-        #table_20160930_facilitiesdraft[facilitygroup="{{name}}"] {
+        #facilities_data[facilitygroup="{{name}}"] {
            marker-fill: {{color}};
         }
         `

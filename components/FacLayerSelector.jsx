@@ -174,13 +174,13 @@ var LayerSelector = React.createClass({
 
   buildSQL(layers) {
     if (layers.length > 0) {
-      var sql = 'SELECT * FROM table_20160930_facilitiesdraft WHERE '
+      var sql = 'SELECT * FROM facilities_data WHERE '
       layers.map(function(name, i) {
         if(i>0) sql += ' OR '
         sql += 'facilitysubgroup = \'' + name + '\''
       })  
     } else {
-      var sql ='SELECT * FROM table_20160930_facilitiesdraft LIMIT 0'
+      var sql ='SELECT * FROM facilities_data LIMIT 0'
     }
 
     this.props.updateSQL(sql)
