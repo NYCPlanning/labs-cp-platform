@@ -417,8 +417,8 @@ var aboutContent = (
     </p>
     <p>
       <ul type={"disc"}>
-        <li>Health Care and Human Services</li>
-        <li>Youth, Education, and Child Welfare</li>
+        <li>Health and Human Services</li>
+        <li>Education, Child Welfare, and Youth</li>
         <li>Public Safety, Emergency Services, and Administration of Justice</li>
         <li>Core Infrastructure and Transportation</li>
         <li>Parks, Cultural, and Other Community Facilities</li>
