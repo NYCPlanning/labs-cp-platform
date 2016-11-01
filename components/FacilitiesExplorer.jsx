@@ -411,9 +411,10 @@ module.exports=FacilitiesExplorer
 
 var aboutContent = (
   <div>
-    <h4>What's included?</h4>
+
+    <h4>Product Overview</h4>
     <p>
-      The City Planning Facilities Database (FacDB) is produced by the New York City Department of City Planning (NYC Planning) Capital Planning Division. The database captures the location, type, and capacity of public and private facilities ranging across six domains:
+      The City Planning Facilities Database (FacDB) aggregates information about facilities and program sites that are owned, operated, funded, licensed or certified by a City, State, or Federal agency in the City of New York. These facilities generally impact the quality of the city’s neighborhoods, and they span six domains:
     </p>
     <p>
       <ul type={"disc"}>
@@ -424,30 +425,64 @@ var aboutContent = (
         <li>Parks, Cultural, and Other Community Facilities</li>
         <li>Administration of Government (See note in Disclaimers)</li>
       </ul>
-      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 31,000 facilities throughout NYC. Details on the facility categories, fields in the database, data sources, and the database update process is provided on NYC Planning’s <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Capital Planning Docs</a> site.
+      This database and interactive map build upon City Planning’s decades-old work on the Selected Facilities and Program Sites Database, which this new product replaces, and capture the location, type, and capacity of public and private facilities in order to inform holistic neighborhood planning, strategic site selection and service delivery planning, opportunities for interagency and public-private partnerships, community outreach activities, and many other functions across City agencies.
     </p>
+    <p>
+      One goal of this database is to provide a consolidated, authoritative dataset that can serve as a one-stop-shop to planners. More broadly, the intent is to provide the foundation for a more robust data-integration initiative, ensuring interoperability between disparate agencies’ datasets. City Planning has grouped these facilities according to the following six domains, each with a set of groups, subgroups, and facility types that are intended to make the data easy to navigate and more useful for specific planning purposes. Facility types and names are pulled directly from source datasets, wherever possible.
+    </p>
+    <p>
+      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 34,000 facilities throughout NYC. More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis. Details on the facility categories, fields in the database, data sources, and the database update process is provided on the Capital Planning Platform Docs site.Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 34,000 facilities throughout NYC. More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis.
 
-    <h4>How is this useful?</h4>
-    <p>
-      This data resource provides agencies and communities with easy access to data and neighborhood context needed for site planning, assessing service delivery, preparing neighborhood plans, or informing capital investment decisions. The facilities and program sites are generally operated, funded, licensed, or certified by a City, State, or Federal government agency.
     </p>
+    
+
+    <h4>Limitations & disclaimers</h4>
     <p>
-      The facilities which are included are valuable for planning purposes because of the social services they provide and their role in land use typology which impacts activity in the neighborhood. For example parking lots and garages (including commerical garages) are captured in the database, both because they are an asset that residents and visitors use and because they could indicate increased vehicular traffic in the area.
+
+      Details on the facility categories, fields in the database, data sources, and the database update process is provided on the Capital Planning Platform <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Docs</a> site.
     </p>
 
     <h4>Limitations and Disclaimers</h4>
     <p>
-      The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. The descriptions of the different facility types are also limited by what is available in the source data. For more detailed information on a specific facility please reach out to the respective oversight agency.
+      FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource available of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. We hope to resolve as many of these limitations as possible over time, and seek feedback from the user community on potential approaches to improving the data. For more detailed information on a specific facility please reach out to the respective oversight agency.
+
     </p>
-    <p>
-      <b>Duplicates.</b> Please be aware that this beta version of the database also includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these duplicate records and retain the most up-to-date and detailed record.
+  <p>
+      ***Exclusions:*** The database excludes likely duplicates and projects with no change in units, as determined by DCP.
+      <li>Duplicates: In some cases, it appeared that multiple permits were generated for a single development. For example, this could occur if an initial permit had administrative errors that were corrected by issuing a new permit. Since the data does not include permit expiration date (per above), we cannot determine if/which permits are outdated. To avoid double-counting, we identified likely duplicates using the Building Identification Number (BIN) listed in the DOB permit. We have only retained the most recent instance of a given BIN in the database. </li>
+     <li>No change in units:  In some cases, alteration permits are required for administrative reasons rather than actual construction. To prevent such permits from skewing analyses, we have excluded any alteration permits that are missing data about existing and/or projected number of units. </li>
     </p>
 
+    <p>
+      <b>Analysis Limitations.</b> As a result of these data limitations and inconsistencies, users should be careful in their use of this database not to develop analyses that may be suspect. For example, a comparison of the density or accessibility of facilities across neighborhoods should recognize that some of the facilities included are organizational headquarters rather than service sites, and that this database is not authoritatively comprehensive.
+    </p>
+
+
+ 
     <h4>Feedback</h4>
     <p>
       We are constantly looking for ways to improve this product. <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a> with Capital Planning.
     </p>
   </div>
+)
+
+var collaborateContent = (
+    <div>
+        <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
+        <p>
+            The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
+        </p>
+        <p>
+            We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='docs.capitalplanning.nyc'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
+        </p>
+        <p>
+            We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
+        </p>
+        <p>
+            Email the team at <a href='mailto:capital@planning.nyc.gov'>capital@planning.nyc.gov</a>.
+        </p>
+        <div className='modal-logo'></div>
+    </div>
 )
 
 /* SETTING THE CONTENT OF THE SPLASH "WELCOME" MODAL */

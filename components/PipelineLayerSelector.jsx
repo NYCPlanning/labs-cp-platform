@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
 
+import carto from '../helpers/carto.js'
+
 
 //object for the hierarchy of domains, groups and subgroups
 //includes colors to be used in display
@@ -11,7 +13,7 @@ var layerStructure = [
     column: 'dcp_pipeline_status',
     children: [
       {
-        name: 'Recently completed',
+        name: 'Complete',
         color: '#ebebeb'
      
       },
@@ -20,11 +22,11 @@ var layerStructure = [
         color: '#ebebeb'
       },
       {
-        name: 'Permit pending',
+        name: 'Permit outstanding',
         color: '#ebebeb'
       },
       {
-        name: 'Permitted',
+        name: 'Permit pending',
         color: '#ebebeb'
       }
     ]
@@ -34,15 +36,19 @@ var layerStructure = [
     column: 'dcp_pipeline_category',
     children: [
       {
-        name: 'Residential New',
+        name: 'Residential-New',
         color: '#ebebeb'
       },
       {
-        name: 'Residential New - Hotel',
+        name: 'Hotel-New',
         color: '#ebebeb'
       },
       {
-        name: 'Residential renovation',
+        name: 'Residential-Alteration',
+        color: '#ebebeb'
+      },
+      {
+        name: 'Hotel-Alteration',
         color: '#ebebeb'
       }
     ]
@@ -65,8 +71,27 @@ var LayerSelector = React.createClass({
 
   getInitialState: function() {
     return ({
-      layers:layerStructure
+      layers:layerStructure,
+      selectedCount: '__',
+      totalCount:'__',
+      dateFilter: false
     })
+  },
+
+  updateCounts() {
+    var self=this
+
+    /* get a count of "select all" from entire dataset */
+    var SQL = 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode' 
+    var totalCountSQL = "SELECT count(*) as count FROM (" + SQL + ") a"
+
+    carto.SQL(totalCountSQL, 'json')
+      .then(function(data) {
+        self.setState({
+          selectedCount: data[0].count,
+          totalCount: data[0].count
+        })
+      })
   },
 
   toggleCheckbox: function(type, domain, group, subgroup, e) {
@@ -123,6 +148,7 @@ var LayerSelector = React.createClass({
   },
 
   processChecked: function(layers) {
+    console.log('processChecked')
     var self=this
 
     //set indeterminate states, start from the bottom and work up
@@ -155,6 +181,7 @@ var LayerSelector = React.createClass({
 
     //push an object for each column to be filtered by, containing an array of currently selected values
     this.state.layers.map(function(domain) {
+      console.log(domain)
       var columnSelected = {
         column: domain.column,
         selected: []
@@ -175,7 +202,15 @@ var LayerSelector = React.createClass({
         chunk = '(' + chunk + ')'
 
         self.sqlChunks[columnSelected.column] = chunk
-      } 
+      } else {
+        self.sqlChunks[columnSelected.column] = 'FALSE'
+      }
+
+      if(!self.state.dateFilter) {
+        delete self.sqlChunks.dob_cofo_date
+      }
+      
+
       self.buildSQL()
 
 
@@ -185,10 +220,26 @@ var LayerSelector = React.createClass({
 
   },
 
+  getCount(sql) {
+    var self=this
+    
+    var countSQL = 'SELECT count(a.*) as selected FROM ( ' + sql + ') a'
+
+    carto.SQL(countSQL, 'json')
+      .then(function(data) {
+        self.setState({
+          selectedCount: data[0].selected,
+        })
+      })
+  },
+
   componentDidMount() {
     var self=this
 
+    this.updateCounts() 
+
     $(this.refs.dateSlider).dateRangeSlider({
+      enabled: false,
       bounds:{
         min: new Date('2012-10-1'),
         max: new Date()
@@ -214,18 +265,23 @@ var LayerSelector = React.createClass({
         max:Moment(dateRange.max).format('YYYY-MM-DD')
       }
 
-      self.sqlChunks.dob_co_date = Mustache.render('((dob_co_date >= \'{{min}}\' AND dob_co_date <= \'{{max}}\') OR (dob_co_date IS NULL))', dateRangeFormatted)
+      if(self.state.dateFilter) {
+        self.sqlChunks.dob_cofo_date = Mustache.render(
+        'NOT (dob_cofo_date_first >= \'{{max}}\' OR dob_cofo_date_last <= \'{{min}}\')', dateRangeFormatted
+        )
+      } 
+      
       self.buildSQL()
     });
 
     $(this.refs.unitsSlider).rangeSlider({
       bounds:{
-        min: -262,
-        max: 1432
+        min: -1100,
+        max: 1669
       },
       defaultValues:{
-        min: -262,
-        max: 1432
+        min: -1100,
+        max: 1669
       },
       step:10
     });
@@ -236,15 +292,15 @@ var LayerSelector = React.createClass({
         max: data.values.max
       };
 
-      self.sqlChunks.dcp_pipeline_units = Mustache.render('(dcp_pipeline_units >= \'{{min}}\' AND dcp_pipeline_units <= \'{{max}}\')', range)
+      self.sqlChunks.dcp_pipeline_units = Mustache.render('(dcp_units_use_map >= \'{{min}}\' AND dcp_units_use_map <= \'{{max}}\')', range)
       self.buildSQL()
     });
   },
 
   buildSQL: function() {
 
-    var sqlTemplate = 'SELECT * FROM residential_pipeline_100416_v1_users WHERE '
-
+    var sqlTemplate = 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
+    console.log(this.sqlChunks)
 
     var chunksArray = []
     for (var key in this.sqlChunks) {
@@ -258,7 +314,34 @@ var LayerSelector = React.createClass({
 
     var sql = sqlTemplate + chunksString
     this.props.updateSQL(sql)
+    this.getCount(sql)
 
+  },
+
+  toggleDateFilter: function() {
+
+    if(!this.state.dateFilter) {
+      $(this.refs.dateSlider).dateRangeSlider("option", "enabled", true);
+      //filter complete and partially complete in the checkboxes
+      var layers = this.state.layers 
+      layers[0].children[2].checked = false  //disable permit outstanding
+      layers[0].children[3].checked = false  //disable permit pending
+
+      this.setState({
+        layers: layers
+      })
+
+    } else {
+      $(this.refs.dateSlider).dateRangeSlider("option", "enabled", false);
+    }
+
+
+    this.setState({
+      dateFilter: !this.state.dateFilter
+    }, () => {
+      //trigger update
+      this.processChecked(this.state.layers)
+    })
   },
 
   render: function(){
@@ -269,6 +352,13 @@ var LayerSelector = React.createClass({
             <h3>Explore by Project Type and Status</h3>
         </div>
         <div className="col-md-12">  
+          <div className="filter-count">
+              {
+                (this.state.selectedCount == this.state.totalCount) ? 
+                  <span>Showing all {this.state.totalCount} Projects</span> :
+                  <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
+              }
+            </div>
           <ul className="nav nav-pills nav-stacked" id="stacked-menu">
             { 
               this.state.layers.map(function(domain, i) {
@@ -313,7 +403,11 @@ var LayerSelector = React.createClass({
           </ul>
           <h4>Number of Units</h4>
           <div id="unitsSlider" ref="unitsSlider"></div>
-          <h4>Completion Date*<br/><small>*Applies to completed and partially completed projects only</small></h4>
+          <h4><Checkbox checked={this.state.dateFilter} onChange={this.toggleDateFilter}/> Completion Date*
+            <br/>
+            <small>*Filters to completed and partially completed projects</small>
+          </h4>
+          
           <div id="dateSlider" ref="dateSlider"></div>
         </div>
       </div>
