@@ -127,6 +127,9 @@ var FacilitiesLandingPage = React.createClass({
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/subset/government_owned_or_operated">
                                 <div className="service-box">
+                                    <div className="coming-soon">
+                                        <p>Coming Soon</p>
+                                    </div>
                                     <i className="fa fa-4x fa-university wow bounceIn text-primary" ></i>
                                     <h4>Government Owned or Operated</h4>
                                     <p className="text-muted"> All facilities owned or operated by City, State, or Federal agencies.</p>
@@ -136,6 +139,9 @@ var FacilitiesLandingPage = React.createClass({
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/subset/community_facilities_ceqr">
                                 <div className="service-box">
+                                    <div className="coming-soon">
+                                        <p>Coming Soon</p>
+                                    </div>
                                     <i className="fa fa-4x fa-hospital-o wow bounceIn text-primary" ></i>
                                     <h4>Community Facilities for CEQR Analysis</h4>
                                     <p className="text-muted">Public or publicly funded schools, libraries, child care centers, health care facilities, and fire and police protection.</p>
@@ -145,6 +151,9 @@ var FacilitiesLandingPage = React.createClass({
                         <div className="col-sm-4 text-center">
                             <a href="/facilities/subset/children_seniors_and_people_with_disabilities">
                                 <div className="service-box">
+                                    <div className="coming-soon">
+                                            <p>Coming Soon</p>
+                                        </div>
                                     <i className="fa fa-4x fa-child wow bounceIn text-primary" ></i>
                                     <h4>Children, Seniors, & People with Disabilities</h4>
                                     <p className="text-muted">All facilities focused on serving children, seniors, or people with disabilities.</p>
