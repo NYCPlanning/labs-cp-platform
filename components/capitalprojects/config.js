@@ -21,14 +21,6 @@ module.exports = {
       "label":"Brooklyn Public Library - BPL"
    },
    {  
-      "value":"CME",
-      "label":"Office of the Chief Medical Examiner - CME"
-   },
-   {  
-      "value":"Courts",
-      "label":"New York State Unified Court System - Courts"
-   },
-   {  
       "value":"CUNY",
       "label":"City University of New York - CUNY"
    },
@@ -52,29 +44,13 @@ module.exports = {
       "value":"DEP",
       "label":"Department of Environmental Protection - DEP"
    },
-   {  
-      "value":"DFTA",
-      "label":"Department for the Aging - DFTA"
-   },
-   {  
-      "value":"DHP",
-      "label":"Department of Housing, Preservation, and Development - DHP"
-   },
-   {  
-      "value":"DHS",
-      "label":"Department of Homeless Services - DHS"
-   },
-   {  
-      "value":"DJJ",
-      "label":"Department of Juvenile Justice - DJJ"
-   },
-   {  
+   {
       "value":"DOC",
-      "label":"Department of Corrections - DOC"
+      "label":"Department of Correction",
    },
-   {  
+   {
       "value":"DOE",
-      "label":"Department of Education - DOE"
+      "label":"Department of Education"
    },
    {  
       "value":"DOHMH",
@@ -109,20 +85,8 @@ module.exports = {
       "label":"Health and Hospitals Corporation - HHC"
    },
    {  
-      "value":"HRA",
-      "label":"Human Resources Administration - HRA"
-   },
-   {  
-      "value":"Miscellaneous",
-      "label":"Miscellaneous"
-   },
-   {  
       "value":"MO",
       "label":"Mayor's Office - MO"
-   },
-   {  
-      "value":"Non-City",
-      "label":"Non-City Agencies"
    },
    {  
       "value":"NYCHA",
@@ -159,6 +123,14 @@ module.exports = {
    {  
       "value":"TGI",
       "label":"Trust for Governor's Island"
+   },
+   {
+      "value":"TRS",
+      "label":"Teachers' Retirement System"
+   },
+   {
+      "value":"USACE",
+      "label":"United States Army Corps of Engineers"
    }
 ],
 
@@ -345,6 +317,18 @@ sponsorAgencies: [
    {  
       "value":"TGI",
       "label":"Trust for Governor's Island"
+   },
+   {
+      "value":"TLC",
+      "label": "Taxi and Limousine Commission"
+   },
+   {
+      "value":"TRS",
+      "label":"Teachers' Retirement System"
+   },
+   {
+      "value":"USACE",
+      "label":"United States Army Corps of Engineers"
    }
 ],
 
