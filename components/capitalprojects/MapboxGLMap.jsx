@@ -49,7 +49,6 @@ var MapboxGLMap = React.createClass({
 
   applyFilters(filters) {
 
-    console.log('applying Filters', filters)
 
     this.map.setFilter('points', filters);
     this.map.setFilter('points-outline', filters);
@@ -104,8 +103,7 @@ var MapboxGLMap = React.createClass({
 
       //add geojson layer to gray areas outside of NYC
       $.getJSON('data/greyOutsideNYC.geojson', function(data) {
-        console.log(data)
-        map.addSource('grey-outside', {
+          map.addSource('grey-outside', {
           type: 'geojson',
           data: data
         })

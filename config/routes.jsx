@@ -16,8 +16,7 @@ import CDPage from '../components/CDPage.jsx'
 import FacilitiesLanding from '../components/FacilitiesLanding.jsx'
 import NotFound from '../components/NotFound.jsx'
 
-
- var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
+var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
 
 const auth = new Auth(auth0_client_id, auth0_domain)
@@ -42,7 +41,6 @@ var AuthSuccess = function() {
     </div>
   )
 } 
-
 
 module.exports = (
   <Route path="/" component={App} auth={auth} >

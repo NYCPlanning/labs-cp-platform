@@ -7,13 +7,10 @@ export default class LayerService {
     this.map=mapObject
     this.addedLayers = {}
     this.sqlMod = sqlMod
-    console.log(this.sqlMod)
   }
 
   update(layers) {
     var self=this
-
-    console.log('in update, added layers are: ', this.addedLayers)
 
     layers.forEach(function(layerName) {
       if (!self.addedLayers[layerName]) {
@@ -41,11 +38,9 @@ export default class LayerService {
         self.map.addLayer(self.addedLayers[layerName])
 
         var originalSQL = layer.getSubLayer(0).getSQL()
-        console.log(self.sqlMod)
         var newSQL = Mustache.render(self.sqlMod, {
           originalSQL: originalSQL
         })
-        console.log('new SQL', newSQL)
 
         self.addedLayers[layerName].getSubLayer(0).setSQL(newSQL)
 
@@ -55,7 +50,6 @@ export default class LayerService {
   removeLayer(layerName) {
     //iterate over sublayers to hide
     var layer = this.addedLayers[layerName]
-    console.log('removing', layer)
     layer.layers.forEach(function(subLayer, i) {
       layer.getSubLayer(i).hide()
     })

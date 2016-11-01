@@ -8,8 +8,6 @@ module.exports = {
 
     var sql = Mustache.render(sqlTemplate, {value: value})
 
-    console.log(sql)
-
     return this.SQL(sql)
 
   },
@@ -23,7 +21,6 @@ module.exports = {
     var promises = vizJsons.map(function(vizJson) {
       return new Promise(function(resolve, reject) {
         $.getJSON(vizJson, function(vizJsonData) {
-          console.log(vizJsonData)
           var sourceOptions = vizJsonData.layers[1].options.layer_definition.layers[0].options
 
 
@@ -40,9 +37,6 @@ module.exports = {
               }
             ]
           }
-
-          console.log(layerConfig)
-          console.log(JSON.stringify(layerConfig))
 
           $.ajax({
             type: 'POST',
@@ -77,8 +71,6 @@ module.exports = {
       column: column,
       value: value
     })
-
-    console.log(sql)
 
     //returns a promise
     return this.SQL(sql)
