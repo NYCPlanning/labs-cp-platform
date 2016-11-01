@@ -707,11 +707,6 @@ line-height: 30px;
   margin-bottom: 15px;
   background-position-y: 50%;
   background-position-x: 50%;
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -o-filter: grayscale(100%);
-  -ms-filter: grayscale(100%);
-  filter: grayscale(100%);
 }
 
 .portfolio-item .fa-quote-left {
@@ -1065,6 +1060,34 @@ line-height: 30px;
 
 
 /*FacDB Content Selection / Landing Page*/
+
+.facilities-landing hr {
+  border-color: #FFF;
+}
+
+.facilities-landing h2.section-heading {
+  color: #FFF;
+}
+
+.facilities-landing h3.section-heading {
+  color: #FFF;
+  padding-bottom: 30px;
+  font-size: 31px;
+  font-weight: 200;
+}
+
+.header-area {
+  color: #FFF;
+}
+
+.header-area a{
+  color: #FFF;
+  text-decoration: underline;
+}
+
+.header-area a:hover {
+  color: #d2d2d2;
+}
 
 section.content-selection {
   padding: 10px 0;
