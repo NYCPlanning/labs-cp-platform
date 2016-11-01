@@ -38,7 +38,11 @@ var FacilitiesLayers = [
         color: '#3182bd',
         children: [
           {
-            name: 'Housing and Homeless Services',
+            name: 'Shelters and Transitional Housing',
+            description: 'Homeless shelters and transitional houseing'
+          },
+          {
+            name: 'Non-residential Housing and Homeless Services',
             description: 'Shelters and homelessness prevention services'
           },
           {
@@ -54,12 +58,16 @@ var FacilitiesLayers = [
             description: 'Workforce 1 Centers and other vocational services for adults'
           },
           {
+            name: 'Legal and Intervention Services',
+            description: 'Early intervention, criminal defense, and mediation services'
+          },
+          {
             name: 'Soup Kitchens and Food Pantries',
             description: 'Soup kitchens and food pantries'
           },
           {
-            name: 'Legal and Intervention Services',
-            description: 'Early intervention, criminal defense, and mediation services'
+            name: 'Community Centers',
+            description: 'Community centers that provide multiple social services at one site'
           }
         ]
       }
@@ -91,14 +99,6 @@ var FacilitiesLayers = [
           {
             name: 'Other Schools Serving Students with Disabilities',
             description: 'Specialized schools and educational services for students with disabilities'
-          },
-          {
-            name: 'Colleges or Universities',
-            description: 'Public and privately operated 2 and 4 year colleges and universities'
-          },
-          {
-            name: 'Proprietary Schools',
-            description: 'ESL schools and trade colleges'
           }
         ]
       },
@@ -154,6 +154,28 @@ var FacilitiesLayers = [
           {
             name: 'Camps',
             description: 'Preschool age and all age camps'
+          }
+        ]
+      },
+      {
+        name: 'Higher Education',
+        description: 'Public and privately operated 2 and 4 year colleges and universities',
+        color: '#a7b1f9',
+        children: [
+          {
+            name: 'Colleges or Universities',
+            description: 'Public and privately operated 2 and 4 year colleges and universities'
+          }
+        ]
+      },
+      {
+        name: 'Vocational and Proprietary Schools',
+        description: 'ESL schools and trade colleges',
+        color: '#bcba76',
+        children: [
+          {
+            name: 'Proprietary Schools',
+            description: 'ESL schools and trade colleges'
           }
         ]
       }
@@ -255,8 +277,12 @@ var FacilitiesLayers = [
         color: 'rgba(49,130,189,0.9)',
         children: [
           {
+            name: 'Fire Services',
+            description: 'Firehouses'
+          },
+          {
             name: 'Emergency Services',
-            description: 'Firehouses, ambulance stations, training facilites, and others related to providing emergency services'
+            description: 'Ambulance and Emergency Medical Stations'
           }
         ]
       },
@@ -267,7 +293,11 @@ var FacilitiesLayers = [
         children: [
           {
             name: 'Police Services',
-            description: 'Police stations, training facilities, and other support centers'
+            description: 'NYPD and NYCHA police stations'
+          },
+          {
+            name: 'Other Public Safety',
+            description: 'Other public safety related support centers'
           }
         ]
       },
@@ -295,13 +325,47 @@ var FacilitiesLayers = [
     subColor: '#e3eef2',
     children: [
       {
-        name: 'Transportation',
-        description: 'Sites operated or overseen by Metropolitan Transportation Authority, Port Authority of NY and NJ, NYC Dept. of Transportation, NYC Dept. of Consumer Affairs, US Dept. of Transportation, and others',
+        name: 'Solid Waste',
+        description: 'Sites overseen and operated by NYC Dept. of Sanitation, NYC Business Integrity Commission, and NYS Dept. of Conservation',
+        color: '#da664f',
+        children: [
+          {
+            name: 'Solid Waste Processing',
+            description: 'Material recovery, composting, landfill gas recovery, and scrap metal processing facilities'
+          },
+          {
+            name: 'Solid Waste Transfer and Carting',
+            description: 'Waste carter sites and transfer stations'
+          }
+        ]
+      },
+      {
+        name: 'Water and Wastewater',
+        description: 'Sites overseen and operated by NYC Dept. of Environmental Protection',
         color: '#b0dae8',
         children: [
           {
-            name: 'Parking Lots and Garages',
-            description: 'Public and commercial parking lots and garages'
+            name: 'Wastewater and Pollution Control',
+            description: 'Wastewater treatment plants and other sites related to wastewater conveyance and pollution control'
+          },
+          {
+            name: 'Water Supply',
+            description: 'Sites related to water supply'
+          }
+        ]
+      },
+      {
+        name: 'Transportation',
+        description: 'Sites operated or overseen by Metropolitan Transportation Authority, Port Authority of NY and NJ, NYC Dept. of Transportation, NYC Dept. of Consumer Affairs, US Dept. of Transportation, and others',
+        color: '#f7ca00',
+        children: [
+          {
+            name: 'Public Parking Lots and Garages',
+            description: 'Public parking lots and garages'
+          },
+          {
+            name: 'Commercial Parking Lots and Garages',
+            description: 'Commercial parking lots and garages'
           },
           {
             name: 'Bus Depots and Terminals',
@@ -322,21 +386,28 @@ var FacilitiesLayers = [
         ]
       },
       {
-        name: 'Wastewater and Waste Management',
-        description: 'Sites overseen and operated by NYC Dept. of Sanitation, NYC Dept. of Environmental Protection, NYC Business Integrity Commission, and NYS Dept. of Conservation',
-        color: '#da664f',
+        name: 'Telecommunications',
+        description: 'Sites operated or overseen by Dept. of Information Technology and Telecommunications and other City telecommunications services',
+        color: '#3182bd',
         children: [
           {
-            name: 'Solid Waste Processing',
-            description: 'Material recovery, composting, landfill gas recovery, and scrap metal processing facilities'
+            name: 'Telecommunications',
+            description: 'Antennas and other telecommunications sites'
+          }
+        ]
+      },
+      {
+        name: 'Material Supplies and Markets',
+        description: 'Sites operated or overseen by Dept. of Information Technology and Telecommunications and other City telecommunications services',
+        color: '#b67eb7',
+        children: [
+          {
+            name: 'Material Supplies',
+            description: 'Asphalt plants and other material processing facilities'
           },
           {
-            name: 'Solid Waste Transfer and Carting',
-            description: 'Waste carter sites and transfer stations'
-          },
-          {
-            name: 'Wastewater Treatment Plant',
-            description: 'Wastewater treatment plants'
+            name: 'Wholesale Markets',
+            description: 'Wholesale food and commercial markets'
           }
         ]
       }
@@ -349,13 +420,17 @@ var FacilitiesLayers = [
     subColor: 'rgba(251, 128, 114, 0.3)',
     children: [
       {
-        name: 'Offices',
+        name: 'Offices, Training, and Testing',
         description: 'All City owned or leased offices overseen by Dept. of Citywide Administrative Services',
         color: '#da664f',
         children: [
           {
             name: 'Offices',
             description: 'Offices used by City agencies'
+          },
+          {
+            name: 'Training and Testing',
+            description: 'Training and testing sites used by City agencies'
           }
         ]
       },
@@ -365,7 +440,7 @@ var FacilitiesLayers = [
         color: '#b0dae8',
         children: [
           {
-            name: 'Maintenance',
+            name: 'Maintenance and Garages',
             description: 'City agency vehicle maintenance sites'
           },
           {
@@ -384,16 +459,12 @@ var FacilitiesLayers = [
         color: '#b67eb7',
         children: [
           {
-            name: 'No Use',
+            name: 'Undeveloped or No Use',
             description: 'Property and structures without a designated use'
           },
           {
             name: 'Miscellaneous Use',
             description: 'Property without a categorized use'
-          },
-          {
-            name: 'Undeveloped',
-            description: 'Undeveloped property'
           }
         ]
       }
