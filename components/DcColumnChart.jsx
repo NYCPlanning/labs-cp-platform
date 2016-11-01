@@ -16,8 +16,6 @@ var Component = React.createClass({
         var containerWidth = container.offsetWidth,
         containerHeight = container.offsetHeight;
 
-        console.log(containerWidth, containerHeight)
-
         this.chart = dc.barChart(container)
 
         this.chart

@@ -37,8 +37,6 @@ export default class AuthService {
 
 
   _doAuthentication(authResult){
-    console.log('DOING AUTH', authResult, this)
-
     this.lock.getProfile(authResult.idToken, function(error, profile) {
     if (error) {
       // Handle error
@@ -55,8 +53,6 @@ export default class AuthService {
 
   login() {
     // Call the show method to display the widget.
-    console.log('auth', this)
-
     this.lock.show({
       auth: {
         params: {

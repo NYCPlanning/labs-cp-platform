@@ -18,7 +18,6 @@ var Component = React.createClass({
     // in the future, this feature may break. The older method we are currently using is 
     // L.geoJson. The new method is L.geoJSON: http://leafletjs.com/examples/geojson/
     $.getJSON('/data/greyOutsideNYC.geojson', function(data) {
-      console.log(data)
       var test = L.geoJson(data, {
         style: {
           color: "black",

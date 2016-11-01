@@ -121,7 +121,6 @@ var CapitalProjectsExplorer = React.createClass({
 
     carto.SQL('SELECT count(*) FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE ' + sqlFilters, 'json')
       .then(function(data) {
-        console.log(data)
         this.setState({
           selectedCount: data[0].count
         })

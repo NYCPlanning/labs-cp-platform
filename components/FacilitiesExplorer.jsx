@@ -134,7 +134,6 @@ var FacilitiesExplorer = React.createClass({
       var layerOptions = vizJson.options.layer_definition.layers[0].options
       this.initialSQL=layerOptions.sql="SELECT * FROM table_20160930_facilitiesdraft WHERE domain ILIKE '" + firstFive + "%'"
       this.layerStructure = FacilitiesLayers.filter(function(layer) {
-        console.log(layer.slug, domain)
         return (layer.slug == domain)
       })
       layerOptions.cartocss = this.buildCartoCSS(this.layerStructure)
@@ -184,7 +183,6 @@ var FacilitiesExplorer = React.createClass({
       this.initialSQL=layerOptions.sql=config[subset].sql
     }
 
-    console.log(vizJson)
   },
 
   buildCartoCSS(layerStructure) {
@@ -219,7 +217,6 @@ var FacilitiesExplorer = React.createClass({
       cartocss += groupRule + '\n'
     })
 
-    console.log(cartocss)
     return cartocss
   },
 
@@ -258,7 +255,6 @@ var FacilitiesExplorer = React.createClass({
 
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
-    console.log(d)
 
     var Categories = function() {
       return(

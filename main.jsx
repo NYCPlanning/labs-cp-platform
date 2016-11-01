@@ -10,7 +10,8 @@ import routes from './config/routes.jsx'
 ReactGA.initialize('UA-84250233-2')
 
 function fireTracking() {
-    ReactGA.pageview(window.location.hash);
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview( window.location.pathname );
 }
 
 
