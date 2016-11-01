@@ -5,8 +5,10 @@ import turf from 'turf'
 import extent from 'turf-extent'
 
 import Agencies from '../../helpers/agencies.js'
-import Search from './Search.jsx'
 import carto from '../../helpers/carto.js'
+
+import Search from './Search.jsx'
+import LocationWidget from '../LocationWidget.jsx'
 
 
 var MapboxGLMap = React.createClass({
@@ -206,8 +208,13 @@ var MapboxGLMap = React.createClass({
         // }
 
 
-      })      
+      })  
+
+
     })
+
+    //force update after the map initializes so that the locationwidget will mount
+    this.forceUpdate()
   },
 
   render() {
@@ -256,8 +263,7 @@ var MapboxGLMap = React.createClass({
               handleClick={this.props.handleClick}/> :
             null
         }
-        
-        
+        { this.map ? <LocationWidget type='mapboxGL' map={this.map}/> : null }
       </div>
     )
   },
@@ -266,7 +272,6 @@ var MapboxGLMap = React.createClass({
 
 module.exports=MapboxGLMap;
 
-//Component for popups, takes an array of features, renders static HTML
 var ProjectsPopup = React.createClass({
   showDetails(feature) {
     this.props.handleClick(feature)
