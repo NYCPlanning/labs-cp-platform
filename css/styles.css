@@ -194,6 +194,11 @@ ul.navbar-right {
   width: 100%;
 }
 
+#mapboxGLmap {
+  height: 100%;
+  width: calc(100% - 340px);
+}
+
 .mapbox-improve-map {
   display: none;
 }
