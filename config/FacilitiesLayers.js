@@ -43,7 +43,7 @@ var FacilitiesLayers = [
           },
           {
             name: 'Non-residential Housing and Homeless Services',
-            description: 'Shelters and homelessness prevention services'
+            description: 'Non-residential homelessness prevention services'
           },
           {
             name: 'Senior Services',
