@@ -182,7 +182,7 @@ var CapitalProjectsExplorer = React.createClass({
                 </OverlayTrigger></h5>
               <Select
                 multi
-                placeholder='All sponsor agencies'
+                placeholder='showing all sponsor agencies'
                 value={this.state.filters.sagency}
                 name="form-field-name"
                 options={config.sponsorAgencies}
@@ -196,7 +196,7 @@ var CapitalProjectsExplorer = React.createClass({
               </h5>
               <Select
                 multi
-                placeholder='All managing agencies'
+                placeholder='showing all managing agencies'
                 value={this.state.filters.magency}
                 name="form-field-name"
                 options={config.managingAgencies}
@@ -210,7 +210,7 @@ var CapitalProjectsExplorer = React.createClass({
               </h5>
               <Select
                 multi
-                placeholder='All sourcing agencies'
+                placeholder='showing all source agencies'
                 value={this.state.filters.source}
                 name="form-field-name"
                 options={config.sourceAgencies}
@@ -223,7 +223,7 @@ var CapitalProjectsExplorer = React.createClass({
                 </OverlayTrigger></h5>
               <Select
                 multi
-                placeholder='All statuses'
+                placeholder='showing all project statuses'
                 value={this.state.filters.cpstatus}
                 name="form-field-name"
                 options={config.statuses}
@@ -237,7 +237,7 @@ var CapitalProjectsExplorer = React.createClass({
               </h5>
               <Select
                 multi
-                placeholder='All types'
+                placeholder='showing all project types'
                 value={this.state.filters.type}
                 name="form-field-name"
                 options={config.types}
