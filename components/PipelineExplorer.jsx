@@ -83,7 +83,7 @@ var PipelineExplorer = React.createClass({
     var modalContent = (
       <div className="row">
         <div className="col-md-12">
-          <h3>{d.dob_address} - {d.dcp_pipeline_units} Units</h3>
+          <h3>{d.dob_permit_address}</h3>
         </div>
         <div className="col-md-6">
           <SimpleMarkerMap point={latlng}/>
@@ -91,21 +91,18 @@ var PipelineExplorer = React.createClass({
         <div className="col-md-6">
           <ul className="list-group">
             <li className="list-group-item">
-              <h4>Pipeline Information</h4>
+              <h4>General Information</h4>
               <dl className="dl-horizontal">
-                <dt>Number of Units</dt>
-                <dd>{d.dcp_pipeline_units}</dd>
+                <dt>Units Complete</dt>
+                <dd>{d.dcp_units_complete}</dd>
+                <dt>Units Outstanding</dt>
+                <dd>{d.dcp_units_outstanding}</dd>
+                <dt>Units Pending</dt>
+                <dd>{d.dcp_units_pending}</dd>
                 <dt>Category</dt>
                 <dd>{d.dcp_pipeline_category}</dd>
                 <dt>Status</dt>
                 <dd>{d.dcp_pipeline_status}</dd>
-              </dl>
-            </li>
-          
-
-            <li className="list-group-item">
-              <h4>Site Information</h4>
-              <dl className="dl-horizontal">
                 <dt>BBL</dt>
                 <dd>{d.dob_bbl}</dd>
                 <dt>Building Id (BIN)</dt>
@@ -113,17 +110,38 @@ var PipelineExplorer = React.createClass({
               </dl>
             </li>
           
+
             <li className="list-group-item">
-              <h4>Permit Info</h4>
+              <h4>DOB Information</h4>
               <dl className="dl-horizontal">
-                <dt>Issue Date</dt>
-                <dd>{d.dob_issue_date}</dd>
-                <dt>Job Number</dt>
-                <dd>{d.dob_jobnumber}</dd>
-                <dt>Job Type</dt>
-                <dd>{d.dob_jobtype}</dd>
-                <dt>C of O Date</dt>
-                <dd>{d.dob_co_date}</dd>
+                <dt>C of O First Date</dt>
+                <dd>{d.dob_cofo_date_first}</dd>
+                <dt>C of O Last Date</dt>
+                <dd>{d.dob_cofo_date_last}</dd>
+                <dt>Pre-2011 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_pre_2011}</dd>
+                <dt>2011 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_2011}</dd>
+                <dt>2012 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_2012}</dd>
+                <dt>2013 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_2013}</dd>
+                <dt>2014 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_2014}</dd>
+                <dt>2015 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_2015}</dd>
+                <dt>2016 Incremental Units</dt>
+                <dd>{d.dob_cofo_increm_units_2016}</dd>
+                <dt>Last C of O Type</dt>
+                <dd>{d.dob_cofo_last_type}</dd>
+
+              </dl>
+            </li>
+          
+            <li className="list-group-item">
+              <h4>HPD Information</h4>
+              <dl className="dl-horizontal">
+                
               </dl>
             </li>
           </ul>
@@ -132,7 +150,7 @@ var PipelineExplorer = React.createClass({
     )
 
     this.showModal({
-      modalHeading: 'Pipeline Details',
+      modalHeading: 'Pipeline Project Details',
       modalContent: modalContent,
       modalCloseText: 'Close'
     })
