@@ -1,11 +1,12 @@
 import React from 'react'
+import LocationWidget from './LocationWidget.jsx'
 
 var Component = React.createClass({
 
   componentDidMount() {
     var self=this 
 
-    var map = new L.Map(this.refs.map, {
+    var map = this.map = new L.Map(this.refs.map, {
       center: [40.71,-73.934555],
       zoomControl: false,
       zoom: 11,
@@ -71,7 +72,9 @@ var Component = React.createClass({
           .on('featureOut', function(e, latlng, pos, data) {
             $('#map').css('cursor','-webkit-grab'); 
           })
-          .on('featureClick', self.props.handleFeatureClick)
+          .on('featureClick', function(e, latlng, pos, data) {
+            self.props.handleFeatureClick(e, latlng, pos, data)
+          })
 
         layer.bind('loading', function() { $('.map-loader').fadeIn() });
         layer.bind('load',  function() { $('.map-loader').fadeOut(); });
@@ -80,6 +83,9 @@ var Component = React.createClass({
       .on('error', function(err) {
         alert("some error occurred: " + err);
       });
+
+      //force update so that LocationWidget renders
+      this.forceUpdate()
   },
 
   setSQL(sql) {
@@ -88,7 +94,11 @@ var Component = React.createClass({
 
   render() {
     return(
-      <div id="map" ref="map"/> 
+      <div id="mapContainer">
+        <div id="map" ref="map">
+        </div> 
+        { this.map ? <LocationWidget type='carto' map={this.map}/> : null }
+      </div>
     )
   }
 })

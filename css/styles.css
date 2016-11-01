@@ -183,9 +183,15 @@ ul.navbar-right {
 /*End Sidebar & Main Content*/
 
 /*Map*/
-#map {
+#mapContainer {
   height: 100%;
   width: calc(100% - 340px);
+  position: absolute;
+}
+
+#map {
+  height:100%;
+  width: 100%;
 }
 
 .mapbox-improve-map {
@@ -1076,6 +1082,31 @@ section.content-selection {
 }
 
 
+/*browser location*/
+/*Based on https://jsfiddle.net/mandynicole/7xrKP/*/
+.location-ring-container{
+  position: absolute;
+  z-index:1000;
+}
+
+.location-ring{
+  border: 3px solid rgb(49, 212, 228);
+  -webkit-border-radius: 30px;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  left: -14px;
+  top: -14px;
+  -webkit-animation: pulsate 1.4s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 1;
+}
+
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 1;}
+    50% {opacity: 0.75;}
+    100% {-webkit-transform: scale(3, 3); opacity: 0.0;}
+}
 
 
 
