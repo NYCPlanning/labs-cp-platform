@@ -93,47 +93,42 @@ var PipelineExplorer = React.createClass({
             <li className="list-group-item">
               <h4>General Information</h4>
               <dl className="dl-horizontal">
-                <dt>Units Complete</dt>
-                <dd>{d.dcp_units_complete}</dd>
-                <dt>Units Outstanding</dt>
-                <dd>{d.dcp_units_outstanding}</dd>
-                <dt>Units Pending</dt>
-                <dd>{d.dcp_units_pending}</dd>
                 <dt>Category</dt>
                 <dd>{d.dcp_pipeline_category}</dd>
+
                 <dt>Status</dt>
                 <dd>{d.dcp_pipeline_status}</dd>
+
+                <dt>Complete Units</dt>
+                <dd>{d.dcp_units_complete}</dd>
+
+                <dt>Outstanding Units</dt>
+                <dd>{d.dcp_units_outstanding}</dd>
+
+                <dt>Permit Pending Units</dt>
+                <dd>{d.dcp_units_pending}</dd>
+
                 <dt>BBL</dt>
-                <dd>{d.dob_bbl}</dd>
+                <dd>{d.dob_permit_bbl}</dd>
+
                 <dt>Building Id (BIN)</dt>
-                <dd>{d.dob_bin}</dd>
+                <dd>{d.dob_permit_bin}</dd>
               </dl>
             </li>
           
 
             <li className="list-group-item">
-              <h4>DOB Information</h4>
+              <h4>DOB Certificate of Occupancy Details</h4>
               <dl className="dl-horizontal">
-                <dt>C of O First Date</dt>
+                <dt>Earliest C of O (Since 2010)</dt>
                 <dd>{d.dob_cofo_date_first}</dd>
-                <dt>C of O Last Date</dt>
+
+                <dt>Most Recent C of O</dt>
                 <dd>{d.dob_cofo_date_last}</dd>
-                <dt>Pre-2011 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_pre_2011}</dd>
-                <dt>2011 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_2011}</dd>
-                <dt>2012 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_2012}</dd>
-                <dt>2013 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_2013}</dd>
-                <dt>2014 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_2014}</dd>
-                <dt>2015 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_2015}</dd>
-                <dt>2016 Incremental Units</dt>
-                <dd>{d.dob_cofo_increm_units_2016}</dd>
-                <dt>Last C of O Type</dt>
+
+                <dt>Most Recent C of O Type</dt>
                 <dd>{d.dob_cofo_last_type}</dd>
+             
 
               </dl>
             </li>
@@ -141,7 +136,12 @@ var PipelineExplorer = React.createClass({
             <li className="list-group-item">
               <h4>HPD Information</h4>
               <dl className="dl-horizontal">
-                
+                <dt>Project Name</dt>
+                <dd>{d.hpd_project_name}</dd>
+
+                <dt>HPD-Supported Units</dt>
+                <dd>{d.hpd_units_supported_total}</dd>
+
               </dl>
             </li>
           </ul>
@@ -174,8 +174,9 @@ var PipelineExplorer = React.createClass({
             <div className="messageOverlay mapOverlay">
               <div className="message">Hover over a property, or click for full details</div>
               <div className="message">Data Freshness:</div>
-              <div className="message-mini">DOB Permits-5/19/2016</div>
-              <div className="message-mini">DOB Certificates of Occupancy-8/25/2016</div>
+              <div className="message-mini">DOB Permits-10/20/2016</div>
+              <div className="message-mini">DOB Certificates of Occupancy-9/30/2016</div>
+              <div className="message-mini">HPD Projects-10/11/2016</div>
             </div>
             <CartoMap
              vizJson="http://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/27f505b4-9fab-11e6-ab61-0242ac110002/viz.json"

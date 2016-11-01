@@ -1152,3 +1152,13 @@ section.content-selection {
 
 
 
+.dl-horizontal dt {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+}

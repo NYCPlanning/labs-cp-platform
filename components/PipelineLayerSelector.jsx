@@ -276,11 +276,11 @@ var LayerSelector = React.createClass({
 
     $(this.refs.unitsSlider).rangeSlider({
       bounds:{
-        min: -1100,
+        min: -309,
         max: 1669
       },
       defaultValues:{
-        min: -1100,
+        min: -309,
         max: 1669
       },
       step:10
@@ -356,7 +356,7 @@ var LayerSelector = React.createClass({
               {
                 (this.state.selectedCount == this.state.totalCount) ? 
                   <span>Showing all {this.state.totalCount} Projects</span> :
-                  <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
+                  <span>Showing {this.state.selectedCount} of {this.state.totalCount} projects</span>
               }
             </div>
           <ul className="nav nav-pills nav-stacked" id="stacked-menu">
