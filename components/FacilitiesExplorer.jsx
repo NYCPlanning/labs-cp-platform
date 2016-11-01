@@ -409,46 +409,65 @@ module.exports=FacilitiesExplorer
 
 var aboutContent = (
   <div>
-    <h4>What's included?</h4>
+    <h4>Product overview</h4>
     <p>
-      The City Planning Facilities Database (FacDB) is produced by the New York City Department of City Planning (NYC Planning) Capital Planning Division. The database captures the location, type, and capacity of public and private facilities ranging across six domains:
+     The Development Pipeline aims to help planners understand land use changes resulting from building activity. It is currently comprised of data from the Department of Buildings (DOB) and the Department of Housing Preservation and Development (HPD), and includes the most comprehensive picture of new residential development taking place across the five boroughs. DCP will be working over the months to come to add other, non-residential developments to this pipeline, and to integrate other data sources.
     </p>
     <p>
-      <ul type={"disc"}>
-        <li>Health Care and Human Services</li>
-        <li>Youth, Education, and Child Welfare</li>
-        <li>Public Safety, Emergency Services, and Administration of Justice</li>
-        <li>Core Infrastructure and Transportation</li>
-        <li>Parks, Cultural, and Other Community Facilities</li>
-        <li>Administration of Government (See note in Disclaimers)</li>
-      </ul>
-      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 31,000 facilities throughout NYC. Details on the facility categories, fields in the database, data sources, and the database update process is provided on NYC Planning’s <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Capital Planning Docs</a> site.
+    This product includes recently-completed residential development activity (last 5+ years), as well data on developments that are at various stages in the permitting process.  Completed or “partially complete” projects have received Certificates of Occupancy for at least a portion of their permitted units. Permitted sites are those that have received building permits; although not all of these sites will necessarily be built and completed over the next few years, this category is the City’s best predictor of where new housing will be built in the near future. Sites identified in the “permit pending” category demonstrate where developers have completed applications for new building (NB) permits or major alterations (A1) permits that will change the number of residential units in a building; these sites may give a general direction of where developers are seeking to deliver new housing units, but since they have not yet received permits, the certainty of their development cannot be assured.  In addition to the information derived from permits and Certificates of Occupancy, some records are appended with HPD data regarding the number of affordable housing units. 
+    </p>
+    <p>
+    Special thanks goes to the NYC Department of Buildings and the Department of Housing Preservation and Development who make their data available for this map.
+    </p>
+    
+
+    <h4>Limitations & disclaimers</h4>
+    <p>
+      There are a number of known limitations to the database and improvements will be made on a continual basis, based on internal reviews and user feedback. We encourage users to read the full documentation of this dataset on the <a href='http://docs.capitalplanning.nyc'>metadata</a>
     </p>
 
-    <h4>How is this useful?</h4>
-    <p>
-      This data resource provides agencies and communities with easy access to data and neighborhood context needed for site planning, assessing service delivery, preparing neighborhood plans, or informing capital investment decisions. The facilities and program sites are generally operated, funded, licensed, or certified by a City, State, or Federal government agency.
+      <h5>Geocoding and geospatial integration:</h5>
+      <p>
+        95% DOB permits were successfully geocoding using BBL or address. Geocoding ‘rejects’ were researched by DCP but not every site could be verified. ~75% of HPD records were matched with their corresponding DOB permit using the BBL listed in each dataset. We assume that all HPD projects should have a corresponding DOB permit, and manual research confirms that most un-matched HPD projects list an outdated BBL. Going forward, DCP will work with HPD to improve and integrate this data.
+      </p>
+  <p>
+      ***Expired permits:*** These data include permit filings from 2010 through Q3 2016. Some “outstanding” permits (those without Certificate of Occupancy) may have since expired, however, this information not available in current datasets. Going forward, we will seek to identify and exclude expired permits.
     </p>
-    <p>
-      The facilities which are included are valuable for planning purposes because of the social services they provide and their role in land use typology which impacts activity in the neighborhood. For example parking lots and garages (including commerical garages) are captured in the database, both because they are an asset that residents and visitors use and because they could indicate increased vehicular traffic in the area.
+  <p>
+      ***Exclusions:*** The database excludes likely duplicates and projects with no change in units, as determined by DCP.
+      <li>Duplicates: In some cases, it appeared that multiple permits were generated for a single development. For example, this could occur if an initial permit had administrative errors that were corrected by issuing a new permit. Since the data does not include permit expiration date (per above), we cannot determine if/which permits are outdated. To avoid double-counting, we identified likely duplicates using the Building Identification Number (BIN) listed in the DOB permit. We have only retained the most recent instance of a given BIN in the database. </li>
+     <li>No change in units:  In some cases, alteration permits are required for administrative reasons rather than actual construction. To prevent such permits from skewing analyses, we have excluded any alteration permits that are missing data about existing and/or projected number of units. </li>
     </p>
-
-    <h4>Limitations and Disclaimers</h4>
-    <p>
-      The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. For more detailed information on a specific facility please reach out to the respective oversight agency.
-    </p>
-    <p>
-      <b>Duplicates.</b> Please be aware that this beta version of the database also includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these duplicate records and retain the most up-to-date and detailed record.
-    </p>
-    <p>
-      <b>Admin. of Government.</b> Please note that this domain currently only contains data from NYPD and FDNY in addition to a few DPR properties. After the 2016 version of the <a href="https://www1.nyc.gov/site/planning/about/publications/colp.page">City-Owned and Leased Properties</a> (COLP) database is released, all of its contents will also be added to FacDB.
+ <p>
+      ***Other data sources:*** For some analyses, it may be appropriate to include likely developments that have not yet received permits (e.g., projects where DCP has approved a land use change, or permits that have been filed but not approved). Due to the uncertainty of such developments, they are not included in this version of the Residential Pipeline
     </p>
 
+
+ 
     <h4>Feedback</h4>
     <p>
       We are constantly looking for ways to improve this product. <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a> with Capital Planning.
     </p>
   </div>
+)
+
+var collaborateContent = (
+    <div>
+        <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
+        <p>
+            The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
+        </p>
+        <p>
+            We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='docs.capitalplanning.nyc'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
+        </p>
+        <p>
+            We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
+        </p>
+        <p>
+            Email the team at <a href='mailto:capital@planning.nyc.gov'>capital@planning.nyc.gov</a>.
+        </p>
+        <div className='modal-logo'></div>
+    </div>
 )
 
 /* SETTING THE CONTENT OF THE SPLASH "WELCOME" MODAL */
