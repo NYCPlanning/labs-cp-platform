@@ -57,7 +57,7 @@ var FacilitiesLandingPage = React.createClass({
                             <hr className="light"/>
                             <h3 className="section-heading">The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>                            
                             
-                            <p>Read more about this dataset <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database" style={{'textDecoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'textDecoration': 'underline'}}>improve it.</a></p>
+                            <p>Read more about this dataset <a href="http://docs.capitalplanning.nyc/facdb/" style={{'textDecoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'textDecoration': 'underline'}}>improve it.</a></p>
                             <a href="/facilities/all"> <div className="btn btn-lg dcp-orange">View ALL Facilities <i className="fa fa-arrow-right" aria-hidden="true"></i></div></a>
                         </div>
                     </div>
@@ -214,10 +214,10 @@ var aboutContent = (
       One goal of this database is to provide a consolidated, authoritative dataset that can serve as a one-stop-shop to planners. More broadly, the intent is to provide the foundation for a more robust data-integration initiative, ensuring interoperability between disparate agencies’ datasets. City Planning has grouped these facilities according to the following six domains, each with a set of groups, subgroups, and facility types that are intended to make the data easy to navigate and more useful for specific planning purposes. Facility types and names are pulled directly from source datasets, wherever possible.
     </p>
     <p>
-      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 34,000 facilities throughout NYC. More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis. Details on the facility categories, fields in the database, data sources, and the database update process is provided on the Capital Planning Platform Docs site.Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 34,000 facilities throughout NYC. More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis.
+      Currently, FacDB aggregates and synthesizes data sourced from 42 agencies, recording more than 45,000 facilities throughout NYC. More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis.
     </p>
     <p>
-      Details on the facility categories, fields in the database, data sources, and the database update process is provided on the Capital Planning Platform <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database">Docs</a> site.
+      Details on the facility categories, fields in the database, data sources, and the database update process is provided on the Capital Planning Platform <a href="http://docs.capitalplanning.nyc/facdb/">Docs</a> site.
     </p>
 
     <h4>Limitations and Disclaimers</h4>
@@ -245,7 +245,7 @@ var collaborateContent = (
             The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
         </p>
         <p>
-            We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='docs.capitalplanning.nyc'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
+            We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='http://docs.capitalplanning.nyc/facdb/'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
         </p>
         <p>
             We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
