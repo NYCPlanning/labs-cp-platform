@@ -123,7 +123,7 @@ var HomePage = React.createClass({
                     <div className="col-lg-8 col-lg-offset-2 text-center">
                         <h2 className="section-heading">See what else we're building</h2>
                         <hr className="light"/>
-                        <p className="text-faded">We’re always testing out new technologies that can help meet planners’ needs. Explore some of these tools below and join the <Link to="http://github.com/nycplanning">NYC Planning Organization on github</Link>.</p>
+                        <p className="text-faded">We’re always testing out new technologies that can help meet planners’ needs. See our work in progress below and tell us how new planning technologies and data could help with your workflow.</p>
                     </div>
                 </div>
                 <div className="row">
