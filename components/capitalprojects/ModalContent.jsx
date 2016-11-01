@@ -54,6 +54,12 @@ var ModalContent = React.createClass({
             <li className="list-group-item">
               <h4>General</h4>
               <dl className="dl-horizontal">
+                <dt>Sponsor Agency</dt>
+                <dd>{d.sagency}</dd>
+
+                <dt>Managing Agency</dt>
+                <dd>{d.magency}</dd>
+
                 <dt>Current Status</dt>
                 <dd>{d.cpstatus}</dd>
 
