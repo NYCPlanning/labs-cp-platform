@@ -2,7 +2,7 @@ module.exports = {
   managingAgencies: [
    {  
       "value":"ACS",
-      "label":"Administration for Children's Services"
+      "label":"Administration for Children's Services - ACS"
    },
    {  
       "value":"BBPC",
@@ -34,7 +34,7 @@ module.exports = {
    },
    {  
       "value":"DCAS",
-      "label":"Department of Citywide Administrative Services"
+      "label":"Department of Citywide Administrative Services - DCAS"
    },
    {  
       "value":"DCLA",
@@ -114,7 +114,7 @@ module.exports = {
    },
    {  
       "value":"Miscellaneous",
-      "label":1
+      "label":"Miscellaneous"
    },
    {  
       "value":"MO",
@@ -188,7 +188,7 @@ module.exports = {
 sponsorAgencies: [  
    {  
       "value":"ACS",
-      "label":"Administration for Children's Services"
+      "label":"Administration for Children's Services - ACS"
    },
    {  
       "value":"BBPC",
@@ -220,7 +220,7 @@ sponsorAgencies: [
    },
    {  
       "value":"DCAS",
-      "label":"Department of Citywide Administrative Services"
+      "label":"Department of Citywide Administrative Services - DCAS"
    },
    {  
       "value":"DCLA",
@@ -300,7 +300,7 @@ sponsorAgencies: [
    },
    {  
       "value":"Miscellaneous",
-      "label":1
+      "label":"Miscellaneous"
    },
    {  
       "value":"MO",
@@ -370,7 +370,7 @@ types: [
          "value":"Street Reconstruction"
       },
       {  
-         "label":"Ramp, Ramp, Ramp",
+         "label":"Ramp",
          "value":"Ramp, Ramp, Ramp"
       },
       {  
@@ -390,15 +390,11 @@ types: [
          "value":"Ramp"
       },
       {  
-         "label":"CapacityProjects - Updated, ReplacementProjects",
+         "label":"CapacityProjects - Updated, Replacement Projects",
          "value":"CapacityProjects - Updated, ReplacementProjects"
       },
       {  
-         "label":"Agency does not report",
-         "value":"Agency does not report"
-      },
-      {  
-         "label":"ReplacementProjects",
+         "label":"Replacement Projects",
          "value":"ReplacementProjects"
       },
       {  
@@ -434,7 +430,7 @@ types: [
          "value":"Buildings"
       },
       {  
-         "label":"CapacityInProcess",
+         "label":"Capacity In Process",
          "value":"CapacityInProcess"
       },
       {  
@@ -446,7 +442,7 @@ types: [
          "value":"Lighting Fixture Replacements"
       },
       {  
-         "label":"CapacityProjects - Updated",
+         "label":"Capacity Projects - Updated",
          "value":"CapacityProjects - Updated"
       },
       {  
@@ -454,11 +450,11 @@ types: [
          "value":"Sewer"
       },
       {  
-         "label":"PreKCapacityProjects",
+         "label":"PreK Capacity Projects",
          "value":"PreKCapacityProjects"
       },
       {  
-         "label":"Route, Road, Route, Route, Route, Route, Route, Road, Route, Route, Route, Route, Road, Route, Route, Road, Route, Road",
+         "label":"Route, Road",
          "value":"Route, Road, Route, Route, Route, Route, Route, Road, Route, Route, Route, Route, Road, Route, Route, Road, Route, Road"
       },
       {  
@@ -492,24 +488,20 @@ types: [
    ],
 statuses: [  
       {  
-         "value":"Design",
-         "label":"Design"
+         "value":"Planning",
+         "label":"Planning"
       },
       {  
-         "value":"Agency does not report",
-         "label":"Agency does not report"
-      },
-      {  
-         "value":"Cancelled",
-         "label":"Cancelled"
+         "value":"Proposed",
+         "label":"Proposed"
       },
       {  
          "value":"Procurement",
          "label":"Procurement"
       },
       {  
-         "value":"Proposed",
-         "label":"Proposed"
+         "value":"Design",
+         "label":"Design"
       },
       {  
          "value":"Construction",
@@ -520,12 +512,13 @@ statuses: [
          "label":"Complete"
       },
       {  
-         "value":"Other",
-         "label":"Other"
+         "value":"Cancelled",
+         "label":"Cancelled"
       },
       {  
-         "value":"Planning",
-         "label":"Planning"
+         "value":"Other",
+         "label":"Other"
       }
+
    ]
 }
