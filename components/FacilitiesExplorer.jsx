@@ -6,6 +6,7 @@ import Modal from './Modal.jsx'
 import Link from 'react-router'
 import FacilitiesLayers from '../config/FacilitiesLayers.js'
 import SimpleMarkerMap from './SimpleMarkerMap.jsx'
+import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
 /* CREATING viz.json */
 var vizJson = {  
@@ -271,7 +272,12 @@ var FacilitiesExplorer = React.createClass({
             <dd>{d.facilitygroup}</dd>
             <dt>Subgroup</dt>
             <dd>{d.facilitysubgroup}</dd>
-            <dt>Type</dt>
+            <dt>
+              <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip"> The facility's Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+              </OverlayTrigger>
+              Type
+            </dt>
             <dd>{d.facilitytype}</dd>           
           </dl>
         </div>
@@ -281,14 +287,10 @@ var FacilitiesExplorer = React.createClass({
     var CapacityUtilization = function() {
       return (
         <div>
-          <h4>Capacity & Utilization Details</h4>
+          <h4>Capacity Details</h4>
           <dl className="dl-horizontal">
             <dt>Capacity</dt>
-            <dd>{d.capacity ? d.capacity + ' ' + d.capacitytype : 'Unknown'}</dd>
-            <dt>Utilization</dt>
-            <dd>{d.utilization ? d.utilization + ' ' + d.utilizationtype : 'Unknown'}</dd>
-            {d.capacity && d.utilization ? <dt>Utilization Rate</dt> : null}
-            {d.capacity && d.utilization ? <dd>{d.utilization/d.capacity}</dd> : null}              
+            <dd>{d.capacity ? d.capacity + ' ' + d.capacitytype : 'Unknown'}</dd>           
           </dl>
         </div>
       ) 
@@ -326,7 +328,7 @@ var FacilitiesExplorer = React.createClass({
       <div className="row">
         <div className="col-md-12">
           <h3>{d.facilityname}</h3>
-          <p>{d.address}</p>
+          <h4>{d.address}</h4>
         </div>
         <div className="col-md-6">
           <SimpleMarkerMap point={latlng}/>
@@ -439,13 +441,10 @@ var aboutContent = (
 
     <h4>Limitations and Disclaimers</h4>
     <p>
-      The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. For more detailed information on a specific facility please reach out to the respective oversight agency.
+      The FacDB is only as good as the source data it aggregates. Currently, FacDB is the most comprehensive, spatial data resource of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Many records could not be geocoded. There are also known to be cases when the address provided in the source data is for a headquarters office rather the facility site location. Unfortunately these could not be systematically verified. The descriptions of the different facility types are also limited by what is available in the source data. For more detailed information on a specific facility please reach out to the respective oversight agency.
     </p>
     <p>
       <b>Duplicates.</b> Please be aware that this beta version of the database also includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these duplicate records and retain the most up-to-date and detailed record.
-    </p>
-    <p>
-      <b>Admin. of Government.</b> Please note that this domain currently only contains data from NYPD and FDNY in addition to a few DPR properties. After the 2016 version of the <a href="https://www1.nyc.gov/site/planning/about/publications/colp.page">City-Owned and Leased Properties</a> (COLP) database is released, all of its contents will also be added to FacDB.
     </p>
 
     <h4>Feedback</h4>
