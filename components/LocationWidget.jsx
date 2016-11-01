@@ -81,14 +81,14 @@ var LocationWidget = React.createClass({
           <div className={'location-ring'} ></div>
           <div className="popover right in" style={{
             display: 'block',
-            width: '159px',
+            width: '220px',
             top: '-39px',
             left: '47px'
           }}>
             <div className="arrow" style={{top:'50%'}}></div>
-            <h3 className="popover-title">We found you! <i className="fa fa-times pull-right" aria-hidden="true" onClick={this.hide}></i></h3>
+            <h3 className="popover-title">Want to zoom to your location?<i className="fa fa-times pull-right" aria-hidden="true" onClick={this.hide}></i></h3>
             <div className="popover-content">
-              <div className="btn btn-xs btn-success dcp-orange" onClick={this.zoomMap}>Zoom to my Location</div>
+              <div className="btn btn-xs btn-success dcp-orange" onClick={this.zoomMap}>Click Here</div>
             </div>
           </div>
         </div>
