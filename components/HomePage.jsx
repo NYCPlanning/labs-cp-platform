@@ -65,7 +65,7 @@ var HomePage = React.createClass({
                 <div className='container portfolio'>
                     <a href="capitalprojects">
                         <div className="col-md-4 portfolio-item"  >
-                            <div className="portfolio-image" style={{filter: 'grayscale(100%)', backgroundImage: "url(img/bridge.png)"}}></div>
+                            <div className="portfolio-image" style={{backgroundImage: "url(img/bridge.png)"}}></div>
                             <div className="title"><h3>Capital Projects and Plans</h3></div>
                             <div className="hover-panel">
                                 <h4>We've aggregated agencies' capital maps into a unified web experience - a place to coordinate across agencies and advance neighborhood-based planning</h4>
@@ -76,7 +76,7 @@ var HomePage = React.createClass({
                     </a>
                     <a href="facilities">
                         <div className="col-md-4 portfolio-item" >
-                            <div className="portfolio-image" style={{filter: 'grayscale(100%)', backgroundImage: "url(img/kids.png)"}}></div>
+                            <div className="portfolio-image" style={{backgroundImage: "url(img/kids.png)"}}></div>
                             <div className="title"><h3>Facilities And Program Sites</h3></div>
                             <div className="hover-panel">
                                 <h4>NYC has more than 30k facilities that impact our neighborhoods' services and quality of life - explore them here to consider opportunities to better serve New Yorkers.</h4>
@@ -87,7 +87,7 @@ var HomePage = React.createClass({
                     </a>
                     <a href="pipeline">
                         <div className="col-md-4 portfolio-item" >
-                            <div className="portfolio-image" style={{filter: 'grayscale(100%)', backgroundImage: "url(img/buildings.png)"}} ></div>
+                            <div className="portfolio-image" style={{backgroundImage: "url(img/buildings.png)"}} ></div>
                             <div className="title"><h3>New Housing Developments</h3></div>
                             <div className="hover-panel">
                                 <h4>New residential development is reshaping NYC neighborhoods - explore the map and see how this growth can inform planning and investment priorities.</h4>
@@ -123,7 +123,7 @@ var HomePage = React.createClass({
                     <div className="col-lg-8 col-lg-offset-2 text-center">
                         <h2 className="section-heading">See what else we're building</h2>
                         <hr className="light"/>
-                        <p className="text-faded">We’re always testing out new technologies that can help meet planners’ needs. Explore some of these tools below and join the <Link to="http://github.com/nycplanning">NYC Planning Organization on github</Link>.</p>
+                        <p className="text-faded">We’re always testing out new technologies that can help meet planners’ needs. See our works in progress below and tell us how new planning technologies and data could help with your workflow.</p>
                     </div>
                 </div>
                 <div className="row">

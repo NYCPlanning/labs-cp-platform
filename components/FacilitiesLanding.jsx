@@ -42,22 +42,22 @@ var FacilitiesLandingPage = React.createClass({
 
   render() {
     return(
-      <div >
+      <div className="facilities-landing">
         <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth}>
             <li onClick={this.showAbout}><a> About</a></li>
             <li onClick={this.showCollaborate}><a> Collaborate</a></li>
         </Nav>
 
         <div className="main-content">
-            <section className="bg-primary" id="about" style={{'backgroundImage': "url(/img/facilities_landing_background.png)", 'padding': '60px'}}>
+            <section className="header-area" id="about" style={{'backgroundImage': "url(/img/facilities_landing_background.png)", 'padding': '60px'}}>
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-10 col-lg-offset-1 text-center" style={{'background': "#606060", 'opacity':'0.9', 'padding': '40px'}}>
                             <h2 className="section-heading" style={{'fontSize': '32px'}}>The NYC Facilities Database</h2>
                             <hr className="light"/>
-                            <h3 className="section-heading" style={{'paddingBottom': '30px', 'fontSize': '28px'}}>The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>                            
+                            <h3 className="section-heading">The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>                            
                             
-                            <p className="text-muted">Read more about this dataset <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database" style={{'textDecoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'textDecoration': 'underline'}}>improve it.</a></p>
+                            <p>Read more about this dataset <a href="https://nycplanning.github.io/cpdocs/facdb/#city-planning-facilities-database" style={{'textDecoration': 'underline'}}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{'textDecoration': 'underline'}}>improve it.</a></p>
                             <a href="/facilities/all"> <div className="btn btn-lg dcp-orange">View ALL Facilities <i className="fa fa-arrow-right" aria-hidden="true"></i></div></a>
                         </div>
                     </div>
