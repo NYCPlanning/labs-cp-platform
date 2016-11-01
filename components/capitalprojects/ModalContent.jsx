@@ -54,8 +54,8 @@ var ModalContent = React.createClass({
             <li className="list-group-item">
               <h4>General</h4>
               <dl className="dl-horizontal">
-                <dt>CurrentStatus</dt>
-                <dd>{d.astatus}</dd>
+                <dt>Current Status</dt>
+                <dd>{d.cpstatus}</dd>
 
                 <dt>Contact</dt>
                 <dd>{d.contact}</dd>
@@ -66,9 +66,6 @@ var ModalContent = React.createClass({
                 <dt>Type</dt>
                 <dd>{d.type}</dd>
 
-                <dt>Category</dt>
-                <dd>{d.type}</dd>
-
               </dl> 
             </li>
 
@@ -76,10 +73,10 @@ var ModalContent = React.createClass({
               <h4>Timeline</h4>
               <dl className="dl-horizontal">
                 <dt>Construction Start</dt>
-                <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'Agency does not report'}</dd>  
+                <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : ''}</dd>  
 
                 <dt>Construction End</dt>
-                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'Agency does not report'}</dd>
+                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : ''}</dd>
               </dl>              
             </li>
 
@@ -106,8 +103,6 @@ var ModalContent = React.createClass({
                 <dt>Source Dataset</dt>
                 <dd>{d.sourcedata}</dd>
 
-                <dt>Source Link</dt>
-                <dd>{d.sourcelink}</dd>
               </dl>              
             </li>
 
