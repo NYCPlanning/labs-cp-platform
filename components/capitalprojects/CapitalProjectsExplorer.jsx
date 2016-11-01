@@ -178,7 +178,7 @@ var CapitalProjectsExplorer = React.createClass({
               </div>
               <h5>
                 Show projects where Sponsor Agency includes 
-                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">The City agency <b>funding</b> the project</Tooltip>}>
                   <i className="fa fa-info-circle" aria-hidden="true"></i>
                 </OverlayTrigger></h5>
               <Select
@@ -191,7 +191,7 @@ var CapitalProjectsExplorer = React.createClass({
               />
               <h5>
                 and Managing Agency includes 
-                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">The City agency <b>managing</b> the project</Tooltip>}>
                   <i className="fa fa-info-circle" aria-hidden="true"></i>
                 </OverlayTrigger>
               </h5>
@@ -205,7 +205,7 @@ var CapitalProjectsExplorer = React.createClass({
               />
               <h5>
                 and Source Agency includes
-                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">The City agency that <b>provided the raw data</b></Tooltip>}>
                   <i className="fa fa-info-circle" aria-hidden="true"></i>
                 </OverlayTrigger>
               </h5>
@@ -219,7 +219,7 @@ var CapitalProjectsExplorer = React.createClass({
               />
               <h5>
                 and Status includes 
-                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">The current <b>phase of the project</b></Tooltip>}>
                   <i className="fa fa-info-circle" aria-hidden="true"></i>
                 </OverlayTrigger></h5>
               <Select
@@ -232,7 +232,7 @@ var CapitalProjectsExplorer = React.createClass({
               />
               <h5>
                 and Type includes 
-                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">Placeholder</Tooltip>}>
+                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">The <b>category</b> of the project</Tooltip>}>
                   <i className="fa fa-info-circle" aria-hidden="true"></i>
                 </OverlayTrigger>
               </h5>
