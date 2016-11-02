@@ -43,7 +43,7 @@ var FacilitiesLayers = [
           },
           {
             name: 'Non-residential Housing and Homeless Services',
-            description: 'Shelters and homelessness prevention services'
+            description: 'Non-residential homelessness prevention services'
           },
           {
             name: 'Senior Services',
@@ -281,7 +281,7 @@ var FacilitiesLayers = [
             description: 'Firehouses'
           },
           {
-            name: 'Emergency Services',
+            name: 'Other Emergency Services',
             description: 'Ambulance and Emergency Medical Stations'
           }
         ]
@@ -382,6 +382,10 @@ var FacilitiesLayers = [
           {
             name: 'Airports and Heliports',
             description: 'Publicly and privately operated airports, heliports, and seaplane bases'
+          },
+          {
+            name: 'Other Transportation',
+            description: 'Uncategorized transportation related sites'
           }
         ]
       },
@@ -440,6 +444,10 @@ var FacilitiesLayers = [
         color: '#b0dae8',
         children: [
           {
+            name: 'Custodial',
+            description: 'City agency custodial sites'
+          },
+          {
             name: 'Maintenance and Garages',
             description: 'City agency vehicle maintenance sites'
           },
@@ -465,6 +473,10 @@ var FacilitiesLayers = [
           {
             name: 'Miscellaneous Use',
             description: 'Property without a categorized use'
+          },
+          {
+            name: 'Properties Leased or Licensed to Non-public Entities',
+            description: 'Properties Leased or Licensed to Non-public Entities'
           }
         ]
       }

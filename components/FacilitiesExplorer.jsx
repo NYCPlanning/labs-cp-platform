@@ -246,6 +246,14 @@ var FacilitiesExplorer = React.createClass({
     })
   },
 
+  showCollaborate() {
+    this.showModal({
+      modalHeading: 'Share',
+      modalContent: collaborateContent,
+      modalCloseText: 'Close'
+    })
+  },
+
   /* "FACILITIES DETAILS" MODAL */
   /* Creates each section of the modal as a variable, then compiles them in the "content" var */
 
@@ -374,6 +382,7 @@ var FacilitiesExplorer = React.createClass({
       <div className="full-height">
         <Nav title={title} auth={this.props.auth}>
           <li onClick={this.showAbout}><a>About</a></li>
+          <li onClick={this.showCollaborate}><a>Collaborate</a></li>
         </Nav>
         <div id="main-container">
           <div id="sidebar">
@@ -417,8 +426,8 @@ var aboutContent = (
     </p>
     <p>
       <ul type={"disc"}>
-        <li>Health Care and Human Services</li>
-        <li>Youth, Education, and Child Welfare</li>
+        <li>Health and Human Services</li>
+        <li>Education, Child Welfare, and Youth</li>
         <li>Public Safety, Emergency Services, and Administration of Justice</li>
         <li>Core Infrastructure and Transportation</li>
         <li>Parks, Cultural, and Other Community Facilities</li>
@@ -481,4 +490,23 @@ var splashContent = (
     <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to <a href="http://docs.capitalplanning.nyc/facdb/">read more about the data</a> powering this map.</p>     
     <p>If you're seeing this message, it means we want your help improving this product! <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a>.</p>
   </div>
+)
+
+var collaborateContent = (
+    <div>
+        <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
+        <p>
+            The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
+        </p>
+        <p>
+            We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='http://docs.capitalplanning.nyc/facdb/'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
+        </p>
+        <p>
+            We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
+        </p>
+        <p>
+            Email the team at <a href='mailto:capital@planning.nyc.gov'>capital@planning.nyc.gov</a>.
+        </p>
+        <div className='modal-logo'></div>
+    </div>
 )
