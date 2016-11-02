@@ -63,6 +63,19 @@ To get serve the project locally:
 
 
 
-Test
-
 ###Development Workflow
+
+###Deploying
+By using dokku, the app can be deployed simply by pushing the repo to a different remote:
+
+To set up the production app:
+`git remote add dokku dokku@capitalplanning.nyc:cpp`
+
+To set up the staging app:
+`git remote add staging dokku@capitalplanning.nyc:staging`
+
+To deploy to production:
+`git push dokku master`
+
+To deploy to staging:
+`git push staging staging:master` (This is because dokku only works with a branch called master, so we are calling staging master when pushing to the staging dokku app)
