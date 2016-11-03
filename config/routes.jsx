@@ -8,6 +8,7 @@ import Auth from '../helpers/Auth.js'
 import HomePage from '../components/HomePage.jsx'
 import CapitalProjectsExplorer from '../components/capitalprojects/CapitalProjectsExplorer.jsx'
 import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
+import FacilityPage from '../components/FacilityPage.jsx'
 import PipelineExplorer from '../components/PipelineExplorer.jsx'
 import Sample from '../components/Sample.jsx'
 import DistrictSelection from '../components/DistrictSelection.jsx'
@@ -50,6 +51,7 @@ module.exports = (
     <Route path="facilities/all" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="facilities/domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    <Route path="facilities/:id" component={FacilityPage} onEnter={requireAuth}/>
     
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     
