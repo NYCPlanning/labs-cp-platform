@@ -54,7 +54,7 @@ var HomePage = React.createClass({
             <div className="container">
                 <div className="row">
                     <div className="col-lg-8 col-lg-offset-2 ">
-                        <h2 className="section-heading">A new resource for better, more collaborative planning through data and technology.</h2>
+                        <h2 className="section-heading">A resource for better, more collaborative planning through data and technology.</h2>
                         <h3>We're just getting started - <a href="#" onClick={this.showAbout}>read more here</a> or <a href="#" onClick={this.showCollaborate}>collaborate with us</a></h3>
                         
                     </div>
