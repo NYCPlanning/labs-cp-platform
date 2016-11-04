@@ -74,7 +74,7 @@ var CapitalProjectsExplorer = React.createClass({
    //make an api call to carto to get the full feature, build content from it, show modal
    carto.getRow(tableName, 'projectid', feature.properties.projectid)
     .then(function(data) {
-      var feature = data.features[0]
+      var feature = data
       self.showModal({
         modalHeading: 'Capital Project Details',
         modalContent: <ModalContent feature={feature}/>,
