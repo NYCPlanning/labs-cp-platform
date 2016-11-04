@@ -62,19 +62,28 @@ module.exports = {
   },
 
   //get a full row from a table as geojson
-  getRow(tableName, column, value) {
+  //returns a promise that when resolved yeilds a GeoJson feature
+  getRow( tableName, column, value ) {
+    var self=this 
 
-    var sqlTemplate = "SELECT *  FROM {{tableName}} WHERE {{column}} = '{{value}}'"
+    return new Promise(function( resolve, reject ) {
 
-    var sql = Mustache.render(sqlTemplate, {
-      tableName: tableName,
-      column: column,
-      value: value
+      var sqlTemplate = typeof(value)=='number' ? 
+        "SELECT *  FROM {{tableName}} WHERE {{column}} = {{value}}" :
+        "SELECT *  FROM {{tableName}} WHERE {{column}} = '{{value}}'"
+
+      var sql = Mustache.render(sqlTemplate, {
+        tableName: tableName,
+        column: column,
+        value: value
+      })
+
+      //returns a promise
+      self.SQL(sql)
+        .then(function(data) {
+          resolve(data.features[0])
+        })
     })
-
-    //returns a promise
-    return this.SQL(sql)
-
 
   },
 
