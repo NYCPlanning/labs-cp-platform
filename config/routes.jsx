@@ -10,7 +10,6 @@ import CapitalProjectsExplorer from '../components/capitalprojects/CapitalProjec
 import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
 import FacilityPage from '../components/FacilityPage.jsx'
 import PipelineExplorer from '../components/PipelineExplorer.jsx'
-import Sample from '../components/Sample.jsx'
 import DistrictSelection from '../components/DistrictSelection.jsx'
 import CDPage from '../components/CDPage.jsx'
 
