@@ -79,3 +79,5 @@ To deploy to production:
 
 To deploy to staging:
 `git push staging staging:master` (This is because dokku only works with a branch called master, so we are calling staging master when pushing to the staging dokku app)
+
+Update readme
