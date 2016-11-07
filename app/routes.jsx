@@ -1,20 +1,20 @@
 import React from 'react'
 import {Route, IndexRoute, IndexRedirect} from 'react-router'
 
-import App from '../components/App.jsx'
-import Login from '../components/Login.jsx'
+import App from '../app/App.jsx'
+import Login from '../app/Login.jsx'
 import Auth from '../helpers/Auth.js'
 
-import HomePage from '../components/HomePage.jsx'
-import CapitalProjectsExplorer from '../components/capitalprojects/CapitalProjectsExplorer.jsx'
-import FacilitiesExplorer from '../components/FacilitiesExplorer.jsx'
-import FacilityPage from '../components/FacilityPage.jsx'
-import PipelineExplorer from '../components/PipelineExplorer.jsx'
-import DistrictSelection from '../components/DistrictSelection.jsx'
-import CDPage from '../components/CDPage.jsx'
+import HomePage from '../app/HomePage.jsx'
+import CapitalProjectsExplorer from '../app/capitalprojects/CapitalProjectsExplorer.jsx'
+import FacilitiesExplorer from '../app/FacilitiesExplorer.jsx'
+import FacilityPage from '../app/FacilityPage.jsx'
+import PipelineExplorer from '../app/PipelineExplorer.jsx'
+import DistrictSelection from '../app/DistrictSelection.jsx'
+import CDPage from '../app/CDPage.jsx'
 
-import FacilitiesLanding from '../components/FacilitiesLanding.jsx'
-import NotFound from '../components/NotFound.jsx'
+import FacilitiesLanding from '../app/FacilitiesLanding.jsx'
+import NotFound from '../app/NotFound.jsx'
 
 var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
