@@ -3,7 +3,7 @@ import {Route, IndexRoute, IndexRedirect} from 'react-router'
 
 import App from '../app/App.jsx'
 import Login from '../app/Login.jsx'
-import Auth from '../helpers/Auth.js'
+import Auth from './helpers/Auth.js'
 
 import HomePage from '../app/HomePage.jsx'
 import CapitalProjectsExplorer from '../app/capitalprojects/CapitalProjectsExplorer.jsx'

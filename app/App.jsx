@@ -1,5 +1,5 @@
 import React from 'react'
-import Auth from '../helpers/Auth.js'
+import Auth from './helpers/Auth.js'
 import {browserHistory} from 'react-router'
 
 var App = React.createClass({

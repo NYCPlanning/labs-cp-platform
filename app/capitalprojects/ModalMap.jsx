@@ -2,7 +2,7 @@ import React from 'react'
 import turf from 'turf'
 import extent from 'turf-extent'
 import {Button, ButtonGroup} from 'react-bootstrap'
-import Agencies from '../../helpers/agencies.js'
+import Agencies from '../helpers/agencies.js'
 
 
 

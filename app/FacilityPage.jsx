@@ -4,7 +4,7 @@ import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Nav from './Nav.jsx'
 import SimpleMarkerMap from './SimpleMarkerMap.jsx'
 
-import carto from '../helpers/carto.js'
+import carto from './helpers/carto.js'
 
 var Component = React.createClass({
 

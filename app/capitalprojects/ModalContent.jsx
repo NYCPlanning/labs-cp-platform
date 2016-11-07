@@ -3,7 +3,7 @@ import React from 'react'
 import Numeral from 'numeral'
 import Moment from 'moment'
 
-import Agencies from '../../helpers/agencies.js'
+import Agencies from '../helpers/agencies.js'
 import ModalMap from './ModalMap.jsx'
 import config from './config.js'
 

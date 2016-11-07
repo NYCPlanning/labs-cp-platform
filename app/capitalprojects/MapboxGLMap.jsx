@@ -4,8 +4,8 @@ import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import turf from 'turf'
 import extent from 'turf-extent'
 
-import Agencies from '../../helpers/agencies.js'
-import carto from '../../helpers/carto.js'
+import Agencies from '../helpers/agencies.js'
+import carto from '../helpers/carto.js'
 
 import Search from './Search.jsx'
 import LocationWidget from '../LocationWidget.jsx'

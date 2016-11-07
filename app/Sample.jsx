@@ -15,7 +15,7 @@ import Mustache from 'mustache'
 import SomeComponent from './SomeComponent.jsx'
 import SomeOtherComponent from './SomeOtherComponent.jsx'
 
-import someHelper from '../helpers/somehelper.jsx'
+import someHelper from './helpers/somehelper.jsx'
 
 //use React.CreateClass(), not extends Component
 //order properties by variables, all other react lifecycle methods, custom methods, render method.

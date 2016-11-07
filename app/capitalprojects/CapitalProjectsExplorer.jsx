@@ -11,8 +11,8 @@ import Nav from '../Nav.jsx'
 import Modal from '../Modal.jsx'
 import ModalContent from './ModalContent.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
-import carto from '../../helpers/carto.js'
-import FilterService from '../../helpers/FilterService.js'
+import carto from '../helpers/carto.js'
+import FilterService from '../helpers/FilterService.js'
 import config from './config.js'
 
 
