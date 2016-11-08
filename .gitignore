@@ -4,3 +4,5 @@ npm-debug.log
 /node_modules
 /public/js/bundle.js
 /public/js/bundle.js.map
+/public/css/bundle.css
+/public/css/bundle.css.map

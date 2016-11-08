@@ -1,0 +1,68 @@
+/*Nav Component*/
+
+nav {
+  height: 80px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.navbar-default {
+  background-color: rgba(255, 255, 255, 0.94);
+}
+
+
+ul.navbar-right {
+    margin-right: 0;
+}
+
+.navbar-default .navbar-nav>li>a, .dropdown-menu>li>a {
+  padding: 30px 18px;
+  color: #db691b;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.dropdown-menu>li>a {
+  padding: 3px 15px;
+}
+
+.dropdown-menu>li>a:hover {
+  cursor: pointer;
+}
+
+.navbar-default .navbar-nav>li:hover{
+  background: #eeeeee;
+}
+
+.navbar-default .navbar-brand {
+  background-image: url(/../img/logo_120.png);
+  background-repeat: no-repeat;
+  background-position: 16px 12px;
+  background-size: 112px;
+  height: 80px;
+  width: 144px;
+}
+
+.navbar-title {
+  float: left;
+  color: #d96b27;
+  font-size: 28px;
+  line-height: 80px;
+}
+
+#navbar {
+  border-bottom: 0.5px solid rgba(219, 105, 27, 0);
+}
+.navbar-brand {
+  font-size: 28px;
+}
+
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
+  color: #af4c0f;
+  cursor: pointer;
+}
+
+.fa-github {
+  font-size: 18px;
+}
+
+/*End Nav Component*/

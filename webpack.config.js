@@ -1,4 +1,6 @@
 var webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 
 module.exports = {
   entry: [
@@ -16,7 +18,14 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loaders: ['babel?presets[]=es2015&presets[]=react']
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass')
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('../css/bundle.css')
+  ]
 };
