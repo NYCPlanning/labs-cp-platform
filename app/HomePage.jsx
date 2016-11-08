@@ -63,7 +63,7 @@ var HomePage = React.createClass({
             </section>
             <section className='section-portfolio'>
                 <div className='container portfolio'>
-                    <a href="capitalprojects">
+                    <Link to="/capitalprojects">
                         <div className="col-md-4 portfolio-item"  >
                             <div className="portfolio-image" style={{backgroundImage: "url(img/bridge.png)"}}></div>
                             <div className="title"><h3>Capital Projects and Plans</h3></div>
@@ -73,8 +73,8 @@ var HomePage = React.createClass({
                             </div>
                            
                         </div>
-                    </a>
-                    <a href="facilities">
+                    </Link>
+                    <Link to="/facilities">
                         <div className="col-md-4 portfolio-item" >
                             <div className="portfolio-image" style={{backgroundImage: "url(img/kids.png)"}}></div>
                             <div className="title"><h3>Facilities And Program Sites</h3></div>
@@ -84,8 +84,8 @@ var HomePage = React.createClass({
                             </div>
                            
                         </div>
-                    </a>
-                    <a href="pipeline">
+                    </Link>
+                    <Link to="pipeline">
                         <div className="col-md-4 portfolio-item" >
                             <div className="portfolio-image" style={{backgroundImage: "url(img/buildings.png)"}} ></div>
                             <div className="title"><h3>New Housing Developments</h3></div>
@@ -94,7 +94,7 @@ var HomePage = React.createClass({
                                 <h4 className="hover-panel-explore">Explore  <i className="fa fa-angle-right" aria-hidden="true"></i></h4>
                             </div>
                         </div>
-                    </a>
+                    </Link>
                     {/*
                     <div className="col-md-4 portfolio-item" >
                         <div className="portfolio-image" style={{filter: 'grayscale(100%)', backgroundImage: "url(img/buildings.png)"}} ></div>
