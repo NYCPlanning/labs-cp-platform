@@ -2,8 +2,10 @@
 // Props:
 //  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
 //  initialSQL - String containing the initial SQL state set in FacExplorer.jsx
-//  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
-//  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
+//  updateSQL - String containing updates to SQL query based on checked layers
+//  value - Value associated with checkbox
+//  checked - Checked status associated with value in checkbox
+//  onChange - Action related to status change in checkbox
 
 
 import React from 'react'
