@@ -6,7 +6,7 @@
 
 import React from 'react'
 
-import TravelShed from './helpers/TravelShed.js'
+import TravelShed from '../helpers/TravelShed.js'
 
 var SimpleMarkerMap = React.createClass({
 

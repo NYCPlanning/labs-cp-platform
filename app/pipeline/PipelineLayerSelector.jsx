@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
 
-import carto from './helpers/carto.js'
+import carto from '../helpers/carto.js'
 
 
 //object for the hierarchy of domains, groups and subgroups

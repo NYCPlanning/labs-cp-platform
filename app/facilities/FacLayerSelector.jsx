@@ -1,10 +1,9 @@
-// /facilities/FacilitiesLanding.jsx - This component builds the landing page for the Facilities Explorer which links to the full database map and the subset views
+// /facilities/FacLayerSelector.jsx - This component builds the layer selector which is used in the explorer
 // Props:
-//  modalHeading - A string to be used in the header
-//  modalBody - JSX to be inserted into the body of the modal
-//  modalCloseText - A string to be used in the close button
-//  aboutContent - Copy used for the about modal
-//  collaborateContent - Copy used for the collaborate modal
+//  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
+//  initialSQL - String containing the initial SQL state set in FacExplorer.jsx
+//  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
+//  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
 
 
 import React from 'react'

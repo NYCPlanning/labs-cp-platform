@@ -1,4 +1,4 @@
-// /facilities/FacilitiesLanding.jsx - This component builds the landing page for the Facilities Explorer which links to the full database map and the subset views
+// /facilities/FacLanding.jsx - This component builds the landing page for the Facilities Explorer which links to the full database map and the subset views
 // Props:
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
 
@@ -6,9 +6,9 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-import Nav from './common/Nav.jsx'
-import Footer from './common/Footer.jsx'
-import GlobalModal from './common/GlobalModal.jsx'
+import Nav from '../common/Nav.jsx'
+import Footer from '../common/Footer.jsx'
+import GlobalModal from '../common/GlobalModal.jsx'
 
 var FacilitiesLandingPage = React.createClass({
   getInitialState() {

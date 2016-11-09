@@ -1,4 +1,4 @@
-// /facilities/index.jsx - This component builds the Facilities Explorer map interface, establishes the connection with Carto, and dynamically changes content depending on what is being shown based on the query results
+// /facilities/FacExplorer.jsx - This component builds the Facilities Explorer map interface, establishes the connection with Carto, and dynamically changes content depending on what is being shown based on the query results
 // Props:
 //  params.domain - Domain being shown based on the route being passed in from react-router. Provides text indicating what subset is being shown on the map. Gets used in dynamic titles.
 //  params.subset - Subset being shown based on the route being passed in from react-router. Provides text indicating what subset is being shown on the map. Gets used in dynamic titles.
@@ -9,14 +9,14 @@ import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Link from 'react-router'
 
-import Nav from './Nav.jsx'
-import CartoMap from './CartoMap.jsx'
+import Nav from '../common/Nav.jsx'
+import CartoMap from '../common/CartoMap.jsx'
 import FacLayerSelector from './FacLayerSelector.jsx'
-import Modal from './Modal.jsx'
-import FacilitiesLayers from '../config/FacilitiesLayers.js'
-import SimpleMarkerMap from './SimpleMarkerMap.jsx'
+import Modal from '../common/GlobalModal.jsx'
+import FacilitiesLayers from '../../config/FacilitiesLayers.js'
+import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 
-import Navscss from './Nav.scss'
+import '../../stylesheets/common/Nav.scss'
 
 
 var FacilitiesExplorer = React.createClass({
@@ -395,7 +395,7 @@ var collaborateContent = (
         <div className='modal-logo'></div>
     </div>
 )
-s
+
 var vizJson = {  
    "type":"layergroup",
    "options":{  

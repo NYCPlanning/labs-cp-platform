@@ -1,19 +1,15 @@
 // /facilities/FacilityPage.jsx - This component builds an individual page for each facility in the database and compiles its databse lookup details
 // Props:
-//  modalHeading - A string to be used in the header
-//  modalBody - JSX to be inserted into the body of the modal
-//  modalCloseText - A string to be used in the close button
-//  aboutContent - Copy used for the about modal
-//  collaborateContent - Copy used for the collaborate modal
-
+//  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
+//  auth - User's email login info based on auth0 login. Gets included in nav bar.
 
 import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
-import Nav from './Nav.jsx'
-import SimpleMarkerMap from './SimpleMarkerMap.jsx'
+import Nav from '../common/Nav.jsx'
+import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 
-import carto from './helpers/carto.js'
+import carto from '../helpers/carto.js'
 
 
 var Component = React.createClass({

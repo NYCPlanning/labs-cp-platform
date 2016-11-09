@@ -1,9 +1,9 @@
 import React from 'react'
-import Nav from './Nav.jsx'
-import CartoMap from './CartoMap.jsx'
+import Nav from '../common/Nav.jsx'
+import CartoMap from '../common/CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
-import Modal from './Modal.jsx'
-import SimpleMarkerMap from './SimpleMarkerMap.jsx'
+import Modal from '../common/GlobalModal.jsx'
+import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 
 var PipelineExplorer = React.createClass({
   getInitialState() {
