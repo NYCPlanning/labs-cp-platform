@@ -1,3 +1,11 @@
+// /facilities/PipelineLayerSelector.jsx - This component builds the layer selector which is used in the explorer
+// Props:
+//  updateSQL - String containing updates to SQL query based on checked layers
+//  value - Value associated with checkbox
+//  checked - Checked status associated with value in checkbox
+//  onChange - Action related to status change in checkbox
+
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
@@ -437,8 +445,5 @@ var Checkbox = React.createClass({
    
 
 
-
-
 module.exports=LayerSelector
    
-

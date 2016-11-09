@@ -1,8 +1,16 @@
+// /facilities/PipelineExplorer.jsx - This component builds the Facilities Explorer map interface, establishes the connection with Carto, and dynamically changes content depending on what is being shown based on the query results
+// Props:
+//  auth - User's email login info based on auth0 login. Gets included in nav bar.
+
+
 import React from 'react'
+
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
 import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
+
+
 
 var PipelineExplorer = React.createClass({
   getInitialState() {
@@ -192,8 +200,6 @@ var PipelineExplorer = React.createClass({
   }
 })
 
-module.exports=PipelineExplorer
-
 var aboutContent = (
   <div>
     <h4>Product overview</h4>
@@ -267,3 +273,6 @@ var collaborateContent = (
         <div className='modal-logo'></div>
     </div>
 )
+
+module.exports=PipelineExplorer
+
