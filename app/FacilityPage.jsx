@@ -1,7 +1,7 @@
 import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
-import Nav from './Nav.jsx'
+import Nav from './common/Nav.jsx'
 import SimpleMarkerMap from './SimpleMarkerMap.jsx'
 
 import carto from './helpers/carto.js'

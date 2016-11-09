@@ -7,14 +7,13 @@ import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Select from 'react-select'
 import Numeral from 'numeral'
 
-import Nav from '../Nav.jsx'
-import Modal from '../Modal.jsx'
+import Nav from '../common/Nav.jsx'
+import GlobalModal from '../common/GlobalModal.jsx'
 import ModalContent from './ModalContent.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import carto from '../helpers/carto.js'
 import FilterService from '../helpers/FilterService.js'
 import config from './config.js'
-
 
 var CapitalProjectsExplorer = React.createClass({
   getInitialState() {
@@ -260,7 +259,7 @@ var CapitalProjectsExplorer = React.createClass({
             </div>
           </div>
         </div>
-        <Modal
+        <GlobalModal
           heading={this.state.modalHeading}
           body={this.state.modalContent}
           closeText={this.state.modalCloseText}

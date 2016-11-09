@@ -1,5 +1,12 @@
+//App.jsx - Top-level container for the react SPA, it passes the auth property to 
+//its children, which are the app's top-level routes
+//Props:
+//  route - object passed in from react-router, which includes auth
+//  children - the top-level route(s) from react router
+
 import React from 'react'
 import Auth from './helpers/Auth.js'
+
 import {browserHistory} from 'react-router'
 
 var App = React.createClass({
@@ -15,11 +22,12 @@ var App = React.createClass({
   },
 
   render() {
- 
     let children = null;
+
+    //pass the auth object to the child components so they know who is logged in, etc
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
-        auth: this.props.route.auth //sends auth instance from route to children
+        auth: this.props.route.auth 
       })
     }
 

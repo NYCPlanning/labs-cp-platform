@@ -1,8 +1,8 @@
 import React from 'react'
-import Nav from './Nav.jsx'
-import CartoMap from './CartoMap.jsx'
+import Nav from './common/Nav.jsx'
+import CartoMap from './common/CartoMap.jsx'
 import FacLayerSelector from './FacLayerSelector.jsx'
-import Modal from './Modal.jsx'
+import GlobalModal from './common/GlobalModal.jsx'
 import Link from 'react-router'
 import FacilitiesLayers from '../config/FacilitiesLayers.js'
 import SimpleMarkerMap from './SimpleMarkerMap.jsx'
@@ -402,7 +402,7 @@ var FacilitiesExplorer = React.createClass({
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>
-            <Modal
+            <GlobalModal
               heading={this.state.modalHeading}
               body={this.state.modalContent}
               closeText={this.state.modalCloseText}

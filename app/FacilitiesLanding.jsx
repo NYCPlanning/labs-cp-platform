@@ -1,9 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-import Nav from './Nav.jsx'
-import Footer from './Footer.jsx'
-import Modal from './Modal.jsx'
+import Nav from './common/Nav.jsx'
+import Footer from './common/Footer.jsx'
+import GLobalModal from './common/GlobalModal.jsx'
 
 
 var FacilitiesLandingPage = React.createClass({
@@ -181,7 +181,7 @@ var FacilitiesLandingPage = React.createClass({
         </div>
 
         <Footer/>
-        <Modal
+        <GlobalModal
           heading={this.state.modalHeading}
           body={this.state.modalContent}
           closeText={this.state.modalCloseText}

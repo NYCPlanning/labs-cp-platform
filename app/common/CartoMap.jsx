@@ -1,9 +1,15 @@
+//CartoMap.jsx - Creates a Carto Map, for now only works with the first subLayer on the map
+//pops up a LocationWidget automatically
+
+//Props
+//  vizJson - a viz.json object or URL to be used by cartodb.js' createLayer() method
+//  handleFeatureClick - a function to be executed when a feature is clicked on the map
+
 import React from 'react'
 import LocationWidget from './LocationWidget.jsx'
 
-var Component = React.createClass({
-
-  componentDidMount() {
+var CartoMap = React.createClass({
+  componentDidMount() { //initialize the map after the component mounts
     var self=this 
 
     var map = this.map = new L.Map(this.refs.map, {
@@ -33,14 +39,13 @@ var Component = React.createClass({
          position:'topright'
     }).addTo(map);
 
-    var MyControl = L.Control.extend({
+    //add an animated loading spinner
+    var Spinner = L.Control.extend({
       options: {
         position: 'topright'
       },
 
       onAdd: function (map) {
-        // create the control container with a particular class name
-        // ** you can add the image to the div as a background image using css
         var container = L.DomUtil.create('div', 'map-loader');
         container.innerHTML = `
           <div class="spinner-container">
@@ -48,18 +53,20 @@ var Component = React.createClass({
               <div class="double-bounce1"></div>
               <div class="double-bounce2"></div>
             </div>
-          </div>`
-
+          </div>
+        `
         return container;
       }
     });
 
-    map.addControl(new MyControl());
+    map.addControl(new Spinner());
 
-  
+    //add basemap
+    //TODO make this a prop
     var layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>' })
       .addTo(map)
 
+    //create a layer with the vizJson that was passed in
     cartodb.createLayer(map, this.props.vizJson)
       .addTo(map)
       .on('done', function(layer) {
@@ -76,6 +83,7 @@ var Component = React.createClass({
             self.props.handleFeatureClick(e, latlng, pos, data)
           })
 
+        //show and hide the spinner when leaflet's loading and load events fire
         layer.bind('loading', function() { $('.map-loader').fadeIn() });
         layer.bind('load',  function() { $('.map-loader').fadeOut(); });
 
@@ -84,7 +92,7 @@ var Component = React.createClass({
         alert("some error occurred: " + err);
       });
 
-      //force update so that LocationWidget renders
+      //force component to update so that LocationWidget renders
       this.forceUpdate()
   },
 
@@ -93,6 +101,8 @@ var Component = React.createClass({
   },
 
   render() {
+    //LocationWidget is the "zoom to my location" feature that will probably be replaced with a Control
+
     return(
       <div id="mapContainer">
         <div id="map" ref="map">
@@ -103,4 +113,4 @@ var Component = React.createClass({
   }
 })
 
-module.exports=Component
+module.exports=CartoMap

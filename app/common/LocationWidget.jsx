@@ -12,8 +12,6 @@ var LocationWidget = React.createClass({
   componentDidMount() {
     var self=this
 
-
-
     this.props.map.on('move', function(e) {
       self.forceUpdate()
     })
@@ -45,7 +43,6 @@ var LocationWidget = React.createClass({
       visible: false
     })
 
-
     if(this.props.type=='mapboxGL') {
       this.props.map.flyTo({
         center: this.state.coords,
@@ -72,9 +69,6 @@ var LocationWidget = React.createClass({
       var point = {x:0,y:0}
     }
     
-
-    
-
     if(this.state.visible) {
       return (
         <div className="location-ring-container" ref="locationContainer" style={{'left': point.x, 'top': point.y}}>
@@ -97,7 +91,6 @@ var LocationWidget = React.createClass({
       return <div></div>
     }
   }
-
 })
 
 module.exports=LocationWidget

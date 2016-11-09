@@ -1,3 +1,6 @@
+//routes.jsx - Includes top-level components and defines routes
+//Props: none
+
 import React from 'react'
 import {Route, IndexRoute, IndexRedirect} from 'react-router'
 
@@ -6,12 +9,10 @@ import Login from '../app/Login.jsx'
 import Auth from './helpers/Auth.js'
 
 import HomePage from '../app/HomePage.jsx'
-import CapitalProjectsExplorer from '../app/capitalprojects/CapitalProjectsExplorer.jsx'
+import CapitalProjects from '../app/capitalprojects/index.jsx'
 import FacilitiesExplorer from '../app/FacilitiesExplorer.jsx'
 import FacilityPage from '../app/FacilityPage.jsx'
 import PipelineExplorer from '../app/PipelineExplorer.jsx'
-import DistrictSelection from '../app/DistrictSelection.jsx'
-import CDPage from '../app/CDPage.jsx'
 
 import FacilitiesLanding from '../app/FacilitiesLanding.jsx'
 import NotFound from '../app/NotFound.jsx'
@@ -46,22 +47,19 @@ module.exports = (
   <Route path="/" component={App} auth={auth} >
     <IndexRoute component={HomePage} onEnter={requireAuth}/>
 
-    <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}/>
-    <Route path="facilities/all" component={FacilitiesExplorer} onEnter={requireAuth}/>
-    <Route path="facilities/domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
-    <Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>
-    <Route path="facilities/:id" component={FacilityPage} onEnter={requireAuth}/>
+    <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}>
+      <Route path="all" component={FacilitiesExplorer} onEnter={requireAuth}/>
+      <Route path="domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
+      <Route path="subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>
+      <Route path=":id" component={FacilityPage} onEnter={requireAuth}/>
+    </Route>
     
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     
-    <Route path="capitalprojects" component={CapitalProjectsExplorer} onEnter={requireAuth}/>
-
-    <Route path="districtmap" component={DistrictSelection} onEnter={requireAuth}/>
-    <Route path="cd/:borocd" component={CDPage} onEnter={requireAuth}/>
+    <Route path="capitalprojects" component={CapitalProjects} onEnter={requireAuth}/>
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
-
     <Route path='*' component={NotFound} />
   </Route>
 )

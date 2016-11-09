@@ -1,7 +1,11 @@
+//NotFound.jsx - The Not Found page, shown when there is no route match in react-router
+//Props:
+//  auth - auth object passed down from App.jsx
+
 import React from 'react'
 
-import Nav from './Nav.jsx'
-import Footer from './Footer.jsx'
+import Nav from './common/Nav.jsx'
+import Footer from './common/Footer.jsx'
 
 var NotFound = React.createClass({
   render() {
