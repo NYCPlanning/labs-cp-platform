@@ -41,7 +41,7 @@ var Component = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title={title} auth={this.props.auth}>
+        <Nav title={title} auth={this.props.auth} showModal={this.props.showModal}>
           
         </Nav>
         <div id="main-container">

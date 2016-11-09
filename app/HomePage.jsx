@@ -1,6 +1,7 @@
 //HomePage.jsx - The Homepage for the Capital Planning Plaform, simple content and some info modals
 //Props:
 //  auth - auth object passed down from App.jsx, includes login information
+//  showModal - Global method to show modal 
 
 import React from 'react'
 import {Link} from 'react-router'
@@ -21,20 +22,11 @@ var HomePage = React.createClass({
     })
   },
 
-  showCollaborate() {
-    this.props.showModal({
-      modalHeading: 'Collaborate with Us!',
-      modalContent: collaborateContent,
-      modalCloseText: 'Close'
-    })
-  },
- 
   render() {
     return(
       <div>
-      <Nav title='Capital Planning Platform' auth={this.props.auth}>
+      <Nav title='Capital Planning Platform' auth={this.props.auth} showModal={this.props.showModal}>
         <li onClick={this.showAbout}><a> About</a></li>
-        <li onClick={this.showCollaborate}><a> Collaborate</a></li>
       </Nav>
 
       <div className="col-md-12 main-content">

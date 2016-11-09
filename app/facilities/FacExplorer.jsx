@@ -145,14 +145,6 @@ var FacilitiesExplorer = React.createClass({
     })
   },
 
-  showCollaborate() {
-    this.props.showModal({
-      modalHeading: 'Share',
-      modalContent: collaborateContent,
-      modalCloseText: 'Close'
-    })
-  },
-
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
 
@@ -271,9 +263,8 @@ var FacilitiesExplorer = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title={title} auth={this.props.auth}>
+        <Nav title={title} auth={this.props.auth} showModal={this.props.showModal}>
           <li onClick={this.showAbout}><a>About</a></li>
-          <li onClick={this.showCollaborate}><a>Collaborate</a></li>
         </Nav>
         <div id="main-container">
           <div id="sidebar">

@@ -44,14 +44,6 @@ var PipelineExplorer = React.createClass({
     })
   },
 
-  showCollaborate() {
-    this.props.showModal({
-      modalHeading: 'Share',
-      modalContent: collaborateContent,
-      modalCloseText: 'Got it!'
-    })
-  },
-
   handleFeatureClick(e, latlng, pos, data) {
     var d = data
     var content = (
@@ -171,9 +163,8 @@ var PipelineExplorer = React.createClass({
   render() {
     return(
       <div className="full-height">
-        <Nav title='Housing Development Explorer' auth={this.props.auth}>
+        <Nav title='Housing Development Explorer' auth={this.props.auth} showModal={this.props.showModal}>
           <li onClick={this.showAbout}><a> About</a></li>
-          <li onClick={this.showCollaborate}><a> Collaborate</a></li>
         </Nav>
         <div id="main-container">
           <div id="sidebar">

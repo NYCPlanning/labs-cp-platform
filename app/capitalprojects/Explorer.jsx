@@ -76,14 +76,6 @@ var CapitalProjectsExplorer = React.createClass({
     })
   },
 
-  showCollaborate() {
-    this.props.showModal({
-      modalHeading: 'Share',
-      modalContent: collaborateContent,
-      modalCloseText: 'Close'
-    })
-  },
-
   filterService() {
 
     var mapboxGLFilters = FilterService.mapboxGL(this.state.filters)
@@ -135,7 +127,6 @@ var CapitalProjectsExplorer = React.createClass({
       <div className="full-height">
         <Nav title="Capital Projects Explorer" auth={this.props.auth}>
           <li onClick={this.showAbout}><a> About</a></li>
-          <li onClick={this.showCollaborate}><a> Collaborate</a></li>
         </Nav>
         <div id="main-container">
           <div id="sidebar">
