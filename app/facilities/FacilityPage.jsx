@@ -1,4 +1,4 @@
-// /facilities/FacilityPage.jsx - This component builds individual page for each facility in the database and pulls together all its content
+// /facilities/FacilityPage.jsx - This component builds an individual page for each facility in the database and compiles its databse lookup details
 // Props:
 //  modalHeading - A string to be used in the header
 //  modalBody - JSX to be inserted into the body of the modal

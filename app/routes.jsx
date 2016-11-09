@@ -10,11 +10,11 @@ import Auth from './helpers/Auth.js'
 
 import HomePage from '../app/HomePage.jsx'
 import CapitalProjects from '../app/capitalprojects/index.jsx'
-import FacilitiesExplorer from '../app/FacilitiesExplorer.jsx'
-import FacilityPage from '../app/FacilityPage.jsx'
-import PipelineExplorer from '../app/PipelineExplorer.jsx'
+import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer.jsx'
+import FacilityPage from '../app/facilities/FacilityPage.jsx'
+import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
 
-import FacilitiesLanding from '../app/FacilitiesLanding.jsx'
+import FacilitiesLanding from '../app/facilities/FacilitiesLanding.jsx'
 import NotFound from '../app/NotFound.jsx'
 
 var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
