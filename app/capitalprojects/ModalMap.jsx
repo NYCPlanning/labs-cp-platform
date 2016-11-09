@@ -1,12 +1,13 @@
+//ModalMap.jsx - A simple mapboxGL map for the capital projects modals
+//Props:
+//  data: a geojson feature whose geometry will be rendered on the map
+//TODO: This is similar to SimplePointMap.jsx, maybe combine with that, or combine with a more generic MapboxGLMap.jsx
+
 import React from 'react'
 import turf from 'turf'
 import extent from 'turf-extent'
 import {Button, ButtonGroup} from 'react-bootstrap'
 import Agencies from '../helpers/agencies.js'
-
-
-
-
 
 var ModalMap = React.createClass({
   getInitialState() {
@@ -56,13 +57,10 @@ var ModalMap = React.createClass({
     )
   },
 
-
-
   componentDidMount() {
     this.renderMap();
   },
 
- 
   renderMap() {
     var self=this;
 

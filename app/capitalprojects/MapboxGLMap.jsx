@@ -1,15 +1,21 @@
+//MapboxGLMap.jsx - MapboxGL Map Component specific to capital projects explorer
+//TODO - Make this a generic MapboxGL Map Component and move cpdb-specific logic to the explorer Component
+//Props:
+//  data - 
+//  handleClick() - function to be called when the user clicks on the map
+
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import turf from 'turf'
 import extent from 'turf-extent'
 
-import Agencies from '../helpers/agencies.js'
-import carto from '../helpers/carto.js'
-
 import Search from './Search.jsx'
 import LocationWidget from '../common/LocationWidget.jsx'
+import Popup from './Popup.jsx'
 
+import Agencies from '../helpers/agencies.js'
+import carto from '../helpers/carto.js'
 
 var MapboxGLMap = React.createClass({
   getInitialState() {
@@ -21,6 +27,20 @@ var MapboxGLMap = React.createClass({
         lng: 0
       }
     }
+  },
+
+  componentDidMount() {
+    var self=this
+
+    carto.getVectorTileUrls([
+        'https://carto.capitalplanning.nyc/user/cpadmin/api/v2/viz/92bc20a0-9a27-11e6-b600-0242ac110002/viz.json',
+        'https://carto.capitalplanning.nyc/user/cpadmin/api/v2/viz/ad142984-9a27-11e6-b600-0242ac110002/viz.json',
+    ])
+      .then(function(templates) {
+        self.templates = templates
+        self.renderMap();
+      })
+    
   },
 
   //given a feature, fly the map to it and show a pop-up over its centroid
@@ -55,20 +75,6 @@ var MapboxGLMap = React.createClass({
     this.map.setFilter('points', filters);
     this.map.setFilter('points-outline', filters);
     this.map.setFilter('polygons', filters);
-  },
-
-  componentDidMount() {
-    var self=this
-
-    carto.getVectorTileUrls([
-        'https://carto.capitalplanning.nyc/user/cpadmin/api/v2/viz/92bc20a0-9a27-11e6-b600-0242ac110002/viz.json',
-        'https://carto.capitalplanning.nyc/user/cpadmin/api/v2/viz/ad142984-9a27-11e6-b600-0242ac110002/viz.json',
-    ])
-      .then(function(templates) {
-        self.templates = templates
-        self.renderMap();
-      })
-    
   },
 
   renderMap() {
@@ -198,19 +204,7 @@ var MapboxGLMap = React.createClass({
         var features = map.queryRenderedFeatures(e.point, { layers: ['points', 'polygons'] });
      
         map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-
-        // if (features.length) {
-        //   map.setFilter("polygons-hover", ["==", "guid", features[0].properties.guid]);
-        //   map.setFilter("points-hover", ["==", "guid", features[0].properties.guid]);
-        // } else {
-        //   map.setFilter("points-hover", ["==", "guid", ""]);
-        //   map.setFilter("polygons-hover", ["==", "guid", ""]);
-        // }
-
-
       })  
-
-
     })
 
     //force update after the map initializes so that the locationwidget will mount
@@ -249,13 +243,13 @@ var MapboxGLMap = React.createClass({
         </div>
         <div className='search mapOverlay'>
           <Search 
-            data={this.props.data}
+            data={{}}
             onSuggestionSelected={this.flyMap}/>
         </div>
       
         {
           this.map ? 
-            <ProjectsPopup 
+            <Popup 
               features={this.state.clickFeatures} 
               lngLat={this.state.clickLngLat} 
               map={this.map}
@@ -269,65 +263,4 @@ var MapboxGLMap = React.createClass({
   },
 })
 
-
 module.exports=MapboxGLMap;
-
-var ProjectsPopup = React.createClass({
-  showDetails(feature) {
-    this.props.handleClick(feature)
-  },
-
-  getInitialState() {
-    return({
-      visible:true
-    })
-  },
-
-  componentWillReceiveProps() {
-    this.setState({
-      visible: true
-    })
-  },
-
-  hide() {
-    this.setState({
-      visible: false
-    })
-  },
-
-  render() {
-    var self=this
-
-
-
-    var point = this.props.map.project(this.props.lngLat)
-
-    var rows=this.props.features.map(function(feature, i) {
-      var d=feature.properties
-      return (
-        <div className='popupRow' key={i} onClick={self.showDetails.bind(self, feature)}>
-          
-          <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-          {d.projectid} - {d.name} <i className="fa fa-angle-right" aria-hidden="true"></i> 
-          
-        </div>
-      ) 
-    })
-
-    if(this.state.visible) {
-      return (
-        <div className={'popup mapOverlay'} style={{'left': point.x, 'top': point.y}}>
-          <div className='popupRowContainer'>
-            <div className="closeButton" onClick={this.hide}>&#10006;</div>
-           {rows}
-          </div>
-        </div>
-      )      
-    } else {
-      return <div></div>
-    }
-
-  }
-})
-
-

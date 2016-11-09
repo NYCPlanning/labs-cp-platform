@@ -1,3 +1,8 @@
+//Search.jsx - Implements react-autosuggest with dynamic lookups from the databases
+//  makes use of carto.autoComplete() helper method
+//Props:
+//  onSuggestionSelected(e,o) - function to be called when a suggestion is selected
+
 import React from 'react' 
 import Autosuggest from 'react-autosuggest';
 
@@ -17,9 +22,7 @@ function shouldRenderSuggestions(value) {
   return value.trim().length > 2;
 }
 
-
 var Search = React.createClass({
-
   getInitialState() {
     return {
       value: '',
@@ -43,8 +46,6 @@ var Search = React.createClass({
           suggestions: suggestions
         });   
       })
-
-
   },
 
   // Autosuggest will call this function every time you need to clear suggestions.
@@ -68,27 +69,24 @@ var Search = React.createClass({
   },
 
   render() {
+    const inputProps = {
+      placeholder: 'Search for FMS ID or Project Name',
+      value: this.state.value,
+      onChange: this.onChange
+    };
 
-      // Autosuggest will pass through all these props to the input field.
-      const inputProps = {
-        placeholder: 'Search for FMS ID or Project Name',
-        value: this.state.value,
-        onChange: this.onChange
-      };
-
-      // Finally, render it!
-      return (
-        <Autosuggest
-          suggestions={this.state.suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          shouldRenderSuggestions={shouldRenderSuggestions}
-          inputProps={inputProps}
-          onSuggestionSelected={this.onSuggestionSelected} />
-      );
-    }
-  });
+    return (
+      <Autosuggest
+        suggestions={this.state.suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        shouldRenderSuggestions={shouldRenderSuggestions}
+        inputProps={inputProps}
+        onSuggestionSelected={this.onSuggestionSelected} />
+    );
+  }
+});
 
 module.exports=Search;

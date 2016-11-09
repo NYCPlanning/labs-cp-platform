@@ -1,8 +1,9 @@
+//AgencySelector.jsx - Implements react-select with appropriate agency abbreviations showing on the chips instead of full names
+//Props:
+//  updateFilters - function that the array of selected values is passed to when the component changes
+
 import React from 'react'
 import Select from 'react-select'
-
-
-
 
 var AgencySelector = React.createClass({
 

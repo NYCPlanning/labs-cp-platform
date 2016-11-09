@@ -1,4 +1,6 @@
-module.exports = {
+// config.js - various data objects for the multiselectors on the capital projects explorer
+
+var config = {
   managingAgencies: [
    {  
       "value":"ACS",
@@ -503,6 +505,7 @@ statuses: [
          "value":"Other",
          "label":"Other"
       }
-
    ]
 }
+
+module.exports=config

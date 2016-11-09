@@ -1,6 +1,6 @@
-//AgencySelector should be passed a list of input options and return what is selected,
-//All of the logic for filtering the data should happen in this component
-
+//index.jsx - Top-level Component for the Capital Projects Explorer
+//Props:
+//  auth - the auth object passed down from react-router
 
 import React from 'react'
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
@@ -12,6 +12,7 @@ import GlobalModal from '../common/GlobalModal.jsx'
 import ModalContent from './ModalContent.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import carto from '../helpers/carto.js'
+
 import FilterService from '../helpers/FilterService.js'
 import config from './config.js'
 
@@ -52,17 +53,6 @@ var CapitalProjectsExplorer = React.createClass({
         })
       })
 
-  },
-
-  // reset() {
-  //   dc.filterAll()
-  //   dc.redrawAll()
-  // },
-
-  update() {
-    this.setState({
-      mapData: this.store.everything.top(Number.POSITIVE_INFINITY)
-    })
   },
 
   handleMapClick(feature) {
@@ -106,15 +96,11 @@ var CapitalProjectsExplorer = React.createClass({
 
   filterService() {
 
-
     var mapboxGLFilters = FilterService.mapboxGL(this.state.filters)
     this.refs.map.applyFilters(mapboxGLFilters)
     
-
     var sqlFilters = FilterService.SQL(this.state.filters)
 
-  
-    
     if(sqlFilters != null) {
       this.updateCount(sqlFilters)
     } else {
@@ -125,7 +111,6 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   updateCount(sqlFilters) {
-
     carto.SQL('SELECT count(*) FROM (SELECT * FROM cpadmin.capeprojectspolygons UNION ALL SELECT * FROM cpadmin.capeprojectspoints) a WHERE ' + sqlFilters, 'json')
       .then(function(data) {
         this.setState({
@@ -156,8 +141,6 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   render() {
-    var Iframe = 'iframe'
-
     return(
       <div className="full-height">
         <Nav title="Capital Projects Explorer" auth={this.props.auth}>
@@ -255,7 +238,7 @@ var CapitalProjectsExplorer = React.createClass({
           </div>
           <div id="content">
             <div className={'full-height'}>
-              <MapboxGLMap data={this.state.mapData} handleClick={this.handleMapClick} ref='map'/>
+              <MapboxGLMap handleClick={this.handleMapClick} ref='map'/>
             </div>
           </div>
         </div>
@@ -326,21 +309,21 @@ var aboutContent = (
 )
 
 var collaborateContent = (
-    <div>
-        <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
-        <p>
-            The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
-        </p>
-        <p>
-            We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='http://docs.capitalplanning.nyc/facdb/'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
-        </p>
-        <p>
-            We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
-        </p>
-        <p>
-            Email the team at <a href='mailto:capital@planning.nyc.gov'>capital@planning.nyc.gov</a>.
-        </p>
-        <div className='modal-logo'></div>
-    </div>
+  <div>
+    <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
+    <p>
+        The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
+    </p>
+    <p>
+        We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='http://docs.capitalplanning.nyc/facdb/'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
+    </p>
+    <p>
+        We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
+    </p>
+    <p>
+        Email the team at <a href='mailto:capital@planning.nyc.gov'>capital@planning.nyc.gov</a>.
+    </p>
+    <div className='modal-logo'></div>
+  </div>
 )
 

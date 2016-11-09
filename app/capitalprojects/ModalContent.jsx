@@ -1,12 +1,15 @@
+//ModalContent.jsx - JSX content builder for capital projects detail Modal
+//Props:
+//  feature - A geojson feature whose properties will be used to render the modal
 
 import React from 'react'
 import Numeral from 'numeral'
 import Moment from 'moment'
 
-import Agencies from '../helpers/agencies.js'
 import ModalMap from './ModalMap.jsx'
-import config from './config.js'
 
+import Agencies from '../helpers/agencies.js'
+import config from './config.js'
 
 var ModalContent = React.createClass({
   render() {
