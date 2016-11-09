@@ -21,20 +21,11 @@ var FacilitiesLandingPage = React.createClass({
     })
   },
 
-  showCollaborate() {
-    this.props.showModal({
-      modalHeading: 'Share',
-      modalContent: collaborateContent,
-      modalCloseText: 'Got it!'
-    })
-  },
-
   render() {
     return(
       <div className="facilities-landing">
-        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth}>
+        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth} showModal={this.props.showModal}>
             <li onClick={this.showAbout}><a> About</a></li>
-            <li onClick={this.showCollaborate}><a> Collaborate</a></li>
         </Nav>
 
         <div className="main-content">
