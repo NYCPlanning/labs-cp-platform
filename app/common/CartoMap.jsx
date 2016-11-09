@@ -8,6 +8,8 @@
 import React from 'react'
 import LocationWidget from './LocationWidget.jsx'
 
+import '../../stylesheets/common/CartoMap.scss'
+
 var CartoMap = React.createClass({
   componentDidMount() { //initialize the map after the component mounts
     var self=this 
@@ -36,7 +38,7 @@ var CartoMap = React.createClass({
 
     // add zoom control
     L.control.zoom({
-         position:'topright'
+         position:'bottomright'
     }).addTo(map);
 
     //add an animated loading spinner
@@ -45,7 +47,7 @@ var CartoMap = React.createClass({
         position: 'topright'
       },
 
-      onAdd: function (map) {
+      onAdd: function ( map ) {
         var container = L.DomUtil.create('div', 'map-loader');
         container.innerHTML = `
           <div class="spinner-container">
@@ -55,11 +57,28 @@ var CartoMap = React.createClass({
             </div>
           </div>
         `
-        return container;
+        return container
       }
     });
 
-    map.addControl(new Spinner());
+    map.addControl( new Spinner() );
+
+    var LocationControl = L.Control.extend({
+      options: {
+        position: 'bottomright'
+      },
+
+      onAdd: function( map ) {
+        var container = L.DomUtil.create('div', 'location-control leaflet-bar');
+        container.innerHTML = `
+          <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+        `
+
+        return container
+      }
+    })
+
+    map.addControl( new LocationControl() );
 
     //add basemap
     //TODO make this a prop

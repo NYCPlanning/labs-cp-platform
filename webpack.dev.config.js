@@ -9,8 +9,8 @@ module.exports = {
   ],
   output: {
     path: './public',
-    filename: 'bundle.js',
-    publicPath: '/js/'
+    filename: 'js/bundle.js',
+    publicPath: '/'
   },
   devtool: 'source-map',
   module: {
@@ -25,12 +25,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('../css/bundle.css'),
+    new ExtractTextPlugin('css/bundle.css'),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': '"development"'
