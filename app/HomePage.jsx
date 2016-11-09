@@ -7,23 +7,14 @@ import {Link} from 'react-router'
 
 import Nav from './common/Nav.jsx'
 import Footer from './common/Footer.jsx'
-import GlobalModal from './common/GlobalModal.jsx'
 
 var HomePage = React.createClass({
-  getInitialState() {
-    return({
-      modalHeading: null,
-      modalContent: null,
-      modalCloseText: null
-    })
-  },
-
   componentDidMount: function() {
     document.title = "NYC Capital Planning Platform";
   },
 
   showAbout() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'About the Platform',
       modalContent: aboutContent,
       modalCloseText: 'Close'
@@ -31,16 +22,11 @@ var HomePage = React.createClass({
   },
 
   showCollaborate() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Collaborate with Us!',
       modalContent: collaborateContent,
       modalCloseText: 'Close'
     })
-  },
-
-  showModal(options) {
-    this.setState(options)
-    this.refs.modal.open()
   },
  
   render() {
@@ -163,12 +149,6 @@ var HomePage = React.createClass({
         </section>
         <Footer/>
       </div>
-      <GlobalModal
-        heading={this.state.modalHeading}
-        body={this.state.modalContent}
-        closeText={this.state.modalCloseText}
-        ref="modal"
-      />
       </div>
     )
   }

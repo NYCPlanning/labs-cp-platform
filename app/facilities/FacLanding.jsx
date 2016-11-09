@@ -2,29 +2,19 @@
 // Props:
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
 
-
 import React from 'react'
 import {Link} from 'react-router'
 
 import Nav from '../common/Nav.jsx'
 import Footer from '../common/Footer.jsx'
-import GlobalModal from '../common/GlobalModal.jsx'
 
 var FacilitiesLandingPage = React.createClass({
-  getInitialState() {
-    return({
-      modalHeading: 'About the Facilities and Program Sites Explorer',
-      modalContent: aboutContent,
-      modalCloseText: 'Close'
-    })
-  },
-
-  componentDidMount: function() {
-    document.title = "Capital Planning Platform";
+  componentDidMount() {
+    document.title = "Capital Planning Platform"
   },
 
   showAbout() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'About this Tool',
       modalContent: aboutContent,
       modalCloseText: 'Got it!'
@@ -32,16 +22,11 @@ var FacilitiesLandingPage = React.createClass({
   },
 
   showCollaborate() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Share',
       modalContent: collaborateContent,
       modalCloseText: 'Got it!'
     })
-  },
-
-  showModal(options) {
-    this.setState(options)
-    this.refs.modal.open()
   },
 
   render() {
@@ -183,14 +168,7 @@ var FacilitiesLandingPage = React.createClass({
                 </div>
             </section>
         </div>
-
         <Footer/>
-        <Modal
-          heading={this.state.modalHeading}
-          body={this.state.modalContent}
-          closeText={this.state.modalCloseText}
-          ref="modal"
-        />
       </div>
     );
   }

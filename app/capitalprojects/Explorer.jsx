@@ -8,7 +8,6 @@ import Select from 'react-select'
 import Numeral from 'numeral'
 
 import Nav from '../common/Nav.jsx'
-import GlobalModal from '../common/GlobalModal.jsx'
 import ModalContent from './ModalContent.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import carto from '../helpers/carto.js'
@@ -19,9 +18,6 @@ import config from './config.js'
 var CapitalProjectsExplorer = React.createClass({
   getInitialState() {
     return({
-      modalHeading: null,
-      modalContent: null,
-      modalCloseText: null,
       filters: {
         sagency: [],
         magency: [],
@@ -34,11 +30,11 @@ var CapitalProjectsExplorer = React.createClass({
     })
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     var self=this
     document.title = "NYC Capital Projects Map";
 
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Welcome!',
       modalContent: splashContent,
       modalCloseText: 'Got it.  Let me in!'
@@ -52,7 +48,6 @@ var CapitalProjectsExplorer = React.createClass({
           totalCount: data[0].count
         })
       })
-
   },
 
   handleMapClick(feature) {
@@ -64,7 +59,7 @@ var CapitalProjectsExplorer = React.createClass({
    carto.getRow(tableName, 'projectid', feature.properties.projectid)
     .then(function(data) {
       var feature = data
-      self.showModal({
+      self.props.showModal({
         modalHeading: 'Capital Project Details',
         modalContent: <ModalContent feature={feature}/>,
         modalCloseText: 'Close'
@@ -74,7 +69,7 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   showAbout() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'About this Tool',
       modalContent: aboutContent,
       modalCloseText: 'Close'
@@ -82,16 +77,11 @@ var CapitalProjectsExplorer = React.createClass({
   },
 
   showCollaborate() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Share',
       modalContent: collaborateContent,
       modalCloseText: 'Close'
     })
-  },
-
-  showModal(options) {
-    this.setState(options)
-    this.refs.modal.open()
   },
 
   filterService() {
@@ -242,12 +232,6 @@ var CapitalProjectsExplorer = React.createClass({
             </div>
           </div>
         </div>
-        <GlobalModal
-          heading={this.state.modalHeading}
-          body={this.state.modalContent}
-          closeText={this.state.modalCloseText}
-          ref="modal"
-        />
       </div>
     )
   }

@@ -12,7 +12,6 @@ import Link from 'react-router'
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
 import FacLayerSelector from './FacLayerSelector.jsx'
-import Modal from '../common/GlobalModal.jsx'
 import FacilitiesLayers from '../../config/FacilitiesLayers.js'
 import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 
@@ -20,16 +19,7 @@ import '../../stylesheets/common/Nav.scss'
 
 
 var FacilitiesExplorer = React.createClass({
-  getInitialState() {
-    return({
-      modalHeading: null,
-      modalContent: null,
-      modalCloseText: null
-    })
-  },
-
   componentWillMount() {
-
     // SETTING SQL FOR MAP CONTENTS 
     //default: select * and show all layers in layer selector
     this.layerStructure = FacilitiesLayers
@@ -134,7 +124,7 @@ var FacilitiesExplorer = React.createClass({
     document.title = "Facilities and Program Sites Explorer";
 
     if(!this.props.params.domain)
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Welcome!',
       modalContent: splashContent,
       modalCloseText: 'Got it.  Let me in!'
@@ -148,7 +138,7 @@ var FacilitiesExplorer = React.createClass({
   // "ABOUT" MODAL 
 
   showAbout() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'About this Tool',
       modalContent: aboutContent,
       modalCloseText: 'Close'
@@ -156,19 +146,11 @@ var FacilitiesExplorer = React.createClass({
   },
 
   showCollaborate() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Share',
       modalContent: collaborateContent,
       modalCloseText: 'Close'
     })
-  },
-
-  // "FACILITIES DETAILS" MODAL
-  // Creates each section of the modal as a variable, then compiles them in the "content" var
-
-  showModal(options) {
-    this.setState(options)
-    this.refs.modal.open()
   },
 
   handleFeatureClick(e, latlng, pos, data) {
@@ -265,7 +247,7 @@ var FacilitiesExplorer = React.createClass({
       </div>
     )
 
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Facility Details',
       modalContent: content,
       modalCloseText: 'Close'
@@ -311,12 +293,6 @@ var FacilitiesExplorer = React.createClass({
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>
-            <Modal
-              heading={this.state.modalHeading}
-              body={this.state.modalContent}
-              closeText={this.state.modalCloseText}
-              ref="modal"
-            />
         </div>
       </div>
     )

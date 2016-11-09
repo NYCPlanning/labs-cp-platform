@@ -63,8 +63,9 @@ var CartoMap = React.createClass({
 
     //add basemap
     //TODO make this a prop
-    var layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>' })
-      .addTo(map)
+    var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
 
     //create a layer with the vizJson that was passed in
     cartodb.createLayer(map, this.props.vizJson)

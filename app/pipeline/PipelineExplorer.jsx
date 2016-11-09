@@ -2,7 +2,6 @@ import React from 'react'
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
-import Modal from '../common/GlobalModal.jsx'
 import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 
 var PipelineExplorer = React.createClass({
@@ -17,7 +16,7 @@ var PipelineExplorer = React.createClass({
   componentDidMount: function() {
     document.title = "Housing Development Explorer";
 
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Welcome!',
       modalContent: splashContent,
       modalCloseText: 'Got it.  Let me in!'
@@ -30,7 +29,7 @@ var PipelineExplorer = React.createClass({
   },
 
   showAbout() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'About this Tool',
       modalContent: aboutContent,
       modalCloseText: 'Got it!'
@@ -38,16 +37,11 @@ var PipelineExplorer = React.createClass({
   },
 
   showCollaborate() {
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Share',
       modalContent: collaborateContent,
       modalCloseText: 'Got it!'
     })
-  },
-
-  showModal(options) {
-    this.setState(options)
-    this.refs.modal.open()
   },
 
   handleFeatureClick(e, latlng, pos, data) {
@@ -75,7 +69,7 @@ var PipelineExplorer = React.createClass({
       </div>
     )
 
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Facility Details',
       modalContent: content,
       modalCloseText: 'Close'
@@ -157,7 +151,7 @@ var PipelineExplorer = React.createClass({
       </div>
     )
 
-    this.showModal({
+    this.props.showModal({
       modalHeading: 'Pipeline Project Details',
       modalContent: modalContent,
       modalCloseText: 'Close'
@@ -192,12 +186,6 @@ var PipelineExplorer = React.createClass({
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
           </div>
-            <Modal
-              heading={this.state.modalHeading}
-              body={this.state.modalContent}
-              closeText={this.state.modalCloseText}
-              ref="modal"
-            />
         </div>
       </div>
     )
