@@ -3,7 +3,7 @@ import {Link} from 'react-router'
 
 import Nav from './common/Nav.jsx'
 import Footer from './common/Footer.jsx'
-import GLobalModal from './common/GlobalModal.jsx'
+import GlobalModal from './common/GlobalModal.jsx'
 
 
 var FacilitiesLandingPage = React.createClass({

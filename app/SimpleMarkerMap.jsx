@@ -1,8 +1,12 @@
-// SimpleMarkerMap
-// With a lngLat point ([lat,lng]) passed in as a prop, creates a simple leaflet map with light basemap,
-// and adds a marker, and sets the viewport to it.
+//SimpleMarkerMap.jsx - With a lngLat point ([lat,lng]) passed in as a prop, creates a simple leaflet 
+//map with light basemap, and adds a marker, and sets fits bounds to it
+//Props:
+// point: A lat/lng array [lat, lng]
+// travelshed: boolean - if true, fetches a travelshed, renders it on the map, and fits the bounds to it
 
 import React from 'react'
+
+import TravelShed from './helpers/TravelShed.js'
 
 var SimpleMarkerMap = React.createClass({
 
@@ -30,34 +34,26 @@ var SimpleMarkerMap = React.createClass({
     //get a 30 minute travelshed for this point and render it on the map
     var self=this
 
-    var travelshedTemplate = 'https://otp.reallysimpleopendata.com/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace={{lat}},{{lon}}&date=2016/09/23&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700'
-
-    var url = Mustache.render(travelshedTemplate, {
-      lat: this.props.point[0],
-      lon: this.props.point[1]
-    })
-
     this.featureGroup = L.featureGroup().addTo(this.map)
 
-    $.getJSON(url, function(data) {
-      
-      
+    TravelShed.getSimple(this.props.point)
+      .then(function(data) {
+        console.log(data)
 
-      var layer = L.geoJson(data, {
-        style: {
-          "color":"gray",
-          "fillColor": "steelblue",
-          "weight": 1,
-          "fillopacity": 0.3
-        }
+        var layer = L.geoJson(data, {
+          style: {
+            "color":"gray",
+            "fillColor": "steelblue",
+            "weight": 1,
+            "fillopacity": 0.3
+          }
+        })
+
+        self.featureGroup.addLayer(layer)
+        self.map.fitBounds(self.featureGroup.getBounds())
+        
       })
-
-      self.featureGroup.addLayer(layer)
-      self.map.fitBounds(self.featureGroup.getBounds())
-
-    })
   },
-
 
   render() {
     return(

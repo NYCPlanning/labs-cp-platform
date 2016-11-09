@@ -51,8 +51,10 @@ module.exports = (
       <Route path="all" component={FacilitiesExplorer} onEnter={requireAuth}/>
       <Route path="domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
       <Route path="subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>
-      <Route path=":id" component={FacilityPage} onEnter={requireAuth}/>
+      
     </Route>
+
+    <Route path="facilities/:id" component={FacilityPage} onEnter={requireAuth}/>
     
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     

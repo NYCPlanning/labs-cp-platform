@@ -9,6 +9,8 @@ import Auth from './helpers/Auth.js'
 
 import {browserHistory} from 'react-router'
 
+import '../stylesheets/App.scss'
+
 var App = React.createClass({
   getInitialState() {
     return({

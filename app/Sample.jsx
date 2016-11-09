@@ -1,4 +1,4 @@
-// Sample.jsx - A Sample Component that meets the formatting and structure standards for our app that you can use as a template a new Component
+//Sample.jsx - A Sample Component that meets the formatting and structure standards for our app that you can use as a template a new Component
 //Start with a brief description of what this component does, and a listing of Props that the component expects:
 
 //Props:
