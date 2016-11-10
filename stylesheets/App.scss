@@ -1,0 +1,283 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Oswald', sans-serif;
+}
+
+html, body, #main-container {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#main-container {
+  padding-top:80px;
+}
+
+.full-height {
+  height:100%;    
+  overflow-y: scroll;
+}
+
+.btn.dcp-orange {
+  background-color: #d96b27;
+  border-color: #d68a40;
+  color: #FFF;
+  min-width: 86px;
+}
+
+.dcp-orange {
+  color: #d96b27;
+}
+
+
+.btn.dcp-orange:hover, .btn.dcp-orange:active  {
+  background-color: #a5501b;
+  border-color: #a5501b;
+  color: #FFF;
+}
+
+.fa-info-circle {
+  color: #d96b27;
+}
+
+
+.tooltip-inner {
+  color: #464646;
+  background-color: #ebebeb;
+  text-align: left;
+  font-size: 11px;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #ebebeb;
+}
+
+section {
+  padding: 100px 0;
+}
+
+.bg-primary {
+  background-color: #ccc;
+  color: #636363;
+}
+
+ hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    border-width: 3px;
+    max-width: 50px;
+    border-color: #000;
+}
+
+.bg-primary p {
+  font-size: 19px;
+  color: #636363;
+}
+
+/*Sidebar & Main Content*/
+
+
+#sidebar {
+  box-sizing: border-box;
+  width: 340px;
+  height: 100%;
+  overflow-y: scroll;
+  float: left;
+}
+
+
+.sidebar-content h3 {
+  margin-top: 10px;
+ 
+}
+
+.sidebar-content .btn {
+  margin-top: 10px;
+}
+
+.sidebar-content {
+  margin-bottom: 15px;
+}
+
+#content {
+  margin-left:340px;
+  width:100%;
+  height:100%;
+}
+
+
+/*End Sidebar & Main Content*/
+
+.dl-horizontal dt {
+  float: left;
+  width: 200px;
+  overflow: hidden;
+  clear: left;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+/*Beta Banner*/
+
+body:after {
+    content: "beta";
+    position: fixed;
+    width: 80px;
+    height: 25px;
+    background: #e7ff1e;
+    top: 7px;
+    left: -20px;
+    text-align: center;
+    font-size: 13px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #818181;
+    line-height: 27px;
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    z-index: 10000;
+    border-bottom: 1px solid #b4b4b4;
+    border-top: 1px solid #b4b4b4;
+}
+
+/*End Beta Banner*/
+
+
+/*Map Overlays*/
+.mapOverlay {
+  padding: 10px;
+  font-family: 'Oswald', sans-serif;
+  z-index: 10;
+  position: absolute;
+  min-width: 90px;
+  background: rgba(230, 230, 230, 0.65);
+  font-size: 15px;
+}
+
+.mapOverlay .btn {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.popup {
+  font-family: 'Open Sans', sans-serif;
+  z-index: 10;
+  position: absolute;
+  background: rgba(255,255,255,.9);
+  font-size: 12px;
+  padding: 0;
+  -webkit-box-shadow: 1px 1px 2px 0px #bdbdbd;
+  -moz-box-shadow: 1px 1px 2px 0px #bdbdbd;
+  box-shadow: 1px 1px 2px 0px #bdbdbd;
+  display: inline-table;
+}
+
+.popupRow {
+  border-bottom: 0.5px solid rgba(234, 234, 234, 0.98);
+  padding: 3px 6px;
+}
+
+.popupRow:last-child {
+  border-bottom: none;
+}
+
+.popupRow:hover {
+  background: #e4e4e4;
+  cursor: pointer;
+}
+
+/*from http://enjoycss.com/gallery/shapes/gn*/
+.popup .closeButton {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #db691b;
+  border-radius: 10px;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  color: white;
+  line-height: 15px;
+  font-size: 9px;
+}
+
+.popup .closeButton:hover {
+  cursor: pointer;
+  background-color: #af4c0f;
+}
+
+.badge {
+  min-width: 50px;
+  margin-right: 10px;
+  font-size: 10px;
+  position: relative;
+  top: -1px;
+}
+
+.messageOverlay {
+  border-radius: 0 0 10px 0;
+}
+
+.message-mini {
+  font-family: 'Open Sans';
+  font-size: 12px;
+} 
+
+.legendItemText {
+  font-family: 'Open Sans';
+  display: inline-block;
+}
+
+
+
+
+/*End Map Overlays*/
+
+
+/*Map*/
+#mapContainer {
+  height: calc(100% - 80px);
+  width: calc(100% - 340px);
+  position: absolute;
+}
+
+#map {
+  height:100%;
+  width: 100%;
+}
+
+#mapboxGLmap {
+  height: 100%;
+  width: calc(100% - 340px);
+}
+
+.mapbox-improve-map {
+  display: none;
+}
+
+.mapboxgl-map .mapboxgl-ctrl-top-right {
+  top: 60px;
+}
+/*End Map*/
+
+
+
+
+/*Jquery UI Range Slider Customization*/
+
+.ui-rangeSlider-bar {
+    background: #d96b27;
+}
+/*End Jquery UI Range Slider Customization*/
+
+
+
+

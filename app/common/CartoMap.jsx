@@ -41,10 +41,34 @@ var CartoMap = React.createClass({
          position:'bottomright'
     }).addTo(map);
 
+
+
+    var LocationControl = L.Control.extend({
+      options: {
+        position: 'bottomright'
+      },
+
+      onAdd: function( map ) {
+        var container = L.DomUtil.create('div', 'location-control leaflet-bar');
+        container.innerHTML = `
+          <a href="#"><i class="fa fa-crosshairs" aria-hidden="true"></i></a>
+        `
+
+        return container
+      }
+    })
+
+    map.addControl( new LocationControl() );
+
+    //add a listener to trigger LocationWidget
+    $('.location-control').click(function() {
+      self.refs.LocationWidget.zoomMap()
+    })
+
     //add an animated loading spinner
     var Spinner = L.Control.extend({
       options: {
-        position: 'topright'
+        position: 'bottomright'
       },
 
       onAdd: function ( map ) {
@@ -62,23 +86,6 @@ var CartoMap = React.createClass({
     });
 
     map.addControl( new Spinner() );
-
-    var LocationControl = L.Control.extend({
-      options: {
-        position: 'bottomright'
-      },
-
-      onAdd: function( map ) {
-        var container = L.DomUtil.create('div', 'location-control leaflet-bar');
-        container.innerHTML = `
-          <a href="#"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-        `
-
-        return container
-      }
-    })
-
-    map.addControl( new LocationControl() );
 
     //add basemap
     //TODO make this a prop
@@ -127,7 +134,7 @@ var CartoMap = React.createClass({
       <div id="mapContainer">
         <div id="map" ref="map">
         </div> 
-        { this.map ? <LocationWidget type='carto' map={this.map}/> : null }
+        { this.map ? <LocationWidget type='carto' map={this.map} ref='LocationWidget'/> : null }
       </div>
     )
   }

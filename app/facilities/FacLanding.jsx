@@ -8,6 +8,8 @@ import {Link} from 'react-router'
 import Nav from '../common/Nav.jsx'
 import Footer from '../common/Footer.jsx'
 
+import '../../stylesheets/facilities/FacLanding.scss'
+
 var FacilitiesLandingPage = React.createClass({
   componentDidMount() {
     document.title = "Capital Planning Platform"

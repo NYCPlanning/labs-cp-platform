@@ -3,6 +3,8 @@
 
 import React from 'react'
 
+import '../../stylesheets/common/Footer.scss'
+
 var Footer = function() {
   return (
     <div className="footer">

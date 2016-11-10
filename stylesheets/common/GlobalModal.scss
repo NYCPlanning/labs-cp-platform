@@ -1,0 +1,49 @@
+/*Modal*/
+
+.modal-title {
+  color: #d96b27;
+}
+
+.modal-body h5, {
+  font-family: 'Oswald';
+  font-size: 17px;
+}
+
+h3.modal-opener {
+  line-height: 35px;
+  margin-bottom: 35px;
+}
+
+.modal-body h3 {
+  font-family: 'Oswald';
+}
+
+.modal-body {
+  font-family: 'open sans', sans-serif;
+}
+
+.modal-header, .modal-footer {
+    background: #EBEBEB;
+    color: #D96B27;
+}
+
+.modal-body .modal-label {
+  font-family: oswald;
+  font-size: 15px;  
+}
+
+.modal-dialog {
+  width: auto;
+  max-width: 900px;
+}
+
+.modal-logo {
+  background-image: url(/../img/logo_80.png);
+  height: 62px;
+  width: 80px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto;
+}
+
+/*End Modal*/

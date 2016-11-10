@@ -1,11 +1,19 @@
+//LocationWidget.jsx - Gets the user's location from the browser and allows for quick zooming to location.  Also adds an animated marker
+//Can be used with both carto and mapboxGL maps
+//Props:
+//  map - the carto (leaflet) or mapboxGL map object that the component should work in
+//  type - 'carto' or 'mapboxGL', determines which methods to use to pan and zoom the map, translate lat/long to map coordinates, etc
+
 import React from 'react'
+
+import '../../stylesheets/common/LocationWidget.scss'
 
 var LocationWidget = React.createClass({
 
   getInitialState() {
     return({
       visible:false,
-      lngLat: null
+      coords: null
     })
   },
 
@@ -16,20 +24,7 @@ var LocationWidget = React.createClass({
       self.forceUpdate()
     })
 
-    navigator.geolocation.getCurrentPosition(function(position) {
-      self.onPosition(
-        self.props.type == 'mapboxGL' ? 
-          [position.coords.longitude, position.coords.latitude] : 
-          [position.coords.latitude, position.coords.longitude]
-      )
-    })
-  },
-
-  onPosition(coords) {
-    this.setState({
-      visible: true,
-      coords: coords
-    })
+    this.getLocation()
   },
 
   hide() {
@@ -38,26 +33,47 @@ var LocationWidget = React.createClass({
     })
   },
 
-  zoomMap() {
-    this.setState({
-      visible: false
-    })
+  getLocation() {
+    var self=this
 
-    if(this.props.type=='mapboxGL') {
-      this.props.map.flyTo({
-        center: this.state.coords,
-        zoom: 15,
-        speed: 0.5
-      })      
-    } else {
-      this.props.map.setView(this.state.coords, 15, {
-        animation: true,
-        pan: {
-          duration: 3
-        }
+    console.log('getting location')
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log('got location')
+      var coords = self.props.type == 'mapboxGL' ? 
+        [position.coords.longitude, position.coords.latitude] : 
+        [position.coords.latitude, position.coords.longitude]
+    
+      console.log('setting state')
+      self.setState({
+        coords: coords
       })
-    }
+    })    
+  },
 
+  zoomMap() {
+    console.log('zooming map')
+    if(this.state.coords != null) {
+      if(this.props.type=='mapboxGL') {
+        this.props.map.flyTo({
+          center: this.state.coords,
+          zoom: 15,
+          speed: 0.5
+        })      
+      } else {
+        this.props.map.setView(this.state.coords, 15, {
+          animation: true,
+          pan: {
+            duration: 3
+          }
+        })
+      } 
+
+      this.setState({
+        visible: true
+      })    
+    } else {
+      console.log('You need to allow your browser to share your location...')
+    }
   },
 
   render() {
@@ -73,18 +89,6 @@ var LocationWidget = React.createClass({
       return (
         <div className="location-ring-container" ref="locationContainer" style={{'left': point.x, 'top': point.y}}>
           <div className={'location-ring'} ></div>
-          <div className="popover right in" style={{
-            display: 'block',
-            width: '220px',
-            top: '-39px',
-            left: '47px'
-          }}>
-            <div className="arrow" style={{top:'50%'}}></div>
-            <h3 className="popover-title">Want to zoom to your location?<i className="fa fa-times pull-right" aria-hidden="true" onClick={this.hide}></i></h3>
-            <div className="popover-content">
-              <div className="btn btn-xs btn-success dcp-orange" onClick={this.zoomMap}>Click Here</div>
-            </div>
-          </div>
         </div>
       )      
     } else {

@@ -15,6 +15,8 @@ import carto from '../helpers/carto.js'
 import FilterService from '../helpers/FilterService.js'
 import config from './config.js'
 
+import '../../stylesheets/capitalprojects/Explorer.scss'
+
 var CapitalProjectsExplorer = React.createClass({
   getInitialState() {
     return({

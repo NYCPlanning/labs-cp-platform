@@ -9,6 +9,7 @@ import React from 'react'
 import {Link} from 'react-router'
 
 import Modal from '../common/GlobalModal.jsx'
+
 import '../../stylesheets/common/Nav.scss'
 
 

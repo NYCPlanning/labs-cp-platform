@@ -7,3 +7,143 @@
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+
+.leaflet-bar a, .leaflet-bar a:hover {
+  width: 30px;
+  height: 30px;
+}
+
+.leaflet-bar {
+  box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.1);
+}
+    
+.leaflet-control-zoom-in {
+  padding: 5px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%270%200%2020%2020%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%0A%20%20%3Cpath%20style%3D%27fill%3A%23333333%3B%27%20d%3D%27M%2010%206%20C%209.446%206%209%206.4459904%209%207%20L%209%209%20L%207%209%20C%206.446%209%206%209.446%206%2010%20C%206%2010.554%206.446%2011%207%2011%20L%209%2011%20L%209%2013%20C%209%2013.55401%209.446%2014%2010%2014%20C%2010.554%2014%2011%2013.55401%2011%2013%20L%2011%2011%20L%2013%2011%20C%2013.554%2011%2014%2010.554%2014%2010%20C%2014%209.446%2013.554%209%2013%209%20L%2011%209%20L%2011%207%20C%2011%206.4459904%2010.554%206%2010%206%20z%27%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+  text-indent: 100%;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom-out {
+  padding: 5px;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%270%200%2020%2020%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%0A%20%20%3Cpath%20style%3D%27fill%3A%23333333%3B%27%20d%3D%27m%207%2C9%20c%20-0.554%2C0%20-1%2C0.446%20-1%2C1%200%2C0.554%200.446%2C1%201%2C1%20l%206%2C0%20c%200.554%2C0%201%2C-0.446%201%2C-1%200%2C-0.554%20-0.446%2C-1%20-1%2C-1%20z%27%20%2F%3E%0A%3C%2Fsvg%3E%0A");
+  text-indent: 100%;
+  overflow: hidden;
+}
+
+.location-control {
+  font-size: 17px;
+
+  .fa {
+    position: relative;
+    top: 2px;
+  }
+}
+
+/*spinkit*/
+.spinner {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  margin: 0px auto;
+}
+
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #db691b;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+/*end spinkit*/
+
+
+/*Custom Carto Tooltip*/
+
+.cartodb-tooltip .name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+}
+
+.cartodb-tooltip .message {
+  font-family: 'Oswald', sans-serif;
+  color: #db691b;
+}
+
+/*End Custom Carto Tooltip*/
+
+/*Override Carto Default Legend Styles*/
+
+div.cartodb-legend.category ul li, div.cartodb-legend.color ul li, div.cartodb-legend.custom ul li {
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: initial;
+    font-weight: 200;
+    color: #333;
+}
+
+div.cartodb-legend.category ul li .bullet {
+  width: 10px;
+  height: 10px;
+}
+
+
+div.cartodb-legend-stack {
+  display: block;
+  padding: 10px;
+  font-family: 'Oswald', sans-serif;
+  z-index: 10;
+  position: absolute;
+  min-width: 90px;
+  background: rgba(230, 230, 230, 0.65);
+  font-size: 15px;
+  bottom: 0;
+  left: 0;
+  right: initial;
+  box-shadow: none;
+  webkit-box-shadow: none;
+  border: none;
+  padding-bottom: 30px;
+}
+
+div.cartodb-legend .legend-title {
+    font-family: 'Oswald', sans-serif;
+    color: #333;
+    font-size: 18px;
+    font-weight:500;
+    text-transform: capitalize;
+}
+
+div.cartodb-legend {
+  padding: 0;
+}
+
+/*End Override Carto Default Legend Styles*/
+

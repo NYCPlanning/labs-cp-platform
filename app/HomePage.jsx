@@ -9,6 +9,8 @@ import {Link} from 'react-router'
 import Nav from './common/Nav.jsx'
 import Footer from './common/Footer.jsx'
 
+import '../stylesheets/HomePage.scss'
+
 var HomePage = React.createClass({
   componentDidMount: function() {
     document.title = "NYC Capital Planning Platform";

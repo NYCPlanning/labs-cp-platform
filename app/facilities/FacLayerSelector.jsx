@@ -13,6 +13,7 @@ import ReactDOM from 'react-dom'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 
+import '../../stylesheets/facilities/FacLayerSelector.scss'
 
 var LayerSelector = React.createClass({
 

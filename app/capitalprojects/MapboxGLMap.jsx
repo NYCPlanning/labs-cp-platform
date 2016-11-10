@@ -17,6 +17,8 @@ import Popup from './Popup.jsx'
 import Agencies from '../helpers/agencies.js'
 import carto from '../helpers/carto.js'
 
+import '../../stylesheets/common/MapboxGLMap.scss'
+
 var MapboxGLMap = React.createClass({
   getInitialState() {
     return {

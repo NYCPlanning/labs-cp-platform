@@ -5,6 +5,8 @@
 import React from 'react'
 import {browserHistory} from 'react-router'
 
+import '../stylesheets/Login.scss'
+
 var Login = React.createClass({
   componentDidMount() {
     this.props.auth.login()

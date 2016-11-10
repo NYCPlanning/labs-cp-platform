@@ -7,6 +7,8 @@
 import React from 'react'
 import {Modal, Button} from 'react-bootstrap'
 
+import '../../stylesheets/common/GlobalModal.scss'
+
 var GlobalModal = React.createClass({
   getInitialState() {
     return { showModal: false };
