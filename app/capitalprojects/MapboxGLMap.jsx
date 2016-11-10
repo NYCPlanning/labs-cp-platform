@@ -92,7 +92,18 @@ var MapboxGLMap = React.createClass({
         pitch: 0
     });
 
-    map.addControl(new mapboxgl.Navigation());
+    map.addControl(new mapboxgl.NavigationControl({position: 'bottom-right'}));
+  
+ 
+    $('.mapboxgl-ctrl-bottom-right')
+      .prepend('<div class="mapboxgl-ctrl-group mapboxgl-ctrl"><button class="location-control" type="button"><i class="fa fa-crosshairs" aria-hidden="true"></i></button></div>')
+      .click(function() {
+        self.refs.LocationWidget.zoomMap()
+      })
+
+
+
+    
 
     this.map.on('style.load', function() {
 
@@ -259,7 +270,7 @@ var MapboxGLMap = React.createClass({
               handleClick={this.props.handleClick}/> :
             null
         }
-        { this.map ? <LocationWidget type='mapboxGL' map={this.map}/> : null }
+        { this.map ? <LocationWidget type='mapboxGL' map={this.map} ref='LocationWidget'/> : null }
       </div>
     )
   },
