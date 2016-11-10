@@ -10,6 +10,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom' 
+import {Link} from 'react-router'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 
@@ -363,7 +364,7 @@ var LayerSelector = React.createClass({
           }
         </ul>
         <div className='sidebar-buttons'>
-          <a href="/facilities"><div className='btn btn-sm dcp-orange' > <i className="fa fa-arrow-left" aria-hidden="true"></i> Back to Facilities Home</div><br/></a>
+          <Link to="/facilities"><div className='btn btn-sm dcp-orange' > <i className="fa fa-arrow-left" aria-hidden="true"></i> Back to Facilities Home</div><br/></Link>
           <a href="/facilities/all"><div className='btn btn-sm dcp-orange' > <i className="fa fa-map-marker" aria-hidden="true"></i> All Facilities Map</div></a>
         </div>
       </div>

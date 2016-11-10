@@ -1,6 +1,8 @@
+// FilterService.js - helper methods for filtering mapboxGL layers
+
 module.exports={
 
-  //expects an object of filters like
+  //mapboxGL() expects an object of filters like
   // {
   //   field1:['value1', 'value2'],
   //   field2:['value1', 'value2']
@@ -50,7 +52,7 @@ module.exports={
     return allFilters
   },
 
-
+  //Generates SQL from mapboxGL filter object, used to fetch data from carto for counts, etc
   SQL(filters) {
 
     //build an array of fields

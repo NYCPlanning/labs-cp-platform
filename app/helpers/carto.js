@@ -1,6 +1,10 @@
+// carto.js - helper methods for interacting with the carto APIs
+
 import Mustache from 'mustache'
 
 module.exports = {
+  //given a string, get matches from capitalprojects based on name or projectid
+  //TODO make this generic
   autoComplete: function(value) {
 
 
@@ -87,6 +91,9 @@ module.exports = {
 
   },
 
+  //does a carto SQL api call
+  //pass in format as a valid SQL api export format (shp, csv, geojson)
+  //TODO store host, user, etc in a central config
   SQL(sql, format) {
 
     format = format ? format : 'geojson'

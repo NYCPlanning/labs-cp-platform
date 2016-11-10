@@ -1,8 +1,10 @@
-import { isTokenExpired } from './jwtHelper'
+// Auth.js - Auth0 helper, can trigger login and logout, get/set profile, etc
+
+
 import Auth0Lock from 'auth0-lock'
 import {browserHistory} from 'react-router'
 
-
+import { isTokenExpired } from './jwtHelper'
 
 export default class AuthService {
   constructor(clientId, domain) {
