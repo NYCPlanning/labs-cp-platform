@@ -79,6 +79,7 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
         <div className="col-md-12">
           <h3>{d.facilityname}</h3>
           <h4>{d.address}</h4>
+          <h4>BBL: {d.bbl}</h4>
         </div>
         <div className="col-md-6">
           <SimpleMarkerMap point={this.props.latlng}/>
