@@ -42,7 +42,7 @@
     "turf-extent": "^1.0.4",
     "victory": "^0.12.1",
     "webpack": "^1.13.1",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^1.0.1"
   },
   "babel": {
     "presets": [
