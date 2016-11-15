@@ -4,31 +4,45 @@
 
 
 import React from 'react'
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import Popover from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import Drawer from 'material-ui/Drawer';
 
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
 import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 
-
+import '../../stylesheets/pipeline/PipelineExplorer.scss'
 
 var PipelineExplorer = React.createClass({
   getInitialState() {
     return({
       modalHeading: null,
       modalContent: null,
-      modalCloseText: null
+      modalCloseText: null,
+      drawerOpen: true
     })
   },
 
   componentDidMount: function() {
     document.title = "Housing Development Explorer";
 
-    this.props.showModal({
-      modalHeading: 'Welcome!',
-      modalContent: splashContent,
-      modalCloseText: 'Got it.  Let me in!'
-    }) 
+    // this.props.showModal({
+    //   modalHeading: 'Welcome!',
+    //   modalContent: splashContent,
+    //   modalCloseText: 'Got it.  Let me in!'
+    // }) 
   },
 
   updateSQL(sql) {
@@ -160,6 +174,26 @@ var PipelineExplorer = React.createClass({
 
   },
 
+  handleTouchTap(e) {
+    // This prevents ghost click.
+    e.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: e.currentTarget,
+    });
+  },
+
+  toggleDrawer(e) {
+    this.setState({drawerOpen: !this.state.drawerOpen})
+  },
+
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  },
+
   render() {
     return(
       <div className="full-height">
@@ -167,25 +201,63 @@ var PipelineExplorer = React.createClass({
           <li onClick={this.showAbout}><a> About</a></li>
         </Nav>
         <div id="main-container">
-          <div id="sidebar">
-            <PipelineLayerSelector
-              updateSQL={this.updateSQL}
-            />
-          </div>
           <div id="content">
-            <div className="messageOverlay mapOverlay">
+             <Toolbar 
+              className="mui-toolbar"
+              noGutter={true}
+              style={{
+                backgroundColor: '#fff'
+              }}>
+              <ToolbarGroup firstChild={true}>
+                <TextField
+                  hintText="Hint Text"
+                  floatingLabelText="Floating Label Text"
+                />
+                <ToolbarSeparator />
+                <IconButton tooltip="Filter">
+                  <FontIcon className="fa fa-filter" onTouchTap={this.toggleDrawer}/>
+                </IconButton>
+              </ToolbarGroup>
+            </Toolbar>
+            {/*<div className="messageOverlay mapOverlay">
               <div className="message">Hover over a property, or click for full details</div>
               <div className="message">Data Freshness:</div>
               <div className="message-mini">DOB Permits-10/20/2016</div>
               <div className="message-mini">DOB Certificates of Occupancy-9/30/2016</div>
               <div className="message-mini">HPD Projects-10/11/2016</div>
-            </div>
+            </div>*/}
             <CartoMap
              vizJson="https://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/27f505b4-9fab-11e6-ab61-0242ac110002/viz.json"
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
+            <Drawer className="mapDrawer"
+              open={this.state.drawerOpen}
+              docked={true}
+              width={409}>
+              <Toolbar noGutter={true}>
+                <ToolbarGroup>
+                  <ToolbarTitle text="Filter Pipeline Projects" />
+                </ToolbarGroup>
+                <ToolbarGroup>
+                  <IconButton tooltip="Close Filters">
+                    <FontIcon className="fa fa-times" onTouchTap={this.toggleDrawer}/>
+                  </IconButton>
+                </ToolbarGroup>
+              </Toolbar>
+              <PipelineLayerSelector
+              updateSQL={this.updateSQL}
+            />
+            </Drawer>
           </div>
         </div>
+        <Popover
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          onRequestClose={this.handleRequestClose}
+        >
+        </Popover>
       </div>
     )
   }

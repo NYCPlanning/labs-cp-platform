@@ -6,10 +6,14 @@
 
 import React from 'react'
 import {browserHistory} from 'react-router'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import GlobalModal from './common/GlobalModal.jsx'
 
 import '../stylesheets/App.scss'
+
+injectTapEventPlugin();
 
 var App = React.createClass({
   getInitialState() {
@@ -41,15 +45,17 @@ var App = React.createClass({
     }
 
     return(
-      <div className="full-height">
-        <GlobalModal
-          heading={this.state.modalHeading}
-          body={this.state.modalContent}
-          closeText={this.state.modalCloseText}
-          ref="modal"
-        />
-       {children}
-      </div>
+      <MuiThemeProvider>
+        <div className="full-height">
+          <GlobalModal
+            heading={this.state.modalHeading}
+            body={this.state.modalContent}
+            closeText={this.state.modalCloseText}
+            ref="modal"
+          />
+         {children}
+        </div>
+      </MuiThemeProvider>
     )
   }
 })

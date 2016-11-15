@@ -9,69 +9,56 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
+import Select from 'react-select'
 
 import carto from '../helpers/carto.js'
 
+var filterDimensions = {
+  sqlChunks: {},
 
-//object for the hierarchy of domains, groups and subgroups
-//includes colors to be used in display
-var layerStructure = [
-  {
-    name: 'Project Status',
-    column: 'dcp_pipeline_status',
-    children: [
+  dcp_pipeline_status: {
+    label: 'Project Status',
+    options: [  
       {
-        name: 'Complete',
-        color: '#ebebeb'
-     
+        label: 'Complete',
+        value: 'Complete'
       },
       {
-        name: 'Partial complete',
-        color: '#ebebeb'
+        label: 'Partial complete',
+        value: 'Partial complete'
       },
       {
-        name: 'Permit outstanding',
-        color: '#ebebeb'
+        label: 'Permit outstanding',
+        value: 'Permit outstanding'
       },
       {
-        name: 'Permit pending',
-        color: '#ebebeb'
+        label: 'Permit pending',
+        value: 'Permit pending'
       }
     ]
   },
-  {
-    name: 'Type of Development',
-    column: 'dcp_pipeline_category',
-    children: [
+  dcp_pipeline_category: {
+    label: 'Project Status',
+    options: [  
       {
-        name: 'Residential-New',
-        color: '#ebebeb'
+        label: 'Residential-New',
+        value: 'Residential-New'
       },
       {
-        name: 'Hotel-New',
-        color: '#ebebeb'
+        label: 'Hotel-New',
+        value: 'Hotel-New'
       },
       {
-        name: 'Residential-Alteration',
-        color: '#ebebeb'
+        label: 'Residential-Alteration',
+        value: 'Residential-Alteration'
       },
       {
-        name: 'Hotel-Alteration',
-        color: '#ebebeb'
+        label: 'Hotel-Alteration',
+        value: 'Hotel-Alteration'
       }
     ]
   }
-]
-
-//to start, add checked = true to everything in the layerStructure object
-layerStructure = layerStructure.map(function(domain) {
-  domain.checked = true
-  domain.children = domain.children.map(function(group) {
-    group.checked = true
-    return group
-  })
-  return domain
-})
+}
 
 
 var LayerSelector = React.createClass({
@@ -79,236 +66,115 @@ var LayerSelector = React.createClass({
 
   getInitialState: function() {
     return ({
-      layers:layerStructure,
       selectedCount: '__',
       totalCount:'__',
-      dateFilter: false
-    })
-  },
-
-  updateCounts() {
-    var self=this
-
-    /* get a count of "select all" from entire dataset */
-    var SQL = 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode' 
-    var totalCountSQL = "SELECT count(*) as count FROM (" + SQL + ") a"
-
-    carto.SQL(totalCountSQL, 'json')
-      .then(function(data) {
-        self.setState({
-          selectedCount: data[0].count,
-          totalCount: data[0].count
-        })
-      })
-  },
-
-  toggleCheckbox: function(type, domain, group, subgroup, e) {
-
-    var layers = this.state.layers;
-
-    //update state
-    if(type=='subgroup') {
-      
-      layers[domain].children[group].children[subgroup].checked = !layers[domain].children[group].children[subgroup].checked
-
-      this.processChecked(layers)
-
-    } else if(type=='group') {
-
-     
-
-      var thisGroup = layers[domain].children[group]
-       //figure out if new state is checked or not checked
-
-      thisGroup.checked = !thisGroup.checked
-
-      // thisGroup.children = thisGroup.children.map(function(child) {
-      //   child.checked = thisGroup.checked 
-      //   return child
-      // })
-
-    
-      this.processChecked(layers)
-
-
-    } else {
-    
-      var thisDomain = layers[domain]
-
-      //toggle checked status
-      thisDomain.checked = !thisDomain.checked
-
-      //toggle all children and grandChildren
-      thisDomain.children = thisDomain.children.map(function(group) {
-        group.checked = thisDomain.checked
-        // group.children = group.children.map(function(subgroup) {
-        //   subgroup.checked = thisDomain.checked
-        //   return subgroup
-        // })
-        return group
-      })
-
-      this.processChecked(layers)
-    }
-
-
-
-  },
-
-  processChecked: function(layers) {
-    console.log('processChecked')
-    var self=this
-
-    //set indeterminate states, start from the bottom and work up
-    layers.map(function(domain) {
-      var domainChecked=0
-      //first set all the groups
-      domain.children.map(function(group) {
-        var groupChecked=0
-        // group.children.map(function(subgroup) {
-        //   if(subgroup.checked) groupChecked++
-        // })
-
-        //group.checked = (groupChecked==group.children.length) ? true : false
-        //group.indeterminate = (groupChecked < group.children.length && groupChecked > 0) ? true : false
-
-        if(group.checked) domainChecked++
-      })
-
-      domain.checked = (domainChecked==domain.children.length) ? true : false
-      domain.indeterminate = (domainChecked < domain.children.length && domainChecked > 0) ? true : false
-
-    })
-
-    this.setState({
-      layers: layers
-    })
-
-
-    var selectedLayers = []
-
-    //push an object for each column to be filtered by, containing an array of currently selected values
-    this.state.layers.map(function(domain) {
-      console.log(domain)
-      var columnSelected = {
-        column: domain.column,
-        selected: []
+      dateFilter: true,
+      filterDimensions: {
+        dcp_pipeline_status: [
+          {
+            label: 'Complete',
+            value: 'Complete'
+          },
+          {
+            label: 'Partial complete',
+            value: 'Partial complete'
+          }
+        ],
+        dcp_pipeline_category: filterDimensions['dcp_pipeline_category'].options,
+        dcp_units_use_map: [-310,1670],
+        dob_cofo_date: [Moment('2011-1-1').format('X'), Moment().format('X')]
       }
-      domain.children.map(function(group) {
-        (group.checked) ? columnSelected.selected.push(group.name) : null
-      })
-      
-     if (columnSelected.selected.length > 0) {
-        var chunk = ''
-
-
-        columnSelected.selected.map(function(value, i) {
-          if(i>0) chunk += ' OR '
-          chunk += columnSelected.column + ' = \'' + value + '\''
-        })
-
-        chunk = '(' + chunk + ')'
-
-        self.sqlChunks[columnSelected.column] = chunk
-      } else {
-        self.sqlChunks[columnSelected.column] = 'FALSE'
-      }
-
-      if(!self.state.dateFilter) {
-        delete self.sqlChunks.dob_cofo_date
-      }
-      
-
-      self.buildSQL()
-
-
     })
-
-    
-
-  },
-
-  getCount(sql) {
-    var self=this
-    
-    var countSQL = 'SELECT count(a.*) as selected FROM ( ' + sql + ') a'
-
-    carto.SQL(countSQL, 'json')
-      .then(function(data) {
-        self.setState({
-          selectedCount: data[0].selected,
-        })
-      })
   },
 
   componentDidMount() {
-    var self=this
 
-    this.updateCounts() 
-
-    $(this.refs.dateSlider).dateRangeSlider({
-      enabled: false,
-      bounds:{
-        min: new Date('2011-1-1'),
-        max: new Date()
-      },
-      defaultValues:{
-        min: new Date('2011-1-1'),
-        max: new Date()
-      },
-      step:{
-        months: 1
-      }
-    });
-
-
-    $(this.refs.dateSlider).bind("valuesChanged", function(e, data){  
-      var dateRange = {
-        min: data.values.min,
-        max: data.values.max
-      };
-
-      var dateRangeFormatted = {
-        min:Moment(dateRange.min).format('YYYY-MM-DD'),
-        max:Moment(dateRange.max).format('YYYY-MM-DD')
-      }
-
-      if(self.state.dateFilter) {
-        self.sqlChunks.dob_cofo_date = Mustache.render(
-        'NOT (dob_cofo_date_first >= \'{{max}}\' OR dob_cofo_date_last <= \'{{min}}\')', dateRangeFormatted
-        )
-      } 
-      
-      self.buildSQL()
-    });
-
-    $(this.refs.unitsSlider).rangeSlider({
-      bounds:{
-        min: -309,
-        max: 1669
-      },
-      defaultValues:{
-        min: -309,
-        max: 1669
-      },
-      step:10
-    });
-
-    $(this.refs.unitsSlider).bind("valuesChanged", function(e, data){ 
-      var range = {
-        min: data.values.min,
-        max: data.values.max
-      };
-
-      self.sqlChunks.dcp_pipeline_units = Mustache.render('(dcp_units_use_map >= \'{{min}}\' AND dcp_units_use_map <= \'{{max}}\')', range)
-      self.buildSQL()
-    });
   },
 
-  buildSQL: function() {
+  handleChange(dimension, values) {
+    //before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
+    this.state.filterDimensions[dimension] = values
+
+    //if dimension is status, check which items are included and disable/reset date slider accordingly
+    if(dimension == 'dcp_pipeline_status') {
+      var invalidValues = values.filter(function(value) {
+        if(value.value == 'Permit outstanding' || value.value == 'Permit pending') return value.value
+      })
+
+      if (invalidValues.length > 0 || values.length == 0 ) {
+        console.log('disabling dateFilter')
+        this.state.filterDimensions.dob_cofo_date = [Moment('2011-1-1').format('X'), Moment().format('X')]
+        this.state.dateFilter = false
+      } else {
+        this.state.dateFilter = true
+      }
+    }
+
+    this.forceUpdate()
+    this.buildSQL()
+  },
+
+  handleSliderChange(dimension, data) { 
+    //expects the data output from the ionRangeSlider 
+    //updates state with an array of the filter range
+    this.state.filterDimensions[dimension] = [ data.from, data.to ]
+    this.buildSQL()
+  },
+
+  createSQLChunks() {
+    this.sqlChunks = {}
+    //generate SQL WHERE partials for each filter dimension
+    this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status)
+    this.createMultiSelectSQLChunk('dcp_pipeline_category', this.state.filterDimensions.dcp_pipeline_category)
+    this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map)
+    
+    if(this.state.dateFilter) {
+      this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date)
+    }
+  },
+
+  createUnitsSQLChunk(dimension, range) {
+    this.sqlChunks[dimension] = Mustache.render('(dcp_units_use_map >= \'{{from}}\' AND dcp_units_use_map <= \'{{to}}\')', {
+      from: range[0],
+      to: range[1]
+    })
+  },
+
+  createDateSQLChunk(dimension, range) {
+    var dateRangeFormatted = {
+      from:Moment(range[0], 'X').format('YYYY-MM-DD'),
+      to:Moment(range[1], 'X').format('YYYY-MM-DD')
+    }
+
+    if(this.state.dateFilter) {
+      this.sqlChunks[dimension] = Mustache.render(
+      'NOT (dob_cofo_date_first >= \'{{to}}\' OR dob_cofo_date_last <= \'{{from}}\')', dateRangeFormatted
+      )
+    } 
+  },
+
+  createMultiSelectSQLChunk(dimension, values) {
+    //for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
+    //like ( dimension = 'value1' OR dimension = 'value2')
+    var subChunks = values.map(function(value) {
+      return dimension + ' = \'' + value.value + '\''
+    })
+
+    if(subChunks.length > 0) { //don't set sqlChunks if nothing is selected
+      var chunk = '(' + subChunks.join(' OR ') + ')'
+
+      this.sqlChunks[dimension] = chunk      
+    }
+
+
+  },
+
+  buildSQL() {
+
+    //assemble sql chunks based on the current state
+    this.createSQLChunks()
 
     var sqlTemplate = 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
-    console.log(this.sqlChunks)
 
     var chunksArray = []
     for (var key in this.sqlChunks) {
@@ -319,131 +185,103 @@ var LayerSelector = React.createClass({
     var chunksString = chunksArray.join(' AND ')
 
 
-
     var sql = sqlTemplate + chunksString
     this.props.updateSQL(sql)
-    this.getCount(sql)
-
-  },
-
-  toggleDateFilter: function() {
-
-    if(!this.state.dateFilter) {
-      $(this.refs.dateSlider).dateRangeSlider("option", "enabled", true);
-      //filter complete and partially complete in the checkboxes
-      var layers = this.state.layers 
-      layers[0].children[2].checked = false  //disable permit outstanding
-      layers[0].children[3].checked = false  //disable permit pending
-
-      this.setState({
-        layers: layers
-      })
-
-    } else {
-      $(this.refs.dateSlider).dateRangeSlider("option", "enabled", false);
-    }
-
-
-    this.setState({
-      dateFilter: !this.state.dateFilter
-    }, () => {
-      //trigger update
-      this.processChecked(this.state.layers)
-    })
+    //this.getCount(sql)
   },
 
   render: function(){
+
     var self=this;
     return(
       <div>
-        <div className='col-md-12'>
-            <h3>Explore by Project Type and Status</h3>
-        </div>
-        <div className="col-md-12">  
-          <div className="filter-count">
-              {
-                (this.state.selectedCount == this.state.totalCount) ? 
-                  <span>Showing all {this.state.totalCount} Projects</span> :
-                  <span>Showing {this.state.selectedCount} of {this.state.totalCount} projects</span>
-              }
-            </div>
-          <ul className="nav nav-pills nav-stacked" id="stacked-menu">
-            { 
-              this.state.layers.map(function(domain, i) {
-                return(
+        <div className="col-md-12">
+            <h4>Project Status</h4>  
+            <Select
+              multi
+              value={this.state.filterDimensions.dcp_pipeline_status}
+              name="form-field-name"
+              placeholder="No Status Filter Applied"
+              options={filterDimensions['dcp_pipeline_status'].options}
+              onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
+            />
+            <h4>Category</h4>  
+            <Select
+              multi
+              value={this.state.filterDimensions.dcp_pipeline_category}
+              name="form-field-name"
+              placeholder="No Category Filter Applied"
+              options={filterDimensions['dcp_pipeline_category'].options}
+              onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
+            />
 
-                  <li key={'domain' + i}>
-                    <Checkbox 
-                      value={domain.name} 
-                      checked={domain.checked} 
-                      indeterminate={domain.indeterminate}
-                      onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                    <a className="nav-container" style={{backgroundColor: domain.color}}>
-                    <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)}>{domain.name}</div>
-                    <div className="caret-container" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)} ><span className="caret arrow"></span></div></a>    
-                    <ul className="nav nav-pills nav-stacked collapse in" id={"p" + (i)} style={{height: 'auto'}}>
-                    {
-                      domain.children.map(function(group, j) {
-                        return (
-                            <div className="group nav nav-pills nav-stacked collapse in" key={j}>
-                            <Checkbox 
-                                value={group.name} 
-                                checked={group.checked} 
-                                indeterminate={group.indeterminate}
-                                onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
-                            <li data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} >
+            <h4>Net Units</h4> 
+            <RangeSlider 
+              data={this.state.filterDimensions.dcp_units_use_map}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}/>
 
-                              <a className="nav-sub-container" style={{backgroundColor: domain.subColor}} onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)}>    
-                                {group.name}
-                              </a>
-                            </li>
-                                
-                        
-                              </div>
-                        ) 
-                      })
-                    }
-                    </ul>
-                  </li>
-                )
-              })
-            }
-          </ul>
-          <h4>Number of Units</h4>
-          <div id="unitsSlider" ref="unitsSlider"></div>
-          <h4><Checkbox checked={this.state.dateFilter} onChange={this.toggleDateFilter}/> Completion Date*
-            <br/>
-            <small>*Filters to completed and partially completed projects</small>
-          </h4>
-          
-          <div id="dateSlider" ref="dateSlider"></div>
+            <h4>Completion Date</h4>  
+            <RangeSlider 
+              data={this.state.filterDimensions.dob_cofo_date}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
+              disable={!this.state.dateFilter}
+              prettify= {function (date) {
+                  return Moment(date, 'X').format('MMM YYYY');
+              }}/>
         </div>
       </div>
     )
   }
 })
 
-var Checkbox = React.createClass({
-  render: function() {
-    var self=this
-    return(
-      <input type="checkbox" 
-        value={this.props.value} 
-        checked={this.props.checked} 
-        onChange={this.props.onChange}
-        ref={
-          function(input) {
-            if (input != null) {
-              ReactDOM.findDOMNode(input).indeterminate = self.props.indeterminate
-            }
-          }
-        }
-      />
-    )
-  }
-})
-   
 
 
 module.exports=LayerSelector
+
+var RangeSlider = React.createClass({
+  //Props: 
+  //  data - array with min and max
+
+  componentDidMount() {
+    var self=this
+    $(this.refs.sliderEl).ionRangeSlider({
+      type: self.props.type,
+      min: self.props.data[0],
+      max: self.props.data[1],
+      from: self.props.data[0],
+      to: self.props.data[1],
+      step: self.props.step,
+      disable: self.props.disable ? self.props.disable : false,
+      onFinish: self.props.onChange,
+      prettify: self.props.prettify
+    });
+
+    this.slider = $(this.refs.sliderEl).data("ionRangeSlider");
+  },
+
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps)
+    if(nextProps.disable) {
+      this.slider.update({
+        min: nextProps.data[0],
+        max: nextProps.data[1],
+        from: nextProps.data[0],
+        to: nextProps.data[1],
+        disable: true
+      })      
+    } else {
+      this.slider.update({
+        disable: false
+      }) 
+    }
+  },
+
+  render: function() {
+    return(
+      <input type="text" ref="sliderEl" value=""/>
+    )
+  }
+})
    

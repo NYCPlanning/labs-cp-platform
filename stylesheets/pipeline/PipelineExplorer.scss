@@ -1,0 +1,15 @@
+.mui-toolbar {
+  position: absolute;
+  z-index: 1;
+  margin-top: 15px;
+  margin-left: 15px;
+  background-color: #fff;
+
+  button {
+    z-index: 1;
+  } 
+}
+
+.mapDrawer>div {
+  padding-top:80px;
+}

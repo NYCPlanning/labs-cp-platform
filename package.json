@@ -38,6 +38,7 @@
     "react-ga": "^2.1.2",
     "react-router": "^2.8.1",
     "react-select": "^1.0.0-rc.2",
+    "react-tap-event-plugin": "^1.0.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "turf": "^3.0.14",
