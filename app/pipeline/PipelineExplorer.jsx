@@ -17,6 +17,7 @@ import Menu from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Drawer from 'material-ui/Drawer';
+import Autosuggest from 'react-autosuggest';
 
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
@@ -31,7 +32,7 @@ var PipelineExplorer = React.createClass({
       modalHeading: null,
       modalContent: null,
       modalCloseText: null,
-      drawerOpen: true
+      drawerOpen: false
     })
   },
 
@@ -208,11 +209,8 @@ var PipelineExplorer = React.createClass({
               style={{
                 backgroundColor: '#fff'
               }}>
-              <ToolbarGroup firstChild={true}>
-                <TextField
-                  hintText="Hint Text"
-                  floatingLabelText="Floating Label Text"
-                />
+              <ToolbarGroup>
+                <MapzenGeocoder/>
                 <ToolbarSeparator />
                 <IconButton tooltip="Filter">
                   <FontIcon className="fa fa-filter" onTouchTap={this.toggleDrawer}/>
@@ -339,3 +337,88 @@ var collaborateContent = (
 
 module.exports=PipelineExplorer
 
+function getSuggestionValue(suggestion) {
+  return suggestion.properties.label
+}
+
+function renderSuggestion(suggestion) {
+  console.log(suggestion)
+  return (
+    <span>{suggestion.properties.label}</span>
+  );
+}
+
+function shouldRenderSuggestions(value) {
+  return value.trim().length > 2;
+}
+
+
+var MapzenGeocoder = React.createClass({
+
+  getInitialState() {
+    return {
+      value: '',
+      suggestions: []
+    }
+  },
+
+
+
+  onSuggestionsFetchRequested(value) {
+    var self=this
+
+    var apiCall=Mustache.render('https://search.mapzen.com/v1/autocomplete?text={{value}}&focus.point.lat=40.721502075213984&focus.point.lon=-73.91292572021486&api_key=mapzen-ZyMEp5H', {
+      value: value.value
+    })
+
+    $.getJSON(apiCall, function(data) {
+      self.setState({
+        suggestions: data.features
+      });
+    })
+
+    console.log('getting suggestions', text)
+  },
+
+  // Autosuggest will call this function every time you need to clear suggestions.
+  onSuggestionsClearRequested() {
+    console.log('suggestionsClearRequested')
+    this.setState({
+      suggestions: []
+    });
+  },
+
+  onChange(e, obj) {
+    console.log('change', obj)
+    this.setState({
+      value: obj.newValue
+    });
+  },
+
+  onSuggestionSelected(e,o) {
+    console.log('suggestionSelected', e,o)
+    this.setState({
+      value: o.suggestionValue
+    })
+  },
+
+  render() {
+    const inputProps = {
+      placeholder: 'Search for FMS ID or Project Name',
+      value: this.state.value,
+      onChange: this.onChange
+    };
+
+    return(
+      <Autosuggest
+        suggestions={this.state.suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        shouldRenderSuggestions={shouldRenderSuggestions}
+        inputProps={inputProps}
+        onSuggestionSelected={this.onSuggestionSelected} />
+    )
+  }
+})
