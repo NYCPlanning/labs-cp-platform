@@ -8,6 +8,12 @@
   button {
     z-index: 1;
   } 
+
+  .react-autosuggest__input {
+    border: none;
+    font-size: 16px;
+  }
+
 }
 
 .mapDrawer>div {

@@ -127,6 +127,24 @@ var CartoMap = React.createClass({
     this.cartoLayer.setSQL(sql)
   },
 
+  //expects a geoJSON point feature, sets view to the point location and draws a marker with a label
+  setViewToFeature(feature) {
+    var latLng = [ feature.geometry.coordinates[1], feature.geometry.coordinates[0] ]
+
+    this.map.setView(
+      latLng,
+      16,
+      {
+        animate: true
+      }
+    )
+
+    if(this.geoLocationMarker) this.map.removeLayer(this.geoLocationMarker)
+    this.geoLocationMarker = new L.marker(latLng).addTo(this.map)
+    this.geoLocationMarker.bindPopup(feature.properties.name).openPopup();
+
+  },
+
   render() {
     //LocationWidget is the "zoom to my location" feature that will probably be replaced with a Control
 

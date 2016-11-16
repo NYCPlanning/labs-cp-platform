@@ -195,6 +195,10 @@ var PipelineExplorer = React.createClass({
     });
   },
 
+  handleGeocoderSelection(feature) {
+    this.refs.map.setViewToFeature(feature)
+  },
+
   render() {
     return(
       <div className="full-height">
@@ -207,10 +211,13 @@ var PipelineExplorer = React.createClass({
               className="mui-toolbar"
               noGutter={true}
               style={{
-                backgroundColor: '#fff'
+                backgroundColor: '#fff',
+                height: '48px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02)',
+                borderRadius: '2px'
               }}>
               <ToolbarGroup>
-                <MapzenGeocoder/>
+                <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
                 <ToolbarSeparator />
                 <IconButton tooltip="Filter">
                   <FontIcon className="fa fa-filter" onTouchTap={this.toggleDrawer}/>
@@ -362,14 +369,15 @@ var MapzenGeocoder = React.createClass({
     }
   },
 
-
-
-  onSuggestionsFetchRequested(value) {
+  onSuggestionsFetchRequested({ value }) {
     var self=this
 
-    var apiCall=Mustache.render('https://search.mapzen.com/v1/autocomplete?text={{value}}&focus.point.lat=40.721502075213984&focus.point.lon=-73.91292572021486&api_key=mapzen-ZyMEp5H', {
-      value: value.value
-    })
+    var minLon = -74.292297,
+      maxLon = -73.618011,
+      minLat = 40.477248,
+      maxLat = 40.958123
+
+    var apiCall=`https://search.mapzen.com/v1/autocomplete?text=${value}&boundary.rect.min_lon=${minLon}&boundary.rect.max_lon=${maxLon}&boundary.rect.min_lat=${minLat}&boundary.rect.max_lat=${maxLat}&api_key=mapzen-ZyMEp5H`
 
     $.getJSON(apiCall, function(data) {
       self.setState({
@@ -400,11 +408,13 @@ var MapzenGeocoder = React.createClass({
     this.setState({
       value: o.suggestionValue
     })
+
+    this.props.onSelection(o.suggestion)
   },
 
   render() {
     const inputProps = {
-      placeholder: 'Search for FMS ID or Project Name',
+      placeholder: 'Search for an address',
       value: this.state.value,
       onChange: this.onChange
     };
