@@ -1,8 +1,4 @@
 .mui-toolbar {
-  position: absolute;
-  z-index: 1;
-  margin-top: 15px;
-  margin-left: 15px;
   background-color: #fff;
 
   button {
@@ -11,9 +7,18 @@
 
   .react-autosuggest__input {
     border: none;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    width: 265px;
+    padding: 10px 0 10px 20px;
   }
 
+}
+
+.mui-toolbar-container {
+  padding: 18px;
+  position: absolute;
+  z-index: 1;
 }
 
 .mapDrawer>div {

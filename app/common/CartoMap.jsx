@@ -7,6 +7,7 @@
 
 import React from 'react'
 import LocationWidget from './LocationWidget.jsx'
+import carto from '../helpers/carto.js'
 
 import '../../stylesheets/common/CartoMap.scss'
 
@@ -143,6 +144,55 @@ var CartoMap = React.createClass({
     this.geoLocationMarker = new L.marker(latLng).addTo(this.map)
     this.geoLocationMarker.bindPopup(feature.properties.name).openPopup();
 
+  },
+
+  showChoropleth(sql) {
+    //hide existing carto layer
+    this.cartoLayer.hide()
+
+    //if choropleth layer doesn't exist yet, create it
+    if (this.choroplethLayer) {
+      this.choroplethLayer.addTo(this.map)
+    } else {
+      this.renderChoropleth(sql) 
+    }
+  },
+
+  renderChoropleth(sql) {
+    var self=this
+
+    //first get data
+    var spatialQuery = `WITH points as (${sql}) 
+    SELECT polygons.cartodb_id, polygons.the_geom, count(points.the_geom) AS count 
+    FROM cpadmin.dcp_cdboundaries polygons 
+    LEFT JOIN points ON st_contains(polygons.the_geom,points.the_geom) 
+    GROUP BY polygons.cartodb_id`
+
+    carto.SQL(spatialQuery)
+      .then(function(data) {
+        console.log(data)
+
+        self.choroplethLayer = L.choropleth(data, {
+            valueProperty: 'count', // which property in the features to use
+            scale: ['white', 'red'], // chroma.js scale - include as many as you like
+            steps: 5, // number of breaks or steps in range
+            mode: 'q', // q for quantile, e for equidistant, k for k-means
+            style: {
+                color: '#fff', // border color
+                weight: 2,
+                fillOpacity: 0.8
+            },
+            onEachFeature: function(feature, layer) {
+                layer.bindPopup(feature.properties.value)
+            }
+        }).addTo(self.map)
+      })
+
+  },
+
+  hideChoropleth() {
+    this.map.removeLayer(this.choroplethLayer)
+    this.cartoLayer.show()
   },
 
   render() {

@@ -18,6 +18,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import Drawer from 'material-ui/Drawer';
 import Autosuggest from 'react-autosuggest';
+import Toggle from 'material-ui/Toggle'
 
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
@@ -32,7 +33,9 @@ var PipelineExplorer = React.createClass({
       modalHeading: null,
       modalContent: null,
       modalCloseText: null,
-      drawerOpen: false
+      drawerOpen: false,
+      mapMode: 'discrete',
+      sql: 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\') '
     })
   },
 
@@ -48,6 +51,7 @@ var PipelineExplorer = React.createClass({
 
   updateSQL(sql) {
     console.log(sql)
+    this.state.sql = sql
     this.refs.map.setSQL(sql)
   },
 
@@ -199,6 +203,18 @@ var PipelineExplorer = React.createClass({
     this.refs.map.setViewToFeature(feature)
   },
 
+  toggleMapMode() {
+    this.setState({
+      mapMode: this.state.mapMode == 'discrete' ? 'aggregate' : 'discrete'
+    }, function() {
+      if(this.state.mapMode == 'aggregate') {
+        this.refs.map.showChoropleth(this.state.sql)
+      } else {
+        this.refs.map.hideChoropleth()
+      }
+    })
+  },
+
   render() {
     return(
       <div className="full-height">
@@ -207,23 +223,43 @@ var PipelineExplorer = React.createClass({
         </Nav>
         <div id="main-container">
           <div id="content">
-             <Toolbar 
-              className="mui-toolbar"
-              noGutter={true}
-              style={{
-                backgroundColor: '#fff',
-                height: '48px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02)',
-                borderRadius: '2px'
-              }}>
-              <ToolbarGroup>
-                <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
-                <ToolbarSeparator />
-                <IconButton tooltip="Filter">
-                  <FontIcon className="fa fa-filter" onTouchTap={this.toggleDrawer}/>
-                </IconButton>
-              </ToolbarGroup>
-            </Toolbar>
+            <div className="mui-toolbar-container">
+               <Toolbar 
+                className="mui-toolbar"
+                noGutter={true}
+                style={{
+                  backgroundColor: '#fff',
+                  height: '48px',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02)',
+                  borderRadius: '2px'
+                }}>
+                <ToolbarGroup>
+                  <MapzenGeocoder onSelection={this.handleGeocoderSelection}/><FontIcon className="fa fa-search" />
+                  <ToolbarSeparator />
+                  <IconButton tooltip="Filter">
+                    <FontIcon className="fa fa-filter" onTouchTap={this.toggleDrawer}/>
+                  </IconButton>
+                  <ToolbarSeparator style={{marginLeft: '0'}}/>
+                  
+                    {this.state.mapMode == 'discrete' ?  
+                      <IconButton tooltip="Show Districts">
+                        <FontIcon 
+                          className="fa fa-square"
+                          onTouchTap={this.toggleMapMode}/>
+                      </IconButton> :
+                      <IconButton tooltip="Show Points">
+                        <FontIcon 
+                          className="fa fa-map-marker"
+                          onTouchTap={this.toggleMapMode}/>
+                      </IconButton>
+                    }
+                  
+               
+                  
+               
+                </ToolbarGroup>
+              </Toolbar>
+            </div>
             {/*<div className="messageOverlay mapOverlay">
               <div className="message">Hover over a property, or click for full details</div>
               <div className="message">Data Freshness:</div>
@@ -238,7 +274,11 @@ var PipelineExplorer = React.createClass({
             <Drawer className="mapDrawer"
               open={this.state.drawerOpen}
               docked={true}
-              width={409}>
+              width={409}
+              style={{
+                zIndex: 999,
+                position: 'absolute'
+              }}>
               <Toolbar noGutter={true}>
                 <ToolbarGroup>
                   <ToolbarTitle text="Filter Pipeline Projects" />
