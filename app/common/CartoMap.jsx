@@ -154,28 +154,61 @@ var CartoMap = React.createClass({
     if (this.choroplethLayer) {
       this.choroplethLayer.addTo(this.map)
     } else {
-      this.renderChoropleth(sql) 
+      this.renderChoropleth(sql, {
+        column: 'borocd',
+        dataset: 'cpadmin.dcp_cdboundaries'
+      }) 
     }
   },
 
-  renderChoropleth(sql) {
+  showInfoWindow(e, layer) {
+    var d = e.target.feature.properties
+    //populate the content of the infowindow
+    $('.choropleth').html(`
+      <div class="cartodb-tooltip-content-wrapper">
+        <div class="cartodb-tooltip-content">
+          <div class="name">${d.borocd}</div>
+          <div>Count: ${d.count} </div>
+        </div>
+      </div>
+    `)
+
+    var point = e.containerPoint
+    point.x += 10
+    point.y += 10
+    $('.choropleth').stop().css('top',point.y + 'px').css('left',point.x + 'px').fadeIn(50)
+  },
+
+  moveInfoWindow(e) {
+    var point = e.containerPoint
+    point.x += 10
+    point.y += 10
+    $('.choropleth').css('top',point.y + 'px').css('left',point.x + 'px')
+  },
+
+  hideInfoWindow() {
+    $('.choropleth').fadeOut(50)
+  },
+
+  renderChoropleth(sql, options) {
     var self=this
 
     //first get data
     var spatialQuery = `WITH points as (${sql}) 
-    SELECT polygons.cartodb_id, polygons.the_geom, count(points.the_geom) AS count 
-    FROM cpadmin.dcp_cdboundaries polygons 
-    LEFT JOIN points ON st_contains(polygons.the_geom,points.the_geom) 
+    SELECT polygons.${options.column}, polygons.the_geom, count(points.*) as count
+    FROM ${options.dataset} polygons, points 
+    WHERE points.${options.column} = polygons.${options.column}::text 
     GROUP BY polygons.cartodb_id`
 
     carto.SQL(spatialQuery)
       .then(function(data) {
         console.log(data)
 
+        if (self.choroplethLayer) self.map.removeLayer(self.choroplethLayer)
         self.choroplethLayer = L.choropleth(data, {
             valueProperty: 'count', // which property in the features to use
-            scale: ['white', 'red'], // chroma.js scale - include as many as you like
-            steps: 5, // number of breaks or steps in range
+            scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
+            steps: 8, // number of breaks or steps in range
             mode: 'q', // q for quantile, e for equidistant, k for k-means
             style: {
                 color: '#fff', // border color
@@ -183,11 +216,14 @@ var CartoMap = React.createClass({
                 fillOpacity: 0.8
             },
             onEachFeature: function(feature, layer) {
-                layer.bindPopup(feature.properties.value)
+              layer.on({
+                mouseover: self.showInfoWindow,
+                mousemove: self.moveInfoWindow,
+                mouseout: self.hideInfoWindow
+              })
             }
         }).addTo(self.map)
       })
-
   },
 
   hideChoropleth() {
@@ -203,6 +239,18 @@ var CartoMap = React.createClass({
         <div id="map" ref="map">
         </div> 
         { this.map ? <LocationWidget type='carto' map={this.map} ref='LocationWidget'/> : null }
+        <div className="cartodb-tooltip choropleth">
+          <div className="cartodb-tooltip-content-wrapper"> 
+            <div className="cartodb-tooltip-content">    
+              <div className="name">51 WEST 74TH STREET</div>
+              <div>Units Complete: </div>
+              <div>Units Outstanding: </div>
+              <div>Units Pending: -6</div>
+              <div>Status: Permit pending</div> 
+              <div>Category: Residential-Alteration</div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
