@@ -31,8 +31,8 @@ var ChoroplethLayer = React.createClass({
         this.layer.addTo(nextProps.mapObject)
         if (!this.legend._map) this.legend.addTo(nextProps.mapObject)
       } else {
-        nextProps.mapObject.removeLayer(this.layer)
-        nextProps.mapObject.removeControl(this.legend)
+        if (this.layer) nextProps.mapObject.removeLayer(this.layer)
+        if (this.legend && this.legend._map) nextProps.mapObject.removeControl(this.legend)
       }
     }
   },
@@ -68,7 +68,7 @@ var ChoroplethLayer = React.createClass({
     carto.SQL(spatialQuery)
       .then(function(data) {
         if (self.layer) self.props.mapObject.removeLayer(self.layer)
-        if (self.legend) self.props.mapObject.removeControl(self.legend)
+        if (self.legend && self.legend._map) self.props.mapObject.removeControl(self.legend)
         self.layer = L.choropleth(data, {
             valueProperty: 'count', // which property in the features to use
             scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
