@@ -25,6 +25,7 @@
     "express-spa": "0.0.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "jwt-decode": "^2.1.0",
+    "material-ui": "^0.16.4",
     "moment": "^2.15.2",
     "mustache": "^2.2.1",
     "node-sass": "^3.11.2",
