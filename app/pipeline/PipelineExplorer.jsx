@@ -15,10 +15,10 @@ import CartoMap from '../common/CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
 import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
 import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
+import ChoroplethLayer from '../common/ChoroplethLayer.jsx'
 
 import ModalContent from './ModalContent.jsx'
 import content from './content.jsx'
-import carto from '../helpers/carto.js'
 
 import '../../stylesheets/pipeline/PipelineExplorer.scss'
 
@@ -37,8 +37,6 @@ var PipelineExplorer = React.createClass({
 
     this.mapObject = this.refs.map.map
 
-    console.log(this.mapObject)
-
     // this.props.showModal({
     //   modalHeading: 'Welcome!',
     //   modalContent: content.splash,
@@ -48,15 +46,10 @@ var PipelineExplorer = React.createClass({
 
   //called by the filtering UI with resulting sql
   updateSQL(sql) {
-    console.log(sql)
     this.setState({
       sql: sql
     })
     this.refs.map.setSQL(sql)
-    // this.refs.map.renderChoropleth(sql, {
-    //   column: 'borocd',
-    //   dataset: 'cpadmin.dcp_cdboundaries'
-    // })
   },
 
   showAbout() {
@@ -68,7 +61,6 @@ var PipelineExplorer = React.createClass({
   },
 
   handleFeatureClick(e, latlng, pos, data) {
-
     this.props.showModal({
       modalHeading: 'Pipeline Project Details',
       modalContent: <ModalContent data={data} latlng={latlng}/>,
@@ -95,7 +87,6 @@ var PipelineExplorer = React.createClass({
 
     //manually hide the layer
     //TODO make cartomap listen for a visbile prop and hide itself
-    
   },
 
   handleGeomChange(event, index, value) {
@@ -110,8 +101,6 @@ var PipelineExplorer = React.createClass({
         width: 277,
       },
     }
-
-    console.log('this.mapObject', this.mapObject)
 
     return(
       <div className="full-height">
@@ -157,14 +146,14 @@ var PipelineExplorer = React.createClass({
                   
                   {this.state.mapMode == 'discrete' ?
                    <ToolbarGroup>
-                      <IconButton tooltip="Show Districts">
+                      <IconButton tooltip="Aggregate by District">
                         <FontIcon 
-                          className="fa fa-square"
+                          className="fa fa-map-o"
                           onTouchTap={this.toggleMapMode}/>
+                        Aggregate
                       </IconButton> 
                     </ToolbarGroup> : 
                     <ToolbarGroup>
-                    <ToolbarTitle text="Aggregate by " />
                       <DropDownMenu
                         value={this.state.aggregateGeom}
                         onChange={this.handleGeomChange}
@@ -172,7 +161,7 @@ var PipelineExplorer = React.createClass({
                         autoWidth={false}
                       >
                         <MenuItem value={'cd'} primaryText="Community Districts" />
-                        <MenuItem value={'nta'} primaryText="Neightborhood Tabulation Areas" />
+                        <MenuItem value={'nta'} primaryText="Neighborhood Tabulation Areas" />
                       </DropDownMenu> 
                       <ToolbarSeparator />
                       <IconButton tooltip="Show Points">
@@ -193,9 +182,9 @@ var PipelineExplorer = React.createClass({
               <div className="message-mini">HPD Projects-10/11/2016</div>
             </div>*/}
             <CartoMap
-             vizJson="https://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/27f505b4-9fab-11e6-ab61-0242ac110002/viz.json"
-             handleFeatureClick={this.handleFeatureClick}
-             ref="map"/>
+              vizJson="https://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/27f505b4-9fab-11e6-ab61-0242ac110002/viz.json"
+              handleFeatureClick={this.handleFeatureClick}
+              ref="map"/>
             <ChoroplethLayer 
               mapObject={this.mapObject}
               visible={this.state.mapMode=='aggregate'}
@@ -221,8 +210,7 @@ var PipelineExplorer = React.createClass({
                 </ToolbarGroup>
               </Toolbar>
               <PipelineLayerSelector
-              updateSQL={this.updateSQL}
-            />
+                updateSQL={this.updateSQL} />
             </Drawer>
           </div>
         </div>
@@ -233,125 +221,4 @@ var PipelineExplorer = React.createClass({
 
 module.exports=PipelineExplorer
 
-var ChoroplethLayer = React.createClass({
 
-  componentDidMount() {
-    //create the layer, but don't add it to the map
-    this.updateLayer(this.props.sql)
-  },
-
-  componentWillReceiveProps(nextProps) {
-    var self=this
-    //if new sql or new geom, updateLayer()
-    if ((nextProps.sql != this.props.sql) || (nextProps.geom != this.props.geom)) {
-      this.updateLayer(nextProps.sql, nextProps.geom, nextProps.visible)
-    } 
-
-    if (nextProps.visible) {
-      this.layer.addTo(nextProps.mapObject)
-    } else {
-      nextProps.mapObject.removeLayer(this.layer)
-    }
-  },
-
-  getGeomConfig(geom) {
-    if (geom=='cd') {
-      return {
-        column: 'borocd',
-        dataset: 'cpadmin.dcp_cdboundaries'
-      }
-    } else if (geom=='nta') {
-      return {
-        column: 'ntacode',
-        dataset: 'cpadmin.dcp_ntaboundaries'
-      }
-    }
-  },
-
-  updateLayer(sql, geom = 'cd', visible) {
-    var self=this
- 
-    var config = this.getGeomConfig(geom)
-
-    //first get data
-    var spatialQuery = `WITH points as (${sql}) 
-    SELECT polygons.${config.column}, polygons.the_geom, count(points.*) as count
-    FROM ${config.dataset} polygons, points 
-    WHERE points.${config.column} = polygons.${config.column}::text 
-    GROUP BY polygons.cartodb_id`
-
-    return new Promise(function(resolve, reject) {
-      carto.SQL(spatialQuery)
-        .then(function(data) {
-          console.log(data)
-          if (self.layer) self.props.mapObject.removeLayer(self.layer)
-          self.layer = L.choropleth(data, {
-              valueProperty: 'count', // which property in the features to use
-              scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
-              steps: 8, // number of breaks or steps in range
-              mode: 'q', // q for quantile, e for equidistant, k for k-means
-              style: {
-                  color: '#fff', // border color
-                  weight: 2,
-                  fillOpacity: 0.8
-              },
-              onEachFeature: function(feature, layer) {
-                layer.on({
-                  mouseover: self.showInfoWindow,
-                  mousemove: self.moveInfoWindow,
-                  mouseout: self.hideInfoWindow
-                })
-              }
-          })
-
-          if (visible) self.layer.addTo(self.props.mapObject) 
-        })
-    })
-  },
-
-  showInfoWindow(e, layer) {
-    var d = e.target.feature.properties
-    //populate the content of the infowindow
-    $('.choropleth').html(`
-      <div class="cartodb-tooltip-content-wrapper">
-        <div class="cartodb-tooltip-content">
-          <div class="name">${d.borocd}</div>
-          <div>Count: ${d.count} </div>
-        </div>
-      </div>
-    `)
-
-    var point = e.containerPoint
-    point.x += 10
-    point.y += 10
-    $('.choropleth').stop().css('top',point.y + 'px').css('left',point.x + 'px').fadeIn(50)
-  },
-
-  moveInfoWindow(e) {
-    var point = e.containerPoint
-    point.x += 10
-    point.y += 10
-    $('.choropleth').css('top',point.y + 'px').css('left',point.x + 'px')
-  },
-
-  hideInfoWindow() {
-    $('.choropleth').fadeOut(50)
-  },
-
-  render() {
-    return ( 
-      <div className="cartodb-tooltip choropleth">
-        <div className="cartodb-tooltip-content-wrapper"> 
-          <div className="cartodb-tooltip-content">    
-            <div className="name">51 WEST 74TH STREET</div>
-            <div>Units Complete: </div>
-            <div>Units Outstanding: </div>
-            <div>Units Pending: -6</div>
-            <div>Status: Permit pending</div> 
-            <div>Category: Residential-Alteration</div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-})
