@@ -146,48 +146,12 @@ var CartoMap = React.createClass({
 
   },
 
-  showChoropleth(sql) {
-    //hide existing carto layer
+  showLayer() {
+    this.cartoLayer.show()
+  },
+
+  hideLayer() {
     this.cartoLayer.hide()
-
-    //if choropleth layer doesn't exist yet, create it
-    if (this.choroplethLayer) {
-      this.choroplethLayer.addTo(this.map)
-    } else {
-      this.renderChoropleth(sql, {
-        column: 'borocd',
-        dataset: 'cpadmin.dcp_cdboundaries'
-      }) 
-    }
-  },
-
-  showInfoWindow(e, layer) {
-    var d = e.target.feature.properties
-    //populate the content of the infowindow
-    $('.choropleth').html(`
-      <div class="cartodb-tooltip-content-wrapper">
-        <div class="cartodb-tooltip-content">
-          <div class="name">${d.borocd}</div>
-          <div>Count: ${d.count} </div>
-        </div>
-      </div>
-    `)
-
-    var point = e.containerPoint
-    point.x += 10
-    point.y += 10
-    $('.choropleth').stop().css('top',point.y + 'px').css('left',point.x + 'px').fadeIn(50)
-  },
-
-  moveInfoWindow(e) {
-    var point = e.containerPoint
-    point.x += 10
-    point.y += 10
-    $('.choropleth').css('top',point.y + 'px').css('left',point.x + 'px')
-  },
-
-  hideInfoWindow() {
-    $('.choropleth').fadeOut(50)
   },
 
   renderChoropleth(sql, options) {
@@ -239,18 +203,7 @@ var CartoMap = React.createClass({
         <div id="map" ref="map">
         </div> 
         { this.map ? <LocationWidget type='carto' map={this.map} ref='LocationWidget'/> : null }
-        <div className="cartodb-tooltip choropleth">
-          <div className="cartodb-tooltip-content-wrapper"> 
-            <div className="cartodb-tooltip-content">    
-              <div className="name">51 WEST 74TH STREET</div>
-              <div>Units Complete: </div>
-              <div>Units Outstanding: </div>
-              <div>Units Pending: -6</div>
-              <div>Status: Permit pending</div> 
-              <div>Category: Residential-Alteration</div>
-            </div>
-          </div>
-        </div>
+
       </div>
     )
   }

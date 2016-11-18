@@ -18,6 +18,7 @@ import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
 
 import ModalContent from './ModalContent.jsx'
 import content from './content.jsx'
+import carto from '../helpers/carto.js'
 
 import '../../stylesheets/pipeline/PipelineExplorer.scss'
 
@@ -32,7 +33,11 @@ var PipelineExplorer = React.createClass({
   },
 
   componentDidMount: function() {
-    document.title = "Housing Development Explorer";
+    document.title = "Housing Development Explorer"
+
+    this.mapObject = this.refs.map.map
+
+    console.log(this.mapObject)
 
     // this.props.showModal({
     //   modalHeading: 'Welcome!',
@@ -44,12 +49,14 @@ var PipelineExplorer = React.createClass({
   //called by the filtering UI with resulting sql
   updateSQL(sql) {
     console.log(sql)
-    this.state.sql = sql
-    this.refs.map.setSQL(sql)
-    this.refs.map.renderChoropleth(sql, {
-      column: 'borocd',
-      dataset: 'cpadmin.dcp_cdboundaries'
+    this.setState({
+      sql: sql
     })
+    this.refs.map.setSQL(sql)
+    // this.refs.map.renderChoropleth(sql, {
+    //   column: 'borocd',
+    //   dataset: 'cpadmin.dcp_cdboundaries'
+    // })
   },
 
   showAbout() {
@@ -81,32 +88,20 @@ var PipelineExplorer = React.createClass({
     this.setState({
       mapMode: this.state.mapMode == 'discrete' ? 'aggregate' : 'discrete'
     }, function() {
-      if(this.state.mapMode == 'aggregate') {
-        this.refs.map.showChoropleth(this.state.sql)
-      } else {
-        this.refs.map.hideChoropleth()
-      }
+      this.state.mapMode == 'discrete' ?
+        this.refs.map.showLayer() : 
+        this.refs.map.hideLayer()
     })
+
+    //manually hide the layer
+    //TODO make cartomap listen for a visbile prop and hide itself
+    
   },
 
   handleGeomChange(event, index, value) {
     this.setState({
       aggregateGeom: value
     })
-
-    if(value=='cd') {
-      var options = {
-        column: 'borocd',
-        dataset: 'cpadmin.dcp_cdboundaries'
-      }
-    } else {
-      var options = { 
-        column: 'ntacode',
-        dataset: 'cpadmin.dcp_ntaboundaries'
-      }
-    }
-
-    this.refs.map.renderChoropleth(this.state.sql, options)
   },
 
   render() {
@@ -114,7 +109,9 @@ var PipelineExplorer = React.createClass({
       customWidth: {
         width: 277,
       },
-    };
+    }
+
+    console.log('this.mapObject', this.mapObject)
 
     return(
       <div className="full-height">
@@ -199,6 +196,12 @@ var PipelineExplorer = React.createClass({
              vizJson="https://carto.capitalplanning.nyc/user/nchatterjee/api/v2/viz/27f505b4-9fab-11e6-ab61-0242ac110002/viz.json"
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
+            <ChoroplethLayer 
+              mapObject={this.mapObject}
+              visible={this.state.mapMode=='aggregate'}
+              sql={this.state.sql}
+              geom={this.state.aggregateGeom}
+              />
             <Drawer className="mapDrawer"
               open={this.state.drawerOpen}
               docked={true}
@@ -229,3 +232,126 @@ var PipelineExplorer = React.createClass({
 })
 
 module.exports=PipelineExplorer
+
+var ChoroplethLayer = React.createClass({
+
+  componentDidMount() {
+    //create the layer, but don't add it to the map
+    this.updateLayer(this.props.sql)
+  },
+
+  componentWillReceiveProps(nextProps) {
+    var self=this
+    //if new sql or new geom, updateLayer()
+    if ((nextProps.sql != this.props.sql) || (nextProps.geom != this.props.geom)) {
+      this.updateLayer(nextProps.sql, nextProps.geom, nextProps.visible)
+    } 
+
+    if (nextProps.visible) {
+      this.layer.addTo(nextProps.mapObject)
+    } else {
+      nextProps.mapObject.removeLayer(this.layer)
+    }
+  },
+
+  getGeomConfig(geom) {
+    if (geom=='cd') {
+      return {
+        column: 'borocd',
+        dataset: 'cpadmin.dcp_cdboundaries'
+      }
+    } else if (geom=='nta') {
+      return {
+        column: 'ntacode',
+        dataset: 'cpadmin.dcp_ntaboundaries'
+      }
+    }
+  },
+
+  updateLayer(sql, geom = 'cd', visible) {
+    var self=this
+ 
+    var config = this.getGeomConfig(geom)
+
+    //first get data
+    var spatialQuery = `WITH points as (${sql}) 
+    SELECT polygons.${config.column}, polygons.the_geom, count(points.*) as count
+    FROM ${config.dataset} polygons, points 
+    WHERE points.${config.column} = polygons.${config.column}::text 
+    GROUP BY polygons.cartodb_id`
+
+    return new Promise(function(resolve, reject) {
+      carto.SQL(spatialQuery)
+        .then(function(data) {
+          console.log(data)
+          if (self.layer) self.props.mapObject.removeLayer(self.layer)
+          self.layer = L.choropleth(data, {
+              valueProperty: 'count', // which property in the features to use
+              scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
+              steps: 8, // number of breaks or steps in range
+              mode: 'q', // q for quantile, e for equidistant, k for k-means
+              style: {
+                  color: '#fff', // border color
+                  weight: 2,
+                  fillOpacity: 0.8
+              },
+              onEachFeature: function(feature, layer) {
+                layer.on({
+                  mouseover: self.showInfoWindow,
+                  mousemove: self.moveInfoWindow,
+                  mouseout: self.hideInfoWindow
+                })
+              }
+          })
+
+          if (visible) self.layer.addTo(self.props.mapObject) 
+        })
+    })
+  },
+
+  showInfoWindow(e, layer) {
+    var d = e.target.feature.properties
+    //populate the content of the infowindow
+    $('.choropleth').html(`
+      <div class="cartodb-tooltip-content-wrapper">
+        <div class="cartodb-tooltip-content">
+          <div class="name">${d.borocd}</div>
+          <div>Count: ${d.count} </div>
+        </div>
+      </div>
+    `)
+
+    var point = e.containerPoint
+    point.x += 10
+    point.y += 10
+    $('.choropleth').stop().css('top',point.y + 'px').css('left',point.x + 'px').fadeIn(50)
+  },
+
+  moveInfoWindow(e) {
+    var point = e.containerPoint
+    point.x += 10
+    point.y += 10
+    $('.choropleth').css('top',point.y + 'px').css('left',point.x + 'px')
+  },
+
+  hideInfoWindow() {
+    $('.choropleth').fadeOut(50)
+  },
+
+  render() {
+    return ( 
+      <div className="cartodb-tooltip choropleth">
+        <div className="cartodb-tooltip-content-wrapper"> 
+          <div className="cartodb-tooltip-content">    
+            <div className="name">51 WEST 74TH STREET</div>
+            <div>Units Complete: </div>
+            <div>Units Outstanding: </div>
+            <div>Units Pending: -6</div>
+            <div>Status: Permit pending</div> 
+            <div>Category: Residential-Alteration</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+})
