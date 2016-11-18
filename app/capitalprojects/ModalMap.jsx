@@ -45,7 +45,7 @@ var ModalMap = React.createClass({
 
   render() {
     return(
-      <div id='modalmap'>
+      <div id='modalmap' style={{height: 450}}>
         <div className='basemap mapOverlay'>
           <h4>Basemap</h4>
           <ButtonGroup>

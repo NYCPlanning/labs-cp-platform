@@ -13,8 +13,8 @@ function getSuggestionValue(suggestion) {
 function renderSuggestion(suggestion) {
   console.log(suggestion)
   return (
-    <span>{suggestion.properties.label}</span>
-  );
+    <div><i className="fa fa-map-marker" aria-hidden="true"></i><span>{suggestion.properties.label}</span></div>
+  )
 }
 
 function shouldRenderSuggestions(value) {

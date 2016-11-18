@@ -29,8 +29,10 @@ var ChoroplethLayer = React.createClass({
       //if no change in sql or geom, just show or hide based on visible
       if (nextProps.visible) {
         this.layer.addTo(nextProps.mapObject)
+        if (!this.legend._map) this.legend.addTo(nextProps.mapObject)
       } else {
         nextProps.mapObject.removeLayer(this.layer)
+        nextProps.mapObject.removeControl(this.legend)
       }
     }
   },
@@ -66,6 +68,7 @@ var ChoroplethLayer = React.createClass({
     carto.SQL(spatialQuery)
       .then(function(data) {
         if (self.layer) self.props.mapObject.removeLayer(self.layer)
+        if (self.legend) self.props.mapObject.removeControl(self.legend)
         self.layer = L.choropleth(data, {
             valueProperty: 'count', // which property in the features to use
             scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
@@ -85,7 +88,32 @@ var ChoroplethLayer = React.createClass({
             }
         })
 
+        console.log(self.layer.options.limits, self.layer.options.colors)
         if (visible) self.layer.addTo(self.props.mapObject) 
+
+          // Legend pulled right from the example... reactify it
+          // Add legend (don't forget to add the CSS from index.html)
+          self.legend = L.control({ position: 'bottomright' })
+          self.legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend')
+            var limits = self.layer.options.limits
+            var colors = self.layer.options.colors
+            var labels = []
+
+            // Add min & max
+            div.innerHTML = '<div class="labels"><div class="min">' + limits[0] + '</div> \
+              <div class="max">' + limits[limits.length - 1] + '</div></div>'
+
+            limits.forEach(function (limit, index) {
+              labels.push('<li style="background-color: ' + colors[index] + '"></li>')
+            })
+
+            div.innerHTML += '<ul>' + labels.join('') + '</ul>'
+            return div
+          }
+
+          if(visible) self.legend.addTo(self.props.mapObject)
+
       })
   },
 
@@ -119,7 +147,7 @@ var ChoroplethLayer = React.createClass({
   },
 
   render() {
-    return ( 
+    return (
       <div className="cartodb-tooltip choropleth"/>
     )
   }

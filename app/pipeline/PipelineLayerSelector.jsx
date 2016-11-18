@@ -102,7 +102,6 @@ var LayerSelector = React.createClass({
       })
 
       if (invalidValues.length > 0 || values.length == 0 ) {
-        console.log('disabling dateFilter')
         this.state.filterDimensions.dob_cofo_date = [Moment('2011-1-1').format('X'), Moment().format('X')]
         this.state.dateFilter = false
       } else {
@@ -262,7 +261,6 @@ var RangeSlider = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps)
     if(nextProps.disable) {
       this.slider.update({
         min: nextProps.data[0],

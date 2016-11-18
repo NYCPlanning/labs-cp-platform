@@ -5,10 +5,12 @@ import IconButton from 'material-ui/IconButton'
 
 import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
 
+import '../../stylesheets/common/SearchFilterToolbar.scss'
+
 var SearchFilterToolbar = React.createClass({
   render() {
     return (
-      <div className="mui-toolbar-container">
+      <div className="mui-toolbar-container search-filter-toolbar">
          <Toolbar 
           className="mui-toolbar"
           noGutter={true}
@@ -24,10 +26,7 @@ var SearchFilterToolbar = React.createClass({
             <ToolbarSeparator />
             <IconButton tooltip="Show Filters">
               <FontIcon className="fa fa-filter" onTouchTap={this.props.onFilter}/>
-            </IconButton>
-            <ToolbarSeparator style={{marginLeft: '0'}}/>
-            
-             
+            </IconButton>  
           </ToolbarGroup>
         </Toolbar>
       </div>

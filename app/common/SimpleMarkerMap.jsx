@@ -57,7 +57,7 @@ var SimpleMarkerMap = React.createClass({
 
   render() {
     return(
-      <div id="modalmap" ref="map"/> 
+      <div id="modalmap" ref="map" style={{height: '450px'}}/> 
     )
   }
 })
