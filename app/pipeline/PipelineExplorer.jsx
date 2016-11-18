@@ -13,8 +13,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
-import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
-import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
+import SearchFilterToolbar from '../common/SearchFilterToolbar.jsx'
 import ChoroplethLayer from '../common/ChoroplethLayer.jsx'
 
 import ModalContent from './ModalContent.jsx'
@@ -68,7 +67,7 @@ var PipelineExplorer = React.createClass({
     })
   },
 
-  toggleDrawer(e) {
+  toggleDrawer() {
     this.setState({drawerOpen: !this.state.drawerOpen})
   },
 
@@ -109,30 +108,9 @@ var PipelineExplorer = React.createClass({
         </Nav>
         <div id="main-container">
           <div id="content">
-            <div className="mui-toolbar-container">
-               <Toolbar 
-                className="mui-toolbar"
-                noGutter={true}
-                style={{
-                  backgroundColor: '#fff',
-                  height: '48px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02)',
-                  borderRadius: '2px'
-                }}>
-                <ToolbarGroup>
-                  <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
-                  <FontIcon className="fa fa-search" />
-                  <ToolbarSeparator />
-                  <IconButton tooltip="Filter">
-                    <FontIcon className="fa fa-filter" onTouchTap={this.toggleDrawer}/>
-                  </IconButton>
-                  <ToolbarSeparator style={{marginLeft: '0'}}/>
-                  
-                   
-                </ToolbarGroup>
-              </Toolbar>
-            </div>
-            
+            <SearchFilterToolbar 
+              onFilter={this.toggleDrawer}
+              onSelection={this.handleGeocoderSelection}/>
               <div className="mui-toolbar-container choropleth-menu">
                 <Toolbar 
                   className="mui-toolbar"

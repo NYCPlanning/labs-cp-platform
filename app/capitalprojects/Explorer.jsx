@@ -6,12 +6,18 @@ import React from 'react'
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Select from 'react-select'
 import Numeral from 'numeral'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import Drawer from 'material-ui/Drawer'
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
+
 
 import Nav from '../common/Nav.jsx'
 import ModalContent from './ModalContent.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
-import carto from '../helpers/carto.js'
+import SearchFilterToolbar from '../common/SearchFilterToolbar.jsx'
 
+import carto from '../helpers/carto.js'
 import FilterService from '../helpers/FilterService.js'
 import config from './config.js'
 
@@ -27,6 +33,7 @@ var CapitalProjectsExplorer = React.createClass({
         cpstatus: [],
         type: []
       }, 
+      drawerOpen: true,
       selectedCount: '__',
       totalCount:'__'
     })
@@ -124,6 +131,14 @@ var CapitalProjectsExplorer = React.createClass({
     })
   },
 
+  toggleDrawer() {
+    this.setState({drawerOpen: !this.state.drawerOpen})
+  },
+
+  handleGeocoderSelection(feature) {
+    this.refs.map.setViewToFeature(feature)
+  },
+
   render() {
     return(
       <div className="full-height">
@@ -131,8 +146,31 @@ var CapitalProjectsExplorer = React.createClass({
           <li onClick={this.showAbout}><a> About</a></li>
         </Nav>
         <div id="main-container">
-          <div id="sidebar">
-            <div className="col-md-12">
+          <div id="content">
+            <SearchFilterToolbar 
+              onFilter={this.toggleDrawer}
+              onSelection={this.handleGeocoderSelection}/>
+  
+              <MapboxGLMap handleClick={this.handleMapClick} ref='map'/>
+              <Drawer className="mapDrawer"
+              open={this.state.drawerOpen}
+              docked={true}
+              width={409}
+              style={{
+                zIndex: 999,
+                position: 'absolute'
+              }}>
+              <Toolbar noGutter={true}>
+                <ToolbarGroup>
+                  <ToolbarTitle text="Filter Facilties" />
+                </ToolbarGroup>
+                <ToolbarGroup>
+                  <IconButton tooltip="Close Filters">
+                    <FontIcon className="fa fa-times" onTouchTap={this.toggleDrawer}/>
+                  </IconButton>
+                </ToolbarGroup>
+              </Toolbar>
+              <div className="col-md-12">
               <h3>Explore Capital Projects</h3>
               <p>
                 Filter the data by choosing from the following attributes: 
@@ -218,13 +256,10 @@ var CapitalProjectsExplorer = React.createClass({
                 onChange={this.updateFilter.bind(this, 'type')}
               />
             </div>
-          </div>
-          <div id="content">
-            <div className={'full-height'}>
-              <MapboxGLMap handleClick={this.handleMapClick} ref='map'/>
+            </Drawer>
             </div>
           </div>
-        </div>
+    
       </div>
     )
   }

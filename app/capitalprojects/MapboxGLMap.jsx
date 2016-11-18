@@ -224,6 +224,10 @@ var MapboxGLMap = React.createClass({
     this.forceUpdate()
   },
 
+  setViewToFeature(feature) {
+    this.flyMap(null, {suggestion: feature})
+  },
+
   render() {
     //dynamically create a legend
     var legendItems = Agencies.agencies.map(function(agency,i) {

@@ -7,11 +7,16 @@
 
 import React from 'react'
 import Link from 'react-router'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import Drawer from 'material-ui/Drawer'
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
 
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
 import FacLayerSelector from './FacLayerSelector.jsx'
 import ModalContent from './ModalContent.jsx'
+import SearchFilterToolbar from '../common/SearchFilterToolbar.jsx'
 
 import content from './content.jsx'
 import facilitiesLayers from './facilitiesLayers.js'
@@ -21,6 +26,12 @@ import '../../stylesheets/common/Nav.scss'
 
 
 var FacilitiesExplorer = React.createClass({
+
+  getInitialState() {
+    return({
+      drawerOpen: true,
+    })
+  },
 
   componentWillMount() {
     // SETTING SQL FOR MAP CONTENTS 
@@ -158,6 +169,14 @@ var FacilitiesExplorer = React.createClass({
     })
   },
 
+  toggleDrawer() {
+    this.setState({drawerOpen: !this.state.drawerOpen})
+  },
+
+  handleGeocoderSelection(feature) {
+    this.refs.map.setViewToFeature(feature)
+  },
+
   render() {
 
     //dynamic title based on route
@@ -178,22 +197,42 @@ var FacilitiesExplorer = React.createClass({
           <li onClick={this.showAbout}><a>About</a></li>
         </Nav>
         <div id="main-container">
-          <div id="sidebar">
-            <FacLayerSelector
-              initialSQL={this.initialSQL}
-              layerStructure={this.layerStructure}
-              updateSQL={this.updateSQL}
-            />
-          </div>
           <div id="content">
-            <div className="messageOverlay mapOverlay">
+            <SearchFilterToolbar 
+              onFilter={this.toggleDrawer}
+              onSelection={this.handleGeocoderSelection}/>
+            {/*<div className="messageOverlay mapOverlay">
               <div className="message">Hover over a facility or click for full details</div>
               <div className="message">Data current as of 09/05/2014 - 10/01/2016</div>
-            </div>
+            </div>*/}
             <CartoMap
              vizJson={vizJson}
              handleFeatureClick={this.handleFeatureClick}
              ref="map"/>
+            <Drawer className="mapDrawer"
+              open={this.state.drawerOpen}
+              docked={true}
+              width={409}
+              style={{
+                zIndex: 999,
+                position: 'absolute'
+              }}>
+              <Toolbar noGutter={true}>
+                <ToolbarGroup>
+                  <ToolbarTitle text="Filter Facilties" />
+                </ToolbarGroup>
+                <ToolbarGroup>
+                  <IconButton tooltip="Close Filters">
+                    <FontIcon className="fa fa-times" onTouchTap={this.toggleDrawer}/>
+                  </IconButton>
+                </ToolbarGroup>
+              </Toolbar>
+              <FacLayerSelector
+                initialSQL={this.initialSQL}
+                layerStructure={this.layerStructure}
+                updateSQL={this.updateSQL}
+              />
+            </Drawer>
           </div>
         </div>
       </div>
