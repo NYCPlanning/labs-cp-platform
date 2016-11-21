@@ -36,14 +36,11 @@ var LocationWidget = React.createClass({
   getLocation() {
     var self=this
 
-    console.log('getting location')
     navigator.geolocation.getCurrentPosition(function(position) {
-      console.log('got location')
       var coords = self.props.type == 'mapboxGL' ? 
         [position.coords.longitude, position.coords.latitude] : 
         [position.coords.latitude, position.coords.longitude]
     
-      console.log('setting state')
       self.setState({
         coords: coords
       })
@@ -51,7 +48,6 @@ var LocationWidget = React.createClass({
   },
 
   zoomMap() {
-    console.log('zooming map')
     if(this.state.coords != null) {
       if(this.props.type=='mapboxGL') {
         this.props.map.flyTo({
@@ -71,9 +67,7 @@ var LocationWidget = React.createClass({
       this.setState({
         visible: true
       })    
-    } else {
-      console.log('You need to allow your browser to share your location...')
-    }
+    } 
   },
 
   render() {

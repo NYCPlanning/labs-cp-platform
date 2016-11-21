@@ -11,7 +11,6 @@ function getSuggestionValue(suggestion) {
 }
 
 function renderSuggestion(suggestion) {
-  console.log(suggestion)
   return (
     <div><i className="fa fa-map-marker" aria-hidden="true"></i><span>{suggestion.properties.label}</span></div>
   )
@@ -46,26 +45,22 @@ var MapzenGeocoder = React.createClass({
       });
     })
 
-    console.log('getting suggestions', text)
   },
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested() {
-    console.log('suggestionsClearRequested')
     this.setState({
       suggestions: []
     });
   },
 
   onChange(e, obj) {
-    console.log('change', obj)
     this.setState({
       value: obj.newValue
     });
   },
 
   onSuggestionSelected(e,o) {
-    console.log('suggestionSelected', e,o)
     this.setState({
       value: o.suggestionValue
     })

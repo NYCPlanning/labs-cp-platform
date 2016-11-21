@@ -166,7 +166,6 @@ var CartoMap = React.createClass({
 
     carto.SQL(spatialQuery)
       .then(function(data) {
-        console.log(data)
 
         if (self.choroplethLayer) self.map.removeLayer(self.choroplethLayer)
         self.choroplethLayer = L.choropleth(data, {

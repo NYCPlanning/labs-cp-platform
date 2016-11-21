@@ -27,7 +27,6 @@ var App = React.createClass({
 
   //modalOptions should be an object with modalHeading:String, modalContent:rendered JSX, modalCloseText: String
   showModal(modalOptions) {
-    console.log(modalOptions)
     this.setState(modalOptions)
     this.refs.modal ? this.refs.modal.open() : null  //show the modal
   },

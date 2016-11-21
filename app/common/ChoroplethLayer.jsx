@@ -10,8 +10,11 @@
 //   visible - boolean, whether the choropleth layer should be visible on the map
 
 import React from 'react'
+import Numeral from 'numeral'
 
 import carto from '../helpers/carto.js'
+import NycGeom from '../helpers/NycGeom.js'
+
 
 var ChoroplethLayer = React.createClass({
 
@@ -37,29 +40,14 @@ var ChoroplethLayer = React.createClass({
     }
   },
 
-  //column name and dataset to use in the aggregation query
-  getGeomConfig(geom) {
-    if (geom=='cd') {
-      return {
-        column: 'borocd',
-        dataset: 'cpadmin.dcp_cdboundaries'
-      }
-    } else if (geom=='nta') {
-      return {
-        column: 'ntacode',
-        dataset: 'cpadmin.dcp_ntaboundaries'
-      }
-    }
-  },
-
   updateLayer(sql, geom = 'cd', visible) {
     var self=this
  
-    var config = this.getGeomConfig(geom)
+    var config = NycGeom.getGeomConfig(geom)
 
     //first get data
     var spatialQuery = `WITH points as (${sql}) 
-    SELECT polygons.${config.column}, polygons.the_geom, count(points.*) as count
+    SELECT polygons.${config.column}, polygons.the_geom, SUM(points.dcp_units_use_map) as aggregate
     FROM ${config.dataset} polygons, points 
     WHERE points.${config.column} = polygons.${config.column}::text 
     GROUP BY polygons.cartodb_id`
@@ -70,7 +58,7 @@ var ChoroplethLayer = React.createClass({
         if (self.layer) self.props.mapObject.removeLayer(self.layer)
         if (self.legend && self.legend._map) self.props.mapObject.removeControl(self.legend)
         self.layer = L.choropleth(data, {
-            valueProperty: 'count', // which property in the features to use
+            valueProperty: 'aggregate', // which property in the features to use
             scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
             steps: 8, // number of breaks or steps in range
             mode: 'q', // q for quantile, e for equidistant, k for k-means
@@ -88,7 +76,6 @@ var ChoroplethLayer = React.createClass({
             }
         })
 
-        console.log(self.layer.options.limits, self.layer.options.colors)
         if (visible) self.layer.addTo(self.props.mapObject) 
 
           // Legend pulled right from the example... reactify it
@@ -113,18 +100,23 @@ var ChoroplethLayer = React.createClass({
           }
 
           if(visible) self.legend.addTo(self.props.mapObject)
-
       })
   },
 
   showInfoWindow(e, layer) {
     var d = e.target.feature.properties
+    //get the geomId
+    var column = NycGeom.getGeomConfig(this.props.geom).column
+    //get the name of this geom
+    var geomName = NycGeom.getGeomName(this.props.geom, d[column])
+
+
     //populate the content of the infowindow
     $('.choropleth').html(`
       <div class="cartodb-tooltip-content-wrapper">
         <div class="cartodb-tooltip-content">
-          <div class="name">${d.borocd}</div>
-          <div>Count: ${d.count} </div>
+          <div class="name">${geomName}</div>
+          <div>Incremental Units: ${Numeral(d.aggregate).format('0,0')} </div>
         </div>
       </div>
     `)

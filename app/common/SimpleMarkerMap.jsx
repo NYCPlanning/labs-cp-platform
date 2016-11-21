@@ -38,7 +38,6 @@ var SimpleMarkerMap = React.createClass({
 
     TravelShed.getSimple(this.props.point)
       .then(function(data) {
-        console.log(data)
 
         var layer = L.geoJson(data, {
           style: {
