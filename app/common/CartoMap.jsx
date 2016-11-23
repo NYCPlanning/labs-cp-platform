@@ -94,34 +94,34 @@ var CartoMap = React.createClass({
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    //create a layer with the vizJson that was passed in
-    cartodb.createLayer(map, this.props.vizJson)
-      .addTo(map)
-      .on('done', function(layer) {
-        self.cartoLayer = layer.getSubLayer(0)
+    // //create a layer with the vizJson that was passed in
+    // cartodb.createLayer(map, this.props.vizJson)
+    //   .addTo(map)
+    //   .on('done', function(layer) {
+    //     self.cartoLayer = layer.getSubLayer(0)
 
-        layer
-          .on('featureOver', function(e, latlng, pos, data) {
-            $('#map').css('cursor','pointer');
-          })
-          .on('featureOut', function(e, latlng, pos, data) {
-            $('#map').css('cursor','-webkit-grab'); 
-          })
-          .on('featureClick', function(e, latlng, pos, data) {
-            self.props.handleFeatureClick(e, latlng, pos, data)
-          })
+    //     layer
+    //       .on('featureOver', function(e, latlng, pos, data) {
+    //         $('#map').css('cursor','pointer');
+    //       })
+    //       .on('featureOut', function(e, latlng, pos, data) {
+    //         $('#map').css('cursor','-webkit-grab'); 
+    //       })
+    //       .on('featureClick', function(e, latlng, pos, data) {
+    //         self.props.handleFeatureClick(e, latlng, pos, data)
+    //       })
 
-        //show and hide the spinner when leaflet's loading and load events fire
-        layer.bind('loading', function() { $('.map-loader').fadeIn() });
-        layer.bind('load',  function() { $('.map-loader').fadeOut(); });
+    //     //show and hide the spinner when leaflet's loading and load events fire
+    //     layer.bind('loading', function() { $('.map-loader').fadeIn() });
+    //     layer.bind('load',  function() { $('.map-loader').fadeOut(); });
 
-      })
-      .on('error', function(err) {
-        alert("some error occurred: " + err);
-      });
+    //   })
+    //   .on('error', function(err) {
+    //     alert("some error occurred: " + err);
+    //   });
 
-      //force component to update so that LocationWidget renders
-      this.forceUpdate()
+    //   //force component to update so that LocationWidget renders
+    //   this.forceUpdate()
   },
 
   setSQL(sql) {

@@ -6,9 +6,13 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import Popover from 'material-ui/Popover'
 import Drawer from 'material-ui/Drawer'
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu'
+import MenuItem from 'material-ui/MenuItem'
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import Nav from '../common/Nav.jsx'
 import CartoMap from '../common/CartoMap.jsx'
@@ -25,6 +29,7 @@ var PipelineExplorer = React.createClass({
   getInitialState() {
     return({
       drawerOpen: false,
+      optionsOpen: false,
       mapMode: 'discrete',
       aggregateGeom: 'cd',
       sql: 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\') '
@@ -94,6 +99,19 @@ var PipelineExplorer = React.createClass({
     })
   },
 
+  toggleOptions(e) {
+    this.setState({
+      optionsOpen: !this.state.optionsOpen,
+      anchorEl: e.currentTarget
+    })
+  },
+
+  closeOptions() {
+    this.setState({
+      optionsOpen: false
+    })
+  },
+
   render() {
     const styles = {
       customWidth: {
@@ -142,6 +160,27 @@ var PipelineExplorer = React.createClass({
                         <MenuItem value={'nta'} primaryText="Neighborhood Tabulation Areas" />
                       </DropDownMenu> 
                       <ToolbarSeparator />
+                      <IconButton tooltip="Map Options">
+                        <FontIcon 
+                          className="fa fa-cog"
+                          onTouchTap={this.toggleOptions}/>
+                      </IconButton>
+                      <Popover
+                        open={this.state.optionsOpen}
+                        anchorEl={this.state.anchorEl}
+                        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                        useLayerForClickAway={false}
+                      >
+                        Options Here
+                        <Toolbar>
+                          <ToolbarGroup>
+                            <FlatButton 
+                              label="Apply"
+                              onTouchTap={this.closeOptions} />
+                          </ToolbarGroup>
+                        </Toolbar>
+                      </Popover>
                       <IconButton tooltip="Show Points">
                         <FontIcon 
                           className="fa fa-map-marker"

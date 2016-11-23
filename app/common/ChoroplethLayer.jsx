@@ -60,7 +60,7 @@ var ChoroplethLayer = React.createClass({
         self.layer = L.choropleth(data, {
             valueProperty: 'aggregate', // which property in the features to use
             scale: ['lightblue', 'darkblue'], // chroma.js scale - include as many as you like
-            steps: 8, // number of breaks or steps in range
+            steps: 10, // number of breaks or steps in range
             mode: 'q', // q for quantile, e for equidistant, k for k-means
             style: {
                 color: '#fff', // border color

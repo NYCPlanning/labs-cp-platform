@@ -8,9 +8,13 @@ import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
 import '../../stylesheets/common/SearchFilterToolbar.scss'
 
 var SearchFilterToolbar = React.createClass({
+  handleGeocoderSelection(feature) {
+    this.props.map.showPoiMarker(feature)
+  },
+
   render() {
     return (
-      <div className="mui-toolbar-container search-filter-toolbar">
+      <div className={"mui-toolbar-container search-filter-toolbar"}>
          <Toolbar 
           className="mui-toolbar"
           noGutter={true}
@@ -21,12 +25,18 @@ var SearchFilterToolbar = React.createClass({
             borderRadius: '2px'
           }}>
           <ToolbarGroup>
-            <MapzenGeocoder onSelection={this.props.onSelection}/>
-            <FontIcon className="fa fa-search" />
-            <ToolbarSeparator />
-            <IconButton tooltip="Show Filters">
-              <FontIcon className="fa fa-filter" onTouchTap={this.props.onFilter}/>
-            </IconButton>  
+            <IconButton 
+              tooltip="Map Menu"
+            >
+              <FontIcon className="fa fa-bars" onTouchTap={this.props.onToggleMenuDrawer}/>
+            </IconButton> 
+            <ToolbarSeparator style={{
+                marginLeft: '0'
+              }}/> 
+            <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
+            <IconButton>
+              <FontIcon className="fa fa-search" /> 
+            </IconButton>
           </ToolbarGroup>
         </Toolbar>
       </div>

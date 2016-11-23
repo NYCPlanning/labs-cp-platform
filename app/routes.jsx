@@ -13,6 +13,7 @@ import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
 import FacilitiesExplorer from '../app/facilities/FacExplorer.jsx'
 import FacilityPage from '../app/facilities/FacilityPage.jsx'
 import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
+import MapTest from '../app/MapTest.jsx'
 
 import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
 import NotFound from '../app/NotFound.jsx'
@@ -57,6 +58,8 @@ module.exports = (
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     
     <Route path="capitalprojects" component={CapitalProjects} onEnter={requireAuth}/>
+
+    <Route path="maptest" component={MapTest} onEnter={requireAuth}/>
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>

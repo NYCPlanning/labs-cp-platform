@@ -82,7 +82,7 @@ var LayerSelector = React.createClass({
         ],
         dcp_pipeline_category: filterDimensions['dcp_pipeline_category'].options,
         dcp_units_use_map: [-310,1670],
-        dob_cofo_date: [Moment('2011-1-1').format('X'), Moment().format('X')]
+        dob_cofo_date: [Moment('2010-12-31T19:00:00-05:00').format('X'), Moment().format('X')]
       }
     })
   },

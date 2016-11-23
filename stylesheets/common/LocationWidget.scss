@@ -5,15 +5,28 @@
   z-index:1000;
 }
 
-.location-ring {
+.location-ring-animated {
   width: 40px;
   height: 40px;
+  position: relative;
+  left: -20px;
+  top: -20px;
   margin: 0 auto;
   background-color: #FF9800;
 
   border-radius: 100%;  
   -webkit-animation: sk-scaleout 1.4s infinite ease-in-out;
   animation: sk-scaleout 1.4s infinite ease-in-out;
+}
+
+.location-ring-fixed {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  background-color: #FF9800;
+  border-radius: 100%;  
 }
 
 @-webkit-keyframes sk-scaleout {
