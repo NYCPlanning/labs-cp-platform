@@ -1,4 +1,11 @@
+// PipelineDataLayer - A Data Layer Component for the housing pipeline, to be added as a child of MapComponent
+// Includes custom filtering UI for this dataset, creates/updates a mapboxGL source and layer for the current filters
+
+//Props:
+//  map: the mapboxGL map object to add the source and layer to
+
 import React from 'react'
+
 import PipelineLayerSelector from './pipeline/PipelineLayerSelector.jsx'
 
 import Carto from './helpers/carto.js'
@@ -9,7 +16,6 @@ var PipelineDataLayer = React.createClass({
     return({
       mode: 'discrete',
       aggregateGeom: 'cd',
-      //sql: 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\') '
       sql: 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
     })
   },
@@ -20,6 +26,7 @@ var PipelineDataLayer = React.createClass({
 
   instantiateVectorTiles() {
     // initialize a vector tile layer from our carto server
+    // calls this.renderVectorTiles() when done
     var self=this
 
     var mapConfig = {
@@ -40,23 +47,8 @@ var PipelineDataLayer = React.createClass({
       })
   },
 
-  updateSQL(sql) {
-    var self=this
-
-    this.setState({
-      sql: sql
-    }, function() {
-      self.props.map.removeLayer('pipeline-points')
-      self.props.map.removeLayer('pipeline-outline')
-      self.props.map.removeSource('pipeline-points')
-      self.instantiateVectorTiles()      
-    })
-
-
-  },
-
   renderVectorTiles(template) {
-    console.log(this.props)
+    //add a mapboxGL source for this vector tile template and associated layer(s)
     var map = this.props.map 
 
     map.addSource('pipeline-points', {
@@ -137,6 +129,21 @@ var PipelineDataLayer = React.createClass({
     // });
 
 
+  },
+
+  updateSQL(sql) {
+    //set this.state.sql to the new sql, remove layers from the map, re-load layers
+
+    var self=this
+
+    this.setState({
+      sql: sql
+    }, function() {
+      self.props.map.removeLayer('pipeline-points')
+      self.props.map.removeLayer('pipeline-outline')
+      self.props.map.removeSource('pipeline-points')
+      self.instantiateVectorTiles()      
+    })
   },
 
   render() {
