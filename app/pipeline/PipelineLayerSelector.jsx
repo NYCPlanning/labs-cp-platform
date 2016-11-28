@@ -173,7 +173,7 @@ var LayerSelector = React.createClass({
     //assemble sql chunks based on the current state
     this.createSQLChunks()
 
-    var sqlTemplate = 'SELECT * FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
+    var sqlTemplate = 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
 
     var chunksArray = []
     for (var key in this.sqlChunks) {

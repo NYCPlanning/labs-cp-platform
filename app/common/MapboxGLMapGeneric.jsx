@@ -38,9 +38,10 @@ var MapboxGLMap = React.createClass({
         container: 'mapboxGLmap',
         style: 'mapbox://styles/mapbox/light-v9',
         zoom: 10,
-        minZoom: 10,
+        minZoom: 8,
         center: [-74.024849,40.705628],
-        pitch: 0
+        pitch: 0,
+        hash: true
     });
 
     map.addControl(new mapboxgl.NavigationControl({position: 'bottom-right'}));

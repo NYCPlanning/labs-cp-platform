@@ -65,6 +65,26 @@ module.exports = {
 
   },
 
+  getVectorTileTemplate(mapConfig) {
+    return new Promise(function(resolve, reject) {
+      $.ajax({
+        type: 'POST',
+        url: 'https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map',
+        data: JSON.stringify(mapConfig),
+        dataType: 'text',
+        contentType: "application/json",
+        success: function(data) { 
+          data = JSON.parse(data);
+          var layergroupid = data.layergroupid
+
+          var template = "https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map/" + layergroupid + "/0/{z}/{x}/{y}.mvt"
+
+          resolve(template)
+        }
+      })
+    })
+  },
+
   //get a full row from a table as geojson
   //returns a promise that when resolved yeilds a GeoJson feature
   getRow( tableName, column, value ) {

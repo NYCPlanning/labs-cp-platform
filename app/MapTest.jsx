@@ -45,7 +45,7 @@ var MapComponent = React.createClass({
   getInitialState() {
     return({
       menuDrawerOpen: false,
-      dockedDrawerOpen: false,
+      dockedDrawerOpen: this.props.dockedDrawerOpen ? this.props.dockedDrawerOpen : false,
       overlays: {
         subways: false
       }
@@ -91,11 +91,20 @@ var MapComponent = React.createClass({
   },
 
   render() {
+    var self=this
+
     const styles = {
       customWidth: {
         width: 277,
       },
     }
+
+    const childrenWithProps = React.Children.map(this.props.children, 
+      (child) => React.cloneElement(child, {
+        map: this.refs.map ? this.refs.map.map : null //pass in mapboxGL map object as prop
+      })
+    )
+
 
     return(
       <div className="full-height">
@@ -110,12 +119,17 @@ var MapComponent = React.createClass({
                 onToggleMenuDrawer={this.toggleMenuDrawer}
                 />
               <div className='floating-button-stack'>
-                <FloatingActionButton mini={true} style={{marginBottom: '10px'}} onTouchTap={this.toggleDockedDrawer}>
-                  <FontIcon className="fa fa-home" />
-                </FloatingActionButton>
-                <FloatingActionButton mini={true} style={{marginBottom: '10px'}}>
-                  <FontIcon className="fa fa-home" />
-                </FloatingActionButton>
+                {/* Draw a floating action button for each data layer*/}
+                {React.Children.map( this.props.children, function(child) {
+                  console.log(child.props)
+                  return (
+                    <FloatingActionButton mini={true} style={{marginBottom: '10px'}} onTouchTap={self.toggleDockedDrawer}>
+                      <FontIcon className="fa fa-home" />
+                    </FloatingActionButton>
+                  )
+                })}
+
+                
               </div>
             </div>
             <MapboxGLMap
@@ -146,13 +160,13 @@ var MapComponent = React.createClass({
                   </IconButton>
                 </ToolbarGroup>
               </Toolbar>
-               <PipelineLayerSelector/>
-              Hello, World
+              {this.refs.map ? childrenWithProps : null}
             </Drawer>
             <Drawer className="menuDrawer"
               open={this.state.menuDrawerOpen}
               docked={false}
               width={320}
+              onRequestChange={(open) => this.setState({menuDrawerOpen: open})}
               style={{
                 marginTop: '80px',
                 zIndex: 999,
@@ -279,7 +293,6 @@ var SubwayLayer = React.createClass({
       "minzoom": 0,
       "maxzoom": 22
     })
-
   },
 
   render() {
