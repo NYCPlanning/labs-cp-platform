@@ -1,21 +1,21 @@
-//MapboxGLMap.jsx - MapboxGL Map Component specific to capital projects explorer
-//TODO - Make this a generic MapboxGL Map Component and move cpdb-specific logic to the explorer Component
-//Props:
-//  data - 
-//  handleClick() - function to be called when the user clicks on the map
-
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 
+import Popup from './Popup.jsx'
 
 import '../../stylesheets/common/MapboxGLMap.scss'
+
+// Notes
+// This component inserts a mapboxGL map into its parent container, and renders two "floating" divs, one for the address lookup, and another for a map popup
 
 var MapboxGLMap = React.createClass({
   getInitialState() {
     return {
       basemap: 'light',
-      poiCoords: [0,0]
+      poiCoords: [0,0],
+      popupLngLat: [0,0],
+      popupContent: null
     }
   },
 
@@ -45,6 +45,24 @@ var MapboxGLMap = React.createClass({
     });
 
     map.addControl(new mapboxgl.NavigationControl({position: 'bottom-right'}));
+
+    //add geojson layer to gray areas outside of NYC
+    $.getJSON('data/greyOutsideNYC.geojson', function(data) {
+        map.addSource('grey-outside', {
+        type: 'geojson',
+        data: data
+      })
+
+      map.addLayer({
+        "id": "grey-outside",
+        "type": "fill",
+        "source": "grey-outside",
+        "paint": {
+          'fill-color': '#000',
+          'fill-opacity': 0.15   
+        }
+      })
+    })
   },
 
   flyMap(feature) {
@@ -70,6 +88,14 @@ var MapboxGLMap = React.createClass({
     })
   },
 
+  showPopup(lngLat, content) {
+    console.log(lngLat, content)
+    this.setState({
+      popupLngLat: lngLat,
+      popupContent: content
+    })
+  },   
+
   render() {
 
     //pass map object to all children
@@ -85,6 +111,7 @@ var MapboxGLMap = React.createClass({
       <div id='mapboxGLmap' ref='map'>
         {childrenWithProps}
         {this.map ? <PoiMarker map={this.map} coords={this.state.poiCoords}/>: null}
+        {this.map ? <Popup map={this.map} lngLat={this.state.popupLngLat} content={this.state.popupContent}/>: null}
       </div>
     )
   },

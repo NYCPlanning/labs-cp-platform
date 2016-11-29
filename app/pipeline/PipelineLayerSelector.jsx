@@ -10,8 +10,26 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
 import Select from 'react-select'
+import FontIcon from 'material-ui/FontIcon'
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+
+import {Tabs, Tab} from 'material-ui/Tabs';
+import Slider from 'material-ui/Slider';
+import Divider from 'material-ui/Divider';
+
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+};
 
 import carto from '../helpers/carto.js'
+
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
 
 var filterDimensions = {
   sqlChunks: {},
@@ -173,16 +191,14 @@ var LayerSelector = React.createClass({
     //assemble sql chunks based on the current state
     this.createSQLChunks()
 
-    var sqlTemplate = 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
+    var sqlTemplate = 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
 
     var chunksArray = []
     for (var key in this.sqlChunks) {
       chunksArray.push(this.sqlChunks[key])
     }
 
-
     var chunksString = chunksArray.join(' AND ')
-
 
     var sql = sqlTemplate + chunksString
     this.props.updateSQL(sql)
@@ -193,35 +209,63 @@ var LayerSelector = React.createClass({
 
     var self=this;
     return(
-      <div>
-        <div className="col-md-12">
-            <h4>Project Status</h4>  
-            <Select
-              multi
-              value={this.state.filterDimensions.dcp_pipeline_status}
-              name="form-field-name"
-              placeholder="No Status Filter Applied"
-              options={filterDimensions['dcp_pipeline_status'].options}
-              onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
-            />
-            <h4>Category</h4>  
-            <Select
-              multi
-              value={this.state.filterDimensions.dcp_pipeline_category}
-              name="form-field-name"
-              placeholder="No Category Filter Applied"
-              options={filterDimensions['dcp_pipeline_category'].options}
-              onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
-            />
+      <Tabs>
+        <Tab 
+          icon={<FontIcon className="fa fa-filter"/>}
+          label="Filter"
+        >
+        <div>
+          <List>
+            <Subheader>Project Status</Subheader>
+            <ListItem 
+              leftIcon={<FontIcon className="fa fa-balance-scale" />} 
+              disabled={true}
+            >
+              <Select
+                multi
+                value={this.state.filterDimensions.dcp_pipeline_status}
+                name="form-field-name"
+                placeholder="No Status Filter Applied"
+                options={filterDimensions['dcp_pipeline_status'].options}
+                onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
+              />
+            </ListItem>
+            <Divider/>
 
-            <h4>Net Units</h4> 
-            <RangeSlider 
+            <Subheader>Category</Subheader>
+            <ListItem 
+              leftIcon={<FontIcon className="fa fa-balance-scale" />} 
+              disabled={true}
+            >
+              <Select
+                multi
+                value={this.state.filterDimensions.dcp_pipeline_category}
+                name="form-field-name"
+                placeholder="No Category Filter Applied"
+                options={filterDimensions['dcp_pipeline_category'].options}
+                onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
+              />
+            </ListItem>
+            <Divider/>
+
+            <Subheader>Net Units</Subheader>
+            <ListItem 
+              leftIcon={<FontIcon className="fa fa-balance-scale" />} 
+              disabled={true}
+            >
+              <RangeSlider 
               data={this.state.filterDimensions.dcp_units_use_map}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}/>
+            </ListItem>
+            <Divider/>
 
-            <h4>Completion Date</h4>  
-            <RangeSlider 
+            <Subheader>Completion Date</Subheader> 
+            <ListItem 
+              leftIcon={<FontIcon className="fa fa-calendar" />}
+              disabled={true}
+            >
+              <RangeSlider 
               data={this.state.filterDimensions.dob_cofo_date}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
@@ -229,8 +273,34 @@ var LayerSelector = React.createClass({
               prettify= {function (date) {
                   return Moment(date, 'X').format('MMM YYYY');
               }}/>
+            </ListItem>
+          </List>
         </div>
-      </div>
+        </Tab>
+        <Tab 
+          icon={<FontIcon className="fa fa-toggle-on"/>}
+          label="Mode"
+        >
+          <div>
+            <h2 style={styles.headline}>Tab Two</h2>
+            <p>
+              This is another example tab.
+            </p>
+          </div>
+        </Tab>
+        <Tab
+          icon={<FontIcon className="fa fa-download"/>}
+          label="Download"
+        >
+          <div>
+            <h2 style={styles.headline}>Tab Three</h2>
+            <p>
+              This is a third example tab.
+            </p>
+          </div>
+        </Tab>
+      </Tabs>
+      
     )
   }
 })

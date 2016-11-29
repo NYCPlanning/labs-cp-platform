@@ -16,6 +16,13 @@ var Popup = React.createClass({
     })
   },
 
+  componentDidMount() {
+    var self=this
+    this.props.map.on('move', function(e) {
+      self.forceUpdate()
+    })
+  },
+
   componentWillReceiveProps() {
     this.setState({
       visible: true
@@ -36,24 +43,13 @@ var Popup = React.createClass({
     var self=this
 
     var point = this.props.map.project(this.props.lngLat)
-    var rows=this.props.features.map(function(feature, i) {
-      var d=feature.properties
-      return (
-        <div className='popupRow' key={i} onClick={self.showDetails.bind(self, feature)}>
-          
-          <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-          {d.projectid} - {d.name} <i className="fa fa-angle-right" aria-hidden="true"></i> 
-          
-        </div>
-      ) 
-    })
 
     if(this.state.visible) {
       return (
         <div className={'popup mapOverlay'} style={{'left': point.x, 'top': point.y}}>
           <div className='popupRowContainer'>
             <div className="closeButton" onClick={this.hide}>&#10006;</div>
-           {rows}
+              {this.props.content}
           </div>
         </div>
       )      

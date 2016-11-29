@@ -1,19 +1,19 @@
 //ModalContent.jsx - JSX content builder for capital projects detail Modal
 //Props:
-//  feature - A geojson feature whose properties will be used to render the modal
+//  data - A geojson feature whose properties will be used to render the modal
 
 import React from 'react'
 import Numeral from 'numeral'
 import Moment from 'moment'
 
-import ModalMap from './ModalMap.jsx'
+import ModalMap from '../common/ModalMap.jsx'
 
 import Agencies from '../helpers/agencies.js'
 import config from './config.js'
 
 var ModalContent = React.createClass({
   render() {
-    var d = this.props.feature.properties
+    var d = this.props.data.properties
 
     function getAgencyName(acronym) {
        var match = config.sponsorAgencies.filter(function(agency) {
@@ -57,7 +57,7 @@ var ModalContent = React.createClass({
           </div>
 
           <div className={'col-md-6'}>
-            <ModalMap data = {this.props.feature}/>
+            <ModalMap data={this.props.data}/>
           </div>
           <div className={'col-md-6'}>
           <ul className="list-group">

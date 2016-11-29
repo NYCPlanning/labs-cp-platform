@@ -1,6 +1,4 @@
-// /facilities/PipelineExplorer.jsx - This component builds the Facilities Explorer map interface, establishes the connection with Carto, and dynamically changes content depending on what is being shown based on the query results
-// Props:
-//  auth - User's email login info based on auth0 login. Gets included in nav bar.
+// MapComponent.jsx - A Common Web Mapping Component with some built-in overlay layers, extensible to include various data layers as children components
 
 import React from 'react'
 import IconButton from 'material-ui/IconButton'
@@ -28,8 +26,7 @@ import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 
 import Toggle from 'material-ui/Toggle';
 
-import PipelineLayerSelector from './pipeline/PipelineLayerSelector.jsx'
-import MapboxGLMap from './common/MapboxGLMapGeneric.jsx'
+import MapboxGLMap from './MapboxGLMap.jsx'
 
 
 import Subheader from 'material-ui/Subheader';
@@ -53,58 +50,42 @@ var MapComponent = React.createClass({
   },
 
   componentDidMount: function() {
-    //document.title = "Housing Development Explorer"
 
     this.forceUpdate()
-
-    // this.props.showModal({
-    //   modalHeading: 'Welcome!',
-    //   modalContent: content.splash,
-    //   modalCloseText: 'Got it.  Let me in!'
-    // }) 
   },
 
   toggleMenuDrawer() {
+
     this.setState({menuDrawerOpen: !this.state.menuDrawerOpen})
   },
 
-  // handleGeocoderSelection(feature) {
-  //   this.refs.map.setViewToFeature(feature)
-  // },
-
   toggleDockedDrawer() {
+
     this.setState({
       dockedDrawerOpen: !this.state.dockedDrawerOpen
     })
   },
 
   handleOverlayToggle(overlay) {
-
+    //toggles an overlay layer.  overlayState contains a boolean for each overlay
     var overlayState = this.state.overlays 
     overlayState[overlay] = !overlayState[overlay]
 
     this.setState({
       overlays: overlayState,
       menuDrawerOpen: false
-
     })
   },
 
   render() {
     var self=this
 
-    const styles = {
-      customWidth: {
-        width: 277,
-      },
-    }
-
+    //add the mapboxGL map object to all children as a prop
     const childrenWithProps = React.Children.map(this.props.children, 
       (child) => React.cloneElement(child, {
-        map: this.refs.map ? this.refs.map.map : null //pass in mapboxGL map object as prop
+        map: this.refs.map ? this.refs.map.map : null
       })
     )
-
 
     return(
       <div className="full-height">
@@ -128,8 +109,6 @@ var MapComponent = React.createClass({
                     </FloatingActionButton>
                   )
                 })}
-
-                
               </div>
             </div>
             <MapboxGLMap
@@ -223,8 +202,7 @@ var MapComponent = React.createClass({
   }
 })
 
-module.exports=MapComponent
-
+//TODO just do all of this in CSS
 var FontAwesomeMuiIcon = function(props) {
   return (
     <div 
@@ -257,45 +235,4 @@ var FontAwesomeMuiAvatar = function(props) {
   )
 }
 
-//Tile Layer
-var SubwayLayer = React.createClass({
-  componentDidMount() {
-    $.ajax({
-      type: 'POST',
-      url: 'https://cwhong.carto.com/api/v1/map/named/tpl_230e29ac_7640_11e6_89c5_0e05a8b3e3d7',
-      dataType : "text",
-      contentType: "application/json",
-      success: function(data) { 
-        data = JSON.parse(data);
-        var layergroupid = data.layergroupid
-        this.addLayer(layergroupid)
-      }.bind(this)
-    })
-  },
-
-  componentWillUnmount() {
-    //remove the source and the layer
-    this.props.map.removeLayer('subway-lines')
-    this.props.map.removeSource('subway-lines')
-  },
-
-  addLayer(layergroupid) {
-    this.props.map.addSource('subway-lines', {
-      type: 'raster',
-      tiles: ['https://cwhong.carto.com/api/v1/map/' + layergroupid + '/{z}/{x}/{y}.png'],
-      tileSize: 256
-    })
-
-    this.props.map.addLayer({
-      "id": "subway-lines",
-      "type": "raster",
-      "source": "subway-lines",
-      "minzoom": 0,
-      "maxzoom": 22
-    })
-  },
-
-  render() {
-    return null
-  }
-})
+module.exports=MapComponent

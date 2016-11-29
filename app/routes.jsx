@@ -9,14 +9,13 @@ import Login from '../app/Login.jsx'
 import Auth from './helpers/Auth.js'
 
 import HomePage from '../app/HomePage.jsx'
+
 import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
+import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
 import FacilitiesExplorer from '../app/facilities/FacExplorer.jsx'
 import FacilityPage from '../app/facilities/FacilityPage.jsx'
-import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
-import MapTest from '../app/MapTest.jsx'
-import PipelineTest from '../app/PipelineTest.jsx'
-
 import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
+
 import NotFound from '../app/NotFound.jsx'
 
 var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
@@ -59,9 +58,6 @@ module.exports = (
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     
     <Route path="capitalprojects" component={CapitalProjects} onEnter={requireAuth}/>
-
-    <Route path="maptest" component={MapTest} onEnter={requireAuth}/>
-    <Route path="pipelinetest" component={PipelineTest} onEnter={requireAuth}/>
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>

@@ -4,18 +4,18 @@
 
 import React from 'react' 
 
-import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
+import ModalMap from '../common/ModalMap.jsx'
 
 var ModalContent = React.createClass({ //Component Variable should match the file name
   render() {
-    var d = this.props.data
+    var d = this.props.data.properties
     return (
       <div className="row">
         <div className="col-md-12">
           <h3>{d.dob_permit_address}</h3>
         </div>
         <div className="col-md-6">
-          <SimpleMarkerMap point={this.props.latlng}/>
+          <ModalMap data={this.props.data}/>
         </div>
         <div className="col-md-6">
           <ul className="list-group">

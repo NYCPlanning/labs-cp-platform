@@ -191,7 +191,6 @@ var MapboxGLMap = React.createClass({
         }
       });
 
-
       //popup on click
       map.on('click', function (e) {
           var features = map.queryRenderedFeatures(e.point, { layers: ['points', 'polygons'] });

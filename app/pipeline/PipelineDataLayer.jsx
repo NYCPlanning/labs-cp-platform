@@ -6,9 +6,10 @@
 
 import React from 'react'
 
-import PipelineLayerSelector from './pipeline/PipelineLayerSelector.jsx'
+import PipelineLayerSelector from './PipelineLayerSelector.jsx'
+import ModalContent from './ModalContent.jsx'
 
-import Carto from './helpers/carto.js'
+import Carto from '../helpers/carto.js'
 
 var PipelineDataLayer = React.createClass({
 
@@ -16,7 +17,7 @@ var PipelineDataLayer = React.createClass({
     return({
       mode: 'discrete',
       aggregateGeom: 'cd',
-      sql: 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
+      sql: 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
     })
   },
 
@@ -48,8 +49,9 @@ var PipelineDataLayer = React.createClass({
   },
 
   renderVectorTiles(template) {
+    var self=this
     //add a mapboxGL source for this vector tile template and associated layer(s)
-    var map = this.props.map 
+    var map = this.props.map.map 
 
     map.addSource('pipeline-points', {
       'type': 'vector',
@@ -107,28 +109,54 @@ var PipelineDataLayer = React.createClass({
       }
     })
 
+    map.on('mousemove', function (e) {
+      var features = map.queryRenderedFeatures(e.point, { layers: ['pipeline-points'] });
+      map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+    }) 
 
+    //popup on click
+    map.on('click', function (e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: ['pipeline-points'] });
 
+        if (!features.length) return
+      
+        console.log(e)
+        self.showPopup(e.lngLat, features)
+    })
+  },
 
-    // map.on('moveend', function() {
-    //   var features = map.queryRenderedFeatures({layers:['pipeline-points']});
+  showPopup(lngLat, features) {
+    var self=this
+    //builds content for the popup, sends it to the map
+    console.log(lngLat, features)
 
-    //   var existingFeatureKeys = {};
+    var content = features.map(
+      (feature) => {
+        const d = feature.properties
+        return (
+          <div className="popupRow" onClick={self.showModal.bind(self, feature)}>{d.dob_permit_address}</div>
+        )
+      }
+    )
 
-    //   var uniqueFeatures = features.filter(function(el) {
-    //     if (existingFeatureKeys[el.properties['cartodb_id']]) {
-    //       return false;
-    //     } else {
-    //       existingFeatureKeys[el.properties['cartodb_id']] = true;
-    //       return true;
-    //     }
-    //   });
+    this.props.map.showPopup(lngLat, content)
+  },
 
-    //   console.log(uniqueFeatures.length);
-    //   console.log(features.length)
-    // });
+  showModal(feature) {
+    //builds content for the modal and sends it to the global modal service
+    var self=this
 
+    var tableName = 'nchatterjee.dob_permits_cofos_hpd_geocode'
 
+   //make an api call to carto to get the full feature, build content from it, show modal
+   Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)
+    .then(function(data) {
+      self.props.showModal({
+        modalHeading: 'Capital Project Details',
+        modalContent: <ModalContent data={data}/>,
+        modalCloseText: 'Close'
+      })
+    })
   },
 
   updateSQL(sql) {
@@ -139,9 +167,11 @@ var PipelineDataLayer = React.createClass({
     this.setState({
       sql: sql
     }, function() {
-      self.props.map.removeLayer('pipeline-points')
-      self.props.map.removeLayer('pipeline-outline')
-      self.props.map.removeSource('pipeline-points')
+
+      var map = self.props.map.map
+      map.removeLayer('pipeline-points')
+      map.removeLayer('pipeline-outline')
+      map.removeSource('pipeline-points')
       self.instantiateVectorTiles()      
     })
   },
