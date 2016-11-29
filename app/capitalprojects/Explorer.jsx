@@ -7,7 +7,7 @@ import CapitalProjectsDataLayer from './CapitalProjectsDataLayer.jsx'
 var CapitalProjectsExplorer = React.createClass({ 
   render() {
     return(
-      <MapComponent dockedDrawerOpen={true} auth={this.props.auth}>
+      <MapComponent dockedDrawerOpen={true} title={'Capital Projects Explorer'} auth={this.props.auth}>
         <CapitalProjectsDataLayer name="Capital Projects Explorer" showModal={this.props.showModal}/>
       </MapComponent>
     )

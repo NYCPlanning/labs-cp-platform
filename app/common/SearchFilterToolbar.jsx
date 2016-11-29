@@ -27,8 +27,9 @@ var SearchFilterToolbar = React.createClass({
           <ToolbarGroup>
             <IconButton 
               tooltip="Map Menu"
+              onTouchTap={this.props.onToggleMenuDrawer}
             >
-              <FontIcon className="fa fa-bars" onTouchTap={this.props.onToggleMenuDrawer}/>
+              <FontIcon className="fa fa-bars" />
             </IconButton> 
             <ToolbarSeparator style={{
                 marginLeft: '0'

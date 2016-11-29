@@ -78,7 +78,7 @@ var MapComponent = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title='Housing Development Explorer' auth={this.props.auth} showModal={this.props.showModal}>
+        <Nav title={this.props.title} auth={this.props.auth} showModal={this.props.showModal}>
           <li onClick={this.showAbout}><a> About</a></li>
         </Nav>
         <div id="main-container">
@@ -94,7 +94,7 @@ var MapComponent = React.createClass({
                   console.log(child.props)
                   return (
                     <FloatingActionButton mini={true} style={{marginBottom: '10px'}} onTouchTap={self.toggleDockedDrawer}>
-                      <FontIcon className="fa fa-home" />
+                      <FontIcon className={self.state.dockedDrawerOpen ? "fa fa-times" : "fa fa-home" }/>
                     </FloatingActionButton>
                   )
                 })}
@@ -118,16 +118,6 @@ var MapComponent = React.createClass({
                 style={{
                   height: '80px'
                 }}/>
-              <Toolbar >
-                <ToolbarGroup>
-                  <ToolbarTitle text="Housing Pipeline" />
-                </ToolbarGroup>
-                <ToolbarGroup>
-                  <IconButton tooltip="Close">
-                    <FontIcon className="fa fa-times" onTouchTap={this.toggleDockedDrawer}/>
-                  </IconButton>
-                </ToolbarGroup>
-              </Toolbar>
               {this.refs.map ? childrenWithProps : null}
             </Drawer>
             <Drawer className="menuDrawer"
@@ -149,11 +139,11 @@ var MapComponent = React.createClass({
                 <ToolbarGroup>
                   <ToolbarTitle text="Menu" />
                 </ToolbarGroup>
-                <ToolbarGroup>
+                {/*<ToolbarGroup>
                   <IconButton tooltip="Close Menu">
                     <FontIcon className="fa fa-times" onTouchTap={this.toggleMenuDrawer}/>
                   </IconButton>
-                </ToolbarGroup>
+                </ToolbarGroup>*/}
               </Toolbar>
               
               <List>
@@ -161,19 +151,17 @@ var MapComponent = React.createClass({
                 <ListItem 
                   primaryText="Subway Lines" 
                   leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
-                  rightToggle={<Toggle toggled={this.state.overlays.subway} onToggle={this.handleOverlayToggle.bind(this, 'subway')} />} />
-                <ListItem primaryText="Administrative Boundaries" leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} rightToggle={<Toggle />} />
-                <ListItem primaryText="Flood Plains" leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} rightToggle={<Toggle />} />
-             
+                  rightToggle={<Toggle toggled={this.state.overlays.subway} onToggle={this.handleOverlayToggle.bind(this, 'subway')} />} 
+                />
               <Divider/>
-              <Subheader>Data Layers</Subheader>
+              {/*<Subheader>Data Layers</Subheader>
              
                 <ListItem 
                   primaryText="Housing Pipeline" 
                   leftAvatar={<Avatar icon={<FontAwesomeMuiAvatar icon="fa-home"/>} backgroundColor="steelblue" />}
                   rightToggle={<Toggle />}/>
            
-              <Divider/>
+              <Divider/>*/}
               <Subheader>Basemap</Subheader>
                 <DropDownMenu
                   value={1}

@@ -44,3 +44,5 @@ var SubwayLayer = React.createClass({
     return null
   }
 })
+
+module.exports=SubwayLayer
