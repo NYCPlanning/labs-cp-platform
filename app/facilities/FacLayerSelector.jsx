@@ -3,16 +3,14 @@
 //  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
 //  initialSQL - String containing the initial SQL state set in FacExplorer.jsx
 //  updateSQL - String containing updates to SQL query based on checked layers
-//  value - Value associated with checkbox
-//  checked - Checked status associated with value in checkbox
-//  onChange - Action related to status change in checkbox
-
 
 import React from 'react'
 import ReactDOM from 'react-dom' 
 import {Link} from 'react-router'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
+
+import Carto from '../helpers/carto.js'
 
 import '../../stylesheets/facilities/FacLayerSelector.scss'
 
@@ -22,7 +20,7 @@ var LayerSelector = React.createClass({
 
   getInitialState() {
     return ({
-      layers: null,
+      layers: [],
       selectedCount: '__',
       totalCount:'__',
       checked: 'all' //all, none, or null
@@ -32,7 +30,7 @@ var LayerSelector = React.createClass({
   componentWillMount() {
     /* interates through each domain in the layerStructure object */
     /* to start, add checked = true to everything in the layerStructure object */
-    var layerStructure = this.props.layerStructure.map(function(domain) {
+    var layerStructure = this.props.facilitiesLayers.map(function(domain) {
       domain.checked = true
       domain.children = domain.children.map(function(group) {
         group.checked = true
@@ -53,37 +51,31 @@ var LayerSelector = React.createClass({
   /*checks to see if there is only one domain.*/
   /*if it's a domain subset page (only one domain), expands all and then requests that count be updated*/
   componentDidMount() {
-    if(this.props.layerStructure.length == 1) {
+    if(this.state.layers.length == 1) {
       this.expandAll()
     }
     this.updateCounts() 
   },
 
   /*NEED TO FIND ANOTHER WAY TO CHECK IF IT'S A SUBSET*/
-
-  
   updateCounts() {
     var self=this
 
     /* get a count of "select all" from entire dataset */
-    var SQL = encodeURI(this.props.initialSQL) /* where does initial SQL get defined? */
+    var SQL = this.props.initialSQL /* where does initial SQL get defined? */
     var totalCountSQL = "SELECT count(*) as total FROM (" + SQL + ") a"
 
-    this.cartoSQLCall(totalCountSQL, function(data) {
-      var total = data.rows[0].total
+    Carto.SQL(totalCountSQL, 'json')
+      .then(function(data) {
+        var total = data[0].total
 
-      total = Numeral(total).format('0,0')
-      
-      self.setState({
-        selectedCount: total,
-        totalCount: total
+        total = Numeral(total).format('0,0')
+        
+        self.setState({
+          selectedCount: total,
+          totalCount: total
+        })
       })
-    })
-  },
-
-  cartoSQLCall(sql, cb) {
-     var apiCall = 'https://carto.capitalplanning.nyc/user/hkates/api/v2/sql?q=' + sql
-     $.getJSON(apiCall, cb)
   },
 
   toggleCheckbox(type, domain, group, subgroup, e) {
@@ -186,13 +178,13 @@ var LayerSelector = React.createClass({
 
   buildSQL(layers) {
     if (layers.length > 0) {
-      var sql = 'SELECT * FROM facilities_data WHERE '
+      var sql = 'SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup FROM hkates.facilities_data WHERE '
       layers.map(function(name, i) {
         if(i>0) sql += ' OR '
         sql += 'facilitysubgroup = \'' + name + '\''
       })  
     } else {
-      var sql ='SELECT * FROM facilities_data LIMIT 0'
+      var sql ='SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup FROM hkates.facilities_data LIMIT 0'
     }
 
     this.props.updateSQL(sql)
@@ -204,15 +196,16 @@ var LayerSelector = React.createClass({
     
     var countSQL = 'SELECT count(a.*) as selected FROM ( ' + sql + ') a'
 
-    this.cartoSQLCall(countSQL, function(data) {
-      var selected = data.rows[0].selected
+    Carto.SQL(countSQL, 'json')
+      .then( function(data) {
+        var selected = data.rows[0].selected
 
-      selected = Numeral(selected).format('0,0')
-      
-      self.setState({
-        selectedCount: selected
+        selected = Numeral(selected).format('0,0')
+        
+        self.setState({
+          selectedCount: selected
+        })
       })
-    })
   },
 
   showAll() {
@@ -306,7 +299,7 @@ var LayerSelector = React.createClass({
                     checked={domain.checked} 
                     indeterminate={domain.indeterminate}
                     onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                  <a className="nav-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
+                  <a className="nav-container" style={{backgroundColor: self.state.layers.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
                   <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{'display':'inline-block', 'width': '240px'}}>{domain.name}</div>
                   <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
                   <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
@@ -321,7 +314,7 @@ var LayerSelector = React.createClass({
                               onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
                           <li>
 
-                            <a className="nav-sub-container" style={{backgroundColor: self.props.layerStructure.length == 1 ? group.color: domain.subColor}}>    
+                            <a className="nav-sub-container" style={{backgroundColor: self.state.layers.length == 1 ? group.color: domain.subColor}}>    
                               <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
                                 <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
                                     <i className="fa fa-info-circle" aria-hidden="true"></i>

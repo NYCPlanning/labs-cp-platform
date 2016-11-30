@@ -37,9 +37,9 @@ var MapboxGLMap = React.createClass({
     var map = this.map = new mapboxgl.Map({
         container: 'mapboxGLmap',
         style: 'mapbox://styles/mapbox/light-v9',
-        zoom: 10,
+        zoom: 13,
         minZoom: 8,
-        center: [-74.024849,40.705628],
+        center: [-74.0013, 40.7085],
         pitch: 0,
         hash: true
     });
@@ -47,7 +47,7 @@ var MapboxGLMap = React.createClass({
     map.addControl(new mapboxgl.NavigationControl({position: 'bottom-right'}));
 
     //add geojson layer to gray areas outside of NYC
-    $.getJSON('data/greyOutsideNYC.geojson', function(data) {
+    $.getJSON('/data/greyOutsideNYC.geojson', function(data) {
         map.addSource('grey-outside', {
         type: 'geojson',
         data: data

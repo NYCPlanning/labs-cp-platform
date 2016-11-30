@@ -4,12 +4,12 @@
 
 import React from 'react' 
 
-import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
+import ModalMap from '../common/ModalMap.jsx'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
 var ModalContent = React.createClass({ //Component Variable should match the file name
   render() {
-    var d = this.props.data
+    var d = this.props.data.properties
 
     var Categories = function() {
       return(
@@ -82,7 +82,7 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
           <h4>BBL: {d.bbl}</h4>
         </div>
         <div className="col-md-6">
-          <SimpleMarkerMap point={this.props.latlng}/>
+          <ModalMap data={this.props.data}/>
         </div>
         <div className="col-md-6">
           <ul className="list-group">

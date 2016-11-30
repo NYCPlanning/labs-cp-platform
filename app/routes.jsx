@@ -12,7 +12,7 @@ import HomePage from '../app/HomePage.jsx'
 
 import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
 import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
-import FacilitiesExplorer from '../app/facilities/FacExplorer.jsx'
+import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer.jsx'
 import FacilityPage from '../app/facilities/FacilityPage.jsx'
 import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
 
@@ -51,7 +51,7 @@ module.exports = (
     <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}/>
     <Route path="facilities/all" component={FacilitiesExplorer} onEnter={requireAuth}/>
     <Route path="facilities/domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
-    <Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    {/*<Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>*/}
 
     <Route path="facilities/:id" component={FacilityPage} onEnter={requireAuth}/>
     
