@@ -198,7 +198,7 @@ var LayerSelector = React.createClass({
 
     Carto.SQL(countSQL, 'json')
       .then( function(data) {
-        var selected = data.rows[0].selected
+        var selected = data[0].selected
 
         selected = Numeral(selected).format('0,0')
         
