@@ -102,7 +102,8 @@ var PipelineDataLayer = React.createClass({
             ['Complete', '#136400'],
             ['Partial complete', '#229A00'],
             ['Permit outstanding', '#b2df8a'],
-            ['Permit pending', '#5CA2D1']
+            ['Permit pending', '#5CA2D1'],
+            ['Demolition (complete)', '#525252']
           ]
         },
         "circle-opacity": 0.7
@@ -131,10 +132,15 @@ var PipelineDataLayer = React.createClass({
     console.log(lngLat, features)
 
     var content = features.map(
-      (feature) => {
+      (feature, i) => {
         const d = feature.properties
         return (
-          <div className="popupRow" onClick={self.showModal.bind(self, feature)}>{d.dob_permit_address}</div>
+          <div className="popupRow" key={i} onClick={self.showModal.bind(self, feature)}>
+            <span className="badge">{d.dcp_pipeline_status}</span>
+            <span className="text">{d.dob_permit_address}</span>
+            <span className="badge">Δ {d.dcp_units_use_map}</span>
+            <i className="fa fa-angle-right" aria-hidden="true"></i>
+          </div>
         )
       }
     )
@@ -152,7 +158,7 @@ var PipelineDataLayer = React.createClass({
    Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)
     .then(function(data) {
       self.props.showModal({
-        modalHeading: 'Capital Project Details',
+        modalHeading: 'Development Details',
         modalContent: <ModalContent data={data}/>,
         modalCloseText: 'Close'
       })

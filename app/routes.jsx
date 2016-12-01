@@ -18,6 +18,8 @@ import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
 
 import NotFound from '../app/NotFound.jsx'
 
+import tabDrawer from './tabDrawer.jsx'
+
 var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain = 'cpmanage.auth0.com'
 
@@ -61,6 +63,7 @@ module.exports = (
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
+    <Route path='tabdrawer' component={tabDrawer}/>
     <Route path='*' component={NotFound} />
   </Route>
 )

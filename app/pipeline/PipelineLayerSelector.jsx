@@ -16,6 +16,7 @@ import Subheader from 'material-ui/Subheader'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import Slider from 'material-ui/Slider'
 import Divider from 'material-ui/Divider'
+import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 
 const styles = {
@@ -35,7 +36,7 @@ var filterDimensions = {
   sqlChunks: {},
 
   dcp_pipeline_status: {
-    label: 'Project Status',
+    label: 'Development Status',
     options: [  
       {
         label: 'Complete',
@@ -52,11 +53,17 @@ var filterDimensions = {
       {
         label: 'Permit pending',
         value: 'Permit pending'
+      },
+      {
+        label: 'Demolition (complete)',
+        value: 'Demolition (complete)'        
       }
+
+
     ]
   },
   dcp_pipeline_category: {
-    label: 'Project Status',
+    label: 'Development Status',
     options: [  
       {
         label: 'Residential-New',
@@ -73,6 +80,14 @@ var filterDimensions = {
       {
         label: 'Hotel-Alteration',
         value: 'Hotel-Alteration'
+      },
+      {
+        label: 'Residential-Demolition',
+        value: 'Residential-Demolition'
+      },
+      {
+        label: 'Hotel-Demolition',
+        value: 'Hotel-Demolition'
       }
     ]
   }
@@ -103,10 +118,6 @@ var LayerSelector = React.createClass({
         dob_cofo_date: [Moment('2010-12-31T19:00:00-05:00').format('X'), Moment().format('X')]
       }
     })
-  },
-
-  componentDidMount() {
-
   },
 
   handleChange(dimension, values) {
@@ -222,7 +233,10 @@ var LayerSelector = React.createClass({
           >
           <div>
             <List>
-              <Subheader>Project Status</Subheader>
+              <Subheader>
+                Development Status
+                <InfoIcon text='Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data'/> 
+              </Subheader>
               <ListItem 
                 leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                 disabled={true}
@@ -238,7 +252,10 @@ var LayerSelector = React.createClass({
               </ListItem>
               <Divider/>
 
-              <Subheader>Category</Subheader>
+              <Subheader>
+                Category
+                <InfoIcon text='Categorizes developments based on the construction and housing types, determined using DOB Permit data'/>
+              </Subheader>
               <ListItem 
                 leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                 disabled={true}
@@ -254,7 +271,10 @@ var LayerSelector = React.createClass({
               </ListItem>
               <Divider/>
 
-              <Subheader>Net Units</Subheader>
+              <Subheader>
+                Development Size (Net Units)
+                <InfoIcon text='Net change in units resulting from development. Negative values occur from demolitions and/or alterations that reduce the number of units.'/>
+              </Subheader>
               <ListItem 
                 leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                 disabled={true}
@@ -266,7 +286,10 @@ var LayerSelector = React.createClass({
               </ListItem>
               <Divider/>
 
-              <Subheader>Completion Date</Subheader> 
+              <Subheader>
+                Completion Date
+                <InfoIcon text='Reflects date(s) when developments have received Certificate(s) of Occupancy (CofO). If a development has received multiple CofOs, filter evalutes timeframe between earliest CofO (since 2010) and most recent CofO.'/>
+              </Subheader> 
               <ListItem 
                 leftIcon={<FontIcon className="fa fa-calendar" />}
                 disabled={true}
@@ -314,6 +337,21 @@ var LayerSelector = React.createClass({
 
 
 module.exports=LayerSelector
+
+function InfoIcon(props) {
+  return (
+    <OverlayTrigger 
+      placement="right" 
+      overlay={ 
+        <Tooltip id="tooltip">{props.text}</Tooltip>
+      }
+    >
+      <i className="fa fa-info-circle" aria-hidden="true"></i>
+    </OverlayTrigger> 
+
+  )
+}
+
 
 var RangeSlider = React.createClass({
   //Props: 

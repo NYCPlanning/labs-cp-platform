@@ -22,19 +22,22 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
             <li className="list-group-item">
               <h4>General Information</h4>
               <dl className="dl-horizontal">
-                <dt>Category</dt>
+                <dt>Development Type</dt>
                 <dd>{d.dcp_pipeline_category}</dd>
 
                 <dt>Status</dt>
                 <dd>{d.dcp_pipeline_status}</dd>
 
+                <dt>Total Net Units</dt>
+                <dd>{d.dcp_units_use_map}</dd>
+
                 <dt>Complete Units</dt>
                 <dd>{d.dcp_units_complete}</dd>
 
-                <dt>Outstanding Units</dt>
+                <dt>Incomplete Units (permit issued)</dt>
                 <dd>{d.dcp_units_outstanding}</dd>
 
-                <dt>Permit Pending Units</dt>
+                <dt>Potential Units (permit application)</dt>
                 <dd>{d.dcp_units_pending}</dd>
 
                 <dt>BBL</dt>
@@ -49,13 +52,13 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
             <li className="list-group-item">
               <h4>DOB Certificate of Occupancy Details</h4>
               <dl className="dl-horizontal">
-                <dt>Earliest C of O (Since 2010)</dt>
+                <dt>Earliest CofO (Since 2010)</dt>
                 <dd>{d.dob_cofo_date_first}</dd>
 
-                <dt>Most Recent C of O</dt>
+                <dt>Most Recent CofO</dt>
                 <dd>{d.dob_cofo_date_last}</dd>
 
-                <dt>Most Recent C of O Type</dt>
+                <dt>Most Recent CofO Type</dt>
                 <dd>{d.dob_cofo_last_type}</dd>
              
 

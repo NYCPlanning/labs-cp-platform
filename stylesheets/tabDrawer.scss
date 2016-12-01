@@ -1,0 +1,22 @@
+.tabDrawer {
+  width: 300px;
+  position: absolute;
+  top: 0;
+  bottom:0;  
+  left:0;
+  background-color: steelblue;
+}
+
+.tabDrawer>div:first-of-type>div:first-of-type {
+  left: 100%;
+  position: absolute;
+  width: 40px !important;
+  white-space: initial !important;
+  display: initial !important;
+  height: 100%;
+  background-color: #525252 !important;
+
+  button {
+    width: 40px !important;
+  }
+}
