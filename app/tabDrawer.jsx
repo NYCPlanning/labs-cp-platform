@@ -1,93 +1,83 @@
-import React from 'react'
+import React, {createElement, cloneElement} from 'react'
+import { Tabs as MuiTabs } from 'material-ui/Tabs'
+import TabTemplate from 'material-ui/Tabs/TabTemplate.js'
 
-import '../stylesheets/tabDrawer.scss'
+import IconButton from 'material-ui/IconButton'
 
-import {Tabs} from 'material-ui/Tabs'
+function getStyles(props, context) {
+  const {tabs} = context.muiTheme;
 
-import Tab from './Tab.jsx'
-import FontIcon from 'material-ui/FontIcon'
-import Drawer from 'material-ui/Drawer';
-
-module.exports=React.createClass({
-  getInitialState() {
-    return({open:true})
-  },
-
-  handleToggle() {
-    this.setState({open: !this.state.open}) 
-  }, 
-
-  render() {
-  const styles = {
-    headline: {
-      fontSize: 24,
-      paddingTop: 16,
-      marginBottom: 12,
-      fontWeight: 400,
+  return {
+    tabItemContainer: {
+      width: '100%',
+      backgroundColor: tabs.backgroundColor,
+      whiteSpace: 'nowrap',
+      display: 'flex',
     },
   };
+}
+
+
+class Tabs extends MuiTabs {
+  render() {
+
+    var style = {
+      container: {
+        transform: this.props.open ? null : 'translate(-320px,0)'
+      }
+    }
+
+    const tabTemplate = null
+    const tabTemplateStyle = {}
+
+    const {prepareStyles} = this.context.muiTheme;
+    const styles = getStyles(this.props, this.context);
+    const valueLink = this.getValueLink(this.props);
+    const tabValue = valueLink.value;
+    const tabContent = [];
+    const width = 100 / this.getTabCount();
+
+    const tabs = this.getTabs().map((tab, index) => {
+
+      console.log(tab.props.children)
+      tabContent.push(tab.props.children ?
+        createElement(tabTemplate || TabTemplate, {
+          key: index,
+          selected: this.getSelected(tab, index),
+          style: tabTemplateStyle,
+        }, tab.props.children) : undefined);
+
+      return cloneElement(tab, {
+        key: index,
+        index: index,
+        selected: this.getSelected(tab, index),
+        width: `${width}%`,
+        onTouchTap: this.handleTabTouchTap,
+      });
+    });
+
+    console.log(tabs)
+    console.log(tabContent)
 
     return (
-      <Drawer open={this.state.open} width={290} containerStyle={{overflow: 'visible'}}>
-          <div className='tabDrawer' style={{
-            marginRight: '40px'
-          }}>
-            <Tabs
-              >
-              <Tab icon={<FontIcon className="fa fa-times"/>} onActive={this.handleToggle} >
-                <div>
-                  <h2 style={styles.headline}>Tab One</h2>
-                  <p>
-                    This is an example tab.
-                  </p>
-                  <p>
-                    You can put any sort of HTML or react component in here. It even keeps the component state!
-                  </p>
-                  
-                </div>
-              </Tab>
-              <Tab icon={<FontIcon className="fa fa-times"/>} >
-                <div>
-                  <h2 style={styles.headline}>Tab Two</h2>
-                  <p>
-                    This is another example tab.
-                  </p>
-                </div>
-              </Tab>
-              <Tab icon={<FontIcon className="fa fa-times"/>} onActive={this.handleToggle}>
-                <div>
-                  <h2 style={styles.headline}>Tab Three</h2>
-                  <p>
-                    This is a third example tab.
-                  </p>
-                </div>
-              </Tab>
-            </Tabs>
+      <div className="tabDrawer-container" style={style.container}>
+        <div className="tabDrawer-content">
+          {tabContent}
+        </div>
+        <div className="tabDrawer-bar">
+       
+          <div className="bottom">
+            <IconButton  
+              style={{ width: '40px', color: '#fff', padding: 'none' }} 
+              iconStyle={{ color: '#fff' }} 
+              iconClassName={this.props.open ? "fa fa-angle-double-left" : "fa fa-angle-double-right"} 
+              onTouchTap={this.props.onToggleOpen}
+            />
           </div>
-      </Drawer>
+        </div>
+      </div>
     )
   }
-})
+}
 
-// var TabDrawer = React.createClass({
-//   render() {
-//     return(
-//       <div className='tabDrawer'>
-        
-//       </div>
-//     )
-//   }
-// })
-
-// var Tab = React.createClass({
-//   render() {
-//     return(
-//       <div>
-        
-//       </div>
-//     )
-//   }
-// })
-
-
-
+module.exports = Tabs

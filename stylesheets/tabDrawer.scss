@@ -1,21 +1,23 @@
-.tabDrawer {
-  width: 320px;
+.tabDrawer-container {
+  width: 360px;
   position: absolute;
   top: 0;
   bottom:0;  
   left:0;
+  background-color: #FFF;
+  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 
-.tabDrawer>div:first-of-type>div:first-of-type {
-  left: 100%;
+.tabDrawer-bar {
+  width: 40px;
+  background-color: #525252;
   position: absolute;
-  width: 40px !important;
-  white-space: initial !important;
-  display: initial !important;
-  height: 100%;
-  background-color: #525252 !important;
+  top: 0;
+  right: 0;
+  bottom: 0;
 
-  button {
-    width: 40px !important;
+  .bottom {
+    position: absolute;
+    bottom: 0;
   }
 }

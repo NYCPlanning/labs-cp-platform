@@ -26,10 +26,8 @@ import SubwayLayer from '../overlays/SubwayLayer.jsx'
 
 import '../../stylesheets/tabDrawer.scss'
 
-import {Tabs} from 'material-ui/Tabs'
-
-import Tab from '../Tab.jsx'
-
+import {Tabs, Tab} from 'material-ui/Tabs'
+import TabDrawer from '../TabDrawer.jsx'
 
 import '../../stylesheets/pipeline/PipelineExplorer.scss'
 
@@ -130,74 +128,52 @@ var MapComponent = React.createClass({
               ref="map">
               {this.state.overlays.subway ? <SubwayLayer/> : null}
             </MapboxGLMap>
-            <Drawer className="dockedDrawer"
+            <TabDrawer 
               open={this.state.dockedDrawerOpen}
-              docked={true}
-              width={320} 
-              containerStyle={{overflow: 'visible', marginTop: '80px'}}
+              onToggleOpen={this.toggleDockedDrawer}
             >
-              <div 
-                className="menu-header-filler" 
-                style={{
-                  height: '80px'
-                }}/>
-              <div className='tabDrawer' style={{
-                marginRight: '40px'
-              }}>
-                <Tabs
-                  >
-                  <Tab icon={<FontIcon className="fa fa-bars"/>} onActive={this.openDockedDrawer} >
-                    <div>
-                      <Toolbar >
-                        <ToolbarGroup>
-                          <ToolbarTitle text="Menu" />
-                        </ToolbarGroup>
-                        {/*<ToolbarGroup>
-                          <IconButton tooltip="Close Menu">
-                            <FontIcon className="fa fa-times" onTouchTap={this.toggleMenuDrawer}/>
-                          </IconButton>
-                        </ToolbarGroup>*/}
-                      </Toolbar>
-                      
-                      <List>
-                      <Subheader>Overlays</Subheader>
-                        <ListItem 
-                          primaryText="Subway Lines" 
-                          leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
-                          rightToggle={<Toggle toggled={this.state.overlays.subway} onToggle={this.handleOverlayToggle.bind(this, 'subway')} />} 
-                        />
-                      <Divider/>
-                      {/*<Subheader>Data Layers</Subheader>
-                     
-                        <ListItem 
-                          primaryText="Housing Pipeline" 
-                          leftAvatar={<Avatar icon={<FontAwesomeMuiAvatar icon="fa-home"/>} backgroundColor="steelblue" />}
-                          rightToggle={<Toggle />}/>
-                   
-                      <Divider/>*/}
-                      <Subheader>Basemap</Subheader>
-                        <DropDownMenu
-                          value={1}
-                        >
-                          <MenuItem value={1} primaryText="Light" />
-                          <MenuItem value={2} primaryText="Dark" />
-                          <MenuItem value={3} primaryText="Aerial" />
-                        </DropDownMenu>
-                      </List>
+              <Tab icon={<FontIcon className="fa fa-bars"/>} onActive={this.openDockedDrawer} >
+                <div>
+                  <Toolbar >
+                    <ToolbarGroup>
+                      <ToolbarTitle text="Menu" />
+                    </ToolbarGroup>
+                    {/*<ToolbarGroup>
+                      <IconButton tooltip="Close Menu">
+                        <FontIcon className="fa fa-times" onTouchTap={this.toggleMenuDrawer}/>
+                      </IconButton>
+                    </ToolbarGroup>*/}
+                  </Toolbar>
+                  
+                  <List>
+                  <Subheader>Overlays</Subheader>
+                    <ListItem 
+                      primaryText="Subway Lines" 
+                      leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
+                      rightToggle={<Toggle toggled={this.state.overlays.subway} onToggle={this.handleOverlayToggle.bind(this, 'subway')} />} 
+                    />
+                  <Divider/>
+                  {/*<Subheader>Data Layers</Subheader>
+                 
+                    <ListItem 
+                      primaryText="Housing Pipeline" 
+                      leftAvatar={<Avatar icon={<FontAwesomeMuiAvatar icon="fa-home"/>} backgroundColor="steelblue" />}
+                      rightToggle={<Toggle />}/>
+               
+                  <Divider/>*/}
+                  <Subheader>Basemap</Subheader>
+                    <DropDownMenu
+                      value={1}
+                    >
+                      <MenuItem value={1} primaryText="Light" />
+                      <MenuItem value={2} primaryText="Dark" />
+                      <MenuItem value={3} primaryText="Aerial" />
+                    </DropDownMenu>
+                  </List>
 
-                    </div>
-                  </Tab>
-                  { childrenTabs }
-                  <Tab 
-                    icon={
-                      <FontIcon className={this.state.dockedDrawerOpen ? "fa fa-angle-double-left" : "fa fa-angle-double-right"}/>
-                    } 
-                    onActive={ this.state.dockedDrawerOpen ? this.closeDockedDrawer : this.openDockedDrawer }
-                  >
-                  </Tab>
-                </Tabs>
-              </div>
-            </Drawer>
+                </div>
+              </Tab>
+            </TabDrawer>
           </div>
         </div>
       </div>
