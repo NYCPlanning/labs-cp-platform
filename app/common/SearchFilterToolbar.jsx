@@ -25,27 +25,6 @@ var SearchFilterToolbar = React.createClass({
             borderRadius: '2px'
           }}>
           <ToolbarGroup>
-            <IconButton 
-              tooltip="Map Menu"
-              onTouchTap={this.props.onToggleMenuDrawer}
-            >
-              <FontIcon className="fa fa-bars" />
-            </IconButton>
-            <IconButton 
-              tooltip="Map Menu"
-              onTouchTap={this.props.onToggleMenuDrawer}
-            >
-              <FontIcon className="fa fa-bars" />
-            </IconButton> 
-            <IconButton 
-              tooltip="Map Menu"
-              onTouchTap={this.props.onToggleMenuDrawer}
-            >
-              <FontIcon className="fa fa-bars" />
-            </IconButton>  
-            <ToolbarSeparator style={{
-                marginLeft: '0'
-              }}/> 
             <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
             <IconButton>
               <FontIcon className="fa fa-search" /> 
