@@ -1,36 +1,17 @@
 // MapComponent.jsx - A Common Web Mapping Component with some built-in overlay layers, extensible to include various data layers as children components
 
 import React from 'react'
-import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
-import Popover from 'material-ui/Popover'
-import Drawer from 'material-ui/Drawer'
-import DropDownMenu from 'material-ui/DropDownMenu'
-import MenuItem from 'material-ui/MenuItem'
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import Avatar from 'material-ui/Avatar';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Toggle from 'material-ui/Toggle';
-import Subheader from 'material-ui/Subheader';
-
-import MapboxGLMap from './MapboxGLMap.jsx'
 import Nav from './Nav.jsx'
+import MapboxGLMap from './MapboxGLMap.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
 
 
-import '../../stylesheets/tabDrawer.scss'
-
-import {Tabs, Tab} from 'material-ui/Tabs'
-import TabDrawer from '../TabDrawer.jsx'
-
-import MapMenu from '../MapMenu.jsx'
+import {Tab} from 'material-ui/Tabs'
+import TabDrawer from './TabDrawer.jsx'
+import MapMenu from './MapMenu.jsx'
 
 import '../../stylesheets/pipeline/PipelineExplorer.scss'
 
