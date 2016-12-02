@@ -1,83 +1,62 @@
-import React, {createElement, cloneElement} from 'react'
-import { Tabs as MuiTabs } from 'material-ui/Tabs'
-import TabTemplate from 'material-ui/Tabs/TabTemplate.js'
-
+import React from 'react'
+import {Tabs, Tab} from 'material-ui/Tabs'
 import IconButton from 'material-ui/IconButton'
 
-function getStyles(props, context) {
-  const {tabs} = context.muiTheme;
-
-  return {
-    tabItemContainer: {
-      width: '100%',
-      backgroundColor: tabs.backgroundColor,
-      whiteSpace: 'nowrap',
-      display: 'flex',
-    },
-  };
-}
+import MapMenu from './MapMenu.jsx'
+import FontIcon from 'material-ui/FontIcon'
 
 
-class Tabs extends MuiTabs {
+
+var TabDrawer = React.createClass({
+
   render() {
-
-    var style = {
-      container: {
-        transform: this.props.open ? null : 'translate(-320px,0)'
-      }
-    }
-
-    const tabTemplate = null
-    const tabTemplateStyle = {}
-
-    const {prepareStyles} = this.context.muiTheme;
-    const styles = getStyles(this.props, this.context);
-    const valueLink = this.getValueLink(this.props);
-    const tabValue = valueLink.value;
-    const tabContent = [];
-    const width = 100 / this.getTabCount();
-
-    const tabs = this.getTabs().map((tab, index) => {
-
-      console.log(tab.props.children)
-      tabContent.push(tab.props.children ?
-        createElement(tabTemplate || TabTemplate, {
-          key: index,
-          selected: this.getSelected(tab, index),
-          style: tabTemplateStyle,
-        }, tab.props.children) : undefined);
-
-      return cloneElement(tab, {
-        key: index,
-        index: index,
-        selected: this.getSelected(tab, index),
-        width: `${width}%`,
-        onTouchTap: this.handleTabTouchTap,
-      });
-    });
-
-    console.log(tabs)
-    console.log(tabContent)
-
-    return (
-      <div className="tabDrawer-container" style={style.container}>
-        <div className="tabDrawer-content">
-          {tabContent}
-        </div>
-        <div className="tabDrawer-bar">
-       
-          <div className="bottom">
-            <IconButton  
-              style={{ width: '40px', color: '#fff', padding: 'none' }} 
-              iconStyle={{ color: '#fff' }} 
-              iconClassName={this.props.open ? "fa fa-angle-double-left" : "fa fa-angle-double-right"} 
-              onTouchTap={this.props.onToggleOpen}
-            />
-          </div>
+    return(
+      <div className="tabs-container" style={{
+        width: '360px',
+        position: 'absolute',
+        top: 0,
+        bottom:0,  
+        left:0,
+        backgroundColor: '#FFF',
+        transition: 'transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
+        transform: this.props.open ? 'translate(0,0)' : 'translate(-320px,0)'
+      }}>
+        <Tabs 
+          tabItemContainerStyle={{
+            width: '40px',
+            backgroundColor: '#525252',
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            display: 'initial',
+            whiteSpace: 'initial'
+          }}
+          contentContainerStyle={{
+            paddingRight:'40px'
+          }} 
+        >
+          {this.props.children}
+        </Tabs>
+        <div style={{  /*Fixed Button to Close the Drawer*/
+          position: 'absolute',
+          bottom: 0,
+          right: 0
+        }}>
+          <IconButton  
+            style={{ width: '40px', color: '#fff', padding: 'none' }} 
+            iconStyle={{ color: '#fff' }} 
+            iconClassName={this.props.open ? "fa fa-angle-double-left" : "fa fa-angle-double-right"} 
+            onTouchTap={this.props.toggle}
+          />
         </div>
       </div>
     )
   }
-}
 
-module.exports = Tabs
+})
+
+
+
+module.exports = TabDrawer
+ 

@@ -24,18 +24,20 @@ import Nav from './Nav.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
 
+
 import '../../stylesheets/tabDrawer.scss'
 
 import {Tabs, Tab} from 'material-ui/Tabs'
 import TabDrawer from '../TabDrawer.jsx'
+
+import MapMenu from '../MapMenu.jsx'
 
 import '../../stylesheets/pipeline/PipelineExplorer.scss'
 
 var MapComponent = React.createClass({
   getInitialState() {
     return({
-      menuDrawerOpen: false,
-      dockedDrawerOpen: this.props.dockedDrawerOpen ? this.props.dockedDrawerOpen : false,
+      leftDrawerOpen: this.props.leftDrawerOpen ? this.props.leftDrawerOpen : false,
       overlays: {
         subways: false
       }
@@ -43,31 +45,24 @@ var MapComponent = React.createClass({
   },
 
   componentDidMount: function() {
-
     this.forceUpdate()
   },
 
-  toggleMenuDrawer() {
-
-    this.setState({menuDrawerOpen: !this.state.menuDrawerOpen})
-  },
-
-  toggleDockedDrawer() {
-
+  toggleLeftDrawer() {
     this.setState({
-      dockedDrawerOpen: !this.state.dockedDrawerOpen
+      leftDrawerOpen: !this.state.leftDrawerOpen
     })
   },
 
-  openDockedDrawer() {
+  openLeftDrawer() {
     this.setState({
-      dockedDrawerOpen: true
+      leftDrawerOpen: true
     })
   },
 
-  closeDockedDrawer() {
+  closeLeftDrawer() {
     this.setState({
-      dockedDrawerOpen: false
+      leftDrawerOpen: false
     })
   },
 
@@ -78,7 +73,7 @@ var MapComponent = React.createClass({
 
     this.setState({
       overlays: overlayState,
-      menuDrawerOpen: false
+      leftDrawerOpen: false
     })
   },
 
@@ -92,6 +87,37 @@ var MapComponent = React.createClass({
       })
     )
 
+    //create Tab for each child
+    var childrenTabs = childrenWithProps.map(function(child, i) {
+      return (
+        <Tab 
+          key={i+1}
+          icon={<FontIcon className="fa fa-home"/>} 
+          onActive={self.openLeftDrawer} 
+          style={{
+            height: 'auto',
+            width: '40px'
+          }}>
+          {child}
+        </Tab>
+      )
+    })
+
+    //insert the global map menu to the top of the array of tabs
+    childrenTabs.unshift(
+      <Tab 
+        icon={<FontIcon className="fa fa-bars"/>} 
+        key={0} 
+        onActive={self.openLeftDrawer}
+        style={{
+        height: 'auto',
+        width: '40px'
+      }}>
+        <MapMenu/>
+      </Tab>
+    )
+
+
     const styles = {
       headline: {
         fontSize: 24,
@@ -101,16 +127,6 @@ var MapComponent = React.createClass({
       },
     }
 
-  
-    const childrenTabs =  childrenWithProps.map(function(child) {
-      return (
-        <Tab icon={<FontIcon className="fa fa-home"/>} onActive={self.openDockedDrawer}>
-          {child}
-        </Tab>
-      )
-    })
-  
-
     return(
       <div className="full-height">
         <Nav title={this.props.title} auth={this.props.auth} showModal={this.props.showModal}>
@@ -118,7 +134,7 @@ var MapComponent = React.createClass({
         </Nav>
         <div id="main-container">
           <div id="content">
-            <div className = {"left-overlay-bar " + (this.state.dockedDrawerOpen ? 'open-left' : null)}>
+            <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
               <SearchFilterToolbar 
                 map={this.refs.map}
                 onToggleMenuDrawer={this.toggleMenuDrawer}
@@ -129,50 +145,10 @@ var MapComponent = React.createClass({
               {this.state.overlays.subway ? <SubwayLayer/> : null}
             </MapboxGLMap>
             <TabDrawer 
-              open={this.state.dockedDrawerOpen}
-              onToggleOpen={this.toggleDockedDrawer}
+              open={this.state.leftDrawerOpen}
+              toggle={this.toggleLeftDrawer}
             >
-              <Tab icon={<FontIcon className="fa fa-bars"/>} onActive={this.openDockedDrawer} >
-                <div>
-                  <Toolbar >
-                    <ToolbarGroup>
-                      <ToolbarTitle text="Menu" />
-                    </ToolbarGroup>
-                    {/*<ToolbarGroup>
-                      <IconButton tooltip="Close Menu">
-                        <FontIcon className="fa fa-times" onTouchTap={this.toggleMenuDrawer}/>
-                      </IconButton>
-                    </ToolbarGroup>*/}
-                  </Toolbar>
-                  
-                  <List>
-                  <Subheader>Overlays</Subheader>
-                    <ListItem 
-                      primaryText="Subway Lines" 
-                      leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
-                      rightToggle={<Toggle toggled={this.state.overlays.subway} onToggle={this.handleOverlayToggle.bind(this, 'subway')} />} 
-                    />
-                  <Divider/>
-                  {/*<Subheader>Data Layers</Subheader>
-                 
-                    <ListItem 
-                      primaryText="Housing Pipeline" 
-                      leftAvatar={<Avatar icon={<FontAwesomeMuiAvatar icon="fa-home"/>} backgroundColor="steelblue" />}
-                      rightToggle={<Toggle />}/>
-               
-                  <Divider/>*/}
-                  <Subheader>Basemap</Subheader>
-                    <DropDownMenu
-                      value={1}
-                    >
-                      <MenuItem value={1} primaryText="Light" />
-                      <MenuItem value={2} primaryText="Dark" />
-                      <MenuItem value={3} primaryText="Aerial" />
-                    </DropDownMenu>
-                  </List>
-
-                </div>
-              </Tab>
+              {childrenTabs}
             </TabDrawer>
           </div>
         </div>
@@ -181,37 +157,6 @@ var MapComponent = React.createClass({
   }
 })
 
-//TODO just do all of this in CSS
-var FontAwesomeMuiIcon = function(props) {
-  return (
-    <div 
-      className={'fa ' + props.icon} 
-      style={{
-        color: '#757575',
-        fontSize: '20px',
-        position: 'absolute',
-        top: '0',
-        left: '7px',
-        margin: '12px'
-      }}/>
-  )
-}
 
-var FontAwesomeMuiAvatar = function(props) {
-  return (
-    <div 
-      className={'fa ' + props.icon} 
-      style={{
-        color: 'white',
-        fontSize: '24px',
-        position: 'absolute',
-        top: '0',
-        left: '1px',
-        margin: '8px',
-        height: '24px',
-        width: '24px'
-      }}/>
-  )
-}
 
 module.exports=MapComponent

@@ -7,7 +7,7 @@ import PipelineDataLayer from './PipelineDataLayer.jsx'
 var PipeLineExplorer = React.createClass({ 
   render() {
     return(
-      <MapComponent dockedDrawerOpen={true} title={'Housing Pipeline Explorer'} auth={this.props.auth}>
+      <MapComponent leftDrawerOpen={true} title={'Housing Pipeline Explorer'} auth={this.props.auth}>
         <PipelineDataLayer name="Housing Pipeline" showModal={this.props.showModal}/>
       </MapComponent>
     )
