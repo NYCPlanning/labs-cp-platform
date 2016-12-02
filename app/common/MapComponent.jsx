@@ -39,7 +39,7 @@ var MapComponent = React.createClass({
     return({
       leftDrawerOpen: this.props.leftDrawerOpen ? this.props.leftDrawerOpen : false,
       overlays: {
-        subways: false
+        subway: false
       }
     })
   },
@@ -72,8 +72,7 @@ var MapComponent = React.createClass({
     overlayState[overlay] = !overlayState[overlay]
 
     this.setState({
-      overlays: overlayState,
-      leftDrawerOpen: false
+      overlays: overlayState
     })
   },
 
@@ -89,10 +88,11 @@ var MapComponent = React.createClass({
 
     //create Tab for each child
     var childrenTabs = childrenWithProps.map(function(child, i) {
+      console.log('child', child)
       return (
         <Tab 
           key={i+1}
-          icon={<FontIcon className="fa fa-home"/>} 
+          icon={<FontIcon className={child.props.icon}/>} 
           onActive={self.openLeftDrawer} 
           style={{
             height: 'auto',
@@ -113,7 +113,10 @@ var MapComponent = React.createClass({
         height: 'auto',
         width: '40px'
       }}>
-        <MapMenu/>
+        <MapMenu
+          overlays={this.state.overlays}
+          onUpdate={this.handleOverlayToggle.bind(this, 'subway')}
+        />
       </Tab>
     )
 

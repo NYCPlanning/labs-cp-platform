@@ -35,6 +35,7 @@ var TabDrawer = React.createClass({
           contentContainerStyle={{
             paddingRight:'40px'
           }} 
+          initialSelectedIndex={1}
         >
           {this.props.children}
         </Tabs>

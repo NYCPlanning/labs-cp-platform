@@ -8,7 +8,7 @@ var PipeLineExplorer = React.createClass({
   render() {
     return(
       <MapComponent leftDrawerOpen={true} title={'Housing Pipeline Explorer'} auth={this.props.auth}>
-        <PipelineDataLayer name="Housing Pipeline" showModal={this.props.showModal}/>
+        <PipelineDataLayer name="Housing Pipeline" icon="fa fa-home" showModal={this.props.showModal}/>
       </MapComponent>
     )
   }

@@ -25,7 +25,7 @@ var MapMenu = function(props) {
         <ListItem 
           primaryText="Subway Lines" 
           leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
-          /*rightToggle={<Toggle toggled={this.props.overlays.subway} onToggle={this.props.onUpdate} *//>} 
+          rightToggle={<Toggle toggled={props.overlays.subway} onToggle={props.onUpdate}/>} 
         />
       <Divider/>
       <Subheader>Basemap</Subheader>
