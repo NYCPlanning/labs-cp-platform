@@ -5,8 +5,6 @@ import IconButton from 'material-ui/IconButton'
 import MapMenu from './MapMenu.jsx'
 import FontIcon from 'material-ui/FontIcon'
 
-import '../../stylesheets/TabDrawer.scss'
-
 var TabDrawer = React.createClass({
 
   render() {
