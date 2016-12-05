@@ -96,6 +96,12 @@ var MapboxGLMap = React.createClass({
     })
   },   
 
+  setBasemap(type) {
+
+    console.log(this.map.getStyle())
+    this.map.setStyle('mapbox://styles/mapbox/' + type + '-v9');
+  },
+
   render() {
 
     //pass map object to all children

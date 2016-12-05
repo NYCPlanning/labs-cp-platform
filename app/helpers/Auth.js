@@ -67,7 +67,8 @@ export default class AuthService {
 
   loggedIn(){
     // Checks if there is a saved token and it's still valid
-    return !!this.getToken()
+    const token = this.getToken()
+    return !!token && !isTokenExpired(token)
   }
 
 

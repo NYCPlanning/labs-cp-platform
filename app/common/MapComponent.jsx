@@ -2,6 +2,7 @@
 
 import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton'
 
 import Nav from './Nav.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
@@ -9,7 +10,7 @@ import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
 
 
-import {Tab} from 'material-ui/Tabs'
+import Tab from './CustomTab.jsx'
 import TabDrawer from './TabDrawer.jsx'
 import MapMenu from './MapMenu.jsx'
 
@@ -21,7 +22,8 @@ var MapComponent = React.createClass({
       leftDrawerOpen: this.props.leftDrawerOpen ? this.props.leftDrawerOpen : false,
       overlays: {
         subway: false
-      }
+      }, 
+      basemap: 'light'
     })
   },
 
@@ -57,6 +59,13 @@ var MapComponent = React.createClass({
     })
   },
 
+  handleBasemapChange(e, i, type) {
+    this.refs.map.setBasemap(type)
+    this.setState({
+      basemap: type
+    })
+  },
+
   render() {
     var self=this
 
@@ -73,7 +82,10 @@ var MapComponent = React.createClass({
       return (
         <Tab 
           key={i+1}
-          icon={<FontIcon className={child.props.icon}/>} 
+          icon={
+            <FontIcon className={child.props.icon}/> 
+          } 
+          tooltipText={child.props.tooltipText}
           onActive={self.openLeftDrawer} 
           style={{
             height: 'auto',
@@ -88,15 +100,19 @@ var MapComponent = React.createClass({
     childrenTabs.unshift(
       <Tab 
         icon={<FontIcon className="fa fa-bars"/>} 
+        tooltipText='Map Menu'
         key={0} 
         onActive={self.openLeftDrawer}
         style={{
-        height: 'auto',
-        width: '40px'
-      }}>
+          height: 'auto',
+          width: '40px'
+        }}
+      >
         <MapMenu
           overlays={this.state.overlays}
-          onUpdate={this.handleOverlayToggle.bind(this, 'subway')}
+          onUpdate={this.handleOverlayToggle}
+          basemap={this.state.basemap}
+          onBasemapChange={this.handleBasemapChange}
         />
       </Tab>
     )
@@ -125,7 +141,8 @@ var MapComponent = React.createClass({
                 />
             </div>
             <MapboxGLMap
-              ref="map">
+              ref="map"
+              >
               {this.state.overlays.subway ? <SubwayLayer/> : null}
             </MapboxGLMap>
             <TabDrawer 

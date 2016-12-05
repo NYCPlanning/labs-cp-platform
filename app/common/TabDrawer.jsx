@@ -1,5 +1,5 @@
 import React from 'react'
-import {Tabs, Tab} from 'material-ui/Tabs'
+import {Tabs} from 'material-ui/Tabs'
 import IconButton from 'material-ui/IconButton'
 
 import MapMenu from './MapMenu.jsx'
@@ -31,7 +31,12 @@ var TabDrawer = React.createClass({
             whiteSpace: 'initial'
           }}
           contentContainerStyle={{
-            paddingRight:'40px'
+            position: 'absolute',
+            top: 0,
+            right: '40px',
+            bottom: 0,
+            left: 0,
+            overflow: 'scroll'
           }} 
           initialSelectedIndex={1}
         >
@@ -43,7 +48,7 @@ var TabDrawer = React.createClass({
           right: 0
         }}>
           <IconButton  
-            style={{ width: '40px', color: '#fff', padding: 'none' }} 
+            style={{ width: '40px', height: '40px', color: '#fff', padding: 'none' }} 
             iconStyle={{ color: '#fff' }} 
             iconClassName={this.props.open ? "fa fa-angle-double-left" : "fa fa-angle-double-right"} 
             onTouchTap={this.props.toggle}

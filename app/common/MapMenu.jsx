@@ -16,26 +16,27 @@ var MapMenu = function(props) {
     <div>
       <Toolbar >
         <ToolbarGroup>
-          <ToolbarTitle text="Menu" />
+          <ToolbarTitle text="Map Menu" />
         </ToolbarGroup>
       </Toolbar>
       
       <List>
-      <Subheader>Overlays</Subheader>
+      <Subheader>Overlay Layers</Subheader>
         <ListItem 
           primaryText="Subway Lines" 
           leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
-          rightToggle={<Toggle toggled={props.overlays.subway} onToggle={props.onUpdate}/>} 
+          rightToggle={<Toggle toggled={props.overlays.subway} onToggle={() => props.onUpdate('subway')}/>} 
         />
-      <Divider/>
+      {/*<Divider/>
       <Subheader>Basemap</Subheader>
         <DropDownMenu
-          value={1}
+          value={props.basemap}
+          onChange={props.onBasemapChange}
         >
-          <MenuItem value={1} primaryText="Light" />
-          <MenuItem value={2} primaryText="Dark" />
-          <MenuItem value={3} primaryText="Aerial" />
-        </DropDownMenu>
+          <MenuItem value={'light'} primaryText="Light" />
+          <MenuItem value={'dark'} primaryText="Dark" />
+          <MenuItem value={'satellite'} primaryText="Satellite" />
+        </DropDownMenu>*/}
       </List>
     </div>
   )

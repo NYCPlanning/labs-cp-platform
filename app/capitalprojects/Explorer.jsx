@@ -8,7 +8,11 @@ var CapitalProjectsExplorer = React.createClass({
   render() {
     return(
       <MapComponent leftDrawerOpen={true} title={'Capital Projects Explorer'} auth={this.props.auth}>
-        <CapitalProjectsDataLayer name="Capital Projects Explorer" icon="fa fa-money" showModal={this.props.showModal}/>
+        <CapitalProjectsDataLayer 
+          name="Capital Projects Explorer"
+          tooltipText="Capital Projects Database" 
+          icon="fa fa-money" 
+          showModal={this.props.showModal}/>
       </MapComponent>
     )
   }

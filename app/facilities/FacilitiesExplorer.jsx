@@ -10,8 +10,13 @@ var FacilitiesExplorer = React.createClass({
     const mode = this.props.params.domain ? this.props.params.domain : 'all'
 
     return(
-      <MapComponent leftDrawerOpen={true} title={'Housing Pipeline Explorer'} auth={this.props.auth}>
-        <FacilitiesDataLayer name="Housing Pipeline" icon="fa fa-university" showModal={this.props.showModal} mode={mode}/>
+      <MapComponent leftDrawerOpen={true} title={'Facilities Explorer'} auth={this.props.auth}>
+        <FacilitiesDataLayer 
+          name="Housing Pipeline" 
+          icon="fa fa-university" 
+          tooltipText="Facilities Database"
+          showModal={this.props.showModal} 
+          mode={mode}/>
       </MapComponent>
     )
   }
