@@ -6,7 +6,6 @@
 
 import React from 'react'
 
-import AgencySelector from './AgencySelector.jsx'
 import ModalContent from './ModalContent.jsx'
 import CapitalProjectsFilter from './CapitalProjectsFilter.jsx'
 
@@ -148,7 +147,6 @@ var CapitalProjectsDataLayer = React.createClass({
   showPopup(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
-    console.log(lngLat, features)
 
     var content=features.map(function(feature, i) {
       var d=feature.properties

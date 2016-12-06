@@ -121,7 +121,6 @@ var PipelineDataLayer = React.createClass({
 
         if (!features.length) return
       
-        console.log(e)
         self.showPopup(e.lngLat, features)
     })
   },
@@ -129,7 +128,6 @@ var PipelineDataLayer = React.createClass({
   showPopup(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
-    console.log(lngLat, features)
 
     var content = features.map(
       (feature, i) => {

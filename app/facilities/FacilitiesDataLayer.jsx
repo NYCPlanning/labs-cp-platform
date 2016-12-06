@@ -77,7 +77,6 @@ var FacilitiesDataLayer = React.createClass({
         })
       }
     } else {
-      console.log(this.layerStructure)
       var colorObject = {
         property: 'facilitygroup',
         type: 'categorical',
@@ -88,7 +87,6 @@ var FacilitiesDataLayer = React.createClass({
           ]
         })
       }
-      console.log(colorObject)
     }
 
 
@@ -147,7 +145,6 @@ var FacilitiesDataLayer = React.createClass({
 
         if (!features.length) return
       
-        console.log(e)
         self.showPopup(e.lngLat, features)
     })
   },
@@ -155,7 +152,6 @@ var FacilitiesDataLayer = React.createClass({
   showPopup(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
-    console.log(lngLat, features)
 
     var content = features.map(
       (feature) => {

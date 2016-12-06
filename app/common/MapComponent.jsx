@@ -1,4 +1,8 @@
 // MapComponent.jsx - A Common Web Mapping Component with some built-in overlay layers, extensible to include various data layers as children components
+// Props: 
+//   leftDrawerOpen - boolean - whether the left drawer should be open on mount
+//   title - string - title to be passed into the nav component
+//   children - data layers
 
 import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
@@ -8,8 +12,7 @@ import Nav from './Nav.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
-
-
+import CdLayer from '../overlays/CdLayer.jsx'
 import Tab from './CustomTab.jsx'
 import TabDrawer from './TabDrawer.jsx'
 import MapMenu from './MapMenu.jsx'
@@ -21,7 +24,8 @@ var MapComponent = React.createClass({
     return({
       leftDrawerOpen: this.props.leftDrawerOpen ? this.props.leftDrawerOpen : false,
       overlays: {
-        subway: false
+        subway: false,
+        cdboundaries: false
       }, 
       basemap: 'light'
     })
@@ -59,13 +63,6 @@ var MapComponent = React.createClass({
     })
   },
 
-  handleBasemapChange(e, i, type) {
-    this.refs.map.setBasemap(type)
-    this.setState({
-      basemap: type
-    })
-  },
-
   render() {
     var self=this
 
@@ -78,7 +75,6 @@ var MapComponent = React.createClass({
 
     //create Tab for each child
     var childrenTabs = childrenWithProps.map(function(child, i) {
-      console.log('child', child)
       return (
         <Tab 
           key={i+1}
@@ -117,15 +113,11 @@ var MapComponent = React.createClass({
       </Tab>
     )
 
+    //build an array of visible overlay layers
+    const overlays = []
 
-    const styles = {
-      headline: {
-        fontSize: 24,
-        paddingTop: 16,
-        marginBottom: 12,
-        fontWeight: 400,
-      },
-    }
+    if (this.state.overlays.subway) { overlays.push(<SubwayLayer/>) }
+    if (this.state.overlays.cdboundaries) { overlays.push(<CdLayer/>) } 
 
     return(
       <div className="full-height">
@@ -143,7 +135,7 @@ var MapComponent = React.createClass({
             <MapboxGLMap
               ref="map"
               >
-              {this.state.overlays.subway ? <SubwayLayer/> : null}
+              {overlays}
             </MapboxGLMap>
             <TabDrawer 
               open={this.state.leftDrawerOpen}
@@ -157,7 +149,5 @@ var MapComponent = React.createClass({
     )
   }
 })
-
-
 
 module.exports=MapComponent

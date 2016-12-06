@@ -89,21 +89,13 @@ var MapboxGLMap = React.createClass({
   },
 
   showPopup(lngLat, content) {
-    console.log(lngLat, content)
     this.setState({
       popupLngLat: lngLat,
       popupContent: content
     })
   },   
 
-  setBasemap(type) {
-
-    console.log(this.map.getStyle())
-    this.map.setStyle('mapbox://styles/mapbox/' + type + '-v9');
-  },
-
   render() {
-
     //pass map object to all children
     if(this.map) {
       var childrenWithProps = React.Children.map(this.props.children,

@@ -4,8 +4,6 @@
 //TODO: This is similar to SimplePointMap.jsx, maybe combine with that, or combine with a more generic MapboxGLMap.jsx
 
 import React from 'react'
-import turf from 'turf'
-import extent from 'turf-extent'
 import {Button, ButtonGroup} from 'react-bootstrap'
 import Agencies from '../helpers/agencies.js'
 

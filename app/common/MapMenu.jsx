@@ -27,6 +27,11 @@ var MapMenu = function(props) {
           leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
           rightToggle={<Toggle toggled={props.overlays.subway} onToggle={() => props.onUpdate('subway')}/>} 
         />
+        <ListItem 
+          primaryText="Community Districts" 
+          leftIcon={<FontAwesomeMuiIcon icon="fa-flag"/>} 
+          rightToggle={<Toggle toggled={props.overlays.cdboundaries} onToggle={() => props.onUpdate('cdboundaries')}/>} 
+        />
       {/*<Divider/>
       <Subheader>Basemap</Subheader>
         <DropDownMenu
