@@ -4,6 +4,8 @@ import React from 'react'
 import MapComponent from '../common/MapComponent.jsx'
 import CapitalProjectsDataLayer from './CapitalProjectsDataLayer.jsx'
 
+import '../../stylesheets/capitalprojects/Explorer.scss'
+
 var CapitalProjectsExplorer = React.createClass({ 
   componentDidMount() {
     document.title = "NYC Capital Projects Map";

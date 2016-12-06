@@ -131,7 +131,6 @@ var MapComponent = React.createClass({
 
     //turn state.legendContent into an array of components
     var legendChildren = Object.keys(this.state.legendContent).map(function (key, i) { 
-      console.log(key)
       return (
         <div key={i}> 
           {self.state.legendContent[key]}
@@ -174,7 +173,6 @@ var MapComponent = React.createClass({
 })
 
 var Legend = function(props) {
-  console.log('PROPS', props)
 
   return(
     <div className='legend mapOverlay'>

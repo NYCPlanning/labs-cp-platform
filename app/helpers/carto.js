@@ -111,6 +111,18 @@ module.exports = {
 
   },
 
+  getCount(sql) {
+    var self=this
+    sql = `SELECT count(*) FROM (${sql}) a`
+
+    return new Promise(function( resolve, reject ) {
+      self.SQL(sql, 'json')
+        .then(function(data) {
+          resolve(data[0].count)
+        })
+    })
+  },
+
   //does a carto SQL api call
   //pass in format as a valid SQL api export format (shp, csv, geojson)
   //TODO store host, user, etc in a central config

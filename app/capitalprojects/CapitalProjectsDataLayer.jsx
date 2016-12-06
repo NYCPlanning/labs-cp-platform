@@ -180,10 +180,8 @@ var CapitalProjectsDataLayer = React.createClass({
       var d=feature.properties
       return (
         <div className='popupRow' key={i} onClick={self.showModal.bind(self, feature)}>
-          
           <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-          {d.projectid} - {d.name} <i className="fa fa-angle-right" aria-hidden="true"></i> 
-          
+          <span className={'text'}>{d.projectid} - {d.name}</span> <i className="fa fa-angle-right" aria-hidden="true"></i>  
         </div>
       ) 
     })
@@ -231,7 +229,9 @@ var CapitalProjectsDataLayer = React.createClass({
 
   render() {
     return(
-      <CapitalProjectsFilter updateSQL={this.updateSQL}/>
+      <div>
+        <CapitalProjectsFilter updateSQL={this.updateSQL}/>
+      </div>
     )
   }
 })

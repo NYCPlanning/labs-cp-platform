@@ -14,7 +14,10 @@ import ContentInbox from 'material-ui/svg-icons/content/inbox'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 import IconButton from 'material-ui/IconButton'
 
+import CountWidget from '../common/CountWidget.jsx'
 
+import carto from '../helpers/carto.js'
+import config from './config.js'
 
 const styles = {
   headline: {
@@ -24,9 +27,6 @@ const styles = {
     fontWeight: 400,
   },
 };
-
-import carto from '../helpers/carto.js'
-import config from './config.js'
 
 var CapitalProjectsFilter = React.createClass({
   sqlChunks: {},
@@ -40,12 +40,25 @@ var CapitalProjectsFilter = React.createClass({
         cpstatus: [],
         type: []
       }, 
-      totalCount: 0,
-      selectedCount: 0
+      totalCount: null,
+      selectedCount: null
     })
   },
 
   componentDidMount() {
+
+    var totalQuery = 'SELECT cartodb_id FROM capeprojectspoints UNION ALL SELECT cartodb_id FROM capeprojectspolygons'
+
+    carto.getCount(totalQuery)
+      .then((count) => {
+        console.log(count)
+
+        //set both selected and total to the total count since there are no filters applied by default
+        this.setState({ 
+          selectedCount: count,
+          totalCount: count 
+        })
+      })
 
   },
 
@@ -92,6 +105,15 @@ var CapitalProjectsFilter = React.createClass({
     }
   },
 
+  getSelectedCount(pointsSql, polygonsSql) {
+    var self=this
+    //UNION the two queries, get count, update state.selectedCount
+    var sql = `${pointsSql} UNION ALL ${polygonsSql}`
+
+    carto.getCount(sql)
+      .then((count) => self.setState({ selectedCount: count }))
+  },
+
   buildSQL() {
     //assemble sql chunks based on the current state
     this.createSQLChunks()
@@ -109,6 +131,8 @@ var CapitalProjectsFilter = React.createClass({
     var pointsSql = select + 'capeprojectspoints WHERE ' + chunksString
     var polygonsSql = select + 'capeprojectspolygons WHERE ' + chunksString
   
+
+    this.getSelectedCount(pointsSql, polygonsSql)
     this.props.updateSQL(pointsSql, polygonsSql)
     //this.getCount(sql)
   },
@@ -130,6 +154,11 @@ var CapitalProjectsFilter = React.createClass({
           >
             <div>
               <List>
+                <CountWidget 
+                  totalCount={this.state.totalCount} 
+                  selectedCount={this.state.selectedCount} 
+                  units={'projects'}
+                />
                 <Subheader>
                   Sponsor Agency 
                   <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">The City agency <b>funding</b> the project</Tooltip>}>
