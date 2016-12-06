@@ -109,7 +109,7 @@
 /*Map Overlays*/
 .mapOverlay {
   padding: 10px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'roboto', sans-serif;
   z-index: 10;
   position: absolute;
   min-width: 90px;
@@ -236,3 +236,13 @@
   top: 60px;
 }
 /*End Map*/
+
+/*Colored Circle for popups (backgorund Color applied inline)*/
+.color-circle {
+  height: 12px;
+  width: 12px;
+  display: inline-block;
+  border-radius: 6px;
+  border: 1px solid rgb(82, 82, 82);
+}
+    

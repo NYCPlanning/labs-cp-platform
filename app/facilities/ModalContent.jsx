@@ -24,7 +24,7 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
             <dd>{d.facilitysubgroup}</dd>
             <dt>
               <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip"> The facility's Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
-                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                <a href = "http://docs.capitalplanning.nyc/facdb/#source-data"><i className="fa fa-info-circle" aria-hidden="true"></i></a>
               </OverlayTrigger>
               Type
             </dt>

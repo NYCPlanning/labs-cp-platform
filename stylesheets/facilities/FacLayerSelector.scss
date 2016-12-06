@@ -6,26 +6,24 @@
 
 .nav-container {
   background-color: #f5f5f5;
-  text-transform: uppercase;
-  font-weight: bold;
   cursor: pointer;
 }
   
 .nav-sub-container {
   background-color: #f8f8f8;  
-  font-weight: bold;
   cursor: pointer;
+  font-size: 14px;
 }
 
 /*second tier indentation*/
-div.nav-stacked>li>a {
+div.nav-stacked > li > div {
   font-family: 'open sans', sans-serif;
   padding: 3px 30px 3px 40px;
 }
 
 
 /*third tier indentation*/
-ul.nav-stacked ul.nav-stacked > li > a {
+ul.nav-stacked ul.nav-stacked > li > div {
   font-family: 'open sans', sans-serif;
   padding: 3px 15px 3px 50px;
   font-size: 12px;
@@ -42,7 +40,7 @@ ul.nav-stacked ul.nav-stacked > li > a {
 
 .nav-container {
    color: #101011;
-   font-family: 'Oswald', sans-serif;
+   font-family: 'Open Sans', sans-serif;
 }
 
 
@@ -59,7 +57,7 @@ ul.nav-stacked ul.nav-stacked > li > a {
 }
 
 #stacked-menu .group input[type=checkbox] {
-  top: 3px;
+  top: 0px;
   left: 16px;
 }
 
@@ -71,8 +69,8 @@ ul.nav-stacked ul.nav-stacked > li > a {
 }
 
 
-.nav>li>a {
-  padding: 10px 15px 10px 36px;
+.nav > li > div {
+  padding: 10px 30px 10px 36px;
 }
 
 .caret {

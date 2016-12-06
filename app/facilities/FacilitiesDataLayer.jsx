@@ -18,14 +18,14 @@ var FacilitiesDataLayer = React.createClass({
     var self=this
     //update initial state and the layer structure based on mode
     if (this.props.mode != 'all') {
-      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup FROM hkates.facilities_data WHERE domain ILIKE '" + this.props.mode.substr(0,4) + "%'"
+      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data WHERE domain ILIKE '" + this.props.mode.substr(0,4) + "%'"
       
       this.layerStructure = facilitiesLayers.filter(function(layer) {
         return (layer.slug == self.props.mode)
       })
     } else {
       //if map mode is 'all', initialSQL has no WHERE, and layerStructure is unchanged
-      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup FROM hkates.facilities_data"
+      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data"
       this.layerStructure=facilitiesLayers
     }
 
@@ -36,6 +36,15 @@ var FacilitiesDataLayer = React.createClass({
 
   componentDidMount() {
     this.instantiateVectorTiles()
+
+    var legendContent = (
+      <div className="legendSection">
+        <p>Hover over a facility or click for full details</p>
+        <p>Data current as of 09/05/2014 - 10/01/2016</p>
+      </div>
+    )
+
+    this.props.updateLegend('facilities', legendContent) //send legend content up to MapComponent for rendering
   },
 
   instantiateVectorTiles() {
@@ -64,32 +73,6 @@ var FacilitiesDataLayer = React.createClass({
   renderVectorTiles(template) {
     var self=this
     
-    //generate a categorical color object based on mode
-    if(this.props.mode=='all') {
-      var colorObject = {
-        property: 'domain',
-        type: 'categorical',
-        stops: this.layerStructure.map(function(layer) {
-          return [
-            layer.name,
-            layer.color
-          ]
-        })
-      }
-    } else {
-      var colorObject = {
-        property: 'facilitygroup',
-        type: 'categorical',
-        stops: this.layerStructure[0].children.map(function(layer) {
-          return [
-            layer.name,
-            layer.color
-          ]
-        })
-      }
-    }
-
-
     //add a mapboxGL source for this vector tile template and associated layer(s)
     var map = this.props.map.map 
 
@@ -129,7 +112,7 @@ var FacilitiesDataLayer = React.createClass({
             [15,6]
           ]
         },
-        "circle-color": colorObject,
+        "circle-color": this.getColorObject(),
         "circle-opacity": 0.7
       }
     })
@@ -149,19 +132,57 @@ var FacilitiesDataLayer = React.createClass({
     })
   },
 
+  getColorObject() {
+    //generate a categorical color object based on mode
+    if(this.props.mode=='all') {
+      return {
+        property: 'domain',
+        type: 'categorical',
+        stops: this.layerStructure.map(function(layer) {
+          return [
+            layer.name,
+            layer.color
+          ]
+        })
+      }
+    } else {
+      return {
+        property: 'facilitygroup',
+        type: 'categorical',
+        stops: this.layerStructure[0].children.map(function(layer) {
+          return [
+            layer.name,
+            layer.color
+          ]
+        })
+      }
+    }
+  },
+
+  getColor(value) {
+    var colorObject = this.getColorObject()
+    
+    return colorObject.stops.filter((stop) => stop[0] == value)[0][1]
+  },
+
   showPopup(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
 
     var content = features.map(
-      (feature) => {
+      (feature, i) => {
         const d = feature.properties
+        console.log(d)
         return (
           <div 
             className="popupRow" 
             onClick={self.showModal.bind(self, feature)}
+            key={i}
           >
-            { d.cartodb_id }
+            <div className={'color-circle'} style={{
+              'backgroundColor': this.props.mode == 'all' ? this.getColor(d.domain) : this.getColor(d.facilitygroup)
+            }}> </div> 
+            <span className={'text'}>{d.facilityname} - {d.facilitysubgroup}</span> <i className="fa fa-angle-right" aria-hidden="true"></i> 
           </div>
         )
       }

@@ -11,7 +11,7 @@ var CdLayer = React.createClass({
         "type": "mapnik",
         "options": {
           "cartocss_version": "2.1.1",
-          "cartocss": "/** simple visualization */ #dcp_cdboundaries{ polygon-fill: #FF5C00; polygon-opacity: 0; line-color: #FF5C00; line-width: 1.5; line-opacity: 1; } #dcp_cdboundaries::labels { text-name: [borocd]; text-face-name: 'DejaVu Sans Book'; text-size: 15; text-label-position-tolerance: 10; text-fill: #000; text-halo-fill: #FFF; text-halo-radius: 2.5; text-dy: 0; text-allow-overlap: true; text-placement: point; text-placement-type: simple; } ",
+          "cartocss": "#dcp_cdboundaries{ polygon-fill: #FF5C00; polygon-opacity: 0; line-color: #000000; line-width: 3; line-opacity: 0.5; line-dasharray: 10, 5; } #dcp_cdboundaries::labels { text-name: [borocd]; text-face-name: 'DejaVu Sans Book'; text-size: 15; text-label-position-tolerance: 10; text-fill: #000; text-halo-fill: #FFF; text-halo-radius: 2.5; text-dy: 0; text-allow-overlap: true; text-placement: point; text-placement-type: simple; }",
           "sql": "select * from dcp_cdboundaries"
         }
       }]

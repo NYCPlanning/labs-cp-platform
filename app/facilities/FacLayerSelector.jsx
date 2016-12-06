@@ -9,6 +9,13 @@ import ReactDOM from 'react-dom'
 import {Link} from 'react-router'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import {Tabs, Tab} from 'material-ui/Tabs'
+import FontIcon from 'material-ui/FontIcon'
+import {List, ListItem} from 'material-ui/List'
+import Subheader from 'material-ui/Subheader'
+
+import CountWidget from '../common/CountWidget.jsx'
 
 import Carto from '../helpers/carto.js'
 
@@ -51,29 +58,19 @@ var LayerSelector = React.createClass({
   /*checks to see if there is only one domain.*/
   /*if it's a domain subset page (only one domain), expands all and then requests that count be updated*/
   componentDidMount() {
+    var self=this
     if(this.state.layers.length == 1) {
       this.expandAll()
     }
-    this.updateCounts() 
-  },
-
-  /*NEED TO FIND ANOTHER WAY TO CHECK IF IT'S A SUBSET*/
-  updateCounts() {
-    var self=this
-
+  
     /* get a count of "select all" from entire dataset */
     var SQL = this.props.initialSQL /* where does initial SQL get defined? */
-    var totalCountSQL = "SELECT count(*) as total FROM (" + SQL + ") a"
 
-    Carto.SQL(totalCountSQL, 'json')
-      .then(function(data) {
-        var total = data[0].total
-
-        total = Numeral(total).format('0,0')
-        
+    Carto.getCount(SQL)
+      .then(function(count) {
         self.setState({
-          selectedCount: total,
-          totalCount: total
+          selectedCount: count,
+          totalCount: count
         })
       })
   },
@@ -178,34 +175,24 @@ var LayerSelector = React.createClass({
 
   buildSQL(layers) {
     if (layers.length > 0) {
-      var sql = 'SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup FROM hkates.facilities_data WHERE '
+      var sql = 'SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data WHERE '
       layers.map(function(name, i) {
         if(i>0) sql += ' OR '
         sql += 'facilitysubgroup = \'' + name + '\''
       })  
     } else {
-      var sql ='SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup FROM hkates.facilities_data LIMIT 0'
+      var sql ='SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data LIMIT 0'
     }
 
     this.props.updateSQL(sql)
-    this.getCount(sql)
+    this.getSelectedCount(sql)
   },
 
-  getCount(sql) {
+  getSelectedCount(sql) {
     var self=this
     
-    var countSQL = 'SELECT count(a.*) as selected FROM ( ' + sql + ') a'
-
-    Carto.SQL(countSQL, 'json')
-      .then( function(data) {
-        var selected = data[0].selected
-
-        selected = Numeral(selected).format('0,0')
-        
-        self.setState({
-          selectedCount: selected
-        })
-      })
+    Carto.getCount(sql)
+      .then( (count) => { self.setState({ selectedCount: count }) })
   },
 
   showAll() {
@@ -249,118 +236,145 @@ var LayerSelector = React.createClass({
     var self=this;
 
     return(
-      <div className="col-md-12">
-        <div className='row sidebar-content'>
-          <div className='col-md-12'>
-            <h3>Explore by Facility Types</h3>
-    
-            <p>
-              Select facility types to display on the map. 
-              <OverlayTrigger placement="top" overlay={ <Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
-                <a href="https://nycplanning.github.io/cpdocs/facdb/"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
-              </OverlayTrigger>
-            </p>
-            
+      <div>
+        <Toolbar >
+          <ToolbarGroup>
+            <ToolbarTitle text="Facilities Data Layer" />
+          </ToolbarGroup>
+        </Toolbar>
+        <Tabs>
+          <Tab 
+            icon={<FontIcon className="fa fa-filter"/>}
+            label="Filter"
+          >
+          <CountWidget 
+            totalCount={this.state.totalCount} 
+            selectedCount={this.state.selectedCount} 
+            units={'facilities'}
+          />
+          <Subheader>
+            Select facility types to display on the map.
+            <OverlayTrigger placement="top" overlay={ <Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
+              <a href="https://nycplanning.github.io/cpdocs/facdb/"> <i className="fa fa-info-circle" aria-hidden="true"></i></a>
+            </OverlayTrigger> 
+          </Subheader>
+          <ListItem
+            disabled={true}
+          >
+            <div className="btn-group btn-group-xs" role="group">
+              <div className='btn dcp-orange btn-xs ' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
+              <div className='btn dcp-orange btn-xs ' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
+            </div>
+            <br/>
+            <div className="btn-group btn-group-xs" role="group">
+              <div className='btn dcp-orange btn-xs ' 
+              onClick={this.expandAll} >Expand All</div>
+              <div className='btn dcp-orange btn-xs ' onClick={this.collapseAll}>Collapse All</div>
+            </div>
+          </ListItem>
+
+     
+
+
+
+          <ListItem
+            disabled={true}
+          >
+            <ul className="nav nav-pills nav-stacked" id="stacked-menu">
+              { 
+                this.state.layers.map(function(domain, i) {
+                  return(
+
+                    <li key={'domain' + i}>
+                      <Checkbox 
+                        value={domain.name} 
+                        checked={domain.checked} 
+                        indeterminate={domain.indeterminate}
+                        onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
+                      <a className="nav-container" style={{backgroundColor: self.state.layers.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
+                      <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)}>{domain.name}</div>
+                      <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
+                      <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
+                      {
+                        domain.children.map(function(group, j) {
+                          return (
+                              <div className="group nav nav-pills nav-stacked collapse in" key={j}>
+                              <Checkbox 
+                                  value={group.name} 
+                                  checked={group.checked} 
+                                  indeterminate={group.indeterminate}
+                                  onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
+                              <li>
+
+                                <div className="nav-sub-container" style={{backgroundColor: self.state.layers.length == 1 ? group.color: domain.subColor}}>    
+                                  <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
+                                    <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
+                                        <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true"></i></a>
+                                    </OverlayTrigger>
+                                    {group.name}
+                                  </div>
+                                  <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} style={{'color':'black'}}><span className="caret arrow"></span></div>
+                                </div>
+                              </li>
+                                  
+                                <ul className="subgroup-container nav nav-pills nav-stacked collapse" id={'pv' + i + j} style={{height: 'auto'}} >
+                                {
+                                  group.children.map(function(subgroup, k) {
+                                    return(
+                                      <li className='subgroup' key={k}>
+                                      <Checkbox 
+                                            value={subgroup.name} 
+                                            checked={subgroup.checked} 
+                                            indeterminate={false}
+                                            onChange={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} />
+                                        <div onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} style={{'color':'black'}}>
+                                          <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
+                                            <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true"></i></a>
+                                          </OverlayTrigger>
+                                          {subgroup.name}
+                                        </div>
+                                      </li>
+                                    )
+                                  })
+                                } 
+                                </ul>
+                                </div>
+                          ) 
+                        })
+                      }
+                      </ul>
+                    </li>
+                  )
+                })
+              }
+            </ul>
+            </ListItem>
+            <ListItem
+              disabled={true}
+            >
+              <Link to="/facilities"><div className='btn btn-sm dcp-orange' > <i className="fa fa-arrow-left" aria-hidden="true"></i> Back to Facilities Home</div><br/></Link>
+              <a href="/facilities/all"><div className='btn btn-sm dcp-orange' > <i className="fa fa-map-marker" aria-hidden="true"></i> All Facilities Map</div></a>
+            </ListItem>
+
+              </Tab>
+              <Tab
+                icon={<FontIcon className="fa fa-download"/>}
+                label="Download"
+              >
+                <div>
+                  <List>
+                    <ListItem>
+                      Coming Soon
+                    </ListItem>
+                  </List>
+                </div>
+              </Tab>
+            </Tabs>
           </div>
 
-          <div className="col-md-12">
-            <div className="filter-count">
-              {
-                (this.state.selectedCount == this.state.totalCount) ? 
-                  <span>Showing all {this.state.totalCount} Facilities</span> :
-                  <span>Showing {this.state.selectedCount} of {this.state.totalCount} facilities</span>
-              }
-            </div>
-              <div className="btn-group btn-group-xs" role="group">
-                <div className='btn dcp-orange btn-xs ' onClick={this.showAll} disabled={this.state.checked == 'all'}>Select All</div>
-                <div className='btn dcp-orange btn-xs ' onClick={this.hideAll} disabled={this.state.checked == 'none'}>Select None</div>
-              </div>
-              <br/>
-              <div className="btn-group btn-group-xs" role="group">
-                <div className='btn dcp-orange btn-xs ' 
-                onClick={this.expandAll} >Expand All</div>
-                <div className='btn dcp-orange btn-xs ' onClick={this.collapseAll}>Collapse All</div>
-              </div>
-        </div>
-
-        </div>
 
 
-
-
-        <ul className="nav nav-pills nav-stacked" id="stacked-menu">
-          { 
-            this.state.layers.map(function(domain, i) {
-              return(
-
-                <li key={'domain' + i}>
-                  <Checkbox 
-                    value={domain.name} 
-                    checked={domain.checked} 
-                    indeterminate={domain.indeterminate}
-                    onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)} />
-                  <a className="nav-container" style={{backgroundColor: self.state.layers.length == 1 ? 'rgb(224, 224, 224)' : domain.color}}>
-                  <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)} style={{'display':'inline-block', 'width': '240px'}}>{domain.name}</div>
-                  <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={'#p' + (i)}><span className="caret arrow"></span></div></a>    
-                  <ul className="group-container nav nav-pills nav-stacked collapse" id={"p" + (i)} style={{height: 'auto'}}>
-                  {
-                    domain.children.map(function(group, j) {
-                      return (
-                          <div className="group nav nav-pills nav-stacked collapse in" key={j}>
-                          <Checkbox 
-                              value={group.name} 
-                              checked={group.checked} 
-                              indeterminate={group.indeterminate}
-                              onChange={self.toggleCheckbox.bind(self, 'group', i , j, null)} />
-                          <li>
-
-                            <a className="nav-sub-container" style={{backgroundColor: self.state.layers.length == 1 ? group.color: domain.subColor}}>    
-                              <div onClick={self.toggleCheckbox.bind(self, 'group', i , j, null)} style={{'color':'black'}}>
-                                <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{group.description}</Tooltip>}>
-                                    <i className="fa fa-info-circle" aria-hidden="true"></i>
-                                </OverlayTrigger>
-                                {group.name}
-                              </div>
-                              <div className="caret-container collapsed" data-toggle="collapse" data-parent={"#p" + (i)} href={'#pv' + i + j} style={{'color':'black'}}><span className="caret arrow"></span></div>
-                            </a>
-                          </li>
-                              
-                            <ul className="subgroup-container nav nav-pills nav-stacked collapse" id={'pv' + i + j} style={{height: 'auto'}} >
-                            {
-                              group.children.map(function(subgroup, k) {
-                                return(
-                                  <li className='subgroup' key={k}>
-                                  <Checkbox 
-                                        value={subgroup.name} 
-                                        checked={subgroup.checked} 
-                                        indeterminate={false}
-                                        onChange={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} />
-                                    <a onClick={self.toggleCheckbox.bind(self, 'subgroup',i, j, k)} style={{'color':'black'}}>
-                                      <OverlayTrigger placement="right" overlay={ <Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
-                                        <i className="fa fa-info-circle" aria-hidden="true"></i>
-                                      </OverlayTrigger>
-                                      {subgroup.name}
-                                    </a>
-                                  </li>
-                                )
-                              })
-                            } 
-                            </ul>
-                            </div>
-                      ) 
-                    })
-                  }
-                  </ul>
-                </li>
-              )
-            })
-          }
-        </ul>
-        <div className='sidebar-buttons'>
-          <Link to="/facilities"><div className='btn btn-sm dcp-orange' > <i className="fa fa-arrow-left" aria-hidden="true"></i> Back to Facilities Home</div><br/></Link>
-          <a href="/facilities/all"><div className='btn btn-sm dcp-orange' > <i className="fa fa-map-marker" aria-hidden="true"></i> All Facilities Map</div></a>
-        </div>
-      </div>
+      
     )
   }
 })

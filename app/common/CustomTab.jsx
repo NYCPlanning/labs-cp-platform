@@ -143,7 +143,7 @@ class Tab extends Component {
         onTouchTap={this.handleTouchTap}
       >
         <div style={styles.button} >
-          <OverlayTrigger placement="right" delayShow={500} overlay={<Tooltip id="tooltip">{tooltipText}</Tooltip>}>
+          <OverlayTrigger placement="right" delayShow={250} overlay={<Tooltip id="tooltip">{tooltipText}</Tooltip>}>
             {iconElement}
           </OverlayTrigger>
         </div>

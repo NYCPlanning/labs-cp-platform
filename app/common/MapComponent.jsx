@@ -8,7 +8,6 @@ import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 
-import Nav from './Nav.jsx'
 import MapboxGLMap from './MapboxGLMap.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
@@ -69,6 +68,14 @@ var MapComponent = React.createClass({
 
     this.setState({
       legendContent: this.state.legendContent
+    })
+  },
+
+  showAbout() {
+    this.props.showModal({
+      modalHeading: 'About this Tool',
+      modalContent: content.about,
+      modalCloseText: 'Close'
     })
   },
 
@@ -140,9 +147,6 @@ var MapComponent = React.createClass({
 
     return(
       <div className="full-height">
-        <Nav title={this.props.title} auth={this.props.auth} showModal={this.props.showModal}>
-          <li onClick={this.showAbout}><a> About</a></li>
-        </Nav>
         <div id="main-container">
           <div id="content">
             <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
