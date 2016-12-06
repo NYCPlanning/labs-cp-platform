@@ -5,6 +5,8 @@
 
 import React from 'react'
 import {Button, ButtonGroup} from 'react-bootstrap'
+import extent from 'turf-extent'
+
 import Agencies from '../helpers/agencies.js'
 
 var ModalMap = React.createClass({
@@ -12,6 +14,10 @@ var ModalMap = React.createClass({
     return {
       basemap: 'light'
     }
+  },
+
+  componentDidMount() {
+    this.renderMap();
   },
 
   setBasemap(style) {
@@ -33,30 +39,12 @@ var ModalMap = React.createClass({
         zoom: 14
       })
     } else {
-      var bbox = extent(feature)  
+      var bbox = extent(feature)  //use turf to get the extent of the feature
       this.map.fitBounds([[bbox[0],bbox[1]],[bbox[2],bbox[3]]], {
         padding:100
       })
     }
 
-  },
-
-  render() {
-    return(
-      <div id='modalmap' style={{height: 450}}>
-        <div className='basemap mapOverlay'>
-          <h4>Basemap</h4>
-          <ButtonGroup>
-            <Button active={this.state.basemap=='light'} onClick={this.setBasemap.bind(this, 'light')} bsSize="xsmall"> Streets</Button>
-            <Button active={this.state.basemap=='satellite'} onClick={this.setBasemap.bind(this, 'satellite')} bsSize="xsmall"> Aerial</Button>
-          </ButtonGroup>
-        </div>
-      </div>
-    )
-  },
-
-  componentDidMount() {
-    this.renderMap();
   },
 
   renderMap() {
@@ -115,7 +103,23 @@ var ModalMap = React.createClass({
 
       self.flyMap()
     })
-  }
+  },
+
+  render() {
+    return(
+      <div id='modalmap' style={{height: 450}}>
+        <div className='basemap mapOverlay'>
+          <h4>Basemap</h4>
+          <ButtonGroup>
+            <Button active={this.state.basemap=='light'} onClick={this.setBasemap.bind(this, 'light')} bsSize="xsmall"> Streets</Button>
+            <Button active={this.state.basemap=='satellite'} onClick={this.setBasemap.bind(this, 'satellite')} bsSize="xsmall"> Aerial</Button>
+          </ButtonGroup>
+        </div>
+      </div>
+    )
+  },
+
+
 });
 
 module.exports=ModalMap;

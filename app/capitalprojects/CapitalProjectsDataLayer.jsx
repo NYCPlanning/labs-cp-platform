@@ -23,6 +23,34 @@ var CapitalProjectsDataLayer = React.createClass({
 
   componentDidMount() {
     this.instantiateVectorTiles()
+
+    var legendContent = (
+      <div className="legendSection">
+        <h4>Sponsor Agency</h4>
+        <div className="legendItem">
+          <div className="colorBox" style={{backgroundColor: 'rgb(51, 160, 44)'}}></div>
+          <div className="legendItemText">Dept. of Parks and Recreation - (DPR)</div>
+        </div>
+        <div className="legendItem">
+          <div className="colorBox" style={{backgroundColor: 'rgb(202, 178, 214)'}}></div>
+          <div className="legendItemText">Dept. of Transportation - (DOT)</div>
+        </div>
+        <div className="legendItem">
+          <div className="colorBox" style={{backgroundColor: 'rgb(31, 120, 180)'}}></div>
+          <div className="legendItemText">Dept. of Environmental Protection - (DEP)</div>
+        </div>
+        <div className="legendItem">
+          <div className="colorBox" style={{backgroundColor: 'rgb(255, 127, 0)'}}></div>
+          <div className="legendItemText">School Construction Authority - (SCA)</div>
+        </div>
+        <div className="legendItem">
+          <div className="colorBox" style={{backgroundColor: 'rgb(255, 204, 0)'}}></div>
+          <div className="legendItemText">All other agencies</div>
+        </div>
+      </div>
+    )
+
+    this.props.updateLegend('capitalprojects', legendContent) //send legend content up to MapComponent for rendering
   },
 
   instantiateVectorTiles() {

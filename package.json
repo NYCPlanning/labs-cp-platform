@@ -43,6 +43,7 @@
     "react-tap-event-plugin": "^2.0.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
+    "turf-extent": "^1.0.4",
     "webpack": "^1.13.1"
   },
   "babel": {

@@ -17,7 +17,7 @@ import Tab from './CustomTab.jsx'
 import TabDrawer from './TabDrawer.jsx'
 import MapMenu from './MapMenu.jsx'
 
-import '../../stylesheets/pipeline/PipelineExplorer.scss'
+import '../../stylesheets/common/MapComponent.scss'
 
 var MapComponent = React.createClass({
   getInitialState() {
@@ -27,7 +27,8 @@ var MapComponent = React.createClass({
         subway: false,
         cdboundaries: false
       }, 
-      basemap: 'light'
+      basemap: 'light',
+      legendContent: {}
     })
   },
 
@@ -63,13 +64,22 @@ var MapComponent = React.createClass({
     })
   },
 
+  updateLegend(layer, content) {
+    this.state.legendContent[layer] = content
+
+    this.setState({
+      legendContent: this.state.legendContent
+    })
+  },
+
   render() {
     var self=this
 
     //add the MapComponent to all children as a prop
     const childrenWithProps = React.Children.map(this.props.children, 
       (child) => React.cloneElement(child, {
-        map: this.refs.map ? this.refs.map : null
+        map: this.refs.map ? this.refs.map : null,
+        updateLegend: this.updateLegend
       })
     )
 
@@ -119,6 +129,16 @@ var MapComponent = React.createClass({
     if (this.state.overlays.subway) { overlays.push(<SubwayLayer/>) }
     if (this.state.overlays.cdboundaries) { overlays.push(<CdLayer/>) } 
 
+    //turn state.legendContent into an array of components
+    var legendChildren = Object.keys(this.state.legendContent).map(function (key, i) { 
+      console.log(key)
+      return (
+        <div key={i}> 
+          {self.state.legendContent[key]}
+        </div>
+      ) 
+    });
+
     return(
       <div className="full-height">
         <Nav title={this.props.title} auth={this.props.auth} showModal={this.props.showModal}>
@@ -131,6 +151,9 @@ var MapComponent = React.createClass({
                 map={this.refs.map}
                 onToggleMenuDrawer={this.toggleMenuDrawer}
                 />
+              <Legend>
+                {legendChildren}
+              </Legend>
             </div>
             <MapboxGLMap
               ref="map"
@@ -149,5 +172,15 @@ var MapComponent = React.createClass({
     )
   }
 })
+
+var Legend = function(props) {
+  console.log('PROPS', props)
+
+  return(
+    <div className='legend mapOverlay'>
+      {props.children}
+    </div>
+  )
+}
 
 module.exports=MapComponent
