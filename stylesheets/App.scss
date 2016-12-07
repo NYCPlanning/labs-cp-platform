@@ -7,13 +7,15 @@ h1, h2, h3, h4, h5 {
 }
 
 html, body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
 
-body::webkit-scrollbar {
-  width: 0px;
+::-webkit-scrollbar {
+  width: 0px !important;
 }
 
 
