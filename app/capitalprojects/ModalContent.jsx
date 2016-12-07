@@ -88,7 +88,7 @@ var ModalContent = React.createClass({
                 <dd>{(new Date(d.constart) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'unknown'}</dd>  
 
                 <dt>Construction End</dt>
-                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.constart).format('MMMM YYYY') : 'unknown'}</dd>
+                <dd>{(new Date(d.conend) > new Date(1970, 1, 1)) ? Moment(d.conend).format('MMMM YYYY') : 'unknown'}</dd>
               </dl>              
             </li>
 
