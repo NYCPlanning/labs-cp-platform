@@ -349,12 +349,6 @@ var LayerSelector = React.createClass({
               }
             </ul>
             </ListItem>
-            <ListItem
-              disabled={true}
-            >
-              <Link to="/facilities"><div className='btn btn-sm dcp-orange' > <i className="fa fa-arrow-left" aria-hidden="true"></i> Back to Facilities Home</div><br/></Link>
-              <a href="/facilities/all"><div className='btn btn-sm dcp-orange' > <i className="fa fa-map-marker" aria-hidden="true"></i> All Facilities Map</div></a>
-            </ListItem>
 
               </Tab>
               <Tab
