@@ -5,6 +5,7 @@
 //  map: the mapboxGL map object to add the source and layer to
 //  mode: which mode the data layer shoud be in all, domain-[domainname], etc
 import React from 'react'
+import Moment from 'moment'
 
 import FacLayerSelector from './FacLayerSelector.jsx'
 import ModalContent from './ModalContent.jsx'
@@ -35,16 +36,37 @@ var FacilitiesDataLayer = React.createClass({
   },
 
   componentDidMount() {
+    var self=this
     this.instantiateVectorTiles()
 
-    var legendContent = (
-      <div className="legendSection">
-        <p>Hover over a facility or click for full details</p>
-        <p>Data current as of 09/05/2014 - 10/01/2016</p>
-      </div>
-    )
+    var sql = `
+      SELECT
+        min(datesourceupdated)::date AS min,
+        max(datesourceupdated)::date AS max
+      FROM hkates.facilities_data`
 
-    this.props.updateLegend('facilities', legendContent) //send legend content up to MapComponent for rendering
+    Carto.SQL(sql, 'json')
+      .then(function(data) {
+
+        var range = {
+          min: Moment(data[0].min).format('MM/DD/YYYY'),
+          max: Moment(data[0].max).format('MM/DD/YYYY')
+        }
+
+        var legendContent = (
+          <div className="legendSection">
+            <p>Hover over a facility or click for full details</p>
+            <p>Data current as of {range.min} - {range.max}</p>
+          </div>
+        )
+
+        //send legend content up to MapComponent for rendering
+        self.props.updateLegend('facilities', legendContent)
+      })
+
+
+
+     
   },
 
   instantiateVectorTiles() {

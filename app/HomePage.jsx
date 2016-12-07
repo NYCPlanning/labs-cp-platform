@@ -24,10 +24,14 @@ var HomePage = React.createClass({
     })
   },
 
+  showCollaborate() {
+    this.refs.nav.showCollaborate()
+  },
+
   render() {
     return(
       <div>
-      <Nav title='Capital Planning Platform' auth={this.props.auth} showModal={this.props.showModal}>
+      <Nav title='Capital Planning Platform' auth={this.props.auth} showModal={this.props.showModal} ref={'nav'}>
         <li onClick={this.showAbout}><a> About</a></li>
       </Nav>
 

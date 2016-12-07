@@ -10,11 +10,17 @@ var PipeLineExplorer = React.createClass({
   componentDidMount() {
     document.title = "Housing Development Explorer"
 
-    this.props.showModal({
-      modalHeading: 'Welcome!',
-      modalContent: splashContent,
-      modalCloseText: 'Got it.  Let me in!'
-    })
+    var modalShown = JSON.parse(localStorage.getItem('pipeline-splash'))
+    
+    if (!modalShown) {
+      this.props.showModal({
+        modalHeading: 'Welcome!',
+        modalContent: splashContent,
+        modalCloseText: 'Got it.  Let me in!'
+      })
+
+      localStorage.setItem('pipeline-splash', 'true');    
+    }
   },
 
   showAbout() {
