@@ -11,11 +11,17 @@ var CapitalProjectsExplorer = React.createClass({
   componentDidMount() {
     document.title = "NYC Capital Projects Map";
     
-    this.props.showModal({
-      modalHeading: 'Welcome!',
-      modalContent: splashContent,
-      modalCloseText: 'Got it.  Let me in!'
-    })
+    var modalShown = JSON.parse(localStorage.getItem('capitalprojects-splash'))
+    
+    if (!modalShown) {
+      this.props.showModal({
+        modalHeading: 'Welcome!',
+        modalContent: splashContent,
+        modalCloseText: 'Got it.  Let me in!'
+      }) 
+
+      localStorage.setItem('capitalprojects-splash', 'true');    
+    }
   },
 
   showAbout() {

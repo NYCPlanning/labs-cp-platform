@@ -11,12 +11,24 @@ var FacilitiesExplorer = React.createClass({
   componentDidMount() {
     document.title = "Facilities and Program Sites Explorer";
 
-    this.props.showModal({
-      modalHeading: 'Welcome!',
-      modalContent: content.splash,
-      modalCloseText: 'Got it.  Let me in!'
-    })
+    
+
+    var modalShown = JSON.parse(localStorage.getItem('facilities-splash'))
+    
+    if (!modalShown) {
+      this.props.showModal({
+        modalHeading: 'Welcome!',
+        modalContent: content.splash,
+        modalCloseText: 'Got it.  Let me in!'
+      })
+
+      localStorage.setItem('facilities-splash', 'true');    
+    }
+
   },
+
+
+
 
   showAbout() {
     this.props.showModal({
