@@ -12,6 +12,11 @@ html, body {
     overflow: hidden;
 }
 
+body::webkit-scrollbar {
+  width: 0px;
+}
+
+
 #main-container {
   position: absolute;
   top: 80px;
