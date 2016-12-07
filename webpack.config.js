@@ -17,7 +17,11 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loaders: ['babel?presets[]=es2015&presets[]=react&presets[]=stage-0']
+        loader: 'babel-loader',
+        query: {
+          plugins: ['transform-object-assign'],
+          presets: ['es2015', 'react', 'stage-0']
+        }
       },
       {
         test: /\.scss$/,
