@@ -3,6 +3,7 @@
 //  data - data object for this project
 
 import React from 'react' 
+import moment from 'moment'
 
 import ModalMap from '../common/ModalMap.jsx'
 
@@ -53,13 +54,13 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
               <h4>DOB Certificate of Occupancy Details</h4>
               <dl className="dl-horizontal">
                 <dt>Earliest CofO (Since 2010)</dt>
-                <dd>{d.dob_cofo_date_first}</dd>
+                <dd>{moment(d.dob_cofo_date_first).format('MM/DD/YYYY')}</dd>
 
                 <dt>Most Recent CofO</dt>
-                <dd>{d.dob_cofo_date_last}</dd>
+                <dd>{moment(d.dob_cofo_date_last).format('MM/DD/YYYY')}</dd>
 
                 <dt>Most Recent CofO Type</dt>
-                <dd>{d.dob_cofo_last_type}</dd>
+                <dd>{moment(d.dob_cofo_last_type).format('MM/DD/YYYY')}</dd>
              
 
               </dl>
