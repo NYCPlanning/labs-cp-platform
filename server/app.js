@@ -7,7 +7,7 @@ var app = express();
 
 app.use(compression());
 
-const PUBLIC_DIR_PATH = require('path').resolve('.');
+const PUBLIC_DIR_PATH = require('path').resolve('./public');
 app.use(express.static(PUBLIC_DIR_PATH));
 app.use(spa(PUBLIC_DIR_PATH + "/index.html"));
 

@@ -4,7 +4,7 @@ import {Route, Router, browserHistory} from 'react-router'
 import { createHistory, useBasename } from 'history'
 import ReactGA from 'react-ga'
 
-import routes from './config/routes.jsx'
+import routes from './app/routes.jsx'
 
 //initialize google analytics
 ReactGA.initialize('UA-84250233-2')

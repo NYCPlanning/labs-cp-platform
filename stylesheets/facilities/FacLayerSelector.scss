@@ -1,0 +1,127 @@
+/*Collapsible Menu Sidebar from http://www.bootply.com/G2XMjMr27Y*/
+
+.caret-container {
+  float: right;
+}
+
+.nav-container {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+  
+.nav-sub-container {
+  background-color: #f8f8f8;  
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/*second tier indentation*/
+div.nav-stacked > li > div {
+  font-family: 'open sans', sans-serif;
+  padding: 3px 30px 3px 40px;
+}
+
+
+/*third tier indentation*/
+ul.nav-stacked ul.nav-stacked > li > div {
+  font-family: 'open sans', sans-serif;
+  padding: 3px 15px 3px 50px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#stacked-menu {
+  margin-bottom: 20px;
+}
+
+.sidebar-buttons .btn {
+  margin-bottom: 15px;
+}
+
+.nav-container {
+   color: #101011;
+   font-family: 'Open Sans', sans-serif;
+}
+
+
+
+#stacked-menu input[type=checkbox] {
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  left: 10px;
+}
+
+.group {
+  position: relative;
+}
+
+#stacked-menu .group input[type=checkbox] {
+  top: 0px;
+  left: 16px;
+}
+
+
+
+#stacked-menu .subgroup input[type=checkbox]{
+  top: 1px;
+  left: 25px;
+}
+
+
+.nav > li > div {
+  padding: 10px 30px 10px 36px;
+}
+
+.caret {
+  border-top: 8px dashed;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.group .caret {
+  border-top: 6px dashed;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
+
+.caret-container {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.nav-sub-container .caret-container {
+  top: 3px;
+  right: 11px;
+}
+
+.filter-count {
+  background-color: hsla(0, 0%, 86%, 0.86);
+  padding: 7.5px;
+  border-radius: 5px;
+}
+
+.nav-sub-container .fa {
+    float: right;
+    margin-top: 3px;
+    border-color: #EBEBEB;
+}
+
+.subgroup .fa {
+    float: right;
+    margin-top: 2px;
+    border-color: #EBEBEB;
+}
+
+h5 .fa {
+  margin-left: 5px;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #ebebeb;
+}
+
+
+/*End Collapsible Menu Sidebar*/

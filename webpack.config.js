@@ -1,11 +1,13 @@
 var webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 
 module.exports = {
   entry: [
     './main.jsx'
   ],
   output: {
-    path: 'js',
+    path: 'public/js',
     filename: 'bundle.js',
     publicPath: '/js/'
   },
@@ -15,8 +17,15 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loaders: ['babel?presets[]=es2015&presets[]=react']
+        loaders: ['babel?presets[]=es2015&presets[]=react&presets[]=stage-0']
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass')
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('../css/bundle.css')
+  ]
 };

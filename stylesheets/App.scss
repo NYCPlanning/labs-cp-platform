@@ -1,0 +1,180 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Oswald', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+#main-container {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.full-height {
+  height:100%;    
+  overflow-y: scroll;
+}
+
+.btn.dcp-orange {
+  background-color: #d96b27;
+  border-color: #d68a40;
+  color: #FFF;
+  min-width: 86px;
+}
+
+.dcp-orange {
+  color: #d96b27;
+}
+
+
+.btn.dcp-orange:hover, .btn.dcp-orange:active  {
+  background-color: #a5501b;
+  border-color: #a5501b;
+  color: #FFF;
+}
+
+.fa-info-circle {
+  color: #d96b27;
+}
+
+
+.tooltip-inner {
+  color: #464646;
+  background-color: #ebebeb;
+  text-align: left;
+  font-size: 11px;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #ebebeb;
+}
+
+section {
+  padding: 100px 0;
+}
+
+.bg-primary {
+  background-color: #ccc;
+  color: #636363;
+}
+
+/* hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    border-width: 3px;
+    max-width: 50px;
+    border-color: #000;
+}*/
+
+.bg-primary p {
+  font-size: 19px;
+  color: #636363;
+}
+
+/*Sidebar & Main Content*/
+
+
+#sidebar {
+  box-sizing: border-box;
+  width: 340px;
+  height: 100%;
+  overflow-y: scroll;
+  float: left;
+}
+
+
+.sidebar-content h3 {
+  margin-top: 10px;
+ 
+}
+
+.sidebar-content .btn {
+  margin-top: 10px;
+}
+
+.sidebar-content {
+  margin-bottom: 15px;
+}
+
+#content {
+  width:100%;
+  height:100%;
+}
+
+
+/*End Sidebar & Main Content*/
+
+.dl-horizontal dt {
+  float: left;
+  width: 200px;
+  overflow: hidden;
+  clear: left;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 10px;
+}
+
+/*Beta Banner*/
+
+body:after {
+    content: "beta";
+    position: fixed;
+    width: 80px;
+    height: 25px;
+    background: #e7ff1e;
+    top: 7px;
+    left: -20px;
+    text-align: center;
+    font-size: 13px;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #818181;
+    line-height: 27px;
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    z-index: 10000;
+    border-bottom: 1px solid #b4b4b4;
+    border-top: 1px solid #b4b4b4;
+}
+
+/*End Beta Banner*/
+
+
+
+
+
+/*Jquery UI Range Slider Customization*/
+
+.ui-rangeSlider-bar {
+    background: #d96b27;
+}
+/*End Jquery UI Range Slider Customization*/
+
+
+/* CountWidget */
+
+.countWidget {
+  .bigNumber {
+    font-size:20px;
+    font-weight: bold;
+  }
+}
+
+
+
+/* End CountWidget */

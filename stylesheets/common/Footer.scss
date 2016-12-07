@@ -1,0 +1,64 @@
+
+/*Footer inspired by https://www.engineyard.com/*/
+
+.footer {
+  background: #ececec;
+  padding-top: 56px;
+  padding-bottom: 56px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.footer h4 {
+  color: #d96b27;
+  font-weight: 100;
+}
+
+.footer dl {
+  border-right: 1px solid #8f8f8f;
+  height: 200px;
+}
+
+.footer dt, .footer dd {
+    line-height: 32px;
+}
+
+.footer dd a {
+  color: #8f8f8f;
+}
+
+.footer dd a:hover {
+  color: #464646;
+}
+
+.copyright {
+  font-size: 11px;
+}
+
+.footer .social-icons li {
+    border: 1px solid #696D7D;
+    border-radius: 24px;
+    width: 48px;
+    height: 48px;
+    position: relative;
+    margin-right: 5px;
+}
+
+.footer .social-icons li a.twitter {
+    top: 15px;
+    left: 15px;
+}
+
+.footer .social-icons li a.facebook {
+    top: 14px;
+    left: 14px;
+}
+
+.footer .social-icons li a.github {
+    top: 14px;
+    left: 14px;
+}
+
+.footer .social-icons li a {
+    position: absolute;
+}

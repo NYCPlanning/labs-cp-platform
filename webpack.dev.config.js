@@ -1,4 +1,6 @@
 var webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 
 module.exports = {
   entry: [
@@ -7,8 +9,8 @@ module.exports = {
   ],
   output: {
     path: './public',
-    filename: 'bundle.js',
-    publicPath: '/js/'
+    filename: 'js/bundle.js',
+    publicPath: '/'
   },
   devtool: 'source-map',
   module: {
@@ -16,11 +18,19 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loaders: ['react-hot', 'babel?presets[]=es2015&presets[]=react']
+        loaders: [
+          'react-hot', 
+          'babel?presets[]=es2015&presets[]=react&presets[]=stage-0'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass')
       }
     ]
   },
   plugins: [
+    new ExtractTextPlugin('css/bundle.css'),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': '"development"'
