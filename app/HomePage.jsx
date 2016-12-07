@@ -125,7 +125,7 @@ var HomePage = React.createClass({
                 </div>
 
                 <div className="col-md-4">
-                  <a href='https://nycplanning.github.io/travelsheds'>
+                  <a href='#''>
                     <div className="col-md-12 building-item text-left">
                       <h3>
                         Neighborhood Profiles
