@@ -9,7 +9,6 @@ h1, h2, h3, h4, h5 {
 html, body {
   height: 100%;
   width: 100%;
-  overflow: hidden;
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
 }
@@ -29,7 +28,7 @@ html, body {
 
 .full-height {
   height:100%;    
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
 }
 
 .btn.dcp-orange {
