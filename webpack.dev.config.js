@@ -20,7 +20,7 @@ module.exports = {
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          plugins: ['transform-object-assign'],
+          plugins: ['transform-object-assign','es6-promise'],
           presets: ['es2015', 'react', 'stage-0']
         }
       },
