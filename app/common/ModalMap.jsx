@@ -6,6 +6,7 @@
 import React from 'react'
 import {Button, ButtonGroup} from 'react-bootstrap'
 import extent from 'turf-extent'
+import centroid from 'turf-centroid'
 
 import Agencies from '../helpers/agencies.js'
 
@@ -47,6 +48,17 @@ var ModalMap = React.createClass({
 
   },
 
+  getCenter() {
+    var feature = this.props.data;
+    //single points get flyTo(), everything else gets fitBounds()
+    if(feature.geometry.type=='Point') {
+      return feature.geometry.coordinates
+    } else {
+      console.log(centroid(feature))
+      return centroid(feature).geometry.coordinates //get the centroid
+    }
+  },
+
   renderMap() {
     var self=this;
 
@@ -54,9 +66,9 @@ var ModalMap = React.createClass({
     var map = this.map = new mapboxgl.Map({
         container: 'modalmap',
         style: 'mapbox://styles/mapbox/light-v9',
-        zoom: 10,
+        zoom: 12,
         minZoom: 1,
-        center: [-74.024849,40.705628],
+        center: this.getCenter(),
         pitch: 0
     });
 
