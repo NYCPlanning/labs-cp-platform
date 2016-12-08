@@ -17,7 +17,8 @@ var TabDrawer = React.createClass({
         left:0,
         backgroundColor: '#FFF',
         transition: 'transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
-        transform: this.props.open ? 'translate(0,0)' : 'translate(-320px,0)'
+        transform: this.props.open ? 'translate(0,0)' : 'translate(-320px,0)',
+        zIndex: 10
       }}>
         <Tabs 
           tabItemContainerStyle={{
