@@ -24,7 +24,7 @@ var Component = React.createClass({
     var self=this
     // after mount, fetch data and set state
     carto.getRow('hkates.facilities_data', 'cartodb_id', parseInt(this.props.params.id))
-      .then(function(data) { console.log(data)
+      .then(function(data) { 
         self.setState({
           data: data
         })
@@ -56,7 +56,6 @@ var Component = React.createClass({
     var d = data.properties
     var coord = data.geometry.coordinates
     var latlng = [coord[1], coord[0]] 
-    console.log(d)
 
     var Categories = function() {
       return(

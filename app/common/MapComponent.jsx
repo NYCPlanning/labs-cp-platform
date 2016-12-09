@@ -3,6 +3,7 @@
 //   leftDrawerOpen - boolean - whether the left drawer should be open on mount
 //   title - string - title to be passed into the nav component
 //   children - data layers
+//   overlays - array of overlay configuration objects
 
 import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
@@ -12,9 +13,12 @@ import MapboxGLMap from './MapboxGLMap.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
 import CdLayer from '../overlays/CdLayer.jsx'
+import NtaLayer from '../overlays/NtaLayer.jsx'
 import Tab from './CustomTab.jsx'
 import TabDrawer from './TabDrawer.jsx'
 import MapMenu from './MapMenu.jsx'
+
+import overlays from '../overlays/overlayConfig.js'
 
 import '../../stylesheets/common/MapComponent.scss'
 
@@ -22,10 +26,7 @@ var MapComponent = React.createClass({
   getInitialState() {
     return({
       leftDrawerOpen: this.props.leftDrawerOpen ? this.props.leftDrawerOpen : false,
-      overlays: {
-        subway: false,
-        cdboundaries: false
-      }, 
+      overlays: overlays,
       basemap: 'light',
       legendContent: {}
     })
@@ -53,13 +54,20 @@ var MapComponent = React.createClass({
     })
   },
 
-  handleOverlayToggle(overlay) {
-    //toggles an overlay layer.  overlayState contains a boolean for each overlay
-    var overlayState = this.state.overlays 
-    overlayState[overlay] = !overlayState[overlay]
+  handleOverlayToggle(id) {
+    var sections = this.state.overlays
+
+    //find the matching layer in the overlays data
+    sections.forEach((section) => {
+      const thisLayer = section.layers.find((layer) => {
+        return layer.id===id
+      })
+
+      if (thisLayer) thisLayer.visible = !thisLayer.visible
+    }) 
 
     this.setState({
-      overlays: overlayState
+      overlays: sections
     })
   },
 
@@ -110,31 +118,33 @@ var MapComponent = React.createClass({
     })
 
     //insert the global map menu to the top of the array of tabs
-    childrenTabs.unshift(
-      <Tab 
-        icon={<FontIcon className="fa fa-bars"/>} 
-        tooltipText='Map Menu'
-        key={0} 
-        onActive={self.openLeftDrawer}
-        style={{
-          height: 'auto',
-          width: '40px'
-        }}
-      >
-        <MapMenu
-          overlays={this.state.overlays}
-          onUpdate={this.handleOverlayToggle}
-          basemap={this.state.basemap}
-          onBasemapChange={this.handleBasemapChange}
-        />
-      </Tab>
-    )
+    if (this.refs.map) {
+      childrenTabs.unshift(
+        <Tab 
+          icon={<FontIcon className="fa fa-bars"/>} 
+          tooltipText='Map Menu'
+          key={0} 
+          onActive={self.openLeftDrawer}
+          style={{
+            height: 'auto',
+            width: '40px'
+          }}
+        >
+          <MapMenu
+            overlays={this.state.overlays}
+            map={this.refs.map.map}
+            onUpdate={this.handleOverlayToggle}
+          />
+        </Tab>
+      )
+    }
 
-    //build an array of visible overlay layers
-    const overlays = []
+    // //build an array of visible overlay layers
+    // const overlays = []
 
-    if (this.state.overlays.subway) { overlays.push(<SubwayLayer/>) }
-    if (this.state.overlays.cdboundaries) { overlays.push(<CdLayer/>) } 
+    // if (this.state.overlays.subway) { overlays.push(<SubwayLayer/>) }
+    // if (this.state.overlays.cdboundaries) { overlays.push(<CdLayer/>) } 
+    // if (this.state.overlays.ntaboundaries) { overlays.push(<NtaLayer/>) } 
 
     //turn state.legendContent into an array of components
     var legendChildren = Object.keys(this.state.legendContent).map(function (key, i) { 
@@ -161,7 +171,6 @@ var MapComponent = React.createClass({
             <MapboxGLMap
               ref="map"
               >
-              {overlays}
             </MapboxGLMap>
             <TabDrawer 
               open={this.state.leftDrawerOpen}

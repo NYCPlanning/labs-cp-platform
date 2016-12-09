@@ -10,8 +10,73 @@ import { Tab as MuiTab} from 'material-ui/Tabs'
 import Divider from 'material-ui/Divider';
 import DropDownMenu from 'material-ui/DropDownMenu'
 
+import CartoLayer from '../overlays/CartoLayer.jsx'
+import GeoJsonLayer from '../overlays/GeoJsonLayer.jsx'
+
+
+
 
 var MapMenu = function(props) {
+
+  //map overlay objects to UI elements
+  const listItems = props.overlays.map((section, i) => {
+    const layers = section.layers.map((layer, j) => {
+      return (
+        <ListItem
+          style={{
+            fontWeight: 300
+          }}
+          primaryText={layer.name}
+          rightToggle={
+            <Toggle 
+              toggled={layer.visible} 
+              onToggle={() => props.onUpdate(layer.id)} 
+            />
+          } 
+          key={j}
+        />
+      )
+    })
+
+    return (
+      <ListItem 
+        primaryText={section.name} 
+        leftIcon={<FontAwesomeMuiIcon icon={section.iconClass}/>} 
+        primaryTogglesNestedList={true}
+        nestedItems={layers}
+        key={i}
+      />
+    )
+  })
+
+  //also map overlay objects to actual layers
+  const drawnLayers = props.overlays.map((section, i) => {
+    return section.layers.map((layer, j) => {
+     if(layer.visible) {
+        if(layer.type=='carto') {
+          return (
+            <CartoLayer
+              map={props.map}
+              id={layer.name}
+              options={layer.options}
+              key={i}
+            />
+          )
+        } else if (layer.type=='geojson') {
+          return (
+            <GeoJsonLayer
+              map={props.map}
+              source={layer.options.source}
+              id={layer.id}
+              layer={layer.options.layer}
+              key={i}
+            />
+          )
+        }
+      } 
+    })
+  })
+
  return(
     <div>
       <Toolbar >
@@ -22,27 +87,9 @@ var MapMenu = function(props) {
       
       <List>
       <Subheader>Overlay Layers</Subheader>
-        <ListItem 
-          primaryText="Subway Lines" 
-          leftIcon={<FontAwesomeMuiIcon icon="fa-subway"/>} 
-          rightToggle={<Toggle toggled={props.overlays.subway} onToggle={() => props.onUpdate('subway')}/>} 
-        />
-        <ListItem 
-          primaryText="Community Districts" 
-          leftIcon={<FontAwesomeMuiIcon icon="fa-flag"/>} 
-          rightToggle={<Toggle toggled={props.overlays.cdboundaries} onToggle={() => props.onUpdate('cdboundaries')}/>} 
-        />
-      {/*<Divider/>
-      <Subheader>Basemap</Subheader>
-        <DropDownMenu
-          value={props.basemap}
-          onChange={props.onBasemapChange}
-        >
-          <MenuItem value={'light'} primaryText="Light" />
-          <MenuItem value={'dark'} primaryText="Dark" />
-          <MenuItem value={'satellite'} primaryText="Satellite" />
-        </DropDownMenu>*/}
+        {listItems}
       </List>
+      {drawnLayers} {/* None of the layers actually renders elements, but this causes them to mount */}
     </div>
   )
 }
