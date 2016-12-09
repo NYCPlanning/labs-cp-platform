@@ -51,7 +51,6 @@ var CapitalProjectsFilter = React.createClass({
 
     carto.getCount(totalQuery)
       .then((count) => {
-        console.log(count)
 
         //set both selected and total to the total count since there are no filters applied by default
         this.setState({ 

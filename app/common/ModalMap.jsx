@@ -54,7 +54,6 @@ var ModalMap = React.createClass({
     if(feature.geometry.type=='Point') {
       return feature.geometry.coordinates
     } else {
-      console.log(centroid(feature))
       return centroid(feature).geometry.coordinates //get the centroid
     }
   },

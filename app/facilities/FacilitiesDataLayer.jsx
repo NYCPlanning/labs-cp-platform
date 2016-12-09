@@ -194,7 +194,6 @@ var FacilitiesDataLayer = React.createClass({
     var content = features.map(
       (feature, i) => {
         const d = feature.properties
-        console.log(d)
         return (
           <div 
             className="popupRow" 

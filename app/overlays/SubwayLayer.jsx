@@ -1,5 +1,6 @@
-//Tile Layer
+//Instantiates a carto named map for subways, renders a TileLayer
 import React from 'react'
+import TileLayer from './TileLayer.jsx'
 
 var SubwayLayer = React.createClass({
   componentDidMount() {
@@ -13,36 +14,21 @@ var SubwayLayer = React.createClass({
       success: function(data) { 
         data = JSON.parse(data);
         var layergroupid = data.layergroupid
-        this.addLayer(layergroupid)
+        this.tiles = 'https://cwhong.carto.com/api/v1/map/' + layergroupid + '/{z}/{x}/{y}.png'
+        this.forceUpdate()
       }.bind(this)
     })
   },
 
-  componentWillUnmount() {
-    //remove the source and the layer
-    this.props.map.removeLayer('subway-lines')
-    this.props.map.removeSource('subway-lines')
-  },
-
-  addLayer(layergroupid) {
-    this.props.map.addSource('subway-lines', {
-      type: 'raster',
-      tiles: ['https://cwhong.carto.com/api/v1/map/' + layergroupid + '/{z}/{x}/{y}.png'],
-      tileSize: 256
-    })
-
-    this.props.map.addLayer({
-      "id": "subway-lines",
-      "type": "raster",
-      "source": "subway-lines",
-      "minzoom": 0,
-      "maxzoom": 22
-    })
-  },
-
   render() {
-    return null
+    return this.tiles ? 
+      <TileLayer 
+        map={this.props.map}
+        name={'subways'} 
+        tiles={this.tiles}/> : 
+      null
   }
 })
 
 module.exports=SubwayLayer
+
