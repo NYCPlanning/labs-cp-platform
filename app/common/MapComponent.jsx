@@ -119,6 +119,7 @@ var MapComponent = React.createClass({
 
     //insert the global map menu to the top of the array of tabs
     if (this.refs.map) {
+
       childrenTabs.unshift(
         <Tab 
           icon={<FontIcon className="fa fa-bars"/>} 
@@ -153,7 +154,17 @@ var MapComponent = React.createClass({
           {self.state.legendContent[key]}
         </div>
       ) 
-    });
+    })
+
+
+    const tabDrawer = (
+      <TabDrawer 
+        open={this.state.leftDrawerOpen}
+        toggle={this.toggleLeftDrawer}
+      >
+        {childrenTabs}
+      </TabDrawer>
+    )
 
     return(
       <div className="full-height">
@@ -172,12 +183,7 @@ var MapComponent = React.createClass({
               ref="map"
               >
             </MapboxGLMap>
-            <TabDrawer 
-              open={this.state.leftDrawerOpen}
-              toggle={this.toggleLeftDrawer}
-            >
-              {childrenTabs}
-            </TabDrawer>
+            {this.refs.map ? tabDrawer : null}            
           </div>
         </div>
       </div>
