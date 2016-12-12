@@ -23,6 +23,59 @@ var PipelineDataLayer = React.createClass({
 
   componentDidMount() {
     this.instantiateVectorTiles()
+
+    var legendContent = (
+      <div>
+        <div className="legendSection">
+          <h4>Development Status</h4>
+          <div className="legendItem">
+            <div className="colorCircle" style={{backgroundColor: this.getStatusColor('Complete')}}></div>
+            <div className="legendItemText">Complete</div>
+          </div>
+          <div className="legendItem">
+            <div className="colorCircle" style={{backgroundColor: this.getStatusColor('Partial complete')}}></div>
+            <div className="legendItemText">Partial Complete</div>
+          </div>
+          <div className="legendItem">
+            <div className="colorCircle" style={{backgroundColor: this.getStatusColor('Permit outstanding')}}></div>
+            <div className="legendItemText">Permit Outstanding</div>
+          </div>
+          <div className="legendItem">
+            <div className="colorCircle" style={{backgroundColor: this.getStatusColor('Permit pending')}}></div>
+            <div className="legendItemText">Permit Pending</div>
+          </div>
+          <div className="legendItem">
+            <div className="colorCircle" style={{backgroundColor: this.getStatusColor('Demolition (complete)')}}></div>
+            <div className="legendItemText">Demolition (Complete)</div>
+          </div>
+        </div>
+        <div className="legendSection">
+          <p>Larger markers represent higher net unit counts</p>
+        </div>
+      </div>
+    )
+
+    this.props.updateLegend('capitalprojects', legendContent) //send legend content up to MapComponent for rendering
+  },
+
+  getStatusColor(status) {
+    switch(status) {
+      case 'Complete':
+          return '#136400'
+          break
+      case 'Partial complete':
+          return '#229A00'
+          break
+      case 'Permit outstanding':
+          return '#b2df8a'
+          break
+      case 'Permit pending':
+          return '#5CA2D1'
+          break
+      case 'Demolition (complete)':
+          return '#525252'
+          break
+    }
   },
 
   instantiateVectorTiles() {
@@ -134,7 +187,9 @@ var PipelineDataLayer = React.createClass({
         const d = feature.properties
         return (
           <div className="popupRow" key={i} onClick={self.showModal.bind(self, feature)}>
-            <span className="badge">{d.dcp_pipeline_status}</span>
+            <span className="badge" style={{
+              backgroundColor: self.getStatusColor(d.dcp_pipeline_status)
+            }}>{d.dcp_pipeline_status}</span>
             <span className="text">{d.dob_permit_address}</span>
             <span className="badge">Δ {d.dcp_units_use_map}</span>
             <i className="fa fa-angle-right" aria-hidden="true"></i>
