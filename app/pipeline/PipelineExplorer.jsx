@@ -8,7 +8,7 @@ import FacilitiesDataLayer from '../facilities/FacilitiesDataLayer.jsx'
 
 var PipeLineExplorer = React.createClass({ 
   componentDidMount() {
-    document.title = "Housing Development Explorer"
+    document.title = "Capital Projects Explorer"
 
     var modalShown = JSON.parse(localStorage.getItem('pipeline-splash'))
     

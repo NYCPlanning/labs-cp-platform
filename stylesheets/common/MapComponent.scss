@@ -18,6 +18,16 @@
     vertical-align: middle;
   }
 
+  .colorCircle {
+    height: 12px;
+    width: 12px;
+    margin-right: 6px;
+    display: inline-block;
+    border-radius: 6px;
+    position: relative;
+    top: 2px;
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
@@ -41,6 +51,10 @@
   .legendItemText {
     font-family: 'Roboto';
     display: inline-block;
+  }
+
+  .legendSection {
+    margin-bottom: 10px;
   }
 
 }
