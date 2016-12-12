@@ -9,6 +9,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
+import Mustache from 'mustache'
 import Select from 'react-select'
 import FontIcon from 'material-ui/FontIcon'
 import {List, ListItem} from 'material-ui/List'

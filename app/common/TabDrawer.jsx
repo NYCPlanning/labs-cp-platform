@@ -8,6 +8,7 @@ import FontIcon from 'material-ui/FontIcon'
 var TabDrawer = React.createClass({
 
   render() {
+    console.log('TabDrawer', this.props.children)
     return(
       <div className="tabs-container" style={{
         width: '360px',
