@@ -12,7 +12,6 @@ import Divider from 'material-ui/Divider'
 import Numeral from 'numeral'
 import ContentInbox from 'material-ui/svg-icons/content/inbox'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
 
 import CountWidget from '../common/CountWidget.jsx'
 
@@ -165,7 +164,6 @@ var CapitalProjectsFilter = React.createClass({
                   </OverlayTrigger>
                 </Subheader>
                 <ListItem 
-                  leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                   disabled={true}
                 >
                   <Select
@@ -187,7 +185,6 @@ var CapitalProjectsFilter = React.createClass({
                   </OverlayTrigger>
                 </Subheader>
                 <ListItem 
-                  leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                   disabled={true}
                 >
                   <Select
@@ -209,7 +206,6 @@ var CapitalProjectsFilter = React.createClass({
                   </OverlayTrigger>
                 </Subheader>
                 <ListItem 
-                  leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                   disabled={true}
                 >
                   <Select
@@ -231,7 +227,6 @@ var CapitalProjectsFilter = React.createClass({
                   </OverlayTrigger>
                 </Subheader>
                 <ListItem 
-                  leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                   disabled={true}
                 >
                   <Select
@@ -253,7 +248,6 @@ var CapitalProjectsFilter = React.createClass({
                   </OverlayTrigger>
                 </Subheader>
                 <ListItem 
-                  leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                   disabled={true}
                 >
                   <Select
