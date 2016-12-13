@@ -74,7 +74,6 @@ var MapboxGLMap = React.createClass({
   },
 
   showPoiMarker(feature) {
-    console.log(feature)
     //set the location of the poi marker
     this.setState({
       poiCoords: feature.geometry.coordinates,
@@ -175,8 +174,6 @@ var PoiMarker = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    console.log('POI receiving PROPS', nextProps)
-
     this.marker.setLngLat(nextProps.coords)
     this.label.setLngLat(nextProps.coords).setHTML("<p>" + nextProps.label + "</p>")
   },

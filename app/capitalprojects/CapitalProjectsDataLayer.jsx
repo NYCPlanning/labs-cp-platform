@@ -209,8 +209,6 @@ var CapitalProjectsDataLayer = React.createClass({
   updateSQL(pointsSql, polygonsSql) {
     //gets chunksString (Where clause) from the filter UI, updates vector Tile layers accordingly
 
-    console.log(pointsSql, polygonsSql)
-
     var self=this
 
     this.setState({
