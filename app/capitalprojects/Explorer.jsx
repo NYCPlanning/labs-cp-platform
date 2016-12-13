@@ -42,7 +42,7 @@ var CapitalProjectsExplorer = React.createClass({
           <CapitalProjectsDataLayer 
             name="Capital Projects Explorer"
             tooltipText="Capital Projects Database" 
-            icon="fa fa-money" 
+            icon="fa fa-usd" 
             showModal={this.props.showModal}/>
         </MapComponent>
       </div>

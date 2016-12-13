@@ -239,7 +239,6 @@ var LayerSelector = React.createClass({
                 <InfoIcon text='Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data'/> 
               </Subheader>
               <ListItem 
-                leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                 disabled={true}
               >
                 <Select
@@ -258,7 +257,6 @@ var LayerSelector = React.createClass({
                 <InfoIcon text='Categorizes developments based on the construction and housing types, determined using DOB Permit data'/>
               </Subheader>
               <ListItem 
-                leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                 disabled={true}
               >
                 <Select
@@ -277,7 +275,6 @@ var LayerSelector = React.createClass({
                 <InfoIcon text='Net change in units resulting from development. Negative values occur from demolitions and/or alterations that reduce the number of units.'/>
               </Subheader>
               <ListItem 
-                leftIcon={<FontIcon className="fa fa-balance-scale" />} 
                 disabled={true}
               >
                 <RangeSlider 
@@ -292,7 +289,6 @@ var LayerSelector = React.createClass({
                 <InfoIcon text='Reflects date(s) when developments have received Certificate(s) of Occupancy (CofO). If a development has received multiple CofOs, filter evalutes timeframe between earliest CofO (since 2010) and most recent CofO.'/>
               </Subheader> 
               <ListItem 
-                leftIcon={<FontIcon className="fa fa-calendar" />}
                 disabled={true}
               >
                 <RangeSlider 
