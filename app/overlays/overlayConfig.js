@@ -73,38 +73,38 @@ const overlayConfig = [
     name: "Zoning and Land Use",
     iconClass: 'fa fa-flag',
     layers: [
-      {
-        id: 'zoningdistricts',
-        name: 'Zoning Districts',
-        visible: false,
-        type: 'carto',
-        options: { 
-          "cartocss": `
-            #nyzd {
-             polygon-opacity: 0.4;
-             line-color: #FFF;
-             line-width: 0.5;
-             line-opacity: 0;
-          }
+      // {
+      //   id: 'zoningdistricts',
+      //   name: 'Zoning Districts',
+      //   visible: false,
+      //   type: 'carto',
+      //   options: { 
+      //     "cartocss": `
+      //       #nyzd {
+      //        polygon-opacity: 0.4;
+      //        line-color: #FFF;
+      //        line-width: 0.5;
+      //        line-opacity: 0;
+      //     }
 
-          #nyzd[zonetype="B"] {
-             polygon-fill: #A6CEE3;
-          }
-          #nyzd[zonetype="C"] {
-             polygon-fill: #D6301D;
-          }
-          #nyzd[zonetype="M"] {
-             polygon-fill: #A53ED5;
-          }
-          #nyzd[zonetype="P"] {
-             polygon-fill: #33A02C;
-          }
-          #nyzd[zonetype="R"] {
-             polygon-fill: #FF9900;
-          }`,
-          "sql": "SELECT *, LEFT(zonedist, 1) as zonetype FROM cpadmin.nyzd WHERE LEFT(zonedist, 1) <> 'P'"    
-        }
-      }
+      //     #nyzd[zonetype="B"] {
+      //        polygon-fill: #A6CEE3;
+      //     }
+      //     #nyzd[zonetype="C"] {
+      //        polygon-fill: #D6301D;
+      //     }
+      //     #nyzd[zonetype="M"] {
+      //        polygon-fill: #A53ED5;
+      //     }
+      //     #nyzd[zonetype="P"] {
+      //        polygon-fill: #33A02C;
+      //     }
+      //     #nyzd[zonetype="R"] {
+      //        polygon-fill: #FF9900;
+      //     }`,
+      //     "sql": "SELECT *, LEFT(zonedist, 1) as zonetype FROM cpadmin.nyzd WHERE LEFT(zonedist, 1) <> 'P'"    
+      //   }
+      // }
 
     ]
   },
@@ -165,49 +165,49 @@ const overlayConfig = [
     name: "Waterfront, Flood Zones, Watersheds",
     iconClass: 'fa fa-flag',
     layers: [
-      {
-        id: 'hurricaneevac',
-        name: 'Hurricane Evacuation Zones',
-        visible: false,
-        type: 'carto',
-        options: { 
-          "cartocss": `
-            #nyhez {
-              polygon-opacity: 0.5;
-              line-color: #FFF;
-              line-width: 0.5;
-              line-opacity: 0;
-            }
+      // {
+      //   id: 'hurricaneevac',
+      //   name: 'Hurricane Evacuation Zones',
+      //   visible: false,
+      //   type: 'carto',
+      //   options: { 
+      //     "cartocss": `
+      //       #nyhez {
+      //         polygon-opacity: 0.5;
+      //         line-color: #FFF;
+      //         line-width: 0.5;
+      //         line-opacity: 0;
+      //       }
 
-            #nyhez[hurricane_="0"] {
-               line-opacity: 0; 
-               polygon-opacity: 0;
-            }
-            #nyhez[hurricane_="1"] {
-               polygon-fill: #045a8d;
-            }
-            #nyhez[hurricane_="2"] {
-               polygon-fill: #2b8cbe;
-            }
-            #nyhez[hurricane_="3"] {
-               polygon-fill: #74a9cf;
-            }
-            #nyhez[hurricane_="4"] {
-               polygon-fill: #a6bddb;
-            }
-            #nyhez[hurricane_="5"] {
-               polygon-fill: #d0d1e6;
-            }
-            #nyhez[hurricane_="6"] {
-               polygon-fill: #f1eef6;
-            }
-            #nyhez[hurricane_="X"] {
-               line-opacity: 0; 
-               polygon-opacity: 0; 
-            }`,
-          "sql": "select * from nyhez"    
-        }
-      }
+      //       #nyhez[hurricane_="0"] {
+      //          line-opacity: 0; 
+      //          polygon-opacity: 0;
+      //       }
+      //       #nyhez[hurricane_="1"] {
+      //          polygon-fill: #045a8d;
+      //       }
+      //       #nyhez[hurricane_="2"] {
+      //          polygon-fill: #2b8cbe;
+      //       }
+      //       #nyhez[hurricane_="3"] {
+      //          polygon-fill: #74a9cf;
+      //       }
+      //       #nyhez[hurricane_="4"] {
+      //          polygon-fill: #a6bddb;
+      //       }
+      //       #nyhez[hurricane_="5"] {
+      //          polygon-fill: #d0d1e6;
+      //       }
+      //       #nyhez[hurricane_="6"] {
+      //          polygon-fill: #f1eef6;
+      //       }
+      //       #nyhez[hurricane_="X"] {
+      //          line-opacity: 0; 
+      //          polygon-opacity: 0; 
+      //       }`,
+      //     "sql": "select * from nyhez"    
+      //   }
+      // }
     ]
   },
 

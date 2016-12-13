@@ -74,26 +74,40 @@ var ModalMap = React.createClass({
     this.map.on('style.load', function() {
 
       if(self.props.data.geometry.type == 'Point') {
-        map.addSource('pointFeatures', {
-          'type': 'geojson',
-          'data': self.props.data
-          })   
+        // map.addSource('pointFeatures', {
+        //   'type': 'geojson',
+        //   'data': self.props.data
+        //   })   
 
-        map.addLayer({
-          "id": "points",
-          "source": 'pointFeatures',
-          "type": "circle",
-          "paint": {
-              "circle-radius": {
-                "stops": [
-                  [10,1],
-                  [15,6]
-                ]
-              },
-              "circle-color": 'steelblue',
-              "circle-opacity": 0.8
-          }
-        });
+        // map.addLayer({
+        //   "id": "points",
+        //   "source": 'pointFeatures',
+        //   "type": "circle",
+        //   "paint": {
+        //       "circle-radius": {
+        //         "stops": [
+        //           [10,1],
+        //           [15,6]
+        //         ]
+        //       },
+        //       "circle-color": 'steelblue',
+        //       "circle-opacity": 0.8
+        //   }
+        // });
+
+        //Implement MapboxGL Marker
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(' + 'http://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange-small.png' + ')';
+        el.style.width = '32px'
+        el.style.height = '37px'
+        el.style.zIndex = 10
+
+        new mapboxgl.Marker(el, {
+          offset: [-16,-37]
+        })
+          .setLngLat(self.props.data.geometry.coordinates)
+          .addTo(map);
 
       } else {
         map.addSource('polygonFeatures', {
