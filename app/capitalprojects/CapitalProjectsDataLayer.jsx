@@ -16,8 +16,8 @@ var CapitalProjectsDataLayer = React.createClass({
 
   getInitialState() {
     return({
-      pointsSql: 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM capeprojectspoints',
-      polygonsSql: 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM capeprojectspolygons'
+      pointsSql: 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM adoyle.capeprojectspoints',
+      polygonsSql: 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM adoyle.capeprojectspolygons'
     })
   },
 
@@ -193,7 +193,7 @@ var CapitalProjectsDataLayer = React.createClass({
     //builds content for the modal and sends it to the global modal service
     var self=this
 
-    var tableName = feature.geometry.type == 'Point' ? 'capeprojectspoints' : 'capeprojectspolygons'
+    var tableName = feature.geometry.type == 'Point' ? 'adoyle.capeprojectspoints' : 'adoyle.capeprojectspolygons'
 
    //make an api call to carto to get the full feature, build content from it, show modal
    Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)

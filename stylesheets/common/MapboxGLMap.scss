@@ -51,3 +51,19 @@
     opacity: 0;
   }
 }
+
+.mapboxgl-popup-content {
+
+   background: none; 
+   border-radius: none; 
+   box-shadow: none;
+
+  p {
+    font-weight: 800;
+    text-shadow: 1px 1px #ffffff;
+  }
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  display: none;
+}

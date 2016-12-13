@@ -27,7 +27,7 @@ var SearchFilterToolbar = React.createClass({
           <ToolbarGroup>
             <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
             <IconButton>
-              <FontIcon className="fa fa-search" /> 
+              <FontIcon className={"fa fa-search"} /> 
             </IconButton>
           </ToolbarGroup>
         </Toolbar>

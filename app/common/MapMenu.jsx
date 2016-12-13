@@ -59,7 +59,7 @@ var MapMenu = function(props) {
               map={props.map}
               id={layer.name}
               options={layer.options}
-              key={i}
+              key={j}
             />
           )
         } else if (layer.type=='geojson') {
@@ -69,7 +69,7 @@ var MapMenu = function(props) {
               source={layer.options.source}
               id={layer.id}
               layer={layer.options.layer}
-              key={i}
+              key={j}
             />
           )
         }

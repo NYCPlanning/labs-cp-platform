@@ -46,7 +46,7 @@ var CapitalProjectsFilter = React.createClass({
 
   componentDidMount() {
 
-    var totalQuery = 'SELECT cartodb_id FROM capeprojectspoints UNION ALL SELECT cartodb_id FROM capeprojectspolygons'
+    var totalQuery = 'SELECT cartodb_id FROM adoyle.capeprojectspoints UNION ALL SELECT cartodb_id FROM adoyle.capeprojectspolygons'
 
     carto.getCount(totalQuery)
       .then((count) => {
@@ -92,7 +92,14 @@ var CapitalProjectsFilter = React.createClass({
   createMultiSelectSQLChunk(dimension, values) {
     //for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
     //like ( dimension = 'value1' OR dimension = 'value2')
-    var subChunks = values.map(function(value) {
+    var subChunks = values.map(function(value) { 
+
+      //custom handling for label "Unknown" to query for NULL 
+      //TODO make this generic to handle nulls in other dimensions
+      if (dimension == 'cpstatus' && value.label == 'Unknown') {
+        return 'cpstatus IS NULL'
+      }
+
       return dimension + ' = \'' + value.value + '\''
     })
 
@@ -126,8 +133,8 @@ var CapitalProjectsFilter = React.createClass({
     //join chunks with AND, or handle empty filters
     var chunksString = chunksArray.length > 0 ? chunksArray.join(' AND ') : 'true'
 
-    var pointsSql = select + 'capeprojectspoints WHERE ' + chunksString
-    var polygonsSql = select + 'capeprojectspolygons WHERE ' + chunksString
+    var pointsSql = select + 'adoyle.capeprojectspoints WHERE ' + chunksString
+    var polygonsSql = select + 'adoyle.capeprojectspolygons WHERE ' + chunksString
   
 
     this.getSelectedCount(pointsSql, polygonsSql)
