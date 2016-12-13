@@ -14,6 +14,7 @@ var MapboxGLMap = React.createClass({
     return {
       basemap: 'light',
       poiCoords: [0,0],
+      poiLabel: '',
       popupLngLat: [0,0],
       popupContent: null
     }
@@ -73,9 +74,11 @@ var MapboxGLMap = React.createClass({
   },
 
   showPoiMarker(feature) {
+    console.log(feature)
     //set the location of the poi marker
     this.setState({
-      poiCoords: feature.geometry.coordinates
+      poiCoords: feature.geometry.coordinates,
+      poiLabel: feature.properties.name
     })
 
     //fly to it
@@ -108,7 +111,7 @@ var MapboxGLMap = React.createClass({
     return(
       <div id='mapboxGLmap' ref='map'>
         {childrenWithProps}
-        {this.map ? <PoiMarker map={this.map} coords={this.state.poiCoords}/>: null}
+        {this.map ? <PoiMarker map={this.map} coords={this.state.poiCoords} label={this.state.poiLabel}/>: null}
         {this.map ? <Popup map={this.map} lngLat={this.state.popupLngLat} content={this.state.popupContent}/>: null}
       </div>
     )
@@ -119,23 +122,68 @@ module.exports=MapboxGLMap;
 
 
 //POI Marker Component, pass in lngLat coords and a map object, it will project an animated marker
+// var PoiMarker = React.createClass({
+//   componentDidMount() {
+//     var self=this
+
+//     this.props.map.on('move', function(e) {
+//       self.forceUpdate()
+//     })
+//   },
+
+//   render() {
+//       var point = this.props.map.project(this.props.coords) 
+
+//       return (
+//         <div className="location-ring-container" ref="locationContainer" style={{'left': point.x, 'top': point.y}}>
+//           <div className={'location-ring-animated'}></div>
+//           <div className={'location-ring-fixed'}></div>
+//         </div>
+//       )
+//   }
+// })
+
+
 var PoiMarker = React.createClass({
   componentDidMount() {
     var self=this
 
-    this.props.map.on('move', function(e) {
-      self.forceUpdate()
+    var el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundImage = 'url(' + 'http://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange-small.png' + ')';
+      el.style.width = '32px'
+      el.style.height = '37px'
+      el.style.zIndex = 10
+
+    this.marker = new mapboxgl.Marker(el, {
+      offset: [-16,-37]
     })
+      .setLngLat(this.props.coords)
+      .addTo(this.props.map);
+
+
+
+
+    this.label = new mapboxgl.Popup({
+      offset: [0,0],
+      anchor: 'left',
+      closeButton: false,
+      closeOnClick: false
+    })
+      .setLngLat(this.props.coords)
+      .addTo(this.props.map);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    console.log('POI receiving PROPS', nextProps)
+
+    this.marker.setLngLat(nextProps.coords)
+    this.label.setLngLat(nextProps.coords).setHTML("<p>" + nextProps.label + "</p>")
   },
 
   render() {
-      var point = this.props.map.project(this.props.coords) 
-
       return (
-        <div className="location-ring-container" ref="locationContainer" style={{'left': point.x, 'top': point.y}}>
-          <div className={'location-ring-animated'}></div>
-          <div className={'location-ring-fixed'}></div>
-        </div>
+        <div/>
       )
   }
 })

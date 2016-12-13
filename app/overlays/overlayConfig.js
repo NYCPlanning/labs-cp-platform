@@ -115,7 +115,7 @@ const overlayConfig = [
     layers: [
       {
         id: 'subways',
-        name: 'MTA Subways',
+        name: 'MTA Subway Lines',
         visible: false,
         type: 'carto',
         options: { 
@@ -156,6 +156,27 @@ const overlayConfig = [
                  line-color: #0F3B82 ;
               }`,
           "sql": "select * from doitt_subwaylines"    
+        }
+      },
+      {
+        id: 'subwaystations',
+        name: 'MTA Subway Stations',
+        visible: false,
+        type: 'carto',
+        options: { 
+          "cartocss": `
+            #doitt_subwaystations{
+              marker-fill-opacity: 0.9;
+              marker-line-color: #000000;
+              marker-line-width: 2;
+              marker-line-opacity: 1;
+              marker-placement: point;
+              marker-type: ellipse;
+              marker-width: 9;
+              marker-fill: #FFFFFF;
+              marker-allow-overlap: true;
+            }`,
+          "sql": "select * from doitt_subwaystations"    
         }
       }
     ]

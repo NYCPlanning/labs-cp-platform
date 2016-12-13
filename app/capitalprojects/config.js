@@ -502,8 +502,12 @@ statuses: [
          "label":"Cancelled"
       },
       {  
-         "value":"Other",
-         "label":"Other"
+         "value":"Agency does not report",
+         "label":"Not Reported"
+      },
+      {  
+         "value":"Unknown",
+         "label":"Unknown"
       }
    ]
 }
