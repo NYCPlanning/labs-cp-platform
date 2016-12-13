@@ -308,10 +308,11 @@ var LayerSelector = React.createClass({
             label="Mode"
           >
             <div>
-              <h2 style={styles.headline}>Tab Two</h2>
-              <p>
-                This is another example tab.
-              </p>
+              <List>
+                <ListItem>
+                  Coming Soon
+                </ListItem>
+              </List>
             </div>
           </Tab>
           <Tab
@@ -319,10 +320,11 @@ var LayerSelector = React.createClass({
             label="Download"
           >
             <div>
-              <h2 style={styles.headline}>Tab Three</h2>
-              <p>
-                This is a third example tab.
-              </p>
+              <List>
+                <ListItem>
+                  Coming Soon
+                </ListItem>
+              </List>
             </div>
           </Tab>
         </Tabs>

@@ -60,7 +60,7 @@ var ModalContent = React.createClass({ //Component Variable should match the fil
                 <dd>{moment(d.dob_cofo_date_last).format('MM/DD/YYYY')}</dd>
 
                 <dt>Most Recent CofO Type</dt>
-                <dd>{moment(d.dob_cofo_last_type).format('MM/DD/YYYY')}</dd>
+                <dd>{d.dob_cofo_type_last}</dd>
              
 
               </dl>
