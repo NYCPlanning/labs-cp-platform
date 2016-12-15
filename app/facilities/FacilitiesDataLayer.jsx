@@ -6,6 +6,9 @@
 //  mode: which mode the data layer shoud be in all, domain-[domainname], etc
 import React from 'react'
 import Moment from 'moment'
+import {Link} from 'react-router'
+import {ListItem} from 'material-ui/List'
+import {browserHistory} from 'react-router'
 
 import FacLayerSelector from './FacLayerSelector.jsx'
 import ModalContent from './ModalContent.jsx'
@@ -13,20 +16,21 @@ import ModalContent from './ModalContent.jsx'
 import facilitiesLayers from './facilitiesLayers.js'
 import Carto from '../helpers/carto.js'
 
+
 var FacilitiesDataLayer = React.createClass({
 
   componentWillMount() {
     var self=this
     //update initial state and the layer structure based on mode
     if (this.props.mode != 'all') {
-      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data WHERE domain ILIKE '" + this.props.mode.substr(0,4) + "%'"
+      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data WHERE domain ILIKE '" + this.props.mode.substr(0,4) + "%'"
       
       this.layerStructure = facilitiesLayers.filter(function(layer) {
         return (layer.slug == self.props.mode)
       })
     } else {
       //if map mode is 'all', initialSQL has no WHERE, and layerStructure is unchanged
-      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data"
+      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data"
       this.layerStructure=facilitiesLayers
     }
 
@@ -188,45 +192,80 @@ var FacilitiesDataLayer = React.createClass({
   },
 
   showPopup(lngLat, features) {
+    console.log('showPopup')
     var self=this
     //builds content for the popup, sends it to the map
 
     var content = features.map(
       (feature, i) => {
         const d = feature.properties
+        console.log(d)
+
         return (
-          <div 
-            className="popupRow" 
-            onClick={self.showModal.bind(self, feature)}
-            key={i}
-          >
-            <div className={'color-circle'} style={{
-              'backgroundColor': this.props.mode == 'all' ? this.getColor(d.domain) : this.getColor(d.facilitygroup)
-            }}> </div> 
-            <span className={'text'}>{d.facilityname} - {d.facilitysubgroup}</span> <i className="fa fa-angle-right" aria-hidden="true"></i> 
-          </div>
+             <Link
+              key={i}
+              to={{
+                pathname: `/facilities/${d.cartodb_id}`,
+                state: { modal: true, returnTo: '/facilities/all'}
+              }}
+            >
+              <ListItem
+                primaryText={d.facilityname}
+                secondaryText={d.address}
+                leftIcon={
+                  <div 
+                    className={'color-circle'} 
+                    style={{
+                      'backgroundColor': this.props.mode == 'all' ? this.getColor(d.domain) : this.getColor(d.facilitygroup),
+                      'borderRadius': '12px'
+                    }}
+                  /> 
+                }
+                initiallyOpen={i==0 ? true : false}
+                primaryTogglesNestedList={false}
+                nestedItems={[
+                  <div style={{
+                    backgroundColor: '#f1f1f1',
+                    padding: '10px 0'
+                  }}>
+                    <dl className="dl-horizontal list">
+
+                      <dt>Subgroup</dt>
+                      <dd>{d.facilitysubgroup}</dd>
+
+                      <dt>Facility Type</dt>
+                      <dd>{d.facilitytype}</dd>
+
+                    </dl>
+                  </div>
+                ]}
+              />
+            </Link>
         )
       }
     )
 
-    this.props.map.showPopup(lngLat, content)
+    console.log(content)
+    this.props.showSelections(content)
+
+    //this.props.map.showPopup(lngLat, content)
   },
 
   showModal(feature) {
-    //builds content for the modal and sends it to the global modal service
-    var self=this
+    //  //builds content for the modal and sends it to the global modal service
+    //  var self=this
 
-    var tableName = 'hkates.facilities_data'
+    //  var tableName = 'hkates.facilities_data'
 
-   //make an api call to carto to get the full feature, build content from it, show modal
-   Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)
-    .then(function(data) {
-      self.props.showModal({
-        modalHeading: 'Facility Details',
-        modalContent: <ModalContent data={data}/>,
-        modalCloseText: 'Close'
-      })
-    })
+    // //make an api call to carto to get the full feature, build content from it, show modal
+    // Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)
+    //  .then(function(data) {
+    //    self.props.showModal({
+    //      modalHeading: 'Facility Details',
+    //      modalContent: <ModalContent data={data}/>,
+    //      modalCloseText: 'Close'
+    //    })
+    //  })
   },
 
   updateSQL(sql) {

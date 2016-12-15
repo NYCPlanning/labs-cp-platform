@@ -6,10 +6,12 @@
 
 import React from 'react'
 import {browserHistory} from 'react-router'
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import GlobalModal from './common/GlobalModal.jsx'
+
 
 import '../stylesheets/App.scss'
 
@@ -25,6 +27,18 @@ var App = React.createClass({
     })
   },
 
+  componentWillReceiveProps(nextProps) {
+    // if we changed routes...
+    if ((
+      nextProps.location.key !== this.props.location.key &&
+      nextProps.location.state &&
+      nextProps.location.state.modal
+    )) {
+      // save the old children (just like animation)
+      this.previousChildren = this.props.children
+    }
+  },
+
   //modalOptions should be an object with modalHeading:String, modalContent:rendered JSX, modalCloseText: String
   showModal(modalOptions) {
     this.setState(modalOptions)
@@ -32,12 +46,28 @@ var App = React.createClass({
   },
 
   render() {
+
+    let { location } = this.props
+
+    let isModal = (
+      location.state &&
+      location.state.modal &&
+      this.previousChildren
+    )
+
     let children = null;
 
     //pass the auth object to the child components so they know who is logged in
     //pass showModal() method so any descendant can trigger the showing of the modal
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
+        auth: this.props.route.auth,
+        showModal: this.showModal 
+      })
+    }
+
+    if (this.previousChildren) {
+      this.previousChildren = React.cloneElement(this.previousChildren, {
         auth: this.props.route.auth,
         showModal: this.showModal 
       })
@@ -52,7 +82,34 @@ var App = React.createClass({
             closeText={this.state.modalCloseText}
             ref="modal"
           />
-         {children}
+          {isModal ?
+            this.previousChildren :
+            children
+          }
+          <ReactCSSTransitionGroup
+              transitionName="background"
+              transitionAppear={true}
+              transitionAppearTimeout={250}
+              transitionEnterTimeout={250}
+              transitionLeaveTimeout={250}
+            >
+            
+            {isModal && (
+              <div style={{
+                zIndex: 1000,
+                position: 'absolute',
+                right: 0,
+                left: 0,
+                bottom: 0,
+                top: '80px'
+              }} >
+              {React.cloneElement(this.props.children, {
+                key: this.props.location.pathname
+              }) } 
+              </div>
+            )}
+          
+          </ReactCSSTransitionGroup>
         </div>
       </MuiThemeProvider>
     )

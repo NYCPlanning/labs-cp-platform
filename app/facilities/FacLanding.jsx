@@ -13,6 +13,9 @@ import '../../stylesheets/facilities/FacLanding.scss'
 var FacilitiesLandingPage = React.createClass({
   componentDidMount() {
     document.title = "Capital Planning Platform"
+
+    console.log('FACILITIESLANDINGCHILDREN', this.props.children)
+
   },
 
   showAbout() {

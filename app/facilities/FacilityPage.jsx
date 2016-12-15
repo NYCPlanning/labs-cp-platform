@@ -40,14 +40,19 @@ var Component = React.createClass({
     var content = this.state.data ? this.renderContent(this.state.data) : null
 
     return(
-      <div className="full-height">
-        <Nav title={title} auth={this.props.auth} showModal={this.props.showModal}>
+      <div className="full-height" style={{
+        backgroundColor: '#a7a7a7'
+      }}>
+        <h1>Facility Detail Page</h1>
+        {/*<Nav title={title} auth={this.props.auth} showModal={this.props.showModal}>
           
         </Nav>
         <div id="main-container">
           <h1>Facility Details</h1>
           {content}
-        </div>
+        </div>*/}
+
+
       </div>
     )
   },

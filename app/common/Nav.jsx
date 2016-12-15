@@ -24,6 +24,7 @@ var Nav = React.createClass({
   },
 
   render() {
+    console.log(this.props)
     var auth = this.props.auth
     var profile = auth.getProfile()
 

@@ -175,13 +175,13 @@ var LayerSelector = React.createClass({
 
   buildSQL(layers) {
     if (layers.length > 0) {
-      var sql = 'SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data WHERE '
+      var sql = 'SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data WHERE '
       layers.map(function(name, i) {
         if(i>0) sql += ' OR '
         sql += 'facilitysubgroup = \'' + name + '\''
       })  
     } else {
-      var sql ='SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname FROM hkates.facilities_data LIMIT 0'
+      var sql ='SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data LIMIT 0'
     }
 
     this.props.updateSQL(sql)

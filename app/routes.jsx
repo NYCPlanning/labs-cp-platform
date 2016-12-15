@@ -12,6 +12,8 @@ import HomePage from '../app/HomePage.jsx'
 
 import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
 import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
+
+import FacilitiesWrapper from '../app/facilities/FacilitiesWrapper.jsx'
 import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer.jsx'
 import FacilityPage from '../app/facilities/FacilityPage.jsx'
 import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
@@ -48,13 +50,15 @@ module.exports = (
   <Route path="/" component={App} auth={auth} >
     <IndexRoute component={HomePage} onEnter={requireAuth}/>
 
-    <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}/>
+
+    <IndexRoute component={FacilitiesLanding} onEnter={requireAuth}/>
     <Route path="facilities/all" component={FacilitiesExplorer} onEnter={requireAuth}/>
-    <Route path="facilities/domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    <Route path="facilities/:id" component={FacilityPage}/>
+ 
+
+    <Route path="domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
     {/*<Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>*/}
 
-    <Route path="facilities/:id" component={FacilityPage} onEnter={requireAuth}/>
-    
     <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
     
     <Route path="capitalprojects" component={CapitalProjects} onEnter={requireAuth}/>
