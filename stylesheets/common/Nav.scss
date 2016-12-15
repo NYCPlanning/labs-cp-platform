@@ -53,6 +53,12 @@ ul.navbar-right {
 #navbar {
   border-bottom: 0.5px solid rgba(219, 105, 27, 0);
 }
+
+.navbar-collapse {
+  background-color: #fff;
+}
+
+
 .navbar-brand {
   font-size: 28px;
 }
@@ -66,4 +72,29 @@ ul.navbar-right {
   font-size: 18px;
 }
 
-/*End Nav Component*/
+/*modifications for a 50px tall nav*/
+.mini-nav {
+  height: auto;
+
+  .navbar-nav>li>a, .dropdown-menu>li>a {
+    padding: 15px 18px;
+  }
+
+  .navbar-title {
+    font-size: 22px;
+    line-height: 50px;
+  }
+
+  .navbar-brand {
+    background-position: 16px 9px;
+    background-size: 66px;
+    height: 50px;
+    width: 100px;
+    padding: 0;
+  }
+  
+  .title {
+    color: #959595;
+    font-weight: 300;
+  }
+}

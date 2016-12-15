@@ -222,26 +222,22 @@ var MapComponent = React.createClass({
     )
 
     return(
-      <div className="full-height">
-        <div id="main-container">
-          <div id="content">
-            <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
-              <SearchFilterToolbar 
-                map={this.refs.map}
-                onToggleMenuDrawer={this.toggleMenuDrawer}
-                />
-              <Legend>
-                {legendChildren}
-              </Legend>
-            </div>
-            <MapboxGLMap
-              ref="map"
-              >
-            </MapboxGLMap>
-            {this.refs.map ? tabDrawer : null}
-            {this.refs.map ? rightTabDrawer : null}            
-          </div>
+      <div style={{height: '100%', width: '100%'}}>
+        <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
+          <SearchFilterToolbar 
+            map={this.refs.map}
+            onToggleMenuDrawer={this.toggleMenuDrawer}
+            />
+          <Legend>
+            {legendChildren}
+          </Legend>
         </div>
+        <MapboxGLMap
+          ref="map"
+          >
+        </MapboxGLMap>
+        {this.refs.map ? tabDrawer : null}
+        {this.refs.map ? rightTabDrawer : null}            
       </div>
     )
   }

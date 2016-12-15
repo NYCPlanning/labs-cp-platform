@@ -51,8 +51,8 @@ module.exports = (
     <IndexRoute component={HomePage} onEnter={requireAuth}/>
 
 
-    <IndexRoute component={FacilitiesLanding} onEnter={requireAuth}/>
-    <Route path="facilities/all" component={FacilitiesExplorer} onEnter={requireAuth}/>
+    <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}/>
+    <Route path="facilities/all" component={FacilitiesExplorer} title={'Facilities Explorer'} onEnter={requireAuth} miniNav={true}/>
     <Route path="facilities/:id" component={FacilityPage}/>
  
 

@@ -11,6 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import GlobalModal from './common/GlobalModal.jsx'
+import Nav from './common/Nav.jsx'
 
 
 import '../stylesheets/App.scss'
@@ -73,43 +74,51 @@ var App = React.createClass({
       })
     }
 
-    return(
+    return( 
       <MuiThemeProvider>
-        <div className="full-height">
-          <GlobalModal
-            heading={this.state.modalHeading}
-            body={this.state.modalContent}
-            closeText={this.state.modalCloseText}
-            ref="modal"
-          />
-          {isModal ?
-            this.previousChildren :
-            children
-          }
-          <ReactCSSTransitionGroup
-              transitionName="background"
-              transitionAppear={true}
-              transitionAppearTimeout={250}
-              transitionEnterTimeout={250}
-              transitionLeaveTimeout={250}
-            >
+        <div>
+          <Nav 
+            title={this.props.children.props.route.title} 
+            mini={this.props.children.props.route.miniNav}
+            auth={this.props.route.auth} 
+            showModal={this.props.showModal}>
+          </Nav>
+          <div>
+            <GlobalModal
+              heading={this.state.modalHeading}
+              body={this.state.modalContent}
+              closeText={this.state.modalCloseText}
+              ref="modal"
+            />
+            {isModal ?
+              this.previousChildren :
+              children
+            }
+            <ReactCSSTransitionGroup
+                transitionName="background"
+                transitionAppear={true}
+                transitionAppearTimeout={250}
+                transitionEnterTimeout={250}
+                transitionLeaveTimeout={250}
+              >
+              
+              {isModal && (
+                <div style={{
+                  zIndex: 1000,
+                  position: 'absolute',
+                  right: 0,
+                  left: 0,
+                  bottom: 0,
+                  top: '80px'
+                }} >
+                {React.cloneElement(this.props.children, {
+                  key: this.props.location.pathname
+                }) } 
+                </div>
+              )}
             
-            {isModal && (
-              <div style={{
-                zIndex: 1000,
-                position: 'absolute',
-                right: 0,
-                left: 0,
-                bottom: 0,
-                top: '80px'
-              }} >
-              {React.cloneElement(this.props.children, {
-                key: this.props.location.pathname
-              }) } 
-              </div>
-            )}
-          
-          </ReactCSSTransitionGroup>
+            </ReactCSSTransitionGroup>
+          </div>
         </div>
       </MuiThemeProvider>
     )
