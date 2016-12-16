@@ -1,20 +1,12 @@
 import React from 'react'
-import IconButton from 'material-ui/IconButton'
-import FontIcon from 'material-ui/FontIcon'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
-import MenuItem from 'material-ui/MenuItem'
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Toggle from 'material-ui/Toggle';
 import { Tab as MuiTab} from 'material-ui/Tabs'
-import Divider from 'material-ui/Divider';
-import DropDownMenu from 'material-ui/DropDownMenu'
 
 import CartoLayer from '../overlays/CartoLayer.jsx'
 import GeoJsonLayer from '../overlays/GeoJsonLayer.jsx'
-
-
-
 
 var MapMenu = function(props) {
 

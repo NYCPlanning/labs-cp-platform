@@ -1,7 +1,6 @@
 // PipeLineTest - Custom config/code for the pipeline explorer should go here.  This component will make use of MapTest.jsx, a global map component that all "explorers" can use
 import React from 'react' 
 
-import Nav from '../common/Nav.jsx'
 import MapComponent from '../common/MapComponent.jsx'
 import CapitalProjectsDataLayer from './CapitalProjectsDataLayer.jsx'
 

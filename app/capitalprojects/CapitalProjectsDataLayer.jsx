@@ -9,7 +9,6 @@ import {Link} from 'react-router'
 import {ListItem} from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
 
-import ModalContent from './ModalContent.jsx'
 import CapitalProjectsFilter from './CapitalProjectsFilter.jsx'
 
 import Agencies from '../helpers/agencies.js'
@@ -175,7 +174,6 @@ var CapitalProjectsDataLayer = React.createClass({
     })
   },
 
-
   buildSelections(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
@@ -186,68 +184,34 @@ var CapitalProjectsDataLayer = React.createClass({
         const type = (feature.geometry.type == 'Point') ? '0' : '1'
 
         return (
-             <Link
-              key={i}
-              to={{
-                //add flag for point or polygon so the project view knows which table to query
-                pathname: `/capitalprojects/${d.cartodb_id}-${type}`  ,
-                state: { modal: true, returnTo: '/captialprojects'}
-              }}
-            >
-              <ListItem
-                primaryText={d.name}
-                secondaryText={d.projectid}
-                leftIcon={
-                  <div 
-                    className={'color-circle'} 
-                    style={{
-                      'backgroundColor': Agencies.getAgencyColor(d.sagency),
-                      'borderRadius': '12px'
-                    }}
-                  /> 
-                }
-                rightIcon={<FontIcon className='fa fa-chevron-right'/>}
-              />
-            </Link>
+          <Link
+            key={i}
+            to={{
+              //add flag for point or polygon so the project view knows which table to query
+              pathname: `/capitalprojects/${d.cartodb_id}-${type}`  ,
+              state: { modal: true, returnTo: '/captialprojects'}
+            }}
+          >
+            <ListItem
+              primaryText={d.name}
+              secondaryText={d.projectid}
+              leftIcon={
+                <div 
+                  className={'color-circle'} 
+                  style={{
+                    'backgroundColor': Agencies.getAgencyColor(d.sagency),
+                    'borderRadius': '12px'
+                  }}
+                /> 
+              }
+              rightIcon={<FontIcon className='fa fa-chevron-right'/>}
+            />
+          </Link>
         )
       }
     )
 
     this.props.showSelections(content)
-  },
-
-  // showPopup(lngLat, features) {
-  //   var self=this
-  //   //builds content for the popup, sends it to the map
-
-  //   var content=features.map(function(feature, i) {
-  //     var d=feature.properties
-  //     return (
-  //       <div className='popupRow' key={i} onClick={self.showModal.bind(self, feature)}>
-  //         <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-  //         <span className={'text'}>{d.projectid} - {d.name}</span> <i className="fa fa-angle-right" aria-hidden="true"></i>  
-  //       </div>
-  //     ) 
-  //   })
-
-  //   this.props.map.showPopup(lngLat, content)
-  // },
-
-  showModal(feature) {
-    //builds content for the modal and sends it to the global modal service
-    var self=this
-
-    var tableName = feature.geometry.type == 'Point' ? 'adoyle.capeprojectspoints' : 'adoyle.capeprojectspolygons'
-
-   //make an api call to carto to get the full feature, build content from it, show modal
-   Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)
-    .then(function(data) {
-      self.props.showModal({
-        modalHeading: 'Capital Project Details',
-        modalContent: <ModalContent data={data}/>,
-        modalCloseText: 'Close'
-      })
-    })
   },
 
   updateSQL(pointsSql, polygonsSql) {

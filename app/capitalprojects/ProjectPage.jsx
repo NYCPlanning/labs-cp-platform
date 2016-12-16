@@ -3,7 +3,6 @@
 //  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
 import React from 'react'
-import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Numeral from 'numeral'
 import Moment from 'moment'
 
@@ -59,33 +58,34 @@ var Component = React.createClass({
    
     return(
       <div>
-      <div className={'col-md-12'}>
-            <h3>
-              {d.name} - {d.projectid}
-            </h3>
-              <div className="agencybadges">
+        <div className={'col-md-12'}>
+          <h3>
+            {d.name} - {d.projectid}
+          </h3>
+          <div className="agencybadges">
+            <span 
+              className={'badge'} 
+              style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}
+            </span>
+            { d.sagency != d.magency ? 
+              <div className='managedby'> 
+                <div className='managedby-text'>managed by</div>
                 <span 
                   className={'badge'} 
-                  style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}
+                  style={{'backgroundColor': Agencies.getAgencyColor(d.magency)}}>{d.magency}
                 </span>
-                { d.sagency != d.magency ? 
-                  <div className='managedby'> 
-                    <div className='managedby-text'>managed by</div>
-                    <span 
-                      className={'badge'} 
-                      style={{'backgroundColor': Agencies.getAgencyColor(d.magency)}}>{d.magency}
-                    </span>
-                  </div> :
-                  null
-                } 
-              </div>
-              <div id="projectdescription">{d.descriptio}</div> 
+              </div> :
+              null
+            } 
           </div>
+          <div id="projectdescription">{d.descriptio}</div> 
+        </div>
 
-          <div className={'col-md-6'}>
-            <ModalMap data={this.state.data}/>
-          </div>
-          <div className={'col-md-6'}>
+        <div className={'col-md-6'}>
+          <ModalMap data={this.state.data}/>
+        </div>
+
+        <div className={'col-md-6'}>
           <ul className="list-group">
             
             <li className="list-group-item">
@@ -145,10 +145,8 @@ var Component = React.createClass({
             </li>
 
           </ul>
-
-
-          </div>
         </div>
+      </div>
     )
   }
 })

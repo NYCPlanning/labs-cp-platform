@@ -90,7 +90,6 @@ var MapComponent = React.createClass({
   },
 
   showSelections(content) {
-    console.log('showSelections')
     this.setState({
       rightDrawerOpen: true,
       selections: content

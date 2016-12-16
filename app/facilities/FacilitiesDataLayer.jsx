@@ -12,7 +12,6 @@ import FontIcon from 'material-ui/FontIcon'
 import {browserHistory} from 'react-router'
 
 import FacLayerSelector from './FacLayerSelector.jsx'
-import ModalContent from './ModalContent.jsx'
 
 import facilitiesLayers from './facilitiesLayers.js'
 import Carto from '../helpers/carto.js'
@@ -199,7 +198,6 @@ var FacilitiesDataLayer = React.createClass({
     var content = features.map(
       (feature, i) => {
         const d = feature.properties
-        console.log(d)
 
         return (
              <Link
@@ -245,7 +243,6 @@ var FacilitiesDataLayer = React.createClass({
       }
     )
 
-    console.log(content)
     this.props.showSelections(content)
   },
 

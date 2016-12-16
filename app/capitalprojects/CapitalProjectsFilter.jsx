@@ -1,21 +1,16 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Moment from 'moment'
 import Select from 'react-select'
 import FontIcon from 'material-ui/FontIcon'
 import {List, ListItem} from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
-import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
-import {Tabs, Tab} from 'material-ui/Tabs'
-import Slider from 'material-ui/Slider'
 import Divider from 'material-ui/Divider'
-import Numeral from 'numeral'
-import ContentInbox from 'material-ui/svg-icons/content/inbox'
+import {OverlayTrigger, Tooltip} from 'react-bootstrap'
+import {Tabs, Tab} from 'material-ui/Tabs'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 
 import CountWidget from '../common/CountWidget.jsx'
 
-import carto from '../helpers/carto.js'
+import Carto from '../helpers/carto.js'
 import config from './config.js'
 
 const styles = {
@@ -48,7 +43,7 @@ var CapitalProjectsFilter = React.createClass({
 
     var totalQuery = 'SELECT cartodb_id FROM adoyle.capeprojectspoints UNION ALL SELECT cartodb_id FROM adoyle.capeprojectspolygons'
 
-    carto.getCount(totalQuery)
+    Carto.getCount(totalQuery)
       .then((count) => {
 
         //set both selected and total to the total count since there are no filters applied by default
@@ -115,7 +110,7 @@ var CapitalProjectsFilter = React.createClass({
     //UNION the two queries, get count, update state.selectedCount
     var sql = `${pointsSql} UNION ALL ${polygonsSql}`
 
-    carto.getCount(sql)
+    Carto.getCount(sql)
       .then((count) => self.setState({ selectedCount: count }))
   },
 
