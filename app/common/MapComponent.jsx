@@ -8,7 +8,7 @@
 import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
-import {List} from 'material-ui/List'
+import {List, ListItem} from 'material-ui/List'
 import {Tab, Tabs} from 'material-ui/Tabs'
 
 import MapboxGLMap from './MapboxGLMap.jsx'
@@ -192,8 +192,6 @@ var MapComponent = React.createClass({
         right={true}
       >
         <Tab 
-          icon={<FontIcon className="fa fa-bars"/>} 
-          tooltipText='Map Menu'
           key={0} 
           onActive={self.openLeftDrawer}
           style={{
@@ -203,17 +201,24 @@ var MapComponent = React.createClass({
         >
           <Tabs>
             <Tab 
-            icon={<FontIcon className="fa fa-filter"/>}
+            icon={<FontIcon className="fa fa-list"/>}
             label="List"
             >
               <List>
-                {this.state.selections}
+                {this.state.selections.length > 0 ? 
+                  this.state.selections : 
+                  <ListItem>Select items on the map to view details</ListItem>}
               </List>
             </Tab>
             <Tab 
-              icon={<FontIcon className="fa fa-filter"/>}
+              icon={<FontIcon className="fa fa-area-chart"/>}
               label="Metrics"
             >
+              <List>
+                <ListItem>
+                  Coming Soon
+                </ListItem>
+              </List>
             </Tab>
           </Tabs>
          
@@ -222,7 +227,10 @@ var MapComponent = React.createClass({
     )
 
     return(
-      <div style={{height: '100%', width: '100%'}}>
+      <div 
+        className={this.state.rightDrawerOpen ? 'open-right' : null}
+        style={{height: '100%', width: '100%'}}
+      >
         <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
           <SearchFilterToolbar 
             map={this.refs.map}

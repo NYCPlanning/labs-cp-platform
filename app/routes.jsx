@@ -52,16 +52,16 @@ module.exports = (
 
 
     <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth}/>
-    <Route path="facilities/all" component={FacilitiesExplorer} title={'Facilities Explorer'} onEnter={requireAuth} miniNav={true}/>
-    <Route path="facilities/:id" component={FacilityPage}/>
+    <Route path="facilities/all" component={FacilitiesExplorer} title={'Facilities Explorer'} miniNav={true} onEnter={requireAuth} />
+    <Route path="facilities/:id" component={FacilityPage} title={'Facility Details'} miniNav={true}/>
  
 
     <Route path="domain/:domain" component={FacilitiesExplorer} onEnter={requireAuth}/>
     {/*<Route path="facilities/subset/:subset" component={FacilitiesExplorer} onEnter={requireAuth}/>*/}
 
-    <Route path="pipeline" component={PipelineExplorer} onEnter={requireAuth}/>
+    <Route path="pipeline" component={PipelineExplorer} title={'Housing Development Pipeline'} miniNav={true} onEnter={requireAuth}/>
     
-    <Route path="capitalprojects" component={CapitalProjects} onEnter={requireAuth}/>
+    <Route path="capitalprojects" component={CapitalProjects} title={'Capital Projects Explorer'} miniNav={true} onEnter={requireAuth}/>
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>

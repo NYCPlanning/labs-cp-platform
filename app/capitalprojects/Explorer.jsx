@@ -34,7 +34,7 @@ var CapitalProjectsExplorer = React.createClass({
 
   render() {
     return(
-      <div>
+      <div className='full-screen'>
         <MapComponent leftDrawerOpen={true} auth={this.props.auth}>
           <CapitalProjectsDataLayer 
             name="Capital Projects Explorer"

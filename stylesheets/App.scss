@@ -7,9 +7,7 @@ h1, h2, h3, h4, h5 {
 }
 
 html, body {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+
 }
 
 body::webkit-scrollbar {
@@ -19,10 +17,17 @@ body::webkit-scrollbar {
 
 .full-screen {
   position: absolute;
-  top: 50px;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  background: #fff;
+  margin-top: 50px;
+}
+
+.fluid-content {
+  padding: 0;
+  margin-top: 80px;
 }
 
 .btn.dcp-orange {

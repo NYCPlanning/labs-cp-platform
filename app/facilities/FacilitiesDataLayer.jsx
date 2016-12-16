@@ -8,6 +8,7 @@ import React from 'react'
 import Moment from 'moment'
 import {Link} from 'react-router'
 import {ListItem} from 'material-ui/List'
+import FontIcon from 'material-ui/FontIcon'
 import {browserHistory} from 'react-router'
 
 import FacLayerSelector from './FacLayerSelector.jsx'
@@ -211,7 +212,7 @@ var FacilitiesDataLayer = React.createClass({
             >
               <ListItem
                 primaryText={d.facilityname}
-                secondaryText={d.address}
+                secondaryText={d.address + ' | ' + d.facilitytype}
                 leftIcon={
                   <div 
                     className={'color-circle'} 
@@ -221,8 +222,8 @@ var FacilitiesDataLayer = React.createClass({
                     }}
                   /> 
                 }
-                initiallyOpen={i==0 ? true : false}
-                primaryTogglesNestedList={false}
+                rightIcon={<FontIcon className='fa fa-chevron-right'/>}
+                /*initiallyOpen={i==0 ? true : false}
                 nestedItems={[
                   <div style={{
                     backgroundColor: '#f1f1f1',
@@ -238,7 +239,7 @@ var FacilitiesDataLayer = React.createClass({
 
                     </dl>
                   </div>
-                ]}
+                ]}*/
               />
             </Link>
         )

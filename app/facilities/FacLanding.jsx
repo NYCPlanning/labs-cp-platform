@@ -13,9 +13,6 @@ import '../../stylesheets/facilities/FacLanding.scss'
 var FacilitiesLandingPage = React.createClass({
   componentDidMount() {
     document.title = "Capital Planning Platform"
-
-    console.log('FACILITIESLANDINGCHILDREN', this.props.children)
-
   },
 
   showAbout() {
@@ -28,12 +25,8 @@ var FacilitiesLandingPage = React.createClass({
 
   render() {
     return(
-      <div className="facilities-landing">
-        <Nav title='Facilities and Program Sites Explorer' auth={this.props.auth} showModal={this.props.showModal}>
-            <li onClick={this.showAbout}><a> About</a></li>
-        </Nav>
-
-        <div className="main-content">
+ 
+        <div className="facilities-landing fluid-content">
             <section className="header-area" id="about" style={{'backgroundImage': "url(/img/facilities_landing_background.png)", 'padding': '60px'}}>
                 <div className="container">
                     <div className="row">
@@ -163,7 +156,6 @@ var FacilitiesLandingPage = React.createClass({
                     </div>
                 </div>
             </section>
-        </div>
         <Footer/>
       </div>
     );

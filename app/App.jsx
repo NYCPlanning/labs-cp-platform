@@ -109,7 +109,7 @@ var App = React.createClass({
                   right: 0,
                   left: 0,
                   bottom: 0,
-                  top: '80px'
+                  top: 0
                 }} >
                 {React.cloneElement(this.props.children, {
                   key: this.props.location.pathname

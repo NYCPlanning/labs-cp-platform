@@ -5,11 +5,10 @@ nav {
   font-family: 'Oswald', sans-serif;
 }
 
-.navbar-default {
+.navbar-default, .navbar-collapse.in, .navbar-collapse.collapsing{
   background-color: rgba(255, 255, 255, 0.94);
-  z-index: 1000;
+  z-index: 1500;
 }
-
 
 ul.navbar-right {
     margin-right: 0;
@@ -53,11 +52,6 @@ ul.navbar-right {
 #navbar {
   border-bottom: 0.5px solid rgba(219, 105, 27, 0);
 }
-
-.navbar-collapse {
-  background-color: #fff;
-}
-
 
 .navbar-brand {
   font-size: 28px;

@@ -67,7 +67,14 @@ var Nav = React.createClass({
             <span className="icon-bar"></span>
           </button>
           <Link className="navbar-brand" to="/"></Link>
-          <div className="navbar-title">Capital Planning Platform <span className={'title'}>| {this.props.title}</span></div>
+          <div className="navbar-title">
+            Capital Planning Platform 
+            {(
+              this.props.title &&
+                <span className={'title'}> | {this.props.title}</span> 
+            )}
+            
+          </div>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
            <ul className="nav navbar-nav navbar-right ">
