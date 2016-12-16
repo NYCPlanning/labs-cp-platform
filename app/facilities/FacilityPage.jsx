@@ -7,7 +7,7 @@ import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 
 import Nav from '../common/Nav.jsx'
-import SimpleMarkerMap from '../common/SimpleMarkerMap.jsx'
+import ModalMap from '../common/ModalMap.jsx'
 
 import carto from '../helpers/carto.js'
 
@@ -34,20 +34,12 @@ var Component = React.createClass({
   },
 
   render() {
-    var title="Facility Details Page"
-
 
     var content = this.state.data ? this.renderContent(this.state.data) : null
 
     return(
-      <div className="full-height">
-        <Nav title={title} auth={this.props.auth} showModal={this.props.showModal}>
-          
-        </Nav>
-        <div id="main-container">
-          <h1>Facility Details</h1>
-          {content}
-        </div>
+      <div className="full-screen">
+        {content}
       </div>
     )
   },
@@ -121,13 +113,13 @@ var Component = React.createClass({
     }
 
     return  (
-      <div className="row">
+      <div>
         <div className="col-md-12">
           <h3>{d.facilityname}</h3>
-          <h4>{d.address}</h4>
+          <p>{d.address}</p>
         </div>
         <div className="col-md-6">
-          <SimpleMarkerMap point={latlng} travelshed={true}/>
+          <ModalMap data={data}/>
         </div>
         <div className="col-md-6">
           <ul className="list-group">

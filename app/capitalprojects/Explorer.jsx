@@ -34,10 +34,7 @@ var CapitalProjectsExplorer = React.createClass({
 
   render() {
     return(
-      <div>
-        <Nav title={'NYC Capital Projects Explorer'} auth={this.props.auth} showModal={this.props.showModal}>
-            <li onClick={this.showAbout}><a> About</a></li>
-        </Nav>
+      <div className='full-screen'>
         <MapComponent leftDrawerOpen={true} auth={this.props.auth}>
           <CapitalProjectsDataLayer 
             name="Capital Projects Explorer"

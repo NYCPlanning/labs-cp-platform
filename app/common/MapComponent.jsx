@@ -8,13 +8,15 @@
 import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
+import {List, ListItem} from 'material-ui/List'
+import {Tab, Tabs} from 'material-ui/Tabs'
 
 import MapboxGLMap from './MapboxGLMap.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
 import SubwayLayer from '../overlays/SubwayLayer.jsx'
 import CdLayer from '../overlays/CdLayer.jsx'
 import NtaLayer from '../overlays/NtaLayer.jsx'
-import Tab from './CustomTab.jsx'
+import CustomTab from './CustomTab.jsx'
 import TabDrawer from './TabDrawer.jsx'
 import MapMenu from './MapMenu.jsx'
 
@@ -26,9 +28,11 @@ var MapComponent = React.createClass({
   getInitialState() {
     return({
       leftDrawerOpen: this.props.leftDrawerOpen ? this.props.leftDrawerOpen : false,
+      rightDrawerOpen: this.props.rightDrawerOpen ? this.props.rightDrawerOpen : false,
       overlays: overlays,
       basemap: 'light',
-      legendContent: {}
+      legendContent: {}, 
+      selections: []
     })
   },
 
@@ -39,6 +43,12 @@ var MapComponent = React.createClass({
   toggleLeftDrawer() {
     this.setState({
       leftDrawerOpen: !this.state.leftDrawerOpen
+    })
+  },
+
+  toggleRightDrawer() {
+    this.setState({
+      rightDrawerOpen: !this.state.rightDrawerOpen
     })
   },
 
@@ -79,6 +89,14 @@ var MapComponent = React.createClass({
     })
   },
 
+  showSelections(content) {
+    console.log('showSelections')
+    this.setState({
+      rightDrawerOpen: true,
+      selections: content
+    })
+  },
+
   showAbout() {
     this.props.showModal({
       modalHeading: 'About this Tool',
@@ -94,14 +112,15 @@ var MapComponent = React.createClass({
     const childrenWithProps = React.Children.map(this.props.children, 
       (child) => React.cloneElement(child, {
         map: this.refs.map ? this.refs.map : null,
-        updateLegend: this.updateLegend
+        updateLegend: this.updateLegend,
+        showSelections: this.showSelections
       })
     )
 
     //create Tab for each child
     var childrenTabs = childrenWithProps.map(function(child, i) {
       return (
-        <Tab 
+        <CustomTab 
           key={i+1}
           icon={
             <FontIcon className={child.props.icon}/> 
@@ -113,7 +132,7 @@ var MapComponent = React.createClass({
             width: '40px'
           }}>
           {child}
-        </Tab>
+        </CustomTab>
       )
     })
 
@@ -121,7 +140,7 @@ var MapComponent = React.createClass({
     if (this.refs.map) {
 
       childrenTabs.unshift(
-        <Tab 
+        <CustomTab 
           icon={<FontIcon className="fa fa-bars"/>} 
           tooltipText='Map Menu'
           key={0} 
@@ -136,7 +155,7 @@ var MapComponent = React.createClass({
             map={this.refs.map.map}
             onUpdate={this.handleOverlayToggle}
           />
-        </Tab>
+        </CustomTab>
       )
     }
 
@@ -166,26 +185,67 @@ var MapComponent = React.createClass({
       </TabDrawer>
     )
 
+    const rightTabDrawer = (
+      <TabDrawer 
+        open={this.state.rightDrawerOpen}
+        toggle={this.toggleRightDrawer}
+        right={true}
+      >
+        <Tab 
+          key={0} 
+          onActive={self.openLeftDrawer}
+          style={{
+            height: 'auto',
+            width: '40px'
+          }}
+        >
+          <Tabs>
+            <Tab 
+            icon={<FontIcon className="fa fa-list"/>}
+            label="List"
+            >
+              <List>
+                {this.state.selections.length > 0 ? 
+                  this.state.selections : 
+                  <ListItem>Select items on the map to view details</ListItem>}
+              </List>
+            </Tab>
+            <Tab 
+              icon={<FontIcon className="fa fa-area-chart"/>}
+              label="Metrics"
+            >
+              <List>
+                <ListItem>
+                  Coming Soon
+                </ListItem>
+              </List>
+            </Tab>
+          </Tabs>
+         
+        </Tab>
+      </TabDrawer>
+    )
+
     return(
-      <div className="full-height">
-        <div id="main-container">
-          <div id="content">
-            <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
-              <SearchFilterToolbar 
-                map={this.refs.map}
-                onToggleMenuDrawer={this.toggleMenuDrawer}
-                />
-              <Legend>
-                {legendChildren}
-              </Legend>
-            </div>
-            <MapboxGLMap
-              ref="map"
-              >
-            </MapboxGLMap>
-            {this.refs.map ? tabDrawer : null}            
-          </div>
+      <div 
+        className={this.state.rightDrawerOpen ? 'open-right' : null}
+        style={{height: '100%', width: '100%'}}
+      >
+        <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
+          <SearchFilterToolbar 
+            map={this.refs.map}
+            onToggleMenuDrawer={this.toggleMenuDrawer}
+            />
+          <Legend>
+            {legendChildren}
+          </Legend>
         </div>
+        <MapboxGLMap
+          ref="map"
+          >
+        </MapboxGLMap>
+        {this.refs.map ? tabDrawer : null}
+        {this.refs.map ? rightTabDrawer : null}            
       </div>
     )
   }

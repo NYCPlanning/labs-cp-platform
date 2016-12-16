@@ -259,4 +259,26 @@
   border-radius: 6px;
   border: 1px solid rgb(82, 82, 82);
 }
+
+.tabs-container .dl-horizontal {
+  margin-bottom: 0;
+}
+
+.tabs-container .dl-horizontal dt {
+    float: left;
+    width: 110px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+    color: #a9a9a9;
+}
+
+.tabs-container .dl-horizontal dd {
+  margin-left: 120px;
+}
+
+
     

@@ -39,16 +39,26 @@ var FacilitiesExplorer = React.createClass({
   },
 
   render() {
+
+    let { location } = this.props
+
+    let isModal = (
+      location.state &&
+      location.state.modal &&
+      this.previousChildren
+    )
+    
     //Facilities Data Layer is composable, and will show different data/filters based on the route
     const mode = this.props.params.domain ? this.props.params.domain : 'all'
 
     return(
-      <div>
-        <Nav title={'Facilities and Program Sites Explorer'} auth={this.props.auth} showModal={this.props.showModal}>
+      <div className='full-screen'>
+        {/*<Nav title={'Facilities and Program Sites Explorer'} auth={this.props.auth} showModal={this.props.showModal}>
           <li onClick={this.showAbout}><a> About</a></li>
-        </Nav>
+        </Nav>*/}
         <MapComponent leftDrawerOpen={true} auth={this.props.auth} showModal={this.props.showModal}>
           <FacilitiesDataLayer 
+            history={this.props.history}
             name="Housing Pipeline" 
             icon="fa fa-university" 
             tooltipText="Facilities Database"

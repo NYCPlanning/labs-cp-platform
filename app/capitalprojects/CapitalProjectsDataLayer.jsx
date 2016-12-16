@@ -5,6 +5,9 @@
 //  map: the mapboxGL map object to add the source and layer to
 
 import React from 'react'
+import {Link} from 'react-router'
+import {ListItem} from 'material-ui/List'
+import FontIcon from 'material-ui/FontIcon'
 
 import ModalContent from './ModalContent.jsx'
 import CapitalProjectsFilter from './CapitalProjectsFilter.jsx'
@@ -168,26 +171,67 @@ var CapitalProjectsDataLayer = React.createClass({
       var features = map.queryRenderedFeatures(e.point, { layers: ['capitalprojects-points','capitalprojects-polygons'] });
 
       if (!features.length) return
-      self.showPopup(e.lngLat, features)
+      self.buildSelections(e.lngLat, features)
     })
   },
 
-  showPopup(lngLat, features) {
+
+  buildSelections(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
 
-    var content=features.map(function(feature, i) {
-      var d=feature.properties
-      return (
-        <div className='popupRow' key={i} onClick={self.showModal.bind(self, feature)}>
-          <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
-          <span className={'text'}>{d.projectid} - {d.name}</span> <i className="fa fa-angle-right" aria-hidden="true"></i>  
-        </div>
-      ) 
-    })
+    var content = features.map(
+      (feature, i) => {
+        const d = feature.properties
+        const type = (feature.geometry.type == 'Point') ? '0' : '1'
 
-    this.props.map.showPopup(lngLat, content)
+        return (
+             <Link
+              key={i}
+              to={{
+                //add flag for point or polygon so the project view knows which table to query
+                pathname: `/capitalprojects/${d.cartodb_id}-${type}`  ,
+                state: { modal: true, returnTo: '/captialprojects'}
+              }}
+            >
+              <ListItem
+                primaryText={d.name}
+                secondaryText={d.projectid}
+                leftIcon={
+                  <div 
+                    className={'color-circle'} 
+                    style={{
+                      'backgroundColor': Agencies.getAgencyColor(d.sagency),
+                      'borderRadius': '12px'
+                    }}
+                  /> 
+                }
+                rightIcon={<FontIcon className='fa fa-chevron-right'/>}
+              />
+            </Link>
+        )
+      }
+    )
+
+    this.props.showSelections(content)
   },
+
+  // showPopup(lngLat, features) {
+  //   var self=this
+  //   //builds content for the popup, sends it to the map
+
+  //   var content=features.map(function(feature, i) {
+  //     var d=feature.properties
+  //     return (
+  //       <div className='popupRow' key={i} onClick={self.showModal.bind(self, feature)}>
+  //         <span className={'badge'} style={{'backgroundColor': Agencies.getAgencyColor(d.sagency)}}>{d.sagency}</span> 
+  //         <span className={'text'}>{d.projectid} - {d.name}</span> <i className="fa fa-angle-right" aria-hidden="true"></i>  
+  //       </div>
+  //     ) 
+  //   })
+
+  //   this.props.map.showPopup(lngLat, content)
+  // },
 
   showModal(feature) {
     //builds content for the modal and sends it to the global modal service

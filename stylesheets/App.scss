@@ -6,28 +6,28 @@ h1, h2, h3, h4, h5 {
   font-family: 'Oswald', sans-serif;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-  -ms-overflow-style: none;
-}
+
 
 ::-webkit-scrollbar {
   width: 0px !important;
 }
 
 
-#main-container {
+.full-screen {
   position: absolute;
-  top: 80px;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  background: #fff;
+  margin-top: 50px;
 }
 
-.full-height {
-  height:100%;    
-  /*overflow-y: scroll;*/
+
+.fluid-content {
+  padding: 0;
+  margin-top: 80px;
+
 }
 
 .btn.dcp-orange {
@@ -183,3 +183,19 @@ body:after {
 
 
 /* End CountWidget */
+
+
+.background-enter {
+  transform: translate(100%);
+}
+.background-enter.background-enter-active {
+  transform: translate(0%);
+  transition: transform 250ms ease-in-out;
+}
+.background-leave {
+  transform: translate(0%);
+}
+.background-leave.background-leave-active {
+  transform: translate(100%);
+  transition: transform 250ms ease-in-out;
+}

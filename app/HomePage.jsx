@@ -30,12 +30,9 @@ var HomePage = React.createClass({
 
   render() {
     return(
-      <div>
-      <Nav title='Capital Planning Platform' auth={this.props.auth} showModal={this.props.showModal} ref={'nav'}>
-        <li onClick={this.showAbout}><a> About</a></li>
-      </Nav>
+   
 
-      <div className="col-md-12 main-content">
+      <div className="col-md-12 fluid-content">
       
         <section className="headline-section">
         <div className="container">
@@ -146,7 +143,6 @@ var HomePage = React.createClass({
         </div>
         </section>
         <Footer/>
-      </div>
       </div>
     )
   }

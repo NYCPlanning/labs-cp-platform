@@ -24,6 +24,7 @@ var Nav = React.createClass({
   },
 
   render() {
+    console.log(this.props)
     var auth = this.props.auth
     var profile = auth.getProfile()
 
@@ -50,7 +51,7 @@ var Nav = React.createClass({
       )
 
     return(
-      <nav className="navbar navbar-default navbar-fixed-top">
+      <nav className={"navbar navbar-default navbar-fixed-top " + (this.props.mini ? "mini-nav" : null)}>
         <div className="navbar-header">
           <button 
             type="button" 
@@ -66,7 +67,14 @@ var Nav = React.createClass({
             <span className="icon-bar"></span>
           </button>
           <Link className="navbar-brand" to="/"></Link>
-          <div className="navbar-title">{this.props.title}</div>
+          <div className="navbar-title">
+            Capital Planning Platform 
+            {(
+              this.props.title &&
+                <span className={'title'}> | {this.props.title}</span> 
+            )}
+            
+          </div>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
            <ul className="nav navbar-nav navbar-right ">
