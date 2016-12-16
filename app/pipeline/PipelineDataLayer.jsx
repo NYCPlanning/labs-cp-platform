@@ -10,7 +10,6 @@ import {ListItem} from 'material-ui/List'
 import FontIcon from 'material-ui/FontIcon'
 
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
-import ModalContent from './ModalContent.jsx'
 
 import Carto from '../helpers/carto.js'
 
@@ -188,7 +187,6 @@ var PipelineDataLayer = React.createClass({
     var content = features.map(
       (feature, i) => {
         const d = feature.properties
-        console.log(d)
 
         return (
              <Link
@@ -205,7 +203,7 @@ var PipelineDataLayer = React.createClass({
                   <div 
                     className={'color-circle'} 
                     style={{
-                      'backgroundColor': 'steelblue',
+                      'backgroundColor': self.getStatusColor(d.dcp_pipeline_status),
                       'borderRadius': '12px'
                     }}
                   /> 
@@ -234,7 +232,6 @@ var PipelineDataLayer = React.createClass({
       }
     )
 
-    console.log(content)
     this.props.showSelections(content)
   },
 

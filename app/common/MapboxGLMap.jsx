@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 
-import Popup from './Popup.jsx'
-
 import '../../stylesheets/common/MapboxGLMap.scss'
 
 // Notes
@@ -111,36 +109,12 @@ var MapboxGLMap = React.createClass({
       <div id='mapboxGLmap' ref='map'>
         {childrenWithProps}
         {this.map ? <PoiMarker map={this.map} coords={this.state.poiCoords} label={this.state.poiLabel}/>: null}
-        {this.map ? <Popup map={this.map} lngLat={this.state.popupLngLat} content={this.state.popupContent}/>: null}
       </div>
     )
   },
 })
 
 module.exports=MapboxGLMap;
-
-
-//POI Marker Component, pass in lngLat coords and a map object, it will project an animated marker
-// var PoiMarker = React.createClass({
-//   componentDidMount() {
-//     var self=this
-
-//     this.props.map.on('move', function(e) {
-//       self.forceUpdate()
-//     })
-//   },
-
-//   render() {
-//       var point = this.props.map.project(this.props.coords) 
-
-//       return (
-//         <div className="location-ring-container" ref="locationContainer" style={{'left': point.x, 'top': point.y}}>
-//           <div className={'location-ring-animated'}></div>
-//           <div className={'location-ring-fixed'}></div>
-//         </div>
-//       )
-//   }
-// })
 
 
 var PoiMarker = React.createClass({

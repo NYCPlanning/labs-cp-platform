@@ -21,7 +21,6 @@ var TabDrawer = React.createClass({
       angleIcon = this.props.open ? "fa fa-angle-double-left" : "fa fa-angle-double-right"
     }
 
-    console.log(transform)
 
     return(
       <div className="tabs-container" style={{
@@ -78,8 +77,6 @@ var TabDrawer = React.createClass({
   }
 
 })
-
-
 
 module.exports = TabDrawer
  
