@@ -5,6 +5,9 @@
 //  map: the mapboxGL map object to add the source and layer to
 
 import React from 'react'
+import {Link} from 'react-router'
+import {ListItem} from 'material-ui/List'
+import FontIcon from 'material-ui/FontIcon'
 
 import PipelineLayerSelector from './PipelineLayerSelector.jsx'
 import ModalContent from './ModalContent.jsx'
@@ -174,32 +177,89 @@ var PipelineDataLayer = React.createClass({
 
         if (!features.length) return
       
-        self.showPopup(e.lngLat, features)
+        self.buildSelections(e.lngLat, features)
     })
   },
 
-  showPopup(lngLat, features) {
+  buildSelections(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
 
     var content = features.map(
       (feature, i) => {
         const d = feature.properties
+        console.log(d)
+
         return (
-          <div className="popupRow" key={i} onClick={self.showModal.bind(self, feature)}>
-            <span className="badge" style={{
-              backgroundColor: self.getStatusColor(d.dcp_pipeline_status)
-            }}>{d.dcp_pipeline_status}</span>
-            <span className="text">{d.dob_permit_address}</span>
-            <span className="badge">Δ {d.dcp_units_use_map}</span>
-            <i className="fa fa-angle-right" aria-hidden="true"></i>
-          </div>
+             <Link
+              key={i}
+              to={{
+                pathname: `/pipeline/${d.cartodb_id}`,
+                state: { modal: true, returnTo: '/pipeline'}
+              }}
+            >
+              <ListItem
+                primaryText={d.dob_permit_address}
+                secondaryText={d.dcp_pipeline_status + ' | ' + d.dcp_units_use_map + ' units'}
+                leftIcon={
+                  <div 
+                    className={'color-circle'} 
+                    style={{
+                      'backgroundColor': 'steelblue',
+                      'borderRadius': '12px'
+                    }}
+                  /> 
+                }
+                rightIcon={<FontIcon className='fa fa-chevron-right'/>}
+                /*initiallyOpen={i==0 ? true : false}
+                nestedItems={[
+                  <div style={{
+                    backgroundColor: '#f1f1f1',
+                    padding: '10px 0'
+                  }}>
+                    <dl className="dl-horizontal list">
+
+                      <dt>Subgroup</dt>
+                      <dd>{d.facilitysubgroup}</dd>
+
+                      <dt>Facility Type</dt>
+                      <dd>{d.facilitytype}</dd>
+
+                    </dl>
+                  </div>
+                ]}*/
+              />
+            </Link>
         )
       }
     )
 
-    this.props.map.showPopup(lngLat, content)
+    console.log(content)
+    this.props.showSelections(content)
   },
+
+  // showPopup(lngLat, features) {
+  //   var self=this
+  //   //builds content for the popup, sends it to the map
+
+  //   var content = features.map(
+  //     (feature, i) => {
+  //       const d = feature.properties
+  //       return (
+  //         <div className="popupRow" key={i} onClick={self.showModal.bind(self, feature)}>
+  //           <span className="badge" style={{
+  //             backgroundColor: self.getStatusColor(d.dcp_pipeline_status)
+  //           }}>{d.dcp_pipeline_status}</span>
+  //           <span className="text">{d.dob_permit_address}</span>
+  //           <span className="badge">Δ {d.dcp_units_use_map}</span>
+  //           <i className="fa fa-angle-right" aria-hidden="true"></i>
+  //         </div>
+  //       )
+  //     }
+  //   )
+
+  //   this.props.map.showPopup(lngLat, content)
+  // },
 
   showModal(feature) {
     //builds content for the modal and sends it to the global modal service

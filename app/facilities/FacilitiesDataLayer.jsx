@@ -155,7 +155,7 @@ var FacilitiesDataLayer = React.createClass({
 
         if (!features.length) return
       
-        self.showPopup(e.lngLat, features)
+        self.buildSelections(e.lngLat, features)
     })
   },
 
@@ -192,8 +192,7 @@ var FacilitiesDataLayer = React.createClass({
     return colorObject.stops.filter((stop) => stop[0] == value)[0][1]
   },
 
-  showPopup(lngLat, features) {
-    console.log('showPopup')
+  buildSelections(lngLat, features) {
     var self=this
     //builds content for the popup, sends it to the map
 
@@ -248,8 +247,6 @@ var FacilitiesDataLayer = React.createClass({
 
     console.log(content)
     this.props.showSelections(content)
-
-    //this.props.map.showPopup(lngLat, content)
   },
 
   showModal(feature) {

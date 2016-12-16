@@ -1,6 +1,8 @@
 //Agency color mapping for agencies in the capital projects explorer
 //includes 4 major capital agencies and "Others"
 
+import config from './config.js'
+
 var agencies = [
     {
       name: 'All Other Agencies',
@@ -36,16 +38,23 @@ module.exports={
   mapboxGLStyle: {
     property: 'sagency',
     type: 'categorical',
-    stops: agencies.map(function(agency) {
+    stops: agencies.map(function( agency ) {
       return [agency.acronym, agency.color]
     })
   },
 
-  getAgencyColor: function(acronym) {
-    var match = agencies.filter(function(agency) {
+  getAgencyColor: function( acronym ) {
+    var match = agencies.filter(function( agency ) {
       return agency.acronym == acronym;
     })
 
     return match.length>0 ? match[0].color : '#ffcc00';
+  },
+
+  getAgencyName: function( acronym ) {
+    var match = config.sponsorAgencies.filter(function( agency ) {
+      return agency.value == acronym
+    })
+    return match[0].label
   } 
 }
