@@ -106,6 +106,16 @@ var ModalMap = React.createClass({
         });
       }
 
+      self.label = new mapboxgl.Popup({
+        offset: [0,0],
+        anchor: 'left',
+        closeButton: false,
+        closeOnClick: false
+      })
+        .setLngLat(self.props.data.geometry.coordinates)
+        .addTo(self.map)
+        .setHTML("<p>" + self.props.label + "</p>")
+
       self.flyMap()
     })
   },

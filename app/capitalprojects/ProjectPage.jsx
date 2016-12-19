@@ -82,7 +82,7 @@ var Component = React.createClass({
         </div>
 
         <div className={'col-md-6'}>
-          <ModalMap data={this.state.data}/>
+          <ModalMap data={this.state.data} label={d.name}/>
         </div>
 
         <div className={'col-md-6'}>

@@ -54,7 +54,7 @@ var Component = React.createClass({
           <h3>{d.dob_permit_address}</h3>
         </div>
         <div className="col-md-6">
-          <ModalMap data={this.state.data}/>
+          <ModalMap data={this.state.data} label={d.dob_permit_address}/>
         </div>
         <div className="col-md-6">
           <ul className="list-group">

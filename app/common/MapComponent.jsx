@@ -49,18 +49,6 @@ var MapComponent = React.createClass({
     })
   },
 
-  openLeftDrawer() {
-    this.setState({
-      leftDrawerOpen: true
-    })
-  },
-
-  closeLeftDrawer() {
-    this.setState({
-      leftDrawerOpen: false
-    })
-  },
-
   handleOverlayToggle(id) {
     var sections = this.state.overlays
 
@@ -122,7 +110,7 @@ var MapComponent = React.createClass({
             <FontIcon className={child.props.icon}/> 
           } 
           tooltipText={child.props.tooltipText}
-          onActive={self.openLeftDrawer} 
+          onActive={!self.state.leftDrawerOpen ? self.toggleLeftDrawer : null} 
           style={{
             height: 'auto',
             width: '40px'
@@ -140,7 +128,7 @@ var MapComponent = React.createClass({
           icon={<FontIcon className="fa fa-bars"/>} 
           tooltipText='Map Menu'
           key={0} 
-          onActive={self.openLeftDrawer}
+          onActive={!self.state.leftDrawerOpen ? self.toggleLeftDrawer : null}
           style={{
             height: 'auto',
             width: '40px'
@@ -163,7 +151,6 @@ var MapComponent = React.createClass({
         </div>
       ) 
     })
-
 
     const tabDrawer = (
       <TabDrawer 
@@ -225,9 +212,9 @@ var MapComponent = React.createClass({
             map={this.refs.map}
             onToggleMenuDrawer={this.toggleMenuDrawer}
             />
-          <Legend>
+          <div className='legend mapOverlay'>
             {legendChildren}
-          </Legend>
+          </div>
         </div>
         <MapboxGLMap
           ref="map"
@@ -240,13 +227,5 @@ var MapComponent = React.createClass({
   }
 })
 
-var Legend = function(props) {
-
-  return(
-    <div className='legend mapOverlay'>
-      {props.children}
-    </div>
-  )
-}
 
 module.exports=MapComponent
