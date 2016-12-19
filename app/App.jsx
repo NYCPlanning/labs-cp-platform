@@ -1,5 +1,4 @@
-//App.jsx - Top-level container for the react SPA, it passes the auth property to 
-//its children, which are the app's top-level routes
+//App.jsx - Top-level container for the react SPA
 //Props:
 //  route - object passed in from react-router, which includes auth
 //  children - the top-level route(s) from react router
@@ -12,7 +11,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import GlobalModal from './common/GlobalModal.jsx'
 import Nav from './common/Nav.jsx'
-
 
 import '../stylesheets/App.scss'
 
@@ -29,13 +27,12 @@ var App = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    // if we changed routes...
+    //from the react router pinterest example, this allows us to slide in a new page without unmounting the old one
     if ((
       nextProps.location.key !== this.props.location.key &&
       nextProps.location.state &&
       nextProps.location.state.modal
     )) {
-      // save the old children (just like animation)
       this.previousChildren = this.props.children
     }
   },
@@ -74,6 +71,8 @@ var App = React.createClass({
       })
     }
 
+    document.title = this.props.children.props.route.title
+
     return( 
       <MuiThemeProvider>
         <div>
@@ -81,7 +80,7 @@ var App = React.createClass({
             title={this.props.children.props.route.title} 
             mini={this.props.children.props.route.miniNav}
             auth={this.props.route.auth} 
-            showModal={this.props.showModal}>
+            showModal={this.showModal}>
           </Nav>
           <div>
             <GlobalModal
@@ -116,7 +115,6 @@ var App = React.createClass({
                 }) } 
                 </div>
               )}
-            
             </ReactCSSTransitionGroup>
           </div>
         </div>

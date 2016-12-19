@@ -1,26 +1,21 @@
 // carto.js - helper methods for interacting with the carto APIs
 
-import Mustache from 'mustache'
+import appConfig from './appConfig.js'
 
 module.exports = {
   //given a string, get matches from capitalprojects based on name or projectid
   //TODO make this generic
   autoComplete: function(value) {
 
-
-    var sqlTemplate = "SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE name ILIKE '%{{value}}%' OR projectid ILIKE '%{{value}}%'"
-
-    var sql = Mustache.render(sqlTemplate, {value: value})
+    var sql= `SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE name ILIKE '%${value}%' OR projectid ILIKE '%${value}%'`
 
     return this.SQL(sql)
-
   },
 
   getVectorTileUrls: function(vizJsons) {
     //takes an array of vizJsons
     //returns an promise, resolve returns array of vector tile templates
     //TODO add logic so this works with both anonymous and named maps
-
 
     var promises = vizJsons.map(function(vizJson) {
       return new Promise(function(resolve, reject) {
@@ -44,7 +39,7 @@ module.exports = {
 
           $.ajax({
             type: 'POST',
-            url: 'https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map',
+            url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
             data: JSON.stringify(layerConfig),
             dataType: 'text',
             contentType: "application/json",
@@ -52,7 +47,7 @@ module.exports = {
               data = JSON.parse(data);
               var layergroupid = data.layergroupid
 
-              var template = "https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map/" + layergroupid + "/0/{z}/{x}/{y}.mvt"
+              var template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`
 
               resolve(template)
             }
@@ -69,7 +64,7 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       $.ajax({
         type: 'POST',
-        url: 'https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map',
+        url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
         data: JSON.stringify(mapConfig),
         dataType: 'text',
         contentType: "application/json",
@@ -77,7 +72,7 @@ module.exports = {
           data = JSON.parse(data);
           var layergroupid = data.layergroupid
 
-          var template = "https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map/" + layergroupid + "/0/{z}/{x}/{y}.mvt"
+          var template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`
 
           resolve(template)
         }
@@ -92,15 +87,9 @@ module.exports = {
 
     return new Promise(function( resolve, reject ) {
 
-      var sqlTemplate = typeof(value)=='number' ? 
-        "SELECT *  FROM {{tableName}} WHERE {{column}} = {{value}}" :
-        "SELECT *  FROM {{tableName}} WHERE {{column}} = '{{value}}'"
-
-      var sql = Mustache.render(sqlTemplate, {
-        tableName: tableName,
-        column: column,
-        value: value
-      })
+      var sql = typeof(value)=='number' ? 
+        `SELECT * FROM ${tableName} WHERE ${column} = ${value}` :
+        `SELECT * FROM ${tableName} WHERE ${column} = '${value}'`
 
       //returns a promise
       self.SQL(sql)
@@ -130,11 +119,7 @@ module.exports = {
 
     format = format ? format : 'geojson'
 
-    var apiCallTemplate = "https://carto.capitalplanning.nyc/user/cpadmin/api/v2/sql?q={{{sql}}}&format={{format}}"
-    var apiCall = Mustache.render(apiCallTemplate, {
-      sql:sql, 
-      format:format
-    })
+    var apiCall = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}`
 
     apiCall=encodeURI(apiCall)
 

@@ -11,7 +11,7 @@ import FontIcon from 'material-ui/FontIcon'
 
 import CapitalProjectsFilter from './CapitalProjectsFilter.jsx'
 
-import Agencies from '../helpers/agencies.js'
+import Agencies from './agencies.js'
 import Carto from '../helpers/carto.js'
 
 var CapitalProjectsDataLayer = React.createClass({
@@ -176,7 +176,7 @@ var CapitalProjectsDataLayer = React.createClass({
 
   buildSelections(lngLat, features) {
     var self=this
-    //builds content for the popup, sends it to the map
+    //builds content for the right sidebar
 
     var content = features.map(
       (feature, i) => {

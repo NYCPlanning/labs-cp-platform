@@ -12,7 +12,6 @@ import Modal from '../common/GlobalModal.jsx'
 
 import '../../stylesheets/common/Nav.scss'
 
-
 var Nav = React.createClass({
 
   showCollaborate() {

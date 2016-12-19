@@ -9,7 +9,6 @@
 
 //for imports, group into dependencies, Components, and helper files, scss, seperate by one space
 import React from 'react' //always start with React!
-import Mustache from 'mustache'
 
 import SomeComponent from './SomeComponent.jsx'
 import SomeOtherComponent from './SomeOtherComponent.jsx'

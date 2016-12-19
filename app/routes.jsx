@@ -2,31 +2,30 @@
 //Props: none
 
 import React from 'react'
-import {Route, IndexRoute, IndexRedirect} from 'react-router'
+import {Route, IndexRoute} from 'react-router'
 
 import App from '../app/App.jsx'
 import Login from '../app/Login.jsx'
 import Auth from './helpers/Auth.js'
+import appConfig from './helpers/appConfig.js'
 
 import HomePage from '../app/HomePage.jsx'
 
-import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
-import ProjectPage from '../app/capitalprojects/ProjectPage.jsx'
+import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
+import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer.jsx'
+import FacilityPage from '../app/facilities/FacilityPage.jsx'
 
 import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
 import DevelopmentPage from '../app/pipeline/DevelopmentPage.jsx'
 
-import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer.jsx'
-import FacilityPage from '../app/facilities/FacilityPage.jsx'
-import FacilitiesLanding from '../app/facilities/FacLanding.jsx'
+import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
+import ProjectPage from '../app/capitalprojects/ProjectPage.jsx'
 
 import NotFound from '../app/NotFound.jsx'
 
-var auth0_client_id = '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
-  auth0_domain = 'cpmanage.auth0.com'
+const auth = new Auth(appConfig.auth0_client_id, appConfig.auth0_domain)
 
-const auth = new Auth(auth0_client_id, auth0_domain)
-
+//redirects a route to /login if the user is not logged in
 const requireAuth = (nextState, replace) => {
   auth.requestedURL = nextState.location.pathname
 
@@ -41,7 +40,8 @@ const rerouteLoggedIn = (nextState, replace) => {
   }
 }
 
-var AuthSuccess = function() {
+//dummy component for the authsuccess route
+const AuthSuccess = () => {
   return (
     <div>
     </div>

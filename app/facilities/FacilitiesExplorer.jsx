@@ -9,9 +9,6 @@ import content from './content.jsx'
 var FacilitiesExplorer = React.createClass({
 
   componentDidMount() {
-    document.title = "Facilities and Program Sites Explorer";
-
-    
 
     var modalShown = JSON.parse(localStorage.getItem('facilities-splash'))
     
@@ -24,11 +21,7 @@ var FacilitiesExplorer = React.createClass({
 
       localStorage.setItem('facilities-splash', 'true');    
     }
-
   },
-
-
-
 
   showAbout() {
     this.props.showModal({

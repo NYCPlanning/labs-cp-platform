@@ -13,9 +13,6 @@ import {Tab, Tabs} from 'material-ui/Tabs'
 
 import MapboxGLMap from './MapboxGLMap.jsx'
 import SearchFilterToolbar from './SearchFilterToolbar.jsx'
-import SubwayLayer from '../overlays/SubwayLayer.jsx'
-import CdLayer from '../overlays/CdLayer.jsx'
-import NtaLayer from '../overlays/NtaLayer.jsx'
 import CustomTab from './CustomTab.jsx'
 import TabDrawer from './TabDrawer.jsx'
 import MapMenu from './MapMenu.jsx'
@@ -69,9 +66,9 @@ var MapComponent = React.createClass({
 
     //find the matching layer in the overlays data
     sections.forEach((section) => {
-      const thisLayer = section.layers.find((layer) => {
+      const thisLayer = section.layers.filter((layer) => {
         return layer.id===id
-      })
+      })[0]
 
       if (thisLayer) thisLayer.visible = !thisLayer.visible
     }) 
@@ -157,13 +154,6 @@ var MapComponent = React.createClass({
         </CustomTab>
       )
     }
-
-    // //build an array of visible overlay layers
-    // const overlays = []
-
-    // if (this.state.overlays.subway) { overlays.push(<SubwayLayer/>) }
-    // if (this.state.overlays.cdboundaries) { overlays.push(<CdLayer/>) } 
-    // if (this.state.overlays.ntaboundaries) { overlays.push(<NtaLayer/>) } 
 
     //turn state.legendContent into an array of components
     var legendChildren = Object.keys(this.state.legendContent).map(function (key, i) { 

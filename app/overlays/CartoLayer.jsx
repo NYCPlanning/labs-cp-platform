@@ -2,6 +2,8 @@
 import React from 'react'
 import TileLayer from './TileLayer.jsx'
 
+import appConfig from '../helpers/appConfig.js'
+
 const CartoLayer = React.createClass({
 
   componentDidMount() {
@@ -18,17 +20,16 @@ const CartoLayer = React.createClass({
       }]
     }
 
-
     $.ajax({
       type: 'POST',
       data: JSON.stringify(mapConfig),
-      url: 'https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map',
+      url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
       dataType : "text",
       contentType: "application/json",
       success: function(data) { 
         data = JSON.parse(data);
         var layergroupid = data.layergroupid
-        this.tiles='https://carto.capitalplanning.nyc/user/cpadmin/api/v1/map/' + layergroupid + '/{z}/{x}/{y}.png'
+        this.tiles=`https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/{z}/{x}/{y}.png`
         this.forceUpdate()
       }.bind(this)
     })

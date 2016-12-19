@@ -6,7 +6,6 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-import Nav from './common/Nav.jsx'
 import Footer from './common/Footer.jsx'
 
 import '../stylesheets/HomePage.scss'
@@ -30,10 +29,8 @@ var HomePage = React.createClass({
 
   render() {
     return(
-   
 
       <div className="col-md-12 fluid-content">
-      
         <section className="headline-section">
         <div className="container">
           <div className="row">
@@ -167,25 +164,6 @@ var aboutContent = (
 
   <div className="modal-logo"></div>
 
-  </div>
-)
-
-var collaborateContent = (
-  <div>
-    <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
-    <p>
-      The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
-    </p>
-    <p>
-      We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href='docs.capitalplanning.nyc'>metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href='https://github.com/nycplanning'>GitHub</a>.
-    </p>
-    <p>
-      We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city. 
-    </p>
-    <p>
-      Email the team at <a href='mailto:capital@planning.nyc.gov'>capital@planning.nyc.gov</a>.
-    </p>
-    <div className='modal-logo'></div>
   </div>
 )
 

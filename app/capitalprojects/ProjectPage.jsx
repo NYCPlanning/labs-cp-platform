@@ -8,7 +8,7 @@ import Moment from 'moment'
 
 import ModalMap from '../common/ModalMap.jsx'
 
-import Agencies from '../helpers/agencies.js'
+import Agencies from './agencies.js'
 import Carto from '../helpers/carto.js'
 
 var Component = React.createClass({

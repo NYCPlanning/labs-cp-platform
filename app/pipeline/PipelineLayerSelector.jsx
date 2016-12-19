@@ -9,7 +9,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
-import Mustache from 'mustache'
 import Select from 'react-select'
 import FontIcon from 'material-ui/FontIcon'
 import {List, ListItem} from 'material-ui/List'
@@ -163,10 +162,8 @@ var LayerSelector = React.createClass({
   },
 
   createUnitsSQLChunk(dimension, range) {
-    this.sqlChunks[dimension] = Mustache.render('(dcp_units_use_map >= \'{{from}}\' AND dcp_units_use_map <= \'{{to}}\')', {
-      from: range[0],
-      to: range[1]
-    })
+
+    this.sqlChunks[dimension] = `(dcp_units_use_map >= \'${range[0]}\' AND dcp_units_use_map <= \'${range[1]}\')`
   },
 
   createDateSQLChunk(dimension, range) {
@@ -176,9 +173,7 @@ var LayerSelector = React.createClass({
     }
 
     if(this.state.dateFilter) {
-      this.sqlChunks[dimension] = Mustache.render(
-      'NOT (dob_cofo_date_first >= \'{{to}}\' OR dob_cofo_date_last <= \'{{from}}\')', dateRangeFormatted
-      )
+      this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= \'${dateRangeFormatted.to}\' OR dob_cofo_date_last <= \'${dateRangeFormatted.from}\')`
     } 
   },
 

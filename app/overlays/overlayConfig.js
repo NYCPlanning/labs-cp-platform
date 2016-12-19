@@ -185,51 +185,7 @@ const overlayConfig = [
   {
     name: "Waterfront, Flood Zones, Watersheds",
     iconClass: 'fa fa-flag',
-    layers: [
-      // {
-      //   id: 'hurricaneevac',
-      //   name: 'Hurricane Evacuation Zones',
-      //   visible: false,
-      //   type: 'carto',
-      //   options: { 
-      //     "cartocss": `
-      //       #nyhez {
-      //         polygon-opacity: 0.5;
-      //         line-color: #FFF;
-      //         line-width: 0.5;
-      //         line-opacity: 0;
-      //       }
-
-      //       #nyhez[hurricane_="0"] {
-      //          line-opacity: 0; 
-      //          polygon-opacity: 0;
-      //       }
-      //       #nyhez[hurricane_="1"] {
-      //          polygon-fill: #045a8d;
-      //       }
-      //       #nyhez[hurricane_="2"] {
-      //          polygon-fill: #2b8cbe;
-      //       }
-      //       #nyhez[hurricane_="3"] {
-      //          polygon-fill: #74a9cf;
-      //       }
-      //       #nyhez[hurricane_="4"] {
-      //          polygon-fill: #a6bddb;
-      //       }
-      //       #nyhez[hurricane_="5"] {
-      //          polygon-fill: #d0d1e6;
-      //       }
-      //       #nyhez[hurricane_="6"] {
-      //          polygon-fill: #f1eef6;
-      //       }
-      //       #nyhez[hurricane_="X"] {
-      //          line-opacity: 0; 
-      //          polygon-opacity: 0; 
-      //       }`,
-      //     "sql": "select * from nyhez"    
-      //   }
-      // }
-    ]
+    layers: []
   },
 
   {

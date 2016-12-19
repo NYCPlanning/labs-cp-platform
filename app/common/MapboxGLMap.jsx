@@ -2,10 +2,9 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 
-import '../../stylesheets/common/MapboxGLMap.scss'
+import appConfig from '../helpers/appConfig.js'
 
-// Notes
-// This component inserts a mapboxGL map into its parent container, and renders two "floating" divs, one for the address lookup, and another for a map popup
+import '../../stylesheets/common/MapboxGLMap.scss'
 
 var MapboxGLMap = React.createClass({
   getInitialState() {
@@ -32,7 +31,8 @@ var MapboxGLMap = React.createClass({
   initializeMap() {
     var self=this;
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q';
+    mapboxgl.accessToken = appConfig.mapbox_accessToken
+
     var map = this.map = new mapboxgl.Map({
         container: 'mapboxGLmap',
         style: 'mapbox://styles/mapbox/light-v9',
@@ -121,21 +121,18 @@ var PoiMarker = React.createClass({
   componentDidMount() {
     var self=this
 
-    var el = document.createElement('div');
-      el.className = 'marker';
-      el.style.backgroundImage = 'url(' + 'http://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange-small.png' + ')';
+    var el = document.createElement('div')
+      el.className = 'marker'
+      el.style.backgroundImage = 'url(/img/orange-marker.png)'
       el.style.width = '32px'
-      el.style.height = '37px'
+      el.style.height = '32px'
       el.style.zIndex = 10
 
     this.marker = new mapboxgl.Marker(el, {
-      offset: [-16,-37]
+      offset: [-16,-32]
     })
       .setLngLat(this.props.coords)
-      .addTo(this.props.map);
-
-
-
+      .addTo(this.props.map)
 
     this.label = new mapboxgl.Popup({
       offset: [0,0],
@@ -144,7 +141,7 @@ var PoiMarker = React.createClass({
       closeOnClick: false
     })
       .setLngLat(this.props.coords)
-      .addTo(this.props.map);
+      .addTo(this.props.map)
   },
 
   componentWillReceiveProps(nextProps) {

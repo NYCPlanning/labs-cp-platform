@@ -8,7 +8,7 @@ import {Button, ButtonGroup} from 'react-bootstrap'
 import extent from 'turf-extent'
 import centroid from 'turf-centroid'
 
-import Agencies from '../helpers/agencies.js'
+import appConfig from '../helpers/appConfig.js'
 
 var ModalMap = React.createClass({
   getInitialState() {
@@ -61,7 +61,7 @@ var ModalMap = React.createClass({
   renderMap() {
     var self=this;
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q';
+    mapboxgl.accessToken = appConfig.mapbox_accessToken;
     var map = this.map = new mapboxgl.Map({
         container: 'modalmap',
         style: 'mapbox://styles/mapbox/light-v9',
@@ -74,37 +74,17 @@ var ModalMap = React.createClass({
     this.map.on('style.load', function() {
 
       if(self.props.data.geometry.type == 'Point') {
-        // map.addSource('pointFeatures', {
-        //   'type': 'geojson',
-        //   'data': self.props.data
-        //   })   
-
-        // map.addLayer({
-        //   "id": "points",
-        //   "source": 'pointFeatures',
-        //   "type": "circle",
-        //   "paint": {
-        //       "circle-radius": {
-        //         "stops": [
-        //           [10,1],
-        //           [15,6]
-        //         ]
-        //       },
-        //       "circle-color": 'steelblue',
-        //       "circle-opacity": 0.8
-        //   }
-        // });
 
         //Implement MapboxGL Marker
         var el = document.createElement('div');
         el.className = 'marker';
-        el.style.backgroundImage = 'url(' + 'http://gkv.com/wp-content/uploads/leaflet-maps-marker-icons/map_marker-orange-small.png' + ')';
+        el.style.backgroundImage = 'url(/img/orange-marker.png)';
         el.style.width = '32px'
-        el.style.height = '37px'
+        el.style.height = '32px'
         el.style.zIndex = 10
 
         new mapboxgl.Marker(el, {
-          offset: [-16,-37]
+          offset: [-16,-32]
         })
           .setLngLat(self.props.data.geometry.coordinates)
           .addTo(map);

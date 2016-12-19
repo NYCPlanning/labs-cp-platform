@@ -59,7 +59,7 @@ var FacilitiesDataLayer = React.createClass({
 
         var legendContent = (
           <div className="legendSection">
-            <p>Hover over a facility or click for full details</p>
+            <p>Click on the map for facility details</p>
             <p>Data current as of {range.min} - {range.max}</p>
           </div>
         )
