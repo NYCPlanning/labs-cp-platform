@@ -5,13 +5,17 @@
 import React from 'react'
 import Numeral from 'numeral'
 import Moment from 'moment'
+import FontIcon from 'material-ui/FontIcon'
+import RaisedButton from 'material-ui/RaisedButton'
+import {Link} from 'react-router'
+import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
 
 import ModalMap from '../common/ModalMap.jsx'
 
 import Agencies from './agencies.js'
 import Carto from '../helpers/carto.js'
 
-var Component = React.createClass({
+var ProjectPage = React.createClass({
 
   getInitialState() {
     return({
@@ -36,6 +40,8 @@ var Component = React.createClass({
 
   render() {
 
+    console.log(this.props.location)
+
     var content = this.state.data ? this.renderContent(this.state.data) : null
 
     return(
@@ -55,10 +61,14 @@ var Component = React.createClass({
     } else {
       funding = Numeral(d.fundmin).format('($ 0.0 a)') + ' - ' + Numeral(d.fundmax).format('($ 0.0 a)')
     }
-   
+
     return(
-      <div>
-        <div className={'col-md-12'}>
+      <div className='display-content'>
+        
+            
+  
+        <div className='col-md-12 display-header'>
+         
           <h3>
             {d.name} - {d.projectid}
           </h3>
@@ -78,8 +88,22 @@ var Component = React.createClass({
               null
             } 
           </div>
-          <div id="projectdescription">{d.descriptio}</div> 
-        </div>
+          <div className="display-subtitle">{d.descriptio}</div> 
+
+           <Link to={'/capitalprojects'}>
+              <RaisedButton
+                label={this.props.location.state ? "Back to Map" : "Capital Projects Map"}
+                icon={this.props.location.state ? 
+                  <FontIcon className="fa fa-chevron-left" /> :
+                  <FontIcon className="fa fa-map" />
+                }
+              />
+            </Link>
+          
+      </div>
+
+
+                
 
         <div className={'col-md-6'}>
           <ModalMap data={this.state.data} label={d.name}/>
@@ -140,10 +164,8 @@ var Component = React.createClass({
 
                 <dt>Source Dataset</dt>
                 <dd>{d.sourcedata}</dd>
-
               </dl>              
             </li>
-
           </ul>
         </div>
       </div>
@@ -151,4 +173,4 @@ var Component = React.createClass({
   }
 })
 
-module.exports=Component
+module.exports=ProjectPage

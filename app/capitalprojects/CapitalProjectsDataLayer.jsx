@@ -189,7 +189,7 @@ var CapitalProjectsDataLayer = React.createClass({
             to={{
               //add flag for point or polygon so the project view knows which table to query
               pathname: `/capitalprojects/${d.cartodb_id}-${type}`  ,
-              state: { modal: true, returnTo: '/captialprojects'}
+              state: { modal: true, returnTo: '/capitalprojects'}
             }}
           >
             <ListItem
