@@ -18,8 +18,22 @@ var PipelineDataLayer = React.createClass({
   getInitialState() {
     return({
       mode: 'discrete',
-      aggregateGeom: 'cd',
-      sql: 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE (dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
+      aggregateGeom: 'cd'
+    })
+  },
+
+  componentWillMount() {
+
+    let sqlConfig = this.sqlConfig = {
+      columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
+      tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode',
+      where: '(dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
+    }
+
+    let sql = `SELECT ${sqlConfig.columns} FROM ${sqlConfig.tablename} WHERE ${sqlConfig.where}`
+
+    this.setState({
+      sql: sql
     })
   },
 
@@ -295,7 +309,9 @@ var PipelineDataLayer = React.createClass({
   render() {
     return(
       <PipelineLayerSelector 
-        updateSQL={this.updateSQL}/>
+        updateSQL={this.updateSQL}
+        sqlConfig={this.sqlConfig}
+      />
     )
   }
 })

@@ -41,11 +41,11 @@ var CapitalProjectsFilter = React.createClass({
 
   componentDidMount() {
 
-    var totalQuery = 'SELECT cartodb_id FROM adoyle.capeprojectspoints UNION ALL SELECT cartodb_id FROM adoyle.capeprojectspolygons'
+    //special totalQuery since we have two tables
+    var totalQuery = `SELECT cartodb_id FROM ${this.props.sqlConfig.pointsTablename} UNION ALL SELECT cartodb_id FROM ${this.props.sqlConfig.polygonsTablename}`
 
     Carto.getCount(totalQuery)
       .then((count) => {
-
         //set both selected and total to the total count since there are no filters applied by default
         this.setState({ 
           selectedCount: count,
@@ -117,8 +117,6 @@ var CapitalProjectsFilter = React.createClass({
   buildSQL() {
     //assemble sql chunks based on the current state
     this.createSQLChunks()
-
-    var select = 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM '
  
     var chunksArray = []
     for (var key in this.sqlChunks) {
@@ -128,10 +126,9 @@ var CapitalProjectsFilter = React.createClass({
     //join chunks with AND, or handle empty filters
     var chunksString = chunksArray.length > 0 ? chunksArray.join(' AND ') : 'true'
 
-    var pointsSql = select + 'adoyle.capeprojectspoints WHERE ' + chunksString
-    var polygonsSql = select + 'adoyle.capeprojectspolygons WHERE ' + chunksString
+    var pointsSql = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.pointsTablename} WHERE ${chunksString}` 
+    var polygonsSql = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.polygonsTablename} WHERE ${chunksString}`
   
-
     this.getSelectedCount(pointsSql, polygonsSql)
     this.props.updateSQL(pointsSql, polygonsSql)
     //this.getCount(sql)

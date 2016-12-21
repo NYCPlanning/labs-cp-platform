@@ -64,7 +64,7 @@ var LayerSelector = React.createClass({
     }
   
     /* get a count of "select all" from entire dataset */
-    var SQL = this.props.initialSQL /* where does initial SQL get defined? */
+    var SQL = this.props.sql 
 
     Carto.getCount(SQL)
       .then(function(count) {
@@ -175,13 +175,13 @@ var LayerSelector = React.createClass({
 
   buildSQL(layers) {
     if (layers.length > 0) {
-      var sql = 'SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data WHERE '
+      var sql = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} WHERE `
       layers.map(function(name, i) {
         if(i>0) sql += ' OR '
         sql += 'facilitysubgroup = \'' + name + '\''
       })  
     } else {
-      var sql ='SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data LIMIT 0'
+      var sql =`SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} LIMIT 0`
     }
 
     this.props.updateSQL(sql)

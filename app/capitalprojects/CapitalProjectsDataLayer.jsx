@@ -16,10 +16,17 @@ import Carto from '../helpers/carto.js'
 
 var CapitalProjectsDataLayer = React.createClass({
 
-  getInitialState() {
-    return({
-      pointsSql: 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM adoyle.capeprojectspoints',
-      polygonsSql: 'SELECT cartodb_id, the_geom_webmercator, sagency, projectid, name FROM adoyle.capeprojectspolygons'
+  componentWillMount() {
+    //SELECT columns and table name(s) for use throughout this data layer
+    let sqlConfig = this.sqlConfig = {
+      columns: 'cartodb_id, the_geom_webmercator, sagency, projectid, name',
+      pointsTablename: 'adoyle.capeprojectspoints',
+      polygonsTablename: 'adoyle.capeprojectspolygons'
+    }
+
+    this.setState({
+      pointsSql: `SELECT ${sqlConfig.columns} FROM ${sqlConfig.pointsTablename}`,
+      polygonsSql: `SELECT ${sqlConfig.columns} FROM ${sqlConfig.polygonsTablename}`
     })
   },
 
@@ -238,7 +245,10 @@ var CapitalProjectsDataLayer = React.createClass({
   render() {
     return(
       <div>
-        <CapitalProjectsFilter updateSQL={this.updateSQL}/>
+        <CapitalProjectsFilter 
+          updateSQL={this.updateSQL}
+          sqlConfig={this.sqlConfig}
+        />
       </div>
     )
   }

@@ -5,7 +5,6 @@
 //  checked - Checked status associated with value in checkbox
 //  onChange - Action related to status change in checkbox
 
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Moment from 'moment'
@@ -198,7 +197,7 @@ var LayerSelector = React.createClass({
     //assemble sql chunks based on the current state
     this.createSQLChunks()
 
-    var sqlTemplate = 'SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address FROM nchatterjee.dob_permits_cofos_hpd_geocode WHERE '
+    var sqlTemplate = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} WHERE `
 
     var chunksArray = []
     for (var key in this.sqlChunks) {

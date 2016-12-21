@@ -21,21 +21,29 @@ var FacilitiesDataLayer = React.createClass({
 
   componentWillMount() {
     var self=this
+
+    this.sqlConfig = {
+      columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
+      tablename: 'hkates.facilities_data'
+    }
+    
+    let sql = ''
+
     //update initial state and the layer structure based on mode
     if (this.props.mode != 'all') {
-      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data WHERE domain ILIKE '" + this.props.mode.substr(0,4) + "%'"
+      sql=`SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE domain ILIKE '${this.props.mode.substr(0,4)}%'`
       
       this.layerStructure = facilitiesLayers.filter(function(layer) {
         return (layer.slug == self.props.mode)
       })
     } else {
       //if map mode is 'all', initialSQL has no WHERE, and layerStructure is unchanged
-      this.initialSQL="SELECT cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype FROM hkates.facilities_data"
+      sql=`SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`
       this.layerStructure=facilitiesLayers
     }
 
     this.setState({
-      sql: this.initialSQL
+      sql: sql
     })
   },
 
@@ -67,10 +75,6 @@ var FacilitiesDataLayer = React.createClass({
         //send legend content up to MapComponent for rendering
         self.props.updateLegend('facilities', legendContent)
       })
-
-
-
-     
   },
 
   instantiateVectorTiles() {
@@ -103,7 +107,7 @@ var FacilitiesDataLayer = React.createClass({
     var map = this.props.map.map 
 
     map.addSource('facilities-points', {
-      'type': 'vector',
+      "type": 'vector',
       "tiles": [
         template
       ]
@@ -148,18 +152,18 @@ var FacilitiesDataLayer = React.createClass({
       map.getCanvas().style.cursor = features.length ? 'pointer' : '';
     }) 
 
-    //popup on click
+    //populate right sidebar on click
     map.on('click', function (e) {
-        var features = map.queryRenderedFeatures(e.point, { layers: ['facilities-points'] });
+      var features = map.queryRenderedFeatures(e.point, { layers: ['facilities-points'] });
 
-        if (!features.length) return
-      
-        self.buildSelections(e.lngLat, features)
+      if (!features.length) return
+    
+      self.buildSelections(e.lngLat, features)
     })
   },
 
   getColorObject() {
-    //generate a categorical color object based on mode
+    //generate a mapboxGL style categorical color object based on mode
     if(this.props.mode=='all') {
       return {
         property: 'domain',
@@ -200,67 +204,33 @@ var FacilitiesDataLayer = React.createClass({
         const d = feature.properties
 
         return (
-             <Link
-              key={i}
-              to={{
-                pathname: `/facilities/${d.cartodb_id}`,
-                state: { modal: true, returnTo: '/facilities/all'}
-              }}
-            >
-              <ListItem
-                primaryText={d.facilityname}
-                secondaryText={d.address + ' | ' + d.facilitytype}
-                leftIcon={
-                  <div 
-                    className={'color-circle'} 
-                    style={{
-                      'backgroundColor': this.props.mode == 'all' ? this.getColor(d.domain) : this.getColor(d.facilitygroup),
-                      'borderRadius': '12px'
-                    }}
-                  /> 
-                }
-                rightIcon={<FontIcon className='fa fa-chevron-right'/>}
-                /*initiallyOpen={i==0 ? true : false}
-                nestedItems={[
-                  <div style={{
-                    backgroundColor: '#f1f1f1',
-                    padding: '10px 0'
-                  }}>
-                    <dl className="dl-horizontal list">
-
-                      <dt>Subgroup</dt>
-                      <dd>{d.facilitysubgroup}</dd>
-
-                      <dt>Facility Type</dt>
-                      <dd>{d.facilitytype}</dd>
-
-                    </dl>
-                  </div>
-                ]}*/
-              />
-            </Link>
+          <Link
+            key={i}
+            to={{
+              pathname: `/facilities/${d.cartodb_id}`,
+              state: { modal: true, returnTo: '/facilities/all'}
+            }}
+          >
+            <ListItem
+              primaryText={d.facilityname}
+              secondaryText={d.address + ' | ' + d.facilitytype}
+              leftIcon={
+                <div 
+                  className={'color-circle'} 
+                  style={{
+                    'backgroundColor': this.props.mode == 'all' ? this.getColor(d.domain) : this.getColor(d.facilitygroup),
+                    'borderRadius': '12px'
+                  }}
+                /> 
+              }
+              rightIcon={<FontIcon className='fa fa-chevron-right'/>}
+            />
+          </Link>
         )
       }
     )
 
     this.props.showSelections(content)
-  },
-
-  showModal(feature) {
-    //  //builds content for the modal and sends it to the global modal service
-    //  var self=this
-
-    //  var tableName = 'hkates.facilities_data'
-
-    // //make an api call to carto to get the full feature, build content from it, show modal
-    // Carto.getRow(tableName, 'cartodb_id', feature.properties.cartodb_id)
-    //  .then(function(data) {
-    //    self.props.showModal({
-    //      modalHeading: 'Facility Details',
-    //      modalContent: <ModalContent data={data}/>,
-    //      modalCloseText: 'Close'
-    //    })
-    //  })
   },
 
   updateSQL(sql) {
@@ -284,7 +254,8 @@ var FacilitiesDataLayer = React.createClass({
     return(
       <FacLayerSelector 
         updateSQL={this.updateSQL}
-        initialSQL={this.initialSQL}
+        sql={this.state.sql}
+        sqlConfig={this.sqlConfig}
         facilitiesLayers={this.layerStructure}
       />
     )
