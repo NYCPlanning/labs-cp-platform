@@ -7,8 +7,8 @@ import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import Moment from 'moment'
 
-import Nav from '../common/Nav.jsx'
 import ModalMap from '../common/ModalMap.jsx'
+import DetailPage from '../common/DetailPage.jsx'
 
 import carto from '../helpers/carto.js'
 
@@ -39,9 +39,13 @@ var Component = React.createClass({
     var content = this.state.data ? this.renderContent(this.state.data) : null
 
     return(
-      <div className="full-screen">
+      <DetailPage
+        location={this.props.location}
+        defaultText='Housing Development Map'
+        defaultLink='/pipeline'
+      >
         {content}
-      </div>
+      </DetailPage>
     )
   },
 
@@ -50,6 +54,7 @@ var Component = React.createClass({
 
     return  (
      <div>
+          
         <div className="col-md-12">
           <h3>{d.dob_permit_address}</h3>
         </div>

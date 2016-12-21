@@ -5,10 +5,7 @@
 import React from 'react'
 import Numeral from 'numeral'
 import Moment from 'moment'
-import FontIcon from 'material-ui/FontIcon'
-import RaisedButton from 'material-ui/RaisedButton'
-import {Link} from 'react-router'
-import {Toolbar, ToolbarGroup} from 'material-ui/Toolbar';
+import DetailPage from '../common/DetailPage.jsx'
 
 import ModalMap from '../common/ModalMap.jsx'
 
@@ -40,14 +37,16 @@ var ProjectPage = React.createClass({
 
   render() {
 
-    console.log(this.props.location)
-
     var content = this.state.data ? this.renderContent(this.state.data) : null
 
     return(
-      <div className="full-screen">
+      <DetailPage
+        location={this.props.location}
+        defaultText='Capital Projects Map'
+        defaultLink='/capitalprojects'
+      >
         {content}
-      </div>
+      </DetailPage>
     )
   },
 
@@ -63,11 +62,8 @@ var ProjectPage = React.createClass({
     }
 
     return(
-      <div className='display-content'>
-        
-            
-  
-        <div className='col-md-12 display-header'>
+      <div>
+        <div className='col-md-12'>
          
           <h3>
             {d.name} - {d.projectid}
@@ -90,15 +86,7 @@ var ProjectPage = React.createClass({
           </div>
           <div className="display-subtitle">{d.descriptio}</div> 
 
-           <Link to={'/capitalprojects'}>
-              <RaisedButton
-                label={this.props.location.state ? "Back to Map" : "Capital Projects Map"}
-                icon={this.props.location.state ? 
-                  <FontIcon className="fa fa-chevron-left" /> :
-                  <FontIcon className="fa fa-map" />
-                }
-              />
-            </Link>
+
           
       </div>
 
@@ -169,6 +157,7 @@ var ProjectPage = React.createClass({
           </ul>
         </div>
       </div>
+
     )
   }
 })

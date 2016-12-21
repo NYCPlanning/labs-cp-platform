@@ -365,10 +365,6 @@ var LayerSelector = React.createClass({
               </Tab>
             </Tabs>
           </div>
-
-
-
-      
     )
   }
 })
