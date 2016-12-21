@@ -12,6 +12,7 @@ import FontIcon from 'material-ui/FontIcon'
 import {browserHistory} from 'react-router'
 
 import FacLayerSelector from './FacLayerSelector.jsx'
+import DomainHistogram from './DomainHistogram.jsx'
 
 import facilitiesLayers from './facilitiesLayers.js'
 import Carto from '../helpers/carto.js'
@@ -75,6 +76,22 @@ var FacilitiesDataLayer = React.createClass({
         //send legend content up to MapComponent for rendering
         self.props.updateLegend('facilities', legendContent)
       })
+
+    this.buildMetrics()
+  },
+
+  buildMetrics() {
+
+    var metrics = []
+
+    metrics.push(
+      <DomainHistogram
+        sql={this.state.sql}
+        getColor={this.getColor}
+      />
+    )
+
+    this.props.updateMetrics(metrics)
   },
 
   instantiateVectorTiles() {
@@ -190,6 +207,7 @@ var FacilitiesDataLayer = React.createClass({
   },
 
   getColor(value) {
+    console.log(value)
     var colorObject = this.getColorObject()
     
     return colorObject.stops.filter((stop) => stop[0] == value)[0][1]
@@ -246,7 +264,8 @@ var FacilitiesDataLayer = React.createClass({
       map.removeLayer('facilities-points')
       map.removeLayer('facilities-points-outline')
       map.removeSource('facilities-points')
-      self.instantiateVectorTiles()      
+      self.instantiateVectorTiles() 
+      self.buildMetrics()    
     })
   },
 
