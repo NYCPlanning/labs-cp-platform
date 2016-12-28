@@ -21,6 +21,8 @@ import DevelopmentPage from '../app/pipeline/DevelopmentPage.jsx'
 import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
 import ProjectPage from '../app/capitalprojects/ProjectPage.jsx'
 
+import JaneTest from '../app/common/JaneTest.jsx'
+
 import NotFound from '../app/NotFound.jsx'
 
 const auth = new Auth(appConfig.auth0_client_id, appConfig.auth0_domain)
@@ -63,6 +65,8 @@ module.exports = (
 
     <Route path="capitalprojects" component={CapitalProjects} title={'Capital Projects Explorer'} miniNav={true} onEnter={requireAuth}/>
     <Route path="capitalprojects/:id" component={ProjectPage} title={'Capital Project Details'} miniNav={true} onEnter={requireAuth}/>
+
+    <Route path="janetest" component={JaneTest} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn}/>
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn}/>
