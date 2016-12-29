@@ -1,3 +1,7 @@
 import Jane from './Jane.jsx'
+import GeoJsonLayer from './GeoJsonLayer.jsx'
 
-export default Jane
+export {
+  Jane,
+  GeoJsonLayer
+}

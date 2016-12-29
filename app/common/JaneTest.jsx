@@ -1,5 +1,5 @@
 import React from 'react'
-import Jane from '../jane'
+import {Jane} from '../jane'
 
 import appConfig from '../helpers/appConfig.js'
 
@@ -24,6 +24,32 @@ const searchConfig = {
   }
 }
 
+const mapConfig = {
+  layers: [
+    {
+      id: 'ntaboundaries',
+      sources: [
+        {
+          id: 'ntaboundaries',
+          type: 'geojson',
+          source: 'data/ntaboundaries.geojson'
+        }
+      ],
+      mapLayers: [
+        {
+          id: 'ntaboundaries',
+          source: 'ntaboundaries',
+          type: 'line',
+          "paint": {
+            "line-color": "#888",
+            "line-width": 8
+          }
+        }
+      ]
+    }
+  ]
+}
+
 const JaneTest = React.createClass({
   render() {
     return(
@@ -40,7 +66,9 @@ const JaneTest = React.createClass({
           mapInit={mapInit}
           search={true}
           searchConfig={searchConfig}
+          mapConfig={mapConfig}
         />
+       
       </div>
     )
   }

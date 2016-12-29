@@ -8,11 +8,11 @@ var GLMap = React.createClass({
   },
 
   initializeMap() {
-    var self=this;
+    const self=this;
 
     mapboxgl.accessToken = this.props.mapbox_accessToken
 
-    var map = this.mapObject = new mapboxgl.Map({
+    const map = this.mapObject = new mapboxgl.Map({
         container: 'gl-map',
         style: this.props.mapStyle,
         zoom: this.props.zoom,
@@ -21,6 +21,10 @@ var GLMap = React.createClass({
         pitch: this.props.pitch,
         hash: this.props.hash
     });
+
+    this.mapObject.on('load', function () {
+      self.props.onLoad(self.mapObject.getStyle())
+    })
 
     if( this.props.navigationControl ) map.addControl(new mapboxgl.NavigationControl({position: this.props.navigationControlPosition}));  
     
