@@ -27,27 +27,6 @@ const searchConfig = {
 const mapConfig = {
   layers: [
     {
-      id: 'ntaboundaries',
-      sources: [
-        {
-          id: 'ntaboundaries',
-          type: 'geojson',
-          source: 'data/ntaboundaries.geojson'
-        }
-      ],
-      mapLayers: [
-        {
-          id: 'ntaboundaries',
-          source: 'ntaboundaries',
-          type: 'line',
-          "paint": {
-            "line-color": "#888",
-            "line-width": 8
-          }
-        }
-      ]
-    },
-    {
       id: '311',
       sources: [
         {
@@ -68,8 +47,63 @@ const mapConfig = {
           }
         }
       ]
+    },
+
+    {
+      id: 'ntaboundaries',
+      sources: [
+        {
+          id: 'ntaboundaries',
+          type: 'geojson',
+          source: 'data/ntaboundaries.geojson'
+        }
+      ],
+      mapLayers: [
+        {
+          id: 'ntaboundaries',
+          source: 'ntaboundaries',
+          type: 'line',
+          "paint": {
+            "line-color": "#888",
+            "line-width": 8
+          }
+        }
+      ]
+    },
+
+    {
+      id: 'facilities',
+      sources: [
+        {
+          "type": 'vector',
+          "id": 'facilities',
+          "mapConfig": {
+            "version": "1.3.0",
+            "layers": [{
+              "type": "mapnik",
+              "options": {
+                "cartocss_version": "2.1.1",
+                "cartocss": "#layer { polygon-fill: #FFF; }",
+                "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
+              }
+            }]
+          }
+        }
+      ],
+      mapLayers: [
+        {
+          id: 'facilities',
+          source: 'facilities',
+          "source-layer": "layer0",
+          "type": "circle",
+          "paint": {
+            "circle-radius": 4,
+            "circle-color": "green",
+            "circle-opacity": 0.7
+          }
+        }
+      ]
     }
-    
   ]
 }
 

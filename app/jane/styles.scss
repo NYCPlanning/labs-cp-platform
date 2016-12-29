@@ -4,6 +4,22 @@
     top: 0;
     right: 0;
     bottom: 0;
+    left: 180px;
+  }
+
+  .mui-toolbar-container {
+    padding: 6px 6px;
+    position: absolute;
+    z-index: 1;
+    left: 180px;
+  }
+
+  .jane-drawer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
     left: 0;
+    width: 180px;
+    background: #fff;
   }
 }
