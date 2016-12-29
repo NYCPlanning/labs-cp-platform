@@ -46,7 +46,30 @@ const mapConfig = {
           }
         }
       ]
+    },
+    {
+      id: '311',
+      sources: [
+        {
+          id: '311',
+          type: 'geojson',
+          source: 'data/311.geojson'
+        }
+      ],
+      mapLayers: [
+        {
+          id: '311',
+          source: '311',
+          "type": "circle",
+          "paint": {
+            "circle-radius": 4,
+            "circle-color": "steelblue",
+            "circle-opacity": 0.7
+          }
+        }
+      ]
     }
+    
   ]
 }
 

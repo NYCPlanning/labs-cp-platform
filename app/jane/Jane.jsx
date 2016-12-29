@@ -12,7 +12,8 @@ const Jane = React.createClass({
   getInitialState() {
     return({
       poiFeature: null,
-      mapLoaded: false
+      mapLoaded: false,
+      allSourcesLoaded: false
     })
   },
 
@@ -32,20 +33,66 @@ const Jane = React.createClass({
     this.setState({
       mapLoaded: true
     })
+
+  },
+
+  handleSourceLoaded(loadedSources) {
+    console.log('source loaded', loadedSources)
+
+    //check the map's sources and see if all of the current config sources are loaded
+    let allSourcesLoaded = true
+    this.props.mapConfig.layers.map((layer, i) => {
+        layer.sources.map((source, j) => {
+          if (!loadedSources.hasOwnProperty(source.id)) allSourcesLoaded = false
+        })
+      })
+
+    if(allSourcesLoaded) {
+      this.setState({
+        allSourcesLoaded: true
+      })
+    }
+  },
+
+  handleLayerLoaded() {
+    this.forceUpdate()
   },
 
   componentDidMount() {
     //this.map is the GLMap Component, not the map object itself
     this.map = this.refs.map
+    console.log('didMount')
+  },
+
+  componentDidUpdate() {
+    //this.map is the GLMap Component, not the map object itself
+    this.map = this.refs.map
+    console.log('didUpdate')
   },
 
   render() {
+    const self=this
+
+    //get all sources
+    let sources = []
+
+    if (this.state.mapLoaded) {
+      this.props.mapConfig.layers.map((layer) => {
+        layer.sources.map((source) => {
+          sources.push(<GeoJsonSource map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>)
+        })
+      })
+    }
 
     let layers = []
 
-    if(this.state.mapLoaded) {
-      this.props.mapConfig.layers.map(( layer, i ) => {
-        layers.push(<Layer config={layer} map={this.map} key={i}/>)
+    if (this.state.allSourcesLoaded) {
+      this.props.mapConfig.layers.map((layer, i) => {
+        //render components in order
+        if((i == 0) || (i <= this.lastLayerLoaded + 1)) {
+          layers.push(<Layer map={this.map} config={layer} onLoaded={this.handleLayerLoaded} key={layer.id}/>)
+          this.lastLayerLoaded = i
+        } 
       })
     }
 
@@ -70,10 +117,11 @@ const Jane = React.createClass({
 
         {
           this.state.poiFeature && (
-            <PoiMarker feature={this.state.poiFeature} map={this.map}/>
+            <PoiMarker feature={this.state.poiFeature} map={this.map} />
           )
         }
 
+        {sources}
         {layers}
       </div>
     )
@@ -94,40 +142,23 @@ Jane.defaultProps = {
 export default Jane
 
 const Layer = React.createClass({
-  getInitialState() {
-    return({
-      sources: {}
-    })
-  },
 
-  //keep track of loaded sources in state, do not load layer until its source has been loaded
-  handleSourceLoaded(sources) {
-    this.setState({
-      sources: sources
+  componentWillMount() {
+
+    this.map = this.props.map.mapObject
+
+    this.props.config.mapLayers.map((mapLayer) => {
+      this.map.addLayer(mapLayer)
     })
+
+    this.props.onLoaded()
   },
 
   render() {
-    const self=this
-
-    let sources = []
-
-    this.props.config.sources.map((source, i) => {
-      if(source.type=='geojson') sources.push(
-        <GeoJsonSource map={self.props.map} source={source} onLoaded={self.handleSourceLoaded} key={i}/>
-      )
-    })
-
-    let mapLayers = []
-
-    this.props.config.mapLayers.map((mapLayer, i) => {
-      if(mapLayer.type=='line' && this.state.sources.hasOwnProperty(mapLayer.source)) mapLayers.push(<LineLayer map={self.props.map} mapLayer={mapLayer} key={i}/>)
-    })
 
     return (
       <div>
-        {sources}
-        {mapLayers}
+       
       </div>
     )
   }
@@ -147,6 +178,10 @@ const GeoJsonSource = React.createClass({
     }
   },
 
+  componentDidUpdate() {
+    console.log('source did update')
+  },
+
   fetchData() {
     const self=this
 
@@ -162,6 +197,8 @@ const GeoJsonSource = React.createClass({
       type: 'geojson',
       data: this.data
     })
+    
+    console.log(this.map.getStyle())
     this.props.onLoaded(this.map.getStyle().sources)
   },
 
@@ -172,10 +209,11 @@ const GeoJsonSource = React.createClass({
 
 const LineLayer = React.createClass({
   componentWillMount() {
-    console.log('geojsonlayer mounting')
+    console.log(this.props.mapLayer.id + ' mounting')
     this.map = this.props.map.mapObject
 
     this.map.addLayer(this.props.mapLayer)
+
   },
 
   render() {
