@@ -154,7 +154,7 @@ const Jane = React.createClass({
       })      
     }
 
-    if(this.props.debug && this.map) console.log('debug', this.map.mapObject.getStyle())
+    //if(this.props.debug && this.map) console.log('debug', this.map.mapObject.getStyle())
 
     return(
       <div className='jane-container' style={this.props.style}>

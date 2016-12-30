@@ -4,6 +4,8 @@ import {Jane} from '../jane'
 
 import appConfig from '../helpers/appConfig.js'
 
+import AdminBoundaries from './AdminBoundaries.jsx'
+
 const mapInit = {
   mapbox_accessToken: appConfig.mapbox_accessToken,
   center: [-74.0079, 40.7315],
@@ -103,7 +105,7 @@ const mapConfig = {
   layers: [
     {
       id: '311',
-      visible: true,
+      visible: false,
       sources: [
         {
           id: '311',
@@ -125,27 +127,33 @@ const mapConfig = {
       ]
     },
 
+    // {
+    //   id: 'adminboundaries',
+    //   visible: true,
+    //   sources: [
+    //     {
+    //       id: 'ntaboundaries',
+    //       type: 'geojson',
+    //       source: 'data/ntaboundaries.geojson'
+    //     }
+    //   ],
+    //   mapLayers: [
+    //     {
+    //       id: 'ntaboundaries',
+    //       source: 'ntaboundaries',
+    //       type: 'line',
+    //       "paint": {
+    //         "line-color": "#888",
+    //         "line-width": 8
+    //       }
+    //     }
+    //   ]
+    // },
+
     {
-      id: 'ntaboundaries',
+      id: 'adminboundaries',
       visible: true,
-      sources: [
-        {
-          id: 'ntaboundaries',
-          type: 'geojson',
-          source: 'data/ntaboundaries.geojson'
-        }
-      ],
-      mapLayers: [
-        {
-          id: 'ntaboundaries',
-          source: 'ntaboundaries',
-          type: 'line',
-          "paint": {
-            "line-color": "#888",
-            "line-width": 8
-          }
-        }
-      ]
+      component: AdminBoundaries
     },
 
     {
