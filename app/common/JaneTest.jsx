@@ -25,9 +25,11 @@ const searchConfig = {
 }
 
 const mapConfig = {
+  selectedLayer: '311',
   layers: [
     {
       id: '311',
+      visible: true,
       sources: [
         {
           id: '311',
@@ -51,6 +53,7 @@ const mapConfig = {
 
     {
       id: 'ntaboundaries',
+      visible: true,
       sources: [
         {
           id: 'ntaboundaries',
@@ -73,6 +76,7 @@ const mapConfig = {
 
     {
       id: 'facilities',
+      visible: false,
       sources: [
         {
           "type": 'vector',

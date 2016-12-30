@@ -1,4 +1,6 @@
 .jane-container {
+  border: 1px solid #efefef;
+
   #gl-map {
     position: absolute;
     top: 0;
@@ -11,7 +13,7 @@
     padding: 6px 6px;
     position: absolute;
     z-index: 1;
-    left: 180px;
+    left: 200px;
   }
 
   .jane-drawer {
@@ -19,7 +21,12 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 180px;
+    width: 200px;
     background: #fff;
   }
+
+  .list-item {
+    position: relative;
+  }
+
 }

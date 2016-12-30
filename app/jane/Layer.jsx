@@ -2,7 +2,8 @@ import React from 'react'
 
 const Layer = React.createClass({
 
-  componentWillMount() {
+  componentDidMount() {
+    console.log('Layer did mount')
 
     this.map = this.props.map.mapObject
 
