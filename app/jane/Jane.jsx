@@ -1,19 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 
 import GLMap from './GLMap.jsx'
 import Search from './Search.jsx'
 import PoiMarker from './PoiMarker.jsx'
-import Layer from './Layer.jsx'
-import GeoJsonSource from './GeoJsonSource.jsx'
-import VectorSource from './VectorSource.jsx'
-
-
-import {List, ListItem, makeSelectable} from 'material-ui/List';
-import FontIcon from 'material-ui/FontIcon'
-import Avatar from 'material-ui/Avatar';
-import Subheader from 'material-ui/Subheader';
-import Checkbox from 'material-ui/Checkbox';
-import Toggle from 'material-ui/Toggle';
+import Layer from './layer/Layer.jsx'
+import GeoJsonSource from './source/GeoJsonSource.jsx'
+import VectorSource from './source/VectorSource.jsx'
+import Drawer from './Drawer.jsx'
 
 import './styles.scss'
 
@@ -45,22 +38,12 @@ const Jane = React.createClass({
     this.setState({
       mapLoaded: true
     })
-
   },
 
   handleSourceLoaded(loadedSources) {
-    // //check the map's sources and see if all of the current config sources are loaded
-    // let allSourcesLoaded = true
-    // this.state.mapConfig.layers.map((layer, i) => {
-    //     layer.sources.map((source, j) => {
-    //       if (!loadedSources.hasOwnProperty(source.id)) allSourcesLoaded = false
-    //     })
-    //   })
-
     this.setState({
       loadedSources: loadedSources
     })
-    
   },
 
   handleLayerLoaded() {
@@ -74,17 +57,8 @@ const Jane = React.createClass({
 
   componentDidUpdate() {
     //this.map is the GLMap Component, not the map object itself
+    //do we actually need to do this again in componentDidUpdate()?
     this.map = this.refs.map
-  },
-
-  rearrange() {
-    let mapConfig = this.state.mapConfig
-
-    const layer = mapConfig.layers.shift()
-    mapConfig.layers.push(layer)
-    this.setState({
-      mapConfig: mapConfig
-    })
   },
 
   handleLayerToggle(layerid) {
@@ -101,7 +75,9 @@ const Jane = React.createClass({
   render() {
     const self=this
     const mapConfig = this.state.mapConfig
-    //get all sources
+    
+    //load all sources for visible layers
+    //TODO Source components should check to see if the source already exists before adding
     let sources = []
 
     if (this.state.mapLoaded) {
@@ -115,8 +91,8 @@ const Jane = React.createClass({
       })
     }
 
+    //check to see if all sources for visible layers are loaded
     let allSourcesLoaded = true
-    console.log(this.state.loadedSources)
 
     mapConfig.layers.map((layer, i) => {
       if (layer.visible) {
@@ -126,9 +102,9 @@ const Jane = React.createClass({
       }
     })
 
+    //create components for each visible layer, but only if all required sources are already loaded
     let layers = []
 
-    //layers must be rendered together, so layers [] should stay empty until all sources are available
     if (allSourcesLoaded) {
       this.order=0
       mapConfig.layers.map((layer, i) => {
@@ -139,8 +115,6 @@ const Jane = React.createClass({
         }
       })      
     }
-
-    console.log('layers to be rendered', layers)
 
     return(
       <div className='jane-container' style={this.props.style}>
@@ -167,13 +141,10 @@ const Jane = React.createClass({
           )
         }
 
-
-
         {sources}
         {layers}
         <Drawer 
           mapConfig={this.state.mapConfig} 
-          rearrange={this.rearrange}
           onLayerToggle={this.handleLayerToggle}/>
       </div>
     )
@@ -192,60 +163,3 @@ Jane.defaultProps = {
 }
 
 export default Jane
-
-const Drawer = React.createClass({
-
-  handleLayerToggle(layerid) {
-    this.props.onLayerToggle(layerid)
-  },
-
-  render() {
-    const listItemStyle = {
-      padding: '8px 8px 8px 34px',
-      fontSize: '12px'
-    }
-
-    const fontIconStyle = {
-      fontSize: '18px',
-      margin: '8px',
-      height: '18px',
-      width: '18px',
-      left: 0
-    }
-
-    const toggleStyle = {
-      position: 'absolute',
-      display: 'initial',
-      width: 'auto',
-      right: '8px',
-      top: '7px'
-    }
-
-    let layers = this.props.mapConfig.layers.map((layer, i) => {
-      return (
-        <div
-          className={this.props.mapConfig.selectedLayer == layer.id ? 'list-item active' : 'list-item'}
-          key={layer.id}
-        >
-          <FontIcon className="fa fa-home" style={fontIconStyle}/> 
-          {layer.id}
-          <Toggle 
-            style={toggleStyle}
-            toggled={layer.visible}
-            onToggle={this.handleLayerToggle.bind(this, layer.id)}
-          />
-        </div>
-      )
-    })
-
-    //reverse them so the list reflects the map
-    layers = layers.slice().reverse()
-
-    return(
-      <div className='jane-drawer'>
-        {layers}
-        <button onClick={this.props.rearrange}>Rearrange</button>
-      </div>
-    )
-  }
-})

@@ -1,5 +1,5 @@
 import React from 'react'
-import Carto from '../helpers/carto.js'
+import Carto from '../../helpers/carto.js'
 
 const VectorSource = React.createClass({
 
