@@ -144,7 +144,7 @@ const Jane = React.createClass({
         {sources}
         {layers}
         <Drawer 
-          mapConfig={this.state.mapConfig} 
+          layers={this.state.mapConfig.layers} 
           onLayerToggle={this.handleLayerToggle}/>
       </div>
     )

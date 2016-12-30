@@ -1,45 +1,52 @@
-import React from 'react'
-import FontIcon from 'material-ui/FontIcon'
-import Toggle from 'material-ui/Toggle';
+import React, {PropTypes} from 'react'
+import update from 'react/lib/update';
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
+
+import ListItem from './ListItem.jsx'
+
+// This component keeps track of its own state for the order of the layers to implement drag and drop functionality
+// Once an item is dropped, we then pass the new layer order up to Jane to update the main state
+
 
 const Drawer = React.createClass({
+
+  getInitialState() {
+    return({
+      layers: this.props.layers
+    })
+  },
 
   handleLayerToggle(layerid) {
     this.props.onLayerToggle(layerid)
   },
 
-  render() {
-    const style = {
-      fontIcon: {
-        fontSize: '18px',
-        margin: '8px',
-        height: '18px',
-        width: '18px',
-        left: 0
-      },
-      toggle: {
-        position: 'absolute',
-        display: 'initial',
-        width: 'auto',
-        right: '8px',
-        top: '7px'
-      }
-    }
+  moveListItem(dragIndex, hoverIndex) {
+    const { layers } = this.state
+    const dragLayer = layers[dragIndex]
 
-    let layers = this.props.mapConfig.layers.map((layer, i) => {
+    this.setState(update(this.state, {
+      layers: {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragLayer]
+        ]
+      }
+    }), this.props.update)
+  },
+
+  render() {
+    let layers = this.state.layers.map((layer, i) => {
       return (
-        <div
-          className={this.props.mapConfig.selectedLayer == layer.id ? 'list-item active' : 'list-item'}
+        <ListItem
+          className={'list-item'}
+          layer={layer}
+          onToggle={this.handleLayerToggle}
+          moveListItem={this.moveListItem}
+          index={i}
+          onDrop={alert('drop!')}
           key={layer.id}
-        >
-          <FontIcon className="fa fa-home" style={style.fontIcon}/> 
-          {layer.id}
-          <Toggle 
-            style={style.toggle}
-            toggled={layer.visible}
-            onToggle={this.handleLayerToggle.bind(this, layer.id)}
-          />
-        </div>
+        />
       )
     })
 
@@ -54,4 +61,6 @@ const Drawer = React.createClass({
   }
 })
 
-export default Drawer
+export default DragDropContext(HTML5Backend)(Drawer)
+
+
