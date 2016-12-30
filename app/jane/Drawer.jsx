@@ -21,6 +21,11 @@ const Drawer = React.createClass({
     this.props.onLayerToggle(layerid)
   },
 
+  handleDrop() {
+    //on drop pass the current state up to Jane
+    this.props.onLayerChange(this.state.layers)
+  },
+
   moveListItem(dragIndex, hoverIndex) {
     const { layers } = this.state
     const dragLayer = layers[dragIndex]
@@ -44,7 +49,7 @@ const Drawer = React.createClass({
           onToggle={this.handleLayerToggle}
           moveListItem={this.moveListItem}
           index={i}
-          onDrop={alert('drop!')}
+          onDrop={this.handleDrop}
           key={layer.id}
         />
       )

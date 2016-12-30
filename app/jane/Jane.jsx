@@ -72,6 +72,15 @@ const Jane = React.createClass({
     })
   },
 
+  handleLayerChange(layers) {
+    let mapConfig = this.state.mapConfig
+    mapConfig.layers = layers
+
+    this.setState({
+      mapConfig: mapConfig
+    })
+  },
+ 
   render() {
     const self=this
     const mapConfig = this.state.mapConfig
@@ -145,7 +154,9 @@ const Jane = React.createClass({
         {layers}
         <Drawer 
           layers={this.state.mapConfig.layers} 
-          onLayerToggle={this.handleLayerToggle}/>
+          onLayerToggle={this.handleLayerToggle}
+          onLayerChange={this.handleLayerChange}
+        />
       </div>
     )
   }

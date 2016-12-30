@@ -60,7 +60,7 @@ const listItemTarget = {
   },
 
   drop(props, monitor, component) {
-    
+    props.onDrop()
   }
 }
 
