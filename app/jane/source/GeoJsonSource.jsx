@@ -13,10 +13,6 @@ const GeoJsonSource = React.createClass({
     }
   },
 
-  componentDidUpdate() {
-    console.log('source did update')
-  },
-
   fetchData() {
     const self=this
 
@@ -33,7 +29,6 @@ const GeoJsonSource = React.createClass({
       data: this.data
     })
     
-    console.log(this.map.getStyle())
     this.props.onLoaded(this.map.getStyle().sources)
   },
 

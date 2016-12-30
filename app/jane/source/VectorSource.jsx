@@ -15,6 +15,10 @@ const VectorSource = React.createClass({
     console.log('source did update')
   },
 
+  componentWillUnmount() {
+    this.removeSource()
+  },
+
   fetchData() {
     const self=this
 
@@ -32,6 +36,10 @@ const VectorSource = React.createClass({
     
     console.log(this.map.getStyle())
     this.props.onLoaded(this.map.getStyle().sources)
+  },
+
+  removeSource() {
+    this.map.removeSource(this.props.source.id)
   },
 
   render() {

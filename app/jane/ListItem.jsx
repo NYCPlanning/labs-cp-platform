@@ -70,6 +70,10 @@ let ListItem = React.createClass({
     this.props.onToggle(layerid)
   },
 
+  handleClick(layerid) {
+    this.props.onClick(layerid)
+  },
+
   render() {
     const style = {
       fontIcon: {
@@ -91,7 +95,7 @@ let ListItem = React.createClass({
     const { text, isDragging, connectDragSource, connectDropTarget, layer, onToggle } = this.props;
 
     return connectDragSource(connectDropTarget(
-      <div className='list-item-inner'>
+      <div className={this.props.className} onClick={this.handleClick.bind(this, layer.id)}>
         <FontIcon className="fa fa-home" style={style.fontIcon}/> 
         {layer.id}
         <Toggle 

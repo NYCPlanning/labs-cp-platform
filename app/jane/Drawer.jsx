@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import update from 'react/lib/update';
+import update from 'react/lib/update'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
@@ -15,10 +15,6 @@ const Drawer = React.createClass({
     return({
       layers: this.props.layers
     })
-  },
-
-  handleLayerToggle(layerid) {
-    this.props.onLayerToggle(layerid)
   },
 
   handleDrop() {
@@ -44,13 +40,14 @@ const Drawer = React.createClass({
     let layers = this.state.layers.map((layer, i) => {
       return (
         <ListItem
-          className={'list-item'}
+          className={this.props.selectedLayer == layer.id ? 'list-item selected' : 'list-item'}
           layer={layer}
-          onToggle={this.handleLayerToggle}
+          onToggle={this.props.onLayerToggle}
           moveListItem={this.moveListItem}
           index={i}
           onDrop={this.handleDrop}
           key={layer.id}
+          onClick={this.props.onLayerClick}
         />
       )
     })

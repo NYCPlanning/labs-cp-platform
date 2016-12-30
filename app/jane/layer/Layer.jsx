@@ -3,22 +3,21 @@ import React from 'react'
 const Layer = React.createClass({
 
   componentDidMount() {
-    console.log('Layer did mount')
 
     this.map = this.props.map.mapObject
 
-    this.props.config.mapLayers.map((mapLayer) => {
-      this.map.addLayer(mapLayer)
-    })
+    this.map.addLayer(this.props.config)
+    
 
     this.props.onLoaded()
   },
 
+  componentDidUpdate() {
+    console.log('Layer did update', this.props.config)
+  },
+
   componentWillUnmount() {
-    console.log('layer is unmounting!')
-    this.props.config.mapLayers.map((mapLayer) => {
-      this.map.removeLayer(mapLayer.id)
-    })
+    this.map.removeLayer(this.props.config.id)
   },
 
   render() {
