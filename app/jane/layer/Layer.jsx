@@ -12,10 +12,6 @@ const Layer = React.createClass({
     this.props.onLoaded()
   },
 
-  componentDidUpdate() {
-    console.log('Layer did update', this.props.config)
-  },
-
   componentWillUnmount() {
     this.map.removeLayer(this.props.config.id)
   },

@@ -70,6 +70,7 @@ const Jane = React.createClass({
     let layer = mapConfig.layers.find((layer => layer.id == layerid))
     layer.visible = !layer.visible
 
+
     this.setState({
       mapConfig: mapConfig
     })
@@ -94,16 +95,26 @@ const Jane = React.createClass({
   },
 
   handleLayerUpdate(newLayer) {
-    const mapConfig=this.state.mapConfig
 
-    const layerIndex = mapConfig.layers.findIndex((layer) => {
+    // console.log('handling Layer Update', newLayer)
+    // const mapConfig=this.state.mapConfig
+
+    const layerIndex = this.state.mapConfig.layers.findIndex((layer) => {
       return layer.id == newLayer.id
     })
 
-    mapConfig.layers[layerIndex] = newLayer
+    // mapConfig.layers[layerIndex] = newLayer 
+
+    // this.forceUpdate()
 
     this.setState({
-      mapConfig: mapConfig
+      mapConfig: update(this.state.mapConfig, {
+        layers: {
+          [layerIndex]: {
+            $set: newLayer
+          }
+        }
+      })
     })
   },
  
@@ -115,14 +126,15 @@ const Jane = React.createClass({
     //TODO Source components should check to see if the source already exists before adding
     let sources = []
 
+
     if (this.state.mapLoaded) {
       mapConfig.layers.map((layer) => {
-        //if( layer.visible && layer.sources && layer.mapLayers ) {
+        if( layer.visible && layer.sources ) {
           layer.sources.map((source) => {
             if(source.type == 'geojson' ) sources.push(<GeoJsonSource map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>)
             if(source.type == 'vector' ) sources.push(<VectorSource map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>)
           })          
-        //}
+        }
       })
     }
 
@@ -136,6 +148,7 @@ const Jane = React.createClass({
         })
       }
     })
+
 
     //create components for each visible layer, but only if all required sources are already loaded
     let mapLayers = []
@@ -153,6 +166,17 @@ const Jane = React.createClass({
         }
       })      
     }
+
+    //add hover
+    // if (this.map) {
+    //   const map = this.map.mapObject
+    //   map.off('mousemove')
+    //   map.on('mousemove', (e) => {
+    //     const features = map.queryRenderedFeatures(e.point, { layers: [this.state.mapConfig.selectedLayer] });
+    //     console.log(features)
+    //     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+    //   })   
+    // }
 
     //if(this.props.debug && this.map) console.log('debug', this.map.mapObject.getStyle())
 
@@ -257,7 +281,7 @@ const SecondDrawer = React.createClass({
       <div className='second-drawer'>
         <div className='second-drawer-header' >
           <FontIcon className="fa fa-home" style={style.fontIcon}/> 
-          {activeLayer.id}
+          {activeLayer.name}
         </div>
 
         {components}

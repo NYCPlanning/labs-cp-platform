@@ -17,6 +17,12 @@ const Drawer = React.createClass({
     })
   },
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      layers: nextProps.layers
+    })
+  },
+
   handleDrop() {
     //on drop pass the current state up to Jane
     this.props.onLayerChange(this.state.layers)

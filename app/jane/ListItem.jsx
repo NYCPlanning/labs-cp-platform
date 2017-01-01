@@ -97,7 +97,7 @@ let ListItem = React.createClass({
     return connectDragSource(connectDropTarget(
       <div className={this.props.className} onClick={this.handleClick.bind(this, layer.id)}>
         <FontIcon className="fa fa-home" style={style.fontIcon}/> 
-        {layer.id}
+        {layer.name}
         <Toggle 
           style={style.toggle}
           toggled={layer.visible}

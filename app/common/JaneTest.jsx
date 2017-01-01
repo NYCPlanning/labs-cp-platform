@@ -5,6 +5,7 @@ import {Jane} from '../jane'
 import appConfig from '../helpers/appConfig.js'
 
 import AdminBoundaries from './AdminBoundaries.jsx'
+import Facilities from './Facilities.jsx'
 
 const mapInit = {
   mapbox_accessToken: appConfig.mapbox_accessToken,
@@ -27,85 +28,15 @@ const searchConfig = {
   }
 }
 
-const FacilitiesLayer = React.createClass({
 
-  componentDidMount() {
-
-    const newLayer = update(this.props.layer, {
-      sources: {$set: [
-        {
-          "type": 'vector',
-          "id": 'facilities',
-          "mapConfig": {
-            "version": "1.3.0",
-            "layers": [{
-              "type": "mapnik",
-              "options": {
-                "cartocss_version": "2.1.1",
-                "cartocss": "#layer { polygon-fill: #FFF; }",
-                "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
-              }
-            }]
-          }
-        }
-      ]},
-      mapLayers: {$set: [
-        {
-          id: 'facilities',
-          source: 'facilities',
-          "source-layer": "layer0",
-          "type": "circle",
-          "paint": {
-            "circle-radius": 4,
-            "circle-color": "green",
-            "circle-opacity": 0.7
-          }
-        }
-      ]}
-    })
-
-    this.props.onUpdate(newLayer)
-  },
-
-  handleClick() {
-
-     const newLayer = update(this.props.layer, {
-      mapLayers: {$set: [
-        {
-          id: 'facilities-orange',
-          source: 'facilities',
-          "source-layer": "layer0",
-          "type": "circle",
-          "paint": {
-            "circle-radius": 4,
-            "circle-color": "orange",
-            "circle-opacity": 0.7
-          }
-        }
-      ]}
-    })
-
-    this.props.onUpdate(newLayer)
-  },
-
-  render() {
-    return (
-      <div>
-        I am the FacilitiesLayer
-
-        <button onClick={this.handleClick}>Click me</button>
-
-      </div>
-    )
-  }
-})
 
 const mapConfig = {
   selectedLayer: '311',
   layers: [
     {
       id: '311',
-      visible: false,
+      name: 'Some 311 Data',
+      visible: true,
       sources: [
         {
           id: '311',
@@ -127,69 +58,18 @@ const mapConfig = {
       ]
     },
 
-    // {
-    //   id: 'adminboundaries',
-    //   visible: true,
-    //   sources: [
-    //     {
-    //       id: 'ntaboundaries',
-    //       type: 'geojson',
-    //       source: 'data/ntaboundaries.geojson'
-    //     }
-    //   ],
-    //   mapLayers: [
-    //     {
-    //       id: 'ntaboundaries',
-    //       source: 'ntaboundaries',
-    //       type: 'line',
-    //       "paint": {
-    //         "line-color": "#888",
-    //         "line-width": 8
-    //       }
-    //     }
-    //   ]
-    // },
-
     {
       id: 'adminboundaries',
+      name: 'Admin. Boundaries',
       visible: true,
       component: AdminBoundaries
     },
 
     {
       id: 'facilities',
-      visible: false,
-      // sources: [
-      //   {
-      //     "type": 'vector',
-      //     "id": 'facilities',
-      //     "mapConfig": {
-      //       "version": "1.3.0",
-      //       "layers": [{
-      //         "type": "mapnik",
-      //         "options": {
-      //           "cartocss_version": "2.1.1",
-      //           "cartocss": "#layer { polygon-fill: #FFF; }",
-      //           "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
-      //         }
-      //       }]
-      //     }
-      //   }
-      // ],
-      // mapLayers: [
-      //   {
-      //     id: 'facilities',
-      //     source: 'facilities',
-      //     "source-layer": "layer0",
-      //     "type": "circle",
-      //     "paint": {
-      //       "circle-radius": 4,
-      //       "circle-color": "green",
-      //       "circle-opacity": 0.7
-      //     }
-      //   }
-      // ],
-      component: FacilitiesLayer
+      name: 'Facilities DB',
+      visible: true,
+      component: Facilities
     }
   ]
 }

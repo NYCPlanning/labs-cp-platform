@@ -77,7 +77,6 @@ var MapComponent = React.createClass({
   },
 
   updateMetrics(metrics) {
-    console.log('metrics',metrics)
     this.setState({
       metrics: metrics
     })
@@ -92,7 +91,6 @@ var MapComponent = React.createClass({
   },
 
   updateBounds(bounds) {
-    console.log('updateBounds in MapComponent')
     this.setState({
       bounds: JSON.stringify(bounds)
     })
@@ -117,7 +115,6 @@ var MapComponent = React.createClass({
     //create Tab for each child, pass in the layer's state
     var childrenTabs = this.props.config.layers.map((layer, i) => {
       const Content = this.props.layerComponents[layer.name].primaryContent
-      console.log(Content)
       return (
         <CustomTab 
           key={i+1}
@@ -135,7 +132,6 @@ var MapComponent = React.createClass({
       )
     })
 
-    console.log(childrenTabs)
 
     // //insert the global map menu to the top of the array of tabs
     // if (this.refs.map) {
@@ -226,13 +222,11 @@ var MapComponent = React.createClass({
 
     let dataLayers = this.props.config.layers.map((layer, i) => {
       const LayerComponent = this.props.layerComponents[layer.name].dataLayer
-      console.log(LayerComponent)
 
       
       return self.refs.map ? <LayerComponent key={i} map={self.refs.map}/> : null
     })
     
-    console.log(dataLayers)
 
     return(
 

@@ -7,34 +7,55 @@ const VectorSource = React.createClass({
     this.map = this.props.map.mapObject
     //fetch data if necessary, add layer to map
     if (!this.props.source.tiles) {
-      this.fetchData()
+      this.fetchData(this.props.source.sql)
     } 
   },
 
-  componentDidUpdate() {
-    console.log('source did update')
+  componentWillReceiveProps(nextProps) {
+    //compare sql
+
+    if(!(nextProps.source.sql == this.props.source.sql)) {
+      this.fetchData(nextProps.source.sql)
+    }
   },
+
 
   componentWillUnmount() {
     this.removeSource()
   },
 
-  fetchData() {
+  fetchData(sql) {
     const self=this
 
-    Carto.getVectorTileTemplate(this.props.source.mapConfig)
+    const mapConfig = {
+      "version": "1.3.0",
+      "layers": [{
+        "type": "mapnik",
+        "options": {
+          "cartocss_version": "2.1.1",
+          "cartocss": "#layer { polygon-fill: #FFF; }",
+          "sql": sql
+        }
+      }]
+    }
+
+    Carto.getVectorTileTemplate(mapConfig)
       .then(function(template) {
         self.addSource(template)
       })
   },
 
   addSource(template) {
+
+    if (this.map.getSource(this.props.source.id)){
+      this.map.removeSource(this.props.source.id);
+    }
+
     this.map.addSource(this.props.source.id, {
       type: 'vector',
       tiles: [template]
     })
-    
-    console.log(this.map.getStyle())
+
     this.props.onLoaded(this.map.getStyle().sources)
   },
 
