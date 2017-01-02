@@ -107,14 +107,26 @@ const Jane = React.createClass({
 
     // this.forceUpdate()
 
-    this.setState({
-      mapConfig: update(this.state.mapConfig, {
-        layers: {
-          [layerIndex]: {
-            $set: newLayer
+    // this.setState({
+    //   mapConfig: update(this.state.mapConfig, {
+    //     layers: {
+    //       [layerIndex]: {
+    //         $set: newLayer
+    //       }
+    //     }
+    //   })
+    // })
+
+    this.setState((prevState) => {
+      return {
+        mapConfig: update(prevState.mapConfig, {
+          layers: {
+            [layerIndex]: {
+              $set: newLayer
+            }
           }
-        }
-      })
+        })
+      }
     })
   },
  
