@@ -8,8 +8,7 @@ import ListItem from './ListItem.jsx'
 // This component keeps track of its own state for the order of the layers to implement drag and drop functionality
 // Once an item is dropped, we then pass the new layer order up to Jane to update the main state
 
-
-const Drawer = React.createClass({
+const LayerList = React.createClass({
 
   getInitialState() {
     return({
@@ -25,7 +24,7 @@ const Drawer = React.createClass({
 
   handleDrop() {
     //on drop pass the current state up to Jane
-    this.props.onLayerChange(this.state.layers)
+    this.props.onLayerReorder(this.state.layers)
   },
 
   moveListItem(dragIndex, hoverIndex) {
@@ -69,6 +68,4 @@ const Drawer = React.createClass({
   }
 })
 
-export default DragDropContext(HTML5Backend)(Drawer)
-
-
+export default DragDropContext(HTML5Backend)(LayerList)

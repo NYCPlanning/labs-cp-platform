@@ -8,7 +8,6 @@ import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
 
 import '../../stylesheets/common/SearchFilterToolbar.scss'
 
-
 const Search = React.createClass({
 
   getInitialState() {

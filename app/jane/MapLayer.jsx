@@ -1,15 +1,11 @@
 import React from 'react'
 
-const Layer = React.createClass({
+const MapLayer = React.createClass({
 
   componentDidMount() {
 
     this.map = this.props.map.mapObject
-
     this.map.addLayer(this.props.config)
-    
-
-    this.props.onLoaded()
   },
 
   componentWillUnmount() {
@@ -17,13 +13,10 @@ const Layer = React.createClass({
   },
 
   render() {
-
     return (
-      <div>
-       
-      </div>
+      null
     )
   }
 })
 
-export default Layer
+export default MapLayer

@@ -1,18 +1,16 @@
 import React from 'react'
 import update from 'react/lib/update'
 
-import GLMap from './GLMap.jsx'
-import Search from './Search.jsx'
-import PoiMarker from './PoiMarker.jsx'
-import Layer from './layer/Layer.jsx'
 import GeoJsonSource from './source/GeoJsonSource.jsx'
+import GLMap from './GLMap.jsx'
+import LayerContent from './LayerContent.jsx'
+import LayerList from './LayerList.jsx'
+import MapLayer from './MapLayer.jsx'
+import PoiMarker from './PoiMarker.jsx'
+import Search from './Search.jsx'
 import VectorSource from './source/VectorSource.jsx'
-import Drawer from './Drawer.jsx'
 
 import './styles.scss'
-
-
-import FontIcon from 'material-ui/FontIcon'
 
 const Jane = React.createClass({
 
@@ -23,34 +21,6 @@ const Jane = React.createClass({
       loadedSources: {},
       mapConfig: this.props.mapConfig
     })
-  },
-
-  showPoiMarker(feature) {
-    this.setState({
-      poiFeature: feature
-    })
-  },
-
-  hidePoiMarker() {
-    this.setState({
-      poiFeature: null
-    })
-  },
-
-  onMapLoad(style) {
-    this.setState({
-      mapLoaded: true
-    })
-  },
-
-  handleSourceLoaded(loadedSources) {
-    this.setState({
-      loadedSources: loadedSources
-    })
-  },
-
-  handleLayerLoaded() {
-    // this.forceUpdate()
   },
 
   componentDidMount() {
@@ -64,59 +34,51 @@ const Jane = React.createClass({
     this.map = this.refs.map
   },
 
-  handleLayerToggle(layerid) {
-    const mapConfig=this.state.mapConfig
+  showPoiMarker(feature) {
+    this.setState({ poiFeature: feature })
+  },
 
-    let layer = mapConfig.layers.find((layer => layer.id == layerid))
+  hidePoiMarker() {
+    this.setState({ poiFeature: null })
+  },
+
+  onMapLoad(style) {
+    this.setState({ mapLoaded: true })
+  },
+
+  //keeps track of loaded sources in state,
+  //used to figure out whether layers are ready to be added in render()
+  handleSourceLoaded(loadedSources) {
+    this.setState({ loadedSources: loadedSources })
+  },
+
+  handleLayerToggle(layerid) {
+    let layer = this.state.mapConfig.layers.find((layer => layer.id == layerid))
     layer.visible = !layer.visible
 
-
-    this.setState({
-      mapConfig: mapConfig
-    })
+    this.setState({ mapConfig: this.state.mapConfig })
   },
 
-  handleLayerChange(layers) {
-    let mapConfig = this.state.mapConfig
-    mapConfig.layers = layers
-
-    this.setState({
-      mapConfig: mapConfig
-    })
+  handleLayerReorder(layers) {
+    this.state.mapConfig.layers = layers
+  
+    this.setState({ mapConfig: this.state.mapConfig })
   },
 
+  //sets the selected layer
   handleLayerClick(layerid) {
-    let mapConfig = this.state.mapConfig
-    mapConfig.selectedLayer = layerid
+    this.state.mapConfig.selectedLayer = layerid
 
-    this.setState({
-      mapConfig: mapConfig
-    })
+    this.setState({ mapConfig: this.state.mapConfig })
   },
 
+  //handles updates to a layer's configuration
   handleLayerUpdate(newLayer) {
-
-    // console.log('handling Layer Update', newLayer)
-    // const mapConfig=this.state.mapConfig
-
     const layerIndex = this.state.mapConfig.layers.findIndex((layer) => {
       return layer.id == newLayer.id
     })
 
-    // mapConfig.layers[layerIndex] = newLayer 
-
-    // this.forceUpdate()
-
-    // this.setState({
-    //   mapConfig: update(this.state.mapConfig, {
-    //     layers: {
-    //       [layerIndex]: {
-    //         $set: newLayer
-    //       }
-    //     }
-    //   })
-    // })
-
+    //use setState with callback because multiple <Layer>s may want to update in the same render cycle
     this.setState((prevState) => {
       return {
         mapConfig: update(prevState.mapConfig, {
@@ -135,9 +97,7 @@ const Jane = React.createClass({
     const mapConfig = this.state.mapConfig
     
     //load all sources for visible layers
-    //TODO Source components should check to see if the source already exists before adding
     let sources = []
-
 
     if (this.state.mapLoaded) {
       mapConfig.layers.map((layer) => {
@@ -161,8 +121,7 @@ const Jane = React.createClass({
       }
     })
 
-
-    //create components for each visible layer, but only if all required sources are already loaded
+    //create <Layer> components for each visible layer, but only if all required sources are already loaded
     let mapLayers = []
 
     if (allSourcesLoaded) {
@@ -171,7 +130,7 @@ const Jane = React.createClass({
         //render layers in order 
         if(layer.visible && layer.sources && layer.mapLayers) {
           layer.mapLayers.map((mapLayer) => {
-            mapLayers.push(<Layer map={this.map} config={mapLayer} onLoaded={this.handleLayerLoaded} key={mapLayer.id + this.order}/>)
+            mapLayers.push(<MapLayer map={this.map} config={mapLayer} key={mapLayer.id + this.order}/>)
           })
           
           this.order++
@@ -189,8 +148,6 @@ const Jane = React.createClass({
     //     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
     //   })   
     // }
-
-    //if(this.props.debug && this.map) console.log('debug', this.map.mapObject.getStyle())
 
     return(
       <div className='jane-container' style={this.props.style}>
@@ -219,20 +176,19 @@ const Jane = React.createClass({
 
         {sources}
         {mapLayers}
-        <Drawer 
+        <LayerList 
           layers={this.state.mapConfig.layers}
           selectedLayer={this.state.mapConfig.selectedLayer} 
           onLayerToggle={this.handleLayerToggle}
-          onLayerChange={this.handleLayerChange}
+          onLayerReorder={this.handleLayerReorder}
           onLayerClick={this.handleLayerClick}
         />
 
-        <SecondDrawer 
+        <LayerContent 
           layers={this.state.mapConfig.layers}
           selectedLayer={this.state.mapConfig.selectedLayer} 
           onLayerUpdate={this.handleLayerUpdate}
         />
-
       </div>
     )
   }
@@ -250,55 +206,3 @@ Jane.defaultProps = {
 }
 
 export default Jane
-
-const SecondDrawer = React.createClass({
-  render() {
-    const { layers, selectedLayer } = this.props
-
-    const activeLayer = layers.filter((layer) => {
-      return layer.id == selectedLayer
-    })[0]
-
-    const style = {
-      fontIcon: {
-        fontSize: '18px',
-        margin: '8px',
-        height: '18px',
-        width: '18px',
-        left: 0
-      }
-    }
-
-    //if the layer has a component, mount it
-    const components = layers.map((layer) => {
-      if (layer.component) {
-        return (
-          <div
-            style={{
-              display: layer.id == selectedLayer ? 'inline' : 'none'
-            }}
-            key={layer.id}
-          >
-            <layer.component
-              layer={layer}
-              onUpdate={this.props.onLayerUpdate}
-            />
-          </div>
-        )
-      }
-    })
-    
-
-    return (
-      <div className='second-drawer'>
-        <div className='second-drawer-header' >
-          <FontIcon className="fa fa-home" style={style.fontIcon}/> 
-          {activeLayer.name}
-        </div>
-
-        {components}
-      </div>
-    )
-  }
-})
-

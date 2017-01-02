@@ -1,3 +1,5 @@
+//source prop should have 'data' property with geoJSON, or 'source' property with URL to geojson
+
 import React from 'react'
 
 const GeoJsonSource = React.createClass({

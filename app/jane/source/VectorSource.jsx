@@ -19,7 +19,6 @@ const VectorSource = React.createClass({
     }
   },
 
-
   componentWillUnmount() {
     this.removeSource()
   },
