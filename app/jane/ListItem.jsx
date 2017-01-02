@@ -70,8 +70,8 @@ let ListItem = React.createClass({
     this.props.onToggle(layerid)
   },
 
-  handleClick(layerid) {
-    this.props.onClick(layerid)
+  handleClick(layerid, e) {
+    if (e.target.type != 'checkbox') this.props.onClick(layerid)
   },
 
   render() {

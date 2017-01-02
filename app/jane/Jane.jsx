@@ -1,14 +1,13 @@
 import React from 'react'
 import update from 'react/lib/update'
 
-import GeoJsonSource from './source/GeoJsonSource.jsx'
 import GLMap from './GLMap.jsx'
 import LayerContent from './LayerContent.jsx'
 import LayerList from './LayerList.jsx'
 import MapLayer from './MapLayer.jsx'
 import PoiMarker from './PoiMarker.jsx'
 import Search from './Search.jsx'
-import VectorSource from './source/VectorSource.jsx'
+import Source from './source/Source.jsx'
 
 import './styles.scss'
 
@@ -101,10 +100,11 @@ const Jane = React.createClass({
 
     if (this.state.mapLoaded) {
       mapConfig.layers.map((layer) => {
-        if( layer.visible && layer.sources ) {
+        if( layer.sources ) {
           layer.sources.map((source) => {
-            if(source.type == 'geojson' ) sources.push(<GeoJsonSource map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>)
-            if(source.type == 'vector' ) sources.push(<VectorSource map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>)
+            sources.push(
+              <Source map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>
+            )
           })          
         }
       })

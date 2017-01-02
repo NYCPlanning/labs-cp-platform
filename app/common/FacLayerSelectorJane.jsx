@@ -241,11 +241,6 @@ var LayerSelector = React.createClass({
 
     return(
       <div>
-        <Toolbar >
-          <ToolbarGroup>
-            <ToolbarTitle text="Facilities Data Layer" />
-          </ToolbarGroup>
-        </Toolbar>
         <Tabs>
           <Tab 
             icon={<FontIcon className="fa fa-filter"/>}

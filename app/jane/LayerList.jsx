@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import update from 'react/lib/update'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import FontIcon from 'material-ui/FontIcon'
 
 import ListItem from './ListItem.jsx'
 
@@ -42,6 +43,16 @@ const LayerList = React.createClass({
   },
 
   render() {
+    const style = {
+      fontIcon: {
+        fontSize: '18px',
+        margin: '8px',
+        height: '18px',
+        width: '18px',
+        left: 0
+      }
+    }
+
     let layers = this.state.layers.map((layer, i) => {
       return (
         <ListItem
@@ -62,6 +73,10 @@ const LayerList = React.createClass({
 
     return(
       <div className='jane-drawer'>
+        <div className='second-drawer-header' >
+          <FontIcon className="fa fa-home" style={style.fontIcon}/> 
+          Layer List
+        </div>
         {layers}
       </div>
     )
