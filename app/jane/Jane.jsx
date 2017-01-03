@@ -18,7 +18,9 @@ const Jane = React.createClass({
       poiFeature: null,
       mapLoaded: false,
       loadedSources: {},
-      mapConfig: this.props.mapConfig
+      mapConfig: this.props.mapConfig,
+      layerListExpanded: false,
+      layerContentVisible: true
     })
   },
 
@@ -31,6 +33,8 @@ const Jane = React.createClass({
     //this.map is the GLMap Component, not the map object itself
     //do we actually need to do this again in componentDidUpdate()?
     this.map = this.refs.map
+    if (this.map) this.map.mapObject.resize() //eww
+
   },
 
   showPoiMarker(feature) {
@@ -66,9 +70,16 @@ const Jane = React.createClass({
 
   //sets the selected layer
   handleLayerClick(layerid) {
-    this.state.mapConfig.selectedLayer = layerid
+    if(this.state.mapConfig.selectedLayer == layerid) {
+      this.setState({
+        layerContentVisible: !this.state.layerContentVisible
+      })
+    } else {
+      this.state.mapConfig.selectedLayer = layerid
+      this.setState({ mapConfig: this.state.mapConfig })      
+    }
 
-    this.setState({ mapConfig: this.state.mapConfig })
+
   },
 
   //handles updates to a layer's configuration
@@ -89,6 +100,10 @@ const Jane = React.createClass({
         })
       }
     })
+  },
+
+  handleToggleExpanded() {
+    this.setState({ layerListExpanded: !this.state.layerListExpanded })
   },
  
   render() {
@@ -164,6 +179,8 @@ const Jane = React.createClass({
 
         <GLMap 
           {...this.props.mapInit}
+          offset1={this.state.layerListExpanded}
+          offset2={this.state.layerContentVisible}
           ref='map'
           onLoad={this.onMapLoad}
         />
@@ -177,14 +194,18 @@ const Jane = React.createClass({
         {sources}
         {mapLayers}
         <LayerList 
+          expanded={this.state.layerListExpanded}
           layers={this.state.mapConfig.layers}
           selectedLayer={this.state.mapConfig.selectedLayer} 
           onLayerToggle={this.handleLayerToggle}
           onLayerReorder={this.handleLayerReorder}
           onLayerClick={this.handleLayerClick}
+          onToggleExpanded={this.handleToggleExpanded}
         />
 
         <LayerContent 
+          offset={this.state.layerListExpanded}
+          visible={this.state.layerContentVisible}
           layers={this.state.mapConfig.layers}
           selectedLayer={this.state.mapConfig.selectedLayer} 
           onLayerUpdate={this.handleLayerUpdate}

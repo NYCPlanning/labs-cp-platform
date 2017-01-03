@@ -4,8 +4,8 @@ import {Jane} from '../jane'
 
 import appConfig from '../helpers/appConfig.js'
 
-import AdminBoundaries from './AdminBoundaries.jsx'
-import Facilities from './Facilities.jsx'
+import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
+import FacilitiesJaneLayer from '../facilities/facilitiesjanelayer'
 
 const mapInit = {
   mapbox_accessToken: appConfig.mapbox_accessToken,
@@ -62,15 +62,10 @@ const mapConfig = {
       id: 'adminboundaries',
       name: 'Admin. Boundaries',
       visible: true,
-      component: AdminBoundaries
+      component: AdminBoundariesJaneLayer
     },
 
-    {
-      id: 'facilities',
-      name: 'Facilities DB',
-      visible: true,
-      component: Facilities
-    }
+    FacilitiesJaneLayer
   ]
 }
 
@@ -92,9 +87,7 @@ const JaneTest = React.createClass({
           search={true}
           searchConfig={searchConfig}
           mapConfig={mapConfig}
-          debug={true}
         />
-       
       </div>
     )
   }

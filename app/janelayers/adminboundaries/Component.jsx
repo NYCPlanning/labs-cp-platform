@@ -2,6 +2,7 @@ import React from 'react'
 import update from 'react/lib/update'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import {Tabs, Tab} from 'material-ui/Tabs'
 
 
 const layerConfig = {
@@ -10,7 +11,7 @@ const layerConfig = {
       {
         id: 'ntaboundaries',
         type: 'geojson',
-        source: 'data/ntaboundaries.geojson'
+        source: '/data/ntaboundaries.geojson'
       }
     ],
     mapLayers: [
@@ -31,7 +32,7 @@ const layerConfig = {
       {
         id: 'cdboundaries',
         type: 'geojson',
-        source: 'data/cdboundaries.geojson'
+        source: '/data/cdboundaries.geojson'
       }
     ],
     mapLayers: [
@@ -85,17 +86,19 @@ const AdminBoundaries = React.createClass({
   render() {
     return (
       <div>
-        Admin Boundaries
+        <Tabs>
+          <Tab label='Data'>
+            <DropDownMenu
+              value={this.state.value}
+              onChange={this.handleChange}
+              autoWidth={false}
+            >
+              <MenuItem value={'nta'} primaryText="Neighborhood Tabulation Areas" />
+              <MenuItem value={'cd'} primaryText="Community Districts" />
 
-         <DropDownMenu
-          value={this.state.value}
-          onChange={this.handleChange}
-          autoWidth={false}
-        >
-          <MenuItem value={'nta'} primaryText="Neighborhood Tabulation Areas" />
-          <MenuItem value={'cd'} primaryText="Community Districts" />
-
-        </DropDownMenu>
+            </DropDownMenu>
+          </Tab>
+        </Tabs>
 
       </div>
     )

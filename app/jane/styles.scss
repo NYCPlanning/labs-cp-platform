@@ -6,7 +6,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 520px;
+    left: 36px;
   }
 
   .mui-toolbar-container {
@@ -16,7 +16,7 @@
     left: 520px;
   }
 
-  .jane-drawer {
+  .jane-drawer-inner {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -25,26 +25,53 @@
     background: #fff;
   }
 
+  .jane-drawer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    background: #fff;
+    overflow: hidden;
+    transition: width 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+
+  .jane-drawer.expanded {
+    width: 200px;
+  }
+
   .list-item, .list-item-inner {
     position: relative;
     cursor: pointer;
+    height: 30px;
+    font-size: 13px;
   }
 
   .list-item.selected {
     background: #cdcdcd;
   }
 
+  .second-drawer.offset {
+    left: 200px;
+  }
+
   .second-drawer {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 200px;
+    left: 35px;
     width: 320px;
     background: #cdcdcd;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   }
 
-  .second-drawer-header {
+  .drawer-header {
     position: relative;
     border-bottom: 1px solid #a9a9a9;
+    height: 35px;
+  }
+
+  .drawer-subheader {
+    height: 48px;
   }
 }

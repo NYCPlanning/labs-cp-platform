@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import update from 'react/lib/update'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
-import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton';
 
 import ListItem from './ListItem.jsx'
 
@@ -45,10 +45,10 @@ const LayerList = React.createClass({
   render() {
     const style = {
       fontIcon: {
-        fontSize: '18px',
-        margin: '8px',
-        height: '18px',
-        width: '18px',
+        fontSize: '15px',
+        margin: '7px 10px',
+        height: '15px',
+        width: '15px',
         left: 0
       }
     }
@@ -72,12 +72,24 @@ const LayerList = React.createClass({
     layers = layers.slice().reverse()
 
     return(
-      <div className='jane-drawer'>
-        <div className='second-drawer-header' >
-          <FontIcon className="fa fa-home" style={style.fontIcon}/> 
-          Layer List
+      <div className={'jane-drawer ' + (this.props.expanded ? 'expanded' : '') }>
+        <div className={'jane-drawer-inner'}>
+          <div className='drawer-header' >
+            <IconButton 
+              style={{
+                width: 36,
+                height: 36,
+                padding: 0
+              }}
+              iconClassName="fa fa-list-ul" 
+              iconStyle={style.fontIcon} 
+              onTouchTap={this.props.onToggleExpanded}
+            />
+            Layers
+          </div>
+          <div className="drawer-subheader"/>
+          {layers}
         </div>
-        {layers}
       </div>
     )
   }

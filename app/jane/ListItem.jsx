@@ -77,10 +77,10 @@ let ListItem = React.createClass({
   render() {
     const style = {
       fontIcon: {
-        fontSize: '18px',
-        margin: '8px',
-        height: '18px',
-        width: '18px',
+        fontSize: '15px',
+        margin: '7px 10px',
+        height: '15px',
+        width: '15px',
         left: 0
       },
       toggle: {
@@ -96,7 +96,7 @@ let ListItem = React.createClass({
 
     return connectDragSource(connectDropTarget(
       <div className={this.props.className} onClick={this.handleClick.bind(this, layer.id)}>
-        <FontIcon className="fa fa-home" style={style.fontIcon}/> 
+        <FontIcon className={'fa fa-' + layer.icon} style={style.fontIcon}/> 
         {layer.name}
         <Toggle 
           style={style.toggle}

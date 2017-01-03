@@ -15,11 +15,11 @@ import FontIcon from 'material-ui/FontIcon'
 import {List, ListItem} from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
 
-import CountWidget from '../common/CountWidget.jsx'
+import CountWidget from '../../common/CountWidget.jsx'
 
-import Carto from '../helpers/carto.js'
+import Carto from '../../helpers/carto.js'
 
-import '../../stylesheets/facilities/FacLayerSelector.scss'
+import '../../../stylesheets/facilities/FacLayerSelector.scss'
 
 var LayerSelector = React.createClass({
 
@@ -120,6 +120,7 @@ var LayerSelector = React.createClass({
       this.processChecked(layers)
     }
   },
+
   processChecked(layers) {
 
     var allChecked = 0,
@@ -174,14 +175,17 @@ var LayerSelector = React.createClass({
   },
 
   buildSQL(layers) {
+    
+    let sql
+
     if (layers.length > 0) {
-      var sql = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} WHERE `
+      sql = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} WHERE `
       layers.map(function(name, i) {
         if(i>0) sql += ' OR '
         sql += 'facilitysubgroup = \'' + name + '\''
       })  
     } else {
-      var sql =`SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} LIMIT 0`
+      sql = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} LIMIT 0`
     }
 
     this.props.updateSQL(sql)
@@ -237,16 +241,6 @@ var LayerSelector = React.createClass({
 
     return(
       <div>
-        <Toolbar >
-          <ToolbarGroup>
-            <ToolbarTitle text="Facilities Data Layer" />
-          </ToolbarGroup>
-        </Toolbar>
-        <Tabs>
-          <Tab 
-            icon={<FontIcon className="fa fa-filter"/>}
-            label="Filter"
-          >
           <CountWidget 
             totalCount={this.state.totalCount} 
             selectedCount={this.state.selectedCount} 
@@ -349,21 +343,6 @@ var LayerSelector = React.createClass({
               }
             </ul>
             </ListItem>
-
-              </Tab>
-              <Tab
-                icon={<FontIcon className="fa fa-download"/>}
-                label="Download"
-              >
-                <div>
-                  <List>
-                    <ListItem>
-                      Coming Soon
-                    </ListItem>
-                  </List>
-                </div>
-              </Tab>
-            </Tabs>
           </div>
     )
   }

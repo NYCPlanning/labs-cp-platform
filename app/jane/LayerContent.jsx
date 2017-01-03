@@ -41,9 +41,14 @@ const LayerContent = React.createClass({
     })
     
     return (
-      <div className='second-drawer'>
-        <div className='second-drawer-header' >
-          <FontIcon className="fa fa-home" style={style.fontIcon}/> 
+      <div 
+        className={'second-drawer ' + (this.props.offset ? 'offset' : '')}
+        style={{
+          display: this.props.visible ? 'initial' : 'none'
+        }}
+      >
+        <div className='drawer-header' >
+          <FontIcon className={'fa fa-' + activeLayer.icon} style={style.fontIcon}/> 
           {activeLayer.name}
         </div>
 
