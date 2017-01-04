@@ -24,7 +24,7 @@ var Component = React.createClass({
   componentDidMount() {
     var self=this
     // after mount, fetch data and set state
-    carto.getRow('hkates.facilities_data_newschema', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getRow('hkates.facilities_data', 'cartodb_id', parseInt(this.props.params.id))
       .then(function(data) { 
         self.setState({
           data: data

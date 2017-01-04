@@ -24,7 +24,7 @@ var FacilitiesDataLayer = React.createClass({
 
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype, agencysource',
-      tablename: 'hkates.facilities_data_newschema'
+      tablename: 'hkates.facilities_data'
     }
     
     let sql = ''
@@ -55,7 +55,7 @@ var FacilitiesDataLayer = React.createClass({
       WITH temp AS (
       SELECT
       unnest(string_to_array(datesourceupdated,',')) as date
-      FROM hkates.facilities_data_newschema
+      FROM hkates.facilities_data
       WHERE datesourceupdated NOT LIKE '%NULL%'
       )
       SELECT
