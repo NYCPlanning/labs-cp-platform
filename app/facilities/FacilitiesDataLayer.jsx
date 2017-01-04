@@ -23,7 +23,7 @@ var FacilitiesDataLayer = React.createClass({
     var self=this
 
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
+      columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype, agencysource',
       tablename: 'hkates.facilities_data'
     }
     
@@ -52,10 +52,16 @@ var FacilitiesDataLayer = React.createClass({
     this.instantiateVectorTiles()
 
     var sql = `
+      WITH temp AS (
       SELECT
-        min(datesourceupdated)::date AS min,
-        max(datesourceupdated)::date AS max
-      FROM hkates.facilities_data`
+      unnest(string_to_array(datesourceupdated,',')) as date
+      FROM hkates.facilities_data
+      WHERE datesourceupdated NOT LIKE '%NULL%'
+      )
+      SELECT
+      min(date::date) as min,
+      max(date::date) as max
+      FROM temp`
 
     Carto.SQL(sql, 'json')
       .then(function(data) {
@@ -213,7 +219,9 @@ var FacilitiesDataLayer = React.createClass({
           >
             <ListItem
               primaryText={d.facilityname}
-              secondaryText={d.address + ' | ' + d.facilitytype}
+              secondaryText={d.facilitytype + ' | ' + d.address}
+              // secondaryText={d.agencysource + ' | ' + d.facilitytype}
+              secondaryTextLines={2}
               leftIcon={
                 <div 
                   className={'color-circle'} 
