@@ -66,8 +66,12 @@ var facilitiesLayers = [
                   "description": "Soup kitchens and food pantries"
                },
                {
-                  "name": "Community Centers",
+                  "name": "Community Centers and Community School Programs",
                   "description": "Community centers that provide multiple social services at one site"
+               },
+               {
+                  "name": "School-Based Drug Prevention Programs",
+                  "description": "Substance Abuse Prevention and Intervention programs at schools"
                }
             ]
          }
@@ -80,7 +84,7 @@ var facilitiesLayers = [
       "subColor": "#fff8dd",
       "children": [
          {
-            "name": "Schools",
+            "name": "Schools (K-12)",
             "description": "Preschools, K-12 schools, and higher education overseen by NYC Dept. of Education and NYS Education Department",
             "color": "#f7ca00",
             "children": [
@@ -93,24 +97,32 @@ var facilitiesLayers = [
                   "description": "Private elementary, middle, and high schools"
                },
                {
-                  "name": "Preschools",
-                  "description": "Early Learn NYC and Universal Pre-K sites"
-               },
-               {
                   "name": "Other Schools Serving Students with Disabilities",
                   "description": "Specialized schools and educational services for students with disabilities"
                }
             ]
          },
          {
-            "name": "Childcare",
+            "name": "Child Care and Pre-Kindergarten",
             "description": "Childcare centers overseen by NYC Administration for Childrens Services and NYC Dept. of Mental Health and Hygiene",
             "color": "#b0dae8",
             "children": [
                {
-                  "name": "Childcare",
+                  "name": "Pre-Kindergarten",
+                  "description": "NYC DOE designated Universal Pre-K center"
+               },
+               {
+                  "name": "Dual Pre-K and Child Care",
+                  "description": "Center that offers both a NYC DOE desgiated Universal Pre-K services and other child care services"
+               },
+               {
+                  "name": "Child Care",
                   "description": "Group and school-based child care centers for infants, toddlers, and preschoolers"
-               }
+               },
+               {
+                  "name": "Preschools for Students with Disabilities",
+                  "description": "Center specialized on preschool students with disabilities"
+               },
             ]
          },
          {
@@ -141,8 +153,16 @@ var facilitiesLayers = [
             "color": "#b67eb7",
             "children": [
                {
-                  "name": "Youth Services",
-                  "description": "COMPASS Programs, youth literacy, and youth employment programs"
+                  "name": "Comprehensive After School System (COMPASS) Sites",
+                  "description": "Comprehensive After School System (COMPASS) Sites"
+               },
+               {
+                  "name": "Youth Centers, Literacy Programs, Job Training, and Immigrant Services",
+                  "description": "Youth Centers, Literacy Programs, Job Training, and Immigrant Services"
+               },
+               {
+                  "name": "Summer Youth Employment Site",
+                  "description": "Seasonal employment sites for youth"
                }
             ]
          },
@@ -228,8 +248,8 @@ var facilitiesLayers = [
                   "description": "All public libaries"
                },
                {
-                  "name": "Academic Libraries",
-                  "description": "Libraries operated by academic institutions"
+                  "name": "Academic and Special Libraries",
+                  "description": "Libraries operated by academic institutions or other specialized organizations"
                }
             ]
          },

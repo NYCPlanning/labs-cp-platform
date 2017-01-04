@@ -24,7 +24,7 @@ var Component = React.createClass({
   componentDidMount() {
     var self=this
     // after mount, fetch data and set state
-    carto.getRow('hkates.facilities_data', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getRow('hkates.facilities_data_newschema', 'cartodb_id', parseInt(this.props.params.id))
       .then(function(data) { 
         self.setState({
           data: data
@@ -93,9 +93,11 @@ var Component = React.createClass({
           <h4>Operations & Oversight</h4>
           <dl className="dl-horizontal">
             <dt>Operator</dt>
-            <dd>{d.operatorabbrev + ' - ' + d.operatorname}</dd>
+            <dd>{d.operatorname}</dd>
+            <dt>Operator Type</dt>
+            <dd>{d.operatortype}</dd>
             <dt>Oversight Agency</dt>
-            <dd>{d.oversightabbrev + ' - ' + d.oversightagency}</dd>            
+            <dd>{d.oversightagency.split(',').join(', ')}</dd>            
           </dl>
         </div>
       )
@@ -107,9 +109,11 @@ var Component = React.createClass({
           <h4>Data Source</h4>
           <dl className="dl-horizontal">
             <dt>Source Dataset</dt>
-            <dd>{d.agencysource + ' - ' + d.sourcedatasetname}</dd>
+            <dd>{d.agencysource + ' - ' + d.sourcedatasetname.split(',').join(', ')}</dd>
             <dt>Last Update</dt>
-            <dd>{d.datesourceupdated}</dd>           
+            <dd>{d.datesourceupdated}</dd> 
+            <dt>Facility ID in Source Data</dt>
+            <dd>{d.idagency ? d.idagency.split(',').join(', ') : 'None Provided'}</dd>           
           </dl>
         </div>
       )
