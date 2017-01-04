@@ -2,9 +2,13 @@
 import React from 'react' 
 
 import Nav from '../common/Nav.jsx'
+import {Jane} from '../jane/'
 import MapComponent from '../common/MapComponent.jsx'
-import FacilitiesDataLayer from './FacilitiesDataLayer.jsx'
-import content from './content.jsx'
+import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
+import FacilitiesJaneLayer from './facilitiesjanelayer'
+import TransportationJaneLayer from '../janelayers/transportation'
+
+import appConfig from '../helpers/appConfig.js'
 
 var FacilitiesExplorer = React.createClass({
 
@@ -33,31 +37,49 @@ var FacilitiesExplorer = React.createClass({
 
   render() {
 
-    let { location } = this.props
+    //TODO these can be globally defined for the app
+    const mapInit = {
+      mapbox_accessToken: appConfig.mapbox_accessToken,
+      center: [-74.0079, 40.7315],
+      zoom: 12,
+      minZoom: null,
+      maxZoom: null,
+      pitch: 0,
+      hash: true,
+      navigationControlPosition: 'bottom-right'
+    }
 
-    let isModal = (
-      location.state &&
-      location.state.modal &&
-      this.previousChildren
-    )
+    const searchConfig = {
+      mapzen_api_key: appConfig.mapzen_api_key,
+      bounds: {
+        minLon: -74.292297,
+        maxLon: -73.618011,
+        minLat: 40.477248,
+        maxLat: 40.958123
+      }
+    }
+
+    //TODO we need some kind of "stock layers list" that shoudl automatically be added to mapConfig.layers and maintained elsewhere
+    const mapConfig = {
+      selectedLayer: 'facilities',
+      layers: [
+        AdminBoundariesJaneLayer,
+        TransportationJaneLayer,
+        FacilitiesJaneLayer, 
+      ]
+    }
     
     //Facilities Data Layer is composable, and will show different data/filters based on the route
     const mode = this.props.params.domain ? this.props.params.domain : 'all'
 
     return(
       <div className='full-screen'>
-        {/*<Nav title={'Facilities and Program Sites Explorer'} auth={this.props.auth} showModal={this.props.showModal}>
-          <li onClick={this.showAbout}><a> About</a></li>
-        </Nav>*/}
-        <MapComponent leftDrawerOpen={true} auth={this.props.auth} showModal={this.props.showModal}>
-          <FacilitiesDataLayer 
-            history={this.props.history}
-            name="Housing Pipeline" 
-            icon="fa fa-university" 
-            tooltipText="Facilities Database"
-            showModal={this.props.showModal} 
-            mode={mode}/>
-        </MapComponent>
+        <Jane 
+          mapInit={mapInit}
+          search={true}
+          searchConfig={searchConfig}
+          mapConfig={mapConfig}
+        />
       </div>
     )
   }

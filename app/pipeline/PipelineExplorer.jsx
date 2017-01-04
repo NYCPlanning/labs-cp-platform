@@ -4,7 +4,6 @@ import React from 'react'
 import Nav from '../common/Nav.jsx'
 import MapComponent from '../common/MapComponent.jsx'
 import PipelineDataLayer from './PipelineDataLayer.jsx'
-import FacilitiesDataLayer from '../facilities/FacilitiesDataLayer.jsx'
 
 var PipeLineExplorer = React.createClass({ 
   componentDidMount() {

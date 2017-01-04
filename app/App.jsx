@@ -71,7 +71,7 @@ var App = React.createClass({
       })
     }
 
-    document.title = this.props.children.props.route.title
+    document.title = this.props.children.props.route.title || 'NYC Captial Planning Platform'
 
     return( 
       <MuiThemeProvider>
