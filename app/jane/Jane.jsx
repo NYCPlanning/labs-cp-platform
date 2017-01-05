@@ -8,6 +8,7 @@ import MapLayer from './MapLayer.jsx'
 import PoiMarker from './PoiMarker.jsx'
 import Search from './Search.jsx'
 import Source from './source/Source.jsx'
+import SelectedFeaturesPane from './SelectedFeaturesPane.jsx'
 
 import './styles.scss'
 
@@ -20,7 +21,8 @@ const Jane = React.createClass({
       loadedSources: {},
       mapConfig: this.props.mapConfig,
       layerListExpanded: false,
-      layerContentVisible: true
+      layerContentVisible: true,
+      selectedFeatures: []
     })
   },
 
@@ -28,7 +30,16 @@ const Jane = React.createClass({
     //this.map is the GLMap Component, not the map object itself
     this.map = this.refs.map
 
+    this.map.mapObject.on('zoomend', this.resetSelectedFeatures)
+    this.map.mapObject.on('dragend', this.resetSelectedFeatures)
+
     this.map.mapObject.on('click', this.handleMapLayerClick)
+  },
+
+  resetSelectedFeatures() {
+    this.setState({
+      selectedFeatures: []
+    })
   },
 
   componentDidUpdate() {
@@ -92,17 +103,38 @@ const Jane = React.createClass({
 
   handleMapLayerClick(e) {
 
-    //get the interactivity layer(s) of the selected janeLayer
-    const layers = ['facilities-points', 'facilities-points-outline']
+    const mapLayers = this.getMapLayers()
+    console.log(mapLayers)
 
-    const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: layers });
+    const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: mapLayers });
 
     console.log(features)
-    
-    this.highlightFeature({
-      type: 'Feature',
-      geometry: features[0].geometry
-    }) 
+
+    this.setState({
+      selectedFeatures: features
+    })
+
+    if(features.length > 0) {
+      this.highlightFeature({
+        type: 'Feature',
+        geometry: features[0].geometry
+      })  
+    }
+  },
+
+  //return an array of all loaded mapLayers
+  getMapLayers() {
+    const mapLayers = []
+
+    this.state.mapConfig.layers.map((layer) => {
+      layer.mapLayers.map((mapLayer) => {
+        if(layer.visible) {
+          mapLayers.push(mapLayer.id)
+        }
+      })
+    })
+
+    return mapLayers
   },
 
   highlightFeature(feature) {
@@ -231,6 +263,24 @@ const Jane = React.createClass({
       }
     }) 
 
+    //add selected feature items for each layer
+    let selectedFeatureItems = []
+
+    mapConfig.layers.map((layer, i) => {
+      if(layer.listItem && layer.visible && layer.interactivityMapLayer) { 
+
+        const SelectedFeatureItem = layer.listItem ? layer.listItem: null
+        const layerSelectedFeatures = this.state.selectedFeatures.filter((feature) => {
+          return feature.layer.id == layer.interactivityMapLayer
+        })
+
+        console.log('this layers selected features', layerSelectedFeatures)
+        layerSelectedFeatures.map((layerSelectedFeature, j) => {
+          selectedFeatureItems.push(<SelectedFeatureItem feature={layerSelectedFeature} key={i.toString()+j.toString()}/>)
+        })
+      }
+    })
+
 
     //add hover
     // if (this.map) {
@@ -301,6 +351,13 @@ const Jane = React.createClass({
           onLayerUpdate={this.handleLayerUpdate}
           onClose={this.toggleLayerContent}
         />
+       
+        <SelectedFeaturesPane style={{
+          right: (selectedFeatureItems.length>0) ? 0 : -250
+        }}>
+          {selectedFeatureItems}
+        </SelectedFeaturesPane>
+        
       </div>
     )
   }

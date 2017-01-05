@@ -4,41 +4,10 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import Moment from 'moment'
 
 import LayerSelector from './LayerSelector.jsx'
-import facilitiesLayers from './facilitiesLayers.js'
+import facilitiesLayers from '../facilitiesLayers.js'
+import colors from '../colors.js'
 
 import Carto from '../../helpers/carto.js'
-
-
-
-
-
-
-function getColorObject() {
-  //generate a mapboxGL style categorical color object based on mode
-  //if(this.props.mode=='all') {
-    return {
-      property: 'domain',
-      type: 'categorical',
-      stops: facilitiesLayers.map(function(layer) {
-        return [
-          layer.name,
-          layer.color
-        ]
-      })
-    }
-  // } else {
-  //   return {
-  //     property: 'facilitygroup',
-  //     type: 'categorical',
-  //     stops: this.layerStructure[0].children.map(function(layer) {
-  //       return [
-  //         layer.name,
-  //         layer.color
-  //       ]
-  //     })
-  //   }
-  // }
-}
 
 
 const Facilities = React.createClass({
@@ -88,7 +57,7 @@ const Facilities = React.createClass({
                 [15,6]
               ]
             },
-            "circle-color": getColorObject(),
+            "circle-color": colors.getColorObject(),
             "circle-opacity": 0.7
           }
         }
