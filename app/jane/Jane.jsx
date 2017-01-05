@@ -27,12 +27,22 @@ const Jane = React.createClass({
   componentDidMount() {
     //this.map is the GLMap Component, not the map object itself
     this.map = this.refs.map
+
+    this.map.mapObject.on('click', this.handleMapLayerClick)
   },
 
   componentDidUpdate() {
+    const self=this
     //this.map is the GLMap Component, not the map object itself
-    //do we actually need to do this again in componentDidUpdate()?
+    //do we actually need to do this again here?
     this.map = this.refs.map
+
+    // this.map.mapObject.off('click')
+    // this.map.mapObject.on('click', (e) => {
+    //   const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: ['facilities-points'] });
+
+    //   console.log(features)
+    // })
   },
 
   showPoiMarker(feature) {
@@ -78,6 +88,46 @@ const Jane = React.createClass({
       this.state.mapConfig.selectedLayer = layerid
       this.setState({ mapConfig: this.state.mapConfig })      
     }
+  },
+
+  handleMapLayerClick(e) {
+
+    //get the interactivity layer(s) of the selected janeLayer
+    const layers = ['facilities-points', 'facilities-points-outline']
+
+    const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: layers });
+
+    console.log(features)
+    
+    this.highlightFeature({
+      type: 'Feature',
+      geometry: features[0].geometry
+    }) 
+  },
+
+  highlightFeature(feature) {
+    const map = this.map.mapObject
+    try {
+      map.removeLayer('highlighted')
+      map.removeSource('highlighted')
+    }
+    catch(err) {}
+
+    map.addSource('highlighted', {
+      "type": "geojson",
+      "data": feature
+    })
+
+    map.addLayer({
+      "id": "highlighted",
+      "type": "circle",
+      "source": "highlighted",
+      "paint": {
+        "circle-radius": 14,
+        "circle-color": "steelblue",
+        "circle-opacity": 0.5
+      }
+    })
   },
 
   toggleLayerContent() {
@@ -135,7 +185,11 @@ const Jane = React.createClass({
           })          
         }
       })
+
+
     }
+
+  
 
     //check to see if all sources for visible layers are loaded
     let allSourcesLoaded = true
@@ -147,6 +201,7 @@ const Jane = React.createClass({
         })
       }
     })
+
 
     //create <Layer> components for each visible layer, but only if all required sources are already loaded
     let mapLayers = []
@@ -162,9 +217,12 @@ const Jane = React.createClass({
           
           this.order++
         }
-      })      
+      })  
+
     }
 
+
+    //add legendItems for each layer
     let legendItems = []
 
     mapConfig.layers.map((layer, i) => {
@@ -172,6 +230,7 @@ const Jane = React.createClass({
         legendItems.push(<div key={i}>{layer.legend}</div>)
       }
     }) 
+
 
     //add hover
     // if (this.map) {

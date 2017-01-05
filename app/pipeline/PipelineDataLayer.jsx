@@ -186,11 +186,11 @@ var PipelineDataLayer = React.createClass({
 
     //popup on click
     map.on('click', function (e) {
-        var features = map.queryRenderedFeatures(e.point, { layers: ['pipeline-points'] });
+      var features = map.queryRenderedFeatures(e.point, { layers: ['pipeline-points'] });
 
-        if (!features.length) return
-      
-        self.buildSelections(e.lngLat, features)
+      if (!features.length) return
+    
+      self.buildSelections(e.lngLat, features)
     })
   },
 

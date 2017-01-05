@@ -9,49 +9,9 @@ import facilitiesLayers from './facilitiesLayers.js'
 import Carto from '../../helpers/carto.js'
 
 
-const config = {
-  sources: [
-    {
-      "type": 'vector',
-      "id": 'facilities',
-      "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
-    }
-  ],
-  mapLayers: [
-    {
-      "id": "facilities-points-outline",
-      "source": 'facilities',
-      "source-layer": "layer0",
-      "type": "circle",
-      "paint": {
-        "circle-radius": {
-          "stops": [
-            [10,3],
-            [15,7]
-          ]
-        },
-        "circle-color": "#012700",
-        "circle-opacity": 0.7
-      }
-    },
-    {
-      "id": "facilities-points",
-      "source": 'facilities',
-      "source-layer": "layer0",
-      "type": "circle",
-      "paint": {
-        "circle-radius": {
-          "stops": [
-            [10,2],
-            [15,6]
-          ]
-        },
-        "circle-color": getColorObject(),
-        "circle-opacity": 0.7
-      }
-    }
-  ]
-}
+
+
+
 
 function getColorObject() {
   //generate a mapboxGL style categorical color object based on mode
@@ -91,6 +51,50 @@ const Facilities = React.createClass({
 
     const sql=`SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`
 
+    this.config = {
+      sources: [
+        {
+          "type": 'vector',
+          "id": 'facilities',
+          "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
+        }
+      ],
+      mapLayers: [
+        {
+          "id": "facilities-points-outline",
+          "source": 'facilities',
+          "source-layer": "layer0",
+          "type": "circle",
+          "paint": {
+            "circle-radius": {
+              "stops": [
+                [10,3],
+                [15,7]
+              ]
+            },
+            "circle-color": "#012700",
+            "circle-opacity": 0.7
+          }
+        },
+        {
+          "id": "facilities-points",
+          "source": 'facilities',
+          "source-layer": "layer0",
+          "type": "circle",
+          "paint": {
+            "circle-radius": {
+              "stops": [
+                [10,2],
+                [15,6]
+              ]
+            },
+            "circle-color": getColorObject(),
+            "circle-opacity": 0.7
+          }
+        }
+      ]
+    }
+
     this.setState({
       sql: sql
     })
@@ -100,11 +104,15 @@ const Facilities = React.createClass({
     this.renderLegend()
   },
 
+  handleLayerClick(e) {
+    console.log('layerClick', e)
+  },
+
   //updates the sql for the map source
   updateSQL(sql) {
     console.log('updated sql', sql)
 
-    const newConfig = update(config, {
+    const newConfig = update(this.config, {
       sources: {
         0: {
           sql: {
