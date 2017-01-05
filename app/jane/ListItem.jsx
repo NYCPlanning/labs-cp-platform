@@ -71,7 +71,7 @@ let ListItem = React.createClass({
   },
 
   handleClick(layer, e) {
-    if (e.target.type != 'checkbox' && layer.visible) this.props.onClick(layer.id)
+    if (e.target.type != 'checkbox') this.props.onClick(layer.id)
   },
 
   render() {
@@ -81,6 +81,7 @@ let ListItem = React.createClass({
         margin: '7px 10px',
         height: '15px',
         width: '15px',
+        color: '#5F5F5F',
         left: 0
       },
       toggle: {
@@ -88,7 +89,7 @@ let ListItem = React.createClass({
         display: 'initial',
         width: 'auto',
         right: '8px',
-        top: '7px'
+        top: '3px'
       }
     }
 

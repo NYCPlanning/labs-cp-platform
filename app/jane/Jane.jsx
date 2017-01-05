@@ -33,8 +33,6 @@ const Jane = React.createClass({
     //this.map is the GLMap Component, not the map object itself
     //do we actually need to do this again in componentDidUpdate()?
     this.map = this.refs.map
-    if (this.map) this.map.mapObject.resize() //eww
-
   },
 
   showPoiMarker(feature) {
@@ -96,6 +94,8 @@ const Jane = React.createClass({
 
   //handles updates to a layer's configuration
   handleLayerUpdate(newLayer) {
+    console.log('handleLayerUpdate', newLayer)
+
     const layerIndex = this.state.mapConfig.layers.findIndex((layer) => {
       return layer.id == newLayer.id
     })
@@ -165,6 +165,14 @@ const Jane = React.createClass({
       })      
     }
 
+    let legendItems = []
+
+    mapConfig.layers.map((layer, i) => {
+      if(layer.visible && layer.legend) { 
+        legendItems.push(<div key={i}>{layer.legend}</div>)
+      }
+    }) 
+
     //add hover
     // if (this.map) {
     //   const map = this.map.mapObject
@@ -175,27 +183,38 @@ const Jane = React.createClass({
     //     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
     //   })   
     // }
+    let leftOffset = 36
+    if (this.state.layerListExpanded) leftOffset+=164
+    if (this.state.layerContentVisible) leftOffset+=320
 
     return(
       <div className='jane-container' style={this.props.style}>
-        { 
-          this.props.search && (
-            <Search 
-              {...this.props.searchConfig}
-              onGeocoderSelection={this.showPoiMarker}
-              onClear={this.hidePoiMarker}
-              selectionActive={this.state.poiFeature}
-            />
-          )
-        }
+        <div className='jane-map-container' style={{
+          left: leftOffset
+        }}>
 
-        <GLMap 
-          {...this.props.mapInit}
-          offset1={this.state.layerListExpanded}
-          offset2={this.state.layerContentVisible}
-          ref='map'
-          onLoad={this.onMapLoad}
-        />
+
+          { 
+            this.props.search && (
+              <Search 
+                {...this.props.searchConfig}
+                onGeocoderSelection={this.showPoiMarker}
+                onClear={this.hidePoiMarker}
+                selectionActive={this.state.poiFeature}
+              />
+            )
+          }
+
+          <div className='jane-legend'>
+            {legendItems}
+          </div>
+
+          <GLMap 
+            {...this.props.mapInit}
+            ref='map'
+            onLoad={this.onMapLoad}
+          />
+        </div>
 
         {
           this.state.poiFeature && (

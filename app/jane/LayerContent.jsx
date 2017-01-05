@@ -17,6 +17,7 @@ const LayerContent = React.createClass({
         margin: '8px',
         height: '18px',
         width: '18px',
+        color: '#5F5F5F',
         left: 0
       }
     }
@@ -66,7 +67,8 @@ const LayerContent = React.createClass({
               margin: '8px',
               height: '15px',
               width: '15px',
-              float: 'right'
+              float: 'right',
+              color: '#5F5F5F'
             }}
             onTouchTap={this.props.onClose}
           /> 

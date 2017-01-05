@@ -49,6 +49,7 @@ const LayerList = React.createClass({
         margin: '7px 10px',
         height: '15px',
         width: '15px',
+        color: '#5F5F5F',  
         left: 0
       }
     }

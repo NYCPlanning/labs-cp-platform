@@ -6,14 +6,13 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 36px;
+    left: 0;
   }
 
   .mui-toolbar-container {
     padding: 6px 6px;
     position: absolute;
     z-index: 1;
-    left: 520px;
   }
 
   .jane-drawer-inner {
@@ -22,7 +21,7 @@
     bottom: 0;
     left: 0;
     width: 200px;
-    background: #fff;
+    background: #c1c1c1;
   }
 
   .jane-drawer {
@@ -46,14 +45,15 @@
     cursor: move;
     height: 30px;
     font-size: 13px;
+    border-bottom: 2px solid #b5b5b5;
   }
 
   .list-item.selected  {
-    background: #cdcdcd;
+    background: #fff;
   }
 
   .list-item.disabled .fa {
-    color: #cdcdcd !important;
+    color: #9c9c9c !important;
   }
 
   .second-drawer.offset {
@@ -66,7 +66,7 @@
     bottom: 0;
     left: 35px;
     width: 320px;
-    background: #cdcdcd;
+    background: #fff;
     transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px
   }
@@ -79,5 +79,29 @@
 
   .drawer-subheader {
     height: 48px;
+  }
+
+  .jane-legend {
+    color: #555;
+    padding: 6px 8px;
+    background: #fff;
+    margin: 28px 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2), 0 -1px 0 rgba(0,0,0,.0196078);
+    border-radius: 2px;
+    font-family: roboto,sans-serif;
+    z-index: 10;
+    position: absolute;
+    bottom: 0;
+    width: 320px;
+    min-width: 90px;
+    font-size: 13px;
+  }
+
+  .jane-map-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   }
 }

@@ -20,7 +20,7 @@ const layerConfig = {
         source: 'ntaboundaries',
         type: 'line',
         "paint": {
-          "line-color": "#888",
+          "line-color": "#D96B27",
           "line-width": 3,
           "line-dasharray": [2,2]
         }
@@ -41,7 +41,7 @@ const layerConfig = {
         source: 'cdboundaries',
         type: 'line',
         "paint": {
-          "line-color": "#888",
+          "line-color": "#D96B27",
           "line-width": 3,
           "line-dasharray": [2,2]
         }

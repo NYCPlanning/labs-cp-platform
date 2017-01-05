@@ -69,7 +69,9 @@ const Search = React.createClass({
     }
 
     return (
-      <div className={"mui-toolbar-container search-filter-toolbar"}>
+      <div 
+        className={"mui-toolbar-container search-filter-toolbar"}
+      >
          <Toolbar 
           className="mui-toolbar"
           noGutter={true}
@@ -116,6 +118,5 @@ function renderSuggestion(suggestion) {
 function shouldRenderSuggestions(value) {
   return value.trim().length > 2;
 }
-
 
 module.exports = Search

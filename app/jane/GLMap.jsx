@@ -30,6 +30,13 @@ var GLMap = React.createClass({
     
   },
 
+  componentDidUpdate() {
+    //TODO this is a hack to get the GL map to resize to its container after changing the container size.  Need to find a less hacky way to do this
+    setTimeout(() => {
+      this.mapObject && this.mapObject.resize()
+    }, 500)
+  },
+
   flyMap(feature, zoom = 15) {
     this.mapObject.flyTo({
       center: feature.geometry.coordinates,
@@ -38,19 +45,12 @@ var GLMap = React.createClass({
   },
 
   render() {
-
     //figure out which drawers are open so we know where the left edge of the map div should be
-    let leftOffset = 36
-    if (this.props.offset1) leftOffset+=164
-    if (this.props.offset2) leftOffset+=320
 
     return(
       <div 
         id='gl-map' 
         ref='map'
-        style={{
-          left: leftOffset
-        }}
       >
       </div>
     )
