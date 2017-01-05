@@ -1,4 +1,4 @@
-// /facilities/FacilityPage.jsx - This component builds an individual page for each facility in the database and compiles its databse lookup details
+// /pipeline/DevelopmentPage.jsx - This component builds an individual page for each facility in the database and compiles its databse lookup details
 // Props:
 //  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
@@ -25,7 +25,7 @@ var Component = React.createClass({
     var self=this
     // after mount, fetch data and set state
     carto.getRow('nchatterjee.dob_permits_cofos_hpd_geocode', 'cartodb_id', parseInt(this.props.params.id))
-      .then(function(data) { 
+      .then(function(data) {
         self.setState({
           data: data
         })
@@ -54,7 +54,7 @@ var Component = React.createClass({
 
     return  (
      <div>
-          
+
         <div className="col-md-12">
           <h3>{d.dob_permit_address}</h3>
         </div>
@@ -91,7 +91,7 @@ var Component = React.createClass({
                 <dd>{d.dob_permit_bin}</dd>
               </dl>
             </li>
-          
+
 
             <li className="list-group-item">
               <h4>DOB Certificate of Occupancy Details</h4>
@@ -104,11 +104,11 @@ var Component = React.createClass({
 
                 <dt>Most Recent CofO Type</dt>
                 <dd>{d.dob_cofo_type_last}</dd>
-             
+
 
               </dl>
             </li>
-          
+
             <li className="list-group-item">
               <h4>HPD Information</h4>
               <dl className="dl-horizontal">
