@@ -94,7 +94,6 @@ const Facilities = React.createClass({
   },
 
   updateSQL(sql) {
-    console.log('updated sql', sql)
 
     const newConfig = update(config, {
       sources: {

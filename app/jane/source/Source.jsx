@@ -5,6 +5,21 @@ import CartoVectorSource from './CartoVectorSource.jsx'
 import CartoRasterSource from './CartoRasterSource.jsx'
 
 const Source = React.createClass({
+  
+  componentWillMount() {
+    console.log('mounting source ' + this.props.source.id)
+  },
+
+  componentWillUnmount() {
+    this.removeSource()
+  },
+
+  removeSource() {
+    this.props.map.mapObject.removeSource(this.props.source.id)
+    //let jane know what sources are still loaded
+    this.props.onLoaded(this.props.map.mapObject.getStyle().sources)
+  },
+
   render() {
 
     const source = this.props.source

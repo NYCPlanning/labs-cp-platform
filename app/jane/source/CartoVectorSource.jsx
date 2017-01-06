@@ -13,14 +13,10 @@ const CartoVectorSource = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     //compare sql
-
     if(!(nextProps.source.sql == this.props.source.sql)) {
+      console.log('updating vector source')
       this.fetchData(nextProps.source.sql)
     }
-  },
-
-  componentWillUnmount() {
-    this.removeSource()
   },
 
   fetchData(sql) {
@@ -58,10 +54,6 @@ const CartoVectorSource = React.createClass({
     console.log('Added source ' + this.props.source.id, this.map.getStyle())
 
     this.props.onLoaded(this.map.getStyle().sources)
-  },
-
-  removeSource() {
-    this.map.removeSource(this.props.source.id)
   },
 
   render() {

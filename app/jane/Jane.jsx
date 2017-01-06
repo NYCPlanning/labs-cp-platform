@@ -104,11 +104,8 @@ const Jane = React.createClass({
   handleMapLayerClick(e) {
 
     const mapLayers = this.getMapLayers()
-    console.log(mapLayers)
 
     const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: mapLayers });
-
-    console.log(features)
 
     this.setState({
       selectedFeatures: features
@@ -176,7 +173,6 @@ const Jane = React.createClass({
 
   //handles updates to a layer's configuration
   handleLayerUpdate(newLayer) {
-    console.log('handleLayerUpdate', newLayer)
 
     const layerIndex = this.state.mapConfig.layers.findIndex((layer) => {
       return layer.id == newLayer.id
@@ -235,6 +231,7 @@ const Jane = React.createClass({
     })
 
 
+
     //create <Layer> components for each visible layer, but only if all required sources are already loaded
     let mapLayers = []
 
@@ -252,7 +249,6 @@ const Jane = React.createClass({
       })  
     }
 
-    console.log('mapLayers', mapLayers)
 
 
     //add legendItems for each layer
@@ -275,7 +271,6 @@ const Jane = React.createClass({
           return feature.layer.id == layer.interactivityMapLayer
         })
 
-        console.log('this layers selected features', layerSelectedFeatures)
         layerSelectedFeatures.map((layerSelectedFeature, j) => {
           selectedFeatureItems.push(<SelectedFeatureItem feature={layerSelectedFeature} key={i.toString()+j.toString()}/>)
         })

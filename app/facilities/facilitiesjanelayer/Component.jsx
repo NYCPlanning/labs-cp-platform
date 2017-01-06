@@ -74,12 +74,10 @@ const Facilities = React.createClass({
   },
 
   handleLayerClick(e) {
-    console.log('layerClick', e)
   },
 
   //updates the sql for the map source
   updateSQL(sql) {
-    console.log('updated sql', sql)
 
     const newConfig = update(this.config, {
       sources: {

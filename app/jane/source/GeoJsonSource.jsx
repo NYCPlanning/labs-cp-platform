@@ -15,6 +15,17 @@ const GeoJsonSource = React.createClass({
     }
   },
 
+
+
+  componentWillReceiveProps(nextProps) {
+    //compare sql
+    if(!(nextProps.source.data == this.props.source.data)) {
+      console.log('updating geojson source')
+      this.data = nextProps.source.data
+      this.map.getSource(this.props.source.id).setData(this.data)
+    }
+  },
+
   fetchData() {
     const self=this
 

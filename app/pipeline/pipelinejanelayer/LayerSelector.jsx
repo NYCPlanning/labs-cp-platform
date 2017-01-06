@@ -214,7 +214,6 @@ var LayerSelector = React.createClass({
     var chunksString = chunksArray.join(' AND ')
 
     var sql = sqlTemplate + chunksString
-    console.log('built sql', sql)
     this.props.updateSQL(sql)
     //this.getCount(sql)
   },
