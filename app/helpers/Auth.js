@@ -14,7 +14,7 @@ export default class AuthService {
     this.lock = new Auth0Lock(clientId, domain, {
       initialScreen: 'signUp',
       closable: false,
-      allowSignUp: true,
+      allowSignUp: false,
       auth: {
         redirectUrl: document.location.origin + '/authsuccess',
         responseType: 'token'
