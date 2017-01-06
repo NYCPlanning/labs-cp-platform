@@ -10,6 +10,7 @@ import PipelineJaneLayer from './pipelinejanelayer'
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
 import TransportationJaneLayer from '../janelayers/transportation'
+import GrayOutsideNyc from '../janelayers/grayoutsidenyc'
 
 var PipeLineExplorer = React.createClass({
   componentDidMount() {
@@ -55,6 +56,7 @@ var PipeLineExplorer = React.createClass({
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
         PipelineJaneLayer,
+        GrayOutsideNyc
       ]
     }
 

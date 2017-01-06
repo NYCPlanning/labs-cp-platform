@@ -58,18 +58,20 @@ const LayerList = React.createClass({
       let className = this.props.selectedLayer == layer.id ? 'list-item selected' : 'list-item'
       if(!layer.visible) className += ' disabled'
 
-      return (
-        <ListItem
-          className={className}
-          layer={layer}
-          onToggle={this.props.onLayerToggle}
-          moveListItem={this.moveListItem}
-          index={i}
-          onDrop={this.handleDrop}
-          key={layer.id}
-          onClick={this.props.onLayerClick}
-        />
-      )
+      if(layer.inList != false) {
+        return (
+          <ListItem
+            className={className}
+            layer={layer}
+            onToggle={this.props.onLayerToggle}
+            moveListItem={this.moveListItem}
+            index={i}
+            onDrop={this.handleDrop}
+            key={layer.id}
+            onClick={this.props.onLayerClick}
+          />
+        )
+      }
     })
 
     //reverse layers so the list reflects the map (first in array will be bottom on map)

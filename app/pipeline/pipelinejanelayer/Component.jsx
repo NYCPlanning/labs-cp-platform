@@ -4,8 +4,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import Toggle from 'material-ui/Toggle'
 
 import LayerSelector from './LayerSelector.jsx'
-
-import colors from '../colors.js'
+import LayerConfig from './LayerConfig.jsx'
 
 const Pipeline = React.createClass({
   getInitialState() {
@@ -13,179 +12,27 @@ const Pipeline = React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState)
-    console.log(this.state)
-
     if(this.state.mode != prevState.mode) {
-      this.state.mode == 'points' ? this.setPointsConfig() : this.setPolygonsConfig()
-
-      const sql= this.state.mode == 'points' ? 
-      `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}` :
-      `SELECT * FROM dcp_cdboundaries`
-
-      // this.setState({
-      //   sql: sql
-      // })
-
-      this.updateSQL(sql)
+      this.updateLayerConfig(this.sql)
     }
-
-    // return true
   },
 
-  componentWillMount() {
-    this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
-      tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode',
-      where: '(dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
-    }
+  updateLayerConfig(sql) {
+    //store the current data query in this, used when this method is called on mode change 
+    //( it is normally called by the LayerSelector)
+    this.sql=sql
+
+    //change the layer config based on mode
+    const config = this.state.mode == 'points' ? LayerConfig.points : LayerConfig.polygons
+
+    //update the sql for the map source based on the mode.  For points it is unchanged, for polygons it will be a CTE based on the original data query
+    const mapSql= this.state.mode == 'points' ? sql : `SELECT * FROM dcp_cdboundaries`
     
-
-    this.state.mode == 'points' ? this.setPointsConfig() : this.setPolygonsConfig()
-
-    const sql= this.state.mode == 'points' ? 
-      `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}` :
-      `SELECT * FROM dcp_cdboundaries`
-
-    this.setState({
-      sql: sql
-    })
-
-    //trigger the initial render of the layer, same method used when updating
-    this.updateSQL(sql)
-
-  },
-
-  setPointsConfig() {
-
-    this.config = {
-      sources: [
-        {
-          "type": "vector",
-          "id": "pipeline-points"        
-        }
-      ],
-      mapLayers: [
-        {
-          "id": "pipeline-outline",
-          "source": 'pipeline-points',
-          "source-layer": "layer0",
-          "type": "circle",
-          "paint": {
-            "circle-radius": {
-              property: 'dcp_units_use_map',
-              stops: [
-                [{zoom: 10, value: -12}, 2],
-                [{zoom: 10, value: 1669}, 5],
-                [{zoom: 14, value: -12}, 6],
-                [{zoom: 14, value: 1669}, 15]
-              ]
-            },
-            "circle-color": "#FFF",
-            "circle-opacity": 0.7
-          }
-        },
-        {
-          "id": "pipeline-points",
-          "source": 'pipeline-points',
-          "source-layer": "layer0",
-          "type": "circle",
-          "paint": {
-            "circle-radius": {
-              property: 'dcp_units_use_map',
-              stops: [
-                [{zoom: 10, value: -12}, 1],
-                [{zoom: 10, value: 1669}, 4],
-                [{zoom: 14, value: -12}, 5],
-                [{zoom: 14, value: 1669}, 14]
-              ]
-            },
-            "circle-color": {
-              property: 'dcp_pipeline_status',
-              type: 'categorical',
-              stops: [
-                ['Complete', '#136400'],
-                ['Partial complete', '#229A00'],
-                ['Permit outstanding', '#b2df8a'],
-                ['Permit pending', '#5CA2D1'],
-                ['Demolition (complete)', '#525252']
-              ]
-            },
-            "circle-opacity": 0.7
-          }
-        }
-      ],
-      legend: (
-        <div>
-          <div className="legend-section">
-            <h4>Development Status</h4>
-            <div className="legendItem">
-              <div className="color-circle" style={{backgroundColor: colors.getStatusColor('Complete')}}></div>
-              <div className="legendItemText">Complete</div>
-            </div>
-            <div className="legendItem">
-              <div className="color-circle" style={{backgroundColor: colors.getStatusColor('Partial complete')}}></div>
-              <div className="legendItemText">Partial Complete</div>
-            </div>
-            <div className="legendItem">
-              <div className="color-circle" style={{backgroundColor: colors.getStatusColor('Permit outstanding')}}></div>
-              <div className="legendItemText">Permit Outstanding</div>
-            </div>
-            <div className="legendItem">
-              <div className="color-circle" style={{backgroundColor: colors.getStatusColor('Permit pending')}}></div>
-              <div className="legendItemText">Permit Pending</div>
-            </div>
-            <div className="legendItem">
-              <div className="color-circle" style={{backgroundColor: colors.getStatusColor('Demolition (complete)')}}></div>
-              <div className="legendItemText">Demolition (Complete)</div>
-            </div>
-          </div>
-          <div className="legendSection">
-            <p>Larger markers represent higher net unit counts</p>
-          </div>
-        </div>
-      )
-    }
-  },
-
-  setPolygonsConfig() {
-
-    this.config = {
-      sources: [
-        {
-          "type": "vector",
-          "id": "pipeline-polygons"
-        }
-      ],
-      mapLayers: [
-        {
-          "id": "pipeline-polygons",
-          "source": 'pipeline-polygons',
-          "source-layer": "layer0",
-          "type": "fill",
-          'paint': {
-            'fill-color': 'steelblue',
-            'fill-opacity': 0.75,
-            'fill-outline-color': '#838763',
-            'fill-antialias': true 
-          }
-        }
-      ],
-      legend: (
-        
-        <div className="legend-section">
-           Legend 
-        </div>
-      )
-    }
-  },
-
-  updateSQL(sql) {
-    const newConfig = update(this.config, {
+    const newConfig = update(config, {
       sources: {
         0: {
           sql: {
-            $set: sql
+            $set: mapSql
           }
         }
       }
@@ -203,11 +50,8 @@ const Pipeline = React.createClass({
       }
     })
 
-    this.updateMapElements(newLayer)
-  },
-
-  updateMapElements(layerConfig) {
-    this.props.onUpdate(layerConfig)
+    //pass the new config up to Jane
+    this.props.onUpdate(newLayer)
   },
 
   handleModeToggle() {
@@ -219,9 +63,7 @@ const Pipeline = React.createClass({
       <Tabs>
         <Tab label="Data">
           <LayerSelector
-            updateSQL={this.updateSQL}
-            sql={this.state.sql}
-            sqlConfig={this.sqlConfig}
+            updateSQL={this.updateLayerConfig}
           />
         </Tab>
         <Tab label="About">

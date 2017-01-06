@@ -117,6 +117,15 @@ var LayerSelector = React.createClass({
     })
   },
 
+  componentDidMount() {
+    this.sqlConfig = {
+      columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
+      tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode'
+    }
+
+    this.buildSQL()
+  },
+
   handleChange(dimension, values) {
     //before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
     this.state.filterDimensions[dimension] = values
@@ -195,7 +204,7 @@ var LayerSelector = React.createClass({
     //assemble sql chunks based on the current state
     this.createSQLChunks()
 
-    var sqlTemplate = `SELECT ${this.props.sqlConfig.columns} FROM ${this.props.sqlConfig.tablename} WHERE `
+    var sqlTemplate = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `
 
     var chunksArray = []
     for (var key in this.sqlChunks) {
@@ -205,6 +214,7 @@ var LayerSelector = React.createClass({
     var chunksString = chunksArray.join(' AND ')
 
     var sql = sqlTemplate + chunksString
+    console.log('built sql', sql)
     this.props.updateSQL(sql)
     //this.getCount(sql)
   },
