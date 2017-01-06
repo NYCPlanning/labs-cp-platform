@@ -29,7 +29,8 @@ var MapComponent = React.createClass({
       overlays: overlays,
       basemap: 'light',
       legendContent: {}, 
-      selections: []
+      selections: [], 
+      metrics: []
     })
   },
 
@@ -81,6 +82,13 @@ var MapComponent = React.createClass({
     })
   },
 
+  updateMetrics(metrics) {
+    console.log('metrics',metrics)
+    this.setState({
+      metrics: metrics
+    })
+  },
+
   showAbout() {
     this.props.showModal({
       modalHeading: 'About this Tool',
@@ -97,7 +105,8 @@ var MapComponent = React.createClass({
       (child) => React.cloneElement(child, {
         map: this.refs.map ? this.refs.map : null,
         updateLegend: this.updateLegend,
-        showSelections: this.showSelections
+        showSelections: this.showSelections,
+        updateMetrics: this.updateMetrics
       })
     )
 
@@ -163,7 +172,7 @@ var MapComponent = React.createClass({
 
     const rightTabDrawer = (
       <TabDrawer 
-        open={this.state.rightDrawerOpen}
+        open={true} //test
         toggle={this.toggleRightDrawer}
         right={true}
       >
@@ -175,7 +184,9 @@ var MapComponent = React.createClass({
             width: '40px'
           }}
         >
-          <Tabs>
+          <Tabs
+            initialSelectedIndex={1}
+          >
             <Tab 
             icon={<FontIcon className="fa fa-list"/>}
             label="List"
@@ -189,11 +200,14 @@ var MapComponent = React.createClass({
             <Tab 
               icon={<FontIcon className="fa fa-area-chart"/>}
               label="Metrics"
+
             >
               <List>
-                <ListItem>
-                  Coming Soon
-                </ListItem>
+                {
+                  this.state.metrics.length > 0 ?
+                    this.state.metrics :
+                    <ListItem> No Metrics for this Data Layer </ListItem>
+                }
               </List>
             </Tab>
           </Tabs>

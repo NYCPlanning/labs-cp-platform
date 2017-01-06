@@ -10,7 +10,9 @@ var appConfig = {
 
   carto_domain: 'carto.capitalplanning.nyc',
 
-  carto_user: 'cpadmin'
+  carto_user: 'cpadmin',
+
+  mapzen_api_key: 'mapzen-ZyMEp5H'
 
 }
 
