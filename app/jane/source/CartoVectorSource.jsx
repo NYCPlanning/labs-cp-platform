@@ -55,6 +55,8 @@ const CartoVectorSource = React.createClass({
       tiles: [template]
     })
 
+    console.log('Added source ' + this.props.source.id, this.map.getStyle())
+
     this.props.onLoaded(this.map.getStyle().sources)
   },
 

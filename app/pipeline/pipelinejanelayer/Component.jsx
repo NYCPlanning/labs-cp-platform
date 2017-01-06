@@ -1,26 +1,68 @@
 import React from 'react'
 import update from 'react/lib/update'
 import {Tabs, Tab} from 'material-ui/Tabs'
+import Toggle from 'material-ui/Toggle'
 
 import LayerSelector from './LayerSelector.jsx'
 
 import colors from '../colors.js'
 
 const Pipeline = React.createClass({
+  getInitialState() {
+    return ({ mode: 'points' })
+  },
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState)
+    console.log(this.state)
+
+    if(this.state.mode != prevState.mode) {
+      this.state.mode == 'points' ? this.setPointsConfig() : this.setPolygonsConfig()
+
+      const sql= this.state.mode == 'points' ? 
+      `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}` :
+      `SELECT * FROM dcp_cdboundaries`
+
+      // this.setState({
+      //   sql: sql
+      // })
+
+      this.updateSQL(sql)
+    }
+
+    // return true
+  },
+
   componentWillMount() {
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
       tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode',
       where: '(dcp_pipeline_status = \'Complete\' OR dcp_pipeline_status = \'Partial complete\')'
     }
-    const sql=`SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`
+    
+
+    this.state.mode == 'points' ? this.setPointsConfig() : this.setPolygonsConfig()
+
+    const sql= this.state.mode == 'points' ? 
+      `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}` :
+      `SELECT * FROM dcp_cdboundaries`
+
+    this.setState({
+      sql: sql
+    })
+
+    //trigger the initial render of the layer, same method used when updating
+    this.updateSQL(sql)
+
+  },
+
+  setPointsConfig() {
 
     this.config = {
       sources: [
         {
           "type": "vector",
-          "id": "pipeline-points",
-          "sql": "SELECT the_geom_webmercator FROM hkates.nchatterjee.dob_permits_cofos_hpd_geocode"
+          "id": "pipeline-points"        
         }
       ],
       mapLayers: [
@@ -104,12 +146,38 @@ const Pipeline = React.createClass({
         </div>
       )
     }
+  },
 
-    this.setState({
-      sql: sql
-    })
+  setPolygonsConfig() {
 
-    this.updateSQL(sql)
+    this.config = {
+      sources: [
+        {
+          "type": "vector",
+          "id": "pipeline-polygons"
+        }
+      ],
+      mapLayers: [
+        {
+          "id": "pipeline-polygons",
+          "source": 'pipeline-polygons',
+          "source-layer": "layer0",
+          "type": "fill",
+          'paint': {
+            'fill-color': 'steelblue',
+            'fill-opacity': 0.75,
+            'fill-outline-color': '#838763',
+            'fill-antialias': true 
+          }
+        }
+      ],
+      legend: (
+        
+        <div className="legend-section">
+           Legend 
+        </div>
+      )
+    }
   },
 
   updateSQL(sql) {
@@ -142,6 +210,10 @@ const Pipeline = React.createClass({
     this.props.onUpdate(layerConfig)
   },
 
+  handleModeToggle() {
+    this.setState({ mode: this.state.mode == 'points' ? 'polygons' : 'points'})
+  },
+
   render() {
     return (
       <Tabs>
@@ -154,6 +226,12 @@ const Pipeline = React.createClass({
         </Tab>
         <Tab label="About">
           About this Data Layer
+        </Tab>
+        <Tab label="Choropleth">
+          <Toggle 
+            toggled={this.state.mode=='polygons'}
+            onToggle={this.handleModeToggle}
+          />
         </Tab>
         <Tab label="Download">
           Coming Soon

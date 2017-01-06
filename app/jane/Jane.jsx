@@ -250,8 +250,9 @@ const Jane = React.createClass({
           this.order++
         }
       })  
-
     }
+
+    console.log('mapLayers', mapLayers)
 
 
     //add legendItems for each layer
