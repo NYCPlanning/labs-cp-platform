@@ -20,10 +20,6 @@ const CartoRasterSource = React.createClass({
     }
   },
 
-  componentWillUnmount() {
-    this.removeSource()
-  },
-
   fetchData(sql) {
     const mapConfig = {
       "version": "1.3.0",
@@ -66,9 +62,6 @@ const CartoRasterSource = React.createClass({
     this.props.onLoaded(this.map.getStyle().sources)
   },
 
-  removeSource() {
-    this.map.removeSource(this.props.source.id)
-  },
 
   render() {
     return null

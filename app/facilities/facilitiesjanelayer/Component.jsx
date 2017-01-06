@@ -4,82 +4,23 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import Moment from 'moment'
 
 import LayerSelector from './LayerSelector.jsx'
-import facilitiesLayers from '../facilitiesLayers.js'
 import colors from '../colors.js'
+import layerConfig from './layerconfig.js'
 
 import Carto from '../../helpers/carto.js'
 
 
 const Facilities = React.createClass({
 
-  componentWillMount() {
-    this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
-      tablename: 'hkates.facilities_data'
-    }
-
-    const sql=`SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`
-
-    this.config = {
-      sources: [
-        {
-          "type": 'vector',
-          "id": 'facilities',
-          "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
-        }
-      ],
-      mapLayers: [
-        {
-          "id": "facilities-points-outline",
-          "source": 'facilities',
-          "source-layer": "layer0",
-          "type": "circle",
-          "paint": {
-            "circle-radius": {
-              "stops": [
-                [10,3],
-                [15,7]
-              ]
-            },
-            "circle-color": "#012700",
-            "circle-opacity": 0.7
-          }
-        },
-        {
-          "id": "facilities-points",
-          "source": 'facilities',
-          "source-layer": "layer0",
-          "type": "circle",
-          "paint": {
-            "circle-radius": {
-              "stops": [
-                [10,2],
-                [15,6]
-              ]
-            },
-            "circle-color": colors.getColorObject(),
-            "circle-opacity": 0.7
-          }
-        }
-      ]
-    }
-
-    this.setState({
-      sql: sql
-    })
-
-    this.updateSQL(sql)
-
+  componentDidMount() {
     this.renderLegend()
   },
 
-  handleLayerClick(e) {
-  },
-
   //updates the sql for the map source
-  updateSQL(sql) {
+  updateLayerConfig(sql) {
+    //use this method to build new mapConfig based on mode
 
-    const newConfig = update(this.config, {
+    const newLayerConfig = update(layerConfig, {
       sources: {
         0: {
           sql: {
@@ -89,24 +30,26 @@ const Facilities = React.createClass({
       }
     })
 
-    const newLayer = update(this.props.layer, {
-      sources: {
-        $set: newConfig.sources
-      },
-      mapLayers: {
-        $set: newConfig.mapLayers
-      }
-    })
-
-    this.updateMapElements(newLayer)
+    this.sendNewConfig(newLayerConfig)
   },
 
   //sends the new layerConfig up the chain
-  updateMapElements(layerConfig) {
-    this.props.onUpdate(layerConfig)
+  sendNewConfig(layerConfig) {
+
+    const newLayerConfig = update(this.props.layer, {
+      sources: {
+        $set: layerConfig.sources
+      },
+      mapLayers: {
+        $set: layerConfig.mapLayers
+      }
+    })
+
+    this.props.onUpdate(newLayerConfig)
   },
 
-  //builds a legend with a composed date range, updates layer config
+  //builds a legend with a composed date range, updates layer config,
+  //updates the layerconfig and sends it up to Jane
   renderLegend() {
     const self=this
     const sql = `
@@ -116,7 +59,7 @@ const Facilities = React.createClass({
       FROM hkates.facilities_data`
 
     Carto.SQL(sql, 'json')
-      .then(function(data) {
+      .then((data) => {
 
         const range = {
           min: Moment(data[0].min).format('MM/DD/YYYY'),
@@ -136,7 +79,7 @@ const Facilities = React.createClass({
           }
         })
 
-        self.updateMapElements(newLayer)
+        this.props.onUpdate(newLayer)
       })
   },
 
@@ -150,10 +93,8 @@ const Facilities = React.createClass({
       <Tabs>
         <Tab label="Data">
           <LayerSelector
-            facilitiesLayers={facilitiesLayers}
-            updateSQL={this.updateSQL}
-            sql={this.state.sql}
-            sqlConfig={this.sqlConfig}
+            mode={this.props.context.mode}
+            updateSQL={this.updateLayerConfig}
           />
         </Tab>
         <Tab label="About">

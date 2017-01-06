@@ -37,6 +37,7 @@ const LayerContent = React.createClass({
             <LayerComponent
               layer={layer}
               onUpdate={this.props.onLayerUpdate}
+              context={this.props.context}
             />
           </div>
         )

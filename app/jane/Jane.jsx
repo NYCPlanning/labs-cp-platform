@@ -346,6 +346,7 @@ const Jane = React.createClass({
           selectedLayer={this.state.mapConfig.selectedLayer} 
           onLayerUpdate={this.handleLayerUpdate}
           onClose={this.toggleLayerContent}
+          context={this.props.context}
         />
        
         <SelectedFeaturesPane style={{

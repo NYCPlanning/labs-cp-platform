@@ -59,7 +59,7 @@ var FacilitiesExplorer = React.createClass({
       }
     }
 
-    //TODO we need some kind of "stock layers list" that shoudl automatically be added to mapConfig.layers and maintained elsewhere
+    //TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
     const mapConfig = {
       selectedLayer: 'facilities',
       layers: [
@@ -79,6 +79,9 @@ var FacilitiesExplorer = React.createClass({
           search={true}
           searchConfig={searchConfig}
           mapConfig={mapConfig}
+          context={{
+            mode: mode
+          }} 
         />
       </div>
     )

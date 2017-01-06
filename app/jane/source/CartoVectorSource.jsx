@@ -14,7 +14,6 @@ const CartoVectorSource = React.createClass({
   componentWillReceiveProps(nextProps) {
     //compare sql
     if(!(nextProps.source.sql == this.props.source.sql)) {
-      console.log('updating vector source')
       this.fetchData(nextProps.source.sql)
     }
   },
@@ -35,7 +34,7 @@ const CartoVectorSource = React.createClass({
     }
 
     Carto.getVectorTileTemplate(mapConfig)
-      .then(function(template) {
+      .then((template) => {
         self.addSource(template)
       })
   },
@@ -50,8 +49,6 @@ const CartoVectorSource = React.createClass({
       type: 'vector',
       tiles: [template]
     })
-
-    console.log('Added source ' + this.props.source.id, this.map.getStyle())
 
     this.props.onLoaded(this.map.getStyle().sources)
   },

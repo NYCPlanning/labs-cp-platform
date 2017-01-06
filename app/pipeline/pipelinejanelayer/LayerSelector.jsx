@@ -215,7 +215,6 @@ var LayerSelector = React.createClass({
 
     var sql = sqlTemplate + chunksString
     this.props.updateSQL(sql)
-    //this.getCount(sql)
   },
 
   render: function(){
