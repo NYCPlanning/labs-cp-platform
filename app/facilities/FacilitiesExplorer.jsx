@@ -2,7 +2,7 @@
 import React from 'react' 
 
 import Nav from '../common/Nav.jsx'
-import Jane from '../../jane-maps/'
+import Jane from '../../jane-maps/src'
 import MapComponent from '../common/MapComponent.jsx'
 import content from './content.jsx'
 
