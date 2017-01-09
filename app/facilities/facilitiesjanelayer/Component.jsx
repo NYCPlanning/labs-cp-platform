@@ -2,12 +2,16 @@ import React from 'react'
 import update from 'react/lib/update'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import Moment from 'moment'
+import Subheader from 'material-ui/Subheader'
 
 import LayerSelector from './LayerSelector.jsx'
+import content from '../content.jsx'
+
 import colors from '../colors.js'
 import layerConfig from './layerconfig.js'
 
 import Carto from '../../helpers/carto.js'
+
 
 
 const Facilities = React.createClass({
@@ -23,9 +27,11 @@ const Facilities = React.createClass({
     const newLayerConfig = update(layerConfig, {
       sources: {
         0: {
-          sql: {
-            $set: sql
-          }
+          options: {
+            sql: {
+              $set: sql
+            }
+          } 
         }
       }
     })
@@ -90,7 +96,7 @@ const Facilities = React.createClass({
     }
 
     return (
-      <Tabs>
+      <Tabs className='sidebar-tabs'>
         <Tab label="Data">
           <LayerSelector
             mode={this.props.context.mode}
@@ -98,10 +104,15 @@ const Facilities = React.createClass({
           />
         </Tab>
         <Tab label="About">
-          About this Data Layer
+          <div className="sidebar-tab-content">
+            {content.about}
+          </div>
         </Tab>
         <Tab label="Download">
-          Coming Soon
+          <div className="sidebar-tab-content">
+            <h4>Data Downloads</h4> 
+            <p>Custom data downloads are currently in development.  Please check back again soon.</p>
+          </div>
         </Tab>
       </Tabs>  
     )

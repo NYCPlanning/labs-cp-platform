@@ -1,11 +1,16 @@
 import colors from '../colors.js'
+import appConfig from '../../helpers/appConfig.js'
 
 const layerConfig = {
   sources: [
     {
-      "type": 'vector',
+      "type": 'cartovector',
       "id": 'facilities',
-      "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
+      "options": {
+        "carto_user": appConfig.carto_user,
+        "carto_domain": appConfig.carto_domain
+      }
+      
     }
   ],
   mapLayers: [

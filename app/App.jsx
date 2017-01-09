@@ -14,6 +14,9 @@ import Nav from './common/Nav.jsx'
 
 import '../stylesheets/App.scss'
 
+//get styles for jane-maps, TODO figure out the best way to include this
+import '../jane-maps/src/styles.scss'
+
 injectTapEventPlugin();
 
 var App = React.createClass({

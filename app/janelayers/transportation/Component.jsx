@@ -3,6 +3,8 @@ import update from 'react/lib/update'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+import appConfig from '../../helpers/appConfig.js'
+
 
 const layerConfig = {
   subway_lines: {
@@ -10,7 +12,10 @@ const layerConfig = {
       {
         id: 'subway_lines',
         type: 'cartoraster',
+
         options: { 
+          "carto_user": appConfig.carto_user,
+          "carto_domain": appConfig.carto_domain,
           "cartocss": `
             #doitt_subwaylines {
                  line-width: 3;

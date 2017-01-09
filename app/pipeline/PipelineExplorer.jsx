@@ -5,7 +5,7 @@ import Nav from '../common/Nav.jsx'
 import appConfig from '../helpers/appConfig.js'
 import content from './content.jsx'
 
-import { Jane } from '../jane/'
+import Jane from '../../jane-maps/'
 import PipelineJaneLayer from './pipelinejanelayer'
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'

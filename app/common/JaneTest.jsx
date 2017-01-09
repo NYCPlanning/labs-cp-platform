@@ -1,6 +1,6 @@
 import React from 'react'
 import update from 'react/lib/update';
-import {Jane} from '../jane'
+import Jane from '../../jane-maps'
 
 import appConfig from '../helpers/appConfig.js'
 

@@ -214,3 +214,29 @@ body:after {
   display: inline-block;
   font-size: 20px;
 }
+
+/*Sidebar Tabs, Overrides Material-UI*/
+  .sidebar-tabs > div:first-child {
+    height:30px;
+
+    button > div > div {
+      height: 30px !important;
+      font-size: 12px;
+    }
+  }
+
+  .sidebar-tab-content {
+    font-family: 'roboto', sans-serif;
+    padding: 0 16px;
+    font-size: 12px;
+
+    h4 {
+      font-family: 'roboto', sans-serif;
+      color: rgba(0, 0, 0, 0.541176);
+      font-size: 14px;
+      font-weight: 500;
+      margin: 16px 0;
+    }
+  }
+  
+/*End Sidebar Tabs*/

@@ -2,11 +2,14 @@
 import React from 'react' 
 
 import Nav from '../common/Nav.jsx'
-import {Jane} from '../jane/'
+import Jane from '../../jane-maps/'
 import MapComponent from '../common/MapComponent.jsx'
+import content from './content.jsx'
+
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
 import FacilitiesJaneLayer from './facilitiesjanelayer'
 import TransportationJaneLayer from '../janelayers/transportation'
+
 
 import appConfig from '../helpers/appConfig.js'
 
@@ -25,14 +28,6 @@ var FacilitiesExplorer = React.createClass({
 
       localStorage.setItem('facilities-splash', 'true');    
     }
-  },
-
-  showAbout() {
-    this.props.showModal({
-      modalHeading: 'About this tool',
-      modalContent: content.about,
-      modalCloseText: 'Close'
-    })
   },
 
   render() {
