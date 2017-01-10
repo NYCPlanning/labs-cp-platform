@@ -1,6 +1,7 @@
 import React from 'react'
 
 import GeoJsonSource from './GeoJsonSource.js'
+import RasterSource from './RasterSource.js'
 import CartoVectorSource from './CartoVectorSource.js'
 import CartoRasterSource from './CartoRasterSource.js'
 
@@ -21,6 +22,7 @@ const Source = React.createClass({
     const source = this.props.source
 
     if( source.type=='geojson') return <GeoJsonSource {...this.props}/>
+    if( source.type=='raster') return <RasterSource {...this.props}/> 
     if( source.type=='cartovector' && source.options) return <CartoVectorSource {...this.props}/>  
     if( source.type=='cartoraster') return <CartoRasterSource {...this.props}/>
   }

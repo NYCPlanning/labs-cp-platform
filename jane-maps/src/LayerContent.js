@@ -38,7 +38,7 @@ const LayerContent = React.createClass({
     const components = layers.map((layer) => {
       const LayerComponent = layer.component
 
-      if (LayerComponent) {
+    
         return (
           <div
             style={{
@@ -76,14 +76,27 @@ const LayerContent = React.createClass({
               /> 
             </div>
 
-            <LayerComponent
-              layer={layer}
-              onUpdate={this.props.onLayerUpdate}
-              context={this.props.context}
-            />
+            { 
+              layer.component && (
+                <LayerComponent
+                  layer={layer}
+                  onUpdate={this.props.onLayerUpdate}
+                  context={this.props.context}
+                />
+              ) 
+            }
+
+            { 
+              !layer.component && (
+                <div className='sidebar-tab-content'>
+                  <h4>{layer.name}</h4>
+                  <p>You can show and hide this layer using the toggle above </p>
+                </div>
+              ) 
+            }
           </div>
         )
-      }
+    
     })
     
     return (

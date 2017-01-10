@@ -9,6 +9,7 @@ import content from './content.jsx'
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
 import FacilitiesJaneLayer from './facilitiesjanelayer'
 import TransportationJaneLayer from '../janelayers/transportation'
+import ImageryJaneLayer from '../janelayers/imagery'
 
 
 import appConfig from '../helpers/appConfig.js'
@@ -58,9 +59,10 @@ var FacilitiesExplorer = React.createClass({
     const mapConfig = {
       selectedLayer: 'facilities',
       layers: [
+        ImageryJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
-        FacilitiesJaneLayer, 
+        FacilitiesJaneLayer
       ]
     }
     
