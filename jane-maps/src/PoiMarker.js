@@ -29,8 +29,12 @@ const PoiMarker = React.createClass({
     this.updateMarker(this.props.feature)
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.updateMarker(nextProps.feature)
+  componentWillUpdate(nextProps) {
+    console.log('poimarker will update')
+
+    if(JSON.stringify(nextProps.feature) != JSON.stringify(this.props.feature)) {
+      this.updateMarker(nextProps.feature)
+    }
   },
 
   componentWillUnmount() {

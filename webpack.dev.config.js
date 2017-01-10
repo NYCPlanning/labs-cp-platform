@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: [
+    'webpack-dev-server/client?http://0.0.0.0:8000',
     'webpack/hot/only-dev-server',
     './main.jsx'
   ],
@@ -18,11 +19,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query: {
-          plugins: ['transform-object-assign','es6-promise'],
-          presets: ['es2015', 'react', 'stage-0']
-        }
+        loaders: ['react-hot','babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise']
       },
       {
         test: /\.scss$/,

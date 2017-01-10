@@ -15,8 +15,6 @@ const GeoJsonSource = React.createClass({
     }
   },
 
-
-
   componentWillReceiveProps(nextProps) {
     //compare sql
     if(!(nextProps.source.data == this.props.source.data)) {

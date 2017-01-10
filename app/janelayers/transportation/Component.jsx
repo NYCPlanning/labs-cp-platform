@@ -1,7 +1,9 @@
 import React from 'react'
 import update from 'react/lib/update'
 import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import MenuItem from 'material-ui/MenuItem'
+import Checkbox from 'material-ui/Checkbox'
+import {Tabs, Tab} from 'material-ui/Tabs'
 
 import appConfig from '../../helpers/appConfig.js'
 
@@ -63,35 +65,121 @@ const layerConfig = {
         "source": 'subway_lines'
       }
     ]
+  },
+
+  subway_stations: {
+    sources: [
+      {
+        id: "subway_stations",
+        type: 'cartoraster',
+        options: { 
+          "carto_user": appConfig.carto_user,
+          "carto_domain": appConfig.carto_domain,
+          "cartocss": `
+            #doitt_subwaystations{
+              marker-fill-opacity: 0.9;
+              marker-line-color: #000000;
+              marker-line-width: 2;
+              marker-line-opacity: 1;
+              marker-placement: point;
+              marker-type: ellipse;
+              marker-width: 9;
+              marker-fill: #FFFFFF;
+              marker-allow-overlap: true;
+            }`,
+          "sql": "select * from doitt_subwaystations"    
+        }
+      }
+    ],
+    mapLayers: [
+      {
+        "id": 'subway_stations',
+        "type": "raster",
+        "source": 'subway_stations'
+      }
+    ]
   }
 }
 
 const Transportation = React.createClass({
-
-  componentDidMount() {
-
-    this.updateMapElements(layerConfig.subway_lines)
+  getInitialState() {
+    return({
+      activeCheckboxes: ['subway_lines']
+    })
   },
 
-  updateMapElements(layerConfig) {
-    //mutate the layer object and pass it up to jane
+
+
+  componentDidMount() {
+    this.updateMapElements()
+  },
+
+  updateMapElements() {
+  
+    let sources=[], mapLayers=[]
+
+    console.log(this.state.activeCheckboxes)
+
+    this.state.activeCheckboxes.map((id) => {
+      console.log(layerConfig[id])
+      const config = layerConfig[id]
+      config.sources.map((source) => { sources.push(source)})
+      config.mapLayers.map((mapLayer) => { mapLayers.push(mapLayer)})
+    })
 
     const newLayer = update(this.props.layer, {
-      sources: {$set: layerConfig.sources},
-      mapLayers: {$set: layerConfig.mapLayers}
+      sources: {$set: sources},
+      mapLayers: {$set: mapLayers}
     })
+
+    console.log(newLayer)
 
     this.props.onUpdate(newLayer)
   },
 
-  handleChange(e, key, value) {
+  handleCheck(id) {
+    let found = this.state.activeCheckboxes.includes(id)
+    if (found) {
+      this.setState({ 
+        activeCheckboxes: this.state.activeCheckboxes.filter(x => x !== id)
+      }, this.updateMapElements)
+    } else {
+      this.setState({ 
+        activeCheckboxes: [ ...this.state.activeCheckboxes, id ]
+      }, this.updateMapElements)
+    }
 
+    
   },
 
   render() {
     return (
       <div>
-        Transportation Layer
+        <Tabs className='sidebar-tabs'>
+          <Tab label='Data'>
+            <div className="sidebar-tab-content">
+              <h4>Transportation Layers</h4> 
+
+              <Checkbox
+                label="Subway Lines"
+                checked={this.state.activeCheckboxes.includes('subway_lines')}
+                onCheck={this.handleCheck.bind(this, 'subway_lines')}
+              />
+              <Checkbox
+                label="Subway Stations"
+                checked={this.state.activeCheckboxes.includes('subway_stations')}
+                onCheck={this.handleCheck.bind(this, 'subway_stations')}
+              />
+            </div>
+          </Tab>
+          <Tab label='About'>
+            <div className="sidebar-tab-content">
+              <h4>Transportation Layers</h4> 
+              <p>These layers are provided by the DoITT GIS Team, and are available on their <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">public carto server</a>.</p>
+            </div>
+          </Tab>
+        </Tabs>
+
       </div>
     )
   }
