@@ -59,10 +59,18 @@ const Facilities = React.createClass({
   renderLegend() {
     const self=this
     const sql = `
+      WITH temp AS (
+        SELECT
+        unnest(string_to_array(datesourceupdated,',')) as date
+        FROM hkates.facilities_data
+        WHERE datesourceupdated NOT LIKE '%NULL%'
+      )
+
       SELECT
-        min(datesourceupdated)::date AS min,
-        max(datesourceupdated)::date AS max
-      FROM hkates.facilities_data`
+      min(date::date) as min,
+      max(date::date) as max
+      FROM temp
+    `
 
     Carto.SQL(sql, 'json')
       .then((data) => {
@@ -87,6 +95,9 @@ const Facilities = React.createClass({
 
         this.props.onUpdate(newLayer)
       })
+
+
+
   },
 
   render() {

@@ -1,14 +1,14 @@
 
 module.exports = {
   id: 'aerials',
-  name: 'Aerials Imagery',
+  name: 'Aerial Imagery',
   icon: 'camera',
   visible: false,
   sources: [
     {
       id: 'nyaerials',
       type: 'raster',
-      tiles: 'http://www.orthos.dhses.ny.gov/arcgis/rest/services/2010/MapServer/tile/{z}/{y}/{x}' 
+      tiles: 'https://api.capitalplanning.nyc/api/tiles/dhsesorthos/{z}/{y}/{x}' 
     } 
   ],
   mapLayers: [

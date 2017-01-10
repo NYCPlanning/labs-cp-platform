@@ -127,7 +127,7 @@ var HomePage = React.createClass({
                       <div className='coming-soon'> 
                         <p>Coming Soon</p>
                       </div>
-                      <div className="building-image" style={{backgroundImage: "url('http://www1.nyc.gov/assets/planning/images/content/pages/data-maps/maps-geography/city-neighborhoods/mapview.jpg')"}}/>
+                      <div className="building-image" style={{backgroundImage: "url('https://www1.nyc.gov/assets/planning/images/content/pages/data-maps/maps-geography/city-neighborhoods/mapview.jpg')"}}/>
                      
                       <p>We're working on a tool to allow planners to quickly view metrics about any place in the city.  Let us know how you might use it here.</p>
                     </div>

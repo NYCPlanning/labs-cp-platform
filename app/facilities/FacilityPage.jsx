@@ -6,6 +6,7 @@
 import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import DetailPage from '../common/DetailPage.jsx'
+import Jane from '../../jane-maps/src'
 
 import Nav from '../common/Nav.jsx'
 import ModalMap from '../common/ModalMap.jsx'
