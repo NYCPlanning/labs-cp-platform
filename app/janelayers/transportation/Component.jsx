@@ -20,7 +20,7 @@ const layerConfig = {
           "carto_domain": appConfig.carto_domain,
           "cartocss": `
             #doitt_subwaylines {
-                 line-width: 3;
+                 line-width: 2;
                  line-opacity:0.9;
               }
 
@@ -79,11 +79,11 @@ const layerConfig = {
             #doitt_subwaystations{
               marker-fill-opacity: 0.9;
               marker-line-color: #000000;
-              marker-line-width: 2;
+              marker-line-width: 1;
               marker-line-opacity: 1;
               marker-placement: point;
               marker-type: ellipse;
-              marker-width: 9;
+              marker-width: 5;
               marker-fill: #FFFFFF;
               marker-allow-overlap: true;
             }`,

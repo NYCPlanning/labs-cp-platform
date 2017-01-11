@@ -33,8 +33,10 @@ const Pipeline = React.createClass({
       const newConfig = update(config, {
         sources: {
           0: {
-            sql: {
-              $set: sql
+            options: {
+              sql: {
+                $set: sql
+              }
             }
           }
         }
@@ -155,6 +157,8 @@ const Pipeline = React.createClass({
         $set: newConfig.legend
       }
     })
+
+    console.log('Sending layer to jane', newLayer)
 
     //pass the new config up to Jane
     this.props.onUpdate(newLayer)

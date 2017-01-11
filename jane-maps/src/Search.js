@@ -45,7 +45,7 @@ const Search = React.createClass({
     })
 
     //pass up to Jane to create/update PoiMarker
-    this.props.onGeocoderSelection(o.suggestion)
+    this.props.onGeocoderSelection(o.suggestion, o.suggestion.properties.name)
   },
 
   clearInput() {

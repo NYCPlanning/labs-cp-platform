@@ -7,7 +7,7 @@ module.exports = {
     {
       id: 'grayoutsidenyc',
       type: 'geojson',
-      source: 'data/grayoutsidenyc.geojson'
+      source: '/data/grayoutsidenyc.geojson'
     }
   ],
   mapLayers: [

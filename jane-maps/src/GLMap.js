@@ -13,8 +13,10 @@ var GLMap = React.createClass({
 
     mapboxgl.accessToken = this.props.mapbox_accessToken
 
+    console.log('container', this.container)
+
     const map = this.mapObject = new mapboxgl.Map({
-        container: 'gl-map',
+        container: this.container,
         style: this.props.mapStyle,
         zoom: this.props.zoom,
         minZoom: this.props.minZoom,
@@ -24,6 +26,7 @@ var GLMap = React.createClass({
     });
 
     this.mapObject.on('load', function () {
+      console.log('loaded!', map)
       self.props.onLoad(self.mapObject.getStyle())
     })
 
@@ -49,9 +52,8 @@ var GLMap = React.createClass({
     //figure out which drawers are open so we know where the left edge of the map div should be
 
     return(
-      <div 
-        id='gl-map' 
-        ref='map'
+      <div className='gl-map' 
+        ref={(x) => { this.container = x }}
       >
       </div>
     )

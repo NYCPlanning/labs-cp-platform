@@ -10,6 +10,7 @@ import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
 import FacilitiesJaneLayer from './facilitiesjanelayer'
 import TransportationJaneLayer from '../janelayers/transportation'
 import ImageryJaneLayer from '../janelayers/imagery'
+import GrayOutsideNyc from '../janelayers/grayoutsidenyc'
 
 
 import appConfig from '../helpers/appConfig.js'
@@ -62,6 +63,7 @@ var FacilitiesExplorer = React.createClass({
         ImageryJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
+        GrayOutsideNyc,
         FacilitiesJaneLayer
       ]
     }

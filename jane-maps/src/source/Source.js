@@ -8,6 +8,7 @@ import CartoRasterSource from './CartoRasterSource.js'
 
 const Source = React.createClass({
 
+
   componentWillUnmount() {
     this.removeSource()
   },
@@ -20,6 +21,8 @@ const Source = React.createClass({
 
   render() {
     const source = this.props.source
+
+    console.log(source)
 
     if( source.type=='geojson') return <GeoJsonSource {...this.props}/>
     if( source.type=='raster') return <RasterSource {...this.props}/> 

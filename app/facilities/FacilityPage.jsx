@@ -6,7 +6,7 @@
 import React from 'react'
 import {OverlayTrigger, Tooltip} from 'react-bootstrap'
 import DetailPage from '../common/DetailPage.jsx'
-import Jane from '../../jane-maps/src'
+
 
 import Nav from '../common/Nav.jsx'
 import ModalMap from '../common/ModalMap.jsx'
@@ -127,7 +127,7 @@ var Component = React.createClass({
             <p>{d.address}</p>
           </div>
           <div className="col-md-6">
-            <ModalMap data={data} label={data.properties.facilityname}/>
+            {data && <ModalMap feature={data} label={data.properties.facilityname}/>}
           </div>
           <div className="col-md-6">
             <ul className="list-group">

@@ -25,12 +25,13 @@ const Jane = React.createClass({
     }
 
     return({
-      poiFeature: null,
+      poiFeature: this.props.poiFeature ? this.props.poiFeature : null,
+      poiLabel: this.props.poiLabel ? this.props.poiLabel : null,
       mapLoaded: false,
       loadedSources: {},
       mapConfig: this.props.mapConfig ? this.props.mapConfig : defaultMapConfig ,
       layerListExpanded: false,
-      layerContentVisible: true,
+      layerContentVisible: false,
       selectedFeatures: []
     })
   },
@@ -65,12 +66,18 @@ const Jane = React.createClass({
     // })
   },
 
-  showPoiMarker(feature) {
-    this.setState({ poiFeature: feature })
+  showPoiMarker(feature, label) {
+    this.setState({ 
+      poiFeature: feature,
+      poiLabel: label
+    })
   },
 
   hidePoiMarker() {
-    this.setState({ poiFeature: null })
+    this.setState({ 
+      poiFeature: null,
+      poiLabel: null 
+    })
   },
 
   onMapLoad(style) {
@@ -214,7 +221,7 @@ const Jane = React.createClass({
 
     if (this.state.mapLoaded) {
       mapConfig.layers.map((layer) => {
-        if( layer.sources ) {
+        if( layer.sources && layer.visible ) {
           layer.sources.map((source) => {
             sources.push(
               <Source map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id}/>
@@ -222,8 +229,6 @@ const Jane = React.createClass({
           })          
         }
       })
-
-
     }
 
   
@@ -234,14 +239,15 @@ const Jane = React.createClass({
     mapConfig.layers.map((layer, i) => {
       if (layer.visible && layer.sources && layer.mapLayers) {
         layer.mapLayers.map((mapLayer) => {
-          if(!this.state.loadedSources.hasOwnProperty(mapLayer.source)) allSourcesLoaded = false
+          if(!this.state.loadedSources.hasOwnProperty(mapLayer.source)) { console.log('flipping allsourcesloaded',mapLayer); allSourcesLoaded = false}
         })
       }
     })
 
+    console.log(allSourcesLoaded)
 
 
-    //create <Layer> components for each visible layer, but only if all required sources are already loaded
+    //create <MapLayer> components for each visible layer, but only if all required sources are already loaded
     let mapLayers = []
 
     if (allSourcesLoaded) {
@@ -320,20 +326,29 @@ const Jane = React.createClass({
             )
           }
 
-          <div className='jane-legend'>
-            {legendItems}
-          </div>
+          {
+            legendItems.length > 0 &&  (
+              <div className='jane-legend'>
+                {legendItems}
+              </div>
+            )
+          }
 
           <GLMap 
             {...this.props.mapInit}
             ref='map'
             onLoad={this.onMapLoad}
           />
+          
         </div>
 
         {
-          this.state.poiFeature && (
-            <PoiMarker feature={this.state.poiFeature} map={this.map} />
+          (this.state.poiFeature && this.map) && (
+            <PoiMarker 
+              feature={this.state.poiFeature} 
+              label={this.state.poiLabel}
+              map={this.map} 
+            />
           )
         }
 
@@ -359,11 +374,12 @@ const Jane = React.createClass({
           context={this.props.context}
         />
        
-        <SelectedFeaturesPane style={{
+        {(selectedFeatureItems.length>0) && (<SelectedFeaturesPane style={{
           right: (selectedFeatureItems.length>0) ? 0 : -250
         }}>
           {selectedFeatureItems}
         </SelectedFeaturesPane>
+        )}
         
       </div>
     

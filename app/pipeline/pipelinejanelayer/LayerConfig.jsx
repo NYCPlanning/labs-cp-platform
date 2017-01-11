@@ -1,13 +1,18 @@
 import React from 'react'
 
 import colors from '../colors.js'
+import appConfig from '../../helpers/appConfig.js'
 
 const LayerConfig = {
   points: {
     sources: [
       {
-        "type": "vector",
-        "id": "pipeline-points"        
+        "type": "cartovector",
+        "id": "pipeline-points",
+        "options": {
+          "carto_user": appConfig.carto_user,
+          "carto_domain": appConfig.carto_domain
+        }        
       }
     ],
     mapLayers: [
@@ -95,8 +100,12 @@ const LayerConfig = {
   polygons: {
     sources: [
       {
-        "type": "vector",
-        "id": "pipeline-polygons"
+        "type": "cartovector",
+        "id": "pipeline-polygons",
+        "options": {
+          "carto_user": appConfig.carto_user,
+          "carto_domain": appConfig.carto_domain
+        }
       }
     ],
     mapLayers: [

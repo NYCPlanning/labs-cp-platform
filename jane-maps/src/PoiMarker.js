@@ -20,7 +20,7 @@ const PoiMarker = React.createClass({
       
 
     this.label = new mapboxgl.Popup({
-      offset: [0,0],
+      offset: [6,0],
       anchor: 'left',
       closeButton: false,
       closeOnClick: false
@@ -48,7 +48,7 @@ const PoiMarker = React.createClass({
       .addTo(this.props.map.mapObject)
     this.label
       .setLngLat(feature.geometry.coordinates)
-      .setHTML(`<p>${feature.properties.name}</p>`)
+      .setHTML(`<p>${this.props.label}</p>`)
       .addTo(this.props.map.mapObject)
   
     this.props.map.flyMap(feature)
