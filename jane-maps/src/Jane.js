@@ -190,6 +190,8 @@ const Jane = React.createClass({
   //handles updates to a layer's configuration
   handleLayerUpdate(newLayer) {
 
+    console.log('updating a layer', newLayer)
+
     const layerIndex = this.state.mapConfig.layers.findIndex((layer) => {
       return layer.id == newLayer.id
     })
@@ -218,6 +220,8 @@ const Jane = React.createClass({
     
     //load all sources for visible layers
     let sources = []
+
+    console.log('assembling sources', mapConfig)
 
     if (this.state.mapLoaded) {
       mapConfig.layers.map((layer) => {
