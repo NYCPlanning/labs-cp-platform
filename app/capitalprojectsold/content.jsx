@@ -1,6 +1,6 @@
 import React from 'react'
 
-exports.splash = () => {
+exports.splashContent = () => {
   return (
     <div>
       <h4>Hello, Beta Tester!</h4>
@@ -11,7 +11,8 @@ exports.splash = () => {
   )
 }
 
-exports.about = (
+exports.aboutContent = () => {
+  return (
     <div>
       <h4>Product Overview</h4>
       <p>
@@ -54,3 +55,4 @@ exports.about = (
       </p>
     </div>
   )
+}

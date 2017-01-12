@@ -19,9 +19,9 @@ import PipelineExplorer from '../app/pipeline/PipelineExplorer.jsx'
 import DevelopmentPage from '../app/pipeline/DevelopmentPage.jsx'
 
 import CapitalProjects from '../app/capitalprojects/Explorer.jsx'
-import ProjectPage from '../app/capitalprojects/ProjectPage.jsx'
 
-import CapitalProjects2 from '../app/capitalprojects2/Explorer.jsx'
+import CapitalProjectsOld from '../app/capitalprojectsold/Explorer.jsx'
+import ProjectPage from '../app/capitalprojectsold/ProjectPage.jsx'
 
 import JaneTest from '../app/common/JaneTest.jsx'
 
@@ -68,8 +68,7 @@ module.exports = (
     <Route path="capitalprojects" component={CapitalProjects} title={'Capital Projects Explorer'} miniNav={true} onEnter={requireAuth}/>
     <Route path="capitalprojects/:id" component={ProjectPage} title={'Capital Project Details'} miniNav={true} onEnter={requireAuth}/>
 
-    <Route path="capitalprojects2" component={CapitalProjects2} title={'Capital Projects Explorer'} miniNav={true} onEnter={requireAuth}/>
-    <Route path="capitalprojects/:id" component={ProjectPage} title={'Capital Project Details'} miniNav={true} onEnter={requireAuth}/>
+    <Route path="capitalprojectsold" component={CapitalProjectsOld} title={'Capital Projects Explorer'} miniNav={true} onEnter={requireAuth}/>
 
 
     <Route path="janetest" component={JaneTest} />

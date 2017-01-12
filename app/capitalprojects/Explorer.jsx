@@ -1,50 +1,86 @@
-// PipeLineTest - Custom config/code for the pipeline explorer should go here.  This component will make use of MapTest.jsx, a global map component that all "explorers" can use
+//Explorer.jsx - Top level Component for the Facilities Explorer
 import React from 'react' 
 
-import MapComponent from '../common/MapComponent.jsx'
-import CapitalProjectsDataLayer from './CapitalProjectsDataLayer.jsx'
+import Nav from '../common/Nav.jsx'
+import Jane from '../../jane-maps/src'
 import content from './content.jsx'
 
-import '../../stylesheets/capitalprojects/Explorer.scss'
+import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
+import ProjectsJaneLayer from './projectsJaneLayer'
+import TransportationJaneLayer from '../janelayers/transportation'
+import ImageryJaneLayer from '../janelayers/imagery'
+import GrayOutsideNyc from '../janelayers/grayoutsidenyc'
 
-var CapitalProjectsExplorer = React.createClass({ 
+
+import appConfig from '../helpers/appConfig.js'
+
+import './styles.scss'
+
+var CaptialProjectsExplorer = React.createClass({
+
   componentDidMount() {
-    
-    //show modal on first launch
-    var modalShown = JSON.parse(localStorage.getItem('capitalprojects-splash'))
+
+    var modalShown = JSON.parse(localStorage.getItem('facilities-splash'))
     
     if (!modalShown) {
       this.props.showModal({
         modalHeading: 'Welcome!',
-        modalContent: content.splashContent,
+        modalContent: content.splash,
         modalCloseText: 'Got it.  Let me in!'
-      }) 
+      })
 
-      localStorage.setItem('capitalprojects-splash', 'true');    
+      localStorage.setItem('facilities-splash', 'true');    
     }
   },
 
-  showAbout() {
-    this.props.showModal({
-      modalHeading: 'About this tool',
-      modalContent: content.aboutContent,
-      modalCloseText: 'Close'
-    })
-  },
-
   render() {
+
+    //TODO these can be globally defined for the app
+    const mapInit = {
+      mapbox_accessToken: appConfig.mapbox_accessToken,
+      center: [-74.0079, 40.7315],
+      zoom: 12,
+      minZoom: null,
+      maxZoom: null,
+      pitch: 0,
+      hash: true,
+      navigationControlPosition: 'bottom-right'
+    }
+
+    const searchConfig = {
+      mapzen_api_key: appConfig.mapzen_api_key,
+      bounds: {
+        minLon: -74.292297,
+        maxLon: -73.618011,
+        minLat: 40.477248,
+        maxLat: 40.958123
+      }
+    }
+
+    //TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
+    const mapConfig = {
+      selectedLayer: 'capital-projects',
+      layers: [
+        ImageryJaneLayer,
+        AdminBoundariesJaneLayer,
+        TransportationJaneLayer,
+        GrayOutsideNyc,
+        ProjectsJaneLayer
+      ]
+    }
+    
     return(
       <div className='full-screen'>
-        <MapComponent leftDrawerOpen={true} auth={this.props.auth}>
-          <CapitalProjectsDataLayer 
-            name="Capital Projects Explorer"
-            tooltipText="Capital Projects Database" 
-            icon="fa fa-usd" 
-            showModal={this.props.showModal}/>
-        </MapComponent>
+        <Jane 
+          mapInit={mapInit}
+          layerContentVisible={true}
+          search={true}
+          searchConfig={searchConfig}
+          mapConfig={mapConfig}
+        />
       </div>
     )
   }
 })
 
-module.exports=CapitalProjectsExplorer
+module.exports=CaptialProjectsExplorer

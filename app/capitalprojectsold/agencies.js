@@ -32,12 +32,11 @@ var agencies = [
   ]
 
 
-
-const AgencyHelper = {
+module.exports={
   agencies: agencies,
 
   mapboxGLStyle: {
-    property: 'agency',
+    property: 'sagency',
     type: 'categorical',
     stops: agencies.map(function( agency ) {
       return [agency.acronym, agency.color]
@@ -59,7 +58,3 @@ const AgencyHelper = {
     return match[0].label
   } 
 }
-
-console.log(AgencyHelper.mapboxGLStyle)
-
-export default AgencyHelper

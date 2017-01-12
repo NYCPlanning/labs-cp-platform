@@ -28,7 +28,7 @@ const Facilities = React.createClass({
         0: {
           options: {
             sql: {
-              $set: sql
+              $set: [sql]
             }
           } 
         }

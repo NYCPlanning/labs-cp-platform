@@ -6,7 +6,7 @@ module.exports = {
   name: 'Facilities DB',
   icon: 'university',
   visible: true,
-  interactivityMapLayer: 'facilities-points',
+  interactivityMapLayers: ['facilities-points'],
   component: Component,
   listItem: ListItem
 }

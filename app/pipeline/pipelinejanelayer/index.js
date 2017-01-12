@@ -6,7 +6,7 @@ module.exports = {
   name: 'Housing Pipeline',
   icon: 'building',
   visible: true,
-  interactivityMapLayer: 'pipeline-points',
+  interactivityMapLayers: ['pipeline-points'],
   component: Component,
   listItem: ListItem
 }

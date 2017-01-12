@@ -31,7 +31,7 @@ const Jane = React.createClass({
       loadedSources: {},
       mapConfig: this.props.mapConfig ? this.props.mapConfig : defaultMapConfig ,
       layerListExpanded: false,
-      layerContentVisible: false,
+      layerContentVisible: this.props.layerContentVisible ? this.props.layerContentVisible : null,
       selectedFeatures: []
     })
   },
@@ -127,12 +127,12 @@ const Jane = React.createClass({
       selectedFeatures: features
     })
 
-    if(features.length > 0) {
-      this.highlightFeature({
-        type: 'Feature',
-        geometry: features[0].geometry
-      })  
-    }
+    // if(features.length > 0) {
+    //   this.highlightFeature({
+    //     type: 'Feature',
+    //     geometry: features[0].geometry
+    //   })  
+    // }
   },
 
   //return an array of all loaded mapLayers
@@ -282,12 +282,15 @@ const Jane = React.createClass({
     let selectedFeatureItems = []
 
     mapConfig.layers.map((layer, i) => {
-      if(layer.listItem && layer.visible && layer.interactivityMapLayer) { 
+      console.log(layer)
+      if(layer.listItem && layer.visible && layer.interactivityMapLayers) { 
 
         const SelectedFeatureItem = layer.listItem ? layer.listItem: null
         const layerSelectedFeatures = this.state.selectedFeatures.filter((feature) => {
-          return feature.layer.id == layer.interactivityMapLayer
+          return layer.interactivityMapLayers.indexOf(feature.layer.id) > -1
         })
+
+        console.log('layerselectedfeatures!', layerSelectedFeatures)
 
         layerSelectedFeatures.map((layerSelectedFeature, j) => {
           selectedFeatureItems.push(<SelectedFeatureItem feature={layerSelectedFeature} key={i.toString()+j.toString()}/>)

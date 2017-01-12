@@ -1,24 +1,12 @@
 import React from 'react'
 import update from 'react/lib/update'
 import {Tabs, Tab} from 'material-ui/Tabs'
-import Moment from 'moment'
-import Subheader from 'material-ui/Subheader'
 
-import LayerSelector from './LayerSelector.jsx'
+import Filter from './Filter.jsx'
 import content from '../content.jsx'
-
-import colors from '../colors.js'
-import layerConfig from './layerconfig.js'
-
-import Carto from '../../helpers/carto.js'
-
-
+import layerConfig from './layerconfig.jsx'
 
 const CapitalProjects = React.createClass({
-
-  componentDidMount() {
-    this.renderLegend()
-  },
 
   //updates the sql for the map source
   updateLayerConfig(pointsSql, polygonsSql) {
@@ -42,43 +30,16 @@ const CapitalProjects = React.createClass({
   //sends the new layerConfig up the chain
   sendNewConfig(layerConfig) {
 
-    const newLayerConfig = update(this.props.layer, {
-      sources: {
-        $set: layerConfig.sources
-      },
-      mapLayers: {
-        $set: layerConfig.mapLayers
-      }
-    })
-
-
     this.props.onUpdate('capital-projects', {
       sources: layerConfig.sources,
-      mapLayers: layerConfig.mapLayers
+      mapLayers: layerConfig.mapLayers,
+      legend: layerConfig.legend
     })
-  },
-
-  //builds a legend with a composed date range, updates layer config,
-  //updates the layerconfig and sends it up to Jane
-  renderLegend() {
-
-    const legendContent = (
-      <div className="legendSection">
-        <p>This is the new capital projects map</p>
-      </div>
-    )
-
-    const newLayer = update(this.props.layer, {
-      legend: {
-        $set: legendContent
-      }
-    })
-
-    //this.props.onUpdate(newLayer)
   },
 
   render() {
 
+    console.log(content)
     const tabStyle = {
       height: '30px'
     }
@@ -86,8 +47,7 @@ const CapitalProjects = React.createClass({
     return (
       <Tabs className='sidebar-tabs'>
         <Tab label="Data">
-          <LayerSelector
-            mode={this.props.context.mode}
+          <Filter
             updateSQL={this.updateLayerConfig}
           />
         </Tab>
