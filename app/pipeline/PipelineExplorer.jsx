@@ -54,10 +54,10 @@ var PipeLineExplorer = React.createClass({
     const mapConfig = {
       selectedLayer: 'pipeline',
       layers: [
-        AdminBoundariesJaneLayer,
-        TransportationJaneLayer,
+        // AdminBoundariesJaneLayer,
+        // TransportationJaneLayer,
         PipelineJaneLayer,
-        GrayOutsideNyc
+        // GrayOutsideNyc
       ]
     }
 

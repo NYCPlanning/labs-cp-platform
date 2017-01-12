@@ -188,12 +188,13 @@ const Jane = React.createClass({
   },
 
   //handles updates to a layer's configuration
-  handleLayerUpdate(newLayer) {
+  handleLayerUpdate(layerid, updates) {
 
-    console.log('updating a layer', newLayer)
+    console.log('handling layer update', layerid, updates)
 
+    //get the index in mapConfig.layers of the layer to be updated
     const layerIndex = this.state.mapConfig.layers.findIndex((layer) => {
-      return layer.id == newLayer.id
+      return layer.id == layerid
     })
 
     //use setState with callback because multiple <Layer>s may want to update in the same render cycle
@@ -202,7 +203,7 @@ const Jane = React.createClass({
         mapConfig: update(prevState.mapConfig, {
           layers: {
             [layerIndex]: {
-              $set: newLayer
+              $merge: updates
             }
           }
         })
@@ -221,7 +222,6 @@ const Jane = React.createClass({
     //load all sources for visible layers
     let sources = []
 
-    console.log('assembling sources', mapConfig)
 
     if (this.state.mapLoaded) {
       mapConfig.layers.map((layer) => {
@@ -243,12 +243,11 @@ const Jane = React.createClass({
     mapConfig.layers.map((layer, i) => {
       if (layer.visible && layer.sources && layer.mapLayers) {
         layer.mapLayers.map((mapLayer) => {
-          if(!this.state.loadedSources.hasOwnProperty(mapLayer.source)) { console.log('flipping allsourcesloaded',mapLayer); allSourcesLoaded = false}
+          if(!this.state.loadedSources.hasOwnProperty(mapLayer.source)) { allSourcesLoaded = false}
         })
       }
     })
 
-    console.log(allSourcesLoaded)
 
 
     //create <MapLayer> components for each visible layer, but only if all required sources are already loaded

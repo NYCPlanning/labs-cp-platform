@@ -146,22 +146,24 @@ const Pipeline = React.createClass({
   // },
 
   sendNewConfig(newConfig) {
-    const newLayer = update(this.props.layer, {
-      sources: {
-        $set: newConfig.sources
-      },
-      mapLayers: {
-        $set: newConfig.mapLayers
-      },
-      legend: {
-        $set: newConfig.legend
-      }
-    })
-
-    console.log('Sending layer to jane', newLayer)
+    // const newLayer = update(this.props.layer, {
+    //   sources: {
+    //     $set: newConfig.sources
+    //   },
+    //   mapLayers: {
+    //     $set: newConfig.mapLayers
+    //   },
+    //   legend: {
+    //     $set: newConfig.legend
+    //   }
+    // })
 
     //pass the new config up to Jane
-    this.props.onUpdate(newLayer)
+    this.props.onUpdate('pipeline', {
+      sources: newConfig.sources,
+      mapLayers: newConfig.mapLayers,
+      legend: newConfig.legend
+    })
   },
 
   handleModeToggle() {

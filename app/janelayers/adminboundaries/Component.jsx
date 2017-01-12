@@ -133,7 +133,10 @@ const AdminBoundaries = React.createClass({
       mapLayers: {$set: layerConfig.mapLayers}
     })
 
-    this.props.onUpdate(newLayer)
+    this.props.onUpdate('adminboundaries', {
+      sources: layerConfig.sources,
+      mapLayers: layerConfig.mapLayers
+    })
   },
 
   handleChange(e, value) {

@@ -127,14 +127,10 @@ const Transportation = React.createClass({
       config.mapLayers.map((mapLayer) => { mapLayers.push(mapLayer)})
     })
 
-    const newLayer = update(this.props.layer, {
-      sources: {$set: sources},
-      mapLayers: {$set: mapLayers}
+    this.props.onUpdate('transportation', {
+      sources: sources,
+      mapLayers: mapLayers
     })
-
-    console.log(newLayer)
-
-    this.props.onUpdate(newLayer)
   },
 
   handleCheck(id) {

@@ -22,8 +22,6 @@ const Source = React.createClass({
   render() {
     const source = this.props.source
 
-    console.log(source)
-
     if( source.type=='geojson') return <GeoJsonSource {...this.props}/>
     if( source.type=='raster') return <RasterSource {...this.props}/> 
     if( source.type=='cartovector' && source.options) return <CartoVectorSource {...this.props}/>  

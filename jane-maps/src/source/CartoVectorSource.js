@@ -12,28 +12,32 @@ const CartoVectorSource = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
+
     //compare sql
     if(!(nextProps.source.options.sql == this.props.source.options.sql)) {
       this.fetchData(nextProps.source.options.sql)
     }
   },
 
-  fetchData(sql) {
+  fetchData(sqlArray) {
     const self=this
 
     const mapConfig = {
       "version": "1.3.0",
-      "layers": [{
+      "layers": []
+    }
+
+    sqlArray.map((sql) => {
+      mapConfig.layers.push({
         "type": "mapnik",
         "options": {
           "cartocss_version": "2.1.1",
           "cartocss": "#layer { polygon-fill: #FFF; }",
           "sql": sql
         }
-      }]
-    }
+      })
+    })
 
-    console.log(this.props.source)
 
     Carto.getVectorTileTemplate(mapConfig, this.props.source.options)
       .then((template) => {

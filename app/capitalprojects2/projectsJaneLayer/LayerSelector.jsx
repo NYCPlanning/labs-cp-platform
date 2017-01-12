@@ -34,8 +34,9 @@ const LayerSelector = React.createClass({
     const self=this
     
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator',
-      tablename: 'adoyle.commitmentspoints'
+      columns: 'cartodb_id, the_geom_webmercator, agency',
+      pointsTablename: 'adoyle.commitmentspoints',
+      polygonsTablename: 'adoyle.commitmentspolygons',
     }
 
     self.buildSQL()
@@ -57,17 +58,17 @@ const LayerSelector = React.createClass({
     //the main event!  This method is called whenever any change is detected in the UI,
     //and ultimately ends up passing a new layerconfig to jane
     
-    let sql
+    let pointsSql, polygonsSql
 
-    sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`
+    pointsSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.pointsTablename}`
+    polygonsSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.polygonsTablename}`
 
 
 
+    //if(this.state.totalCount == null) this.getTotalCount(sql)
 
-    if(this.state.totalCount == null) this.getTotalCount(sql)
-
-    this.props.updateSQL(sql)
-    this.getSelectedCount(sql)
+    this.props.updateSQL(pointsSql, polygonsSql)
+    //this.getSelectedCount(pointsSql, polygonsSql)
   },
 
   getSelectedCount(sql) {

@@ -1,5 +1,6 @@
 import colors from '../colors.js'
 import appConfig from '../../helpers/appConfig.js'
+import Agencies from '../agencies.js'
 
 const layerConfig = {
   sources: [
@@ -42,8 +43,20 @@ const layerConfig = {
             [15,6]
           ]
         },
-        "circle-color": "steelblue",
+        "circle-color": Agencies.mapboxGLStyle,
         "circle-opacity": 0.7
+      }
+    },
+    {
+      "id": "capital-projects-polygons",
+      "source": 'capital-projects',
+      "source-layer": "layer1",
+      "type": "fill",
+      'paint': {
+        'fill-color': Agencies.mapboxGLStyle,
+        'fill-opacity': 0.75,
+        //'fill-outline-color': '#838763',
+        'fill-antialias': true 
       }
     }
   ]

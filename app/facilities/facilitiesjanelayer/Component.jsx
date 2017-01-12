@@ -22,7 +22,6 @@ const Facilities = React.createClass({
 
   //updates the sql for the map source
   updateLayerConfig(sql) {
-    //use this method to build new mapConfig based on mode
 
     const newLayerConfig = update(layerConfig, {
       sources: {
@@ -41,17 +40,10 @@ const Facilities = React.createClass({
 
   //sends the new layerConfig up the chain
   sendNewConfig(layerConfig) {
-
-    const newLayerConfig = update(this.props.layer, {
-      sources: {
-        $set: layerConfig.sources
-      },
-      mapLayers: {
-        $set: layerConfig.mapLayers
-      }
+    this.props.onUpdate('facilities', {
+      sources: layerConfig.sources,
+      mapLayers: layerConfig.mapLayers
     })
-
-    this.props.onUpdate(newLayerConfig)
   },
 
   //builds a legend with a composed date range, updates layer config,
@@ -93,7 +85,7 @@ const Facilities = React.createClass({
           }
         })
 
-        this.props.onUpdate(newLayer)
+        //this.props.onUpdate(newLayer)
       })
 
 

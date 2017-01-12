@@ -21,16 +21,15 @@ const CapitalProjects = React.createClass({
   },
 
   //updates the sql for the map source
-  updateLayerConfig(sql) {
+  updateLayerConfig(pointsSql, polygonsSql) {
     //use this method to build new mapConfig based on mode
-    console.log('updatingLayerConfig')
 
     const newLayerConfig = update(layerConfig, {
       sources: {
         0: {
           options: {
             sql: {
-              $set: sql
+              $set: [pointsSql, polygonsSql]
             }
           } 
         }
@@ -53,8 +52,10 @@ const CapitalProjects = React.createClass({
     })
 
 
-    console.log('newLayerConfig', newLayerConfig)
-    this.props.onUpdate(newLayerConfig)
+    this.props.onUpdate('capital-projects', {
+      sources: layerConfig.sources,
+      mapLayers: layerConfig.mapLayers
+    })
   },
 
   //builds a legend with a composed date range, updates layer config,
