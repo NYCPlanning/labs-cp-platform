@@ -1,41 +1,41 @@
-//Explorer.jsx - Top level Component for the Facilities Explorer
-import React from 'react' 
+// Explorer.jsx - Top level Component for the Facilities Explorer
+import React from 'react';
 
-import Nav from '../common/Nav.jsx'
-import Jane from '../../jane-maps/src'
-import content from './content.jsx'
+import Jane from '../../jane-maps/src';
+import content from './content';
 
-import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
-import ProjectsJaneLayer from './projectsJaneLayer'
-import TransportationJaneLayer from '../janelayers/transportation'
-import ImageryJaneLayer from '../janelayers/imagery'
-import GrayOutsideNyc from '../janelayers/grayoutsidenyc'
+import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
+import ProjectsJaneLayer from './projectsJaneLayer';
+import TransportationJaneLayer from '../janelayers/transportation';
+import ImageryJaneLayer from '../janelayers/imagery';
+import GrayOutsideNyc from '../janelayers/grayoutsidenyc';
 
 
-import appConfig from '../helpers/appConfig.js'
+import appConfig from '../helpers/appConfig';
 
-import './styles.scss'
+import './styles.scss';
 
-var CaptialProjectsExplorer = React.createClass({
+const CaptialProjectsExplorer = React.createClass({
+  propTypes: {
+    showModal: React.PropTypes.Func,
+  },
 
   componentDidMount() {
+    const modalShown = JSON.parse(localStorage.getItem('facilities-splash'));
 
-    var modalShown = JSON.parse(localStorage.getItem('facilities-splash'))
-    
     if (!modalShown) {
       this.props.showModal({
         modalHeading: 'Welcome!',
         modalContent: content.splash,
-        modalCloseText: 'Got it.  Let me in!'
-      })
+        modalCloseText: 'Got it.  Let me in!',
+      });
 
-      localStorage.setItem('facilities-splash', 'true');    
+      localStorage.setItem('facilities-splash', 'true');
     }
   },
 
   render() {
-
-    //TODO these can be globally defined for the app
+    // TODO these can be globally defined for the app
     const mapInit = {
       mapbox_accessToken: appConfig.mapbox_accessToken,
       center: [-74.0079, 40.7315],
@@ -44,8 +44,8 @@ var CaptialProjectsExplorer = React.createClass({
       maxZoom: null,
       pitch: 0,
       hash: true,
-      navigationControlPosition: 'bottom-right'
-    }
+      navigationControlPosition: 'bottom-right',
+    };
 
     const searchConfig = {
       mapzen_api_key: appConfig.mapzen_api_key,
@@ -53,11 +53,11 @@ var CaptialProjectsExplorer = React.createClass({
         minLon: -74.292297,
         maxLon: -73.618011,
         minLat: 40.477248,
-        maxLat: 40.958123
-      }
-    }
+        maxLat: 40.958123,
+      },
+    };
 
-    //TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
+    // TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
     const mapConfig = {
       selectedLayer: 'capital-projects',
       layers: [
@@ -65,22 +65,22 @@ var CaptialProjectsExplorer = React.createClass({
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
         GrayOutsideNyc,
-        ProjectsJaneLayer
-      ]
-    }
-    
-    return(
-      <div className='full-screen'>
-        <Jane 
+        ProjectsJaneLayer,
+      ],
+    };
+
+    return (
+      <div className="full-screen">
+        <Jane
           mapInit={mapInit}
-          layerContentVisible={true}
-          search={true}
+          layerContentVisible
+          search
           searchConfig={searchConfig}
           mapConfig={mapConfig}
         />
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-module.exports=CaptialProjectsExplorer
+module.exports = CaptialProjectsExplorer;

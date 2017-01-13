@@ -1,51 +1,47 @@
-import React from 'react'
-import update from 'react/lib/update'
-import {Tabs, Tab} from 'material-ui/Tabs'
+import React from 'react';
+import update from 'react/lib/update';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
-import Filter from './Filter.jsx'
-import content from '../content.jsx'
-import layerConfig from './layerconfig.jsx'
+import Filter from './Filter';
+import content from '../content';
+import defaultlayerConfig from './defaultLayerConfig';
 
 const CapitalProjects = React.createClass({
 
-  //updates the sql for the map source
+  propTypes: {
+    onUpdate: React.PropTypes.func,
+  },
+  // updates the sql for the map source
   updateLayerConfig(pointsSql, polygonsSql) {
-    //use this method to build new mapConfig based on mode
+    // use this method to build new mapConfig based on mode
 
-    const newLayerConfig = update(layerConfig, {
+    const newLayerConfig = update(defaultlayerConfig, {
       sources: {
         0: {
           options: {
             sql: {
-              $set: [pointsSql, polygonsSql]
-            }
-          } 
-        }
-      }
-    })
+              $set: [pointsSql, polygonsSql],
+            },
+          },
+        },
+      },
+    });
 
-    this.sendNewConfig(newLayerConfig)
+    this.sendNewConfig(newLayerConfig);
   },
 
-  //sends the new layerConfig up the chain
+  // sends the new layerConfig up the chain
   sendNewConfig(layerConfig) {
-
     this.props.onUpdate('capital-projects', {
       sources: layerConfig.sources,
       mapLayers: layerConfig.mapLayers,
-      legend: layerConfig.legend
-    })
+      legend: layerConfig.legend,
+    });
   },
 
   render() {
-
-    console.log(content)
-    const tabStyle = {
-      height: '30px'
-    }
-
     return (
-      <Tabs className='sidebar-tabs'>
+      <Tabs className="sidebar-tabs">
         <Tab label="Data">
           <Filter
             updateSQL={this.updateLayerConfig}
@@ -58,13 +54,13 @@ const CapitalProjects = React.createClass({
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">
-            <h4>Data Downloads</h4> 
+            <h4>Data Downloads</h4>
             <p>Custom data downloads are currently in development.  Please check back again soon.</p>
           </div>
         </Tab>
-      </Tabs>  
-    )
-  }
-})
+      </Tabs>
+    );
+  },
+});
 
-export default CapitalProjects
+export default CapitalProjects;

@@ -1,7 +1,5 @@
-// config.js - various data objects for the multiselectors on the capital projects explorer
-
-var config = {
-  agencies: [
+module.exports = {
+  "agencies": [
       {  
          "value":"ACS",
          "label":"Administration for Children's Services - ACS"
@@ -100,5 +98,3 @@ var config = {
       }
    ]
 }
-
-module.exports=config

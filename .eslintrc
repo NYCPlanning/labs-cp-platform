@@ -1,11 +1,17 @@
-
 {
-  /*"extends": "airbnb/legacy",*/
-  "env": {
-    "browser": false,
-    "node": true,
+  parser: "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "max-len": [1, 120, 2, {ignoreComments: true}],
+    "react/prop-types": [2],
+    "react/prefer-es6-class": [0],
+    "react/jsx-no-bind": [0],
   },
-   "rules": {
-    "quotes": [2, "single"],
-  }
+  "env": {
+    "browser": true,
+    "node": true
+  },
 }
