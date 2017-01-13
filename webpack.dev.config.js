@@ -14,7 +14,7 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.scss', '.js', '.jsx'],
   },
   module: {
     preLoaders: [
@@ -32,7 +32,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader', 'eslint-loader'],
+        loaders: ['babel-loader'],
       },
       {
         test: /\.scss$/,

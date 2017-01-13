@@ -1,19 +1,19 @@
 // MapzenGeocoder.jsx - Autocomplete geocoder component
-// Props: 
+// Props:
 //   onSelection - function to be called when the user chooses an autocomplete selection
 //   The geocoder will pass a geojson feature to onSelection(), which can be used to zoom a map into that location and create a marker
 
-import React from 'react'
-import Autosuggest from 'react-autosuggest'
+import React from 'react';
+import Autosuggest from 'react-autosuggest';
 
 function getSuggestionValue(suggestion) {
-  return suggestion.properties.label
+  return suggestion.properties.label;
 }
 
 function renderSuggestion(suggestion) {
   return (
-    <div><i className="fa fa-map-marker" aria-hidden="true"></i><span>{suggestion.properties.label}</span></div>
-  )
+    <div><i className="fa fa-map-marker" aria-hidden="true" /><span>{suggestion.properties.label}</span></div>
+  );
 }
 
 function shouldRenderSuggestions(value) {
@@ -25,51 +25,51 @@ const MapzenGeocoder = React.createClass({
   getInitialState() {
     return {
       value: '',
-      suggestions: []
-    }
+      suggestions: [],
+    };
   },
 
   onSuggestionsFetchRequested({ value }) {
-    var self=this
+    const self = this;
 
-    var apiCall=`https://search.mapzen.com/v1/autocomplete?text=${value}&boundary.rect.min_lon=${this.props.bounds.minLon}&boundary.rect.max_lon=${this.props.bounds.maxLon}&boundary.rect.min_lat=${this.props.bounds.minLat}&boundary.rect.max_lat=${this.props.bounds.maxLat}&api_key=${this.props.mapzen_api_key}`
+    const apiCall = `https://search.mapzen.com/v1/autocomplete?text=${value}&boundary.rect.min_lon=${this.props.bounds.minLon}&boundary.rect.max_lon=${this.props.bounds.maxLon}&boundary.rect.min_lat=${this.props.bounds.minLat}&boundary.rect.max_lat=${this.props.bounds.maxLat}&api_key=${this.props.mapzen_api_key}`;
 
-    $.getJSON(apiCall, function(data) {
+    $.getJSON(apiCall, (data) => {
       self.setState({
-        suggestions: data.features
+        suggestions: data.features,
       });
-    })
+    });
   },
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested() {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
   },
 
   onChange(e, obj) {
     this.setState({
-      value: obj.newValue
+      value: obj.newValue,
     });
   },
 
-  onSuggestionSelected(e,o) {
+  onSuggestionSelected(e, o) {
     this.setState({
-      value: o.suggestionValue
-    })
+      value: o.suggestionValue,
+    });
 
-    this.props.onSelection(o.suggestion)
+    this.props.onSelection(o.suggestion);
   },
 
   render() {
     const inputProps = {
       placeholder: 'Search for an address',
       value: this.state.value,
-      onChange: this.onChange
+      onChange: this.onChange,
     };
 
-    return(
+    return (
       <Autosuggest
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -78,10 +78,10 @@ const MapzenGeocoder = React.createClass({
         renderSuggestion={renderSuggestion}
         shouldRenderSuggestions={shouldRenderSuggestions}
         inputProps={inputProps}
-        onSuggestionSelected={this.onSuggestionSelected} 
+        onSuggestionSelected={this.onSuggestionSelected}
       />
-    )
-  }
-})
+    );
+  },
+});
 
-module.exports=MapzenGeocoder
+module.exports = MapzenGeocoder;

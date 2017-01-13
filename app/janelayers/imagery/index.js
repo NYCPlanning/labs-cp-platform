@@ -8,14 +8,14 @@ module.exports = {
     {
       id: 'nyaerials',
       type: 'raster',
-      tiles: 'https://api.capitalplanning.nyc/api/tiles/dhsesorthos/{z}/{y}/{x}' 
-    } 
+      tiles: 'https://api.capitalplanning.nyc/api/tiles/dhsesorthos/{z}/{y}/{x}',
+    },
   ],
   mapLayers: [
     {
-      "id": 'nyaerials',
-      "type": "raster",
-      "source": 'nyaerials'
-    }
-  ]
-}
+      id: 'nyaerials',
+      type: 'raster',
+      source: 'nyaerials',
+    },
+  ],
+};

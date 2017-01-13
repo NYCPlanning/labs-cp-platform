@@ -1,17 +1,17 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
-import FontIcon from 'material-ui/FontIcon'
-import {OverlayTrigger, Tooltip} from 'react-bootstrap'
+import FontIcon from 'material-ui/FontIcon';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const listItemSource = {
   beginDrag(props) {
     return {
       id: props.layer.id,
-      index: props.index
-    }
-  }
-}
+      index: props.index,
+    };
+  },
+};
 
 const listItemTarget = {
   hover(props, monitor, component) {
@@ -60,14 +60,14 @@ const listItemTarget = {
   },
 
   drop(props, monitor, component) {
-    props.onDrop()
-  }
-}
+    props.onDrop();
+  },
+};
 
 let ListItem = React.createClass({
 
   handleClick(layer, e) {
-    if (e.target.type != 'checkbox') this.props.onClick(layer.id)
+    if (e.target.type != 'checkbox') this.props.onClick(layer.id);
   },
 
   render() {
@@ -78,50 +78,50 @@ let ListItem = React.createClass({
         height: '15px',
         width: '15px',
         color: '#5F5F5F',
-        left: 0
-      }
-    }
+        left: 0,
+      },
+    };
 
     const { text, isDragging, connectDragSource, connectDropTarget, layer, onToggle } = this.props;
 
     return connectDragSource(connectDropTarget(
       <div className={this.props.className} onClick={this.handleClick.bind(this, layer)}>
-        
+
         { !this.props.expanded && (
-          <OverlayTrigger 
-            placement="right" 
-            overlay={ <Tooltip id={layer.name}>{layer.name}</Tooltip>} 
+          <OverlayTrigger
+            placement="right"
+            overlay={<Tooltip id={layer.name}>{layer.name}</Tooltip>}
           >
-            <FontIcon className={'fa fa-' + layer.icon} style={style.fontIcon}/> 
+            <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
           </OverlayTrigger>
         )}
 
         { this.props.expanded && (
-          <FontIcon className={'fa fa-' + layer.icon} style={style.fontIcon}/> 
+          <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
         )}
 
         {layer.name}
 
-      </div>
-    ))
-  }
-})
+      </div>,
+    ));
+  },
+});
 
 ListItem.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  moveListItem: PropTypes.func.isRequired
-}
+  moveListItem: PropTypes.func.isRequired,
+};
 
 ListItem = DragSource('listItem', listItemSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
-  isDragging: monitor.isDragging()
-}))(ListItem)
+  isDragging: monitor.isDragging(),
+}))(ListItem);
 
 ListItem = DropTarget('listItem', listItemTarget, connect => ({
-  connectDropTarget: connect.dropTarget()
-}))(ListItem)
+  connectDropTarget: connect.dropTarget(),
+}))(ListItem);
 
-export default ListItem
+export default ListItem;

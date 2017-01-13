@@ -1,129 +1,132 @@
-//App.jsx - Top-level container for the react SPA
-//Props:
-//  route - object passed in from react-router, which includes auth
-//  children - the top-level route(s) from react router
+import React from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import React from 'react'
-import {browserHistory} from 'react-router'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import GlobalModal from './common/GlobalModal';
+import Nav from './common/Nav';
 
-import GlobalModal from './common/GlobalModal.jsx'
-import Nav from './common/Nav.jsx'
+import '../stylesheets/App.scss';
 
-import '../stylesheets/App.scss'
-
-//get styles for jane-maps, TODO figure out the best way to include this
-import '../jane-maps/src/styles.scss'
+// get styles for jane-maps, TODO figure out the best way to include this
+import '../jane-maps/src/styles.scss';
 
 injectTapEventPlugin();
 
-var App = React.createClass({
+const App = React.createClass({
+  propTypes: {
+    location: React.PropTypes.shape(),
+    children: React.PropTypes.element,
+    route: React.PropTypes.shape(),
+  },
+
   getInitialState() {
-    return({
+    return ({
       loggedIn: true,
       modalHeading: null,
       modalContent: null,
-      modalCloseText: null
-    })
+      modalCloseText: null,
+    });
   },
 
   componentWillReceiveProps(nextProps) {
-    //from the react router pinterest example, this allows us to slide in a new page without unmounting the old one
+    // from the react router pinterest example, this allows us to slide in a new page without unmounting the old one
     if ((
       nextProps.location.key !== this.props.location.key &&
       nextProps.location.state &&
       nextProps.location.state.modal
     )) {
-      this.previousChildren = this.props.children
+      this.previousChildren = this.props.children;
     }
   },
 
-  //modalOptions should be an object with modalHeading:String, modalContent:rendered JSX, modalCloseText: String
+  // modalOptions should be an object with modalHeading:String, modalContent:rendered JSX, modalCloseText: String
   showModal(modalOptions) {
-    this.setState(modalOptions)
-    this.refs.modal ? this.refs.modal.open() : null  //show the modal
+    this.setState(modalOptions);
+    if (this.modal) this.modal.open();
   },
 
   render() {
+    const { location } = this.props;
 
-    let { location } = this.props
-
-    let isModal = (
+    const isModal = (
       location.state &&
       location.state.modal &&
       this.previousChildren
-    )
+    );
 
     let children = null;
 
-    //pass the auth object to the child components so they know who is logged in
-    //pass showModal() method so any descendant can trigger the showing of the modal
+    // pass the auth object to the child components so they know who is logged in
+    // pass showModal() method so any descendant can trigger the showing of the modal
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
         auth: this.props.route.auth,
-        showModal: this.showModal 
-      })
+        showModal: this.showModal,
+      });
     }
 
     if (this.previousChildren) {
       this.previousChildren = React.cloneElement(this.previousChildren, {
         auth: this.props.route.auth,
-        showModal: this.showModal 
-      })
+        showModal: this.showModal,
+      });
     }
 
-    document.title = this.props.children.props.route.title || 'NYC Captial Planning Platform'
+    document.title = this.props.children.props.route.title || 'NYC Captial Planning Platform';
 
-    return( 
+    return (
       <MuiThemeProvider>
         <div>
-          <Nav 
-            title={this.props.children.props.route.title} 
+          <Nav
+            title={this.props.children.props.route.title}
             mini={this.props.children.props.route.miniNav}
-            auth={this.props.route.auth} 
-            showModal={this.showModal}>
-          </Nav>
+            auth={this.props.route.auth}
+            showModal={this.showModal}
+          />
           <div>
             <GlobalModal
               heading={this.state.modalHeading}
               body={this.state.modalContent}
               closeText={this.state.modalCloseText}
-              ref="modal"
+              ref={(modal) => { this.modal = modal; }}
             />
             {isModal ?
               this.previousChildren :
               children
             }
             <ReactCSSTransitionGroup
-                transitionName="background"
-                transitionAppear={true}
-                transitionAppearTimeout={250}
-                transitionEnterTimeout={250}
-                transitionLeaveTimeout={250}
-              >
-              
+              transitionName="background"
+              transitionAppear
+              transitionAppearTimeout={250}
+              transitionEnterTimeout={250}
+              transitionLeaveTimeout={250}
+            >
+
               {isModal && (
-                <div style={{
-                  zIndex: 1000,
-                  position: 'absolute',
-                  right: 0,
-                  left: 0,
-                  bottom: 0,
-                  top: 0
-                }} >
-                {React.cloneElement(this.props.children, {
-                  key: this.props.location.pathname
-                }) } 
+                <div
+                  style={{
+                    zIndex: 1000,
+                    position: 'absolute',
+                    right: 0,
+                    left: 0,
+                    bottom: 0,
+                    top: 0,
+                  }}
+                >
+                  {
+                    React.cloneElement(this.props.children, {
+                      key: this.props.location.pathname,
+                    })
+                  }
                 </div>
               )}
             </ReactCSSTransitionGroup>
           </div>
         </div>
       </MuiThemeProvider>
-    )
-  }
-})
+    );
+  },
+});
 
-module.exports=App
+module.exports = App;

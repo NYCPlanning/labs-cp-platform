@@ -17,7 +17,7 @@ import './styles.scss';
 
 const CaptialProjectsExplorer = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.Func,
+    showModal: React.PropTypes.func,
   },
 
   componentDidMount() {

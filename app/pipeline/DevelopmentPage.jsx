@@ -1,65 +1,48 @@
-// /pipeline/DevelopmentPage.jsx - This component builds an individual page for each facility in the database and compiles its databse lookup details
-// Props:
-//  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
-//  auth - User's email login info based on auth0 login. Gets included in nav bar.
+import React from 'react';
+import Moment from 'moment';
 
-import React from 'react'
-import {OverlayTrigger, Tooltip} from 'react-bootstrap'
-import Moment from 'moment'
+import ModalMap from '../common/ModalMap';
+import DetailPage from '../common/DetailPage';
 
-import ModalMap from '../common/ModalMap.jsx'
-import DetailPage from '../common/DetailPage.jsx'
-
-import carto from '../helpers/carto.js'
+import carto from '../helpers/carto';
 
 
-var Component = React.createClass({
+const Component = React.createClass({
+  propTypes: {
+    params: React.PropTypes.shape({
+      id: React.PropTypes.number,
+    }),
+    location: React.PropTypes.shape(),
+  },
 
   getInitialState() {
-    return({
-      data: null
-    })
+    return ({
+      data: null,
+    });
   },
 
   componentDidMount() {
-    var self=this
+    const self = this;
     // after mount, fetch data and set state
     carto.getRow('nchatterjee.dob_permits_cofos_hpd_geocode', 'cartodb_id', parseInt(this.props.params.id))
-      .then(function(data) {
+      .then((data) => {
         self.setState({
-          data: data
-        })
-      })
-
-
-  },
-
-  render() {
-
-    var content = this.state.data ? this.renderContent(this.state.data) : null
-
-    return(
-      <DetailPage
-        location={this.props.location}
-        defaultText='Housing Development Map'
-        defaultLink='/pipeline'
-      >
-        {content}
-      </DetailPage>
-    )
+          data,
+        });
+      });
   },
 
   renderContent(data) {
-    var d = data.properties
+    const d = data.properties;
 
-    return  (
-     <div>
+    return (
+      <div>
 
         <div className="col-md-12">
           <h3>{d.dob_permit_address}</h3>
         </div>
         <div className="col-md-6">
-          <ModalMap data={this.state.data} label={d.dob_permit_address}/>
+          <ModalMap data={this.state.data} label={d.dob_permit_address} />
         </div>
         <div className="col-md-6">
           <ul className="list-group">
@@ -123,9 +106,23 @@ var Component = React.createClass({
           </ul>
         </div>
       </div>
-    )
-  }
+    );
+  },
 
-})
+  render() {
+    const content = this.state.data ? this.renderContent(this.state.data) : null;
 
-module.exports=Component
+    return (
+      <DetailPage
+        location={this.props.location}
+        defaultText="Housing Development Map"
+        defaultLink="/pipeline"
+      >
+        {content}
+      </DetailPage>
+    );
+  },
+
+});
+
+module.exports = Component;

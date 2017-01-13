@@ -1,25 +1,23 @@
-import facilitiesLayers from './facilitiesLayers.js'
+import facilitiesLayers from './facilitiesLayers';
 
 const colors = {
   getColor(value) {
-    var colorObject = this.getColorObject()
-    
-    return colorObject.stops.filter((stop) => stop[0] == value)[0][1]
+    const colorObject = this.getColorObject();
+
+    return colorObject.stops.filter(stop => stop[0] === value)[0][1];
   },
 
   getColorObject() {
-  //generate a mapboxGL style categorical color object based on mode
-  //if(this.props.mode=='all') {
+  // generate a mapboxGL style categorical color object based on mode
+  // if(this.props.mode=='all') {
     return {
       property: 'domain',
       type: 'categorical',
-      stops: facilitiesLayers.map(function(layer) {
-        return [
-          layer.name,
-          layer.color
-        ]
-      })
-    }
+      stops: facilitiesLayers.map(layer => [
+        layer.name,
+        layer.color,
+      ]),
+    };
   // } else {
   //   return {
   //     property: 'facilitygroup',
@@ -32,7 +30,7 @@ const colors = {
   //     })
   //   }
   // }
-  }
-}
+  },
+};
 
-export default colors
+export default colors;

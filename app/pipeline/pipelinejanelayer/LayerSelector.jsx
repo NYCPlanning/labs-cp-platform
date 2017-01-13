@@ -1,37 +1,14 @@
-// LayerSelector.jsx - This component builds the layer selector which is used in the explorer
-// Props:
-//  updateSQL - String containing updates to SQL query based on checked layers
-//  value - Value associated with checkbox
-//  checked - Checked status associated with value in checkbox
-//  onChange - Action related to status change in checkbox
+import React from 'react';
+import Moment from 'moment';
+import Select from 'react-select';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { List, ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Moment from 'moment'
-import Select from 'react-select'
-import FontIcon from 'material-ui/FontIcon'
-import {List, ListItem} from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import {Tabs, Tab} from 'material-ui/Tabs'
-import Slider from 'material-ui/Slider'
-import Divider from 'material-ui/Divider'
-import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import RangeSlider from './RangeSlider';
 
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  },
-};
-
-import carto from '../../helpers/carto.js'
-
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-
-var filterDimensions = {
+const filterDimensions = {
   sqlChunks: {},
 
   dcp_pipeline_status: {
@@ -39,265 +16,261 @@ var filterDimensions = {
     options: [
       {
         label: 'Complete',
-        value: 'Complete'
+        value: 'Complete',
       },
       {
         label: 'Partial complete',
-        value: 'Partial complete'
+        value: 'Partial complete',
       },
       {
         label: 'Permit outstanding',
-        value: 'Permit outstanding'
+        value: 'Permit outstanding',
       },
       {
         label: 'Permit pending',
-        value: 'Permit pending'
+        value: 'Permit pending',
       },
       {
         label: 'Demolition (complete)',
-        value: 'Demolition (complete)'
-      }
-    ]
+        value: 'Demolition (complete)',
+      },
+    ],
   },
   dcp_pipeline_category: {
     label: 'Development Status',
     options: [
       {
         label: 'Residential-New',
-        value: 'Residential-New'
+        value: 'Residential-New',
       },
       {
         label: 'Hotel-New',
-        value: 'Hotel-New'
+        value: 'Hotel-New',
       },
       {
         label: 'Residential-Alteration',
-        value: 'Residential-Alteration'
+        value: 'Residential-Alteration',
       },
       {
         label: 'Hotel-Alteration',
-        value: 'Hotel-Alteration'
+        value: 'Hotel-Alteration',
       },
       {
         label: 'Residential-Demolition',
-        value: 'Residential-Demolition'
+        value: 'Residential-Demolition',
       },
       {
         label: 'Hotel-Demolition',
-        value: 'Hotel-Demolition'
-      }
-    ]
-  }
-}
+        value: 'Hotel-Demolition',
+      },
+    ],
+  },
+};
 
 
-var LayerSelector = React.createClass({
-  sqlChunks: {},
+const LayerSelector = React.createClass({
+  propTypes: {
+    updateSQL: React.PropTypes.func,
+  },
 
-  getInitialState: function() {
+  getInitialState() {
     return ({
       selectedCount: '__',
-      totalCount:'__',
+      totalCount: '__',
       dateFilter: true,
       filterDimensions: {
         dcp_pipeline_status: [
           {
             label: 'Complete',
-            value: 'Complete'
+            value: 'Complete',
           },
           {
             label: 'Partial complete',
-            value: 'Partial complete'
-          }
+            value: 'Partial complete',
+          },
         ],
-        dcp_pipeline_category: filterDimensions['dcp_pipeline_category'].options,
-        dcp_units_use_map: [-310,1670],
-        dob_cofo_date: [Moment('2010-12-31T19:00:00-05:00').format('X'), Moment().format('X')]
-      }
-    })
+        dcp_pipeline_category: filterDimensions.dcp_pipeline_category.options,
+        dcp_units_use_map: [-310, 1670],
+        dob_cofo_date: [Moment('2010-12-31T19:00:00-05:00').format('X'), Moment().format('X')],
+      },
+    });
   },
 
   componentDidMount() {
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
-      tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode'
-    }
+      tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode',
+    };
 
-    this.buildSQL()
+    this.buildSQL();
   },
 
+  sqlChunks: {},
+
   handleChange(dimension, values) {
-    //before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
-    this.state.filterDimensions[dimension] = values
+    // before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
+    this.state.filterDimensions[dimension] = values;
 
-    //if dimension is status, check which items are included and disable/reset date slider accordingly
-    if(dimension == 'dcp_pipeline_status') {
-      var invalidValues = values.filter(function(value) {
-        if(value.value == 'Permit outstanding' || value.value == 'Permit pending') return value.value
-      })
+    // if dimension is status, check which items are included and disable/reset date slider accordingly
+    if (dimension === 'dcp_pipeline_status') {
+      const invalidValues = values.filter(value => (
+        (value.value === 'Permit outstanding' || value.value === 'Permit pending') ? value.value : null
+      ));
 
-      if (invalidValues.length > 0 || values.length == 0 ) {
-        this.state.filterDimensions.dob_cofo_date = [Moment('2011-1-1').format('X'), Moment().format('X')]
-        this.state.dateFilter = false
+      if (invalidValues.length > 0 || values.length === 0) {
+        this.state.filterDimensions.dob_cofo_date = [Moment('2011-1-1').format('X'), Moment().format('X')];
+        this.state.dateFilter = false;
       } else {
-        this.state.dateFilter = true
+        this.state.dateFilter = true;
       }
     }
 
-    this.forceUpdate()
-    this.buildSQL()
+    this.forceUpdate();
+    this.buildSQL();
   },
 
   handleSliderChange(dimension, data) {
-    //expects the data output from the ionRangeSlider
-    //updates state with an array of the filter range
-    this.state.filterDimensions[dimension] = [ data.from, data.to ]
-    this.buildSQL()
+    // expects the data output from the ionRangeSlider
+    // updates state with an array of the filter range
+    this.state.filterDimensions[dimension] = [data.from, data.to];
+    this.buildSQL();
   },
 
   createSQLChunks() {
-    this.sqlChunks = {}
-    //generate SQL WHERE partials for each filter dimension
-    this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status)
-    this.createMultiSelectSQLChunk('dcp_pipeline_category', this.state.filterDimensions.dcp_pipeline_category)
-    this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map)
+    this.sqlChunks = {};
+    // generate SQL WHERE partials for each filter dimension
+    this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
+    this.createMultiSelectSQLChunk('dcp_pipeline_category', this.state.filterDimensions.dcp_pipeline_category);
+    this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
 
-    if(this.state.dateFilter) {
-      this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date)
+    if (this.state.dateFilter) {
+      this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date);
     }
   },
 
   createUnitsSQLChunk(dimension, range) {
-
-    this.sqlChunks[dimension] = `(dcp_units_use_map >= \'${range[0]}\' AND dcp_units_use_map <= \'${range[1]}\')`
+    this.sqlChunks[dimension] = `(dcp_units_use_map >= '${range[0]}' AND dcp_units_use_map <= '${range[1]}')`;
   },
 
   createDateSQLChunk(dimension, range) {
-    var dateRangeFormatted = {
-      from:Moment(range[0], 'X').format('YYYY-MM-DD'),
-      to:Moment(range[1], 'X').format('YYYY-MM-DD')
-    }
+    const dateRangeFormatted = {
+      from: Moment(range[0], 'X').format('YYYY-MM-DD'),
+      to: Moment(range[1], 'X').format('YYYY-MM-DD'),
+    };
 
-    if(this.state.dateFilter) {
-      this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= \'${dateRangeFormatted.to}\' OR dob_cofo_date_last <= \'${dateRangeFormatted.from}\')`
+    if (this.state.dateFilter) {
+      this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= '${dateRangeFormatted.to}' OR dob_cofo_date_last <= '${dateRangeFormatted.from}')`;
     }
   },
 
   createMultiSelectSQLChunk(dimension, values) {
-    //for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
-    //like ( dimension = 'value1' OR dimension = 'value2')
-    var subChunks = values.map(function(value) {
-      return dimension + ' = \'' + value.value + '\''
-    })
+    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
+    // like ( dimension = 'value1' OR dimension = 'value2')
+    const subChunks = values.map(value => `${dimension} = '${value.value}'`);
 
-    if(subChunks.length > 0) { //don't set sqlChunks if nothing is selected
-      var chunk = '(' + subChunks.join(' OR ') + ')'
+    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
+      const chunk = `(${subChunks.join(' OR ')})`;
 
-      this.sqlChunks[dimension] = chunk
+      this.sqlChunks[dimension] = chunk;
     }
-
-
   },
 
   buildSQL() {
+    // assemble sql chunks based on the current state
+    this.createSQLChunks();
 
-    //assemble sql chunks based on the current state
-    this.createSQLChunks()
+    const sqlTemplate = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `;
 
-    var sqlTemplate = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `
+    const chunksArray = [];
 
-    var chunksArray = []
-    for (var key in this.sqlChunks) {
-      chunksArray.push(this.sqlChunks[key])
-    }
+    Object.keys(this.sqlChunks).forEach(key => chunksArray.push(this.sqlChunks[key]));
 
-    var chunksString = chunksArray.join(' AND ')
+    const chunksString = chunksArray.join(' AND ');
 
-    var sql = sqlTemplate + chunksString
-    this.props.updateSQL(sql)
+    const sql = sqlTemplate + chunksString;
+    this.props.updateSQL(sql);
   },
 
-  render: function(){
-
-    var self=this;
-    return(
+  render() {
+    return (
       <div>
         <List>
           <Subheader>
             Development Status
-            <InfoIcon text='Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data'/>
+            <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
           </Subheader>
           <ListItem
-            disabled={true}
+            disabled
           >
             <Select
               multi
               value={this.state.filterDimensions.dcp_pipeline_status}
               name="form-field-name"
               placeholder="No Status Filter Applied"
-              options={filterDimensions['dcp_pipeline_status'].options}
+              options={filterDimensions.dcp_pipeline_status.options}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
             />
           </ListItem>
-          <Divider/>
+          <Divider />
 
           <Subheader>
             Category
-            <InfoIcon text='Categorizes developments based on the construction and housing types, determined using DOB Permit data'/>
+            <InfoIcon text="Categorizes developments based on the construction and housing types, determined using DOB Permit data" />
           </Subheader>
           <ListItem
-            disabled={true}
+            disabled
           >
             <Select
               multi
               value={this.state.filterDimensions.dcp_pipeline_category}
               name="form-field-name"
               placeholder="No Category Filter Applied"
-              options={filterDimensions['dcp_pipeline_category'].options}
+              options={filterDimensions.dcp_pipeline_category.options}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
             />
           </ListItem>
-          <Divider/>
+          <Divider />
 
           <Subheader>
             Development Size (Net Units)
-            <InfoIcon text='Net change in units resulting from development. Negative values occur from demolitions and/or alterations that reduce the number of units.'/>
+            <InfoIcon text="Net change in units resulting from development. Negative values occur from demolitions and/or alterations that reduce the number of units." />
           </Subheader>
           <ListItem
-            disabled={true}
+            disabled
           >
             <RangeSlider
-            data={this.state.filterDimensions.dcp_units_use_map}
-            type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}/>
+              data={this.state.filterDimensions.dcp_units_use_map}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
+            />
           </ListItem>
-          <Divider/>
+          <Divider />
 
           <Subheader>
             Completion Date
-            <InfoIcon text='Reflects date(s) when developments have received Certificate(s) of Occupancy (CofO). If a development has received multiple CofOs, filter evalutes timeframe between earliest CofO (since 2010) and most recent CofO.'/>
+            <InfoIcon text="Reflects date(s) when developments have received Certificate(s) of Occupancy (CofO). If a development has received multiple CofOs, filter evalutes timeframe between earliest CofO (since 2010) and most recent CofO." />
           </Subheader>
           <ListItem
-            disabled={true}
+            disabled
           >
             <RangeSlider
-            data={this.state.filterDimensions.dob_cofo_date}
-            type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
-            disable={!this.state.dateFilter}
-            prettify= {function (date) {
+              data={this.state.filterDimensions.dob_cofo_date}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
+              disable={!this.state.dateFilter}
+              prettify={function (date) {
                 return Moment(date, 'X').format('MMM YYYY');
-            }}/>
+              }}
+            />
           </ListItem>
         </List>
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
 
-
-module.exports=LayerSelector
+module.exports = LayerSelector;
 
 function InfoIcon(props) {
   return (
@@ -307,55 +280,15 @@ function InfoIcon(props) {
         <Tooltip id="tooltip">{props.text}</Tooltip>
       }
     >
-      <i className="fa fa-info-circle" aria-hidden="true"></i>
+      <i className="fa fa-info-circle" aria-hidden="true" />
     </OverlayTrigger>
 
-  )
+  );
 }
 
+InfoIcon.propTypes = {
+  text: React.PropTypes.string,
+};
 
-var RangeSlider = React.createClass({
-  //Props:
-  //  data - array with min and max
 
-  componentDidMount() {
-    var self=this
-    $(this.refs.sliderEl).ionRangeSlider({
-      type: self.props.type,
-      min: self.props.data[0],
-      max: self.props.data[1],
-      from: self.props.data[0],
-      to: self.props.data[1],
-      step: self.props.step,
-      disable: self.props.disable ? self.props.disable : false,
-      onFinish: self.props.onChange,
-      prettify: self.props.prettify
-    });
-
-    this.slider = $(this.refs.sliderEl).data("ionRangeSlider");
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.disable) {
-      this.slider.update({
-        min: nextProps.data[0],
-        max: nextProps.data[1],
-        from: nextProps.data[0],
-        to: nextProps.data[1],
-        disable: true
-      })
-    } else {
-      this.slider.update({
-        disable: false
-      })
-    }
-  },
-
-  render: function() {
-    return(
-      <input type="text" ref="sliderEl" value=""/>
-    )
-  }
-})
-
-module.exports=LayerSelector
+module.exports = LayerSelector;

@@ -1,4 +1,4 @@
-var appConfig = {
+const appConfig = {
 
   auth0_client_id: '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
 
@@ -12,8 +12,8 @@ var appConfig = {
 
   carto_user: 'cpadmin',
 
-  mapzen_api_key: 'mapzen-ZyMEp5H'
+  mapzen_api_key: 'mapzen-ZyMEp5H',
 
-}
+};
 
-module.exports = appConfig
+module.exports = appConfig;

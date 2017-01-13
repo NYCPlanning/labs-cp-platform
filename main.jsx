@@ -1,28 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import {Route, Router, browserHistory} from 'react-router'
-import { createHistory, useBasename } from 'history'
-import ReactGA from 'react-ga'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
-import routes from './app/routes.jsx'
+import routes from './app/routes';
 
-//initialize google analytics
-ReactGA.initialize('UA-84250233-2')
+// initialize google analytics
+ReactGA.initialize('UA-84250233-2');
 
 function fireTracking() {
   ReactGA.set({ page: window.location.pathname });
-  ReactGA.pageview( window.location.pathname );
+  ReactGA.pageview(window.location.pathname);
 }
-
-
-const history = useBasename(createHistory)({
-  basename: null
-})
 
 
 ReactDOM.render(
   <Router onUpdate={fireTracking} history={browserHistory}>
     {routes}
   </Router>,
-  document.getElementById('root')
-)
+  document.getElementById('root'),
+);

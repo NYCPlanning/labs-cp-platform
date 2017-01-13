@@ -1,55 +1,59 @@
-import React from 'react'
-import update from 'react/lib/update'
-import {Tabs, Tab} from 'material-ui/Tabs'
-import Toggle from 'material-ui/Toggle'
-import _ from 'underscore'
+import React from 'react';
+import update from 'react/lib/update';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import Toggle from 'material-ui/Toggle';
+import _ from 'underscore';
 
-import LayerSelector from './LayerSelector.jsx'
-import LayerConfig from './LayerConfig.jsx'
+import LayerSelector from './LayerSelector';
+import LayerConfig from './LayerConfig';
 
-import Carto from '../../helpers/carto.js'
-import choropleth from '../../helpers/choropleth.js'
+import Carto from '../../helpers/carto';
+import choropleth from '../../helpers/choropleth';
 
 const Pipeline = React.createClass({
+  propTypes: {
+    onUpdate: React.PropTypes.func,
+  },
+
   getInitialState() {
-    return ({ mode: 'points' })
+    return ({ mode: 'points' });
   },
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.state.mode != prevState.mode) {
-      this.updateLayerConfig(this.sql)
+    if (this.state.mode !== prevState.mode) {
+      this.updateLayerConfig(this.sql);
     }
   },
 
   updateLayerConfig(sql) {
-    //use this method to build new mapConfig based on mode
-    const self=this
-    this.sql=sql
+    // use this method to build new mapConfig based on mode
+    const self = this;
+    this.sql = sql;
 
-    if (this.state.mode == 'points') {
-      const config = LayerConfig.points
+    if (this.state.mode === 'points') {
+      const config = LayerConfig.points;
 
-      //set the sql for the vector source
+      // set the sql for the vector source
       const newConfig = update(config, {
         sources: {
           0: {
             options: {
               sql: {
-                $set: [sql]
-              }
-            }
-          }
-        }
-      })
+                $set: [sql],
+              },
+            },
+          },
+        },
+      });
 
-      //update the layer config 
-      this.sendNewConfig(newConfig)
+      // update the layer config
+      this.sendNewConfig(newConfig);
     }
 
-    if (this.state.mode == 'polygons') {
-      //we need all the data client-side to figure out styling/breaks so a vector tile source will not work
+    if (this.state.mode === 'polygons') {
+      // we need all the data client-side to figure out styling/breaks so a vector tile source will not work
 
-      //get geojson
+      // get geojson
 
       const groupSQL = `
         WITH data as (SELECT a.the_geom, a.borocd, a.dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode a RIGHT JOIN (${sql}) b ON a.cartodb_id = b.cartodb_id)
@@ -61,77 +65,74 @@ const Pipeline = React.createClass({
             GROUP BY borocd
         ) b 
         ON a.borocd::text = b.borocd
-      `
+      `;
 
       Carto.SQL(groupSQL)
         .then((data) => {
-
           const paint = _.extend({
-            "fill-outline-color": "white",
-            "fill-opacity": 0.75
+            'fill-outline-color': 'white',
+            'fill-opacity': 0.75,
 
           }, choropleth(data, {
             valueProperty: 'delta',
-            scale: ['#edf8fb','#b2e2e2','#66c2a4','#2ca25f','#006d2c'],
+            scale: ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c'],
             steps: 5,
-            mode: 'q'
-          }))
+            mode: 'q',
+          }));
 
 
           const newConfig = {
-              sources: [
-                {
-                  "id": "pipeline-polygons",
-                  "type": "geojson",
-                  "data": data
-                }
-              ],
-              mapLayers: [
-                {
-                  "id": "pipeline-polygons",
-                  "source": 'pipeline-polygons',
-                  "source-layer": "layer0",
-                  "type": "fill",
-                  'paint': paint
-                }
-              ],
-              legend: (
-                <div className="legend-section">
-                   Legend 
+            sources: [
+              {
+                id: 'pipeline-polygons',
+                type: 'geojson',
+                data,
+              },
+            ],
+            mapLayers: [
+              {
+                id: 'pipeline-polygons',
+                source: 'pipeline-polygons',
+                'source-layer': 'layer0',
+                type: 'fill',
+                paint,
+              },
+            ],
+            legend: (
+              <div className="legend-section">
+                   Legend
                 </div>
-              )
-            }
-        
-          self.sendNewConfig(newConfig)
-        })
+              ),
+          };
 
+          self.sendNewConfig(newConfig);
+        });
     }
-
   },
 
   // updateLayerConfigOld(sql) {
-  //   //store the current data query in this, used when this method is called on mode change 
+  //   //store the current data query in this, used when this method is called on mode change
   //   //( it is normally called by the LayerSelector)
   //   this.sql=sql
 
   //   //change the layer config based on mode
-  //   const config = this.state.mode == 'points' ? LayerConfig.points : 
+  //   const config = this.state.mode == 'points' ? LayerConfig.points :
 
   //   //update the sql for the map source based on the mode.  For points it is unchanged, for polygons it will be a CTE based on the original data query
-  //   const mapSql= this.state.mode == 'points' ? sql : 
+  //   const mapSql= this.state.mode == 'points' ? sql :
   //     `WITH data as (
-  //       SELECT * 
+  //       SELECT *
   //       FROM nchatterjee.dob_permits_cofos_hpd_geocode
   //     )
 
-  //     SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta 
-  //     FROM dcp_cdboundaries a 
+  //     SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta
+  //     FROM dcp_cdboundaries a
   //     LEFT JOIN (
-  //       SELECT borocd, SUM(dcp_units_use_map) as delta FROM data 
+  //       SELECT borocd, SUM(dcp_units_use_map) as delta FROM data
   //         GROUP BY borocd
-  //     ) b 
+  //     ) b
   //     ON a.borocd::text = b.borocd`
-    
+
   //   const newConfig = update(config, {
   //     sources: {
   //       0: {
@@ -158,16 +159,16 @@ const Pipeline = React.createClass({
     //   }
     // })
 
-    //pass the new config up to Jane
+    // pass the new config up to Jane
     this.props.onUpdate('pipeline', {
       sources: newConfig.sources,
       mapLayers: newConfig.mapLayers,
-      legend: newConfig.legend
-    })
+      legend: newConfig.legend,
+    });
   },
 
   handleModeToggle() {
-    this.setState({ mode: this.state.mode == 'points' ? 'polygons' : 'points'})
+    this.setState({ mode: this.state.mode === 'points' ? 'polygons' : 'points' });
   },
 
   render() {
@@ -182,8 +183,8 @@ const Pipeline = React.createClass({
           About this Data Layer
         </Tab>
         <Tab label="Choropleth">
-          <Toggle 
-            toggled={this.state.mode=='polygons'}
+          <Toggle
+            toggled={this.state.mode === 'polygons'}
             onToggle={this.handleModeToggle}
           />
         </Tab>
@@ -191,10 +192,9 @@ const Pipeline = React.createClass({
           Coming Soon
         </Tab>
       </Tabs>
-    )
-  }
-})
+    );
+  },
+});
 
 
-
-export default Pipeline
+export default Pipeline;

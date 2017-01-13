@@ -1,3 +1,3 @@
-import Jane from './Jane.js'
+import Jane from './Jane';
 
-export default Jane
+export default Jane;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www",
-    "devserve": "webpack-dev-server --config webpack.dev.config.js --hot --progress --colors --history-api-fallback --inline --content-base public/",
+    "devserve": "webpack-dev-server --config webpack.dev.config.js --display-error-detials --hot --progress --colors --history-api-fallback --inline --content-base public/",
     "probuild": "webpack -p --config webpack.config.js --progress --colors",
     "postinstall": "npm run probuild",
     "test": "mocha",

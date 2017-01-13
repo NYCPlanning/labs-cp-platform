@@ -1,44 +1,49 @@
 // nycgeom.js - helper methods for NYC known geometries
 // simple known geometries are 'cd' - community district, 'nta' - neighborhood tabulation area, etc
-import nta from '../helpers/nta.js'
+import nta from '../helpers/nta';
 
-var NycGeom = {
-  //get the column name and dataset for a given geomType
-  getGeomConfig: function(geomType) {
-    if (geomType=='cd') {
+const NycGeom = {
+  // get the column name and dataset for a given geomType
+  getGeomConfig(geomType) {
+    if (geomType === 'cd') {
       return {
         column: 'borocd',
-        dataset: 'cpadmin.dcp_cdboundaries'
-      }
-    } else if (geomType=='nta') {
+        dataset: 'cpadmin.dcp_cdboundaries',
+      };
+    } else if (geomType === 'nta') {
       return {
         column: 'ntacode',
-        dataset: 'cpadmin.dcp_ntaboundaries'
-      }
+        dataset: 'cpadmin.dcp_ntaboundaries',
+      };
     }
+
+    return 'notfound';
   },
 
-  getGeomName: function(geomType, id) {
-    //return a human-readable geometry name for a given type and ID.
-    //For example ('cd', '101') => 'Manhattan Community District 1'
-    //TODO make this a sitewide helper method
+  getGeomName(geomType, id) {
+    // return a human-readable geometry name for a given type and ID.
+    // For example ('cd', '101') => 'Manhattan Community District 1'
+    // TODO make this a sitewide helper method
 
-    var borocode = id.toString()[0]
-    var cd = id % 100
+    const borocode = id.toString()[0];
+    const cd = id % 100;
 
-    if (geomType == 'cd') {
-      var boro = (borocode=='1') ? 'Manhattan' :
-        (borocode=='2') ? 'Bronx' :
-        (borocode=='3') ? 'Brooklyn' :
-        (borocode=='4') ? 'Queens' :
-        (borocode=='5') ? 'Staten Island' : 'Invalid ID'
-      return `${boro} Community District ${cd}`
+    if (geomType === 'cd') {
+      let boro;
+
+      if (borocode === '1') boro = 'Manhattan';
+      else if (borocode === '2') boro = 'Bronx';
+      else if (borocode === '3') boro = 'Brooklyn';
+      else if (borocode === '4') boro = 'Queens';
+      else if (borocode === '5') boro = 'Staten Island';
+
+      return `${boro} Community District ${cd}`;
+    } else if (geomType === 'nta') {
+      return `${nta.getNtaName(id)} (${id})`;
     }
 
-    if (geomType == 'nta') {
-      return `${nta.getNtaName(id)} (${id})`
-    }
-  }
-}
+    return 'notfound';
+  },
+};
 
-module.exports = NycGeom
+module.exports = NycGeom;

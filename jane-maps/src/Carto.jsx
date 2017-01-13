@@ -1,6 +1,5 @@
 // carto.js - helper methods for interacting with the carto APIs
 
-import appConfig from './appConfig';
 
 module.exports = {
   // given a string, get matches from capitalprojects based on name or projectid
@@ -56,11 +55,11 @@ module.exports = {
     return Promise.all(promises);
   },
 
-  getVectorTileTemplate(mapConfig) {
+  getVectorTileTemplate(mapConfig, options) {
     return new Promise((resolve, reject) => {
       $.ajax({
         type: 'POST',
-        url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
+        url: `https://${options.carto_domain}/user/${options.carto_user}/api/v1/map`,
         data: JSON.stringify(mapConfig),
         dataType: 'text',
         contentType: 'application/json',
@@ -68,7 +67,7 @@ module.exports = {
           data = JSON.parse(data);
           const layergroupid = data.layergroupid;
 
-          const template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`;
+          const template = `https://${options.carto_domain}/user/${options.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`;
 
           resolve(template);
         },
@@ -119,11 +118,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       $.getJSON(apiCall)
         .done((data) => {
-          if (format === 'geojson') {
-            resolve(data);
-          } else {
-            resolve(data.rows);
-          }
+          format == 'geojson' ? resolve(data) : resolve(data.rows);
         });
     });
   },

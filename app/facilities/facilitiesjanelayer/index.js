@@ -1,5 +1,5 @@
-import Component from './Component.jsx'
-import ListItem from './ListItem.jsx'
+import Component from './Component';
+import ListItem from './ListItem';
 
 module.exports = {
   id: 'facilities',
@@ -8,6 +8,6 @@ module.exports = {
   visible: true,
   interactivityMapLayers: ['facilities-points'],
   component: Component,
-  listItem: ListItem
-}
+  listItem: ListItem,
+};
 

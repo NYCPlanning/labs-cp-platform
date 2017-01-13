@@ -1,24 +1,21 @@
-import React from 'react'
-import update from 'react/lib/update'
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem'
-import Checkbox from 'material-ui/Checkbox'
-import {Tabs, Tab} from 'material-ui/Tabs'
+import React from 'react';
+import Checkbox from 'material-ui/Checkbox';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
-import appConfig from '../../helpers/appConfig.js'
+import appConfig from '../../helpers/appConfig';
 
 
 const layerConfig = {
   subway_lines: {
-    sources: [ 
+    sources: [
       {
         id: 'subway_lines',
         type: 'cartoraster',
 
-        options: { 
-          "carto_user": appConfig.carto_user,
-          "carto_domain": appConfig.carto_domain,
-          "cartocss": `
+        options: {
+          carto_user: appConfig.carto_user,
+          carto_domain: appConfig.carto_domain,
+          cartocss: `
             #doitt_subwaylines {
                  line-width: 2;
                  line-opacity:0.9;
@@ -54,28 +51,28 @@ const layerConfig = {
               #doitt_subwaylines[rt_symbol="SI"] {
                  line-color: #0F3B82 ;
               }`,
-          "sql": "select * from doitt_subwaylines"    
-        } 
-      }
+          sql: 'select * from doitt_subwaylines',
+        },
+      },
     ],
     mapLayers: [
       {
-        "id": 'subway_lines',
-        "type": "raster",
-        "source": 'subway_lines'
-      }
-    ]
+        id: 'subway_lines',
+        type: 'raster',
+        source: 'subway_lines',
+      },
+    ],
   },
 
   subway_stations: {
     sources: [
       {
-        id: "subway_stations",
+        id: 'subway_stations',
         type: 'cartoraster',
-        options: { 
-          "carto_user": appConfig.carto_user,
-          "carto_domain": appConfig.carto_domain,
-          "cartocss": `
+        options: {
+          carto_user: appConfig.carto_user,
+          carto_domain: appConfig.carto_domain,
+          cartocss: `
             #doitt_subwaystations{
               marker-fill-opacity: 0.9;
               marker-line-color: #000000;
@@ -87,74 +84,73 @@ const layerConfig = {
               marker-fill: #FFFFFF;
               marker-allow-overlap: true;
             }`,
-          "sql": "select * from doitt_subwaystations"    
-        }
-      }
+          sql: 'select * from doitt_subwaystations',
+        },
+      },
     ],
     mapLayers: [
       {
-        "id": 'subway_stations',
-        "type": "raster",
-        "source": 'subway_stations'
-      }
-    ]
-  }
-}
+        id: 'subway_stations',
+        type: 'raster',
+        source: 'subway_stations',
+      },
+    ],
+  },
+};
 
 const Transportation = React.createClass({
-  getInitialState() {
-    return({
-      activeCheckboxes: ['subway_lines']
-    })
+  propTypes: {
+    onUpdate: React.PropTypes.func,
   },
 
+  getInitialState() {
+    return ({
+      activeCheckboxes: ['subway_lines'],
+    });
+  },
 
 
   componentDidMount() {
-    this.updateMapElements()
+    this.updateMapElements();
   },
 
   updateMapElements() {
-  
-    let sources=[], mapLayers=[]
+    const sources = [];
+    const mapLayers = [];
 
-    console.log(this.state.activeCheckboxes)
 
-    this.state.activeCheckboxes.map((id) => {
-      console.log(layerConfig[id])
-      const config = layerConfig[id]
-      config.sources.map((source) => { sources.push(source)})
-      config.mapLayers.map((mapLayer) => { mapLayers.push(mapLayer)})
-    })
+    this.state.activeCheckboxes.forEach((id) => {
+      const config = layerConfig[id];
+      config.sources.forEach((source) => { sources.push(source); });
+      config.mapLayers.forEach((mapLayer) => { mapLayers.push(mapLayer); });
+    });
 
     this.props.onUpdate('transportation', {
-      sources: sources,
-      mapLayers: mapLayers
-    })
+      sources,
+      mapLayers,
+    });
   },
 
   handleCheck(id) {
-    let found = this.state.activeCheckboxes.includes(id)
+    const found = this.state.activeCheckboxes.includes(id);
     if (found) {
-      this.setState({ 
-        activeCheckboxes: this.state.activeCheckboxes.filter(x => x !== id)
-      }, this.updateMapElements)
+      this.setState({
+        activeCheckboxes: this.state.activeCheckboxes.filter(x => x !== id),
+      }, this.updateMapElements);
     } else {
-      this.setState({ 
-        activeCheckboxes: [ ...this.state.activeCheckboxes, id ]
-      }, this.updateMapElements)
+      this.setState({
+        activeCheckboxes: [...this.state.activeCheckboxes, id],
+      }, this.updateMapElements);
     }
-
-    
   },
 
   render() {
     return (
       <div>
-        <Tabs className='sidebar-tabs'>
-          <Tab label='Data'>
+        <Tabs className="sidebar-tabs">
+          <Tab label="Data">
             <div className="sidebar-tab-content">
-              <h4>Transportation Layers</h4> 
+              <h4>Transportation Layers</h4>
 
               <Checkbox
                 label="Subway Lines"
@@ -168,17 +164,17 @@ const Transportation = React.createClass({
               />
             </div>
           </Tab>
-          <Tab label='About'>
+          <Tab label="About">
             <div className="sidebar-tab-content">
-              <h4>Transportation Layers</h4> 
+              <h4>Transportation Layers</h4>
               <p>These layers are provided by the DoITT GIS Team, and are available on their <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">public carto server</a>.</p>
             </div>
           </Tab>
         </Tabs>
 
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default Transportation
+export default Transportation;
