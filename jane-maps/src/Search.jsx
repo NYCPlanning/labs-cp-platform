@@ -3,10 +3,30 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import Autosuggest from 'react-autosuggest';
+import $ from 'jquery';
 
-import MapzenGeocoder from './MapzenGeocoder';
+function getSuggestionValue(suggestion) {
+  return suggestion.properties.label;
+}
+
+function renderSuggestion(suggestion) {
+  return (
+    <div><i className="fa fa-map-marker" aria-hidden="true" /><span>{suggestion.properties.label}</span></div>
+  );
+}
+
+function shouldRenderSuggestions(value) {
+  return value.trim().length > 2;
+}
 
 const Search = React.createClass({
+  propTypes: {
+    bounds: React.PropTypes.object,
+    mapzen_api_key: React.PropTypes.string,
+    onGeocoderSelection: React.PropTypes.func,
+    onClear: React.PropTypes.func,
+    selectionActive: React.PropTypes.boolean,
+  },
 
   getInitialState() {
     return {
@@ -102,19 +122,5 @@ const Search = React.createClass({
     );
   },
 });
-
-function getSuggestionValue(suggestion) {
-  return suggestion.properties.label;
-}
-
-function renderSuggestion(suggestion) {
-  return (
-    <div><i className="fa fa-map-marker" aria-hidden="true" /><span>{suggestion.properties.label}</span></div>
-  );
-}
-
-function shouldRenderSuggestions(value) {
-  return value.trim().length > 2;
-}
 
 module.exports = Search;

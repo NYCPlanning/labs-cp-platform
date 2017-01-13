@@ -1,15 +1,21 @@
-//GlobalModal.jsx - A react-bootstrap modal that can be quickly composed
-//Props:
+// GlobalModal.jsx - A react-bootstrap modal that can be quickly composed
+// Props:
 //  heading - A string to be used in the header
 //  body - JSX to be inserted into the body of the modal
 //  closeText - A string to be used in the close button
 
-import React from 'react'
-import {Modal, Button} from 'react-bootstrap'
+import React from 'react';
+import { Modal } from 'react-bootstrap';
 
-import '../../stylesheets/common/GlobalModal.scss'
+import '../../stylesheets/common/GlobalModal.scss';
 
-var GlobalModal = React.createClass({
+const GlobalModal = React.createClass({
+  propTypes: {
+    closeText: React.PropTypes.string,
+    heading: React.PropTypes.string,
+    body: React.PropTypes.element,
+  },
+
   getInitialState() {
     return { showModal: false };
   },
@@ -23,7 +29,7 @@ var GlobalModal = React.createClass({
   },
 
   render() {
-    var closeText = this.props.closeText ? this.props.closeText : 'Close'
+    const closeText = this.props.closeText ? this.props.closeText : 'Close';
 
     return (
       <Modal show={this.state.showModal} onHide={this.close}>
@@ -38,7 +44,7 @@ var GlobalModal = React.createClass({
         </Modal.Footer>
       </Modal>
     );
-  }
-})
+  },
+});
 
-module.exports=GlobalModal
+module.exports = GlobalModal;

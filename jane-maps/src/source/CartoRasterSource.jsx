@@ -1,7 +1,19 @@
 import React from 'react';
-import Carto from '../Carto';
+import $ from 'jquery';
 
 const CartoRasterSource = React.createClass({
+  propTypes: {
+    map: React.PropTypes.shape({
+      mapObject: React.PropTypes.object,
+    }),
+    source: React.PropTypes.shape({
+      options: React.PropTypes.object,
+      tiles: React.PropTypes.array,
+      id: React.PropTypes.string,
+      sql: React.PropTypes.string,
+    }),
+    onLoaded: React.PropTypes.func,
+  },
 
   componentWillMount() {
     this.map = this.props.map.mapObject;
@@ -14,12 +26,12 @@ const CartoRasterSource = React.createClass({
   componentWillReceiveProps(nextProps) {
     // compare sql
 
-    if (!(nextProps.source.sql == this.props.source.sql)) {
+    if (!(nextProps.source.sql === this.props.source.sql)) {
       this.fetchData(nextProps.source.sql);
     }
   },
 
-  fetchData(sql) {
+  fetchData() {
     const { carto_domain, carto_user } = this.props.source.options;
 
     const mapConfig = {
@@ -40,12 +52,12 @@ const CartoRasterSource = React.createClass({
       url: `https://${carto_domain}/user/${carto_user}/api/v1/map`,
       dataType: 'text',
       contentType: 'application/json',
-      success: function (data) {
+      success: (data) => {
         data = JSON.parse(data);
         const layergroupid = data.layergroupid;
         const template = `https://${carto_domain}/user/${carto_user}/api/v1/map/${layergroupid}/{z}/{x}/{y}.png`;
         this.addSource(template);
-      }.bind(this),
+      },
     });
   },
 

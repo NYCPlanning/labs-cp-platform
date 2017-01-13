@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import update from 'react/lib/update';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -11,6 +11,15 @@ import ListItem from './ListItem';
 // Once an item is dropped, we then pass the new layer order up to Jane to update the main state
 
 const LayerList = React.createClass({
+  propTypes: {
+    layers: React.PropTypes.array,
+    onLayerReorder: React.PropTypes.func,
+    update: React.PropTypes.func,
+    expanded: React.PropTypes.boolean,
+    onLayerClick: React.PropTypes.func,
+    selectedLayer: React.PropTypes.string,
+    onToggleExpanded: React.PropTypes.func,
+  },
 
   getInitialState() {
     return ({
@@ -56,10 +65,10 @@ const LayerList = React.createClass({
     };
 
     let layers = this.state.layers.map((layer, i) => {
-      let className = this.props.selectedLayer == layer.id ? 'list-item selected' : 'list-item';
+      let className = this.props.selectedLayer === layer.id ? 'list-item selected' : 'list-item';
       if (!layer.visible) className += ' disabled';
 
-      if (layer.inList != false) {
+      if (layer.inList !== false) {
         return (
           <ListItem
             className={className}
@@ -73,6 +82,8 @@ const LayerList = React.createClass({
           />
         );
       }
+
+      return null;
     });
 
     // reverse layers so the list reflects the map (first in array will be bottom on map)

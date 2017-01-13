@@ -16,6 +16,17 @@ import SelectedFeaturesPane from './SelectedFeaturesPane';
 // import './styles.scss'
 
 const Jane = React.createClass({
+  propTypes: {
+    poiFeature: React.PropTypes.object,
+    poiLabel: React.PropTypes.string,
+    mapConfig: React.PropTypes.object,
+    layerContentVisible: React.PropTypes.boolean,
+    mapInit: React.PropTypes.object,
+    style: React.PropTypes.object,
+    context: React.PropTypes.object,
+    search: React.PropTypes.boolean,
+    searchConfig: React.PropTypes.object,
+  },
 
   getInitialState() {
     const defaultMapConfig = {
@@ -36,7 +47,6 @@ const Jane = React.createClass({
 
   componentDidMount() {
     // this.map is the GLMap Component, not the map object itself
-    this.map = this.refs.map;
 
     this.map.mapObject.on('zoomend', this.resetSelectedFeatures);
     this.map.mapObject.on('dragend', this.resetSelectedFeatures);
@@ -44,57 +54,23 @@ const Jane = React.createClass({
     this.map.mapObject.on('click', this.handleMapLayerClick);
   },
 
-  resetSelectedFeatures() {
-    this.setState({
-      selectedFeatures: [],
-    });
-  },
-
-  componentDidUpdate() {
-    const self = this;
-    // this.map is the GLMap Component, not the map object itself
-    // do we actually need to do this again here?
-    this.map = this.refs.map;
-
-    // this.map.mapObject.off('click')
-    // this.map.mapObject.on('click', (e) => {
-    //   const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: ['facilities-points'] });
-
-    //   console.log(features)
-    // })
-  },
-
-  showPoiMarker(feature, label) {
-    this.setState({
-      poiFeature: feature,
-      poiLabel: label,
-    });
-  },
-
-  hidePoiMarker() {
-    this.setState({
-      poiFeature: null,
-      poiLabel: null,
-    });
-  },
-
-  onMapLoad(style) {
+  onMapLoad() {
     this.setState({ mapLoaded: true });
   },
 
-  // keeps track of loaded sources in state,
-  // used to figure out whether layers are ready to be added in render()
-  handleSourceLoaded(loadedSources) {
-    this.setState({ loadedSources });
-  },
+  // return an array of all loaded mapLayers
+  getMapLayers() {
+    const mapLayers = [];
 
-  handleLayerToggle(layerid) {
-    const layer = this.state.mapConfig.layers.find((layer => layer.id == layerid));
-    layer.visible = !layer.visible;
-
-    this.setState({
-      mapConfig: this.state.mapConfig,
+    this.state.mapConfig.layers.forEach((layer) => {
+      layer.mapLayers.forEach((mapLayer) => {
+        if (layer.visible) {
+          mapLayers.push(mapLayer.id);
+        }
+      });
     });
+
+    return mapLayers;
   },
 
   handleLayerReorder(layers) {
@@ -107,7 +83,7 @@ const Jane = React.createClass({
   handleLayerClick(layerid) {
     if (!this.state.layerContentVisible) this.toggleLayerContent();
 
-    if (this.state.mapConfig.selectedLayer == layerid) {
+    if (this.state.mapConfig.selectedLayer === layerid) {
       this.toggleLayerContent();
     } else {
       this.state.mapConfig.selectedLayer = layerid;
@@ -123,28 +99,42 @@ const Jane = React.createClass({
     this.setState({
       selectedFeatures: features,
     });
-
-    // if(features.length > 0) {
-    //   this.highlightFeature({
-    //     type: 'Feature',
-    //     geometry: features[0].geometry
-    //   })
-    // }
   },
 
-  // return an array of all loaded mapLayers
-  getMapLayers() {
-    const mapLayers = [];
+  handleLayerToggle(layerid) {
+    const theLayer = this.state.mapConfig.layers.find((layer => layer.id === layerid));
+    theLayer.visible = !theLayer.visible;
 
-    this.state.mapConfig.layers.map((layer) => {
-      layer.mapLayers.map((mapLayer) => {
-        if (layer.visible) {
-          mapLayers.push(mapLayer.id);
-        }
-      });
+    this.setState({
+      mapConfig: this.state.mapConfig,
     });
+  },
 
-    return mapLayers;
+  // keeps track of loaded sources in state,
+  // used to figure out whether layers are ready to be added in render()
+  handleSourceLoaded(loadedSources) {
+    this.setState({ loadedSources });
+  },
+
+
+  hidePoiMarker() {
+    this.setState({
+      poiFeature: null,
+      poiLabel: null,
+    });
+  },
+
+  showPoiMarker(feature, label) {
+    this.setState({
+      poiFeature: feature,
+      poiLabel: label,
+    });
+  },
+
+  resetSelectedFeatures() {
+    this.setState({
+      selectedFeatures: [],
+    });
   },
 
   highlightFeature(feature) {
@@ -152,7 +142,9 @@ const Jane = React.createClass({
     try {
       map.removeLayer('highlighted');
       map.removeSource('highlighted');
-    } catch (err) {}
+    } catch (err) {
+      // ignore
+    }
 
     map.addSource('highlighted', {
       type: 'geojson',
@@ -185,10 +177,8 @@ const Jane = React.createClass({
 
   // handles updates to a layer's configuration
   handleLayerUpdate(layerid, updates) {
-    console.log('handling layer update', layerid, updates);
-
     // get the index in mapConfig.layers of the layer to be updated
-    const layerIndex = this.state.mapConfig.layers.findIndex(layer => layer.id == layerid);
+    const layerIndex = this.state.mapConfig.layers.findIndex(layer => layer.id === layerid);
 
     // use setState with callback because multiple <Layer>s may want to update in the same render cycle
     this.setState(prevState => ({
@@ -215,9 +205,9 @@ const Jane = React.createClass({
 
 
     if (this.state.mapLoaded) {
-      mapConfig.layers.map((layer) => {
+      mapConfig.layers.forEach((layer) => {
         if (layer.sources && layer.visible) {
-          layer.sources.map((source) => {
+          layer.sources.forEach((source) => {
             sources.push(
               <Source map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id} />,
             );
@@ -230,10 +220,10 @@ const Jane = React.createClass({
     // check to see if all sources for visible layers are loaded
     let allSourcesLoaded = true;
 
-    mapConfig.layers.map((layer, i) => {
+    mapConfig.layers.forEach((layer) => {
       if (layer.visible && layer.sources && layer.mapLayers) {
-        layer.mapLayers.map((mapLayer) => {
-          if (!this.state.loadedSources.hasOwnProperty(mapLayer.source)) { allSourcesLoaded = false; }
+        layer.mapLayers.forEach((mapLayer) => {
+          if (!Object.prototype.hasOwnProperty.call(this.state.loadedSources, mapLayer.source)) { allSourcesLoaded = false; }
         });
       }
     });
@@ -244,14 +234,14 @@ const Jane = React.createClass({
 
     if (allSourcesLoaded) {
       this.order = 0;
-      mapConfig.layers.map((layer, i) => {
+      mapConfig.layers.forEach((layer) => {
         // render layers in order
         if (layer.visible && layer.sources && layer.mapLayers) {
-          layer.mapLayers.map((mapLayer) => {
+          layer.mapLayers.forEach((mapLayer) => {
             mapLayers.push(<MapLayer map={this.map} config={mapLayer} key={mapLayer.id + this.order} />);
           });
 
-          this.order++;
+          this.order = this.order + 1;
         }
       });
     }
@@ -260,7 +250,7 @@ const Jane = React.createClass({
     // add legendItems for each layer
     const legendItems = [];
 
-    mapConfig.layers.map((layer, i) => {
+    mapConfig.layers.forEach((layer, i) => {
       if (layer.visible && layer.legend) {
         legendItems.push(<div key={i}>{layer.legend}</div>);
       }
@@ -269,15 +259,12 @@ const Jane = React.createClass({
     // add selected feature items for each layer
     const selectedFeatureItems = [];
 
-    mapConfig.layers.map((layer, i) => {
-      console.log(layer);
+    mapConfig.layers.forEach((layer, i) => {
       if (layer.listItem && layer.visible && layer.interactivityMapLayers) {
         const SelectedFeatureItem = layer.listItem ? layer.listItem : null;
         const layerSelectedFeatures = this.state.selectedFeatures.filter(feature => layer.interactivityMapLayers.indexOf(feature.layer.id) > -1);
 
-        console.log('layerselectedfeatures!', layerSelectedFeatures);
-
-        layerSelectedFeatures.map((layerSelectedFeature, j) => {
+        layerSelectedFeatures.forEach((layerSelectedFeature, j) => {
           selectedFeatureItems.push(<SelectedFeatureItem feature={layerSelectedFeature} key={i.toString() + j.toString()} />);
         });
       }
@@ -329,7 +316,7 @@ const Jane = React.createClass({
 
           <GLMap
             {...this.props.mapInit}
-            ref="map"
+            ref={(map) => { this.map = map; }}
             onLoad={this.onMapLoad}
           />
 

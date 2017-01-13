@@ -1,44 +1,49 @@
-import React from 'react'
-import Numeral from 'numeral'
+import React from 'react';
+import Numeral from 'numeral';
 
-import Divider from 'material-ui/Divider'
-import {ListItem} from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import FontIcon from 'material-ui/FontIcon'
+import Divider from 'material-ui/Divider';
+import { ListItem } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import FontIcon from 'material-ui/FontIcon';
 
-var CountWidget = function(props) {
+const CountWidget = (props) => {
+  const totalCount = Numeral(props.totalCount).format('0,0');
+  const selectedCount = Numeral(props.selectedCount).format('0,0');
 
-  const totalCount = Numeral(props.totalCount).format('0,0')
-  const selectedCount = Numeral(props.selectedCount).format('0,0')
+  let countText = '';
 
-  let countText = ''
-
-  if (props.selectedCount == props.totalCount) {
+  if (props.selectedCount === props.totalCount) {
     countText = (
-      <span>Showing all <span className='bigNumber'>{totalCount}</span> {props.units}</span>
-    )
+      <span>Showing all <span className="bigNumber">{totalCount}</span> {props.units}</span>
+    );
   } else {
     countText = (
       <span>
-        <span className='bigNumber'>{selectedCount}</span> of <span className='bigNumber'>{totalCount}</span> {props.units} showing
+        <span className="bigNumber">{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {props.units} showing
       </span>
-    )
+    );
   }
 
-  return(
+  return (
     <div className="countWidget">
       <Subheader>
         Current Filters
       </Subheader>
-      <ListItem 
-        leftIcon={<FontIcon className="fa fa-filter" />} 
-        disabled={true}
+      <ListItem
+        leftIcon={<FontIcon className="fa fa-filter" />}
+        disabled
       >
         {countText}
       </ListItem>
-      <Divider/>
+      <Divider />
     </div>
-  )
-}
+  );
+};
 
-module.exports=CountWidget
+CountWidget.propTypes = {
+  totalCount: React.PropTypes.string,
+  selectedCount: React.PropTypes.string,
+  units: React.PropTypes.string,
+};
+
+module.exports = CountWidget;

@@ -2,6 +2,17 @@ import React from 'react';
 import Carto from '../Carto';
 
 const CartoVectorSource = React.createClass({
+  propTypes: {
+    map: React.PropTypes.shape({
+      mapObject: React.PropTypes.object,
+    }),
+    source: React.PropTypes.shape({
+      options: React.PropTypes.object,
+      tiles: React.PropTypes.array,
+      id: React.PropTypes.string,
+    }),
+    onLoaded: React.PropTypes.func,
+  },
 
   componentWillMount() {
     this.map = this.props.map.mapObject;
@@ -13,7 +24,7 @@ const CartoVectorSource = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     // compare sql
-    if (!(nextProps.source.options.sql == this.props.source.options.sql)) {
+    if (!(nextProps.source.options.sql === this.props.source.options.sql)) {
       this.fetchData(nextProps.source.options.sql);
     }
   },
@@ -26,7 +37,7 @@ const CartoVectorSource = React.createClass({
       layers: [],
     };
 
-    sqlArray.map((sql) => {
+    sqlArray.forEach((sql) => {
       mapConfig.layers.push({
         type: 'mapnik',
         options: {

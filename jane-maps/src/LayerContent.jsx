@@ -5,14 +5,23 @@ import Toggle from 'material-ui/Toggle';
 
 
 const LayerContent = React.createClass({
+  propTypes: {
+    onLayerToggle: React.PropTypes.func,
+    layers: React.PropTypes.array,
+    selectedLayer: React.PropTypes.string,
+    onClose: React.PropTypes.func,
+    onLayerUpdate: React.PropTypes.func,
+    context: React.PropTypes.object,
+    offset: React.PropTypes.number,
+    visible: React.PropTypes.bool,
+  },
+
   handleToggle(layerid) {
     this.props.onLayerToggle(layerid);
   },
 
   render() {
     const { layers, selectedLayer } = this.props;
-
-    const activeLayer = layers.filter(layer => layer.id == selectedLayer)[0];
 
     const style = {
       fontIcon: {
@@ -40,7 +49,7 @@ const LayerContent = React.createClass({
       return (
         <div
           style={{
-            display: layer.id == selectedLayer ? 'inline' : 'none',
+            display: layer.id === selectedLayer ? 'inline' : 'none',
           }}
           key={layer.id}
         >

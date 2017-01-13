@@ -1,33 +1,35 @@
-//ModalMap.jsx - A simple mapboxGL map for the capital projects modals
-//Props:
+// ModalMap.jsx - A simple mapboxGL map for the capital projects modals
+// Props:
 //  feature: a geojson feature whose geometry will be rendered on the map
-//TODO: This is similar to SimplePointMap.jsx, maybe combine with that, or combine with a more generic MapboxGLMap.jsx
+// TODO: This is similar to SimplePointMap.jsx, maybe combine with that, or combine with a more generic MapboxGLMap.jsx
 
-import React from 'react'
-import {Button, ButtonGroup} from 'react-bootstrap'
-import extent from 'turf-extent'
-import centroid from 'turf-centroid'
-import Jane from '../../jane-maps/src'
+import React from 'react';
+import centroid from 'turf-centroid';
+import Jane from '../../jane-maps/src';
 
-import AdminBoundariesJaneLayer from '../janelayers/adminboundaries'
-import TransportationJaneLayer from '../janelayers/transportation'
-import ImageryJaneLayer from '../janelayers/imagery'
+import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
+import TransportationJaneLayer from '../janelayers/transportation';
+import ImageryJaneLayer from '../janelayers/imagery';
 
 
-import appConfig from '../helpers/appConfig.js'
+import appConfig from '../helpers/appConfig';
 
-var ModalMap = React.createClass({
-  getCenter() {
-    var feature = this.props.data;
-    //single points get flyTo(), everything else gets fitBounds()
-    if(feature.geometry.type=='Point') {
-      return feature.geometry.coordinates
-    } else {
-      return centroid(feature).geometry.coordinates //get the centroid
-    }
+const ModalMap = React.createClass({
+  propTypes: {
+    data: React.PropTypes.object,
+    feature: React.PropTypes.object,
+    label: React.PropTypes.string,
   },
 
-  
+  getCenter() {
+    const feature = this.props.data;
+    // single points get flyTo(), everything else gets fitBounds()
+    if (feature.geometry.type === 'Point') {
+      return feature.geometry.coordinates;
+    }
+
+    return centroid(feature).geometry.coordinates; // get the centroid
+  },
 
   render() {
     const mapInit = {
@@ -38,28 +40,28 @@ var ModalMap = React.createClass({
       maxZoom: null,
       pitch: 0,
       hash: true,
-      navigationControlPosition: 'bottom-right'
-    }
+      navigationControlPosition: 'bottom-right',
+    };
 
     const mapConfig = {
       layers: [
         ImageryJaneLayer,
         AdminBoundariesJaneLayer,
-        TransportationJaneLayer
-      ]
-    }
+        TransportationJaneLayer,
+      ],
+    };
 
-    return(
-      <div id='modalmap' style={{height: 450}}>
-        <Jane 
-         mapInit={mapInit}
-         mapConfig={mapConfig}
-         poiFeature={this.props.feature}
-         poiLabel={this.props.label}
+    return (
+      <div id="modalmap" style={{ height: 450 }}>
+        <Jane
+          mapInit={mapInit}
+          mapConfig={mapConfig}
+          poiFeature={this.props.feature}
+          poiLabel={this.props.label}
         />
       </div>
-    )
-  }
+    );
+  },
 });
 
-module.exports=ModalMap;
+module.exports = ModalMap;

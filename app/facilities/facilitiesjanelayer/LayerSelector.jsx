@@ -5,11 +5,12 @@
 //  updateSQL - String containing updates to SQL query based on checked layers
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import $ from 'jquery';
 
+import Checkbox from './Checkbox';
 import CountWidget from '../../common/CountWidget';
 
 import facilitiesLayers from '../facilitiesLayers';
@@ -18,6 +19,10 @@ import Carto from '../../helpers/carto';
 import '../../../stylesheets/facilities/FacLayerSelector.scss';
 
 const LayerSelector = React.createClass({
+  propTypes: {
+    mode: React.PropTypes.string,
+    updateSQL: React.PropTypes.func,
+  },
 
   getInitialState() {
     return ({
@@ -41,7 +46,7 @@ const LayerSelector = React.createClass({
     let layerStructure = facilitiesLayers;
 
     // check everything
-    layerStructure = facilitiesLayers.map((domain,) => {
+    layerStructure = facilitiesLayers.map((domain) => {
       domain.checked = true;
       domain.children = domain.children.map((group) => {
         group.checked = true;
@@ -56,8 +61,8 @@ const LayerSelector = React.createClass({
 
 
     // filter the base layerstructure if we are in a domain view
-    if (this.props.mode != 'all') {
-      layerStructure = layerStructure.filter(layer => (layer.slug == this.props.mode));
+    if (this.props.mode !== 'all') {
+      layerStructure = layerStructure.filter(layer => (layer.slug === this.props.mode));
     }
 
     this.setState({ layers: layerStructure }, () => {
@@ -67,7 +72,7 @@ const LayerSelector = React.createClass({
 
   componentDidMount() {
     // expand list if we are on a domain page
-    if (this.state.layers.length == 1) {
+    if (this.state.layers.length === 1) {
       this.expandAll();
     }
   },
@@ -84,15 +89,22 @@ const LayerSelector = React.createClass({
       });
   },
 
-  toggleCheckbox(type, domain, group, subgroup, e) {
+  getSelectedCount(sql) {
+    const self = this;
+
+    Carto.getCount(sql)
+      .then((count) => { self.setState({ selectedCount: count }); });
+  },
+
+  toggleCheckbox(type, domain, group, subgroup) {
     const layers = this.state.layers;
 
     // update state
-    if (type == 'subgroup') {
+    if (type === 'subgroup') {
       layers[domain].children[group].children[subgroup].checked = !layers[domain].children[group].children[subgroup].checked;
 
       this.buildSQL();
-    } else if (type == 'group') {
+    } else if (type === 'group') {
       const thisGroup = layers[domain].children[group];
        // figure out if new state is checked or not checked
 
@@ -111,13 +123,13 @@ const LayerSelector = React.createClass({
       thisDomain.checked = !thisDomain.checked;
 
       // toggle all children and grandChildren
-      thisDomain.children = thisDomain.children.map((group) => {
-        group.checked = thisDomain.checked;
-        group.children = group.children.map((subgroup) => {
-          subgroup.checked = thisDomain.checked;
-          return subgroup;
+      thisDomain.children = thisDomain.children.map((thisGroup) => {
+        thisGroup.checked = thisDomain.checked;
+        thisGroup.children = thisGroup.children.map((thisSubgroup) => {
+          thisSubgroup.checked = thisDomain.checked;
+          return thisSubgroup;
         });
-        return group;
+        return thisGroup;
       });
 
       this.buildSQL();
@@ -127,34 +139,39 @@ const LayerSelector = React.createClass({
   processChecked() {
     const layers = this.state.layers;
 
-    let allChecked = 0,
-      allIndeterminate = 0;
+    let allChecked = 0;
+    let allIndeterminate = 0;
     // set indeterminate states, start from the bottom and work up
-    layers.map((domain) => {
+    layers.forEach((domain) => {
       let domainChecked = 0;
       // first set all the groups
-      domain.children.map((group) => {
+      domain.children.forEach((group) => {
         let groupChecked = 0;
-        group.children.map((subgroup) => {
-          if (subgroup.checked) groupChecked++;
+        group.children.forEach((subgroup) => {
+          if (subgroup.checked) groupChecked += 1;
         });
 
-        group.checked = (groupChecked == group.children.length);
+        group.checked = (groupChecked === group.children.length);
         group.indeterminate = !!((groupChecked < group.children.length && groupChecked > 0));
 
-        if (group.checked) domainChecked++;
+        if (group.checked) domainChecked += 1;
       });
 
-      domain.checked = (domainChecked == domain.children.length);
-      domain.checked ? allChecked++ : null;
+      domain.checked = (domainChecked === domain.children.length);
+      if (domain.checked) {
+        allChecked += 1;
+      }
       domain.indeterminate = !!((domainChecked < domain.children.length && domainChecked > 0));
-      domain.indeterminate ? allIndeterminate++ : null;
+      if (domain.indeterminate) {
+        allIndeterminate += 1;
+      }
     });
+
     let checkedStatus;
     // figure out whether all, none, or some are checked
-    if (allChecked == layers.length) {
+    if (allChecked === layers.length) {
       checkedStatus = 'all';
-    } else if (allChecked == 0 && allIndeterminate == 0) {
+    } else if (allChecked === 0 && allIndeterminate === 0) {
       checkedStatus = 'none';
     } else {
       checkedStatus = null;
@@ -167,10 +184,12 @@ const LayerSelector = React.createClass({
 
     const selectedLayers = [];
 
-    this.state.layers.map((domain) => {
-      domain.children.map((group) => {
-        group.children.map((subgroup) => {
-          (subgroup.checked) ? selectedLayers.push(subgroup.name) : null;
+    this.state.layers.forEach((domain) => {
+      domain.children.forEach((group) => {
+        group.children.forEach((subgroup) => {
+          if (subgroup.checked) {
+            selectedLayers.push(subgroup.name);
+          }
         });
       });
     });
@@ -189,7 +208,7 @@ const LayerSelector = React.createClass({
     if (layers.length > 0) {
       sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `;
 
-      layers.map((name, i) => {
+      layers.forEach((name, i) => {
         if (i > 0) sql += ' OR ';
         sql += `facilitysubgroup = '${name}'`;
       });
@@ -204,19 +223,12 @@ const LayerSelector = React.createClass({
     this.getSelectedCount(sql);
   },
 
-  getSelectedCount(sql) {
-    const self = this;
-
-    Carto.getCount(sql)
-      .then((count) => { self.setState({ selectedCount: count }); });
-  },
-
   selectAll() {
     const layers = this.state.layers;
 
-    layers.map((domain) => {
-      domain.children.map((group) => {
-        group.children.map((subgroup) => {
+    layers.forEach((domain) => {
+      domain.children.forEach((group) => {
+        group.children.forEach((subgroup) => {
           (subgroup.checked) = true;
         });
       });
@@ -228,9 +240,9 @@ const LayerSelector = React.createClass({
   selectNone() {
     const layers = this.state.layers;
 
-    layers.map((domain) => {
-      domain.children.map((group) => {
-        group.children.map((subgroup) => {
+    layers.forEach((domain) => {
+      domain.children.forEach((group) => {
+        group.children.forEach((subgroup) => {
           (subgroup.checked) = false;
         });
       });
@@ -268,8 +280,8 @@ const LayerSelector = React.createClass({
           disabled
         >
           <div className="btn-group btn-group-xs" role="group">
-            <div className="btn dcp-orange btn-xs " onClick={this.selectAll} disabled={this.state.checked == 'all'}>Select All</div>
-            <div className="btn dcp-orange btn-xs " onClick={this.selectNone} disabled={this.state.checked == 'none'}>Select None</div>
+            <div className="btn dcp-orange btn-xs " onClick={this.selectAll} disabled={this.state.checked === 'all'}>Select All</div>
+            <div className="btn dcp-orange btn-xs " onClick={this.selectNone} disabled={this.state.checked === 'none'}>Select None</div>
           </div>
           <br />
           <div className="btn-group btn-group-xs" role="group">
@@ -296,7 +308,7 @@ const LayerSelector = React.createClass({
                       indeterminate={domain.indeterminate}
                       onChange={self.toggleCheckbox.bind(self, 'domain', i, null, null)}
                     />
-                    <div className="nav-container" style={{ backgroundColor: self.state.layers.length == 1 ? 'rgb(224, 224, 224)' : domain.color }}>
+                    <div className="nav-container" style={{ backgroundColor: self.state.layers.length === 1 ? 'rgb(224, 224, 224)' : domain.color }}>
                       <div onClick={self.toggleCheckbox.bind(self, 'domain', i, null, null)}>{domain.name}</div>
                       <div className="caret-container collapsed" data-toggle="collapse" data-parent="#stacked-menu" href={`#p${i}`}><span className="caret arrow" /></div></div>
                     <ul className="group-container nav nav-pills nav-stacked collapse" id={`p${i}`} style={{ height: 'auto' }}>
@@ -310,7 +322,7 @@ const LayerSelector = React.createClass({
                               onChange={self.toggleCheckbox.bind(self, 'group', i, j, null)}
                             />
                             <li>
-                              <div className="nav-sub-container" style={{ backgroundColor: self.state.layers.length == 1 ? group.color : domain.subColor }}>
+                              <div className="nav-sub-container" style={{ backgroundColor: self.state.layers.length === 1 ? group.color : domain.subColor }}>
                                 <div onClick={self.toggleCheckbox.bind(self, 'group', i, j, null)} style={{ color: 'black' }}>
                                   <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{group.description}</Tooltip>}>
                                     <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true" /></a>
@@ -355,25 +367,5 @@ const LayerSelector = React.createClass({
   },
 });
 
-const Checkbox = React.createClass({
-  render() {
-    const self = this;
-    return (
-      <input
-        type="checkbox"
-        value={this.props.value}
-        checked={this.props.checked}
-        onChange={this.props.onChange}
-        ref={
-          (input) => {
-            if (input != null) {
-              ReactDOM.findDOMNode(input).indeterminate = self.props.indeterminate;
-            }
-          }
-        }
-      />
-    );
-  },
-});
 
 module.exports = LayerSelector;

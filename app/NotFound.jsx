@@ -1,35 +1,33 @@
-//NotFound.jsx - The Not Found page, shown when there is no route match in react-router
-//Props:
-//  auth - auth object passed down from App.jsx
+// NotFound.jsx - The Not Found page, shown when there is no route match in react-router
 
-import React from 'react'
+import React from 'react';
 
-import Nav from './common/Nav.jsx'
-import Footer from './common/Footer.jsx'
+import Nav from './common/Nav';
+import Footer from './common/Footer';
 
-var NotFound = React.createClass({
-  render() {
-    return(
-      <div>
-        <Nav title='Capital Planning Platform' auth={this.props.auth}/>
-        <div className="col-md-12 main-content" >
-          <section className='bg-primary text-center'>
-            <div className="container">
-              <div className="row">
-                <div className="col-lg-8 col-lg-offset-2 text-center">
-                  <i className="fa fa-frown-o fa-5" style={{fontSize: '80px'}}></i>
-                  <h1>Not Found</h1>
-                  <p>Sorry, you've requested a page that doesn't exist.  <a href="/">Take me home!</a></p>
-                </div>
-              </div>
+const NotFound = props => (
+  <div>
+    <Nav title="Capital Planning Platform" auth={props.auth} />
+    <div className="col-md-12 main-content" >
+      <section className="bg-primary text-center">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8 col-lg-offset-2 text-center">
+              <i className="fa fa-frown-o fa-5" style={{ fontSize: '80px' }} />
+              <h1>Not Found</h1>
+              <p>Sorry, you&apos;ve requested a page that doesn&apos;t exist. <a href="/">Take me home!</a></p>
             </div>
-          </section>
-          <Footer/>
+          </div>
         </div>
-        
-      </div>
-    )
-  }
-})
+      </section>
+      <Footer />
+    </div>
+  </div>
+);
 
-module.exports=NotFound
+NotFound.propTypes = {
+  auth: React.PropTypes.object,
+};
+
+
+module.exports = NotFound;

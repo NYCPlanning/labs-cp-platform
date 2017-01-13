@@ -1,11 +1,25 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
 const GLMap = React.createClass({
+  propTypes: {
+    mapbox_accessToken: React.PropTypes.string,
+    mapStyle: React.PropTypes.string,
+    zoom: React.PropTypes.number,
+    minZoom: React.PropTypes.number,
+    center: React.PropTypes.array,
+    pitch: React.PropTypes.number,
+    hash: React.PropTypes.string,
+    navigationControl: React.PropTypes.bool,
+  },
 
   componentDidMount() {
     this.initializeMap();
+  },
+
+  componentDidUpdate() {
+    // TODO this is a hack to get the GL map to resize to its container after changing the container size.  Need to find a less hacky way to do this
+    setTimeout(() => this.mapObject && this.mapObject.resize(), 500);
   },
 
   initializeMap() {
@@ -13,7 +27,6 @@ const GLMap = React.createClass({
 
     mapboxgl.accessToken = this.props.mapbox_accessToken;
 
-    console.log('container', this.container);
 
     const map = this.mapObject = new mapboxgl.Map({
       container: this.container,
@@ -31,13 +44,6 @@ const GLMap = React.createClass({
     });
 
     if (this.props.navigationControl) map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-  },
-
-  componentDidUpdate() {
-    // TODO this is a hack to get the GL map to resize to its container after changing the container size.  Need to find a less hacky way to do this
-    setTimeout(() => {
-      this.mapObject && this.mapObject.resize();
-    }, 500);
   },
 
   flyMap(feature, zoom = 15) {

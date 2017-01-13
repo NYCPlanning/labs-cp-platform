@@ -1,12 +1,14 @@
-// PoiMarker - Takes a geojson point feature and a map object as props, renders a marker and label at the appropriate location
-
 import React from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
 const PoiMarker = React.createClass({
-  componentDidMount() {
-    const self = this;
+  propTypes: {
+    feature: React.PropTypes.object,
+    map: React.PropTypes.object,
+    label: React.PropTypes.string,
+  },
 
+  componentDidMount() {
     const el = document.createElement('div');
     el.className = 'marker';
     el.style.backgroundImage = 'url(/img/orange-marker.png)';
@@ -30,9 +32,7 @@ const PoiMarker = React.createClass({
   },
 
   componentWillUpdate(nextProps) {
-    console.log('poimarker will update');
-
-    if (JSON.stringify(nextProps.feature) != JSON.stringify(this.props.feature)) {
+    if (JSON.stringify(nextProps.feature) !== JSON.stringify(this.props.feature)) {
       this.updateMarker(nextProps.feature);
     }
   },

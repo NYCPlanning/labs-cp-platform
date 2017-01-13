@@ -1,5 +1,5 @@
 // carto.js - helper methods for interacting with the carto APIs
-
+import $ from 'jquery';
 
 module.exports = {
   // given a string, get matches from capitalprojects based on name or projectid
@@ -10,50 +10,51 @@ module.exports = {
     return this.SQL(sql);
   },
 
-  getVectorTileUrls(vizJsons) {
-    // takes an array of vizJsons
-    // returns an promise, resolve returns array of vector tile templates
-    // TODO add logic so this works with both anonymous and named maps
+  // getVectorTileUrls(vizJsons) {
+  //   // takes an array of vizJsons
+  //   // returns an promise, resolve returns array of vector tile templates
+  //   // TODO add logic so this works with both anonymous and named maps
 
-    const promises = vizJsons.map(vizJson => new Promise((resolve, reject) => {
-      $.getJSON(vizJson, (vizJsonData) => {
-        const sourceOptions = vizJsonData.layers[1].options.layer_definition.layers[0].options;
+  //   const promises = vizJsons.map(vizJson => new Promise((resolve, reject) => {
+  //     $.getJSON(vizJson, (vizJsonData) => {
+  //       const sourceOptions = vizJsonData.layers[1].options.layer_definition.layers[0].options;
 
 
-        const layerConfig = {
-          version: '1.0.1',
-          layers: [
-            {
-              type: 'cartodb',
-              options: {
-                sql: sourceOptions.sql,
-                cartocss: sourceOptions.cartocss,
-                cartocss_version: sourceOptions.cartocss_version,
-              },
-            },
-          ],
-        };
+  //       const layerConfig = {
+  //         version: '1.0.1',
+  //         layers: [
+  //           {
+  //             type: 'cartodb',
+  //             options: {
+  //               sql: sourceOptions.sql,
+  //               cartocss: sourceOptions.cartocss,
+  //               cartocss_version: sourceOptions.cartocss_version,
+  //             },
+  //           },
+  //         ],
+  //       };
 
-        $.ajax({
-          type: 'POST',
-          url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
-          data: JSON.stringify(layerConfig),
-          dataType: 'text',
-          contentType: 'application/json',
-          success(data) {
-            data = JSON.parse(data);
-            const layergroupid = data.layergroupid;
+  //       $.ajax({
+  //         type: 'POST',
+  //         url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
+  //         data: JSON.stringify(layerConfig),
+  //         dataType: 'text',
+  //         contentType: 'application/json',
+  //         success(data) {
+  //           data = JSON.parse(data);
+  //           const layergroupid = data.layergroupid;
 
-            const template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`;
+  //           const template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`;
 
-            resolve(template);
-          },
-        });
-      });
-    }));
+  //           resolve(template);
+  //         },
+  //       });
+  //     })
+  //     .fail(() => reject());
+  //   }));
 
-    return Promise.all(promises);
-  },
+  //   return Promise.all(promises);
+  // },
 
   getVectorTileTemplate(mapConfig, options) {
     return new Promise((resolve, reject) => {
@@ -71,7 +72,8 @@ module.exports = {
 
           resolve(template);
         },
-      });
+      })
+      .fail(() => reject());
     });
   },
 
@@ -89,7 +91,8 @@ module.exports = {
       self.SQL(sql)
         .then((data) => {
           resolve(data.features[0]);
-        });
+        })
+        .catch(() => reject());
     });
   },
 
@@ -101,25 +104,31 @@ module.exports = {
       self.SQL(sql, 'json')
         .then((data) => {
           resolve(data[0].count);
-        });
+        })
+        .catch(() => reject());
     });
   },
 
   // does a carto SQL api call
   // pass in format as a valid SQL api export format (shp, csv, geojson)
   // TODO store host, user, etc in a central config
-  SQL(sql, format) {
+  SQL(sql, format, options) {
     format = format || 'geojson';
 
-    let apiCall = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}`;
+    let apiCall = `https://${options.carto_domain}/user/${options.carto_user}/api/v2/sql?q=${sql}&format=${format}`;
 
     apiCall = encodeURI(apiCall);
 
     return new Promise((resolve, reject) => {
       $.getJSON(apiCall)
         .done((data) => {
-          format == 'geojson' ? resolve(data) : resolve(data.rows);
-        });
+          if (format === 'geojson') {
+            resolve(data);
+          } else {
+            resolve(data.rows);
+          }
+        })
+        .fail(() => reject());
     });
   },
 };

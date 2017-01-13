@@ -1,8 +1,14 @@
 // source prop should have 'data' property with geoJSON, or 'source' property with URL to geojson
 
 import React from 'react';
+import $ from 'jquery';
 
 const GeoJsonSource = React.createClass({
+  propTypes: {
+    map: React.PropTypes.object,
+    source: React.PropTypes.object,
+    onLoaded: React.PropTypes.func,
+  },
 
   componentWillMount() {
     this.map = this.props.map.mapObject;
@@ -17,8 +23,7 @@ const GeoJsonSource = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     // compare sql
-    if (!(nextProps.source.data == this.props.source.data)) {
-      console.log('updating geojson source');
+    if (!(nextProps.source.data === this.props.source.data)) {
       this.data = nextProps.source.data;
       this.map.getSource(this.props.source.id).setData(this.data);
     }

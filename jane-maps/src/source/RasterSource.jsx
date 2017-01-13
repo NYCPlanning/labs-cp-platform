@@ -1,7 +1,12 @@
 import React from 'react';
-import Carto from '../Carto';
 
 const RasterSource = React.createClass({
+
+  propTypes: {
+    map: React.PropTypes.object,
+    source: React.PropTypes.object,
+    onLoaded: React.PropTypes.func,
+  },
 
   componentWillMount() {
     this.map = this.props.map.mapObject;

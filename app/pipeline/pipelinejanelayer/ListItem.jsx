@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import FontIcon from 'material-ui/FontIcon';
-
-import colors from '../colors.js';
+import colors from '../colors';
 
 const Item = (props) => {
   const d = props.feature.properties;
@@ -26,6 +24,10 @@ const Item = (props) => {
       </div>
     </Link>
   );
+};
+
+Item.propTypes = {
+  feature: React.PropTypes.object,
 };
 
 export default Item;

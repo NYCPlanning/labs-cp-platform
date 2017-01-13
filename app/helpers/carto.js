@@ -1,5 +1,4 @@
-// carto.js - helper methods for interacting with the carto APIs
-
+import $ from 'jquery';
 import appConfig from './appConfig';
 
 module.exports = {
@@ -50,7 +49,8 @@ module.exports = {
             resolve(template);
           },
         });
-      });
+      })
+      .fail(() => reject());
     }));
 
     return Promise.all(promises);
@@ -72,7 +72,8 @@ module.exports = {
 
           resolve(template);
         },
-      });
+      })
+      .fail(() => reject());
     });
   },
 
@@ -90,7 +91,8 @@ module.exports = {
       self.SQL(sql)
         .then((data) => {
           resolve(data.features[0]);
-        });
+        })
+        .catch(reject());
     });
   },
 
@@ -102,7 +104,8 @@ module.exports = {
       self.SQL(sql, 'json')
         .then((data) => {
           resolve(data[0].count);
-        });
+        })
+        .catch(reject());
     });
   },
 
@@ -124,7 +127,8 @@ module.exports = {
           } else {
             resolve(data.rows);
           }
-        });
+        })
+        .fail(() => reject());
     });
   },
 };

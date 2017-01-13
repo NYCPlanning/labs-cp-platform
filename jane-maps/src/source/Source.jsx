@@ -7,7 +7,11 @@ import CartoRasterSource from './CartoRasterSource';
 
 
 const Source = React.createClass({
-
+  propTypes: {
+    map: React.PropTypes.object,
+    source: React.PropTypes.object,
+    onLoaded: React.PropTypes.func,
+  },
 
   componentWillUnmount() {
     this.removeSource();
@@ -22,10 +26,12 @@ const Source = React.createClass({
   render() {
     const source = this.props.source;
 
-    if (source.type == 'geojson') return <GeoJsonSource {...this.props} />;
-    if (source.type == 'raster') return <RasterSource {...this.props} />;
-    if (source.type == 'cartovector' && source.options) return <CartoVectorSource {...this.props} />;
-    if (source.type == 'cartoraster') return <CartoRasterSource {...this.props} />;
+    if (source.type === 'geojson') return <GeoJsonSource {...this.props} />;
+    if (source.type === 'raster') return <RasterSource {...this.props} />;
+    if (source.type === 'cartovector' && source.options) return <CartoVectorSource {...this.props} />;
+    if (source.type === 'cartoraster') return <CartoRasterSource {...this.props} />;
+
+    return null;
   },
 });
 

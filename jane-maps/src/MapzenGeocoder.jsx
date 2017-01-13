@@ -5,6 +5,7 @@
 
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import $ from 'jquery';
 
 function getSuggestionValue(suggestion) {
   return suggestion.properties.label;
@@ -21,6 +22,11 @@ function shouldRenderSuggestions(value) {
 }
 
 const MapzenGeocoder = React.createClass({
+  propTypes: {
+    bounds: React.PropTypes.object,
+    mapzen_api_key: React.PropTypes.string,
+    onSelection: React.PropTypes.func,
+  },
 
   getInitialState() {
     return {
