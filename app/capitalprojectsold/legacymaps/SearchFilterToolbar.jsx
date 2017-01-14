@@ -3,9 +3,9 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 
-import MapzenGeocoder from '../common/MapzenGeocoder.jsx'
+import MapzenGeocoder from './MapzenGeocoder.jsx'
 
-import '../../stylesheets/common/SearchFilterToolbar.scss'
+import '../../../stylesheets/common/SearchFilterToolbar.scss'
 
 var SearchFilterToolbar = React.createClass({
   handleGeocoderSelection(feature) {

@@ -147,7 +147,7 @@ const Filter = React.createClass({
         </Subheader>
 
         <ListItem
-          disabled="true"
+          disabled
         >
           <Select
             multi

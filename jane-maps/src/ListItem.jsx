@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import FontIcon from 'material-ui/FontIcon';
@@ -24,7 +24,7 @@ const listItemTarget = {
     }
 
     // Determine rectangle on screen
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect(); // eslint-disable-line react/no-find-dom-node
 
     // Get vertical middle
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
@@ -59,15 +59,24 @@ const listItemTarget = {
     monitor.getItem().index = hoverIndex;
   },
 
-  drop(props, monitor, component) {
+  drop(props) {
     props.onDrop();
   },
 };
 
 let ListItem = React.createClass({
 
+  propTypes: {
+    connectDragSource: React.PropTypes.func.isRequired,
+    connectDropTarget: React.PropTypes.func.isRequired,
+    layer: React.PropTypes.object,
+    onClick: React.PropTypes.func,
+    className: React.PropTypes.string,
+    expanded: React.PropTypes.bool,
+  },
+
   handleClick(layer, e) {
-    if (e.target.type != 'checkbox') this.props.onClick(layer.id);
+    if (e.target.type !== 'checkbox') this.props.onClick(layer.id);
   },
 
   render() {
@@ -82,7 +91,7 @@ let ListItem = React.createClass({
       },
     };
 
-    const { text, isDragging, connectDragSource, connectDropTarget, layer, onToggle } = this.props;
+    const { connectDragSource, connectDropTarget, layer } = this.props;
 
     return connectDragSource(connectDropTarget(
       <div className={this.props.className} onClick={this.handleClick.bind(this, layer)}>
@@ -107,13 +116,6 @@ let ListItem = React.createClass({
   },
 });
 
-ListItem.propTypes = {
-  connectDragSource: PropTypes.func.isRequired,
-  connectDropTarget: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  isDragging: PropTypes.bool.isRequired,
-  moveListItem: PropTypes.func.isRequired,
-};
 
 ListItem = DragSource('listItem', listItemSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
@@ -124,4 +126,6 @@ ListItem = DropTarget('listItem', listItemTarget, connect => ({
   connectDropTarget: connect.dropTarget(),
 }))(ListItem);
 
-export default ListItem;
+
+const exportListItem = ListItem;
+export default exportListItem;

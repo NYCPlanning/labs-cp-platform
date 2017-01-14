@@ -70,18 +70,18 @@ export default class AuthService {
   }
 
 
-  getToken() {
+  getToken() { // eslint-disable-line class-methods-use-this
     // Retrieves the user token from localStorage
     return localStorage.getItem('id_token');
   }
 
-  getProfile() {
+  getProfile() { // eslint-disable-line class-methods-use-this
     // Retrieves the profile data from localStorage
     const profile = localStorage.getItem('profile');
     return profile ? JSON.parse(localStorage.profile) : {};
   }
 
-  logout() {
+  logout() { // eslint-disable-line class-methods-use-this
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
     browserHistory.push('/');

@@ -19,7 +19,7 @@ import MapMenu from './MapMenu.jsx'
 
 import overlays from '../overlays/overlayConfig.js'
 
-import '../../stylesheets/common/MapComponent.scss'
+import '../../../stylesheets/common/MapComponent.scss'
 
 var MapComponent = React.createClass({
   getInitialState() {

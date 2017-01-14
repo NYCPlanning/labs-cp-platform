@@ -20,8 +20,6 @@ import CapitalProjects from '../app/capitalprojects/Explorer';
 import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
 import ProjectPage from '../app/capitalprojectsold/ProjectPage';
 
-import JaneTest from '../app/common/JaneTest';
-
 import NotFound from '../app/NotFound';
 
 const auth = new Auth(appConfig.auth0_client_id, appConfig.auth0_domain);
@@ -64,9 +62,6 @@ module.exports = (
     <Route path="capitalprojects/:id" component={ProjectPage} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
 
     <Route path="capitalprojectsold" component={CapitalProjectsOld} title={'Capital Projects Explorer'} miniNav onEnter={requireAuth} />
-
-
-    <Route path="janetest" component={JaneTest} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />

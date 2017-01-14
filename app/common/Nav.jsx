@@ -27,7 +27,7 @@ const Nav = React.createClass({
   propTypes: {
     showModal: React.PropTypes.func,
     auth: React.PropTypes.object,
-    mini: React.PropTypes.boolean,
+    mini: React.PropTypes.bool,
     title: React.PropTypes.string,
     children: React.PropTypes.array,
   },
@@ -83,7 +83,7 @@ const Nav = React.createClass({
             <span className="icon-bar" />
             <span className="icon-bar" />
           </button>
-          <Link className="navbar-brand" to="/"></Link>
+          <Link className="navbar-brand" to="/">&#8291;</Link>
           <div className="navbar-title">
             Capital Planning Platform
             {(

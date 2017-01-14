@@ -1,11 +1,11 @@
 // PipeLineTest - Custom config/code for the pipeline explorer should go here.  This component will make use of MapTest.jsx, a global map component that all "explorers" can use
-import React from 'react' 
+import React from 'react';
 
-import MapComponent from '../common/MapComponent.jsx'
-import CapitalProjectsDataLayer from './CapitalProjectsDataLayer.jsx'
-import content from './content.jsx'
+import MapComponent from './legacymaps/MapComponent';
+import CapitalProjectsDataLayer from './CapitalProjectsDataLayer';
+import content from './content';
 
-import '../../stylesheets/capitalprojects/Explorer.scss'
+import '../../stylesheets/capitalprojects/Explorer.scss';
 
 var CapitalProjectsExplorer = React.createClass({ 
   componentDidMount() {
@@ -35,7 +35,7 @@ var CapitalProjectsExplorer = React.createClass({
   render() {
     return(
       <div className='full-screen'>
-        <MapComponent leftDrawerOpen={true} auth={this.props.auth}>
+        <MapComponent leftDrawerOpen auth={this.props.auth}>
           <CapitalProjectsDataLayer 
             name="Capital Projects Explorer"
             tooltipText="Capital Projects Database" 

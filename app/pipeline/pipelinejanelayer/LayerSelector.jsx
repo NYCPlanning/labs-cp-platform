@@ -258,9 +258,7 @@ const LayerSelector = React.createClass({
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
               disable={!this.state.dateFilter}
-              prettify={function (date) {
-                return Moment(date, 'X').format('MMM YYYY');
-              }}
+              prettify={date => Moment(date, 'X').format('MMM YYYY')}
             />
           </ListItem>
         </List>

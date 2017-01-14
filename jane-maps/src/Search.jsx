@@ -25,7 +25,7 @@ const Search = React.createClass({
     mapzen_api_key: React.PropTypes.string,
     onGeocoderSelection: React.PropTypes.func,
     onClear: React.PropTypes.func,
-    selectionActive: React.PropTypes.boolean,
+    selectionActive: React.PropTypes.bool,
   },
 
   getInitialState() {

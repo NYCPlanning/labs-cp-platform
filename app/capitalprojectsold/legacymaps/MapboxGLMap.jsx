@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
-import appConfig from '../helpers/appConfig.js'
+import appConfig from '../../helpers/appConfig.js'
 
-import '../../stylesheets/common/MapboxGLMap.scss'
+import '../../../stylesheets/common/MapboxGLMap.scss'
 
 var MapboxGLMap = React.createClass({
   getInitialState() {

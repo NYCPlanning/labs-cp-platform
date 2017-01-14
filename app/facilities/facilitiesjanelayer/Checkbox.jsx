@@ -10,7 +10,7 @@ const Checkbox = props => (
     ref={
       (input) => {
         if (input != null) {
-          ReactDOM.findDOMNode(input).indeterminate = self.props.indeterminate;
+          ReactDOM.findDOMNode(input).indeterminate = self.props.indeterminate; // eslint-disable-line react/no-find-dom-node
         }
       }
     }

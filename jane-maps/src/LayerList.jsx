@@ -15,7 +15,7 @@ const LayerList = React.createClass({
     layers: React.PropTypes.array,
     onLayerReorder: React.PropTypes.func,
     update: React.PropTypes.func,
-    expanded: React.PropTypes.boolean,
+    expanded: React.PropTypes.bool,
     onLayerClick: React.PropTypes.func,
     selectedLayer: React.PropTypes.string,
     onToggleExpanded: React.PropTypes.func,

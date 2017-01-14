@@ -9,7 +9,7 @@ const GLMap = React.createClass({
     minZoom: React.PropTypes.number,
     center: React.PropTypes.array,
     pitch: React.PropTypes.number,
-    hash: React.PropTypes.string,
+    hash: React.PropTypes.bool,
     navigationControl: React.PropTypes.bool,
   },
 
@@ -39,7 +39,6 @@ const GLMap = React.createClass({
     });
 
     this.mapObject.on('load', () => {
-      console.log('loaded!', map);
       self.props.onLoad(self.mapObject.getStyle());
     });
 

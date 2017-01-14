@@ -17,8 +17,9 @@ module.exports = {
     extensions: ['', '.scss', '.js', '.jsx'],
   },
   module: {
+    noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
     preLoaders: [
-      { test: /\.jsx?$/, loader: 'eslint', exclude: /node_modules/ },
+      { test: /\.jsx?$/, loader: 'eslint', exclude: [/(node_modules|capitalprojectsold)/] },
     ],
     loaders: [
       {

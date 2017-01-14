@@ -12,7 +12,7 @@ const LayerContent = React.createClass({
     onClose: React.PropTypes.func,
     onLayerUpdate: React.PropTypes.func,
     context: React.PropTypes.object,
-    offset: React.PropTypes.number,
+    offset: React.PropTypes.bool,
     visible: React.PropTypes.bool,
   },
 

@@ -20,11 +20,11 @@ const Jane = React.createClass({
     poiFeature: React.PropTypes.object,
     poiLabel: React.PropTypes.string,
     mapConfig: React.PropTypes.object,
-    layerContentVisible: React.PropTypes.boolean,
+    layerContentVisible: React.PropTypes.bool,
     mapInit: React.PropTypes.object,
     style: React.PropTypes.object,
     context: React.PropTypes.object,
-    search: React.PropTypes.boolean,
+    search: React.PropTypes.bool,
     searchConfig: React.PropTypes.object,
   },
 

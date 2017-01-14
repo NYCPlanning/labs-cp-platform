@@ -2,7 +2,7 @@
 import React from 'react'
 import TileLayer from './TileLayer.jsx'
 
-import appConfig from '../helpers/appConfig.js'
+import appConfig from '../../helpers/appConfig.js'
 
 const CartoLayer = React.createClass({
 
