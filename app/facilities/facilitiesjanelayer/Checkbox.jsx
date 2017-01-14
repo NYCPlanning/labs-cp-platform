@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const Checkbox = props => (
   <input
@@ -7,20 +6,15 @@ const Checkbox = props => (
     value={props.value}
     checked={props.checked}
     onChange={props.onChange}
-    ref={
-      (input) => {
-        if (input != null) {
-          ReactDOM.findDOMNode(input).indeterminate = self.props.indeterminate; // eslint-disable-line react/no-find-dom-node
-        }
-      }
-    }
+    ref={elem => elem && (elem.indeterminate = props.indeterminate)}
   />
 );
 
 Checkbox.propTypes = {
   value: React.PropTypes.string,
-  checked: React.PropTypes.string,
+  checked: React.PropTypes.bool,
   onChange: React.PropTypes.func,
+  indeterminate: React.PropTypes.bool,
 };
 
 export default Checkbox;

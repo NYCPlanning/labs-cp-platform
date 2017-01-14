@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import appConfig from './appConfig';
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
     // TODO add logic so this works with both anonymous and named maps
 
     const promises = vizJsons.map(vizJson => new Promise((resolve, reject) => {
-      $.getJSON(vizJson, (vizJsonData) => {
+      $.getJSON(vizJson, (vizJsonData) => { // eslint-disable-line no-undef
         const sourceOptions = vizJsonData.layers[1].options.layer_definition.layers[0].options;
 
 
@@ -34,7 +33,7 @@ module.exports = {
           ],
         };
 
-        $.ajax({
+        $.ajax({ // eslint-disable-line no-undef
           type: 'POST',
           url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
           data: JSON.stringify(layerConfig),
@@ -58,7 +57,7 @@ module.exports = {
 
   getVectorTileTemplate(mapConfig) {
     return new Promise((resolve, reject) => {
-      $.ajax({
+      $.ajax({ // eslint-disable-line no-undef
         type: 'POST',
         url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
         data: JSON.stringify(mapConfig),
@@ -120,7 +119,7 @@ module.exports = {
     apiCall = encodeURI(apiCall);
 
     return new Promise((resolve, reject) => {
-      $.getJSON(apiCall)
+      $.getJSON(apiCall) // eslint-disable-line no-undef
         .done((data) => {
           if (format === 'geojson') {
             resolve(data);

@@ -35,7 +35,8 @@ const Component = React.createClass({
         self.setState({
           data,
         });
-      });
+      })
+      .catch();
   },
 
   renderContent(data) {

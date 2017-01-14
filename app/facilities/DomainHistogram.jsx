@@ -34,7 +34,8 @@ const DomainHistogram = React.createClass({
         self.setState({
           data,
         });
-      });
+      })
+      .catch()
   },
 
   render() {

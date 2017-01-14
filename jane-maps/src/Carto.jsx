@@ -1,5 +1,4 @@
 // carto.js - helper methods for interacting with the carto APIs
-import $ from 'jquery';
 
 module.exports = {
   // given a string, get matches from capitalprojects based on name or projectid
@@ -58,7 +57,7 @@ module.exports = {
 
   getVectorTileTemplate(mapConfig, options) {
     return new Promise((resolve, reject) => {
-      $.ajax({
+      $.ajax({ // eslint-disable-line no-undef
         type: 'POST',
         url: `https://${options.carto_domain}/user/${options.carto_user}/api/v1/map`,
         data: JSON.stringify(mapConfig),
@@ -120,7 +119,7 @@ module.exports = {
     apiCall = encodeURI(apiCall);
 
     return new Promise((resolve, reject) => {
-      $.getJSON(apiCall)
+      $.getJSON(apiCall) // eslint-disable-line no-undef
         .done((data) => {
           if (format === 'geojson') {
             resolve(data);

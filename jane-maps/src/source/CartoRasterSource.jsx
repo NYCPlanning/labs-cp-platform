@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 
 const CartoRasterSource = React.createClass({
   propTypes: {
@@ -46,7 +45,7 @@ const CartoRasterSource = React.createClass({
       }],
     };
 
-    $.ajax({
+    $.ajax({ // eslint-disable-line no-undef
       type: 'POST',
       data: JSON.stringify(mapConfig),
       url: `https://${carto_domain}/user/${carto_user}/api/v1/map`,

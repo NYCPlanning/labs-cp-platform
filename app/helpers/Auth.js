@@ -54,6 +54,7 @@ export default class AuthService {
 
   login() {
     // Call the show method to display the widget.
+
     this.lock.show({
       auth: {
         params: {

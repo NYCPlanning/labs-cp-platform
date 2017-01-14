@@ -1,10 +1,9 @@
 import React from 'react';
-import $ from 'jquery';
 
 const RangeSlider = React.createClass({
   componentDidMount() {
     const self = this;
-    $(this.sliderEl).ionRangeSlider({
+    $(this.sliderEl).ionRangeSlider({ // eslint-disable-line no-undef
       type: self.props.type,
       min: self.props.data[0],
       max: self.props.data[1],
@@ -16,7 +15,7 @@ const RangeSlider = React.createClass({
       prettify: self.props.prettify,
     });
 
-    this.slider = $(this.sliderEl).data('ionRangeSlider');
+    this.slider = $(this.sliderEl).data('ionRangeSlider'); // eslint-disable-line no-undef
   },
 
   componentWillReceiveProps(nextProps) {

@@ -1,7 +1,6 @@
 // source prop should have 'data' property with geoJSON, or 'source' property with URL to geojson
 
 import React from 'react';
-import $ from 'jquery';
 
 const GeoJsonSource = React.createClass({
   propTypes: {
@@ -32,7 +31,7 @@ const GeoJsonSource = React.createClass({
   fetchData() {
     const self = this;
 
-    $.getJSON(this.props.source.source)
+    $.getJSON(this.props.source.source) // eslint-disable-line no-undef
       .then((data) => {
         self.data = data;
         self.addSource();

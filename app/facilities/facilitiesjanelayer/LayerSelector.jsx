@@ -8,7 +8,6 @@ import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import $ from 'jquery';
 
 import Checkbox from './Checkbox';
 import CountWidget from '../../common/CountWidget';
@@ -253,11 +252,11 @@ const LayerSelector = React.createClass({
 
   expandAll() {
     // geez, just do it with jQuery
-    $('.caret-container.collapsed').click();
+    $('.caret-container.collapsed').click(); // eslint-disable-line no-undef
   },
 
   collapseAll() {
-    $('.caret-container:not(.collapsed)').click();
+    $('.caret-container:not(.collapsed)').click(); // eslint-disable-line no-undef
   },
 
   render() {

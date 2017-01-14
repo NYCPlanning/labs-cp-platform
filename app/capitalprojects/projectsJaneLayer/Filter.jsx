@@ -46,14 +46,16 @@ const Filter = React.createClass({
           selectedCount: count,
           totalCount: count,
         });
-      });
+      })
+      .catch();
   },
 
   getSelectedCount(sql) {
     const self = this;
 
     Carto.getCount(sql)
-      .then((count) => { self.setState({ selectedCount: count }); });
+      .then((count) => { self.setState({ selectedCount: count }); })
+      .catch();
   },
 
   unionSQL(pointsSql, polygonsSql) {

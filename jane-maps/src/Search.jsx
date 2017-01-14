@@ -3,7 +3,6 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import Autosuggest from 'react-autosuggest';
-import $ from 'jquery';
 
 function getSuggestionValue(suggestion) {
   return suggestion.properties.label;
@@ -40,7 +39,7 @@ const Search = React.createClass({
 
     const apiCall = `https://search.mapzen.com/v1/autocomplete?text=${value}&boundary.rect.min_lon=${this.props.bounds.minLon}&boundary.rect.max_lon=${this.props.bounds.maxLon}&boundary.rect.min_lat=${this.props.bounds.minLat}&boundary.rect.max_lat=${this.props.bounds.maxLat}&api_key=${this.props.mapzen_api_key}`;
 
-    $.getJSON(apiCall, (data) => {
+    $.getJSON(apiCall, (data) => { // eslint-disable-line no-undef
       self.setState({
         suggestions: data.features,
       });

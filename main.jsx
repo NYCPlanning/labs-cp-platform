@@ -13,7 +13,6 @@ function fireTracking() {
   ReactGA.pageview(window.location.pathname);
 }
 
-
 ReactDOM.render(
   <Router onUpdate={fireTracking} history={browserHistory}>
     {routes}
