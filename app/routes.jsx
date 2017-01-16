@@ -16,9 +16,10 @@ import PipelineExplorer from '../app/pipeline/PipelineExplorer';
 import DevelopmentPage from '../app/pipeline/DevelopmentPage';
 
 import CapitalProjects from '../app/capitalprojects/Explorer';
+import ProjectPage from '../app/capitalprojects/ProjectPage';
 
 import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
-import ProjectPage from '../app/capitalprojectsold/ProjectPage';
+import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';
 
 import NotFound from '../app/NotFound';
 
@@ -62,6 +63,7 @@ module.exports = (
     <Route path="capitalprojects/:id" component={ProjectPage} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
 
     <Route path="capitalprojectsold" component={CapitalProjectsOld} title={'Capital Projects Explorer'} miniNav onEnter={requireAuth} />
+    <Route path="capitalprojectsold/:id" component={ProjectPageOld} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
