@@ -53,8 +53,6 @@ const GLMap = React.createClass({
   },
 
   render() {
-    // figure out which drawers are open so we know where the left edge of the map div should be
-
     return (
       <div
         className="gl-map"

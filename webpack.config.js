@@ -1,41 +1,47 @@
-var webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
 module.exports = {
   entry: [
-    './main.jsx'
+    './main.jsx',
   ],
   output: {
     path: 'public/js',
     filename: 'bundle.js',
-    publicPath: '/js/'
+    publicPath: '/js/',
+  },
+  resolve: {
+    extensions: ['', '.scss', '.js', '.jsx'],
   },
   module: {
+    noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query: {
-          plugins: ['transform-object-assign', 'es6-promise'],
-          presets: ['es2015', 'react', 'stage-0']
-        }
+        loaders: [
+          'react-hot',
+          'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: ['babel-loader'],
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
-      }
-    ]
+        loader: ExtractTextPlugin.extract('style', 'css!sass'),
+      },
+    ],
   },
   plugins: [
     new ExtractTextPlugin('../css/bundle.css'),
     new webpack.DefinePlugin({
-      "process.env": { 
-        NODE_ENV: JSON.stringify("production") 
-      }
-    })
-  ]
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+  ],
 };
-
-
