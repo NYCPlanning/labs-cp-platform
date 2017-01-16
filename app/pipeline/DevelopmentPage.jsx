@@ -7,10 +7,10 @@ import DetailPage from '../common/DetailPage';
 import carto from '../helpers/carto';
 
 
-const Component = React.createClass({
+const DevelopmentPage = React.createClass({
   propTypes: {
     params: React.PropTypes.shape({
-      id: React.PropTypes.number,
+      id: React.PropTypes.string,
     }),
     location: React.PropTypes.shape(),
   },
@@ -25,11 +25,7 @@ const Component = React.createClass({
     const self = this;
     // after mount, fetch data and set state
     carto.getRow('nchatterjee.dob_permits_cofos_hpd_geocode', 'cartodb_id', parseInt(this.props.params.id))
-      .then((data) => {
-        self.setState({
-          data,
-        });
-      });
+      .then((data) => { self.setState({ data }); });
   },
 
   renderContent(data) {
@@ -42,7 +38,7 @@ const Component = React.createClass({
           <h3>{d.dob_permit_address}</h3>
         </div>
         <div className="col-md-6">
-          <ModalMap data={this.state.data} label={d.dob_permit_address} />
+          <ModalMap feature={this.state.data} label={d.dob_permit_address} />
         </div>
         <div className="col-md-6">
           <ul className="list-group">
@@ -125,4 +121,4 @@ const Component = React.createClass({
 
 });
 
-module.exports = Component;
+module.exports = DevelopmentPage;

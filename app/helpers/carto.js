@@ -91,7 +91,7 @@ module.exports = {
         .then((data) => {
           resolve(data.features[0]);
         })
-        .catch(reject());
+        .catch(err => reject(err));
     });
   },
 
@@ -104,7 +104,7 @@ module.exports = {
         .then((data) => {
           resolve(data[0].count);
         })
-        .catch(reject());
+        .catch(err => reject(err));
     });
   },
 

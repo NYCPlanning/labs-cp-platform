@@ -41,8 +41,8 @@ const CountWidget = (props) => {
 };
 
 CountWidget.propTypes = {
-  totalCount: React.PropTypes.string,
-  selectedCount: React.PropTypes.string,
+  totalCount: React.PropTypes.number,
+  selectedCount: React.PropTypes.number,
   units: React.PropTypes.string,
 };
 

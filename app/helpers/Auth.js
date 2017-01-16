@@ -10,7 +10,7 @@ export default class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
-      initialScreen: 'signUp',
+      initialScreen: 'login',
       closable: false,
       allowSignUp: false,
       auth: {

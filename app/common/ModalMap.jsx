@@ -16,13 +16,12 @@ import appConfig from '../helpers/appConfig';
 
 const ModalMap = React.createClass({
   propTypes: {
-    data: React.PropTypes.object,
     feature: React.PropTypes.object,
     label: React.PropTypes.string,
   },
 
   getCenter() {
-    const feature = this.props.data;
+    const feature = this.props.feature;
     // single points get flyTo(), everything else gets fitBounds()
     if (feature.geometry.type === 'Point') {
       return feature.geometry.coordinates;

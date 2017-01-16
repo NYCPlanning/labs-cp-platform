@@ -7,7 +7,7 @@ const SelectedFeauturesPane = props => (
 );
 
 SelectedFeauturesPane.propTypes = {
-  children: React.PropTypes.element,
+  children: React.PropTypes.array,
   style: React.PropTypes.shape(),
 };
 

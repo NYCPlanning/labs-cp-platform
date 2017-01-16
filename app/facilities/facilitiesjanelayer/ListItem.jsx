@@ -29,7 +29,7 @@ const Item = (props) => {
 
 Item.propTypes = {
   feature: React.PropTypes.shape({
-    properties: React.PropTypes.array,
+    properties: React.PropTypes.object,
   }),
 };
 

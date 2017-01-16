@@ -12,7 +12,7 @@ import ModalMap from '../common/ModalMap';
 import carto from '../helpers/carto';
 
 
-const Component = React.createClass({
+const FacilityPage = React.createClass({
 
   propTypes: {
     params: React.PropTypes.shape({
@@ -32,11 +32,8 @@ const Component = React.createClass({
     // after mount, fetch data and set state
     carto.getRow('hkates.facilities_data', 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => {
-        self.setState({
-          data,
-        });
-      })
-      .catch();
+        self.setState({ data });
+      });
   },
 
   renderContent(data) {
@@ -147,4 +144,4 @@ const Component = React.createClass({
 
 });
 
-module.exports = Component;
+module.exports = FacilityPage;

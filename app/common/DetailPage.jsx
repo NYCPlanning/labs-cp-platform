@@ -16,7 +16,7 @@ const DetailPage = props => (
         />
       </Link>
     </div>
-    {this.props.children}
+    {props.children}
   </div>
 );
 
@@ -24,6 +24,7 @@ DetailPage.propTypes = {
   location: React.PropTypes.object,
   defaultText: React.PropTypes.string,
   defaultLink: React.PropTypes.string,
+  children: React.PropTypes.object,
 };
 
 
