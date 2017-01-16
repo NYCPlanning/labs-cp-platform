@@ -354,15 +354,13 @@ const Jane = React.createClass({
           context={this.props.context}
         />
 
-        {(selectedFeatureItems.length > 0) && (<SelectedFeaturesPane
+        <SelectedFeaturesPane
           style={{
             right: (selectedFeatureItems.length > 0) ? 0 : -250,
           }}
         >
           {selectedFeatureItems}
         </SelectedFeaturesPane>
-        )}
-
       </div>
 
     );
