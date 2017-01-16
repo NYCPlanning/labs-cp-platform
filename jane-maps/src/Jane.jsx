@@ -52,6 +52,7 @@ const Jane = React.createClass({
     this.map.mapObject.on('dragend', this.resetSelectedFeatures);
 
     this.map.mapObject.on('click', this.handleMapLayerClick);
+    this.map.mapObject.on('mousemove', this.handleMapMouseove);
   },
 
   onMapLoad() {
@@ -99,6 +100,14 @@ const Jane = React.createClass({
     this.setState({
       selectedFeatures: features,
     });
+  },
+
+  handleMapMousemove(e) {
+    const mapLayers = this.getMapLayers();
+
+    const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: mapLayers });
+
+    this.map.mapObject.getCanvas().style.cursor = (features.length > 0) ? 'pointer' : '';
   },
 
   handleLayerToggle(layerid) {
@@ -271,16 +280,16 @@ const Jane = React.createClass({
     });
 
 
-    // add hover
+    // // add hover
     // if (this.map) {
-    //   const map = this.map.mapObject
-    //   map.off('mousemove')
+    //   const map = this.map.mapObject;
+    //   map.off('mousemove');
     //   map.on('mousemove', (e) => {
     //     const features = map.queryRenderedFeatures(e.point, { layers: [this.state.mapConfig.selectedLayer] });
-    //     console.log(features)
     //     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-    //   })
+    //   });
     // }
+
     let leftOffset = 36;
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.layerContentVisible) leftOffset += 320;
@@ -374,6 +383,7 @@ Jane.defaultProps = {
     right: 0,
     bottom: 0,
     left: 0,
+    overflow: 'hidden',
   },
   search: false,
 };

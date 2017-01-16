@@ -98,7 +98,7 @@ const Filter = React.createClass({
         return 'cpstatus IS NULL';
       }
 
-      return `${dimension}' = '${value.value}'`;
+      return `${dimension} = '${value.value}'`;
     });
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
