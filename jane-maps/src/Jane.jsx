@@ -52,7 +52,7 @@ const Jane = React.createClass({
     this.map.mapObject.on('dragend', this.resetSelectedFeatures);
 
     this.map.mapObject.on('click', this.handleMapLayerClick);
-    this.map.mapObject.on('mousemove', this.handleMapMouseove);
+    this.map.mapObject.on('mousemove', this.handleMapMousemove);
   },
 
   onMapLoad() {
@@ -60,12 +60,12 @@ const Jane = React.createClass({
   },
 
   // return an array of all loaded mapLayers
-  getMapLayers() {
+  getLoadedMapLayers() {
     const mapLayers = [];
 
     this.state.mapConfig.layers.forEach((layer) => {
       layer.mapLayers.forEach((mapLayer) => {
-        if (layer.visible) {
+        if (layer.visible && this.map.mapObject.getLayer(mapLayer.id)) {
           mapLayers.push(mapLayer.id);
         }
       });
@@ -93,7 +93,7 @@ const Jane = React.createClass({
   },
 
   handleMapLayerClick(e) {
-    const mapLayers = this.getMapLayers();
+    const mapLayers = this.getLoadedMapLayers();
 
     const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: mapLayers });
 
@@ -103,7 +103,7 @@ const Jane = React.createClass({
   },
 
   handleMapMousemove(e) {
-    const mapLayers = this.getMapLayers();
+    const mapLayers = this.getLoadedMapLayers();
 
     const features = this.map.mapObject.queryRenderedFeatures(e.point, { layers: mapLayers });
 

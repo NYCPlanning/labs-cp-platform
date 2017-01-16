@@ -18,20 +18,18 @@ const CartoVectorSource = React.createClass({
     this.map = this.props.map.mapObject;
     // fetch data if necessary, add layer to map
     if (!this.props.source.tiles) {
-      this.fetchData(this.props.source.options.sql);
+      this.fetchData(this.props.source.options.sql, this.addSource);
     }
   },
 
   componentWillReceiveProps(nextProps) {
     // compare sql
     if (!(nextProps.source.options.sql === this.props.source.options.sql)) {
-      this.fetchData(nextProps.source.options.sql);
+      this.fetchData(nextProps.source.options.sql, this.updateSource);
     }
   },
 
-  fetchData(sqlArray) {
-    const self = this;
-
+  fetchData(sqlArray, cb) {
     const mapConfig = {
       version: '1.3.0',
       layers: [],
@@ -51,7 +49,7 @@ const CartoVectorSource = React.createClass({
 
     Carto.getVectorTileTemplate(mapConfig, this.props.source.options)
       .then((template) => {
-        self.addSource(template);
+        cb(template);
       });
   },
 
@@ -66,6 +64,12 @@ const CartoVectorSource = React.createClass({
     });
 
     this.props.onLoaded(this.map.getStyle().sources);
+  },
+
+  updateSource(template) {
+    const newStyle = this.map.getStyle();
+    newStyle.sources[this.props.source.id].tiles = [template];
+    this.map.setStyle(newStyle);
   },
 
   render() {
