@@ -21,7 +21,6 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loaders: [
-          'react-hot',
           'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
         ],
       },
