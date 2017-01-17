@@ -51,7 +51,22 @@ const ProjectPage = React.createClass({
   renderContent() {
     const d = this.state.feature.properties;
 
-    const formatCost = number => Numeral(number).format('($ 0.00 a)').toUpperCase();
+    const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
+
+    const expendituresContent = this.state.expenditures.length > 0 ?
+      (
+        <BootstrapTable data={this.state.expenditures} keyField="id" striped hover>
+          <TableHeaderColumn dataField="issue_date">Issue Date</TableHeaderColumn>
+          <TableHeaderColumn dataField="check_amount" dataFormat={formatCost}>Check Amount</TableHeaderColumn>
+          <TableHeaderColumn dataField="capital_project">Capital Project</TableHeaderColumn>
+          <TableHeaderColumn dataField="contract_ID">Contract ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="expense_category" >Expense Category </TableHeaderColumn>
+          <TableHeaderColumn dataField="agency" >Agency </TableHeaderColumn>
+          <TableHeaderColumn dataField="payee_name" >Payee Name </TableHeaderColumn>
+        </BootstrapTable>
+      ) :
+      (<p>No Expenditures Found</p>);
+
 
     return (
       <div>
@@ -110,15 +125,7 @@ const ProjectPage = React.createClass({
 
             <li className="list-group-item">
               <h4>Expenditures</h4>
-              <BootstrapTable data={this.state.expenditures} keyField="id" striped hover>
-                <TableHeaderColumn dataField="issue_date">Issue Date</TableHeaderColumn>
-                <TableHeaderColumn dataField="check_amount" dataFormat={formatCost}>Check Amount</TableHeaderColumn>
-                <TableHeaderColumn dataField="capital_project">Capital Project</TableHeaderColumn>
-                <TableHeaderColumn dataField="contract_ID">Contract ID</TableHeaderColumn>
-                <TableHeaderColumn dataField="expense_category" >Expense Category </TableHeaderColumn>
-                <TableHeaderColumn dataField="agency" >Agency </TableHeaderColumn>
-                <TableHeaderColumn dataField="payee_name" >Payee Name </TableHeaderColumn>
-              </BootstrapTable>
+              {expendituresContent}
             </li>
           </ul>
         </div>
