@@ -78,7 +78,7 @@ module.exports = {
 
   // get a full row from a table as geojson
   // returns a promise that when resolved yeilds a GeoJson feature
-  getRow(tableName, column, value) {
+  getFeature(tableName, column, value) {
     const self = this;
 
     return new Promise((resolve, reject) => {

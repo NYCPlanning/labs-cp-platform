@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
-// import Numeral from 'numeral';
+import Numeral from 'numeral';
 // import Moment from 'moment';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import DetailPage from '../common/DetailPage';
 
 import ModalMap from '../common/ModalMap';
+import PlanningApi from '../helpers/PlanningApi';
 
 import Agencies from './agencies';
 import Carto from '../helpers/carto';
@@ -16,23 +18,40 @@ const ProjectPage = React.createClass({
   },
 
   getInitialState() {
-    return ({ data: null });
+    return ({
+      feature: null,
+      commitments: [],
+      expenditures: [],
+    });
   },
 
   componentDidMount() {
     const self = this;
+    const maprojid = this.props.params.id;
 
     const tableName = '(SELECT * FROM adoyle.commitmentspoints UNION ALL SELECT * FROM adoyle.commitmentspolygons) a';
 
-    // after mount, fetch data and set state
-    Carto.getRow(tableName, 'maprojid', this.props.params.id)
-      .then((data) => {
-        self.setState({ data });
+    // go get the project's data as a geojson feature
+    Carto.getFeature(tableName, 'maprojid', maprojid)
+      .then((feature) => {
+        self.setState({ feature });
       });
+
+    const commitmentsSQL = `SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${maprojid}'`;
+
+    // get an array of commitments data for this project
+    Carto.SQL(commitmentsSQL, 'json')
+      .then(commitments => this.setState({ commitments }));
+
+    // get an array of expenditures data for this project
+    PlanningApi.getCapitalProjectExpenditures(maprojid)
+      .then(res => self.setState({ expenditures: res.data }));
   },
 
   renderContent() {
-    const d = this.state.data.properties;
+    const d = this.state.feature.properties;
+
+    const formatCost = number => Numeral(number).format('($ 0.00 a)').toUpperCase();
 
     return (
       <div>
@@ -50,7 +69,7 @@ const ProjectPage = React.createClass({
           </div>
         </div>
         <div className={'col-md-6'}>
-          <ModalMap feature={this.state.data} label={d.descriptio} />
+          <ModalMap feature={this.state.feature} label={d.descriptio} />
         </div>
 
         <div className={'col-md-6'}>
@@ -74,8 +93,32 @@ const ProjectPage = React.createClass({
               <h4>Cost Data</h4>
               <dl className="dl-horizontal">
                 <dt>Sum of All Commitments</dt>
-                <dd>{d.totalcost}</dd>
+                <dd>{formatCost(d.totalcost)}</dd>
               </dl>
+            </li>
+
+            <li className="list-group-item">
+              <h4>Commitments</h4>
+              <BootstrapTable data={this.state.commitments} keyField="cartodb_id" striped hover>
+                <TableHeaderColumn dataField="plancommdate">date</TableHeaderColumn>
+                <TableHeaderColumn dataField="budgetline">Budget Line</TableHeaderColumn>
+                <TableHeaderColumn dataField="citycost" dataFormat={formatCost}>City Cost</TableHeaderColumn>
+                <TableHeaderColumn dataField="noncitycost" dataFormat={formatCost}>Non-City Cost</TableHeaderColumn>
+                <TableHeaderColumn dataField="totalcost" dataFormat={formatCost}>Cost</TableHeaderColumn>
+              </BootstrapTable>
+            </li>
+
+            <li className="list-group-item">
+              <h4>Expenditures</h4>
+              <BootstrapTable data={this.state.expenditures} keyField="id" striped hover>
+                <TableHeaderColumn dataField="issue_date">Issue Date</TableHeaderColumn>
+                <TableHeaderColumn dataField="check_amount" dataFormat={formatCost}>Check Amount</TableHeaderColumn>
+                <TableHeaderColumn dataField="capital_project">Capital Project</TableHeaderColumn>
+                <TableHeaderColumn dataField="contract_ID">Contract ID</TableHeaderColumn>
+                <TableHeaderColumn dataField="expense_category" >Expense Category </TableHeaderColumn>
+                <TableHeaderColumn dataField="agency" >Agency </TableHeaderColumn>
+                <TableHeaderColumn dataField="payee_name" >Payee Name </TableHeaderColumn>
+              </BootstrapTable>
             </li>
           </ul>
         </div>
@@ -84,7 +127,7 @@ const ProjectPage = React.createClass({
   },
 
   render() {
-    const content = this.state.data ? this.renderContent() : null;
+    const content = this.state.feature ? this.renderContent() : null;
 
     return (
       <DetailPage

@@ -4,7 +4,7 @@ import FontIcon from 'material-ui/FontIcon';
 import { Link } from 'react-router';
 
 const DetailPage = props => (
-  <div className="full-screen display-content">
+  <div className="fluid-content display-content">
     <div className="col-md-12">
       <Link to={props.location.state ? props.location.state.returnTo : props.defaultLink} className="pull-right">
         <RaisedButton

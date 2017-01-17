@@ -27,7 +27,7 @@ var ProjectPage = React.createClass({
     var tableName = (type == '0') ? 'adoyle.capeprojectspoints' : 'adoyle.capeprojectspolygons'
 
     // after mount, fetch data and set state
-    Carto.getRow(tableName, 'cartodb_id', parseInt(this.props.params.id.split('-')[0]))
+    Carto.getFeature(tableName, 'cartodb_id', parseInt(this.props.params.id.split('-')[0]))
       .then(function(data) { 
         self.setState({
           data: data

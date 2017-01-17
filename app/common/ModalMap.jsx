@@ -47,7 +47,7 @@ const ModalMap = React.createClass({
       minZoom: null,
       maxZoom: null,
       pitch: 60,
-      hash: true,
+      hash: false,
       navigationControlPosition: 'bottom-right',
     };
 
