@@ -14,7 +14,7 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.scss', '.js', '.jsx'],
+    extensions: ['', '.js', '.jsx'],
   },
   module: {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
