@@ -4,7 +4,7 @@ import {ButtonGroup, Button, Badge} from 'react-bootstrap'
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 import appConfig from '../../helpers/appConfig.js'
 
-import '../../../stylesheets/common/MapboxGLMap.scss'
+import './MapboxGLMap.scss'
 
 var MapboxGLMap = React.createClass({
   getInitialState() {
@@ -58,7 +58,7 @@ var MapboxGLMap = React.createClass({
         "source": "grey-outside",
         "paint": {
           'fill-color': '#000',
-          'fill-opacity': 0.15   
+          'fill-opacity': 0.15
         }
       })
     })
@@ -93,7 +93,7 @@ var MapboxGLMap = React.createClass({
       popupLngLat: lngLat,
       popupContent: content
     })
-  },   
+  },
 
   render() {
     //pass map object to all children
@@ -101,9 +101,9 @@ var MapboxGLMap = React.createClass({
       var childrenWithProps = React.Children.map(this.props.children,
         (child) => React.cloneElement(child, {
           map: this.map
-        }) 
+        })
       )
-    } 
+    }
 
     return(
       <div id='mapboxGLmap' ref='map'>

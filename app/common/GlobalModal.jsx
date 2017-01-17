@@ -7,7 +7,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
-import '../../stylesheets/common/GlobalModal.scss';
+import './GlobalModal.scss';
 
 const GlobalModal = React.createClass({
   propTypes: {

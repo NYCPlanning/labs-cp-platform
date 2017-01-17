@@ -1,5 +1,5 @@
 // MapComponent.jsx - A Common Web Mapping Component with some built-in overlay layers, extensible to include various data layers as children components
-// Props: 
+// Props:
 //   leftDrawerOpen - boolean - whether the left drawer should be open on mount
 //   title - string - title to be passed into the nav component
 //   children - data layers
@@ -19,7 +19,7 @@ import MapMenu from './MapMenu.jsx'
 
 import overlays from '../overlays/overlayConfig.js'
 
-import '../../../stylesheets/common/MapComponent.scss'
+import './MapComponent.scss'
 
 var MapComponent = React.createClass({
   getInitialState() {
@@ -28,8 +28,8 @@ var MapComponent = React.createClass({
       rightDrawerOpen: this.props.rightDrawerOpen ? this.props.rightDrawerOpen : false,
       overlays: overlays,
       basemap: 'light',
-      legendContent: {}, 
-      selections: [], 
+      legendContent: {},
+      selections: [],
       metrics: []
     })
   },
@@ -60,7 +60,7 @@ var MapComponent = React.createClass({
       })[0]
 
       if (thisLayer) thisLayer.visible = !thisLayer.visible
-    }) 
+    })
 
     this.setState({
       overlays: sections
@@ -101,7 +101,7 @@ var MapComponent = React.createClass({
     var self=this
 
     //add the MapComponent to all children as a prop
-    const childrenWithProps = React.Children.map(this.props.children, 
+    const childrenWithProps = React.Children.map(this.props.children,
       (child) => React.cloneElement(child, {
         map: this.refs.map ? this.refs.map : null,
         updateLegend: this.updateLegend,
@@ -113,13 +113,13 @@ var MapComponent = React.createClass({
     //create Tab for each child
     var childrenTabs = childrenWithProps.map(function(child, i) {
       return (
-        <CustomTab 
+        <CustomTab
           key={i+1}
           icon={
-            <FontIcon className={child.props.icon}/> 
-          } 
+            <FontIcon className={child.props.icon}/>
+          }
           tooltipText={child.props.tooltipText}
-          onActive={!self.state.leftDrawerOpen ? self.toggleLeftDrawer : null} 
+          onActive={!self.state.leftDrawerOpen ? self.toggleLeftDrawer : null}
           style={{
             height: 'auto',
             width: '40px'
@@ -133,10 +133,10 @@ var MapComponent = React.createClass({
     if (this.refs.map) {
 
       childrenTabs.unshift(
-        <CustomTab 
-          icon={<FontIcon className="fa fa-bars"/>} 
+        <CustomTab
+          icon={<FontIcon className="fa fa-bars"/>}
           tooltipText='Map Menu'
-          key={0} 
+          key={0}
           onActive={!self.state.leftDrawerOpen ? self.toggleLeftDrawer : null}
           style={{
             height: 'auto',
@@ -153,16 +153,16 @@ var MapComponent = React.createClass({
     }
 
     //turn state.legendContent into an array of components
-    var legendChildren = Object.keys(this.state.legendContent).map(function (key, i) { 
+    var legendChildren = Object.keys(this.state.legendContent).map(function (key, i) {
       return (
-        <div key={i}> 
+        <div key={i}>
           {self.state.legendContent[key]}
         </div>
-      ) 
+      )
     })
 
     const tabDrawer = (
-      <TabDrawer 
+      <TabDrawer
         open={this.state.leftDrawerOpen}
         toggle={this.toggleLeftDrawer}
       >
@@ -171,13 +171,13 @@ var MapComponent = React.createClass({
     )
 
     const rightTabDrawer = (
-      <TabDrawer 
+      <TabDrawer
         open={true} //test
         toggle={this.toggleRightDrawer}
         right={true}
       >
-        <Tab 
-          key={0} 
+        <Tab
+          key={0}
           onActive={self.openLeftDrawer}
           style={{
             height: 'auto',
@@ -187,17 +187,17 @@ var MapComponent = React.createClass({
           <Tabs
             initialSelectedIndex={1}
           >
-            <Tab 
+            <Tab
             icon={<FontIcon className="fa fa-list"/>}
             label="List"
             >
               <List>
-                {this.state.selections.length > 0 ? 
-                  this.state.selections : 
+                {this.state.selections.length > 0 ?
+                  this.state.selections :
                   <ListItem>Select items on the map to view details</ListItem>}
               </List>
             </Tab>
-            <Tab 
+            <Tab
               icon={<FontIcon className="fa fa-area-chart"/>}
               label="Metrics"
 
@@ -211,18 +211,18 @@ var MapComponent = React.createClass({
               </List>
             </Tab>
           </Tabs>
-         
+
         </Tab>
       </TabDrawer>
     )
 
     return(
-      <div 
+      <div
         className={this.state.rightDrawerOpen ? 'open-right' : null}
         style={{height: '100%', width: '100%'}}
       >
         <div className = {"left-overlay-bar " + (this.state.leftDrawerOpen ? 'open-left' : null)}>
-          <SearchFilterToolbar 
+          <SearchFilterToolbar
             map={this.refs.map}
             onToggleMenuDrawer={this.toggleMenuDrawer}
             />
@@ -235,7 +235,7 @@ var MapComponent = React.createClass({
           >
         </MapboxGLMap>
         {this.refs.map ? tabDrawer : null}
-        {this.refs.map ? rightTabDrawer : null}            
+        {this.refs.map ? rightTabDrawer : null}
       </div>
     )
   }
