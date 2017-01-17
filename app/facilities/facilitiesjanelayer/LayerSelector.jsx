@@ -15,7 +15,7 @@ import CountWidget from '../../common/CountWidget';
 import facilitiesLayers from '../facilitiesLayers';
 import Carto from '../../helpers/carto';
 
-import '../../../stylesheets/facilities/FacLayerSelector.scss';
+import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
   propTypes: {

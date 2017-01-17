@@ -9,7 +9,7 @@ import Footer from '../common/Footer';
 
 import content from './content';
 
-import '../../stylesheets/facilities/FacLanding.scss';
+import './FacLanding.scss';
 
 const FacilitiesLandingPage = React.createClass({
   propTypes: {
