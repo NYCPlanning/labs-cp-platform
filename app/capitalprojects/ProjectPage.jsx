@@ -53,8 +53,6 @@ const ProjectPage = React.createClass({
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
 
-    console.log(this.state)
-
     const expendituresContent = this.state.expenditures.length > 0 ?
       (
         <BootstrapTable data={this.state.expenditures} keyField="id" striped hover>
