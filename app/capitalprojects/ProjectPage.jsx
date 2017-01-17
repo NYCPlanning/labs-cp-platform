@@ -93,7 +93,7 @@ const ProjectPage = React.createClass({
               <h4>Cost Data</h4>
               <dl className="dl-horizontal">
                 <dt>Sum of All Commitments</dt>
-                <dd>${formatCost(d.totalcost)}</dd>
+                <dd>{formatCost(d.totalcost)}</dd>
               </dl>
             </li>
 
