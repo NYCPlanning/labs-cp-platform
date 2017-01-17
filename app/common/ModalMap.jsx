@@ -31,9 +31,18 @@ const ModalMap = React.createClass({
   },
 
   render() {
+    const feature = this.props.feature;
+
+    let center;
+    if (feature.geometry.type === 'Point') {
+      center = feature.geometry.coordinates;
+    } else {
+      center = centroid(feature).geometry.coordinates;
+    }
+
     const mapInit = {
       mapbox_accessToken: appConfig.mapbox_accessToken,
-      center: [-74.0079, 40.7315],
+      center,
       zoom: 12,
       minZoom: null,
       maxZoom: null,
@@ -50,13 +59,40 @@ const ModalMap = React.createClass({
       ],
     };
 
+    if (this.props.feature.geometry.type !== 'Point') {
+      mapConfig.layers.push({
+        id: 'feature',
+        name: 'Feature',
+        visible: true,
+        sources: [
+          {
+            id: 'feature',
+            type: 'geojson',
+            data: this.props.feature,
+          },
+        ],
+        mapLayers: [
+          {
+            id: 'feature',
+            source: 'feature',
+            type: 'fill',
+            paint: {
+              'fill-color': 'steelblue',
+              'fill-opacity': 0.75,
+              'fill-antialias': true,
+            },
+          },
+        ],
+      });
+    }
+
     return (
       <div id="modalmap" style={{ height: 450 }}>
         <Jane
           mapInit={mapInit}
           mapConfig={mapConfig}
-          poiFeature={this.props.feature}
-          poiLabel={this.props.label}
+          poiFeature={this.props.feature.geometry.type === 'Point' ? this.props.feature : null}
+          poiLabel={this.props.feature.geometry.type === 'Point' ? this.props.label : null}
         />
       </div>
     );
