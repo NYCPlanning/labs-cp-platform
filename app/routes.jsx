@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from '../app/App';
-import Login from '../app/Login';
+import Login from '../app/pages/Login';
 import Auth from './helpers/Auth';
 import appConfig from './helpers/appConfig';
 
-import HomePage from '../app/HomePage';
+import HomePage from '../app/pages/HomePage';
 
 import FacilitiesLanding from '../app/facilities/FacLanding';
 import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer';
@@ -21,7 +21,7 @@ import ProjectPage from '../app/capitalprojects/ProjectPage';
 import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
 import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';
 
-import NotFound from '../app/NotFound';
+import NotFound from '../app/pages/NotFound';
 
 const auth = new Auth(appConfig.auth0_client_id, appConfig.auth0_domain);
 
@@ -70,4 +70,3 @@ module.exports = (
     <Route path="*" component={NotFound} />
   </Route>
 );
-

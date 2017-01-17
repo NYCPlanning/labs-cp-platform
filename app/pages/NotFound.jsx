@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import Nav from './common/Nav';
-import Footer from './common/Footer';
+import Nav from '../common/Nav';
+import Footer from '../common/Footer';
 
 const NotFound = props => (
   <div>
@@ -28,6 +28,5 @@ const NotFound = props => (
 NotFound.propTypes = {
   auth: React.PropTypes.object,
 };
-
 
 module.exports = NotFound;

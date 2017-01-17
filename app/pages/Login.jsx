@@ -1,7 +1,6 @@
-
 import React from 'react';
 
-import './login.scss';
+import './Login.scss';
 
 const Login = React.createClass({
   propTypes: {

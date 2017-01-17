@@ -1,28 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Footer from './common/Footer';
+import Footer from '../common/Footer';
 
-import './homepage.scss';
+import './HomePage.scss';
 
 const aboutContent = (
   <div>
     <h3 className="modal-opener">The Capital Planning Platform, currently in beta, is a place for capital planners across city agencies to access interactive maps, data, and analytical tools to inform capital investment planning and priorities.</h3>
-
-
     <p>Since we started the Capital Planning team at DCP in 2014, we’ve heard consistently that access to better data and mapping technologies can help improve interagency coordination and neighborhood-based planning. This platform is a work-in-progress that aims to meet these needs.</p>
-
-
     <p>We’ve started by mapping capital projects, facilities that impact neighborhoods, and new residential developments. We believe these resources can have a significant impact on strategic planning and investment priorities across city agencies.They complement other data and maps that DCP produces, including <a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a>, <a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a>, the <a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a>, and the <a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a>, among others. </p>
-
-
     <p>Now we’re working on more analytical tools that will help integrate data from multiple sources and make it more readily available for mapping and analysis.</p>
-
-
     <p>We hope you find this effort useful, and let us know how we can improve this resource here.</p>
-
     <div className="modal-logo" />
-
   </div>
 );
 
@@ -43,13 +33,8 @@ const HomePage = React.createClass({
     });
   },
 
-  showCollaborate() {
-
-  },
-
   render() {
     return (
-
       <div className="col-md-12 fluid-content">
         <section className="headline-section">
           <div className="container">
