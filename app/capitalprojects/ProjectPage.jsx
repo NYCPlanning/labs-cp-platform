@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-// import Numeral from 'numeral';
+import Numeral from 'numeral';
 // import Moment from 'moment';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import DetailPage from '../common/DetailPage';
 
 import ModalMap from '../common/ModalMap';
@@ -24,15 +25,23 @@ const ProjectPage = React.createClass({
 
     const tableName = '(SELECT * FROM adoyle.commitmentspoints UNION ALL SELECT * FROM adoyle.commitmentspolygons) a';
 
-    // after mount, fetch data and set state
-    Carto.getRow(tableName, 'maprojid', this.props.params.id)
+    // go get the project's data as a geojson feature
+    Carto.getFeature(tableName, 'maprojid', this.props.params.id)
       .then((data) => {
         self.setState({ data });
       });
+
+    const commitmentsSQL = `SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${this.props.params.id}'`;
+
+    // get an array of commitments data for this project
+    Carto.SQL(commitmentsSQL, 'json')
+      .then(commitments => this.setState({ commitments }));
   },
 
   renderContent() {
     const d = this.state.data.properties;
+
+    const formatCost = number => Numeral(number).format('0.00a').toUpperCase();
 
     return (
       <div>
@@ -74,8 +83,20 @@ const ProjectPage = React.createClass({
               <h4>Cost Data</h4>
               <dl className="dl-horizontal">
                 <dt>Sum of All Commitments</dt>
-                <dd>{d.totalcost}</dd>
+                <dd>${formatCost(d.totalcost)}</dd>
               </dl>
+            </li>
+
+            <li className="list-group-item">
+              <h4>Commitments</h4>
+              <BootstrapTable data={this.state.commitments} striped hover>
+                <TableHeaderColumn isKey dataField="cartodb_id">Carto ID</TableHeaderColumn>
+                <TableHeaderColumn dataField="plancommdate">date</TableHeaderColumn>
+                <TableHeaderColumn dataField="budgetline">Budget Line</TableHeaderColumn>
+                <TableHeaderColumn dataField="citycost" dataFormat={formatCost}>Cost</TableHeaderColumn>
+                <TableHeaderColumn dataField="noncitycost" dataFormat={formatCost}>Cost</TableHeaderColumn>
+                <TableHeaderColumn dataField="totalcost" dataFormat={formatCost}>Cost</TableHeaderColumn>
+              </BootstrapTable>
             </li>
           </ul>
         </div>
