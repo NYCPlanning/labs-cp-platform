@@ -13,7 +13,7 @@ import GrayOutsideNyc from '../janelayers/grayoutsidenyc';
 
 import appConfig from '../helpers/appConfig';
 
-import './styles.scss';
+import './Explorer.scss';
 
 const CaptialProjectsExplorer = React.createClass({
   propTypes: {

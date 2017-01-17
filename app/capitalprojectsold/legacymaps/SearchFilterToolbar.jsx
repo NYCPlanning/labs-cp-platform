@@ -1,11 +1,11 @@
 import React from 'react'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 
 import MapzenGeocoder from './MapzenGeocoder.jsx'
 
-import '../../../stylesheets/common/SearchFilterToolbar.scss'
+import './SearchFilterToolbar.scss'
 
 var SearchFilterToolbar = React.createClass({
   handleGeocoderSelection(feature) {
@@ -15,7 +15,7 @@ var SearchFilterToolbar = React.createClass({
   render() {
     return (
       <div className={"mui-toolbar-container search-filter-toolbar"}>
-         <Toolbar 
+         <Toolbar
           className="mui-toolbar"
           noGutter={true}
           style={{
@@ -27,7 +27,7 @@ var SearchFilterToolbar = React.createClass({
           <ToolbarGroup>
             <MapzenGeocoder onSelection={this.handleGeocoderSelection}/>
             <IconButton>
-              <FontIcon className={"fa fa-search"} /> 
+              <FontIcon className={"fa fa-search"} />
             </IconButton>
           </ToolbarGroup>
         </Toolbar>
