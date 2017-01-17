@@ -6,7 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import GlobalModal from './common/GlobalModal';
 import Nav from './common/Nav';
 
-import '../stylesheets/App.scss';
+import './app.scss';
 
 // get styles for jane-maps, TODO figure out the best way to include this
 import '../jane-maps/src/styles.scss';

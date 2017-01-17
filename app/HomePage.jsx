@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import Footer from './common/Footer';
 
-import '../stylesheets/HomePage.scss';
+import './homepage.scss';
 
 const aboutContent = (
   <div>
