@@ -23,12 +23,12 @@ const filterDimensions = {
         value: 'Partial complete',
       },
       {
-        label: 'Permit outstanding',
-        value: 'Permit outstanding',
+        label: 'Permit issued',
+        value: 'Permit issued',
       },
       {
-        label: 'Permit pending',
-        value: 'Permit pending',
+        label: 'Application filed',
+        value: 'Application filed',
       },
       {
         label: 'Demolition (complete)',
@@ -37,31 +37,31 @@ const filterDimensions = {
     ],
   },
   dcp_pipeline_category: {
-    label: 'Development Status',
+    label: 'Development Type',
     options: [
       {
-        label: 'Residential-New',
-        value: 'Residential-New',
+        label: 'New Building - Residential',
+        value: 'New Building - Residential',
       },
       {
-        label: 'Hotel-New',
-        value: 'Hotel-New',
+        label: 'New Building - Non-residential',
+        value: 'New Building - Non-residential',
       },
       {
-        label: 'Residential-Alteration',
-        value: 'Residential-Alteration',
+        label: 'Alteration - Residential',
+        value: 'Alteration - Residential',
       },
       {
-        label: 'Hotel-Alteration',
-        value: 'Hotel-Alteration',
+        label: 'Alteration - Non-residential',
+        value: 'Alteration - Non-residential',
       },
       {
-        label: 'Residential-Demolition',
-        value: 'Residential-Demolition',
+        label: 'Demolition - Residential',
+        value: 'Demolition - Residential',
       },
       {
-        label: 'Hotel-Demolition',
-        value: 'Hotel-Demolition',
+        label: 'Demolition - Non-residential',
+        value: 'Demolition - Non-residential',
       },
     ],
   },
@@ -214,7 +214,7 @@ const LayerSelector = React.createClass({
           <Divider />
 
           <Subheader>
-            Category
+            Development Type
             <InfoIcon text="Categorizes developments based on the construction and housing types, determined using DOB Permit data" />
           </Subheader>
           <ListItem
