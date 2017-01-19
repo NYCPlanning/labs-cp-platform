@@ -2,12 +2,13 @@
 import $ from 'jquery';
 
 const PlanningApi = {
-  getCapitalProjectExpenditures(maprojid) {
+  getCommitSpend(maprojid) {
     const maprojidTrimmed = maprojid.replace(/ /g, '');
 
-    const apiCall = `https://api.capitalplanning.nyc/api/spending/capitalprojects/${maprojidTrimmed}`;
+    const apiCall = `https://api.capitalplanning.nyc/api/capitalprojects/commitspend/${maprojidTrimmed}`;
     return $.getJSON(apiCall);
   },
 };
 
 export default PlanningApi;
+

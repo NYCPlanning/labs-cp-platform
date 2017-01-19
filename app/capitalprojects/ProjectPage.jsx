@@ -1,11 +1,9 @@
 import React, { PropTypes } from 'react';
 import Numeral from 'numeral';
-// import Moment from 'moment';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import DetailPage from '../common/DetailPage';
 
+import DetailPage from '../common/DetailPage';
 import ModalMap from '../common/ModalMap';
-import PlanningApi from '../helpers/PlanningApi';
+import CommitmentExpenditureChart from './CommitmentExpenditureChart';
 
 import Agencies from './agencies';
 import Carto from '../helpers/carto';
@@ -20,8 +18,6 @@ const ProjectPage = React.createClass({
   getInitialState() {
     return ({
       feature: null,
-      commitments: [],
-      expenditures: [],
     });
   },
 
@@ -43,9 +39,9 @@ const ProjectPage = React.createClass({
     Carto.SQL(commitmentsSQL, 'json')
       .then(commitments => this.setState({ commitments }));
 
-    // get an array of expenditures data for this project
-    PlanningApi.getCapitalProjectExpenditures(maprojid)
-      .then(res => self.setState({ expenditures: res.data }));
+    // // get an array of expenditures data for this project
+    // PlanningApi.getCapitalProjectExpenditures(maprojid)
+    //   .then(res => self.setState({ expenditures: res.data }));
   },
 
   renderContent() {
@@ -53,23 +49,8 @@ const ProjectPage = React.createClass({
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
 
-    const expendituresContent = this.state.expenditures.length > 0 ?
-      (
-        <BootstrapTable data={this.state.expenditures} keyField="id" striped hover>
-          <TableHeaderColumn dataField="issue_date">Issue Date</TableHeaderColumn>
-          <TableHeaderColumn dataField="check_amount" dataFormat={formatCost}>Check Amount</TableHeaderColumn>
-          <TableHeaderColumn dataField="capital_project">Capital Project</TableHeaderColumn>
-          <TableHeaderColumn dataField="contract_ID">Contract ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="expense_category" >Expense Category </TableHeaderColumn>
-          <TableHeaderColumn dataField="agency" >Agency </TableHeaderColumn>
-          <TableHeaderColumn dataField="payee_name" >Payee Name </TableHeaderColumn>
-        </BootstrapTable>
-      ) :
-      (<p>No Expenditures Found</p>);
-
-
     return (
-      <div>
+      <div className="project-page">
         <div className="col-md-12">
           <h3>
             {d.descriptio} - {d.maprojid}
@@ -112,20 +93,10 @@ const ProjectPage = React.createClass({
               </dl>
             </li>
 
-            <li className="list-group-item">
-              <h4>Commitments</h4>
-              <BootstrapTable data={this.state.commitments} keyField="cartodb_id" striped hover>
-                <TableHeaderColumn dataField="plancommdate">date</TableHeaderColumn>
-                <TableHeaderColumn dataField="budgetline">Budget Line</TableHeaderColumn>
-                <TableHeaderColumn dataField="citycost" dataFormat={formatCost}>City Cost</TableHeaderColumn>
-                <TableHeaderColumn dataField="noncitycost" dataFormat={formatCost}>Non-City Cost</TableHeaderColumn>
-                <TableHeaderColumn dataField="totalcost" dataFormat={formatCost}>Cost</TableHeaderColumn>
-              </BootstrapTable>
-            </li>
+            <li className="list-group-item" style={{ paddingBottom: '100px' }}>
+              <h4>Commitments & Expenditures</h4>
+              <CommitmentExpenditureChart maprojid={this.props.params.id} />
 
-            <li className="list-group-item">
-              <h4>Expenditures</h4>
-              {expendituresContent}
             </li>
           </ul>
         </div>
