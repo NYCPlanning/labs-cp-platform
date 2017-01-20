@@ -67,7 +67,7 @@ const defaultLayerConfig = {
           'text-color': '#D96B27',
         },
         layout: {
-          'text-field': '{borocd}',
+          'text-field': '{displaynam}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
         },
       },
