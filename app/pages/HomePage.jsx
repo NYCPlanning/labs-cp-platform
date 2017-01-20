@@ -16,6 +16,25 @@ const aboutContent = (
   </div>
 );
 
+const collaborateContent = (
+  <div>
+    <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
+    <p>
+        The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
+    </p>
+    <p>
+        We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href="http://docs.capitalplanning.nyc/facdb/">metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href="https://github.com/nycplanning">GitHub</a>.
+    </p>
+    <p>
+        We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city.
+    </p>
+    <p>
+        Email the team at <a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a>.
+    </p>
+    <div className="modal-logo" />
+  </div>
+);
+
 const HomePage = React.createClass({
   propTypes: {
     showModal: React.PropTypes.func,
@@ -33,15 +52,23 @@ const HomePage = React.createClass({
     });
   },
 
+  showCollaborate() {
+    this.props.showModal({
+      modalHeading: 'Collaborate',
+      modalContent: collaborateContent,
+      modalCloseText: 'Close',
+    });
+  },
+
   render() {
     return (
-      <div className="col-md-12 fluid-content">
+      <div className="col-md-12 fluid-content" style={{ marginTop: '80px' }}>
         <section className="headline-section">
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-lg-offset-2 ">
                 <h2 className="section-heading">A new resource for better, more collaborative planning through data and technology.</h2>
-                <h3>We&apos;re just getting started - <button onClick={this.showAbout}>read more here</button> or <button onClick={this.showCollaborate}>collaborate with us</button></h3>
+                <h3>We&apos;re just getting started - <a onClick={this.showAbout}>read more here</a> or <a onClick={this.showCollaborate}>collaborate with us</a></h3>
               </div>
             </div>
           </div>

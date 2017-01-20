@@ -6,7 +6,7 @@ const Footer = () => (
   <div className="footer">
     <div className="container">
       <div className="row">
-        <div className="col-md-2 col-sm-2 col-xs-6 column">
+        <div className="col-md-3 col-sm-3 col-xs-6 column">
           <dl>
             <dt><h4>NYC</h4></dt>
             <dd><a href="http://www1.nyc.gov/">NYC.gov</a></dd>
@@ -14,7 +14,7 @@ const Footer = () => (
             <dd><a href="http://www1.nyc.gov/home/privacy-policy.page">Privacy Policy</a></dd>
           </dl>
         </div>
-        <div className="col-md-2 col-sm-3 col-xs-6 column">
+        <div className="col-md-3 col-sm-3 col-xs-6 column">
           <dl>
             <dt><h4>DCP</h4></dt>
             <dd><a href="http://www1.nyc.gov/site/planning/index.page">DCP Website</a></dd>
@@ -23,19 +23,15 @@ const Footer = () => (
           </dl>
         </div>
         <div className="clearfix visible-xs-block" />
-        <div className="col-md-3 col-sm-4 col-sm-push-0 col-xs-6 col-xs-push-6 column">
+        <div
+          className="col-md-3 col-sm-3 col-sm-push-0 col-xs-6 col-xs-push-6 column"
+        >
           <dl>
             <dt><h4>Capital Planning Team</h4></dt>
             <dd><a href="http://docs.capitalplanning.nyc">Data Documentation</a></dd>
           </dl>
         </div>
-        <div className="col-md-3 col-sm-4 col-sm-pull-0 col-xs-6 col-xs-pull-6 column">
-          <dl>
-            <dt><h4>Other Resources</h4></dt>
-            <dd><a>Coming Soon</a></dd>
-          </dl>
-        </div>
-        <div className="col-md-2 col-xs-12">
+        <div className="col-md-3 col-xs-12">
           <div className="row">
             <div className="col-xs-12">
               <h4>

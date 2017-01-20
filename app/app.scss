@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5 {
   left: 0;
   background: #fff;
   margin-top: 50px;
-  overflow: scroll;
+  overflow: visible;
   padding: 0;
 }
 
@@ -200,13 +200,31 @@ body:after {
 }
 
 /*Sidebar Tabs, Overrides Material-UI*/
+
+.sidebar-tabs {
+  position: absolute;
+  top: 35px;
+  bottom: 0;
+  overflow: auto;
+}
+
 .sidebar-tabs > div:first-child {
   height:30px;
+  position: fixed;
+  z-index: 50;
 
   button > div > div {
     height: 30px !important;
     font-size: 12px;
   }
+}
+
+.sidebar-tabs > div:nth-child(2) {
+  margin-top: 32px;
+}
+
+.sidebar-tabs > div:nth-child(3) {
+  z-index: 10;
 }
 
 .sidebar-tab-content {
