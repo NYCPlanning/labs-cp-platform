@@ -69,6 +69,7 @@ const PipeLineExplorer = React.createClass({
       <div className="full-screen">
         <Jane
           mapInit={mapInit}
+          layerContentVisible
           search
           searchConfig={searchConfig}
           mapConfig={mapConfig}
