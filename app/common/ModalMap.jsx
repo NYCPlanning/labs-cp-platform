@@ -5,19 +5,32 @@
 
 import React from 'react';
 import centroid from 'turf-centroid';
+import extent from 'turf-extent';
 import Jane from '../../jane-maps/src';
+
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
 
-
 import appConfig from '../helpers/appConfig';
 
 const ModalMap = React.createClass({
   propTypes: {
-    feature: React.PropTypes.object,
+    feature: React.PropTypes.object.isRequired,
     label: React.PropTypes.string,
+  },
+
+  componentDidMount() {
+    // get the mapbox GL map object
+    this.map = this.janeMap.map.mapObject;
+
+    if (this.props.feature.geometry.type !== 'Point') {
+      const bounds = extent(this.props.feature.geometry);
+      const glBounds = [[bounds[0], bounds[1]], [bounds[2], bounds[3]]];
+
+      this.map.fitBounds(glBounds, { padding: 100 });
+    }
   },
 
   getCenter() {
@@ -46,7 +59,7 @@ const ModalMap = React.createClass({
       zoom: 12,
       minZoom: null,
       maxZoom: null,
-      pitch: 60,
+      pitch: 30,
       hash: false,
       navigationControlPosition: 'bottom-right',
     };
@@ -93,6 +106,7 @@ const ModalMap = React.createClass({
           mapConfig={mapConfig}
           poiFeature={this.props.feature.geometry.type === 'Point' ? this.props.feature : null}
           poiLabel={this.props.feature.geometry.type === 'Point' ? this.props.label : null}
+          ref={x => (this.janeMap = x)}
         />
       </div>
     );
