@@ -6,6 +6,8 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import FontIcon from 'material-ui/FontIcon';
 
+import './CountWidget.scss';
+
 const CountWidget = (props) => {
   const totalCount = Numeral(props.totalCount).format('0,0');
   const selectedCount = Numeral(props.selectedCount).format('0,0');
@@ -19,7 +21,7 @@ const CountWidget = (props) => {
   } else {
     countText = (
       <span>
-        <span className="bigNumber">{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {props.units} showing
+        <span className={`bigNumber ${selectedCount === '0' ? 'zero' : ''}`}>{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {props.units} showing
       </span>
     );
   }
