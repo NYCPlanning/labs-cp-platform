@@ -6,6 +6,7 @@ import _ from 'underscore';
 
 import LayerSelector from './LayerSelector';
 import LayerConfig from './LayerConfig';
+import content from '../content';
 
 import Carto from '../../helpers/carto';
 import choropleth from '../../helpers/choropleth';
@@ -58,12 +59,12 @@ const Pipeline = React.createClass({
       const groupSQL = `
         WITH data as (SELECT a.the_geom, a.borocd, a.dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode a RIGHT JOIN (${sql}) b ON a.cartodb_id = b.cartodb_id)
 
-        SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta 
-        FROM dcp_cdboundaries a 
+        SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta
+        FROM dcp_cdboundaries a
         LEFT JOIN (
-          SELECT borocd, SUM(dcp_units_use_map) as delta FROM data 
+          SELECT borocd, SUM(dcp_units_use_map) as delta FROM data
             GROUP BY borocd
-        ) b 
+        ) b
         ON a.borocd::text = b.borocd
       `;
 
@@ -110,55 +111,7 @@ const Pipeline = React.createClass({
     }
   },
 
-  // updateLayerConfigOld(sql) {
-  //   //store the current data query in this, used when this method is called on mode change
-  //   //( it is normally called by the LayerSelector)
-  //   this.sql=sql
-
-  //   //change the layer config based on mode
-  //   const config = this.state.mode == 'points' ? LayerConfig.points :
-
-  //   //update the sql for the map source based on the mode.  For points it is unchanged, for polygons it will be a CTE based on the original data query
-  //   const mapSql= this.state.mode == 'points' ? sql :
-  //     `WITH data as (
-  //       SELECT *
-  //       FROM nchatterjee.dob_permits_cofos_hpd_geocode
-  //     )
-
-  //     SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta
-  //     FROM dcp_cdboundaries a
-  //     LEFT JOIN (
-  //       SELECT borocd, SUM(dcp_units_use_map) as delta FROM data
-  //         GROUP BY borocd
-  //     ) b
-  //     ON a.borocd::text = b.borocd`
-
-  //   const newConfig = update(config, {
-  //     sources: {
-  //       0: {
-  //         sql: {
-  //           $set: mapSql
-  //         }
-  //       }
-  //     }
-  //   })
-
-
-  // },
-
   sendNewConfig(newConfig) {
-    // const newLayer = update(this.props.layer, {
-    //   sources: {
-    //     $set: newConfig.sources
-    //   },
-    //   mapLayers: {
-    //     $set: newConfig.mapLayers
-    //   },
-    //   legend: {
-    //     $set: newConfig.legend
-    //   }
-    // })
-
     // pass the new config up to Jane
     this.props.onUpdate('pipeline', {
       sources: newConfig.sources,
@@ -173,28 +126,30 @@ const Pipeline = React.createClass({
 
   render() {
     return (
-      <Tabs>
+      <Tabs className="sidebar-tabs">
         <Tab label="Data">
-          <LayerSelector
-            updateSQL={this.updateLayerConfig}
-          />
-        </Tab>
-        <Tab label="About">
-          About this Data Layer
-        </Tab>
-        <Tab label="Choropleth">
           <Toggle
             toggled={this.state.mode === 'polygons'}
             onToggle={this.handleModeToggle}
           />
+          <LayerSelector
+            updateSQL={this.updateLayerConfig}
+          />
         </Tab>
         <Tab label="Download">
-          Coming Soon
+          <div className="sidebar-tab-content">
+            <h4>Data Downloads</h4>
+            <p>Custom data downloads are currently in development.  Please check back again soon.</p>
+          </div>
+        </Tab>
+        <Tab label="About">
+          <div className="sidebar-tab-content">
+            {content.about}
+          </div>
         </Tab>
       </Tabs>
     );
   },
 });
-
 
 export default Pipeline;
