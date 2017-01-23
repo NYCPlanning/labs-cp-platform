@@ -47,15 +47,15 @@ const CapitalProjects = React.createClass({
             updateSQL={this.updateLayerConfig}
           />
         </Tab>
-        <Tab label="About">
-          <div className="sidebar-tab-content">
-            {content.about}
-          </div>
-        </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">
             <h4>Data Downloads</h4>
             <p>Custom data downloads are currently in development.  Please check back again soon.</p>
+          </div>
+        </Tab>
+        <Tab label="About">
+          <div className="sidebar-tab-content">
+            {content.about}
           </div>
         </Tab>
       </Tabs>
