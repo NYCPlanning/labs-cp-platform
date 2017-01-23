@@ -1,21 +1,21 @@
-// /facilities/FacLayerSelector.jsx - This component builds the layer selector which is used in the explorer
-// Props:
-//  layerStructure - A json containing the heirachy of domains, groups, and subgroups, and descriptions and colors
-//  initialSQL - String containing the initial SQL state set in FacExplorer.jsx
-//  updateSQL - String containing updates to SQL query based on checked layers
+// LayerSelector.jsx - This component builds the layer selector which is used in the facilities JaneLayer
 
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import Select from 'react-select';
+
 
 import Checkbox from './Checkbox';
 import CountWidget from '../../common/CountWidget';
 
+import config from './config';
 import facilitiesLayers from '../facilitiesLayers';
 import Carto from '../../helpers/carto';
 
 import './LayerSelector.scss';
+
 
 const LayerSelector = React.createClass({
   propTypes: {
@@ -29,6 +29,10 @@ const LayerSelector = React.createClass({
       selectedCount: null,
       totalCount: null,
       checked: 'all', // all, none, or null
+      filterDimensions: {
+        operatortype: [],
+        oversightabbrev: [],
+      },
     });
   },
 
@@ -196,25 +200,76 @@ const LayerSelector = React.createClass({
     return selectedLayers;
   },
 
+  updateFilterDimension(key, values) {
+    const abbreviated = values.map(value => ({
+      value: value.value,
+      label: value.value,
+    }));
+
+    this.state.filterDimensions[key] = key !== 'oversightabbrev' ? values : abbreviated;
+    this.buildSQL();
+  },
+
+  createSQLChunks() {
+    // create an array of where clause chunks to be joined by 'AND'
+    this.sqlChunks = {};
+
+    const f = this.state.filterDimensions;
+
+    this.createMultiSelectSQLChunk('operatortype', f.operatortype);
+    this.createMultiSelectSQLChunk('oversightabbrev', f.oversightabbrev);
+    this.createCategorySQLChunk();
+  },
+
+  // builds WHERE clause partial for operatortype filter
+  createMultiSelectSQLChunk(dimension, values) {
+    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
+    // like ( dimension = 'value1' OR dimension = 'value2')
+    const subChunks = values.map((value) => {
+      if (dimension !== 'oversightabbrev') {
+        return `${dimension} = '${value.value}'`;
+      }
+
+      return `${dimension} LIKE '%${value.value}%'`;
+    });
+
+    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
+      const joined = subChunks.join(' OR ');
+      const chunk = `(${joined})`;
+
+      this.sqlChunks[dimension] = chunk;
+    }
+  },
+
+  // builds the WHERE clause partial for facilitysubgroup filter
+  createCategorySQLChunk() {
+    const layers = this.processChecked();
+
+    let layersChunk = '';
+
+    layers.forEach((name, i) => {
+      if (i > 0) layersChunk += ' OR ';
+      layersChunk += `facilitysubgroup = '${name}'`;
+    });
+
+    this.sqlChunks.facilitysubgroup = (layersChunk.length > 0) ? `(${layersChunk})` : 'false';
+  },
+
   buildSQL() {
     // the main event!  This method is called whenever any change is detected in the UI,
     // and ultimately ends up passing a new layerconfig to jane
 
-    let sql;
+    this.createSQLChunks();
 
-    const layers = this.processChecked();
+    const chunksArray = [];
 
-    if (layers.length > 0) {
-      sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `;
+    Object.keys(this.sqlChunks).forEach((key) => {
+      chunksArray.push(this.sqlChunks[key]);
+    });
 
-      layers.forEach((name, i) => {
-        if (i > 0) sql += ' OR ';
-        sql += `facilitysubgroup = '${name}'`;
-      });
-    } else {
-      sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} LIMIT 0`;
-    }
+    const chunksString = chunksArray.length > 0 ? chunksArray.join(' AND ') : 'true';
 
+    const sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE ${chunksString}`;
 
     if (this.state.totalCount == null) this.getTotalCount(sql);
 
@@ -270,7 +325,7 @@ const LayerSelector = React.createClass({
           units={'facilities'}
         />
         <Subheader>
-            Select facility types to display on the map.
+            Facility Type
             <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
               <a href="https://nycplanning.github.io/cpdocs/facdb/"> <i className="fa fa-info-circle" aria-hidden="true" /></a>
             </OverlayTrigger>
@@ -360,6 +415,55 @@ const LayerSelector = React.createClass({
                   ))
               }
           </ul>
+        </ListItem>
+
+        <Subheader>
+          Agency
+          <OverlayTrigger
+            placement="right" overlay={
+              <Tooltip id="tooltip">The Agency managing this facility</Tooltip>
+            }
+          >
+            <i className="fa fa-info-circle" aria-hidden="true" />
+          </OverlayTrigger>
+        </Subheader>
+
+        <ListItem
+          disabled
+        >
+          <Select
+            multi
+            placeholder="Select Agencies"
+            value={this.state.filterDimensions.oversightabbrev}
+            name="form-field-name"
+            options={config.agencies}
+            onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
+          />
+        </ListItem>
+
+
+        <Subheader>
+          Operator Type
+          <OverlayTrigger
+            placement="right" overlay={
+              <Tooltip id="tooltip">The type of entity operating the facility</Tooltip>
+            }
+          >
+            <i className="fa fa-info-circle" aria-hidden="true" />
+          </OverlayTrigger>
+        </Subheader>
+
+        <ListItem
+          disabled
+        >
+          <Select
+            multi
+            placeholder="Select Operator Types"
+            value={this.state.filterDimensions.operatortype}
+            name="form-field-name"
+            options={config.operatorTypes}
+            onChange={this.updateFilterDimension.bind(this, 'operatortype')}
+          />
         </ListItem>
       </div>
     );
