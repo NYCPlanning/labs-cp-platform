@@ -1,7 +1,8 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Toggle from 'material-ui/Toggle';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import _ from 'underscore';
 
 import LayerSelector from './LayerSelector';
@@ -94,16 +95,15 @@ const Pipeline = React.createClass({
               {
                 id: 'pipeline-polygons',
                 source: 'pipeline-polygons',
-                'source-layer': 'layer0',
                 type: 'fill',
                 paint,
               },
             ],
             legend: (
               <div className="legend-section">
-                   Legend
-                </div>
-              ),
+                Legend
+              </div>
+            ),
           };
 
           self.sendNewConfig(newConfig);
@@ -120,18 +120,29 @@ const Pipeline = React.createClass({
     });
   },
 
-  handleModeToggle() {
-    this.setState({ mode: this.state.mode === 'points' ? 'polygons' : 'points' });
-  },
-
   render() {
+    const self = this;
+
+    function toggleMode(event, index, value) {
+      self.setState({ mode: value });
+    }
+
+    const dropdownStyles = {
+      paddingLeft: '16px',
+    };
+
     return (
       <Tabs className="sidebar-tabs">
         <Tab label="Data">
-          <Toggle
-            toggled={this.state.mode === 'polygons'}
-            onToggle={this.handleModeToggle}
-          />
+          <SelectField
+            value={this.state.mode}
+            onChange={toggleMode}
+            labelStyle={dropdownStyles}
+            fullWidth
+          >
+            <MenuItem value={'points'} primaryText="Points" />
+            <MenuItem value={'polygons'} primaryText="Choropleth" />
+          </SelectField>
           <LayerSelector
             updateSQL={this.updateLayerConfig}
           />
