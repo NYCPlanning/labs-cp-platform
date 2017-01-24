@@ -100,7 +100,7 @@ const ModalMap = React.createClass({
     }
 
     return (
-      <div id="modalmap" style={{ height: 450 }}>
+      <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
           mapInit={mapInit}
           mapConfig={mapConfig}
