@@ -20,9 +20,7 @@ const Facilities = React.createClass({
   },
 
   getInitialState() {
-    return {
-      sql: '',
-    };
+    return { sql: '' };
   },
 
   componentDidMount() {

@@ -7,6 +7,7 @@ import _ from 'underscore';
 
 import LayerSelector from './LayerSelector';
 import LayerConfig from './LayerConfig';
+import Download from '../../common/Download';
 import content from '../content';
 
 import Carto from '../../helpers/carto';
@@ -18,7 +19,7 @@ const Pipeline = React.createClass({
   },
 
   getInitialState() {
-    return ({ mode: 'points' });
+    return ({ mode: 'points', sql: '' });
   },
 
   componentDidUpdate(prevProps, prevState) {
@@ -31,6 +32,7 @@ const Pipeline = React.createClass({
     // use this method to build new mapConfig based on mode
     const self = this;
     this.sql = sql;
+    this.setState({ sql });
 
     if (this.state.mode === 'points') {
       const config = LayerConfig.points;
@@ -148,10 +150,7 @@ const Pipeline = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <div className="sidebar-tab-content">
-            <h4>Data Downloads</h4>
-            <p>Custom data downloads are currently in development.  Please check back again soon.</p>
-          </div>
+          <Download sql={this.state.sql} />
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">
