@@ -19,8 +19,8 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.facilityname}</div>
-        <div className={'subtitle'}>{d.address}</div>
         <div className={'subtitle'}>{d.facilitytype}</div>
+        <div className={'subtitle'}>{d.address}</div>
         <i className="fa fa-chevron-right" />
       </div>
     </Link>
