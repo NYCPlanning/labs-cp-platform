@@ -3,7 +3,7 @@
 //  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import DetailPage from '../common/DetailPage';
 
@@ -15,10 +15,11 @@ import carto from '../helpers/carto';
 const FacilityPage = React.createClass({
 
   propTypes: {
-    params: React.PropTypes.shape({
-      id: React.PropTypes.string,
+    params: PropTypes.shape({
+      id: PropTypes.string,
     }),
-    location: React.PropTypes.shape(),
+    location: PropTypes.shape(),
+    auth: PropTypes.object,
   },
 
   getInitialState() {

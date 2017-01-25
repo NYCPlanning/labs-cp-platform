@@ -114,7 +114,7 @@ const LayerSelector = React.createClass({
     // if dimension is status, check which items are included and disable/reset date slider accordingly
     if (dimension === 'dcp_pipeline_status') {
       const invalidValues = values.filter(value => (
-        (value.value === 'Permit outstanding' || value.value === 'Permit pending') ? value.value : null
+        (value.value === 'Permit issued' || value.value === 'Application filed' || value.value === 'Demolition (complete)') ? value.value : null
       ));
 
       if (invalidValues.length > 0 || values.length === 0) {
