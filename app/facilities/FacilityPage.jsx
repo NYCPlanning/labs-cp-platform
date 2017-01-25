@@ -19,7 +19,6 @@ const FacilityPage = React.createClass({
       id: PropTypes.string,
     }),
     location: PropTypes.shape(),
-    auth: PropTypes.object,
   },
 
   getInitialState() {
