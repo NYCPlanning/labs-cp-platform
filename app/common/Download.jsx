@@ -8,12 +8,16 @@ import FontIcon from 'material-ui/FontIcon';
 
 import Carto from '../helpers/carto';
 
+import Moment from 'moment';
+
+const date = Moment().format('YYYY-MM-DD');
+
 const Download = ({ sql, filePrefix = 'data' }) => {
   const filteredSql = Carto.transformSqlSelectAll(sql);
   const completeSql = Carto.transformSqlRemoveWhere(filteredSql);
 
-  const allFilename = `${filePrefix}-all`;
-  const filteredFilename = `${filePrefix}-filtered`;
+  const allFilename = `${filePrefix}_all_${date}`;
+  const filteredFilename = `${filePrefix}_filtered_${date}`;
 
   return (
     <div>
