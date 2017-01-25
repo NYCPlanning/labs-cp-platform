@@ -1,11 +1,14 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Toggle from 'material-ui/Toggle';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import _ from 'underscore';
 
 import LayerSelector from './LayerSelector';
 import LayerConfig from './LayerConfig';
+import Download from '../../common/Download';
+import content from '../content';
 
 import Carto from '../../helpers/carto';
 import choropleth from '../../helpers/choropleth';
@@ -16,7 +19,7 @@ const Pipeline = React.createClass({
   },
 
   getInitialState() {
-    return ({ mode: 'points' });
+    return ({ mode: 'points', sql: '' });
   },
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,6 +32,7 @@ const Pipeline = React.createClass({
     // use this method to build new mapConfig based on mode
     const self = this;
     this.sql = sql;
+    this.setState({ sql });
 
     if (this.state.mode === 'points') {
       const config = LayerConfig.points;
@@ -58,12 +62,12 @@ const Pipeline = React.createClass({
       const groupSQL = `
         WITH data as (SELECT a.the_geom, a.borocd, a.dcp_units_use_map FROM nchatterjee.dob_permits_cofos_hpd_geocode a RIGHT JOIN (${sql}) b ON a.cartodb_id = b.cartodb_id)
 
-        SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta 
-        FROM dcp_cdboundaries a 
+        SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta
+        FROM dcp_cdboundaries a
         LEFT JOIN (
-          SELECT borocd, SUM(dcp_units_use_map) as delta FROM data 
+          SELECT borocd, SUM(dcp_units_use_map) as delta FROM data
             GROUP BY borocd
-        ) b 
+        ) b
         ON a.borocd::text = b.borocd
       `;
 
@@ -93,16 +97,15 @@ const Pipeline = React.createClass({
               {
                 id: 'pipeline-polygons',
                 source: 'pipeline-polygons',
-                'source-layer': 'layer0',
                 type: 'fill',
                 paint,
               },
             ],
             legend: (
               <div className="legend-section">
-                   Legend
-                </div>
-              ),
+                Legend
+              </div>
+            ),
           };
 
           self.sendNewConfig(newConfig);
@@ -110,55 +113,7 @@ const Pipeline = React.createClass({
     }
   },
 
-  // updateLayerConfigOld(sql) {
-  //   //store the current data query in this, used when this method is called on mode change
-  //   //( it is normally called by the LayerSelector)
-  //   this.sql=sql
-
-  //   //change the layer config based on mode
-  //   const config = this.state.mode == 'points' ? LayerConfig.points :
-
-  //   //update the sql for the map source based on the mode.  For points it is unchanged, for polygons it will be a CTE based on the original data query
-  //   const mapSql= this.state.mode == 'points' ? sql :
-  //     `WITH data as (
-  //       SELECT *
-  //       FROM nchatterjee.dob_permits_cofos_hpd_geocode
-  //     )
-
-  //     SELECT a.the_geom, a.the_geom_webmercator, a.borocd, b.delta
-  //     FROM dcp_cdboundaries a
-  //     LEFT JOIN (
-  //       SELECT borocd, SUM(dcp_units_use_map) as delta FROM data
-  //         GROUP BY borocd
-  //     ) b
-  //     ON a.borocd::text = b.borocd`
-
-  //   const newConfig = update(config, {
-  //     sources: {
-  //       0: {
-  //         sql: {
-  //           $set: mapSql
-  //         }
-  //       }
-  //     }
-  //   })
-
-
-  // },
-
   sendNewConfig(newConfig) {
-    // const newLayer = update(this.props.layer, {
-    //   sources: {
-    //     $set: newConfig.sources
-    //   },
-    //   mapLayers: {
-    //     $set: newConfig.mapLayers
-    //   },
-    //   legend: {
-    //     $set: newConfig.legend
-    //   }
-    // })
-
     // pass the new config up to Jane
     this.props.onUpdate('pipeline', {
       sources: newConfig.sources,
@@ -167,34 +122,47 @@ const Pipeline = React.createClass({
     });
   },
 
-  handleModeToggle() {
-    this.setState({ mode: this.state.mode === 'points' ? 'polygons' : 'points' });
-  },
-
   render() {
+    const self = this;
+
+    function toggleMode(event, index, value) {
+      self.setState({ mode: value });
+    }
+
+    const dropdownStyles = {
+      paddingLeft: '16px',
+    };
+
     return (
-      <Tabs>
+      <Tabs className="sidebar-tabs">
         <Tab label="Data">
+          <SelectField
+            value={this.state.mode}
+            onChange={toggleMode}
+            labelStyle={dropdownStyles}
+            fullWidth
+          >
+            <MenuItem value={'points'} primaryText="Points" />
+            <MenuItem value={'polygons'} primaryText="Choropleth" />
+          </SelectField>
           <LayerSelector
             updateSQL={this.updateLayerConfig}
           />
         </Tab>
-        <Tab label="About">
-          About this Data Layer
-        </Tab>
-        <Tab label="Choropleth">
-          <Toggle
-            toggled={this.state.mode === 'polygons'}
-            onToggle={this.handleModeToggle}
+        <Tab label="Download">
+          <Download
+            sql={this.state.sql}
+            filePrefix="developments"
           />
         </Tab>
-        <Tab label="Download">
-          Coming Soon
+        <Tab label="About">
+          <div className="sidebar-tab-content">
+            {content.about}
+          </div>
         </Tab>
       </Tabs>
     );
   },
 });
-
 
 export default Pipeline;

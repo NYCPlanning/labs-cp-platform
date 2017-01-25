@@ -24,7 +24,7 @@ const DevelopmentPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getRow('nchatterjee.dob_permits_cofos_hpd_geocode', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature('nchatterjee.dob_permits_cofos_hpd_geocode', 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => { self.setState({ data }); });
   },
 
