@@ -116,8 +116,8 @@ module.exports = {
     return sql.replace(/ WHERE .*/, '');
   },
 
-  generateUrlString(sql, format) {
-    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}`;
+  generateUrlString(sql, format, filename = 'download') {
+    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}&filename=${filename}`;
     return encodeURI(apiString);
   },
 
