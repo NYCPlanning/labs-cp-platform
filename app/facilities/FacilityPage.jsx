@@ -112,7 +112,6 @@ const FacilityPage = React.createClass({
             displayUnit="Facility"
             ref_type="facility"
             ref_id={this.props.params.id}
-            auth={this.props.auth}
           />
         </div>
         <div className="col-md-6">

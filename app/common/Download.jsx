@@ -1,14 +1,11 @@
 // Download.jsx - This component builds a download pane used in the explorer
-
 import React, { PropTypes } from 'react';
-
 import Subheader from 'material-ui/Subheader';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
+import Moment from 'moment';
 
 import Carto from '../helpers/carto';
-
-import Moment from 'moment';
 
 const date = Moment().format('YYYY-MM-DD');
 

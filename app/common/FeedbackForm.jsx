@@ -5,10 +5,11 @@ import Paper from 'material-ui/Paper';
 import reformed from 'react-reformed';
 import $ from 'jquery';
 
+import auth from '../helpers/AuthHelper';
+
 const FeedbackForm = React.createClass({
 
   propTypes: {
-    auth: PropTypes.object,
     setProperty: PropTypes.func,
     model: PropTypes.object,
     displayUnit: PropTypes.string.isRequired,
@@ -20,6 +21,7 @@ const FeedbackForm = React.createClass({
     return ({
       valid: false,
       submitted: false,
+      error: false,
     });
   },
 
@@ -29,10 +31,14 @@ const FeedbackForm = React.createClass({
     }
   },
 
+  onPostError() {
+    this.setState({ error: true });
+  },
+
   onSubmit() {
     const data = this.props.model;
 
-    const profile = this.props.auth.getProfile();
+    const profile = auth.getProfile();
 
     // add user details to payload
     data.email = profile.email;
@@ -41,7 +47,7 @@ const FeedbackForm = React.createClass({
     data.ref_id = this.props.ref_id;
 
     // get the json web token from localstorage
-    const jwt = this.props.auth.getToken();
+    const jwt = auth.getToken();
 
     $.ajax({
       url: 'http://localhost:3000/api/feedback/',
@@ -51,6 +57,7 @@ const FeedbackForm = React.createClass({
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
       success: this.onPostSuccess,
+      error: this.onPostError,
     });
   },
 
@@ -77,10 +84,10 @@ const FeedbackForm = React.createClass({
     return (
       <Paper style={{ padding: '15px' }} zDepth={2}>
         <h4>Send Feedback about this {this.props.displayUnit}</h4>
-        <p>Your comments can help us keep our data fresh!</p>
 
-        { !this.state.submitted && (
+        { !this.state.submitted && !this.state.error && (
           <div>
+            <p>Your comments can help us keep our data fresh!</p>
             <TextField
               name="comment"
               value={model.comment}
@@ -103,6 +110,12 @@ const FeedbackForm = React.createClass({
         { this.state.submitted && (
           <div>
             Thanks! We&apos;ll take a look at your comments shortly.
+          </div>
+        )}
+
+        { this.state.error && (
+          <div>
+            Oops! Something went wrong and we were not able to log your feedback.  Please try again later.
           </div>
         )}
 

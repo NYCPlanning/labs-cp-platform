@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { Link } from 'react-router';
+
+import AuthHelper from '../helpers/AuthHelper';
 
 import './Nav.scss';
 
@@ -41,10 +42,9 @@ const Nav = React.createClass({
   },
 
   render() {
-    const auth = this.props.auth;
-    const profile = auth.getProfile();
+    const profile = AuthHelper.getProfile();
 
-    const userMenu = auth.loggedIn() ? (
+    const userMenu = AuthHelper.loggedIn() ? (
       <li className="dropdown">
         <a
           className="dropdown-toggle"
@@ -58,7 +58,7 @@ const Nav = React.createClass({
         </a>
 
         <ul className="dropdown-menu">
-          <li><a onClick={auth.logout}>Log Out</a></li>
+          <li><a onClick={this.props.auth.logout}>Log Out</a></li>
         </ul>
 
       </li>

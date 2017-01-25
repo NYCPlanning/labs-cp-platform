@@ -1,3 +1,4 @@
+import appConfig from '../../helpers/appConfig';
 
 module.exports = {
   id: 'aerials',
@@ -8,7 +9,7 @@ module.exports = {
     {
       id: 'nyaerials',
       type: 'raster',
-      tiles: 'https://api.capitalplanning.nyc/api/tiles/dhsesorthos/{z}/{y}/{x}',
+      tiles: `https://${appConfig.api_domain}/api/tiles/dhsesorthos/{z}/{y}/{x}`,
     },
   ],
   mapLayers: [

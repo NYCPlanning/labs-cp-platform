@@ -3,7 +3,8 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from '../app/App';
 import Login from '../app/pages/Login';
-import Auth from './helpers/Auth';
+import AuthService from './helpers/AuthService';
+import AuthHelper from './helpers/AuthHelper';
 import appConfig from './helpers/appConfig';
 
 import HomePage from '../app/pages/HomePage';
@@ -23,19 +24,19 @@ import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';
 
 import NotFound from '../app/pages/NotFound';
 
-const auth = new Auth(appConfig.auth0_client_id, appConfig.auth0_domain);
+const auth = new AuthService(appConfig.auth0_client_id, appConfig.auth0_domain);
 
 // redirects a route to /login if the user is not logged in
 const requireAuth = (nextState, replace) => {
   auth.requestedURL = nextState.location.pathname;
 
-  if (!auth.loggedIn()) {
+  if (!AuthHelper.loggedIn()) {
     replace({ pathname: '/login' });
   }
 };
 
 const rerouteLoggedIn = (nextState, replace) => {
-  if (auth.loggedIn()) {
+  if (AuthHelper.loggedIn()) {
     replace({ pathname: '/' });
   }
 };
