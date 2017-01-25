@@ -6,6 +6,9 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 
+import CountWidget from '../../common/CountWidget';
+import Carto from '../../helpers/carto';
+
 import RangeSlider from './RangeSlider';
 
 const filterDimensions = {
@@ -75,8 +78,8 @@ const LayerSelector = React.createClass({
 
   getInitialState() {
     return ({
-      selectedCount: '__',
-      totalCount: '__',
+      selectedCount: null,
+      totalCount: null,
       dateFilter: true,
       filterDimensions: {
         dcp_pipeline_status: [
@@ -105,7 +108,86 @@ const LayerSelector = React.createClass({
     this.buildSQL();
   },
 
-  sqlChunks: {},
+  getTotalCount(sql) {
+    const self = this;
+
+    Carto.getCount(sql)
+      .then((count) => {
+        self.setState({
+          selectedCount: count,
+          totalCount: count,
+        });
+      });
+  },
+
+  getSelectedCount(sql) {
+    const self = this;
+
+    Carto.getCount(sql)
+      .then((count) => { self.setState({ selectedCount: count }); });
+  },
+
+  buildSQL() {
+    // assemble sql chunks based on the current state
+    this.createSQLChunks();
+
+    const sqlTemplate = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `;
+
+    const chunksArray = [];
+
+    Object.keys(this.sqlChunks).forEach(key => chunksArray.push(this.sqlChunks[key]));
+
+    const chunksString = chunksArray.join(' AND ');
+
+    const sql = sqlTemplate + chunksString;
+
+    // since pipeline does not start with all selected, we must provide a query that will count all rows
+    const totalSql = `SELECT * FROM ${this.sqlConfig.tablename}`;
+    if (this.state.totalCount == null) this.getTotalCount(totalSql);
+
+    this.props.updateSQL(sql);
+
+    this.getSelectedCount(sql);
+  },
+
+  createMultiSelectSQLChunk(dimension, values) {
+    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
+    // like ( dimension = 'value1' OR dimension = 'value2')
+    const subChunks = values.map(value => `${dimension} = '${value.value}'`);
+
+    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
+      const chunk = `(${subChunks.join(' OR ')})`;
+
+      this.sqlChunks[dimension] = chunk;
+    }
+  },
+
+  createDateSQLChunk(dimension, range) {
+    const dateRangeFormatted = {
+      from: Moment(range[0], 'X').format('YYYY-MM-DD'),
+      to: Moment(range[1], 'X').format('YYYY-MM-DD'),
+    };
+
+    if (this.state.dateFilter) {
+      this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= '${dateRangeFormatted.to}' OR dob_cofo_date_last <= '${dateRangeFormatted.from}')`;
+    }
+  },
+
+  createUnitsSQLChunk(dimension, range) {
+    this.sqlChunks[dimension] = `(dcp_units_use_map >= '${range[0]}' AND dcp_units_use_map <= '${range[1]}')`;
+  },
+
+  createSQLChunks() {
+    this.sqlChunks = {};
+    // generate SQL WHERE partials for each filter dimension
+    this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
+    this.createMultiSelectSQLChunk('dcp_pipeline_category', this.state.filterDimensions.dcp_pipeline_category);
+    this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
+
+    if (this.state.dateFilter) {
+      this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date);
+    }
+  },
 
   handleChange(dimension, values) {
     // before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
@@ -136,64 +218,16 @@ const LayerSelector = React.createClass({
     this.buildSQL();
   },
 
-  createSQLChunks() {
-    this.sqlChunks = {};
-    // generate SQL WHERE partials for each filter dimension
-    this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
-    this.createMultiSelectSQLChunk('dcp_pipeline_category', this.state.filterDimensions.dcp_pipeline_category);
-    this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
-
-    if (this.state.dateFilter) {
-      this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date);
-    }
-  },
-
-  createUnitsSQLChunk(dimension, range) {
-    this.sqlChunks[dimension] = `(dcp_units_use_map >= '${range[0]}' AND dcp_units_use_map <= '${range[1]}')`;
-  },
-
-  createDateSQLChunk(dimension, range) {
-    const dateRangeFormatted = {
-      from: Moment(range[0], 'X').format('YYYY-MM-DD'),
-      to: Moment(range[1], 'X').format('YYYY-MM-DD'),
-    };
-
-    if (this.state.dateFilter) {
-      this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= '${dateRangeFormatted.to}' OR dob_cofo_date_last <= '${dateRangeFormatted.from}')`;
-    }
-  },
-
-  createMultiSelectSQLChunk(dimension, values) {
-    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
-    // like ( dimension = 'value1' OR dimension = 'value2')
-    const subChunks = values.map(value => `${dimension} = '${value.value}'`);
-
-    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
-      const chunk = `(${subChunks.join(' OR ')})`;
-
-      this.sqlChunks[dimension] = chunk;
-    }
-  },
-
-  buildSQL() {
-    // assemble sql chunks based on the current state
-    this.createSQLChunks();
-
-    const sqlTemplate = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `;
-
-    const chunksArray = [];
-
-    Object.keys(this.sqlChunks).forEach(key => chunksArray.push(this.sqlChunks[key]));
-
-    const chunksString = chunksArray.join(' AND ');
-
-    const sql = sqlTemplate + chunksString;
-    this.props.updateSQL(sql);
-  },
+  sqlChunks: {},
 
   render() {
     return (
       <div>
+        <CountWidget
+          totalCount={this.state.totalCount}
+          selectedCount={this.state.selectedCount}
+          units={'developments'}
+        />
         <List>
           <Subheader>
             Development Status
