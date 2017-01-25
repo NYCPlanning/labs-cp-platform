@@ -61,10 +61,16 @@ const CapitalProjects = React.createClass({
         </Tab>
         <Tab label="Download">
           <h4 style={{ paddingLeft: '16px' }}>Points</h4>
-          <Download sql={this.state.pointsSql} />
+          <Download
+            sql={this.state.pointsSql}
+            filePrefix="projects-points"
+          />
           <Divider />
           <h4 style={{ paddingLeft: '16px' }}>Polygons</h4>
-          <Download sql={this.state.polygonsSql} />
+          <Download
+            sql={this.state.polygonsSql}
+            filePrefix="projects-polygons"
+          />
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">

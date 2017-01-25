@@ -106,7 +106,10 @@ const Facilities = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <Download sql={this.state.sql} />
+          <Download
+            sql={this.state.sql}
+            filePrefix="facilities"
+          />
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">
