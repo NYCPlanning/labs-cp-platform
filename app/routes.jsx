@@ -22,6 +22,8 @@ import ProjectPage from '../app/capitalprojects/ProjectPage';
 import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
 import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';
 
+import FeedbackPage from '../app/pages/FeedbackPage';
+
 import NotFound from '../app/pages/NotFound';
 
 const auth = new AuthService(appConfig.auth0_client_id, appConfig.auth0_domain);
@@ -65,6 +67,8 @@ module.exports = (
 
     <Route path="capitalprojectsold" component={CapitalProjectsOld} title={'Capital Projects Explorer'} miniNav onEnter={requireAuth} />
     <Route path="capitalprojectsold/:id" component={ProjectPageOld} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
+
+    <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} miniNav onEnter={requireAuth} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
