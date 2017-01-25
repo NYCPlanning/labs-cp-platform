@@ -42,7 +42,7 @@ const LayerSelector = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
+      columns: 'uid, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
       tablename: 'hkates.facilities_data',
     };
 
