@@ -21,6 +21,10 @@ const ModalMap = React.createClass({
     label: React.PropTypes.string,
   },
 
+  getDefaultProps() {
+    return { label: '' };
+  },
+
   componentDidMount() {
     // get the mapbox GL map object
     this.map = this.janeMap.map.mapObject;

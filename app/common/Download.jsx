@@ -9,7 +9,7 @@ import Carto from '../helpers/carto';
 
 const date = Moment().format('YYYY-MM-DD');
 
-const Download = ({ sql, filePrefix = 'data' }) => {
+const Download = ({ sql, filePrefix }) => {
   const filteredSql = Carto.transformSqlSelectAll(sql);
   const completeSql = Carto.transformSqlRemoveWhere(filteredSql);
 
@@ -63,8 +63,8 @@ const Download = ({ sql, filePrefix = 'data' }) => {
 };
 
 Download.propTypes = {
-  sql: PropTypes.string,
-  filePrefix: PropTypes.string,
+  sql: PropTypes.string.isRequired,
+  filePrefix: PropTypes.string.isRequired,
 };
 
 module.exports = Download;

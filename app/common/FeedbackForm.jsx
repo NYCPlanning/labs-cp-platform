@@ -6,12 +6,13 @@ import reformed from 'react-reformed';
 import $ from 'jquery';
 
 import auth from '../helpers/AuthHelper';
+import appConfig from '../helpers/appConfig';
 
 const FeedbackForm = React.createClass({
 
   propTypes: {
-    setProperty: PropTypes.func,
-    model: PropTypes.object,
+    setProperty: PropTypes.func.isRequired,
+    model: PropTypes.object.isRequired,
     displayUnit: PropTypes.string.isRequired,
     ref_type: PropTypes.string.isRequired,
     ref_id: PropTypes.string.isRequired,
@@ -50,7 +51,7 @@ const FeedbackForm = React.createClass({
     const jwt = auth.getToken();
 
     $.ajax({
-      url: 'http://localhost:3000/api/feedback/',
+      url: `//${appConfig.api_domain}/api/feedback/`,
       type: 'POST',
       headers: { Authorization: `Bearer ${jwt}` },
       data: JSON.stringify(data),

@@ -9,7 +9,7 @@ module.exports = {
     {
       id: 'nyaerials',
       type: 'raster',
-      tiles: `https://${appConfig.api_domain}/api/tiles/dhsesorthos/{z}/{y}/{x}`,
+      tiles: `//${appConfig.api_domain}/api/tiles/dhsesorthos/{z}/{y}/{x}`,
     },
   ],
   mapLayers: [

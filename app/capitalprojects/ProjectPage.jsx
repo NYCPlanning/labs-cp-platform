@@ -11,8 +11,8 @@ import Carto from '../helpers/carto';
 const ProjectPage = React.createClass({
 
   propTypes: {
-    params: PropTypes.object,
-    location: PropTypes.object,
+    params: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   },
 
   getInitialState() {

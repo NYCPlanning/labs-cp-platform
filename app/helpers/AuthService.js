@@ -13,7 +13,7 @@ export default class AuthService {
       allowSignUp: false,
       auth: {
         redirectUrl: `${document.location.origin}/authsuccess`,
-        responseType: 'token',
+        responseType: 'id_token',
       },
       theme: {
         logo: '/img/logo_80.png',

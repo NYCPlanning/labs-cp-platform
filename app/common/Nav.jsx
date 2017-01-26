@@ -26,11 +26,19 @@ const collaborateContent = (
 
 const Nav = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.func,
-    auth: React.PropTypes.object,
+    showModal: React.PropTypes.func.isRequired,
+    auth: React.PropTypes.object.isRequired,
     mini: React.PropTypes.bool,
     title: React.PropTypes.string,
     children: React.PropTypes.array,
+  },
+
+  getDefaultProps() {
+    return {
+      mini: false,
+      title: '',
+      children: null,
+    };
   },
 
   showCollaborate() {

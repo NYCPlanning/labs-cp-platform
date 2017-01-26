@@ -15,7 +15,7 @@ import choropleth from '../../helpers/choropleth';
 
 const Pipeline = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {

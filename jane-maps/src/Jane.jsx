@@ -19,13 +19,32 @@ const Jane = React.createClass({
   propTypes: {
     poiFeature: React.PropTypes.object,
     poiLabel: React.PropTypes.string,
-    mapConfig: React.PropTypes.object,
+    mapConfig: React.PropTypes.object.isRequired,
     layerContentVisible: React.PropTypes.bool,
-    mapInit: React.PropTypes.object,
+    mapInit: React.PropTypes.object.isRequired,
     style: React.PropTypes.object,
     context: React.PropTypes.object,
     search: React.PropTypes.bool,
     searchConfig: React.PropTypes.object,
+  },
+
+  getDefaultProps() {
+    return {
+      poiFeature: null,
+      poiLabel: null,
+      layerContentVisible: false,
+      style: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        overflow: 'hidden',
+      },
+      context: null,
+      search: false,
+      searchConfig: null,
+    };
   },
 
   getInitialState() {
@@ -40,7 +59,7 @@ const Jane = React.createClass({
       loadedSources: {},
       mapConfig: this.props.mapConfig ? this.props.mapConfig : defaultMapConfig,
       layerListExpanded: false,
-      layerContentVisible: this.props.layerContentVisible ? this.props.layerContentVisible : null,
+      layerContentVisible: this.props.layerContentVisible,
       selectedFeatures: [],
     });
   },
@@ -259,9 +278,9 @@ const Jane = React.createClass({
     // add legendItems for each layer
     const legendItems = [];
 
-    mapConfig.layers.forEach((layer, i) => {
+    mapConfig.layers.forEach((layer) => {
       if (layer.visible && layer.legend) {
-        legendItems.push(<div key={i}>{layer.legend}</div>);
+        legendItems.push(<div key={layer.id}>{layer.legend}</div>);
       }
     });
 
@@ -293,6 +312,8 @@ const Jane = React.createClass({
     let leftOffset = 36;
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.layerContentVisible) leftOffset += 320;
+
+    const selectedLayer = this.state.mapConfig.selectedLayer || this.state.mapConfig.layers[0].id;
 
     return (
 
@@ -346,7 +367,7 @@ const Jane = React.createClass({
         <LayerList
           expanded={this.state.layerListExpanded}
           layers={this.state.mapConfig.layers}
-          selectedLayer={this.state.mapConfig.selectedLayer}
+          selectedLayer={selectedLayer}
           onLayerReorder={this.handleLayerReorder}
           onLayerClick={this.handleLayerClick}
           onToggleExpanded={this.handleToggleExpanded}
@@ -356,7 +377,7 @@ const Jane = React.createClass({
           offset={this.state.layerListExpanded}
           visible={this.state.layerContentVisible}
           layers={this.state.mapConfig.layers}
-          selectedLayer={this.state.mapConfig.selectedLayer}
+          selectedLayer={selectedLayer}
           onLayerUpdate={this.handleLayerUpdate}
           onLayerToggle={this.handleLayerToggle}
           onClose={this.toggleLayerContent}
@@ -375,17 +396,5 @@ const Jane = React.createClass({
     );
   },
 });
-
-Jane.defaultProps = {
-  style: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    overflow: 'hidden',
-  },
-  search: false,
-};
 
 export default Jane;

@@ -15,17 +15,14 @@ injectTapEventPlugin();
 
 const App = React.createClass({
   propTypes: {
-    location: React.PropTypes.shape(),
-    children: React.PropTypes.element,
-    route: React.PropTypes.shape(),
+    location: React.PropTypes.shape().isRequired,
+    children: React.PropTypes.element.isRequired,
+    route: React.PropTypes.shape().isRequired,
   },
 
   getInitialState() {
     return ({
       loggedIn: true,
-      modalHeading: null,
-      modalContent: null,
-      modalCloseText: null,
     });
   },
 
@@ -85,12 +82,16 @@ const App = React.createClass({
             showModal={this.showModal}
           />
           <div>
-            <GlobalModal
-              heading={this.state.modalHeading}
-              body={this.state.modalContent}
-              closeText={this.state.modalCloseText}
-              ref={(modal) => { this.modal = modal; }}
-            />
+            {
+              this.state.modalHeading &&
+              this.state.modalContent &&
+              <GlobalModal
+                heading={this.state.modalHeading}
+                body={this.state.modalContent}
+                closeText={this.state.modalCloseText}
+                ref={(modal) => { this.modal = modal; }}
+              />
+            }
             {isModal ?
               this.previousChildren :
               children

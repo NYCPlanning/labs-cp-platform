@@ -29,8 +29,8 @@ const Item = (props) => {
 
 Item.propTypes = {
   feature: React.PropTypes.shape({
-    properties: React.PropTypes.object,
-  }),
+    properties: React.PropTypes.object.isRequired,
+  }).isRequired,
 };
 
 export default Item;

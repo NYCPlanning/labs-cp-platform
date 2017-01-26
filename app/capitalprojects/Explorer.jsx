@@ -20,6 +20,12 @@ const CaptialProjectsExplorer = React.createClass({
     showModal: React.PropTypes.func,
   },
 
+  getDefaultProps() {
+    return {
+      showModal: null,
+    };
+  },
+
   componentDidMount() {
     const modalShown = JSON.parse(localStorage.getItem('facilities-splash'));
 

@@ -73,7 +73,7 @@ const filterDimensions = {
 
 const LayerSelector = React.createClass({
   propTypes: {
-    updateSQL: React.PropTypes.func,
+    updateSQL: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -319,7 +319,7 @@ function InfoIcon(props) {
 }
 
 InfoIcon.propTypes = {
-  text: React.PropTypes.string,
+  text: React.PropTypes.string.isRequired,
 };
 
 
