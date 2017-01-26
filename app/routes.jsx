@@ -22,6 +22,8 @@ import ProjectPage from '../app/capitalprojects/ProjectPage';
 import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
 import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';
 
+import FeedbackPage from '../app/pages/FeedbackPage';
+
 import NotFound from '../app/pages/NotFound';
 
 const auth = new AuthService(appConfig.auth0_client_id, appConfig.auth0_domain);
@@ -54,17 +56,19 @@ module.exports = (
 
     <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth} />
     <Route path="facilities/all" component={FacilitiesExplorer} title={'Facilities Explorer'} miniNav onEnter={requireAuth} />
-    <Route path="facilities/:id" component={FacilityPage} title={'Facility Details'} miniNav onEnter={requireAuth} />
     <Route path="facilities/domain/:domain" component={FacilitiesExplorer} miniNav onEnter={requireAuth} />
+    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} miniNav onEnter={requireAuth} />
 
     <Route path="pipeline" component={PipelineExplorer} title={'Housing Development Pipeline'} miniNav onEnter={requireAuth} />
-    <Route path="pipeline/:id" component={DevelopmentPage} title={'Development Details'} miniNav onEnter={requireAuth} />
+    <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} miniNav onEnter={requireAuth} />
 
     <Route path="capitalprojects" component={CapitalProjects} title={'Capital Projects Explorer'} miniNav onEnter={requireAuth} />
-    <Route path="capitalprojects/:id" component={ProjectPage} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
+    <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
 
     <Route path="capitalprojectsold" component={CapitalProjectsOld} title={'Capital Projects Explorer'} miniNav onEnter={requireAuth} />
     <Route path="capitalprojectsold/:id" component={ProjectPageOld} title={'Capital Project Details'} miniNav onEnter={requireAuth} />
+
+    <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} miniNav onEnter={requireAuth} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />

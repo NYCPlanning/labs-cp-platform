@@ -9,7 +9,7 @@ const Item = (props) => {
   return (
     <Link
       to={{
-        pathname: `/pipeline/${d.cartodb_id}`,
+        pathname: `/development/${d.cartodb_id}`,
         state: { modal: true, returnTo: '/pipeline' },
       }}
     >
