@@ -17,6 +17,12 @@ const PipeLineExplorer = React.createClass({
     showModal: React.PropTypes.func,
   },
 
+  getDefaultProps() {
+    return {
+      showModal: null,
+    };
+  },
+
   componentDidMount() {
     document.title = 'NYC Housing Development Explorer';
 

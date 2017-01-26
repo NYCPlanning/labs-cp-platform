@@ -13,7 +13,7 @@ import './FacLanding.scss';
 
 const FacilitiesLandingPage = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.func,
+    showModal: React.PropTypes.func.isRequired,
   },
 
   componentDidMount() {

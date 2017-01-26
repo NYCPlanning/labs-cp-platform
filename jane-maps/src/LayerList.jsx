@@ -12,13 +12,12 @@ import ListItem from './ListItem';
 
 const LayerList = React.createClass({
   propTypes: {
-    layers: React.PropTypes.array,
-    onLayerReorder: React.PropTypes.func,
-    update: React.PropTypes.func,
-    expanded: React.PropTypes.bool,
-    onLayerClick: React.PropTypes.func,
-    selectedLayer: React.PropTypes.string,
-    onToggleExpanded: React.PropTypes.func,
+    layers: React.PropTypes.array.isRequired,
+    onLayerReorder: React.PropTypes.func.isRequired,
+    expanded: React.PropTypes.bool.isRequired,
+    onLayerClick: React.PropTypes.func.isRequired,
+    selectedLayer: React.PropTypes.string.isRequired,
+    onToggleExpanded: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -49,7 +48,7 @@ const LayerList = React.createClass({
           [hoverIndex, 0, dragLayer],
         ],
       },
-    }), this.props.update);
+    }));
   },
 
   render() {

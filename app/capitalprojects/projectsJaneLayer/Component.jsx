@@ -10,7 +10,7 @@ import defaultlayerConfig from './defaultLayerConfig';
 
 const CapitalProjects = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {

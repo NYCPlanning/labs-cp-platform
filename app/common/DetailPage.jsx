@@ -21,10 +21,14 @@ const DetailPage = props => (
 );
 
 DetailPage.propTypes = {
-  location: PropTypes.object,
-  defaultText: PropTypes.string,
-  defaultLink: PropTypes.string,
+  location: PropTypes.object.isRequired,
+  defaultText: PropTypes.string.isRequired,
+  defaultLink: PropTypes.string.isRequired,
   children: PropTypes.object,
+};
+
+DetailPage.defaultProps = {
+  children: null,
 };
 
 

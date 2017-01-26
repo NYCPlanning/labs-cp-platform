@@ -11,8 +11,8 @@ import appConfig from '../helpers/appConfig';
 const FeedbackForm = React.createClass({
 
   propTypes: {
-    setProperty: PropTypes.func,
-    model: PropTypes.object,
+    setProperty: PropTypes.func.isRequired,
+    model: PropTypes.object.isRequired,
     displayUnit: PropTypes.string.isRequired,
     ref_type: PropTypes.string.isRequired,
     ref_id: PropTypes.string.isRequired,

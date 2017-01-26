@@ -12,7 +12,7 @@ import config from '../config';
 
 const Filter = React.createClass({
   propTypes: {
-    updateSQL: React.PropTypes.func,
+    updateSQL: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {

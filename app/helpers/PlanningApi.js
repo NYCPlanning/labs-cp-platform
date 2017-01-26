@@ -7,7 +7,7 @@ const PlanningApi = {
   getCommitSpend(maprojid) {
     const maprojidTrimmed = maprojid.replace(/ /g, '');
 
-    const apiCall = `https://${appConfig.api_domain}/api/capitalprojects/commitspend/${maprojidTrimmed}`;
+    const apiCall = `//${appConfig.api_domain}/api/capitalprojects/commitspend/${maprojidTrimmed}`;
     return $.getJSON(apiCall);
   },
 };

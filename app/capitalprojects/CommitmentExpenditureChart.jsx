@@ -11,7 +11,7 @@ import PlanningApi from '../helpers/PlanningApi';
 const CommitmentExpenditureChart = React.createClass({
 
   propTypes: {
-    maprojid: PropTypes.string,
+    maprojid: PropTypes.string.isRequired,
   },
 
   getInitialState() {

@@ -7,8 +7,8 @@ const SelectedFeauturesPane = props => (
 );
 
 SelectedFeauturesPane.propTypes = {
-  children: React.PropTypes.array,
-  style: React.PropTypes.shape(),
+  children: React.PropTypes.array.isRequired,
+  style: React.PropTypes.shape().isRequired,
 };
 
 export default SelectedFeauturesPane;
