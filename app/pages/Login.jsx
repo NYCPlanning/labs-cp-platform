@@ -6,7 +6,13 @@ const Login = React.createClass({
   propTypes: {
     auth: React.PropTypes.shape({
       login: React.PropTypes.func,
-    }).isRequired,
+    }),
+  },
+
+  getDefaultProps() {
+    return {
+      auth: null,
+    };
   },
 
   componentDidMount() {
