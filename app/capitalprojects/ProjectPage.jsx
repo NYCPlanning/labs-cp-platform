@@ -4,6 +4,7 @@ import Numeral from 'numeral';
 import DetailPage from '../common/DetailPage';
 import ModalMap from '../common/ModalMap';
 import CommitmentExpenditureChart from './CommitmentExpenditureChart';
+import FeedbackForm from '../common/FeedbackForm';
 
 import Agencies from './agencies';
 import Carto from '../helpers/carto';
@@ -66,6 +67,11 @@ const ProjectPage = React.createClass({
         </div>
         <div className={'col-md-6'}>
           <ModalMap feature={this.state.feature} label={d.descriptio} />
+          <FeedbackForm
+            displayUnit="Capital Project"
+            ref_type="capitalproject"
+            ref_id={this.props.params.id}
+          />
         </div>
 
         <div className={'col-md-6'}>

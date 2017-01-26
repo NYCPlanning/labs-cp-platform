@@ -9,7 +9,7 @@ const Item = (props) => {
   return (
     <Link
       to={{
-        pathname: `/capitalprojects/${d.maprojid}`,
+        pathname: `/capitalproject/${d.maprojid}`,
         state: { modal: true, returnTo: '/capitalprojects' },
       }}
     >
