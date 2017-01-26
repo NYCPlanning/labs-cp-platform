@@ -11,10 +11,14 @@ const Checkbox = props => (
 );
 
 Checkbox.propTypes = {
-  value: React.PropTypes.string,
-  checked: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
+  value: React.PropTypes.string.isRequired,
+  checked: React.PropTypes.bool.isRequired,
+  onChange: React.PropTypes.func.isRequired,
   indeterminate: React.PropTypes.bool,
+};
+
+Checkbox.defaultProps = {
+  indeterminate: null,
 };
 
 export default Checkbox;

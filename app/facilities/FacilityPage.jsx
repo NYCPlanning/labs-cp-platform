@@ -18,8 +18,8 @@ const FacilityPage = React.createClass({
   propTypes: {
     params: PropTypes.shape({
       id: PropTypes.string,
-    }),
-    location: PropTypes.shape(),
+    }).isRequired,
+    location: PropTypes.shape().isRequired,
   },
 
   getInitialState() {

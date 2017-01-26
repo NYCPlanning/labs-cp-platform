@@ -11,8 +11,8 @@ const DevelopmentPage = React.createClass({
   propTypes: {
     params: React.PropTypes.shape({
       id: React.PropTypes.string,
-    }),
-    location: React.PropTypes.shape(),
+    }).isRequired,
+    location: React.PropTypes.shape().isRequired,
   },
 
   getInitialState() {

@@ -69,10 +69,10 @@ let ListItem = React.createClass({
   propTypes: {
     connectDragSource: React.PropTypes.func.isRequired,
     connectDropTarget: React.PropTypes.func.isRequired,
-    layer: React.PropTypes.object,
-    onClick: React.PropTypes.func,
-    className: React.PropTypes.string,
-    expanded: React.PropTypes.bool,
+    layer: React.PropTypes.object.isRequired,
+    onClick: React.PropTypes.func.isRequired,
+    className: React.PropTypes.string.isRequired,
+    expanded: React.PropTypes.bool.isRequired,
   },
 
   handleClick(layer, e) {

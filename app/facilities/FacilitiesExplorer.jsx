@@ -18,7 +18,13 @@ const FacilitiesExplorer = React.createClass({
     showModal: React.PropTypes.func,
     params: React.PropTypes.shape({
       domain: React.PropTypes.string,
-    }),
+    }).isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      showModal: null,
+    };
   },
 
   componentDidMount() {

@@ -100,7 +100,7 @@ const layerConfig = {
 
 const Transportation = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {

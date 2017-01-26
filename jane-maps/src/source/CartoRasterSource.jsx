@@ -4,14 +4,14 @@ const CartoRasterSource = React.createClass({
   propTypes: {
     map: React.PropTypes.shape({
       mapObject: React.PropTypes.object,
-    }),
+    }).isRequired,
     source: React.PropTypes.shape({
       options: React.PropTypes.object,
       tiles: React.PropTypes.array,
       id: React.PropTypes.string,
       sql: React.PropTypes.string,
-    }),
-    onLoaded: React.PropTypes.func,
+    }).isRequired,
+    onLoaded: React.PropTypes.func.isRequired,
   },
 
   componentWillMount() {

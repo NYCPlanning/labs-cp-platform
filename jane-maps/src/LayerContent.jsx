@@ -6,14 +6,20 @@ import Toggle from 'material-ui/Toggle';
 
 const LayerContent = React.createClass({
   propTypes: {
-    onLayerToggle: React.PropTypes.func,
-    layers: React.PropTypes.array,
-    selectedLayer: React.PropTypes.string,
-    onClose: React.PropTypes.func,
-    onLayerUpdate: React.PropTypes.func,
+    onLayerToggle: React.PropTypes.func.isRequired,
+    layers: React.PropTypes.array.isRequired,
+    selectedLayer: React.PropTypes.string.isRequired,
+    onClose: React.PropTypes.func.isRequired,
+    onLayerUpdate: React.PropTypes.func.isRequired,
     context: React.PropTypes.object,
-    offset: React.PropTypes.bool,
-    visible: React.PropTypes.bool,
+    offset: React.PropTypes.bool.isRequired,
+    visible: React.PropTypes.bool.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      context: null,
+    };
   },
 
   handleToggle(layerid) {

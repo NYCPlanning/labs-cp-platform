@@ -112,7 +112,7 @@ const defaultLayerConfig = {
 
 const AdminBoundaries = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {

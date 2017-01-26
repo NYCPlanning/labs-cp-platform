@@ -3,9 +3,9 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
 const PoiMarker = React.createClass({
   propTypes: {
-    feature: React.PropTypes.object,
-    map: React.PropTypes.object,
-    label: React.PropTypes.string,
+    feature: React.PropTypes.object.isRequired,
+    map: React.PropTypes.object.isRequired,
+    label: React.PropTypes.string.isRequired,
   },
 
   componentDidMount() {
