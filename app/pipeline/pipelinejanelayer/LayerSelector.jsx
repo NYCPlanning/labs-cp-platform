@@ -192,6 +192,10 @@ const LayerSelector = React.createClass({
   },
 
   render() {
+    const listItemStyle = {
+      paddingTop: '0px',
+    };
+
     return (
       <div>
         <List>
@@ -201,6 +205,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <Select
               multi
@@ -219,6 +224,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <Select
               multi
@@ -237,6 +243,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <RangeSlider
               data={this.state.filterDimensions.dcp_units_use_map}
@@ -252,6 +259,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <RangeSlider
               data={this.state.filterDimensions.dob_cofo_date}
@@ -278,7 +286,13 @@ function InfoIcon(props) {
         <Tooltip id="tooltip">{props.text}</Tooltip>
       }
     >
-      <i className="fa fa-info-circle" aria-hidden="true" />
+      <i
+        className="fa fa-info-circle"
+        style={{
+          paddingLeft: '5px',
+        }}
+        aria-hidden="true"
+      />
     </OverlayTrigger>
 
   );
