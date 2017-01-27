@@ -201,7 +201,11 @@ const LayerSelector = React.createClass({
     return (
       <div>
         <List>
-          <Subheader>
+          <Subheader
+            style={{
+              paddingTop: '12px',
+            }}
+          >
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
           </Subheader>
@@ -218,7 +222,6 @@ const LayerSelector = React.createClass({
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
             />
           </ListItem>
-          <Divider />
 
           <Subheader>
             Development Type
@@ -237,7 +240,6 @@ const LayerSelector = React.createClass({
               onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
             />
           </ListItem>
-          <Divider />
 
           <Subheader>
             Development Size (Net Units)
@@ -253,7 +255,6 @@ const LayerSelector = React.createClass({
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
             />
           </ListItem>
-          <Divider />
 
           <Subheader>
             Completion Date
