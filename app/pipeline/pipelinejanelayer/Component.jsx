@@ -1,6 +1,7 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import Subheader from 'material-ui/Subheader';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import _ from 'underscore';
@@ -11,6 +12,7 @@ import content from '../content';
 
 import Carto from '../../helpers/carto';
 import choropleth from '../../helpers/choropleth';
+import InfoIcon from '../../common/InfoIcon';
 
 const Pipeline = React.createClass({
   propTypes: {
@@ -127,17 +129,34 @@ const Pipeline = React.createClass({
       self.setState({ mode: value });
     }
 
-    const dropdownStyles = {
+    const labelStyle = {
       paddingLeft: '16px',
+      lineHeight: '48px',
+    };
+
+    const iconStyle = {
+      right: '200px',
+      top: '10px',
+      color: 'black',
     };
 
     return (
       <Tabs className="sidebar-tabs">
         <Tab label="Data">
+          <Subheader
+            style={{
+              lineHeight: '30px',
+              paddingTop: '12px',
+            }}
+          >
+            View
+            <InfoIcon text="Toggles the map view between point data and choropleth." />
+          </Subheader>
           <SelectField
             value={this.state.mode}
             onChange={toggleMode}
-            labelStyle={dropdownStyles}
+            labelStyle={labelStyle}
+            iconStyle={iconStyle}
             fullWidth
           >
             <MenuItem value={'points'} primaryText="Points" />

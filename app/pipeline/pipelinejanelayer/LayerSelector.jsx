@@ -1,12 +1,13 @@
 import React from 'react';
 import Moment from 'moment';
 import Select from 'react-select';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 
 import RangeSlider from './RangeSlider';
+import InfoIcon from '../../common/InfoIcon';
+
 
 const filterDimensions = {
   sqlChunks: {},
@@ -192,6 +193,7 @@ const LayerSelector = React.createClass({
   },
 
   render() {
+    // override material ui ListItem spacing
     const listItemStyle = {
       paddingTop: '0px',
     };
@@ -278,29 +280,29 @@ const LayerSelector = React.createClass({
 
 module.exports = LayerSelector;
 
-function InfoIcon(props) {
-  return (
-    <OverlayTrigger
-      placement="right"
-      overlay={
-        <Tooltip id="tooltip">{props.text}</Tooltip>
-      }
-    >
-      <i
-        className="fa fa-info-circle"
-        style={{
-          paddingLeft: '5px',
-        }}
-        aria-hidden="true"
-      />
-    </OverlayTrigger>
+// function InfoIcon(props) {
+//   return (
+//     <OverlayTrigger
+//       placement="right"
+//       overlay={
+//         <Tooltip id="tooltip">{props.text}</Tooltip>
+//       }
+//     >
+//       <i
+//         className="fa fa-info-circle"
+//         style={{
+//           paddingLeft: '5px',
+//         }}
+//         aria-hidden="true"
+//       />
+//     </OverlayTrigger>
 
-  );
-}
+//   );
+// }
 
-InfoIcon.propTypes = {
-  text: React.PropTypes.string,
-};
+// InfoIcon.propTypes = {
+//   text: React.PropTypes.string,
+// };
 
 
-module.exports = LayerSelector;
+// module.exports = LayerSelector;
