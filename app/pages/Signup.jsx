@@ -35,7 +35,7 @@ const Login = React.createClass({
         logo: '/img/logo_80.png',
       },
       languageDictionary: {
-        title: 'Please log in with your NYC email address',
+        title: 'Please sign up with your NYC email address',
       },
 
     });
