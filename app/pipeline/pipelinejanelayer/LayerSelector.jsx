@@ -1,15 +1,15 @@
 import React from 'react';
 import Moment from 'moment';
 import Select from 'react-select';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
 
 import CountWidget from '../../common/CountWidget';
 import Carto from '../../helpers/carto';
 
 import RangeSlider from './RangeSlider';
+import InfoIcon from '../../common/InfoIcon';
+
 
 const filterDimensions = {
   sqlChunks: {},
@@ -221,6 +221,11 @@ const LayerSelector = React.createClass({
   sqlChunks: {},
 
   render() {
+    // override material ui ListItem spacing
+    const listItemStyle = {
+      paddingTop: '0px',
+    };
+
     return (
       <div>
         <CountWidget
@@ -229,12 +234,17 @@ const LayerSelector = React.createClass({
           units={'developments'}
         />
         <List>
-          <Subheader>
+          <Subheader
+            style={{
+              paddingTop: '12px',
+            }}
+          >
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <Select
               multi
@@ -245,7 +255,6 @@ const LayerSelector = React.createClass({
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
             />
           </ListItem>
-          <Divider />
 
           <Subheader>
             Development Type
@@ -253,6 +262,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <Select
               multi
@@ -263,7 +273,6 @@ const LayerSelector = React.createClass({
               onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
             />
           </ListItem>
-          <Divider />
 
           <Subheader>
             Development Size (Net Units)
@@ -271,6 +280,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <RangeSlider
               data={this.state.filterDimensions.dcp_units_use_map}
@@ -278,7 +288,6 @@ const LayerSelector = React.createClass({
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
             />
           </ListItem>
-          <Divider />
 
           <Subheader>
             Completion Date
@@ -286,6 +295,7 @@ const LayerSelector = React.createClass({
           </Subheader>
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <RangeSlider
               data={this.state.filterDimensions.dob_cofo_date}
@@ -300,27 +310,6 @@ const LayerSelector = React.createClass({
     );
   },
 });
-
-
-module.exports = LayerSelector;
-
-function InfoIcon(props) {
-  return (
-    <OverlayTrigger
-      placement="right"
-      overlay={
-        <Tooltip id="tooltip">{props.text}</Tooltip>
-      }
-    >
-      <i className="fa fa-info-circle" aria-hidden="true" />
-    </OverlayTrigger>
-
-  );
-}
-
-InfoIcon.propTypes = {
-  text: React.PropTypes.string.isRequired,
-};
 
 
 module.exports = LayerSelector;
