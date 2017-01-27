@@ -9,6 +9,12 @@ const Login = React.createClass({
     }),
   },
 
+  getDefaultProps() {
+    return {
+      auth: null,
+    };
+  },
+
   componentDidMount() {
     // trigger Auth0-lock Login Modal
     this.props.auth.login();

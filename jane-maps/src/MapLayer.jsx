@@ -2,8 +2,8 @@ import React from 'react';
 
 const MapLayer = React.createClass({
   propTypes: {
-    map: React.PropTypes.object,
-    config: React.PropTypes.object,
+    map: React.PropTypes.object.isRequired,
+    config: React.PropTypes.object.isRequired,
   },
 
   componentDidMount() {

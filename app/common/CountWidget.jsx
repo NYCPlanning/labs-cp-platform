@@ -45,7 +45,12 @@ const CountWidget = (props) => {
 CountWidget.propTypes = {
   totalCount: React.PropTypes.number,
   selectedCount: React.PropTypes.number,
-  units: React.PropTypes.string,
+  units: React.PropTypes.string.isRequired,
+};
+
+CountWidget.defaultProps = {
+  totalCount: null,
+  selectedCount: null,
 };
 
 module.exports = CountWidget;

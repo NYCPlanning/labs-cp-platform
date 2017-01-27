@@ -4,8 +4,6 @@
 import Auth0Lock from 'auth0-lock';
 import { browserHistory } from 'react-router';
 
-import { isTokenExpired } from './jwtHelper';
-
 export default class AuthService {
   constructor(clientId, domain) {
     // Configure Auth0
@@ -15,7 +13,7 @@ export default class AuthService {
       allowSignUp: false,
       auth: {
         redirectUrl: `${document.location.origin}/authsuccess`,
-        responseType: 'token',
+        responseType: 'id_token',
       },
       theme: {
         logo: '/img/logo_80.png',
@@ -30,9 +28,9 @@ export default class AuthService {
 
 
     // binds login functions to keep this context
-    this.login = this.login.bind(this);
+    // this.login = this.login.bind(this);
 
-    this.getProfile = this.getProfile.bind(this);
+    // this.getProfile = this.getProfile.bind(this);
 
     this.requestedURL = null;
   }
@@ -62,24 +60,6 @@ export default class AuthService {
         },
       },
     });
-  }
-
-  loggedIn() {
-    // Checks if there is a saved token and it's still valid
-    const token = this.getToken();
-    return !!token && !isTokenExpired(token);
-  }
-
-
-  getToken() { // eslint-disable-line class-methods-use-this
-    // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
-  }
-
-  getProfile() { // eslint-disable-line class-methods-use-this
-    // Retrieves the profile data from localStorage
-    const profile = localStorage.getItem('profile');
-    return profile ? JSON.parse(localStorage.profile) : {};
   }
 
   logout() { // eslint-disable-line class-methods-use-this

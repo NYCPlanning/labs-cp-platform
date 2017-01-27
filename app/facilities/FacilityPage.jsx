@@ -3,11 +3,12 @@
 //  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import DetailPage from '../common/DetailPage';
 
 import ModalMap from '../common/ModalMap';
+import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
 
@@ -15,10 +16,10 @@ import carto from '../helpers/carto';
 const FacilityPage = React.createClass({
 
   propTypes: {
-    params: React.PropTypes.shape({
-      id: React.PropTypes.string,
-    }),
-    location: React.PropTypes.shape(),
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
+    location: PropTypes.shape().isRequired,
   },
 
   getInitialState() {
@@ -30,7 +31,7 @@ const FacilityPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature('hkates.facilities_data', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature('hkates.facilities_data', 'uid', this.props.params.id)
       .then((data) => {
         self.setState({ data });
       });
@@ -107,6 +108,11 @@ const FacilityPage = React.createClass({
         </div>
         <div className="col-md-6">
           {data && <ModalMap feature={data} label={data.properties.facilityname} />}
+          <FeedbackForm
+            displayUnit="Facility"
+            ref_type="facility"
+            ref_id={this.props.params.id}
+          />
         </div>
         <div className="col-md-6">
           <ul className="list-group">
@@ -136,6 +142,7 @@ const FacilityPage = React.createClass({
         location={this.props.location}
         defaultText="Facilities Map"
         defaultLink="/facilities/all"
+        feedback
       >
         {content}
       </DetailPage>

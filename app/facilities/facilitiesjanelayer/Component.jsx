@@ -4,20 +4,23 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import Moment from 'moment';
 
 import LayerSelector from './LayerSelector';
+import Download from '../../common/Download';
 import content from '../content';
 
 import defaultLayerConfig from './defaultlayerconfig';
 
 import Carto from '../../helpers/carto';
 
-
 const Facilities = React.createClass({
-
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
     context: React.PropTypes.shape({
-      mode: React.PropTypes.string,
-    }),
+      mode: React.PropTypes.string.isRequired,
+    }).isRequired,
+  },
+
+  getInitialState() {
+    return { sql: '' };
   },
 
   componentDidMount() {
@@ -26,6 +29,8 @@ const Facilities = React.createClass({
 
   // updates the sql for the map source
   updateLayerConfig(sql) {
+    this.setState({ sql });
+
     const newLayerConfig = update(defaultLayerConfig, {
       sources: {
         0: {
@@ -101,10 +106,10 @@ const Facilities = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <div className="sidebar-tab-content">
-            <h4>Data Downloads</h4>
-            <p>Custom data downloads are currently in development.  Please check back again soon.</p>
-          </div>
+          <Download
+            sql={this.state.sql}
+            filePrefix="facilities"
+          />
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">

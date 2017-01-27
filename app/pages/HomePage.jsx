@@ -40,6 +40,12 @@ const HomePage = React.createClass({
     showModal: React.PropTypes.func,
   },
 
+  getDefaultProps() {
+    return {
+      showModal: null,
+    };
+  },
+
   componentDidMount() {
     document.title = 'NYC Capital Planning Platform';
   },

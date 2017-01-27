@@ -19,8 +19,8 @@ import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
   propTypes: {
-    mode: React.PropTypes.string,
-    updateSQL: React.PropTypes.func,
+    mode: React.PropTypes.string.isRequired,
+    updateSQL: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -42,7 +42,7 @@ const LayerSelector = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
+      columns: 'uid, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
       tablename: 'hkates.facilities_data',
     };
 
@@ -354,7 +354,7 @@ const LayerSelector = React.createClass({
           <ul className="nav nav-pills nav-stacked" id="stacked-menu">
             {
                 this.state.layers.map((domain, i) => (
-
+                  // eslint-disable-next-line react/no-array-index-key
                   <li key={`domain${i}`}>
                     <Checkbox
                       value={domain.name}
@@ -368,6 +368,7 @@ const LayerSelector = React.createClass({
                     <ul className="group-container nav nav-pills nav-stacked collapse" id={`p${i}`} style={{ height: 'auto' }}>
                       {
                         domain.children.map((group, j) => (
+                          // eslint-disable-next-line react/no-array-index-key
                           <div className="group nav nav-pills nav-stacked collapse in" key={j}>
                             <Checkbox
                               value={group.name}
@@ -390,6 +391,7 @@ const LayerSelector = React.createClass({
                             <ul className="subgroup-container nav nav-pills nav-stacked collapse" id={`pv${i}${j}`} style={{ height: 'auto' }} >
                               {
                                   group.children.map((subgroup, k) => (
+                                    // eslint-disable-next-line react/no-array-index-key
                                     <li className="subgroup" key={k}>
                                       <Checkbox
                                         value={subgroup.name}

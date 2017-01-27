@@ -9,7 +9,7 @@ const Item = (props) => {
   return (
     <Link
       to={{
-        pathname: `/facilities/${d.cartodb_id}`,
+        pathname: `/facility/${d.uid}`,
         state: { modal: true, returnTo: '/facilities/all' },
       }}
     >
@@ -19,8 +19,8 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.facilityname}</div>
-        <div className={'subtitle'}>{d.address}</div>
         <div className={'subtitle'}>{d.facilitytype}</div>
+        <div className={'subtitle'}>{d.address}</div>
         <i className="fa fa-chevron-right" />
       </div>
     </Link>
@@ -29,8 +29,8 @@ const Item = (props) => {
 
 Item.propTypes = {
   feature: React.PropTypes.shape({
-    properties: React.PropTypes.object,
-  }),
+    properties: React.PropTypes.object.isRequired,
+  }).isRequired,
 };
 
 export default Item;

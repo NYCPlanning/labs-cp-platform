@@ -1,19 +1,31 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import Divider from 'material-ui/Divider';
 
 import Filter from './Filter';
+import Download from '../../common/Download';
 import content from '../content';
 import defaultlayerConfig from './defaultLayerConfig';
 
 const CapitalProjects = React.createClass({
-
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
+
+  getInitialState() {
+    return ({
+      pointsSql: '',
+      polygonsSql: '',
+    });
+  },
+
   // updates the sql for the map source
   updateLayerConfig(pointsSql, polygonsSql) {
-    // use this method to build new mapConfig based on mode
+    this.setState({
+      pointsSql,
+      polygonsSql,
+    });
 
     const newLayerConfig = update(defaultlayerConfig, {
       sources: {
@@ -48,10 +60,17 @@ const CapitalProjects = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <div className="sidebar-tab-content">
-            <h4>Data Downloads</h4>
-            <p>Custom data downloads are currently in development.  Please check back again soon.</p>
-          </div>
+          <h4 style={{ paddingLeft: '16px' }}>Points</h4>
+          <Download
+            sql={this.state.pointsSql}
+            filePrefix="projects-points"
+          />
+          <Divider />
+          <h4 style={{ paddingLeft: '16px' }}>Polygons</h4>
+          <Download
+            sql={this.state.polygonsSql}
+            filePrefix="projects-polygons"
+          />
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">

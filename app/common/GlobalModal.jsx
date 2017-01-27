@@ -12,8 +12,14 @@ import './GlobalModal.scss';
 const GlobalModal = React.createClass({
   propTypes: {
     closeText: React.PropTypes.string,
-    heading: React.PropTypes.string,
-    body: React.PropTypes.element,
+    heading: React.PropTypes.string.isRequired,
+    body: React.PropTypes.element.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      closeText: 'Close',
+    };
   },
 
   getInitialState() {

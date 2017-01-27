@@ -4,9 +4,9 @@ import React from 'react';
 
 const GeoJsonSource = React.createClass({
   propTypes: {
-    map: React.PropTypes.object,
-    source: React.PropTypes.object,
-    onLoaded: React.PropTypes.func,
+    map: React.PropTypes.object.isRequired,
+    source: React.PropTypes.object.isRequired,
+    onLoaded: React.PropTypes.func.isRequired,
   },
 
   componentWillMount() {

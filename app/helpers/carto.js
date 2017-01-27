@@ -108,15 +108,25 @@ module.exports = {
     });
   },
 
+  transformSqlSelectAll(sql) {
+    return sql.replace(/SELECT (.*?) FROM/, 'SELECT * FROM');
+  },
+
+  transformSqlRemoveWhere(sql) {
+    return sql.replace(/ WHERE .*/, '');
+  },
+
+  generateUrlString(sql, format, filename = 'download') {
+    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}&filename=${filename}`;
+    return encodeURI(apiString);
+  },
+
   // does a carto SQL api call
   // pass in format as a valid SQL api export format (shp, csv, geojson)
   // TODO store host, user, etc in a central config
   SQL(sql, format) {
     format = format || 'geojson';
-
-    let apiCall = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}`;
-
-    apiCall = encodeURI(apiCall);
+    const apiCall = this.generateUrlString(sql, format);
 
     return new Promise((resolve, reject) => {
       $.getJSON(apiCall) // eslint-disable-line no-undef

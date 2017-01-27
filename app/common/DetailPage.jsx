@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import { Link } from 'react-router';
@@ -21,10 +21,14 @@ const DetailPage = props => (
 );
 
 DetailPage.propTypes = {
-  location: React.PropTypes.object,
-  defaultText: React.PropTypes.string,
-  defaultLink: React.PropTypes.string,
-  children: React.PropTypes.object,
+  location: PropTypes.object.isRequired,
+  defaultText: PropTypes.string.isRequired,
+  defaultLink: PropTypes.string.isRequired,
+  children: PropTypes.object,
+};
+
+DetailPage.defaultProps = {
+  children: null,
 };
 
 
