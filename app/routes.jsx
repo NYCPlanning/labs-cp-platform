@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from '../app/App';
 import Login from '../app/pages/Login';
+import Signup from '../app/pages/Signup';
 import AuthService from './helpers/AuthService';
 import AuthHelper from './helpers/AuthHelper';
 import appConfig from './helpers/appConfig';
@@ -71,6 +72,7 @@ module.exports = (
     <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} miniNav onEnter={requireAuth} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
+    <Route path="93f8c022f7434327b0ae4d9361cbfcb9" component={Signup} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="*" component={NotFound} />
   </Route>

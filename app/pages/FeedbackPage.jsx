@@ -41,8 +41,6 @@ const FeedbackPage = React.createClass({
       marginBottom: '20px',
     };
 
-    console.log(this.state.data);
-
     const feedback = this.state.data && this.state.data.map(d => (
       <Paper style={style} zDepth={1} className="feedback-item-container">
         <div className="feedback-item">
