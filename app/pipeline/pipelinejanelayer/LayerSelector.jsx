@@ -3,7 +3,6 @@ import Moment from 'moment';
 import Select from 'react-select';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
 
 import RangeSlider from './RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
@@ -280,30 +279,3 @@ const LayerSelector = React.createClass({
 
 
 module.exports = LayerSelector;
-
-// function InfoIcon(props) {
-//   return (
-//     <OverlayTrigger
-//       placement="right"
-//       overlay={
-//         <Tooltip id="tooltip">{props.text}</Tooltip>
-//       }
-//     >
-//       <i
-//         className="fa fa-info-circle"
-//         style={{
-//           paddingLeft: '5px',
-//         }}
-//         aria-hidden="true"
-//       />
-//     </OverlayTrigger>
-
-//   );
-// }
-
-// InfoIcon.propTypes = {
-//   text: React.PropTypes.string,
-// };
-
-
-// module.exports = LayerSelector;
