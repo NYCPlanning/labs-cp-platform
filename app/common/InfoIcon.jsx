@@ -1,7 +1,6 @@
 import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-
 const InfoIcon = props => (
   <OverlayTrigger
     placement="right"
@@ -19,10 +18,12 @@ const InfoIcon = props => (
   </OverlayTrigger>
 );
 
-
 InfoIcon.propTypes = {
   text: React.PropTypes.string,
 };
 
+InfoIcon.defaultProps = {
+  text: null,
+};
 
 module.exports = InfoIcon;
