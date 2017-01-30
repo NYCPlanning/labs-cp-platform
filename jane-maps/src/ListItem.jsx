@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import FontIcon from 'material-ui/FontIcon';
+import Toggle from 'material-ui/Toggle';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const listItemSource = {
@@ -67,27 +68,42 @@ const listItemTarget = {
 let ListItem = React.createClass({
 
   propTypes: {
-    connectDragSource: React.PropTypes.func.isRequired,
-    connectDropTarget: React.PropTypes.func.isRequired,
-    layer: React.PropTypes.object.isRequired,
-    onClick: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string.isRequired,
-    expanded: React.PropTypes.bool.isRequired,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+    layer: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired,
+    className: PropTypes.string.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    onLayerToggle: PropTypes.func.isRequired,
   },
 
   handleClick(layer, e) {
     if (e.target.type !== 'checkbox') this.props.onClick(layer.id);
   },
 
+  handleToggle(layerid) {
+    this.props.onLayerToggle(layerid);
+  },
+
   render() {
     const style = {
       fontIcon: {
         fontSize: '15px',
-        margin: '7px 10px',
+        margin: '7px 12px 7px 10px',
         height: '15px',
         width: '15px',
         color: '#5F5F5F',
         left: 0,
+        textAlign: 'center',
+      },
+      track: {
+        backgroundColor: '#9c9c9c',
+      },
+      thumbSwitched: {
+        backgroundColor: '#d96b27',
+      },
+      trackSwitched: {
+        backgroundColor: 'rgba(217, 107, 39, 0.48)',
       },
     };
 
@@ -108,9 +124,16 @@ let ListItem = React.createClass({
         { this.props.expanded && (
           <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
         )}
-
-        {layer.name}
-
+        <span className="name">{layer.name}</span>
+        <div className="toggle-container">
+          <Toggle
+            trackStyle={style.track}
+            thumbSwitchedStyle={style.thumbSwitched}
+            trackSwitchedStyle={style.trackSwitched}
+            toggled={layer.visible}
+            onToggle={this.handleToggle.bind(this, layer.id)}
+          />
+        </div>
       </div>,
     ));
   },

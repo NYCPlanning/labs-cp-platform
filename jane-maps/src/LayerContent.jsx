@@ -1,8 +1,6 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
-import Toggle from 'material-ui/Toggle';
-
 
 const LayerContent = React.createClass({
   propTypes: {
@@ -62,11 +60,6 @@ const LayerContent = React.createClass({
           <div className="drawer-header" >
             <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
             {layer.name}
-            <Toggle
-              style={style.toggle}
-              toggled={layer.visible}
-              onToggle={this.handleToggle.bind(this, layer.id)}
-            />
             <IconButton
               iconClassName={'fa fa-times'}
               style={{

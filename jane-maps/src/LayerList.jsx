@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import update from 'react/lib/update';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -12,12 +12,13 @@ import ListItem from './ListItem';
 
 const LayerList = React.createClass({
   propTypes: {
-    layers: React.PropTypes.array.isRequired,
-    onLayerReorder: React.PropTypes.func.isRequired,
-    expanded: React.PropTypes.bool.isRequired,
-    onLayerClick: React.PropTypes.func.isRequired,
-    selectedLayer: React.PropTypes.string.isRequired,
-    onToggleExpanded: React.PropTypes.func.isRequired,
+    layers: PropTypes.array.isRequired,
+    onLayerReorder: PropTypes.func.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    onLayerClick: PropTypes.func.isRequired,
+    selectedLayer: PropTypes.string.isRequired,
+    onToggleExpanded: PropTypes.func.isRequired,
+    onLayerToggle: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -78,6 +79,7 @@ const LayerList = React.createClass({
             onDrop={this.handleDrop}
             key={layer.id}
             onClick={this.props.onLayerClick}
+            onLayerToggle={this.props.onLayerToggle}
           />
         );
       }
