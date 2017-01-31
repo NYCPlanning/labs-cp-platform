@@ -5,11 +5,10 @@ import update from 'react/lib/update';
 import GLMap from './GLMap';
 import LayerContent from './LayerContent';
 import LayerList from './LayerList';
-import MapLayer from './MapLayer';
 import PoiMarker from './PoiMarker';
 import Search from './Search';
-import Source from './source/Source';
 import SelectedFeaturesPane from './SelectedFeaturesPane';
+import MapHandler from './MapHandler';
 
 
 // styles should be manually imported from whatever is using Jane for now
@@ -56,7 +55,6 @@ const Jane = React.createClass({
       poiFeature: this.props.poiFeature ? this.props.poiFeature : null,
       poiLabel: this.props.poiLabel ? this.props.poiLabel : null,
       mapLoaded: false,
-      loadedSources: {},
       mapConfig: this.props.mapConfig ? this.props.mapConfig : defaultMapConfig,
       layerListExpanded: false,
       layerContentVisible: this.props.layerContentVisible,
@@ -162,10 +160,6 @@ const Jane = React.createClass({
 
   // keeps track of loaded sources in state,
   // used to figure out whether layers are ready to be added in render()
-  handleSourceLoaded(loadedSources) {
-    this.setState({ loadedSources });
-  },
-
 
   hidePoiMarker() {
     this.setState({
@@ -247,55 +241,7 @@ const Jane = React.createClass({
   },
 
   render() {
-    const self = this;
     const mapConfig = this.state.mapConfig;
-
-    // load all sources for visible layers
-    const sources = [];
-
-
-    if (this.state.mapLoaded) {
-      mapConfig.layers.forEach((layer) => {
-        if (layer.sources && layer.visible) {
-          layer.sources.forEach((source) => {
-            sources.push(
-              <Source map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id} />,
-            );
-          });
-        }
-      });
-    }
-
-
-    // check to see if all sources for visible layers are loaded
-    let allSourcesLoaded = true;
-
-    mapConfig.layers.forEach((layer) => {
-      if (layer.visible && layer.sources && layer.mapLayers) {
-        layer.mapLayers.forEach((mapLayer) => {
-          if (!Object.prototype.hasOwnProperty.call(this.state.loadedSources, mapLayer.source)) { allSourcesLoaded = false; }
-        });
-      }
-    });
-
-
-    // create <MapLayer> components for each visible layer, but only if all required sources are already loaded
-    const mapLayers = [];
-
-    if (allSourcesLoaded) {
-      this.order = 0;
-      mapConfig.layers.forEach((layer) => {
-        // render layers in order
-        if (layer.visible && layer.sources && layer.mapLayers) {
-          layer.mapLayers.forEach((mapLayer) => {
-            mapLayers.push(<MapLayer map={this.map} config={mapLayer} key={mapLayer.id + this.order} />);
-          });
-
-          this.order = this.order + 1;
-        }
-      });
-    }
-
 
     // add legendItems for each layer
     const legendItems = [];
@@ -321,16 +267,6 @@ const Jane = React.createClass({
     });
 
 
-    // // add hover
-    // if (this.map) {
-    //   const map = this.map.mapObject;
-    //   map.off('mousemove');
-    //   map.on('mousemove', (e) => {
-    //     const features = map.queryRenderedFeatures(e.point, { layers: [this.state.mapConfig.selectedLayer] });
-    //     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-    //   });
-    // }
-
     let leftOffset = 36;
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.layerContentVisible) leftOffset += 320;
@@ -345,8 +281,6 @@ const Jane = React.createClass({
             left: leftOffset,
           }}
         >
-
-
           {
             this.props.search && (
               <Search
@@ -384,8 +318,6 @@ const Jane = React.createClass({
           )
         }
 
-        {sources}
-        {mapLayers}
         <LayerList
           expanded={this.state.layerListExpanded}
           layers={this.state.mapConfig.layers}
@@ -414,6 +346,8 @@ const Jane = React.createClass({
         >
           {selectedFeatureItems}
         </SelectedFeaturesPane>
+
+        { this.state.mapLoaded && <MapHandler map={this.map} mapConfig={mapConfig} /> }
       </div>
 
     );
