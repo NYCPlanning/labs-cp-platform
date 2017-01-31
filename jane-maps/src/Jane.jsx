@@ -99,16 +99,32 @@ const Jane = React.createClass({
     this.setState({ mapConfig: this.state.mapConfig });
   },
 
-  // sets the selected layer
   handleLayerClick(layerid) {
-    if (!this.state.layerContentVisible) this.toggleLayerContent();
+    const visible = this.isLayerVisible(layerid);
 
+    // open second drawer if closed
+    if (!this.state.layerContentVisible && visible) this.toggleLayerContent();
+
+    // if selected layer was clicked, toggle second drawer, else make clicked layer selected
     if (this.state.mapConfig.selectedLayer === layerid) {
-      this.toggleLayerContent();
+      // this.toggleLayerContent();
     } else {
-      this.state.mapConfig.selectedLayer = layerid;
-      this.setState({ mapConfig: this.state.mapConfig });
+      // if clicked layer is enabled (visible), make it active
+      if (visible) {
+        this.state.mapConfig.selectedLayer = layerid;
+        this.setState({ mapConfig: this.state.mapConfig });
+        return;
+      }
+
+      // otherwise expand the layerlist
+      if (!this.state.layerListExpanded) this.setState({ layerListExpanded: true });
     }
+  },
+
+  isLayerVisible(layerid) {
+    // checks if layer with id of layerid is visible, returns boolean
+    const thisLayer = this.state.mapConfig.layers.filter(layer => layer.id === layerid)[0];
+    return thisLayer.visible;
   },
 
   handleMapLayerClick(e) {
@@ -132,6 +148,12 @@ const Jane = React.createClass({
   handleLayerToggle(layerid) {
     const theLayer = this.state.mapConfig.layers.find((layer => layer.id === layerid));
     theLayer.visible = !theLayer.visible;
+
+    // clear selectedlayer
+    if (this.state.mapConfig.selectedLayer === layerid) {
+      this.state.mapConfig.selectedLayer = '';
+      if (this.state.layerContentVisible) this.toggleLayerContent();
+    }
 
     this.setState({
       mapConfig: this.state.mapConfig,
@@ -313,7 +335,7 @@ const Jane = React.createClass({
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.layerContentVisible) leftOffset += 320;
 
-    const selectedLayer = this.state.mapConfig.selectedLayer || this.state.mapConfig.layers[0].id;
+    const selectedLayer = this.state.mapConfig.selectedLayer;
 
     return (
 
@@ -371,6 +393,7 @@ const Jane = React.createClass({
           onLayerReorder={this.handleLayerReorder}
           onLayerClick={this.handleLayerClick}
           onToggleExpanded={this.handleToggleExpanded}
+          onLayerToggle={this.handleLayerToggle}
         />
 
         <LayerContent
