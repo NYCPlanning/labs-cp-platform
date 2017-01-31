@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
 import reformed from 'react-reformed';
 import $ from 'jquery';
 
@@ -83,7 +82,7 @@ const FeedbackForm = React.createClass({
     const { model } = this.props;
 
     return (
-      <Paper style={{ padding: '15px' }} zDepth={2}>
+      <div>
         <h4>Send Feedback about this {this.props.displayUnit}</h4>
 
         { !this.state.submitted && !this.state.error && (
@@ -120,7 +119,7 @@ const FeedbackForm = React.createClass({
           </div>
         )}
 
-      </Paper>
+      </div>
     );
   },
 });

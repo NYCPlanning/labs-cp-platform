@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
 import Numeral from 'numeral';
+import _ from 'underscore';
+
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import DetailPage from '../common/DetailPage';
 import ModalMap from '../common/ModalMap';
 import CommitmentExpenditureChart from './CommitmentExpenditureChart';
 import FeedbackForm from '../common/FeedbackForm';
 
-import Agencies from './agencies';
 import Carto from '../helpers/carto';
 
 const ProjectPage = React.createClass({
@@ -34,77 +37,148 @@ const ProjectPage = React.createClass({
         self.setState({ feature });
       });
 
-    const commitmentsSQL = `SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${maprojid}'`;
+    Carto.SQL(`SELECT * FROM adoyle.budgetcommitments WHERE maprojid = '${maprojid}'`, 'json')
+      .then(budget => this.setState({ budget }));
 
-    // get an array of commitments data for this project
-    Carto.SQL(commitmentsSQL, 'json')
-      .then(commitments => this.setState({ commitments }));
-
-    // // get an array of expenditures data for this project
-    // PlanningApi.getCapitalProjectExpenditures(maprojid)
-    //   .then(res => self.setState({ expenditures: res.data }));
+    // const commitmentsSQL = `SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${maprojid}'`;
+    //
+    // // get an array of commitments data for this project
+    // Carto.SQL(commitmentsSQL, 'json')
+    //   .then(commitments => this.setState({ commitments }));
   },
 
   renderContent() {
     const d = this.state.feature.properties;
+    const budget = this.state.budget;
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
+    const project_types = _.uniq(budget.map(b => b.projecttype));
+
+    const CardStyles = {
+      zDepth: 1,
+      height: '100%',
+    };
 
     return (
       <div className="project-page">
         <div className="col-md-12">
-          <h3>
-            {d.descriptio} - {d.maprojid}
-          </h3>
-          <div className="agencybadges">
-            <span
-              className={'badge'}
-              style={{ backgroundColor: Agencies.getAgencyColor(d.agency) }}
-            >
-              {d.agencyname}
-            </span>
+          <h4><small>{d.maprojid}</small></h4>
+          <h1>{d.descriptio}</h1>
+          { project_types.map((project_type) => {
+            return (
+              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                {project_type}
+              </span>
+            );
+          })}
+        </div>
+
+        <div className={'col-md-6'}>
+          <div className={'row'} style={{ marginBottom: '15px', marginTop: '15px' }}>
+            <div className={'col-md-6'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Managed By" />
+                <CardText>
+                  <h3>{d.agencyname}</h3>
+                </CardText>
+              </Card>
+            </div>
+            <div className={'col-md-6'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Sponsored By" />
+                <CardText>
+                  <h3 className={'text-muted'}>Coming Soon</h3>
+                </CardText>
+              </Card>
+            </div>
+          </div>
+
+          <div className={'row'} style={{ marginBottom: '15px' }}>
+            <div className={'col-md-12'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Total Cost" />
+                <CardText>
+                  <h2 style={{ textAlign: 'center' }}>{formatCost(d.totalcost)}</h2>
+                </CardText>
+              </Card>
+            </div>
+          </div>
+
+          <div className={'row'} style={{ marginBottom: '15px' }}>
+            <div className={'col-md-12'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Spending Over Time" actAsExpander showExpandableButton />
+                <CardText expandable>
+                  <CommitmentExpenditureChart maprojid={this.props.params.id} />
+                </CardText>
+              </Card>
+            </div>
+          </div>
+
+          <div className={'row'} style={{ marginBottom: '15px' }}>
+            <div className={'col-md-12'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Spending Details" actAsExpander showExpandableButton />
+                <CardText expandable>
+                  <Table selectable={false}>
+                    <TableHeader
+                      displaySelectAll={false}
+                      adjustForCheckbox={false}
+                    >
+                      <TableRow>
+                        <TableHeaderColumn>ID</TableHeaderColumn>
+                        <TableHeaderColumn>Name</TableHeaderColumn>
+                        <TableHeaderColumn>Status</TableHeaderColumn>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody displayRowCheckbox={false}>
+                      <TableRow>
+                        <TableRowColumn>1</TableRowColumn>
+                        <TableRowColumn>John Smith</TableRowColumn>
+                        <TableRowColumn>Employed</TableRowColumn>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowColumn>2</TableRowColumn>
+                        <TableRowColumn>Randal White</TableRowColumn>
+                        <TableRowColumn>Unemployed</TableRowColumn>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowColumn>3</TableRowColumn>
+                        <TableRowColumn>Stephanie Sanders</TableRowColumn>
+                        <TableRowColumn>Employed</TableRowColumn>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowColumn>4</TableRowColumn>
+                        <TableRowColumn>Steve Brown</TableRowColumn>
+                        <TableRowColumn>Employed</TableRowColumn>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </CardText>
+              </Card>
+            </div>
+          </div>
+
+          <div className={'row'} style={{ marginBottom: '15px' }}>
+            <div className={'col-md-12'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Feedback" actAsExpander showExpandableButton />
+                <CardText expandable>
+                  <FeedbackForm
+                    displayUnit="Capital Project"
+                    ref_type="capitalproject"
+                    ref_id={this.props.params.id}
+                  />
+                </CardText>
+              </Card>
+            </div>
           </div>
         </div>
-        <div className={'col-md-6'}>
-          <ModalMap feature={this.state.feature} label={d.descriptio} />
-          <FeedbackForm
-            displayUnit="Capital Project"
-            ref_type="capitalproject"
-            ref_id={this.props.params.id}
-          />
-        </div>
 
         <div className={'col-md-6'}>
-          <ul className="list-group">
-            <li className="list-group-item">
-              <h4>General</h4>
-              <dl className="dl-horizontal">
-                <dt>BBL</dt>
-                <dd>{d.bbl}</dd>
-                <dt>BIN</dt>
-                <dd>{d.bin}</dd>
-                <dt>Geometry Source</dt>
-                <dd>{d.geomsource}</dd>
-                <dt>Project ID</dt>
-                <dd>{d.projectid}</dd>
-
-              </dl>
-            </li>
-
-            <li className="list-group-item">
-              <h4>Cost Data</h4>
-              <dl className="dl-horizontal">
-                <dt>Sum of All Commitments</dt>
-                <dd>{formatCost(d.totalcost)}</dd>
-              </dl>
-            </li>
-
-            <li className="list-group-item" style={{ paddingBottom: '100px' }}>
-              <h4>Commitments & Expenditures</h4>
-              <CommitmentExpenditureChart maprojid={this.props.params.id} />
-
-            </li>
-          </ul>
+          <div style={{ marginTop: '15px' }}>
+            <ModalMap feature={this.state.feature} label={d.descriptio} />
+          </div>
         </div>
       </div>
     );
