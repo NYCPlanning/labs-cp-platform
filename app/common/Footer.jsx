@@ -28,7 +28,7 @@ const Footer = () => (
         >
           <dl>
             <dt><h4>Capital Planning Team</h4></dt>
-            <dd><a href="http://docs.capitalplanning.nyc">Data Documentation</a></dd>
+            <dd><a href="http://docs.capitalplanning.nyc" target="_blank" rel="noreferrer noopener">Data Documentation</a></dd>
           </dl>
         </div>
         <div className="col-md-3 col-xs-12">

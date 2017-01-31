@@ -380,7 +380,7 @@ const LayerSelector = React.createClass({
                               <div className="nav-sub-container" style={{ backgroundColor: self.state.layers.length === 1 ? group.color : domain.subColor }}>
                                 <div onClick={self.toggleCheckbox.bind(self, 'group', i, j, null)} style={{ color: 'black' }}>
                                   <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{group.description}</Tooltip>}>
-                                    <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
+                                    <a href="http://docs.capitalplanning.nyc/facdb/#overview" target="_blank" rel="noreferrer noopener"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
                                   </OverlayTrigger>
                                   {group.name}
                                 </div>
@@ -401,7 +401,7 @@ const LayerSelector = React.createClass({
                                       />
                                       <div onClick={self.toggleCheckbox.bind(self, 'subgroup', i, j, k)} style={{ color: 'black' }}>
                                         <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
-                                          <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
+                                          <a href="http://docs.capitalplanning.nyc/facdb/#overview" target="_blank" rel="noreferrer noopener"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
                                         </OverlayTrigger>
                                         {subgroup.name}
                                       </div>
