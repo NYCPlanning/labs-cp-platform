@@ -6,9 +6,9 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
 
-
 import Checkbox from './Checkbox';
 import CountWidget from '../../common/CountWidget';
+import InfoIcon from '../../common/InfoIcon';
 
 import config from './config';
 import facilitiesLayers from '../facilitiesLayers';
@@ -317,6 +317,12 @@ const LayerSelector = React.createClass({
   render() {
     const self = this;
 
+    // override material ui ListItem spacing and react-select component font size
+    const listItemStyle = {
+      paddingTop: '0px',
+      fontSize: '14px',
+    };
+
     return (
       <div>
         <CountWidget
@@ -324,14 +330,56 @@ const LayerSelector = React.createClass({
           selectedCount={this.state.selectedCount}
           units={'facilities'}
         />
+
+        <Subheader
+          style={{
+            paddingTop: '12px',
+          }}
+        >
+          Agency
+          <InfoIcon text="The Agency managing this facility" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <Select
+            multi
+            placeholder="Select Agencies"
+            value={this.state.filterDimensions.oversightabbrev}
+            name="form-field-name"
+            options={config.agencies}
+            onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
+          />
+        </ListItem>
+
         <Subheader>
-            Facility Type
-            <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip"> Learn more about facility types</Tooltip>}>
-              <a href="https://nycplanning.github.io/cpdocs/facdb/"> <i className="fa fa-info-circle" aria-hidden="true" /></a>
-            </OverlayTrigger>
+          Operator Type
+          <InfoIcon text="The type of entity operating the facility" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <Select
+            multi
+            placeholder="Select Operator Types"
+            value={this.state.filterDimensions.operatortype}
+            name="form-field-name"
+            options={config.operatorTypes}
+            onChange={this.updateFilterDimension.bind(this, 'operatortype')}
+          />
+        </ListItem>
+
+        <Subheader>
+          Facility Type
+          <a href="https://nycplanning.github.io/cpdocs/facdb/" target="_blank" rel="noreferrer noopener"><InfoIcon text="Learn more about facility types" /></a>
         </Subheader>
         <ListItem
           disabled
+          style={listItemStyle}
         >
           <div className="btn-group btn-group-xs" role="group">
             <div className="btn dcp-orange btn-xs " onClick={this.selectAll} disabled={this.state.checked === 'all'}>Select All</div>
@@ -417,55 +465,6 @@ const LayerSelector = React.createClass({
                   ))
               }
           </ul>
-        </ListItem>
-
-        <Subheader>
-          Agency
-          <OverlayTrigger
-            placement="right" overlay={
-              <Tooltip id="tooltip">The Agency managing this facility</Tooltip>
-            }
-          >
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
-        </Subheader>
-
-        <ListItem
-          disabled
-        >
-          <Select
-            multi
-            placeholder="Select Agencies"
-            value={this.state.filterDimensions.oversightabbrev}
-            name="form-field-name"
-            options={config.agencies}
-            onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
-          />
-        </ListItem>
-
-
-        <Subheader>
-          Operator Type
-          <OverlayTrigger
-            placement="right" overlay={
-              <Tooltip id="tooltip">The type of entity operating the facility</Tooltip>
-            }
-          >
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
-        </Subheader>
-
-        <ListItem
-          disabled
-        >
-          <Select
-            multi
-            placeholder="Select Operator Types"
-            value={this.state.filterDimensions.operatortype}
-            name="form-field-name"
-            options={config.operatorTypes}
-            onChange={this.updateFilterDimension.bind(this, 'operatortype')}
-          />
         </ListItem>
       </div>
     );
