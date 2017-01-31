@@ -28,54 +28,68 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
-    width: 36px;
+    left: -165px;
+    width: 200px;
     background: #fff;
     overflow: hidden;
-    transition: width 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     z-index: 10;
   }
 
   .jane-drawer.expanded {
-    width: 200px;
+    left: 0;
   }
 
-  .list-item, .list-item-inner {
+  .list-item {
+    color: #5f5f5f !important;
     position: relative;
     cursor: -webkit-grab;
     cursor: grab;
     height: 30px;
     font-size: 13px;
-    border-bottom: 2px solid #b5b5b5;
-  }
+    margin-bottom: 2px;
+    text-align: right;
+    background-color: #FFF;
+    border-right: 4px solid #FFF;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
-  .list-item.selected  {
-    background: #fff;
-    border-top: 2px solid #888888;
-    border-bottom: 2px solid #888888;
-    box-sizing: content-box;
-  }
+    &:hover {
+      border-right: 4px solid #9f9f9f;
+    }
 
+    &:hover, &:hover .fa {
+      color: #9f9f9f !important;
 
+    }
 
-  .list-item.disabled .fa, .list-item.disabled .name {
-    color: #9c9c9c !important;
-  }
+    &.selected {
+      background-color: #FFF;
+      border-right: 4px solid #C1C1C1;
+      border-right: 4px solid #d96b27;
+    }
 
-  .list-item.disabled:hover .fa, .list-item.disabled:hover .name {
-    color: #6d6d6d !important;
-  }
+    &.selected .fa {
+      color: #d96b27 !important;
+    }
 
-  .list-item {
+    &.disabled {
+      background-color: #C1C1C1;
+      border-right: 4px solid #C1C1C1;
+    }
+
+    &.disabled, &.disabled .fa {
+      color: #9c9c9c !important;
+    }
+
+    &.disabled:hover, &.disabled:hover .fa {
+      color: #808080 !important;
+    }
+
     .toggle-container {
       width: 50px;
       position: absolute;
-      right: 0;
+      left: 0;
       top: 4px;
-    }
-
-    .name {
-      transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     }
   }
 
@@ -93,12 +107,19 @@
     background: #fff;
     transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+    border-left: 1px solid rgb(153, 153, 153);
+
+    .drawer-header {
+      text-align: left;
+    }
+
   }
 
   .drawer-header {
     position: relative;
     border-bottom: 1px solid #a9a9a9;
     height: 35px;
+    text-align: right;
   }
 
   .drawer-subheader {

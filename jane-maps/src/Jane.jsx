@@ -107,7 +107,7 @@ const Jane = React.createClass({
 
     // if selected layer was clicked, toggle second drawer, else make clicked layer selected
     if (this.state.mapConfig.selectedLayer === layerid) {
-      this.toggleLayerContent();
+      // this.toggleLayerContent();
     } else {
       // if clicked layer is enabled (visible), make it active
       if (visible) {
@@ -149,12 +149,11 @@ const Jane = React.createClass({
     const theLayer = this.state.mapConfig.layers.find((layer => layer.id === layerid));
     theLayer.visible = !theLayer.visible;
 
+    // clear selectedlayer
     if (this.state.mapConfig.selectedLayer === layerid) {
       this.state.mapConfig.selectedLayer = '';
       if (this.state.layerContentVisible) this.toggleLayerContent();
     }
-
-    if (theLayer.visible) this.state.mapConfig.selectedLayer = layerid;
 
     this.setState({
       mapConfig: this.state.mapConfig,

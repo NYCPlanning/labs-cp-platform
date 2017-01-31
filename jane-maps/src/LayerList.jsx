@@ -94,6 +94,7 @@ const LayerList = React.createClass({
       <div className={`jane-drawer ${this.props.expanded ? 'expanded' : ''}`}>
         <div className={'jane-drawer-inner'}>
           <div className="drawer-header" >
+            Layers
             <IconButton
               style={{
                 width: 36,
@@ -104,7 +105,6 @@ const LayerList = React.createClass({
               iconStyle={style.fontIcon}
               onTouchTap={this.props.onToggleExpanded}
             />
-            Layers
           </div>
           {layers}
         </div>

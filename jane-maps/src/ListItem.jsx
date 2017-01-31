@@ -89,7 +89,7 @@ let ListItem = React.createClass({
     const style = {
       fontIcon: {
         fontSize: '15px',
-        margin: '7px 12px 7px 10px',
+        margin: '8px 6px 8px 10px',
         height: '15px',
         width: '15px',
         color: '#5F5F5F',
@@ -112,19 +112,6 @@ let ListItem = React.createClass({
     return connectDragSource(connectDropTarget(
       <div className={this.props.className} onClick={this.handleClick.bind(this, layer)}>
 
-        { !this.props.expanded && (
-          <OverlayTrigger
-            placement="right"
-            overlay={<Tooltip id={layer.name}>{layer.name}</Tooltip>}
-          >
-            <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
-          </OverlayTrigger>
-        )}
-
-        { this.props.expanded && (
-          <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
-        )}
-        <span className="name">{layer.name}</span>
         <div className="toggle-container">
           <Toggle
             trackStyle={style.track}
@@ -134,6 +121,23 @@ let ListItem = React.createClass({
             onToggle={this.handleToggle.bind(this, layer.id)}
           />
         </div>
+
+        <span className="name">{layer.name}</span>
+
+        { !this.props.expanded && (
+          <OverlayTrigger
+            placement="right"
+            overlay={<Tooltip id={layer.name}>{layer.name}</Tooltip>}
+            delayShow={500}
+          >
+            <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
+          </OverlayTrigger>
+        )}
+
+        { this.props.expanded && (
+          <FontIcon className={`fa fa-${layer.icon}`} style={style.fontIcon} />
+        )}
+
       </div>,
     ));
   },
