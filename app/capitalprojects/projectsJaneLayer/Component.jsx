@@ -57,6 +57,8 @@ const CapitalProjects = React.createClass({
         <Tab label="Data">
           <Filter
             updateSQL={this.updateLayerConfig}
+            pointsSql={this.state.pointsSql}
+            polygonsSql={this.state.polygonsSql}
           />
         </Tab>
         <Tab label="Download">

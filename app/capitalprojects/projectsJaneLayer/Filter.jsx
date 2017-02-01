@@ -5,6 +5,7 @@ import Select from 'react-select';
 
 import CountWidget from '../../common/CountWidget';
 import InfoIcon from '../../common/InfoIcon';
+import CostGroupChart from './CostGroupChart';
 
 import Carto from '../../helpers/carto';
 import config from '../config';
@@ -13,6 +14,8 @@ import config from '../config';
 const Filter = React.createClass({
   propTypes: {
     updateSQL: React.PropTypes.func.isRequired,
+    pointsSql: React.PropTypes.string,
+    polygonsSql: React.PropTypes.string,
   },
 
   getInitialState() {
@@ -179,6 +182,17 @@ const Filter = React.createClass({
             onChange={this.updateFilterDimension.bind(this, 'projecttype')}
           />
         </ListItem>
+        <Subheader>
+          Number of Projects by Total Cost
+          <InfoIcon text="The FMS Project Type" />
+        </Subheader>
+        {
+          this.props.pointsSql && this.props.polygonsSql &&
+            <CostGroupChart
+              pointsSql={this.props.pointsSql}
+              polygonsSql={this.props.polygonsSql}
+            />
+        }
       </div>
     );
   },
