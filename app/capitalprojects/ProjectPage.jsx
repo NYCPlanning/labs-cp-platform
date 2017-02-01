@@ -64,13 +64,13 @@ const ProjectPage = React.createClass({
         <div className="col-md-12">
           <h4><small>{d.maprojid}</small></h4>
           <h1>{d.descriptio}</h1>
-          { project_types.map((project_type) => {
-            return (
+          {
+            project_types.map(project_type => (
               <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
                 {project_type}
               </span>
-            );
-          })}
+            ))
+          }
         </div>
 
         <div className={'col-md-6'}>
