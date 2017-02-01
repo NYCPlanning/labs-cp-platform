@@ -30,8 +30,8 @@ const Filter = React.createClass({
 
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, agency, descriptio, totalcost, maprojid',
-      pointsTablename: 'adoyle.commitmentspoints',
-      polygonsTablename: 'adoyle.commitmentspolygons',
+      pointsTablename: 'commitmentspointsjoined',
+      polygonsTablename: 'commitmentspolygonsjoined',
     };
 
     self.buildSQL();
