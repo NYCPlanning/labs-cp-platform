@@ -35,7 +35,6 @@ const GLMap = React.createClass({
 
     mapboxgl.accessToken = this.props.mapbox_accessToken;
 
-
     const map = this.mapObject = new mapboxgl.Map({
       container: this.container,
       style: this.props.mapStyle,

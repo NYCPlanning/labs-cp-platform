@@ -44,8 +44,8 @@ const CaptialProjectsExplorer = React.createClass({
     // TODO these can be globally defined for the app
     const mapInit = {
       mapbox_accessToken: appConfig.mapbox_accessToken,
-      center: [-74.0079, 40.7315],
-      zoom: 12,
+      center: [-74.0058, 40.7094],
+      zoom: 13.62,
       minZoom: null,
       maxZoom: null,
       pitch: 0,

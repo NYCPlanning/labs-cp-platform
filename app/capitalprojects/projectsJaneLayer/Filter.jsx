@@ -1,10 +1,11 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
 
 import CountWidget from '../../common/CountWidget';
+import InfoIcon from '../../common/InfoIcon';
+import CostGroupChart from './CostGroupChart';
 
 import Carto from '../../helpers/carto';
 import config from '../config';
@@ -13,6 +14,8 @@ import config from '../config';
 const Filter = React.createClass({
   propTypes: {
     updateSQL: React.PropTypes.func.isRequired,
+    pointsSql: React.PropTypes.string.isRequired,
+    polygonsSql: React.PropTypes.string.isRequired,
   },
 
   getInitialState() {
@@ -21,6 +24,7 @@ const Filter = React.createClass({
       totalCount: null,
       filterDimensions: {
         agency: [],
+        projecttype: [],
       },
     });
   },
@@ -30,8 +34,8 @@ const Filter = React.createClass({
 
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, agency, descriptio, totalcost, maprojid',
-      pointsTablename: 'adoyle.commitmentspoints',
-      polygonsTablename: 'adoyle.commitmentspolygons',
+      pointsTablename: 'commitmentspointsjoined',
+      polygonsTablename: 'commitmentspolygonsjoined',
     };
 
     self.buildSQL();
@@ -84,7 +88,7 @@ const Filter = React.createClass({
 
     if (this.state.totalCount == null) this.getTotalCount(sql);
 
-    this.getSelectedCount(pointsSql, polygonsSql);
+    this.getSelectedCount(`${pointsSql} UNION ALL ${polygonsSql}`);
     this.props.updateSQL(pointsSql, polygonsSql);
   },
 
@@ -92,10 +96,8 @@ const Filter = React.createClass({
     // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
     // like ( dimension = 'value1' OR dimension = 'value2')
     const subChunks = values.map((value) => {
-      //  custom handling for label "Unknown" to query for NULL
-      //  TODO make this generic to handle nulls in other dimensions
-      if (dimension === 'cpstatus' && value.label === 'Unknown') {
-        return 'cpstatus IS NULL';
+      if (dimension === 'projecttype') {
+        return `array_to_string(projecttype, ', ') like '%${value.value}%'`;
       }
 
       return `${dimension} = '${value.value}'`;
@@ -115,6 +117,7 @@ const Filter = React.createClass({
 
     const f = this.state.filterDimensions;
     this.createMultiSelectSQLChunk('agency', f.agency);
+    this.createMultiSelectSQLChunk('projecttype', f.projecttype);
   },
 
   updateFilterDimension(key, values) {
@@ -130,6 +133,11 @@ const Filter = React.createClass({
   },
 
   render() {
+    // override material ui ListItem spacing
+    const listItemStyle = {
+      paddingTop: '0px',
+    };
+
     return (
       <div>
         <CountWidget
@@ -139,17 +147,12 @@ const Filter = React.createClass({
         />
         <Subheader>
           Agency
-          <OverlayTrigger
-            placement="right" overlay={
-              <Tooltip id="tooltip">The City agency associated with the project in FMS</Tooltip>
-            }
-          >
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
+          <InfoIcon text="The City agency associated with the project in FMS" />
         </Subheader>
 
         <ListItem
           disabled
+          style={listItemStyle}
         >
           <Select
             multi
@@ -160,6 +163,35 @@ const Filter = React.createClass({
             onChange={this.updateFilterDimension.bind(this, 'agency')}
           />
         </ListItem>
+
+        <Subheader>
+          Project Type
+          <InfoIcon text="The FMS Project Type" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <Select
+            multi
+            placeholder="Select Project Types"
+            value={this.state.filterDimensions.projecttype}
+            name="form-field-name"
+            options={config.projecttypes}
+            onChange={this.updateFilterDimension.bind(this, 'projecttype')}
+          />
+        </ListItem>
+        <Subheader>
+          Number of Projects by Total Cost
+        </Subheader>
+        {
+          this.props.pointsSql && this.props.polygonsSql &&
+            <CostGroupChart
+              pointsSql={this.props.pointsSql}
+              polygonsSql={this.props.polygonsSql}
+            />
+        }
       </div>
     );
   },

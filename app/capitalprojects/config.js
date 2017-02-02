@@ -97,4 +97,171 @@ module.exports = {
       label: 'Unknown Agency Code',
     },
   ],
+
+  projecttypes: [
+    {
+      value: 'Aging',
+      label: 'Aging',
+    },
+    {
+      value: 'Brooklyn Public Library',
+      label: 'Brooklyn Public Library',
+    },
+    {
+      value: 'Childrens Services',
+      label: 'Childrens Services',
+    },
+    {
+      value: 'City University of New York',
+      label: 'City University of New York',
+    },
+    {
+      value: 'Correction',
+      label: 'Correction',
+    },
+    {
+      value: 'Courts',
+      label: 'Courts',
+    },
+    {
+      value: 'Cultural Affairs',
+      label: 'Cultural Affairs',
+    },
+    {
+      value: 'Dept. of Information Technology \& Telecomm', // eslint-disable-line no-useless-escape
+      label: 'Dept. of Information Technology & Telecomm',
+    },
+    {
+      value: 'Economic Development',
+      label: 'Economic Development',
+    },
+    {
+      value: 'EDP Equipment and Finance Costs',
+      label: 'EDP Equipment and Finance Costs',
+    },
+    {
+      value: 'Education',
+      label: 'Education',
+    },
+    {
+      value: 'Environmental Protection-Equipment',
+      label: 'Environmental Protection-Equipment',
+    },
+    {
+      value: 'Ferries and Aviation',
+      label: 'Ferries and Aviation',
+    },
+    {
+      value: 'Fire Department',
+      label: 'Fire Department',
+    },
+    {
+      value: 'Health and Hospitals Corporation',
+      label: 'Health and Hospitals Corporation',
+    },
+    {
+      value: 'Health and Mental Hygiene',
+      label: 'Health and Mental Hygiene',
+    },
+    {
+      value: 'Highway Bridges',
+      label: 'Highway Bridges',
+    },
+    {
+      value: 'Highways',
+      label: 'Highways',
+    },
+    {
+      value: 'Homeless Services',
+      label: 'Homeless Services',
+    },
+    {
+      value: 'Housing Authority',
+      label: 'Housing Authority',
+    },
+    {
+      value: 'Housing Preservation and Development',
+      label: 'Housing Preservation and Development',
+    },
+    {
+      value: 'Human Resources',
+      label: 'Human Resources',
+    },
+    {
+      value: 'MTA Bus Company',
+      label: 'MTA Bus Company',
+    },
+    {
+      value: 'New York Public Library',
+      label: 'New York Public Library',
+    },
+    {
+      value: 'New York Research Library',
+      label: 'New York Research Library',
+    },
+    {
+      value: 'Parks and Recreation',
+      label: 'Parks and Recreation',
+    },
+    {
+      value: 'Police',
+      label: 'Police',
+    },
+    {
+      value: 'Public Buildings',
+      label: 'Public Buildings',
+    },
+    {
+      value: 'Queens Borough Public Library',
+      label: 'Queens Borough Public Library',
+    },
+    {
+      value: 'Real Property',
+      label: 'Real Property',
+    },
+    {
+      value: 'Sanitation',
+      label: 'Sanitation',
+    },
+    {
+      value: 'Sewers',
+      label: 'Sewers',
+    },
+    {
+      value: 'Staten Island Rapid Transit',
+      label: 'Staten Island Rapid Transit',
+    },
+    {
+      value: 'Traffic',
+      label: 'Traffic',
+    },
+    {
+      value: 'Transit Authority',
+      label: 'Transit Authority',
+    },
+    {
+      value: 'Transportation - Equipment',
+      label: 'Transportation - Equipment',
+    },
+    {
+      value: 'Water Mains',
+      label: 'Water Mains',
+    },
+    {
+      value: 'Sources and Treatment',
+      label: 'Sources and Treatment',
+    },
+    {
+      value: 'Water Pollution Control',
+      label: 'Water Pollution Control',
+    },
+    {
+      value: 'Water Supply',
+      label: 'Water Supply',
+    },
+    {
+      value: 'Waterway Bridges',
+      label: 'Waterway Bridges',
+    },
+  ],
 };

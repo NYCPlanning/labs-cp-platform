@@ -194,6 +194,12 @@ body:after {
   top: 35px;
   bottom: 0;
   overflow: auto;
+
+  .chart-container {
+    position: relative;
+    margin: 0 16px;
+  }
+
 }
 
 .sidebar-tabs > div:first-child {
@@ -215,6 +221,10 @@ body:after {
   z-index: 10;
 }
 
+.inline-info {
+  margin-left: 6px;
+}
+
 .sidebar-tab-content {
   font-family: 'roboto', sans-serif;
   padding: 0 16px;
@@ -229,3 +239,5 @@ body:after {
   }
 }
 /*End Sidebar Tabs*/
+
+

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import numeral from 'numeral';
 
 import agencies from '../agencies';
 
@@ -19,7 +20,7 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.descriptio}</div>
-        <div className={'subtitle'}>Cost: ${d.totalcost}</div>
+        <div className={'subtitle'}>Cost: ${numeral(d.totalcost).format('0,0')}</div>
 
         <i className="fa fa-chevron-right" />
       </div>
