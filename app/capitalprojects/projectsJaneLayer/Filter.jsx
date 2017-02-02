@@ -14,8 +14,8 @@ import config from '../config';
 const Filter = React.createClass({
   propTypes: {
     updateSQL: React.PropTypes.func.isRequired,
-    pointsSql: React.PropTypes.string,
-    polygonsSql: React.PropTypes.string,
+    pointsSql: React.PropTypes.string.isRequired,
+    polygonsSql: React.PropTypes.string.isRequired,
   },
 
   getInitialState() {
@@ -184,7 +184,6 @@ const Filter = React.createClass({
         </ListItem>
         <Subheader>
           Number of Projects by Total Cost
-          <InfoIcon text="The FMS Project Type" />
         </Subheader>
         {
           this.props.pointsSql && this.props.polygonsSql &&

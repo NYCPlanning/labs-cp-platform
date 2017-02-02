@@ -4,15 +4,13 @@ import * as d3 from 'd3';
 
 import carto from '../../helpers/carto';
 
-// css for this component is in ./styles.scss
-
 const CostGroupChart = React.createClass({
 
   propTypes: {
     pointsSql: PropTypes.string.isRequired,
-    polygonsSql: PropTypes.string.isRequired,
   },
 
+  // on mount, set up chart and go get data
   componentDidMount() {
     this.initializeChart();
     this.fetchData(this.props);
@@ -26,118 +24,126 @@ const CostGroupChart = React.createClass({
     const unioned = `${props.pointsSql} UNION ALL ${props.polygonsSql}`;
 
     const sql = `
-      SELECT 
-        range, 
-        count(range), 
-        CASE
-          WHEN range = '<10K' THEN 0 
-          WHEN range = '10K-100K' THEN 1 
-          WHEN range = '100K-1M' THEN 2 
-          WHEN range = '10M-100M' THEN 3 
-          WHEN range = '>100M' THEN 4 
-        END as i
-      FROM (
-        SELECT 
+      WITH ranges(range,i) AS (
+        VALUES 
+          ('<10K',0), 
+          ('10K-100K', 1),
+          ('100K-1M',2),
+          ('1M-10M',3),
+          ('10M-100M',4),
+          ('>100M',5)
+      )
+
+      SELECT a.range, a.i, count(b.range)
+      FROM ranges a 
+      LEFT JOIN (
+          SELECT 
           CASE 
               WHEN totalcost < 10000 THEN '<10K' 
               WHEN totalcost >= 10000 AND totalcost < 100000 THEN '10K-100K'
-              WHEN totalcost >= 10000 AND totalcost < 100000 THEN '10K-100K'
               WHEN totalcost >= 100000 AND totalcost < 1000000 THEN '100K-1M'
+              WHEN totalcost >= 1000000 AND totalcost < 10000000 THEN '1M-10M'
               WHEN totalcost >= 10000000 AND totalcost < 100000000 THEN '10M-100M'
               ELSE '>100M'
-
           END as range
-        FROM ( 
-          ${unioned} 
-        ) x
-      )y
-      GROUP BY range
-      ORDER BY i
+        FROM (${unioned}) x
+      ) b
+      ON a.range = b.range
+      GROUP BY a.range, a.i
+      ORDER BY a.i
     `;
 
     carto.SQL(sql, 'json')
-      .then(data => this.setState({ data }, this.renderBars));
+      .then((data) => {
+        this.renderBars(data);
+      });
   },
 
   initializeChart() {
     this.margin = {
       top: 20,
-      right: 0,
       bottom: 20,
-      left: 0,
     };
 
-    this.height = 150 - this.margin.top - this.margin.bottom;
+    // overall chart height defined here
+    this.height = 100 - this.margin.top - this.margin.bottom;
     this.width = ReactDOM.findDOMNode(this.chartContainer).getBoundingClientRect().width; // eslint-disable-line react/no-find-dom-node
 
     // create an svg container
     this.chart = d3.select(this.chartContainer)
       .append('svg:svg')
-      .attr('width', '100%')
+      .attr('width', this.width)
       .attr('height', this.height + this.margin.top + this.margin.bottom);
+
+
+    this.x = d3.scaleBand()
+      .rangeRound([0, this.width])
+      .paddingInner(0.25);
+
+    this.y = d3.scaleLinear()
+      .range([this.height + this.margin.top, 0 + this.margin.top]);
+
+
+    this.chart.append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${(this.height + this.margin.top)})`)
+      .call(d3.axisBottom(this.x));
   },
 
-  renderBars() {
-    const data = this.state.data;
+  renderBars(data) {
     const chart = this.chart;
+    const x = this.x;
+    const y = this.y;
 
-    const x = d3.scaleBand()
-      .rangeRound([0, this.width])
-      .domain(data.map(d => d.range))
-      .paddingInner(0.25)
-      .paddingOuter(0.25);
+    const t = d3.transition()
+      .duration(750);
 
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.count)])
-      .range([this.height, 0 + this.margin.top]);
+    x.domain(data.map(d => d.range));
+    y.domain([0, d3.max(data, d => d.count)]);
 
     const bar = chart.selectAll('.bar-group')
       .data(data);
 
+    // d3 enter()
     const barEnter = bar.enter()
       .append('g')
-      .attr('class', 'bar-group');
+      .attr('class', 'bar-group')
+      .attr('transform', d => `translate(${x(d.range)},0)`);
 
     barEnter.append('rect')
+      .attr('y', () => y(0))
+      .attr('height', () => (this.height + this.margin.top) - y(0))
+      .attr('width', x.bandwidth())
+      .transition(t)
       .attr('y', d => y(d.count))
       .attr('height', d => (this.height + this.margin.top) - y(d.count))
-      .attr('width', x.bandwidth())
       .attr('fill', 'steelblue');
 
     // bar labels
     barEnter.append('text')
       .attr('x', x.bandwidth() / 2)
-      .attr('y', d => y(d.count) - 15)
-      .attr('dy', '.75em')
-      .text(d => d.count)
-      .attr('text-anchor', 'middle');
-
-    // update
-    chart.selectAll('.bar-group')
-      .attr('transform', function (d) {
-        return `translate(${x(d.range)},0)`;
-      });
-
-    bar.selectAll('rect')
-      .attr('y', function(d) {
-        console.log(d.count, y(d.count));
-        return y(d.count);
-      })
-      .attr('height', d => (this.height + this.margin.top) - y(d.count))
-      .attr('width', x.bandwidth());
-
-    bar.selectAll('text')
-      .attr('x', x.bandwidth() / 2)
+      .attr('text-anchor', 'middle')
+      .attr('y', () => y(0) - 15)
+      .transition(t)
       .attr('y', d => y(d.count) - 15)
       .attr('dy', '.75em')
       .text(d => d.count);
 
+    // update
+    bar.select('rect')
+      .attr('width', x.bandwidth())
+      .transition(t)
+      .attr('y', d => y(d.count))
+      .attr('height', d => (this.height + this.margin.top) - y(d.count));
 
-    chart.select('.axis').remove();
+    bar.select('text')
+      .attr('x', x.bandwidth() / 2)
+      .transition(t)
+      .attr('y', d => y(d.count) - 15)
+      .attr('dy', '.75em')
+      .text(d => d.count);
 
-    chart.append('g')
-      .attr('class', 'axis')
-      .attr('transform', `translate(0,${(this.height + this.margin.top)})`)
+    this.chart.select('.axis')
       .call(d3.axisBottom(x));
   },
 

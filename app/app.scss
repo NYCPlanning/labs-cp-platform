@@ -194,6 +194,12 @@ body:after {
   top: 35px;
   bottom: 0;
   overflow: auto;
+
+  .chart-container {
+    position: relative;
+    margin: 0 16px;
+  }
+
 }
 
 .sidebar-tabs > div:first-child {
@@ -233,3 +239,5 @@ body:after {
   }
 }
 /*End Sidebar Tabs*/
+
+
