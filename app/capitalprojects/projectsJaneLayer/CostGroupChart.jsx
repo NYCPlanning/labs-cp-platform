@@ -14,11 +14,16 @@ const CostGroupChart = React.createClass({
   },
 
   componentDidMount() {
-    this.fetchData();
+    this.initializeChart();
+    this.fetchData(this.props);
   },
 
-  fetchData() {
-    const unioned = `${this.props.pointsSql} UNION ALL ${this.props.polygonsSql}`;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.pointsSql !== this.props.pointsSql) this.fetchData(nextProps);
+  },
+
+  fetchData(props) {
+    const unioned = `${props.pointsSql} UNION ALL ${props.polygonsSql}`;
 
     const sql = `
       SELECT 
@@ -51,60 +56,88 @@ const CostGroupChart = React.createClass({
     `;
 
     carto.SQL(sql, 'json')
-      .then(data => this.setState({ data }, this.renderChart));
+      .then(data => this.setState({ data }, this.renderBars));
   },
 
-  renderChart() {
-    const data = this.state.data;
-
-    const margin = {
+  initializeChart() {
+    this.margin = {
       top: 20,
       right: 0,
       bottom: 20,
       left: 0,
     };
 
-    const height = 150 - margin.top - margin.bottom;
-    const width = ReactDOM.findDOMNode(this.chartContainer).getBoundingClientRect().width; // eslint-disable-line react/no-find-dom-node
+    this.height = 150 - this.margin.top - this.margin.bottom;
+    this.width = ReactDOM.findDOMNode(this.chartContainer).getBoundingClientRect().width; // eslint-disable-line react/no-find-dom-node
 
     // create an svg container
-    const chart = d3.select(this.chartContainer)
+    this.chart = d3.select(this.chartContainer)
       .append('svg:svg')
       .attr('width', '100%')
-      .attr('height', height + margin.top + margin.bottom);
+      .attr('height', this.height + this.margin.top + this.margin.bottom);
+  },
+
+  renderBars() {
+    const data = this.state.data;
+    const chart = this.chart;
 
     const x = d3.scaleBand()
+      .rangeRound([0, this.width])
       .domain(data.map(d => d.range))
-      .rangeRound([0, width])
       .paddingInner(0.25)
       .paddingOuter(0.25);
 
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => parseInt(d.count))])
-      .range([height, 0 + margin.top]);
+      .domain([0, d3.max(data, d => d.count)])
+      .range([this.height, 0 + this.margin.top]);
 
-    const bar = chart.selectAll('g')
-      .data(data)
-      .enter()
+    const bar = chart.selectAll('.bar-group')
+      .data(data);
+
+    const barEnter = bar.enter()
       .append('g')
-      .attr('transform', d => `translate(${x(d.range)},0)`);
+      .attr('class', 'bar-group');
 
-    bar.append('rect')
+    barEnter.append('rect')
       .attr('y', d => y(d.count))
-      .attr('height', d => (height + margin.top) - y(d.count))
+      .attr('height', d => (this.height + this.margin.top) - y(d.count))
       .attr('width', x.bandwidth())
       .attr('fill', 'steelblue');
 
     // bar labels
-    bar.append('text')
+    barEnter.append('text')
       .attr('x', x.bandwidth() / 2)
       .attr('y', d => y(d.count) - 15)
       .attr('dy', '.75em')
       .text(d => d.count)
       .attr('text-anchor', 'middle');
 
+    // update
+    chart.selectAll('.bar-group')
+      .attr('transform', function (d) {
+        return `translate(${x(d.range)},0)`;
+      });
+
+    bar.selectAll('rect')
+      .attr('y', function(d) {
+        console.log(d.count, y(d.count));
+        return y(d.count);
+      })
+      .attr('height', d => (this.height + this.margin.top) - y(d.count))
+      .attr('width', x.bandwidth());
+
+    bar.selectAll('text')
+      .attr('x', x.bandwidth() / 2)
+      .attr('y', d => y(d.count) - 15)
+      .attr('dy', '.75em')
+      .text(d => d.count);
+
+
+    chart.select('.axis').remove();
+
     chart.append('g')
-      .attr('transform', `translate(0,${(height + margin.top)})`)
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${(this.height + this.margin.top)})`)
       .call(d3.axisBottom(x));
   },
 
