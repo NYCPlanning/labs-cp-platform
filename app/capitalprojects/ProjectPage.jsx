@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Numeral from 'numeral';
+import Moment from 'moment';
 import _ from 'underscore';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
@@ -22,6 +23,7 @@ const ProjectPage = React.createClass({
   getInitialState() {
     return ({
       feature: null,
+      commitments: null,
     });
   },
 
@@ -29,7 +31,7 @@ const ProjectPage = React.createClass({
     const self = this;
     const maprojid = this.props.params.id;
 
-    const tableName = '(SELECT * FROM adoyle.commitmentspoints UNION ALL SELECT * FROM adoyle.commitmentspolygons) a';
+    const tableName = '(SELECT * FROM commitmentspointsjoined UNION ALL SELECT * FROM commitmentspolygonsjoined) a';
 
     // go get the project's data as a geojson feature
     Carto.getFeature(tableName, 'maprojid', maprojid)
@@ -40,11 +42,8 @@ const ProjectPage = React.createClass({
     Carto.SQL(`SELECT * FROM adoyle.budgetcommitments WHERE maprojid = '${maprojid}'`, 'json')
       .then(budget => this.setState({ budget }));
 
-    // const commitmentsSQL = `SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${maprojid}'`;
-    //
-    // // get an array of commitments data for this project
-    // Carto.SQL(commitmentsSQL, 'json')
-    //   .then(commitments => this.setState({ commitments }));
+    Carto.SQL(`SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${maprojid}' ORDER BY to_date(plancommdate,'YY-Mon')`, 'json')
+      .then(commitments => this.setState({ commitments }));
   },
 
   renderContent() {
@@ -52,12 +51,29 @@ const ProjectPage = React.createClass({
     const budget = this.state.budget;
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
+
+    const getFY = ((date) => {
+      const year = Moment(date).year();
+      const month = Moment(date).month();
+
+      return month <= 6 ? year : year + 1;
+    });
+
     const project_types = _.uniq(budget.map(b => b.projecttype));
 
     const CardStyles = {
       zDepth: 1,
       height: '100%',
     };
+
+    const tableRows = this.state.commitments.map(c => (
+      <TableRow>
+        <TableRowColumn>{c.costdescription}</TableRowColumn>
+        <TableRowColumn>{c.budgetline}</TableRowColumn>
+        <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
+        <TableRowColumn>{Moment(c.plancommdate, 'YY-MMM').format('MMM YYYY')}</TableRowColumn>
+      </TableRow>
+    ));
 
     return (
       <div className="project-page">
@@ -98,7 +114,8 @@ const ProjectPage = React.createClass({
               <Card style={CardStyles}>
                 <CardHeader title="Total Cost" />
                 <CardText>
-                  <h2 style={{ textAlign: 'center' }}>{formatCost(d.totalcost)}</h2>
+                  <h2 style={{ textAlign: 'center' }}>{formatCost(d.totalcommitspend)}</h2>
+                  <p className="subtext">{formatCost(d.totalspend)} spent | {formatCost(d.totalcommit)} committed</p>
                 </CardText>
               </Card>
             </div>
@@ -107,7 +124,19 @@ const ProjectPage = React.createClass({
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-12'}>
               <Card style={CardStyles}>
-                <CardHeader title="Spending Over Time" actAsExpander showExpandableButton />
+                <CardHeader title="Years Active" />
+                <CardText>
+                  <h2 style={{ textAlign: 'center' }}>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
+                  <p className="subtext">{Moment(d.mindate).format('MMM YYYY')} thru {Moment(d.maxdate).format('MMM YYYY')}</p>
+                </CardText>
+              </Card>
+            </div>
+          </div>
+
+          <div className={'row'} style={{ marginBottom: '15px' }}>
+            <div className={'col-md-12'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Costs Over Time" actAsExpander showExpandableButton />
                 <CardText expandable>
                   <CommitmentExpenditureChart maprojid={this.props.params.id} />
                 </CardText>
@@ -118,7 +147,7 @@ const ProjectPage = React.createClass({
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-12'}>
               <Card style={CardStyles}>
-                <CardHeader title="Spending Details" actAsExpander showExpandableButton />
+                <CardHeader title="Commitment Details" actAsExpander showExpandableButton />
                 <CardText expandable>
                   <Table selectable={false}>
                     <TableHeader
@@ -126,49 +155,16 @@ const ProjectPage = React.createClass({
                       adjustForCheckbox={false}
                     >
                       <TableRow>
-                        <TableHeaderColumn>ID</TableHeaderColumn>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
-                        <TableHeaderColumn>Status</TableHeaderColumn>
+                        <TableHeaderColumn>Cost Description</TableHeaderColumn>
+                        <TableHeaderColumn>Budget Line</TableHeaderColumn>
+                        <TableHeaderColumn>Total Cost</TableHeaderColumn>
+                        <TableHeaderColumn>Date</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
                     <TableBody displayRowCheckbox={false}>
-                      <TableRow>
-                        <TableRowColumn>1</TableRowColumn>
-                        <TableRowColumn>John Smith</TableRowColumn>
-                        <TableRowColumn>Employed</TableRowColumn>
-                      </TableRow>
-                      <TableRow>
-                        <TableRowColumn>2</TableRowColumn>
-                        <TableRowColumn>Randal White</TableRowColumn>
-                        <TableRowColumn>Unemployed</TableRowColumn>
-                      </TableRow>
-                      <TableRow>
-                        <TableRowColumn>3</TableRowColumn>
-                        <TableRowColumn>Stephanie Sanders</TableRowColumn>
-                        <TableRowColumn>Employed</TableRowColumn>
-                      </TableRow>
-                      <TableRow>
-                        <TableRowColumn>4</TableRowColumn>
-                        <TableRowColumn>Steve Brown</TableRowColumn>
-                        <TableRowColumn>Employed</TableRowColumn>
-                      </TableRow>
+                      {tableRows}
                     </TableBody>
                   </Table>
-                </CardText>
-              </Card>
-            </div>
-          </div>
-
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Feedback" actAsExpander showExpandableButton />
-                <CardText expandable>
-                  <FeedbackForm
-                    displayUnit="Capital Project"
-                    ref_type="capitalproject"
-                    ref_id={this.props.params.id}
-                  />
                 </CardText>
               </Card>
             </div>
@@ -178,6 +174,19 @@ const ProjectPage = React.createClass({
         <div className={'col-md-6'}>
           <div style={{ marginTop: '15px' }}>
             <ModalMap feature={this.state.feature} label={d.descriptio} />
+          </div>
+          <div className={'row'} style={{ marginBottom: '15px' }}>
+            <div className={'col-md-12'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Suggest an Edit" />
+                <CardText>
+                  <FeedbackForm
+                    ref_type="capitalproject"
+                    ref_id={this.props.params.id}
+                  />
+                </CardText>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
