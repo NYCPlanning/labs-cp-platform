@@ -30,7 +30,7 @@ const FacilityPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature('hkates.facilities_data', 'uid', this.props.params.id)
+    carto.getFeature('facilities', 'uid', this.props.params.id)
       .then((data) => {
         self.setState({ data });
       });

@@ -2,7 +2,7 @@ const facilitiesLayers = [
   {
     name: 'Health and Human Services',
     slug: 'health_and_human_services',
-    color: '#b67eb7',
+    color: '#BA68C8',
     subColor: '#f7e6f7',
     children: [
       {
@@ -25,6 +25,10 @@ const facilitiesLayers = [
           {
             name: 'Chemical Dependency',
             description: 'Monitored support, inpatient, outpatient, and crisis services',
+          },
+          {
+            name: 'Health Promotion and Disease Prevention',
+            description: '...',
           },
           {
             name: 'Other Health Care',
@@ -108,11 +112,11 @@ const facilitiesLayers = [
         color: '#b0dae8',
         children: [
           {
-            name: 'Pre-Kindergarten',
+            name: 'DOE Universal Pre-Kindergarten',
             description: 'NYC DOE designated Universal Pre-K center',
           },
           {
-            name: 'Dual Pre-K and Child Care',
+            name: 'Dual Child Care and Universal Pre-K',
             description: 'Center that offers both a NYC DOE desgiated Universal Pre-K services and other child care services',
           },
           {
@@ -131,7 +135,11 @@ const facilitiesLayers = [
         color: '#da664f',
         children: [
           {
-            name: 'Childrens Services',
+            name: 'Foster Care Services and Residential Care',
+            description: 'Foster care services, preventative care, and juvenile non-secure placement',
+          },
+          {
+            name: 'Preventative Care, Evaluation Services, and Respite',
             description: 'Foster care services, preventative care, and juvenile non-secure placement',
           },
         ],
@@ -159,10 +167,6 @@ const facilitiesLayers = [
           {
             name: 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
             description: 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
-          },
-          {
-            name: 'Summer Youth Employment Site',
-            description: 'Seasonal employment sites for youth',
           },
         ],
       },
@@ -202,9 +206,9 @@ const facilitiesLayers = [
     ],
   },
   {
-    name: 'Parks, Cultural, and Other Community Facilities',
-    slug: 'parks_cultural_institutions_and_other_community_facilities',
-    color: '#6f9568',
+    name: 'Parks, Gardens, and Historical Sites',
+    slug: 'parks_gardens_and_historical_sites',
+    color: '#4CAF50',
     subColor: '#dfeddc',
     children: [
       {
@@ -239,6 +243,25 @@ const facilitiesLayers = [
         ],
       },
       {
+        name: 'Historical Sites',
+        description: 'Sites operated by NYC Parks, NYS Office of Parks, Recreation and Historic Preservation, and US National Park Service',
+        color: '#da664f',
+        children: [
+          {
+            name: 'Historical Sites',
+            description: 'Historic house parks, State historic places, national monuments, and national memorials',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Libraries and Cultural Programs',
+    slug: 'libraries_and_cultural_progams',
+    color: '#80DEEA',
+    subColor: '#E0F7FA',
+    children: [
+      {
         name: 'Libraries',
         description: 'Libraries operated by New York Public Libraries, Queens Public Libraries, and Brooklyn Public Libraries and academic institutions',
         color: '#b67eb7',
@@ -272,24 +295,13 @@ const facilitiesLayers = [
           },
         ],
       },
-      {
-        name: 'Historical Sites',
-        description: 'Sites operated by NYC Parks, NYS Office of Parks, Recreation and Historic Preservation, and US National Park Service',
-        color: '#da664f',
-        children: [
-          {
-            name: 'Historical Sites',
-            description: 'Historic house parks, State historic places, national monuments, and national memorials',
-          },
-        ],
-      },
     ],
   },
   {
     name: 'Public Safety, Emergency Services, and Administration of Justice',
     slug: 'public_safety_emergency_services_and_administration_of_justice',
-    color: 'rgba(49,130,189,0.9)',
-    subColor: 'rgba(128, 177, 211, 0.3)',
+    color: '#2979FF',
+    subColor: '#BBDEFB',
     children: [
       {
         name: 'Emergency Services',
@@ -341,7 +353,7 @@ const facilitiesLayers = [
   {
     name: 'Core Infrastructure and Transportation',
     slug: 'core_infrastructure_and_transportation',
-    color: '#b0dae8',
+    color: '#78909C',
     subColor: '#e3eef2',
     children: [
       {
