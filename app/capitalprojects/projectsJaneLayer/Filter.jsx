@@ -28,7 +28,7 @@ const Filter = React.createClass({
       filterDimensions: {
         agency: [],
         projecttype: [],
-        totalcost: [1000, 100000000],
+        totalcommitspend: [1000, 100000000],
         activeyears: [2010, 2027],
       },
     });
@@ -38,7 +38,7 @@ const Filter = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, agency, descriptio, totalcost, maprojid',
+      columns: 'cartodb_id, the_geom_webmercator, agency, descriptio, totalcommitspend, maprojid',
       pointsTablename: 'commitmentspointsjoined',
       polygonsTablename: 'commitmentspolygonsjoined',
     };
@@ -119,9 +119,9 @@ const Filter = React.createClass({
   createUnitsSQLChunk(dimension, range) {
     // conditional, if slider max value is at the starting point, only include results greater than the lower slider
     if (range[1] < 100000000) {
-      this.sqlChunks[dimension] = `(totalcost >= '${range[0]}' AND totalcost <= '${range[1]}')`;
+      this.sqlChunks[dimension] = `(totalcommitspend >= '${range[0]}' AND totalcommitspend <= '${range[1]}')`;
     } else {
-      this.sqlChunks[dimension] = `(totalcost >= '${range[0]}')`;
+      this.sqlChunks[dimension] = `(totalcommitspend >= '${range[0]}')`;
     }
   },
 
@@ -136,7 +136,7 @@ const Filter = React.createClass({
     const f = this.state.filterDimensions;
     this.createMultiSelectSQLChunk('agency', f.agency);
     this.createMultiSelectSQLChunk('projecttype', f.projecttype);
-    this.createUnitsSQLChunk('totalcost', this.state.filterDimensions.totalcost);
+    this.createUnitsSQLChunk('totalcommitspend', this.state.filterDimensions.totalcommitspend);
     this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
   },
 
@@ -155,7 +155,7 @@ const Filter = React.createClass({
   handleSliderChange(dimension, data) {
     // expects the data output from the ionRangeSlider
     // updates state with an array of the filter range
-    if (dimension === 'totalcost') {
+    if (dimension === 'totalcommitspend') {
       this.state.filterDimensions[dimension] = [data.from_value, data.to_value];
     } else {
       this.state.filterDimensions[dimension] = [data.from, data.to];
@@ -236,9 +236,9 @@ const Filter = React.createClass({
           style={listItemStyle}
         >
           <RangeSlider
-            data={this.state.filterDimensions.totalcost}
+            data={this.state.filterDimensions.totalcommitspend}
             type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'totalcost')}
+            onChange={this.handleSliderChange.bind(this, 'totalcommitspend')}
             step={1000}
             prettify={num => Numeral(num).format('($ 0.00 a)')}
             grid
@@ -279,20 +279,30 @@ export default Filter;
 // DROP MATERIALIZED VIEW commitmentspointsjoined;
 // DROP MATERIALIZED VIEW commitmentspolygonsjoined;
 
-// CREATE MATERIALIZED VIEW commitmentspolygonsjoined as
+// CREATE MATERIALIZED VIEW commitmentspointsjoined as
 // SELECT a.*,
 //   array_agg(DISTINCT b.projecttype) AS projecttype,
 //   min(c.date) mindate,
-//   max(c.date) maxdate
-// FROM adoyle.commitmentspolygons a
+//   max(c.date) maxdate,
+//   sum(c.commitspend) as totalcommitspend,
+//   sum(c.commit) as totalcommit,
+//   sum(c.spend) as totalspend
+// FROM adoyle.commitmentspoints a
 // LEFT OUTER JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
 // LEFT OUTER JOIN (
-//   SELECT LEFT(capital_project,12) as maprojid, to_date(issue_date,'YYYY-MM-DD') as date
+//   SELECT LEFT(capital_project,12) as maprojid,
+//     to_date(issue_date,'YYYY-MM-DD') as date,
+//     0 as commit,
+//     check_amount::double precision as spend,
+//     check_amount::double precision as commitspend
 //   FROM cpadmin.spending
 //   UNION ALL
-//   SELECT maprojid, to_date(plancommdate,'YY-Mon') as date
+//   SELECT maprojid,
+//     to_date(plancommdate,'YY-Mon') as date,
+//     totalcost as commit,
+//   0 as spend,
+//     totalcost as commitspend
 //   FROM adoyle.commitscommitments
-//   ORDER BY maprojid ASC
 // ) c ON a.maprojid = c.maprojid
 // GROUP BY a.cartodb_id
 
