@@ -7,7 +7,7 @@ import Subheader from 'material-ui/Subheader';
 import CountWidget from '../../common/CountWidget';
 import Carto from '../../helpers/carto';
 
-import RangeSlider from './RangeSlider';
+import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
 
 

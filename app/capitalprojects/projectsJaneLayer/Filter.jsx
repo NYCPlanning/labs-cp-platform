@@ -2,10 +2,13 @@ import React from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
+import Numeral from 'numeral';
+import Divider from 'material-ui/Divider';
 
 import CountWidget from '../../common/CountWidget';
 import InfoIcon from '../../common/InfoIcon';
 import CostGroupChart from './CostGroupChart';
+import RangeSlider from '../../common/RangeSlider';
 
 import Carto from '../../helpers/carto';
 import config from '../config';
@@ -25,6 +28,8 @@ const Filter = React.createClass({
       filterDimensions: {
         agency: [],
         projecttype: [],
+        totalcost: [1000, 100000000],
+        activeyears: [2010, 2027],
       },
     });
   },
@@ -111,6 +116,19 @@ const Filter = React.createClass({
     }
   },
 
+  createUnitsSQLChunk(dimension, range) {
+    // conditional, if slider max value is at the starting point, only include results greater than the lower slider
+    if (range[1] < 100000000) {
+      this.sqlChunks[dimension] = `(totalcost >= '${range[0]}' AND totalcost <= '${range[1]}')`;
+    } else {
+      this.sqlChunks[dimension] = `(totalcost >= '${range[0]}')`;
+    }
+  },
+
+  createActiveYearsSQLChunk(range) {
+    this.sqlChunks.activeyears = `NOT (maxdate <= to_date('${range[0] - 1}-07-01', 'YYYY-MM-DD') OR mindate >= to_date('${range[1]}-06-30', 'YYYY-MM-DD'))`;
+  },
+
   createSQLChunks() {
     // create an array of where clause chunks to be joined by 'AND'
     this.sqlChunks = {};
@@ -118,6 +136,8 @@ const Filter = React.createClass({
     const f = this.state.filterDimensions;
     this.createMultiSelectSQLChunk('agency', f.agency);
     this.createMultiSelectSQLChunk('projecttype', f.projecttype);
+    this.createUnitsSQLChunk('totalcost', this.state.filterDimensions.totalcost);
+    this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
   },
 
   updateFilterDimension(key, values) {
@@ -128,6 +148,18 @@ const Filter = React.createClass({
     }));
 
     this.state.filterDimensions[key] = abbreviated;
+
+    this.buildSQL();
+  },
+
+  handleSliderChange(dimension, data) {
+    // expects the data output from the ionRangeSlider
+    // updates state with an array of the filter range
+    if (dimension === 'totalcost') {
+      this.state.filterDimensions[dimension] = [data.from_value, data.to_value];
+    } else {
+      this.state.filterDimensions[dimension] = [data.from, data.to];
+    }
 
     this.buildSQL();
   },
@@ -145,6 +177,17 @@ const Filter = React.createClass({
           selectedCount={this.state.selectedCount}
           units={'projects'}
         />
+        <Subheader>
+          Number of Projects by Total Cost
+        </Subheader>
+        {
+          this.props.pointsSql && this.props.polygonsSql &&
+            <CostGroupChart
+              pointsSql={this.props.pointsSql}
+              polygonsSql={this.props.polygonsSql}
+            />
+        }
+        <Divider />
         <Subheader>
           Agency
           <InfoIcon text="The City agency associated with the project in FMS" />
@@ -182,19 +225,76 @@ const Filter = React.createClass({
             onChange={this.updateFilterDimension.bind(this, 'projecttype')}
           />
         </ListItem>
+
         <Subheader>
-          Number of Projects by Total Cost
+          Total Cost
+          <InfoIcon text="Sum of all commitments in the current capital commitment plan" />
         </Subheader>
-        {
-          this.props.pointsSql && this.props.polygonsSql &&
-            <CostGroupChart
-              pointsSql={this.props.pointsSql}
-              polygonsSql={this.props.polygonsSql}
-            />
-        }
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <RangeSlider
+            data={this.state.filterDimensions.totalcost}
+            type={'double'}
+            onChange={this.handleSliderChange.bind(this, 'totalcost')}
+            step={1000}
+            prettify={num => Numeral(num).format('($ 0.00 a)')}
+            grid
+            force_edges
+            max_postfix="+"
+            values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+          />
+        </ListItem>
+
+        <Subheader>
+          Active Years
+          <InfoIcon text="show projects with either spending OR commitments in this range" />
+        </Subheader>
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <RangeSlider
+            data={this.state.filterDimensions.activeyears}
+            type={'double'}
+            onChange={this.handleSliderChange.bind(this, 'activeyears')}
+            step={1}
+            force_edges
+            prettify_enabled={false}
+            grid
+          />
+        </ListItem>
+
       </div>
     );
   },
 });
 
 export default Filter;
+
+// materialized view SQL
+
+// DROP MATERIALIZED VIEW commitmentspointsjoined;
+// DROP MATERIALIZED VIEW commitmentspolygonsjoined;
+
+// CREATE MATERIALIZED VIEW commitmentspolygonsjoined as
+// SELECT a.*,
+//   array_agg(DISTINCT b.projecttype) AS projecttype,
+//   min(c.date) mindate,
+//   max(c.date) maxdate
+// FROM adoyle.commitmentspolygons a
+// LEFT OUTER JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
+// LEFT OUTER JOIN (
+//   SELECT LEFT(capital_project,12) as maprojid, to_date(issue_date,'YYYY-MM-DD') as date
+//   FROM cpadmin.spending
+//   UNION ALL
+//   SELECT maprojid, to_date(plancommdate,'YY-Mon') as date
+//   FROM adoyle.commitscommitments
+//   ORDER BY maprojid ASC
+// ) c ON a.maprojid = c.maprojid
+// GROUP BY a.cartodb_id
+
+// GRANT SELECT on commitmentspointsjoined to publicuser;
+// GRANT SELECT on commitmentspolygonsjoined to publicuser;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Numeral from 'numeral';
 
-import Divider from 'material-ui/Divider';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import FontIcon from 'material-ui/FontIcon';
@@ -37,7 +36,6 @@ const CountWidget = (props) => {
       >
         {countText}
       </ListItem>
-      <Divider />
     </div>
   );
 };
