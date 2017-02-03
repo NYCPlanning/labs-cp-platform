@@ -179,6 +179,7 @@ const Filter = React.createClass({
         />
         <Subheader>
           Number of Projects by Total Cost
+          <InfoIcon text="Total cost is all past spending + all future commitments" />
         </Subheader>
         {
           this.props.pointsSql && this.props.polygonsSql &&
@@ -228,7 +229,7 @@ const Filter = React.createClass({
 
         <Subheader>
           Total Cost
-          <InfoIcon text="Sum of all commitments in the current capital commitment plan" />
+          <InfoIcon text="Total cost is all past spending + all future commitments" />
         </Subheader>
 
         <ListItem
@@ -250,7 +251,7 @@ const Filter = React.createClass({
 
         <Subheader>
           Active Years
-          <InfoIcon text="show projects with either spending OR commitments in this range" />
+          <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
         </Subheader>
         <ListItem
           disabled
@@ -288,9 +289,9 @@ export default Filter;
 //   sum(c.commit) as totalcommit,
 //   sum(c.spend) as totalspend
 // FROM adoyle.commitmentspoints a
-// LEFT OUTER JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
-// LEFT OUTER JOIN (
-//   SELECT LEFT(capital_project,12) as maprojid,
+// LEFT JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
+// LEFT JOIN (
+//   SELECT TRIM(LEFT(capital_project,12)) as maprojid,
 //     to_date(issue_date,'YYYY-MM-DD') as date,
 //     0 as commit,
 //     check_amount::double precision as spend,
@@ -303,8 +304,9 @@ export default Filter;
 //   0 as spend,
 //     totalcost as commitspend
 //   FROM adoyle.commitscommitments
-// ) c ON a.maprojid = c.maprojid
+// ) c ON c.maprojid = a.maprojid
 // GROUP BY a.cartodb_id
+
 
 // GRANT SELECT on commitmentspointsjoined to publicuser;
 // GRANT SELECT on commitmentspolygonsjoined to publicuser;

@@ -20,7 +20,7 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.descriptio}</div>
-        <div className={'subtitle'}>Cost: ${numeral(d.totalcost).format('0,0')}</div>
+        <div className={'subtitle'}>Total Cost: ${numeral(d.totalcommitspend).format('0,0')}</div>
 
         <i className="fa fa-chevron-right" />
       </div>
