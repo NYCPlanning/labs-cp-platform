@@ -3,14 +3,22 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
 const GLMap = React.createClass({
   propTypes: {
-    mapbox_accessToken: React.PropTypes.string,
-    mapStyle: React.PropTypes.string,
-    zoom: React.PropTypes.number,
+    mapbox_accessToken: React.PropTypes.string.isRequired,
+    mapStyle: React.PropTypes.string.isRequired,
+    zoom: React.PropTypes.number.isRequired,
     minZoom: React.PropTypes.number,
-    center: React.PropTypes.array,
+    center: React.PropTypes.array.isRequired,
     pitch: React.PropTypes.number,
     hash: React.PropTypes.bool,
-    navigationControl: React.PropTypes.bool,
+    navigationControl: React.PropTypes.bool.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      minZoom: null,
+      pitch: null,
+      hash: null,
+    };
   },
 
   componentDidMount() {
@@ -26,7 +34,6 @@ const GLMap = React.createClass({
     const self = this;
 
     mapboxgl.accessToken = this.props.mapbox_accessToken;
-
 
     const map = this.mapObject = new mapboxgl.Map({
       container: this.container,

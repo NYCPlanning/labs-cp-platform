@@ -21,6 +21,10 @@ const ModalMap = React.createClass({
     label: React.PropTypes.string,
   },
 
+  getDefaultProps() {
+    return { label: '' };
+  },
+
   componentDidMount() {
     // get the mapbox GL map object
     this.map = this.janeMap.map.mapObject;
@@ -100,7 +104,7 @@ const ModalMap = React.createClass({
     }
 
     return (
-      <div id="modalmap" style={{ height: 450 }}>
+      <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
           mapInit={mapInit}
           mapConfig={mapConfig}

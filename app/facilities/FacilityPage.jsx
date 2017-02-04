@@ -8,6 +8,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import DetailPage from '../common/DetailPage';
 
 import ModalMap from '../common/ModalMap';
+import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
 
@@ -17,8 +18,8 @@ const FacilityPage = React.createClass({
   propTypes: {
     params: PropTypes.shape({
       id: PropTypes.string,
-    }),
-    location: PropTypes.shape(),
+    }).isRequired,
+    location: PropTypes.shape().isRequired,
   },
 
   getInitialState() {
@@ -107,6 +108,11 @@ const FacilityPage = React.createClass({
         </div>
         <div className="col-md-6">
           {data && <ModalMap feature={data} label={data.properties.facilityname} />}
+          <FeedbackForm
+            displayUnit="Facility"
+            ref_type="facility"
+            ref_id={this.props.params.id}
+          />
         </div>
         <div className="col-md-6">
           <ul className="list-group">
@@ -136,6 +142,7 @@ const FacilityPage = React.createClass({
         location={this.props.location}
         defaultText="Facilities Map"
         defaultLink="/facilities/all"
+        feedback
       >
         {content}
       </DetailPage>

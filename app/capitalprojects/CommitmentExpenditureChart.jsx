@@ -11,7 +11,7 @@ import PlanningApi from '../helpers/PlanningApi';
 const CommitmentExpenditureChart = React.createClass({
 
   propTypes: {
-    maprojid: PropTypes.string,
+    maprojid: PropTypes.string.isRequired,
   },
 
   getInitialState() {
@@ -161,6 +161,7 @@ const CommitmentExpenditureChart = React.createClass({
             opacity: this.state.showPopup ? 1 : 0.001,
             left: this.state.offset.x - (popupWidth / 2), // TODO plus half width somehow
             top: '100px', // TODO base off of chart height
+            zIndex: 999,
           }}
         >
           <div className="popup-top">

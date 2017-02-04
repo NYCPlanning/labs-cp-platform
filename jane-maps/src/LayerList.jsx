@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import update from 'react/lib/update';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -12,13 +12,13 @@ import ListItem from './ListItem';
 
 const LayerList = React.createClass({
   propTypes: {
-    layers: React.PropTypes.array,
-    onLayerReorder: React.PropTypes.func,
-    update: React.PropTypes.func,
-    expanded: React.PropTypes.bool,
-    onLayerClick: React.PropTypes.func,
-    selectedLayer: React.PropTypes.string,
-    onToggleExpanded: React.PropTypes.func,
+    layers: PropTypes.array.isRequired,
+    onLayerReorder: PropTypes.func.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    onLayerClick: PropTypes.func.isRequired,
+    selectedLayer: PropTypes.string.isRequired,
+    onToggleExpanded: PropTypes.func.isRequired,
+    onLayerToggle: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -49,7 +49,7 @@ const LayerList = React.createClass({
           [hoverIndex, 0, dragLayer],
         ],
       },
-    }), this.props.update);
+    }));
   },
 
   render() {
@@ -79,6 +79,7 @@ const LayerList = React.createClass({
             onDrop={this.handleDrop}
             key={layer.id}
             onClick={this.props.onLayerClick}
+            onLayerToggle={this.props.onLayerToggle}
           />
         );
       }
@@ -93,6 +94,7 @@ const LayerList = React.createClass({
       <div className={`jane-drawer ${this.props.expanded ? 'expanded' : ''}`}>
         <div className={'jane-drawer-inner'}>
           <div className="drawer-header" >
+            Layers
             <IconButton
               style={{
                 width: 36,
@@ -103,7 +105,6 @@ const LayerList = React.createClass({
               iconStyle={style.fontIcon}
               onTouchTap={this.props.onToggleExpanded}
             />
-            Layers
           </div>
           {layers}
         </div>

@@ -1,8 +1,10 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import SelectField from 'material-ui/SelectField';
+import Subheader from 'material-ui/Subheader';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
 import _ from 'underscore';
 
 import LayerSelector from './LayerSelector';
@@ -12,10 +14,11 @@ import content from '../content';
 
 import Carto from '../../helpers/carto';
 import choropleth from '../../helpers/choropleth';
+import InfoIcon from '../../common/InfoIcon';
 
 const Pipeline = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -129,22 +132,34 @@ const Pipeline = React.createClass({
       self.setState({ mode: value });
     }
 
-    const dropdownStyles = {
-      paddingLeft: '16px',
-    };
-
     return (
       <Tabs className="sidebar-tabs">
         <Tab label="Data">
-          <SelectField
+          <Subheader
+            style={{
+              lineHeight: '30px',
+              paddingTop: '12px',
+            }}
+          >
+            Mode
+            <InfoIcon text="Toggles the map view between point data representing individual projects and area bins colored by unit totals." />
+          </Subheader>
+          <DropDownMenu
             value={this.state.mode}
             onChange={toggleMode}
-            labelStyle={dropdownStyles}
-            fullWidth
+            style={{
+              marginBottom: '16px',
+              marginLeft: '16px',
+              marginTop: '-8px',
+            }}
+            iconStyle={{
+              fill: '#999',
+            }}
           >
-            <MenuItem value={'points'} primaryText="Points" />
-            <MenuItem value={'polygons'} primaryText="Choropleth" />
-          </SelectField>
+            <MenuItem value={'points'} primaryText="Point Data" />
+            <MenuItem value={'polygons'} primaryText="Aggregate Data" />
+          </DropDownMenu>
+          <Divider />
           <LayerSelector
             updateSQL={this.updateLayerConfig}
           />

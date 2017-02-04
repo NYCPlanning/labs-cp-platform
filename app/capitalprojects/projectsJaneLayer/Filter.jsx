@@ -1,10 +1,14 @@
 import React from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
+import Numeral from 'numeral';
+import Divider from 'material-ui/Divider';
 
 import CountWidget from '../../common/CountWidget';
+import InfoIcon from '../../common/InfoIcon';
+import CostGroupChart from './CostGroupChart';
+import RangeSlider from '../../common/RangeSlider';
 
 import Carto from '../../helpers/carto';
 import config from '../config';
@@ -12,7 +16,9 @@ import config from '../config';
 
 const Filter = React.createClass({
   propTypes: {
-    updateSQL: React.PropTypes.func,
+    updateSQL: React.PropTypes.func.isRequired,
+    pointsSql: React.PropTypes.string.isRequired,
+    polygonsSql: React.PropTypes.string.isRequired,
   },
 
   getInitialState() {
@@ -21,6 +27,9 @@ const Filter = React.createClass({
       totalCount: null,
       filterDimensions: {
         agency: [],
+        projecttype: [],
+        totalcost: [1000, 100000000],
+        activeyears: [2010, 2027],
       },
     });
   },
@@ -30,8 +39,8 @@ const Filter = React.createClass({
 
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, agency, descriptio, totalcost, maprojid',
-      pointsTablename: 'adoyle.commitmentspoints',
-      polygonsTablename: 'adoyle.commitmentspolygons',
+      pointsTablename: 'commitmentspointsjoined',
+      polygonsTablename: 'commitmentspolygonsjoined',
     };
 
     self.buildSQL();
@@ -84,7 +93,7 @@ const Filter = React.createClass({
 
     if (this.state.totalCount == null) this.getTotalCount(sql);
 
-    this.getSelectedCount(pointsSql, polygonsSql);
+    this.getSelectedCount(`${pointsSql} UNION ALL ${polygonsSql}`);
     this.props.updateSQL(pointsSql, polygonsSql);
   },
 
@@ -92,10 +101,8 @@ const Filter = React.createClass({
     // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
     // like ( dimension = 'value1' OR dimension = 'value2')
     const subChunks = values.map((value) => {
-      //  custom handling for label "Unknown" to query for NULL
-      //  TODO make this generic to handle nulls in other dimensions
-      if (dimension === 'cpstatus' && value.label === 'Unknown') {
-        return 'cpstatus IS NULL';
+      if (dimension === 'projecttype') {
+        return `array_to_string(projecttype, ', ') like '%${value.value}%'`;
       }
 
       return `${dimension} = '${value.value}'`;
@@ -109,12 +116,28 @@ const Filter = React.createClass({
     }
   },
 
+  createUnitsSQLChunk(dimension, range) {
+    // conditional, if slider max value is at the starting point, only include results greater than the lower slider
+    if (range[1] < 100000000) {
+      this.sqlChunks[dimension] = `(totalcost >= '${range[0]}' AND totalcost <= '${range[1]}')`;
+    } else {
+      this.sqlChunks[dimension] = `(totalcost >= '${range[0]}')`;
+    }
+  },
+
+  createActiveYearsSQLChunk(range) {
+    this.sqlChunks.activeyears = `NOT (maxdate <= to_date('${range[0] - 1}-07-01', 'YYYY-MM-DD') OR mindate >= to_date('${range[1]}-06-30', 'YYYY-MM-DD'))`;
+  },
+
   createSQLChunks() {
     // create an array of where clause chunks to be joined by 'AND'
     this.sqlChunks = {};
 
     const f = this.state.filterDimensions;
     this.createMultiSelectSQLChunk('agency', f.agency);
+    this.createMultiSelectSQLChunk('projecttype', f.projecttype);
+    this.createUnitsSQLChunk('totalcost', this.state.filterDimensions.totalcost);
+    this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
   },
 
   updateFilterDimension(key, values) {
@@ -129,7 +152,24 @@ const Filter = React.createClass({
     this.buildSQL();
   },
 
+  handleSliderChange(dimension, data) {
+    // expects the data output from the ionRangeSlider
+    // updates state with an array of the filter range
+    if (dimension === 'totalcost') {
+      this.state.filterDimensions[dimension] = [data.from_value, data.to_value];
+    } else {
+      this.state.filterDimensions[dimension] = [data.from, data.to];
+    }
+
+    this.buildSQL();
+  },
+
   render() {
+    // override material ui ListItem spacing
+    const listItemStyle = {
+      paddingTop: '0px',
+    };
+
     return (
       <div>
         <CountWidget
@@ -138,18 +178,24 @@ const Filter = React.createClass({
           units={'projects'}
         />
         <Subheader>
+          Number of Projects by Total Cost
+        </Subheader>
+        {
+          this.props.pointsSql && this.props.polygonsSql &&
+            <CostGroupChart
+              pointsSql={this.props.pointsSql}
+              polygonsSql={this.props.polygonsSql}
+            />
+        }
+        <Divider />
+        <Subheader>
           Agency
-          <OverlayTrigger
-            placement="right" overlay={
-              <Tooltip id="tooltip">The City agency associated with the project in FMS</Tooltip>
-            }
-          >
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
+          <InfoIcon text="The City agency associated with the project in FMS" />
         </Subheader>
 
         <ListItem
           disabled
+          style={listItemStyle}
         >
           <Select
             multi
@@ -160,9 +206,95 @@ const Filter = React.createClass({
             onChange={this.updateFilterDimension.bind(this, 'agency')}
           />
         </ListItem>
+
+        <Subheader>
+          Project Type
+          <InfoIcon text="The FMS Project Type" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <Select
+            multi
+            placeholder="Select Project Types"
+            value={this.state.filterDimensions.projecttype}
+            name="form-field-name"
+            options={config.projecttypes}
+            onChange={this.updateFilterDimension.bind(this, 'projecttype')}
+          />
+        </ListItem>
+
+        <Subheader>
+          Total Cost
+          <InfoIcon text="Sum of all commitments in the current capital commitment plan" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <RangeSlider
+            data={this.state.filterDimensions.totalcost}
+            type={'double'}
+            onChange={this.handleSliderChange.bind(this, 'totalcost')}
+            step={1000}
+            prettify={num => Numeral(num).format('($ 0.00 a)')}
+            grid
+            force_edges
+            max_postfix="+"
+            values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+          />
+        </ListItem>
+
+        <Subheader>
+          Active Years
+          <InfoIcon text="show projects with either spending OR commitments in this range" />
+        </Subheader>
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <RangeSlider
+            data={this.state.filterDimensions.activeyears}
+            type={'double'}
+            onChange={this.handleSliderChange.bind(this, 'activeyears')}
+            step={1}
+            force_edges
+            prettify_enabled={false}
+            grid
+          />
+        </ListItem>
+
       </div>
     );
   },
 });
 
 export default Filter;
+
+// materialized view SQL
+
+// DROP MATERIALIZED VIEW commitmentspointsjoined;
+// DROP MATERIALIZED VIEW commitmentspolygonsjoined;
+
+// CREATE MATERIALIZED VIEW commitmentspolygonsjoined as
+// SELECT a.*,
+//   array_agg(DISTINCT b.projecttype) AS projecttype,
+//   min(c.date) mindate,
+//   max(c.date) maxdate
+// FROM adoyle.commitmentspolygons a
+// LEFT OUTER JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
+// LEFT OUTER JOIN (
+//   SELECT LEFT(capital_project,12) as maprojid, to_date(issue_date,'YYYY-MM-DD') as date
+//   FROM cpadmin.spending
+//   UNION ALL
+//   SELECT maprojid, to_date(plancommdate,'YY-Mon') as date
+//   FROM adoyle.commitscommitments
+//   ORDER BY maprojid ASC
+// ) c ON a.maprojid = c.maprojid
+// GROUP BY a.cartodb_id
+
+// GRANT SELECT on commitmentspointsjoined to publicuser;
+// GRANT SELECT on commitmentspolygonsjoined to publicuser;

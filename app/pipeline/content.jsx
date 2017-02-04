@@ -20,7 +20,7 @@ exports.about = (
       There are a number of known limitations to the database and improvements will be made on a continual basis, based on internal reviews and user feedback.
     </p>
     <p>
-      Please consult <a href="http://docs.capitalplanning.nyc/pipeline/">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
+      Please consult <a href="http://docs.capitalplanning.nyc/pipeline/" target="_blank" rel="noreferrer noopener">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
     </p>
 
     <h4>Feedback</h4>

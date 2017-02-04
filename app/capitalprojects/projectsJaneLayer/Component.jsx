@@ -10,7 +10,7 @@ import defaultlayerConfig from './defaultLayerConfig';
 
 const CapitalProjects = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -57,6 +57,8 @@ const CapitalProjects = React.createClass({
         <Tab label="Data">
           <Filter
             updateSQL={this.updateLayerConfig}
+            pointsSql={this.state.pointsSql}
+            polygonsSql={this.state.polygonsSql}
           />
         </Tab>
         <Tab label="Download">

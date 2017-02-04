@@ -13,10 +13,10 @@ import Carto from '../../helpers/carto';
 
 const Facilities = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: React.PropTypes.func.isRequired,
     context: React.PropTypes.shape({
-      mode: React.PropTypes.string,
-    }),
+      mode: React.PropTypes.string.isRequired,
+    }).isRequired,
   },
 
   getInitialState() {

@@ -3,6 +3,7 @@ import Moment from 'moment';
 
 import ModalMap from '../common/ModalMap';
 import DetailPage from '../common/DetailPage';
+import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
 
@@ -11,8 +12,8 @@ const DevelopmentPage = React.createClass({
   propTypes: {
     params: React.PropTypes.shape({
       id: React.PropTypes.string,
-    }),
-    location: React.PropTypes.shape(),
+    }).isRequired,
+    location: React.PropTypes.shape().isRequired,
   },
 
   getInitialState() {
@@ -39,6 +40,11 @@ const DevelopmentPage = React.createClass({
         </div>
         <div className="col-md-6">
           <ModalMap feature={this.state.data} label={d.dob_permit_address} />
+          <FeedbackForm
+            displayUnit="Development"
+            ref_type="development"
+            ref_id={this.props.params.id}
+          />
         </div>
         <div className="col-md-6">
           <ul className="list-group">

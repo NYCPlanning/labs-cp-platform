@@ -13,7 +13,7 @@ import './FacLanding.scss';
 
 const FacilitiesLandingPage = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.func,
+    showModal: React.PropTypes.func.isRequired,
   },
 
   componentDidMount() {
@@ -40,7 +40,7 @@ const FacilitiesLandingPage = React.createClass({
                 <hr className="light" />
                 <h3 className="section-heading">The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>
 
-                <p>Read more about this dataset <a href="http://docs.capitalplanning.nyc/facdb/" style={{ textDecoration: 'underline' }}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{ textDecoration: 'underline' }}>improve it.</a></p>
+                <p>Read more about this dataset <a href="http://docs.capitalplanning.nyc/facdb/" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline' }}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{ textDecoration: 'underline' }}>improve it.</a></p>
                 <Link to="/facilities/all"> <div className="btn btn-lg dcp-orange">View ALL Facilities <i className="fa fa-arrow-right" aria-hidden="true" /></div></Link>
               </div>
             </div>

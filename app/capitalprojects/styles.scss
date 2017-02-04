@@ -1,27 +1,7 @@
-.colorBox {
-  height: 20px;
-  width: 20px;
-  margin-right: 6px;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.managedby {
-  font-size: 10px;
-  display: inline-block;
-}
-
-.managedby-text {
-  margin: 0 3px;
-  display:inline-block;
-}
-
-.agencybadges {
-  display: inline-block;
-  margin-right: 5px;
-  position: relative;
-  top: -2px;
-  margin-bottom: 9px;
+.project-page {
+  h1, h2, h3, h4, h5 {
+    margin-top: 0;
+  }
 }
 
 /* Captial Expenditures Chart */
@@ -33,7 +13,7 @@
 /* Capital Expenditures Chart Spinner */
 
 .chart-container {
-  
+
   height: 120px;
   position: relative;
 
@@ -71,10 +51,10 @@
   }
 
   @keyframes sk-bouncedelay {
-    0%, 80%, 100% { 
+    0%, 80%, 100% {
       -webkit-transform: scale(0);
       transform: scale(0);
-    } 40% { 
+    } 40% {
       -webkit-transform: scale(1.0);
       transform: scale(1.0);
     }
@@ -140,11 +120,7 @@
   border-radius: 0 0 2px 2px;
 }
 
-/* Capital Expenditures Chart Callout */  
+/* Capital Expenditures Chart Callout */
 
-      
+
 /* End Captial Expenditures Chart */
-
-
-
-

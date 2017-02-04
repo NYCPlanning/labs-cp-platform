@@ -26,7 +26,7 @@ const NotFound = props => (
 );
 
 NotFound.propTypes = {
-  auth: React.PropTypes.object,
+  auth: React.PropTypes.object.isRequired,
 };
 
 module.exports = NotFound;

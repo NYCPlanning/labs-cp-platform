@@ -19,8 +19,8 @@ import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
   propTypes: {
-    mode: React.PropTypes.string,
-    updateSQL: React.PropTypes.func,
+    mode: React.PropTypes.string.isRequired,
+    updateSQL: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -354,7 +354,7 @@ const LayerSelector = React.createClass({
           <ul className="nav nav-pills nav-stacked" id="stacked-menu">
             {
                 this.state.layers.map((domain, i) => (
-
+                  // eslint-disable-next-line react/no-array-index-key
                   <li key={`domain${i}`}>
                     <Checkbox
                       value={domain.name}
@@ -368,6 +368,7 @@ const LayerSelector = React.createClass({
                     <ul className="group-container nav nav-pills nav-stacked collapse" id={`p${i}`} style={{ height: 'auto' }}>
                       {
                         domain.children.map((group, j) => (
+                          // eslint-disable-next-line react/no-array-index-key
                           <div className="group nav nav-pills nav-stacked collapse in" key={j}>
                             <Checkbox
                               value={group.name}
@@ -379,7 +380,7 @@ const LayerSelector = React.createClass({
                               <div className="nav-sub-container" style={{ backgroundColor: self.state.layers.length === 1 ? group.color : domain.subColor }}>
                                 <div onClick={self.toggleCheckbox.bind(self, 'group', i, j, null)} style={{ color: 'black' }}>
                                   <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{group.description}</Tooltip>}>
-                                    <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
+                                    <a href="http://docs.capitalplanning.nyc/facdb/#overview" target="_blank" rel="noreferrer noopener"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
                                   </OverlayTrigger>
                                   {group.name}
                                 </div>
@@ -390,6 +391,7 @@ const LayerSelector = React.createClass({
                             <ul className="subgroup-container nav nav-pills nav-stacked collapse" id={`pv${i}${j}`} style={{ height: 'auto' }} >
                               {
                                   group.children.map((subgroup, k) => (
+                                    // eslint-disable-next-line react/no-array-index-key
                                     <li className="subgroup" key={k}>
                                       <Checkbox
                                         value={subgroup.name}
@@ -399,7 +401,7 @@ const LayerSelector = React.createClass({
                                       />
                                       <div onClick={self.toggleCheckbox.bind(self, 'subgroup', i, j, k)} style={{ color: 'black' }}>
                                         <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{subgroup.description}</Tooltip>}>
-                                          <a href="http://docs.capitalplanning.nyc/facdb/#overview"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
+                                          <a href="http://docs.capitalplanning.nyc/facdb/#overview" target="_blank" rel="noreferrer noopener"><i className="fa fa-info-circle" aria-hidden="true" />&#8291;</a>
                                         </OverlayTrigger>
                                         {subgroup.name}
                                       </div>

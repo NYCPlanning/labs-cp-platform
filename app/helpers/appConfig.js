@@ -14,6 +14,8 @@ const appConfig = {
 
   mapzen_api_key: 'mapzen-ZyMEp5H',
 
+  api_domain: (process.env.NODE_ENV === 'production') ? 'api.capitalplanning.nyc' : 'localhost:3000',
+
 };
 
 module.exports = appConfig;

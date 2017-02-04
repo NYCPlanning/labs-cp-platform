@@ -5,11 +5,10 @@ import update from 'react/lib/update';
 import GLMap from './GLMap';
 import LayerContent from './LayerContent';
 import LayerList from './LayerList';
-import MapLayer from './MapLayer';
 import PoiMarker from './PoiMarker';
 import Search from './Search';
-import Source from './source/Source';
 import SelectedFeaturesPane from './SelectedFeaturesPane';
+import MapHandler from './MapHandler';
 
 
 // styles should be manually imported from whatever is using Jane for now
@@ -19,13 +18,32 @@ const Jane = React.createClass({
   propTypes: {
     poiFeature: React.PropTypes.object,
     poiLabel: React.PropTypes.string,
-    mapConfig: React.PropTypes.object,
+    mapConfig: React.PropTypes.object.isRequired,
     layerContentVisible: React.PropTypes.bool,
-    mapInit: React.PropTypes.object,
+    mapInit: React.PropTypes.object.isRequired,
     style: React.PropTypes.object,
     context: React.PropTypes.object,
     search: React.PropTypes.bool,
     searchConfig: React.PropTypes.object,
+  },
+
+  getDefaultProps() {
+    return {
+      poiFeature: null,
+      poiLabel: null,
+      layerContentVisible: false,
+      style: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        overflow: 'hidden',
+      },
+      context: null,
+      search: false,
+      searchConfig: null,
+    };
   },
 
   getInitialState() {
@@ -37,10 +55,9 @@ const Jane = React.createClass({
       poiFeature: this.props.poiFeature ? this.props.poiFeature : null,
       poiLabel: this.props.poiLabel ? this.props.poiLabel : null,
       mapLoaded: false,
-      loadedSources: {},
       mapConfig: this.props.mapConfig ? this.props.mapConfig : defaultMapConfig,
       layerListExpanded: false,
-      layerContentVisible: this.props.layerContentVisible ? this.props.layerContentVisible : null,
+      layerContentVisible: this.props.layerContentVisible,
       selectedFeatures: [],
     });
   },
@@ -80,16 +97,32 @@ const Jane = React.createClass({
     this.setState({ mapConfig: this.state.mapConfig });
   },
 
-  // sets the selected layer
   handleLayerClick(layerid) {
-    if (!this.state.layerContentVisible) this.toggleLayerContent();
+    const visible = this.isLayerVisible(layerid);
 
+    // open second drawer if closed
+    if (!this.state.layerContentVisible && visible) this.toggleLayerContent();
+
+    // if selected layer was clicked, toggle second drawer, else make clicked layer selected
     if (this.state.mapConfig.selectedLayer === layerid) {
-      this.toggleLayerContent();
+      // this.toggleLayerContent();
     } else {
-      this.state.mapConfig.selectedLayer = layerid;
-      this.setState({ mapConfig: this.state.mapConfig });
+      // if clicked layer is enabled (visible), make it active
+      if (visible) {
+        this.state.mapConfig.selectedLayer = layerid;
+        this.setState({ mapConfig: this.state.mapConfig });
+        return;
+      }
+
+      // otherwise expand the layerlist
+      if (!this.state.layerListExpanded) this.setState({ layerListExpanded: true });
     }
+  },
+
+  isLayerVisible(layerid) {
+    // checks if layer with id of layerid is visible, returns boolean
+    const thisLayer = this.state.mapConfig.layers.filter(layer => layer.id === layerid)[0];
+    return thisLayer.visible;
   },
 
   handleMapLayerClick(e) {
@@ -114,6 +147,12 @@ const Jane = React.createClass({
     const theLayer = this.state.mapConfig.layers.find((layer => layer.id === layerid));
     theLayer.visible = !theLayer.visible;
 
+    // clear selectedlayer
+    if (this.state.mapConfig.selectedLayer === layerid) {
+      this.state.mapConfig.selectedLayer = '';
+      if (this.state.layerContentVisible) this.toggleLayerContent();
+    }
+
     this.setState({
       mapConfig: this.state.mapConfig,
     });
@@ -121,10 +160,6 @@ const Jane = React.createClass({
 
   // keeps track of loaded sources in state,
   // used to figure out whether layers are ready to be added in render()
-  handleSourceLoaded(loadedSources) {
-    this.setState({ loadedSources });
-  },
-
 
   hidePoiMarker() {
     this.setState({
@@ -206,62 +241,14 @@ const Jane = React.createClass({
   },
 
   render() {
-    const self = this;
     const mapConfig = this.state.mapConfig;
-
-    // load all sources for visible layers
-    const sources = [];
-
-
-    if (this.state.mapLoaded) {
-      mapConfig.layers.forEach((layer) => {
-        if (layer.sources && layer.visible) {
-          layer.sources.forEach((source) => {
-            sources.push(
-              <Source map={self.map} source={source} onLoaded={this.handleSourceLoaded} key={source.id} />,
-            );
-          });
-        }
-      });
-    }
-
-
-    // check to see if all sources for visible layers are loaded
-    let allSourcesLoaded = true;
-
-    mapConfig.layers.forEach((layer) => {
-      if (layer.visible && layer.sources && layer.mapLayers) {
-        layer.mapLayers.forEach((mapLayer) => {
-          if (!Object.prototype.hasOwnProperty.call(this.state.loadedSources, mapLayer.source)) { allSourcesLoaded = false; }
-        });
-      }
-    });
-
-
-    // create <MapLayer> components for each visible layer, but only if all required sources are already loaded
-    const mapLayers = [];
-
-    if (allSourcesLoaded) {
-      this.order = 0;
-      mapConfig.layers.forEach((layer) => {
-        // render layers in order
-        if (layer.visible && layer.sources && layer.mapLayers) {
-          layer.mapLayers.forEach((mapLayer) => {
-            mapLayers.push(<MapLayer map={this.map} config={mapLayer} key={mapLayer.id + this.order} />);
-          });
-
-          this.order = this.order + 1;
-        }
-      });
-    }
-
 
     // add legendItems for each layer
     const legendItems = [];
 
-    mapConfig.layers.forEach((layer, i) => {
+    mapConfig.layers.forEach((layer) => {
       if (layer.visible && layer.legend) {
-        legendItems.push(<div key={i}>{layer.legend}</div>);
+        legendItems.push(<div key={layer.id}>{layer.legend}</div>);
       }
     });
 
@@ -280,19 +267,11 @@ const Jane = React.createClass({
     });
 
 
-    // // add hover
-    // if (this.map) {
-    //   const map = this.map.mapObject;
-    //   map.off('mousemove');
-    //   map.on('mousemove', (e) => {
-    //     const features = map.queryRenderedFeatures(e.point, { layers: [this.state.mapConfig.selectedLayer] });
-    //     map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-    //   });
-    // }
-
     let leftOffset = 36;
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.layerContentVisible) leftOffset += 320;
+
+    const selectedLayer = this.state.mapConfig.selectedLayer;
 
     return (
 
@@ -302,8 +281,6 @@ const Jane = React.createClass({
             left: leftOffset,
           }}
         >
-
-
           {
             this.props.search && (
               <Search
@@ -341,22 +318,21 @@ const Jane = React.createClass({
           )
         }
 
-        {sources}
-        {mapLayers}
         <LayerList
           expanded={this.state.layerListExpanded}
           layers={this.state.mapConfig.layers}
-          selectedLayer={this.state.mapConfig.selectedLayer}
+          selectedLayer={selectedLayer}
           onLayerReorder={this.handleLayerReorder}
           onLayerClick={this.handleLayerClick}
           onToggleExpanded={this.handleToggleExpanded}
+          onLayerToggle={this.handleLayerToggle}
         />
 
         <LayerContent
           offset={this.state.layerListExpanded}
           visible={this.state.layerContentVisible}
           layers={this.state.mapConfig.layers}
-          selectedLayer={this.state.mapConfig.selectedLayer}
+          selectedLayer={selectedLayer}
           onLayerUpdate={this.handleLayerUpdate}
           onLayerToggle={this.handleLayerToggle}
           onClose={this.toggleLayerContent}
@@ -370,22 +346,12 @@ const Jane = React.createClass({
         >
           {selectedFeatureItems}
         </SelectedFeaturesPane>
+
+        { this.state.mapLoaded && <MapHandler map={this.map} mapConfig={mapConfig} /> }
       </div>
 
     );
   },
 });
-
-Jane.defaultProps = {
-  style: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    overflow: 'hidden',
-  },
-  search: false,
-};
 
 export default Jane;

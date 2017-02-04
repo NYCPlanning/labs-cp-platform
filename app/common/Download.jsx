@@ -1,17 +1,15 @@
 // Download.jsx - This component builds a download pane used in the explorer
-
 import React, { PropTypes } from 'react';
-import Moment from 'moment';
-
 import Subheader from 'material-ui/Subheader';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
+import Moment from 'moment';
 
 import Carto from '../helpers/carto';
 
 const date = Moment().format('YYYY-MM-DD');
 
-const Download = ({ sql, filePrefix = 'data' }) => {
+const Download = ({ sql, filePrefix }) => {
   const filteredSql = Carto.transformSqlSelectAll(sql);
   const completeSql = Carto.transformSqlRemoveWhere(filteredSql);
 
@@ -65,8 +63,8 @@ const Download = ({ sql, filePrefix = 'data' }) => {
 };
 
 Download.propTypes = {
-  sql: PropTypes.string,
-  filePrefix: PropTypes.string,
+  sql: PropTypes.string.isRequired,
+  filePrefix: PropTypes.string.isRequired,
 };
 
 module.exports = Download;

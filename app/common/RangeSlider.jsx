@@ -13,6 +13,13 @@ const RangeSlider = React.createClass({
       disable: self.props.disable ? self.props.disable : false,
       onFinish: self.props.onChange,
       prettify: self.props.prettify,
+      prefix: self.props.prefix,
+      grid: self.props.grid,
+      grid_num: self.props.grid_num,
+      max_postfix: self.props.max_postfix,
+      force_edges: self.props.force_edges,
+      prettify_enabled: self.props.prettify_enabled,
+      values: self.props.values,
     });
 
     this.slider = $(this.sliderEl).data('ionRangeSlider'); // eslint-disable-line no-undef

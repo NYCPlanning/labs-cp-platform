@@ -5,6 +5,7 @@ import Jane from '../../jane-maps/src';
 import content from './content';
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
+import FloodHazardsJaneLayer from '../janelayers/floodhazards';
 import ProjectsJaneLayer from './projectsJaneLayer';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
@@ -18,6 +19,12 @@ import './styles.scss';
 const CaptialProjectsExplorer = React.createClass({
   propTypes: {
     showModal: React.PropTypes.func,
+  },
+
+  getDefaultProps() {
+    return {
+      showModal: null,
+    };
   },
 
   componentDidMount() {
@@ -38,8 +45,8 @@ const CaptialProjectsExplorer = React.createClass({
     // TODO these can be globally defined for the app
     const mapInit = {
       mapbox_accessToken: appConfig.mapbox_accessToken,
-      center: [-74.0079, 40.7315],
-      zoom: 12,
+      center: [-74.0058, 40.7094],
+      zoom: 13.62,
       minZoom: null,
       maxZoom: null,
       pitch: 0,
@@ -62,6 +69,7 @@ const CaptialProjectsExplorer = React.createClass({
       selectedLayer: 'capital-projects',
       layers: [
         ImageryJaneLayer,
+        FloodHazardsJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
         GrayOutsideNyc,

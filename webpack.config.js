@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     './main.jsx',
   ],
   output: {
@@ -39,7 +40,7 @@ module.exports = {
     new ExtractTextPlugin('../css/bundle.css'),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production'),
+        NODE_ENV: '"production"',
       },
     }),
   ],
