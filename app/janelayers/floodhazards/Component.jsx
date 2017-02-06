@@ -84,7 +84,7 @@ const Component = React.createClass({
             <div className="sidebar-tab-content">
               <h4>Flood Hazard Layers</h4>
 
-              {/*<Checkbox
+              {/* <Checkbox
                 label="Limit of Moderate Wave Action (LiMWA)"
                 checked={this.state.activeCheckboxes.includes('limwa')}
                 onCheck={this.handleCheck.bind(this, 'limwa')}

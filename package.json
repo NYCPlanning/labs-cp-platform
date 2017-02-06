@@ -71,21 +71,11 @@
     "babel-eslint": "^7.1.1",
     "babel-plugin-transform-class-properties": "^6.22.0",
     "chai": "^3.5.0",
-<<<<<<< HEAD
-    "eslint": "^3.13.1",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-loader": "^1.6.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-promise": "^3.4.0",
-=======
     "eslint": "^3.14.1",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
->>>>>>> staging
     "eslint-plugin-react": "^6.9.0",
     "eslint-plugin-standard": "^2.0.1",
     "mocha": "^3.1.2",
