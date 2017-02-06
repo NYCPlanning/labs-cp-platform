@@ -113,8 +113,8 @@ const ProjectPage = React.createClass({
             <div className={'col-md-12'}>
               <Card style={CardStyles}>
                 <CardHeader title="Total Cost" />
-                <CardText>
-                  <h2 style={{ textAlign: 'center' }}>{formatCost(d.totalcommitspend)}</h2>
+                <CardText className={'text-center'}>
+                  <h2>{formatCost(d.totalcommitspend)}</h2>
                   <p className="subtext">{formatCost(d.totalspend)} spent | {formatCost(d.totalcommit)} committed</p>
                 </CardText>
               </Card>
@@ -125,8 +125,8 @@ const ProjectPage = React.createClass({
             <div className={'col-md-12'}>
               <Card style={CardStyles}>
                 <CardHeader title="Years Active" />
-                <CardText>
-                  <h2 style={{ textAlign: 'center' }}>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
+                <CardText className={'text-center'}>
+                  <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
                   <p className="subtext">{Moment(d.mindate).format('MMM YYYY')} thru {Moment(d.maxdate).format('MMM YYYY')}</p>
                 </CardText>
               </Card>
@@ -175,18 +175,11 @@ const ProjectPage = React.createClass({
           <div style={{ marginTop: '15px' }}>
             <ModalMap feature={this.state.feature} label={d.descriptio} />
           </div>
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Suggest an Edit" />
-                <CardText>
-                  <FeedbackForm
-                    ref_type="capitalproject"
-                    ref_id={this.props.params.id}
-                  />
-                </CardText>
-              </Card>
-            </div>
+          <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
+            <FeedbackForm
+              ref_type="capitalproject"
+              ref_id={this.props.params.id}
+            />
           </div>
         </div>
       </div>
