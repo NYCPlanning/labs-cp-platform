@@ -1,3 +1,25 @@
+.facility-page {
+  h1, h2, h3, h4, h5 {
+    margin-top: 0;
+  }
+
+  .subtext {
+    color: #b3b3b3;
+    font-weight: 200;
+    text-align: center;
+  }
+
+  .property-detail-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .property-detail-blocks {
+    text-align: center;
+    padding: 0 30px;
+  }
+}
+
 /*FacDB Content Selection / Landing Page*/
 
 .facilities-landing hr {
