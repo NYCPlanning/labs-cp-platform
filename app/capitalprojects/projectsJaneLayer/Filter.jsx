@@ -234,7 +234,10 @@ const Filter = React.createClass({
 
         <ListItem
           disabled
-          style={listItemStyle}
+          style={{
+            paddingTop: '0px',
+            zIndex: '0',
+          }}
         >
           <RangeSlider
             data={this.state.filterDimensions.totalcommitspend}
@@ -255,7 +258,10 @@ const Filter = React.createClass({
         </Subheader>
         <ListItem
           disabled
-          style={listItemStyle}
+          style={{
+            paddingTop: '0px',
+            zIndex: '0',
+          }}
         >
           <RangeSlider
             data={this.state.filterDimensions.activeyears}
