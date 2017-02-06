@@ -62,7 +62,7 @@ const Facilities = React.createClass({
       WITH temp AS (
         SELECT
         unnest(string_to_array(datesourceupdated,',')) as date
-        FROM hkates.facilities_data
+        FROM cpadmin.facilities
         WHERE datesourceupdated NOT LIKE '%NULL%'
       )
 
