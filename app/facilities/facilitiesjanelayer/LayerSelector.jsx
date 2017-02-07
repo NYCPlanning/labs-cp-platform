@@ -395,7 +395,7 @@ const LayerSelector = React.createClass({
         </ListItem>
 
         <Subheader>
-          Facility Type
+          Facility Category
           <a href="https://nycplanning.github.io/cpdocs/facdb/" target="_blank" rel="noreferrer noopener"><InfoIcon text="Learn more about facility types" /></a>
         </Subheader>
         <ListItem
