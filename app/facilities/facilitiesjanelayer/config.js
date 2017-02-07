@@ -11,6 +11,21 @@ const config = {
     },
   ],
 
+  propertyTypes: [
+    {
+      value: 'City Owned',
+      label: 'City Owned',
+    },
+    {
+      value: 'City Leased',
+      label: 'City Leased',
+    },
+    {
+      value: '',
+      label: 'Not Owned or Leased by City',
+    },
+  ],
+
   agencies: [
     {
       value: 'Amtrak',
@@ -101,228 +116,8 @@ const config = {
       label: 'New York City Commission on Human Rights',
     },
     {
-      value: 'NYCCB102',
-      label: 'New York City Community Board 102',
-    },
-    {
-      value: 'NYCCB103',
-      label: 'New York City Community Board 103',
-    },
-    {
-      value: 'NYCCB104',
-      label: 'New York City Community Board 104',
-    },
-    {
-      value: 'NYCCB105',
-      label: 'New York City Community Board 105',
-    },
-    {
-      value: 'NYCCB106',
-      label: 'New York City Community Board 106',
-    },
-    {
-      value: 'NYCCB107',
-      label: 'New York City Community Board 107',
-    },
-    {
-      value: 'NYCCB108',
-      label: 'New York City Community Board 108',
-    },
-    {
-      value: 'NYCCB109',
-      label: 'New York City Community Board 109',
-    },
-    {
-      value: 'NYCCB110',
-      label: 'New York City Community Board 110',
-    },
-    {
-      value: 'NYCCB111',
-      label: 'New York City Community Board 111',
-    },
-    {
-      value: 'NYCCB112',
-      label: 'New York City Community Board 112',
-    },
-    {
-      value: 'NYCCB201',
-      label: 'New York City Community Board 201',
-    },
-    {
-      value: 'NYCCB202',
-      label: 'New York City Community Board 202',
-    },
-    {
-      value: 'NYCCB203',
-      label: 'New York City Community Board 203',
-    },
-    {
-      value: 'NYCCB204',
-      label: 'New York City Community Board 204',
-    },
-    {
-      value: 'NYCCB205',
-      label: 'New York City Community Board 205',
-    },
-    {
-      value: 'NYCCB206',
-      label: 'New York City Community Board 206',
-    },
-    {
-      value: 'NYCCB207',
-      label: 'New York City Community Board 207',
-    },
-    {
-      value: 'NYCCB208',
-      label: 'New York City Community Board 208',
-    },
-    {
-      value: 'NYCCB209',
-      label: 'New York City Community Board 209',
-    },
-    {
-      value: 'NYCCB210',
-      label: 'New York City Community Board 210',
-    },
-    {
-      value: 'NYCCB211',
-      label: 'New York City Community Board 211',
-    },
-    {
-      value: 'NYCCB212',
-      label: 'New York City Community Board 212',
-    },
-    {
-      value: 'NYCCB301',
-      label: 'New York City Community Board 301',
-    },
-    {
-      value: 'NYCCB303',
-      label: 'New York City Community Board 303',
-    },
-    {
-      value: 'NYCCB304',
-      label: 'New York City Community Board 304',
-    },
-    {
-      value: 'NYCCB305',
-      label: 'New York City Community Board 305',
-    },
-    {
-      value: 'NYCCB306',
-      label: 'New York City Community Board 306',
-    },
-    {
-      value: 'NYCCB307',
-      label: 'New York City Community Board 307',
-    },
-    {
-      value: 'NYCCB308',
-      label: 'New York City Community Board 308',
-    },
-    {
-      value: 'NYCCB309',
-      label: 'New York City Community Board 309',
-    },
-    {
-      value: 'NYCCB310',
-      label: 'New York City Community Board 310',
-    },
-    {
-      value: 'NYCCB311',
-      label: 'New York City Community Board 311',
-    },
-    {
-      value: 'NYCCB312',
-      label: 'New York City Community Board 312',
-    },
-    {
-      value: 'NYCCB313',
-      label: 'New York City Community Board 313',
-    },
-    {
-      value: 'NYCCB314',
-      label: 'New York City Community Board 314',
-    },
-    {
-      value: 'NYCCB315',
-      label: 'New York City Community Board 315',
-    },
-    {
-      value: 'NYCCB316',
-      label: 'New York City Community Board 316',
-    },
-    {
-      value: 'NYCCB317',
-      label: 'New York City Community Board 317',
-    },
-    {
-      value: 'NYCCB318',
-      label: 'New York City Community Board 318',
-    },
-    {
-      value: 'NYCCB401',
-      label: 'New York City Community Board 401',
-    },
-    {
-      value: 'NYCCB402',
-      label: 'New York City Community Board 402',
-    },
-    {
-      value: 'NYCCB403',
-      label: 'New York City Community Board 403',
-    },
-    {
-      value: 'NYCCB404',
-      label: 'New York City Community Board 404',
-    },
-    {
-      value: 'NYCCB405',
-      label: 'New York City Community Board 405',
-    },
-    {
-      value: 'NYCCB406',
-      label: 'New York City Community Board 406',
-    },
-    {
-      value: 'NYCCB408',
-      label: 'New York City Community Board 408',
-    },
-    {
-      value: 'NYCCB409',
-      label: 'New York City Community Board 409',
-    },
-    {
-      value: 'NYCCB410',
-      label: 'New York City Community Board 410',
-    },
-    {
-      value: 'NYCCB411',
-      label: 'New York City Community Board 411',
-    },
-    {
-      value: 'NYCCB412',
-      label: 'New York City Community Board 412',
-    },
-    {
-      value: 'NYCCB413',
-      label: 'New York City Community Board 413',
-    },
-    {
-      value: 'NYCCB414',
-      label: 'New York City Community Board 414',
-    },
-    {
-      value: 'NYCCB501',
-      label: 'New York City Community Board 501',
-    },
-    {
-      value: 'NYCCB502',
-      label: 'New York City Community Board 502',
-    },
-    {
-      value: 'NYCCB503',
-      label: 'New York City Community Board 503',
+      value: 'NYCCB',
+      label: 'New York City Community Boards',
     },
     {
       value: 'NYCCOIB',
