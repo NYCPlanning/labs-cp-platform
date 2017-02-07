@@ -1,0 +1,19 @@
+.splash-selector {
+  width:100%;
+  background: white;
+  margin: 18px 0 18px 0;
+  text-align: initial;
+  position: relative;
+
+  .content-area {
+    background: steelblue;
+    display: inline-block;
+    min-height: 100%;
+    position: absolute;
+    width: 50%;
+  }
+
+  .hidden {
+    display: none;
+  }
+}
