@@ -1,6 +1,6 @@
 .facility-page {
   h1, h2, h3, h4, h5 {
-    margin-top: 0;
+    margin: 0;
   }
 
   .subtext {
@@ -17,6 +17,60 @@
   .property-detail-blocks {
     text-align: center;
     padding: 0 30px;
+  }
+
+  span.label {
+    position: relative;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 10px;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  li.usage-list {
+    position: relative;
+    text-align: left;
+  }
+
+  .usage-list {
+    h3 {
+      text-align: left;
+      display: inline-block;
+    }
+
+    h4 {
+      text-align: right;
+      display: inline-block;
+      width: 50%;
+    }
+
+    span.label {
+      right: 10px;
+      bottom: 4px;
+    }
+  }
+
+  .source-data-details {
+    span.label {
+      bottom: 3px;
+    }
+  }
+
+  .classification {
+    .hierarchy {
+      .fa {
+        margin: 0 5px;
+      }
+    }
   }
 }
 
@@ -49,8 +103,6 @@
 .header-area a:hover {
   color: #d2d2d2;
 }
-
-
 
 section.content-selection {
   padding: 10px 0;
