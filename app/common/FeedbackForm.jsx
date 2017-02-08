@@ -84,12 +84,12 @@ const FeedbackForm = React.createClass({
       <div>
         { !this.state.submitted && !this.state.error && (
           <div>
-            <p>Let us know if you think there&apos;s something wrong with this data point</p>
-            <p>Your feedback will help us keep our data fresh!</p>
+            <h4>Your Feedback</h4>
+            <p>See something wrong with this data point? Let us know.</p>
             <TextField
               name="comment"
               value={model.comment}
-              floatingLabelText="Comments"
+              floatingLabelText="Write Here"
               multiLine
               rows={1}
               rowsMax={5}
@@ -98,7 +98,7 @@ const FeedbackForm = React.createClass({
             <br />
             <RaisedButton
               label="Submit"
-              style={{ margin: 12 }}
+              style={{ marginTop: 12 }}
               onTouchTap={this.onSubmit}
               disabled={!this.state.valid}
             />
