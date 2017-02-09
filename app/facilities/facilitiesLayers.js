@@ -4,6 +4,7 @@ const facilitiesLayers = [
     slug: 'health_and_human_services',
     color: '#BA68C8',
     subColor: '#f7e6f7',
+    icon: 'heart',
     children: [
       {
         name: 'Health Care',
@@ -86,6 +87,7 @@ const facilitiesLayers = [
     slug: 'education_child_welfare_and_youth',
     color: '#f7ca00',
     subColor: '#fff8dd',
+    icon: 'graduation-cap',
     children: [
       {
         name: 'Schools (K-12)',
@@ -210,6 +212,7 @@ const facilitiesLayers = [
     slug: 'parks_gardens_and_historical_sites',
     color: '#4CAF50',
     subColor: '#dfeddc',
+    icon: 'pagelines',
     children: [
       {
         name: 'Parks and Plazas',
@@ -260,6 +263,7 @@ const facilitiesLayers = [
     slug: 'libraries_and_cultural_progams',
     color: '#80DEEA',
     subColor: '#E0F7FA',
+    icon: 'book',
     children: [
       {
         name: 'Libraries',
@@ -302,6 +306,7 @@ const facilitiesLayers = [
     slug: 'public_safety_emergency_services_and_administration_of_justice',
     color: '#2979FF',
     subColor: '#BBDEFB',
+    icon: 'ambulance',
     children: [
       {
         name: 'Emergency Services',
@@ -355,6 +360,7 @@ const facilitiesLayers = [
     slug: 'core_infrastructure_and_transportation',
     color: '#78909C',
     subColor: '#e3eef2',
+    icon: 'bus',
     children: [
       {
         name: 'Solid Waste',
@@ -454,6 +460,7 @@ const facilitiesLayers = [
     slug: 'administration_of_government',
     color: '#da664f',
     subColor: 'rgba(251, 128, 114, 0.3)',
+    icon: 'bar-chart',
     children: [
       {
         name: 'Offices, Training, and Testing',

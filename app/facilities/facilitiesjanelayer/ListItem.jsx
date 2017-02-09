@@ -10,7 +10,7 @@ const Item = (props) => {
     <Link
       to={{
         pathname: `/facility/${d.uid}`,
-        state: { modal: true, returnTo: '/facilities/all' },
+        state: { modal: true, returnTo: '/facilities/explorer' },
       }}
     >
       <div

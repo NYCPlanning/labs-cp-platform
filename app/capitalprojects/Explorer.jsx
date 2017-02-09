@@ -9,8 +9,6 @@ import FloodHazardsJaneLayer from '../janelayers/floodhazards';
 import ProjectsJaneLayer from './projectsJaneLayer';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
-import GrayOutsideNyc from '../janelayers/grayoutsidenyc';
-
 
 import appConfig from '../helpers/appConfig';
 
@@ -72,7 +70,6 @@ const CaptialProjectsExplorer = React.createClass({
         FloodHazardsJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
-        GrayOutsideNyc,
         ProjectsJaneLayer,
       ],
     };

@@ -15,8 +15,12 @@ const Facilities = React.createClass({
   propTypes: {
     onUpdate: React.PropTypes.func.isRequired,
     context: React.PropTypes.shape({
-      mode: React.PropTypes.string.isRequired,
-    }).isRequired,
+      layers: React.PropTypes.array,
+    }),
+  },
+
+  getDefaultProps() {
+    return { context: null };
   },
 
   getInitialState() {
@@ -101,7 +105,7 @@ const Facilities = React.createClass({
       <Tabs className="sidebar-tabs">
         <Tab label="Data">
           <LayerSelector
-            mode={this.props.context.mode}
+            layers={this.props.context.layers}
             updateSQL={this.updateLayerConfig}
           />
         </Tab>
