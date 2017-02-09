@@ -5,11 +5,10 @@ import Jane from '../../jane-maps/src';
 import content from './content';
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
+import FloodHazardsJaneLayer from '../janelayers/floodhazards';
 import ProjectsJaneLayer from './projectsJaneLayer';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
-import GrayOutsideNyc from '../janelayers/grayoutsidenyc';
-
 
 import appConfig from '../helpers/appConfig';
 
@@ -68,9 +67,9 @@ const CaptialProjectsExplorer = React.createClass({
       selectedLayer: 'capital-projects',
       layers: [
         ImageryJaneLayer,
+        FloodHazardsJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
-        GrayOutsideNyc,
         ProjectsJaneLayer,
       ],
     };

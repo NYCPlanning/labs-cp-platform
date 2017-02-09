@@ -8,7 +8,7 @@ const config = {
     {
       "type": 'vector',
       "id": 'facilities',
-      "sql": 'SELECT the_geom_webmercator FROM hkates.facilities_data'
+      "sql": 'SELECT the_geom_webmercator FROM cpadmin.facilities'
     }
   ],
   mapLayers: [
@@ -80,7 +80,7 @@ const Facilities = React.createClass({
   componentDidMount() {
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
-      tablename: 'hkates.facilities_data'
+      tablename: 'cpadmin.facilities'
     }
 
     const sql=`SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`

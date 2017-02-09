@@ -1,9 +1,7 @@
 import React from 'react';
 import Numeral from 'numeral';
 
-import Divider from 'material-ui/Divider';
 import { ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 import FontIcon from 'material-ui/FontIcon';
 
 import './CountWidget.scss';
@@ -28,16 +26,21 @@ const CountWidget = (props) => {
 
   return (
     <div className="countWidget">
-      <Subheader>
-        Current Filters
-      </Subheader>
       <ListItem
-        leftIcon={<FontIcon className="fa fa-filter" />}
+        style={{
+          padding: '12px 16px 12px 55px',
+          backgroundColor: '#efefef',
+        }}
+        leftIcon={
+          <FontIcon
+            className="fa fa-filter"
+            style={{ margin: '9px' }}
+          />
+        }
         disabled
       >
         {countText}
       </ListItem>
-      <Divider />
     </div>
   );
 };

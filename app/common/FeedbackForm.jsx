@@ -12,7 +12,6 @@ const FeedbackForm = React.createClass({
   propTypes: {
     setProperty: PropTypes.func.isRequired,
     model: PropTypes.object.isRequired,
-    displayUnit: PropTypes.string.isRequired,
     ref_type: PropTypes.string.isRequired,
     ref_id: PropTypes.string.isRequired,
   },
@@ -83,15 +82,14 @@ const FeedbackForm = React.createClass({
 
     return (
       <div>
-        <h4>Send Feedback about this {this.props.displayUnit}</h4>
-
         { !this.state.submitted && !this.state.error && (
           <div>
-            <p>Your comments can help us keep our data fresh!</p>
+            <h4>Your Feedback</h4>
+            <p>See something wrong with this data point? Let us know.</p>
             <TextField
               name="comment"
               value={model.comment}
-              floatingLabelText="Comments"
+              floatingLabelText="Write Here"
               multiLine
               rows={1}
               rowsMax={5}
@@ -100,7 +98,7 @@ const FeedbackForm = React.createClass({
             <br />
             <RaisedButton
               label="Submit"
-              style={{ margin: 12 }}
+              style={{ marginTop: 12 }}
               onTouchTap={this.onSubmit}
               disabled={!this.state.valid}
             />
@@ -109,13 +107,13 @@ const FeedbackForm = React.createClass({
 
         { this.state.submitted && (
           <div>
-            Thanks! We&apos;ll take a look at your comments shortly.
+            <p>Thanks for helping us keep the data fresh! We will review your feedback and take appropriate action</p>
           </div>
         )}
 
         { this.state.error && (
           <div>
-            Oops! Something went wrong and we were not able to log your feedback.  Please try again later.
+            <p>Oops! Something went wrong and we were not able to save your feedback.  Please try again later.</p>
           </div>
         )}
 

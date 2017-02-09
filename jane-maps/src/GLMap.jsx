@@ -35,7 +35,7 @@ const GLMap = React.createClass({
 
     mapboxgl.accessToken = this.props.mapbox_accessToken;
 
-    const map = this.mapObject = new mapboxgl.Map({
+    this.mapObject = new mapboxgl.Map({
       container: this.container,
       style: this.props.mapStyle,
       zoom: this.props.zoom,
@@ -44,6 +44,8 @@ const GLMap = React.createClass({
       pitch: this.props.pitch,
       hash: this.props.hash,
     });
+
+    const map = this.mapObject;
 
     this.mapObject.on('load', () => {
       self.props.onLoad(self.mapObject.getStyle());
