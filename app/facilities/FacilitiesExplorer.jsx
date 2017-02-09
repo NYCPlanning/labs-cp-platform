@@ -13,7 +13,7 @@ import appConfig from '../helpers/appConfig';
 const FacilitiesExplorer = React.createClass({
   propTypes: {
     showModal: PropTypes.func,
-    location: PropTypes.obj,
+    location: PropTypes.object,
   },
 
   getDefaultProps() {

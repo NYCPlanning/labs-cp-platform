@@ -37,6 +37,7 @@ const LayerSelector = React.createClass({
       filterDimensions: {
         operatortype: [],
         oversightabbrev: [],
+        propertytype: [],
       },
     });
   },
@@ -108,17 +109,6 @@ const LayerSelector = React.createClass({
 
     this.state.filterDimensions[key] = key !== 'oversightabbrev' ? values : abbreviated;
     this.buildSQL();
-  },
-
-  createSQLChunks() {
-    // create an array of where clause chunks to be joined by 'AND'
-    this.sqlChunks = {};
-
-    const f = this.state.filterDimensions;
-
-    this.createMultiSelectSQLChunk('operatortype', f.operatortype);
-    this.createMultiSelectSQLChunk('oversightabbrev', f.oversightabbrev);
-    this.createCategorySQLChunk();
   },
 
   // builds WHERE clause partial for operatortype filter
@@ -201,6 +191,19 @@ const LayerSelector = React.createClass({
     });
 
     return selectedLayers;
+  },
+
+
+  createSQLChunks() {
+    // create an array of where clause chunks to be joined by 'AND'
+    this.sqlChunks = {};
+
+    const f = this.state.filterDimensions;
+
+    this.createMultiSelectSQLChunk('operatortype', f.operatortype);
+    this.createMultiSelectSQLChunk('oversightabbrev', f.oversightabbrev);
+    this.createMultiSelectSQLChunk('propertytype', f.propertytype);
+    this.createCategorySQLChunk();
   },
 
   // builds the WHERE clause partial for facilitysubgroup filter
@@ -296,8 +299,8 @@ const LayerSelector = React.createClass({
             paddingTop: '12px',
           }}
         >
-          Agency
-          <InfoIcon text="The Agency managing this facility" />
+          Oversight Agency
+          <InfoIcon text="The agency that funds or oversees this facility" />
         </Subheader>
 
         <ListItem
@@ -306,7 +309,7 @@ const LayerSelector = React.createClass({
         >
           <Select
             multi
-            placeholder="Select Agencies"
+            placeholder="Search and Select Oversight Agencies"
             value={this.state.filterDimensions.oversightabbrev}
             name="form-field-name"
             options={config.agencies}
@@ -325,7 +328,7 @@ const LayerSelector = React.createClass({
         >
           <Select
             multi
-            placeholder="Select Operator Types"
+            placeholder="Search and Select Operator Types"
             value={this.state.filterDimensions.operatortype}
             name="form-field-name"
             options={config.operatorTypes}
@@ -334,7 +337,26 @@ const LayerSelector = React.createClass({
         </ListItem>
 
         <Subheader>
-          Facility Type
+          Property Type
+          <InfoIcon text="Indicates whether the City owns or directly leases the property" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <Select
+            multi
+            placeholder="Search and Select Property Types"
+            value={this.state.filterDimensions.propertytype}
+            name="form-field-name"
+            options={config.propertyTypes}
+            onChange={this.updateFilterDimension.bind(this, 'propertytype')}
+          />
+        </ListItem>
+
+        <Subheader>
+          Facility Category
           <a href="https://nycplanning.github.io/cpdocs/facdb/" target="_blank" rel="noreferrer noopener"><InfoIcon text="Learn more about facility types" /></a>
         </Subheader>
         <ListItem
