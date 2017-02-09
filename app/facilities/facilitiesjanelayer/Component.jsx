@@ -97,11 +97,13 @@ const Facilities = React.createClass({
   },
 
   render() {
+    console.log(this.props.context.layers)
+
     return (
       <Tabs className="sidebar-tabs">
         <Tab label="Data">
           <LayerSelector
-            mode={this.props.context.mode}
+            layers={this.props.context.layers}
             updateSQL={this.updateLayerConfig}
           />
         </Tab>

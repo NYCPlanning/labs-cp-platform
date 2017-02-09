@@ -45,29 +45,30 @@ const LayerSelector = React.createClass({
       tablename: 'cpadmin.facilities',
     };
 
-    let layerStructure = facilitiesLayers;
+    // let layerStructure = facilitiesLayers;
 
-    // check everything
-    layerStructure = facilitiesLayers.map((domain) => {
-      domain.checked = true;
-      domain.children = domain.children.map((group) => {
-        group.checked = true;
-        group.children = group.children.map((subgroup) => {
-          subgroup.checked = true;
-          return subgroup;
-        });
-        return group;
-      });
-      return domain;
-    });
+    // // check everything
+    // layerStructure = facilitiesLayers.map((domain) => {
+    //   domain.checked = true;
+    //   domain.children = domain.children.map((group) => {
+    //     group.checked = true;
+    //     group.children = group.children.map((subgroup) => {
+    //       subgroup.checked = true;
+    //       return subgroup;
+    //     });
+    //     return group;
+    //   });
+    //   return domain;
+    // });
 
+    console.log('mounting component', this.props.layers)
 
-    // filter the base layerstructure if we are in a domain view
-    if (this.props.mode !== 'all') {
-      layerStructure = layerStructure.filter(layer => (layer.slug === this.props.mode));
-    }
+    // // filter the base layerstructure if we are in a domain view
+    // if (this.props.layers) {
+    //   const layerStructure = this.props.layers;
+    // }
 
-    this.setState({ layers: layerStructure }, () => {
+    this.setState({ layers: this.props.layers }, () => {
       self.buildSQL(); // trigger map layer update
     });
   },
@@ -84,10 +85,7 @@ const LayerSelector = React.createClass({
 
     Carto.getCount(sql)
       .then((count) => {
-        self.setState({
-          selectedCount: count,
-          totalCount: count,
-        });
+        self.setState({ totalCount: count });
       });
   },
 
@@ -229,8 +227,9 @@ const LayerSelector = React.createClass({
     const chunksString = chunksArray.length > 0 ? chunksArray.join(' AND ') : 'true';
 
     const sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE ${chunksString}`;
+    const totalSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`;
 
-    if (this.state.totalCount == null) this.getTotalCount(sql);
+    if (this.state.totalCount == null) this.getTotalCount(totalSql);
 
     this.props.updateSQL(sql);
     this.getSelectedCount(sql);

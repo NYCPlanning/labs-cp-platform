@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
@@ -57,7 +58,6 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
   }),
 
   componentWillMount() {
-
     // set checked to false on everything
     const layers = facilitiesLayers;
 
@@ -81,7 +81,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
   },
 
   handleSelectUpdate() {
-    this.processChecked()
+    this.processChecked();
   },
 
   // set indeterminate states, check/uncheck children, etc
@@ -101,20 +101,15 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
         });
 
         group.checked = (groupChecked === group.children.length);
-        group.indeterminate = !!((groupChecked < group.children.length && groupChecked > 0));
+        group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
 
         if (group.checked) domainChecked += 1;
         if (group.indeterminate) domainIndeterminate += 1;
       });
 
-      console.log(domainIndeterminate, domainChecked);
-
       domain.checked = (domainChecked === domain.children.length);
-      domain.indeterminate = (domainIndeterminate > 0) || (domainChecked < domain.children.length);
-
-      console.log(domain.indeterminate, domain.checked);
+      domain.indeterminate = (domainIndeterminate > 0) || ((domainChecked < domain.children.length) && domainChecked > 0);
     });
-
 
     this.setState({ layers });
   },
@@ -128,7 +123,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
       <ListItem
         value={i}
         primaryText={layer.name}
-        leftIcon={<FontIcon className="fa fa-heart" />}
+        leftIcon={<FontIcon className={`fa fa-${layer.icon}`} />}
       />
     ));
 
@@ -144,20 +139,31 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     ));
 
     return (
-      <div className="splash-selector">
-        <SelectableList
-          onChange={this.handleIndexChange}
-          selectedIndex={this.state.selectedIndex}
-          style={{
-            width: '50%',
-            display: 'inline-block',
+      <div>
+        <div className="splash-selector">
+          <SelectableList
+            onChange={this.handleIndexChange}
+            selectedIndex={this.state.selectedIndex}
+            style={{
+              width: '50%',
+              display: 'inline-block',
+            }}
+          >
+            {layerTabs}
+          </SelectableList>
+          <div className="content-area">
+            {layerContent}
+          </div>
+        </div>
+        <Link
+          to={{
+            pathname: '/facilities/explorer',
+            state: {
+              layers: this.state.layers,
+            },
           }}
         >
-          {layerTabs}
-        </SelectableList>
-        <div className="content-area">
-          {layerContent}
-        </div>
+          <div className="btn btn-lg dcp-orange">View SELECTED Facilities <i className="fa fa-arrow-right" aria-hidden="true" /></div></Link>
       </div>
     );
   },

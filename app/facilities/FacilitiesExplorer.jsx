@@ -77,7 +77,7 @@ const FacilitiesExplorer = React.createClass({
     };
 
     // Facilities Data Layer is composable, and will show different data/filters based on the route
-    const mode = this.props.params.domain ? this.props.params.domain : 'all';
+    // const mode = this.props.params.domain ? this.props.params.domain : 'all';
 
     return (
       <div className="full-screen">
@@ -88,7 +88,7 @@ const FacilitiesExplorer = React.createClass({
           searchConfig={searchConfig}
           mapConfig={mapConfig}
           context={{
-            mode,
+            layers: this.props.location.state.layers
           }}
         />
       </div>
