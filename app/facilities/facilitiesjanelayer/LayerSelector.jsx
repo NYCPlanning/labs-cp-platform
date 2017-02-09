@@ -1,6 +1,6 @@
 // LayerSelector.jsx - This component builds the layer selector which is used in the facilities JaneLayer
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
@@ -18,8 +18,14 @@ import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
   propTypes: {
-    mode: React.PropTypes.string.isRequired,
-    updateSQL: React.PropTypes.func.isRequired,
+    updateSQL: PropTypes.func.isRequired,
+    layers: PropTypes.array,
+  },
+
+  getDefaultProps() {
+    return {
+      layers: [],
+    };
   },
 
   getInitialState() {
@@ -35,8 +41,6 @@ const LayerSelector = React.createClass({
     });
   },
 
-  /* checks to see if there is only one domain.*/
-  /* if it's a domain subset page (only one domain), expands all and then requests that count be updated*/
   componentWillMount() {
     const self = this;
 
@@ -45,30 +49,26 @@ const LayerSelector = React.createClass({
       tablename: 'cpadmin.facilities',
     };
 
-    // let layerStructure = facilitiesLayers;
+    let layers = [];
 
-    // // check everything
-    // layerStructure = facilitiesLayers.map((domain) => {
-    //   domain.checked = true;
-    //   domain.children = domain.children.map((group) => {
-    //     group.checked = true;
-    //     group.children = group.children.map((subgroup) => {
-    //       subgroup.checked = true;
-    //       return subgroup;
-    //     });
-    //     return group;
-    //   });
-    //   return domain;
-    // });
+    if (this.props.layers) {
+      layers = this.props.layers;
+    } else {
+      layers = facilitiesLayers.map((domain) => {
+        domain.checked = true;
+        domain.children = domain.children.map((group) => {
+          group.checked = true;
+          group.children = group.children.map((subgroup) => {
+            subgroup.checked = true;
+            return subgroup;
+          });
+          return group;
+        });
+        return domain;
+      });
+    }
 
-    console.log('mounting component', this.props.layers)
-
-    // // filter the base layerstructure if we are in a domain view
-    // if (this.props.layers) {
-    //   const layerStructure = this.props.layers;
-    // }
-
-    this.setState({ layers: this.props.layers }, () => {
+    this.setState({ layers }, () => {
       self.buildSQL(); // trigger map layer update
     });
   },
@@ -78,6 +78,10 @@ const LayerSelector = React.createClass({
     if (this.state.layers.length === 1) {
       this.expandAll();
     }
+  },
+
+  componentDidUpdate() {
+    if (this.state.expanded) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
   },
 
   getTotalCount(sql) {
@@ -142,30 +146,31 @@ const LayerSelector = React.createClass({
 
     let allChecked = 0;
     let allIndeterminate = 0;
+
     // set indeterminate states, start from the bottom and work up
     layers.forEach((domain) => {
       let domainChecked = 0;
-      // first set all the groups
+      let domainIndeterminate = 0;
+
       domain.children.forEach((group) => {
         let groupChecked = 0;
+
         group.children.forEach((subgroup) => {
           if (subgroup.checked) groupChecked += 1;
         });
 
         group.checked = (groupChecked === group.children.length);
-        group.indeterminate = !!((groupChecked < group.children.length && groupChecked > 0));
+        group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
 
         if (group.checked) domainChecked += 1;
+        if (group.indeterminate) domainIndeterminate += 1;
       });
 
       domain.checked = (domainChecked === domain.children.length);
-      if (domain.checked) {
-        allChecked += 1;
-      }
-      domain.indeterminate = !!((domainChecked < domain.children.length && domainChecked > 0));
-      if (domain.indeterminate) {
-        allIndeterminate += 1;
-      }
+      if (domain.checked) allChecked += 1;
+
+      domain.indeterminate = (domainIndeterminate > 0) || ((domainChecked < domain.children.length) && domainChecked > 0);
+      if (domain.indeterminate) allIndeterminate += 1;
     });
 
     let checkedStatus;
@@ -235,10 +240,6 @@ const LayerSelector = React.createClass({
     this.getSelectedCount(sql);
   },
 
-  updateLayers() {
-    this.buildSQL();
-  },
-
   selectAll() {
     const layers = this.state.layers;
 
@@ -268,12 +269,11 @@ const LayerSelector = React.createClass({
   },
 
   expandAll() {
-    // geez, just do it with jQuery
-    $('.caret-container.collapsed').click(); // eslint-disable-line no-undef
+    this.setState({ expanded: true });
   },
 
   collapseAll() {
-    $('.caret-container:not(.collapsed)').click(); // eslint-disable-line no-undef
+    this.setState({ expanded: false });
   },
 
   render() {
@@ -361,7 +361,9 @@ const LayerSelector = React.createClass({
         >
           <NestedSelect
             layers={this.state.layers}
-            onUpdate={this.updateLayers}
+            onUpdate={this.buildSQL}
+            initiallyOpen={false}
+            expanded={this.state.expanded}
           />
         </ListItem>
       </div>

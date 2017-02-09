@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
-import NestedSelect from './facilitiesjanelayer/NestedSelect2';
+import NestedSelect from './facilitiesjanelayer/NestedSelect';
 import facilitiesLayers from './facilitiesLayers';
 
 import './SplashSelector.scss';
@@ -124,6 +124,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
         value={i}
         primaryText={layer.name}
         leftIcon={<FontIcon className={`fa fa-${layer.icon}`} />}
+        key={layer.name}
       />
     ));
 
@@ -134,6 +135,8 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
         <NestedSelect
           layers={[layer]}
           onUpdate={this.handleSelectUpdate.bind(this, 0)}
+          initiallyOpen
+          key={layer.name}
         />
       </div>
     ));

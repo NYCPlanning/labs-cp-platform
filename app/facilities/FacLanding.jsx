@@ -44,13 +44,12 @@ const FacilitiesLandingPage = React.createClass({
                 <p>Read more about this dataset <a href="http://docs.capitalplanning.nyc/facdb/" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline' }}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" style={{ textDecoration: 'underline' }}>improve it.</a></p>
                 <Link to="/facilities/explorer"> <div className="btn btn-lg dcp-orange">View ALL Facilities <i className="fa fa-arrow-right" aria-hidden="true" /></div></Link>
                 <hr className="light" />
-
+                <h3 className="section-heading">Which facilities would you like to explore?</h3>
                 <SplashSelector />
               </div>
             </div>
           </div>
         </section>
-        
         <Footer />
       </div>
     );

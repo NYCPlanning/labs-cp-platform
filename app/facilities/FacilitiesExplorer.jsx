@@ -1,5 +1,4 @@
-// Explorer.jsx - Top level Component for the Facilities Explorer
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Jane from '../../jane-maps/src';
 import content from './content';
@@ -8,22 +7,19 @@ import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
 import FacilitiesJaneLayer from './facilitiesjanelayer';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
-import GrayOutsideNyc from '../janelayers/grayoutsidenyc';
-
 
 import appConfig from '../helpers/appConfig';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.func,
-    params: React.PropTypes.shape({
-      domain: React.PropTypes.string,
-    }).isRequired,
+    showModal: PropTypes.func,
+    location: PropTypes.obj,
   },
 
   getDefaultProps() {
     return {
       showModal: null,
+      location: null,
     };
   },
 
@@ -71,13 +67,14 @@ const FacilitiesExplorer = React.createClass({
         ImageryJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
-        GrayOutsideNyc,
         FacilitiesJaneLayer,
       ],
     };
 
     // Facilities Data Layer is composable, and will show different data/filters based on the route
     // const mode = this.props.params.domain ? this.props.params.domain : 'all';
+
+    const layers = this.props.location.state ? this.props.location.state.layers : null;
 
     return (
       <div className="full-screen">
@@ -87,9 +84,7 @@ const FacilitiesExplorer = React.createClass({
           search
           searchConfig={searchConfig}
           mapConfig={mapConfig}
-          context={{
-            layers: this.props.location.state.layers
-          }}
+          context={{ layers }}
         />
       </div>
     );

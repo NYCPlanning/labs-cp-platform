@@ -9,7 +9,6 @@ import PipelineJaneLayer from './pipelinejanelayer';
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
 import TransportationJaneLayer from '../janelayers/transportation';
-import GrayOutsideNyc from '../janelayers/grayoutsidenyc';
 import ImageryJaneLayer from '../janelayers/imagery';
 
 const PipeLineExplorer = React.createClass({
@@ -67,7 +66,6 @@ const PipeLineExplorer = React.createClass({
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
         PipelineJaneLayer,
-        GrayOutsideNyc,
       ],
     };
 

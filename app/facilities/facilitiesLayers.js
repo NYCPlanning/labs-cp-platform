@@ -4,12 +4,12 @@ const facilitiesLayers = [
     slug: 'health_and_human_services',
     color: '#BA68C8',
     subColor: '#f7e6f7',
+    icon: 'heart',
     children: [
       {
         name: 'Health Care',
         description: 'Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Alcoholism and Substance Abuse Services',
         color: '#b67eb7',
-        icon: 'heart',
         children: [
           {
             name: 'Hospitals and Clinics',
@@ -263,6 +263,7 @@ const facilitiesLayers = [
     slug: 'libraries_and_cultural_progams',
     color: '#80DEEA',
     subColor: '#E0F7FA',
+    icon: 'book',
     children: [
       {
         name: 'Libraries',
