@@ -46,7 +46,7 @@ const FacilitiesLandingPage = React.createClass({
                 <hr className="light" />
 
                 <SplashSelector />
-      
+
                 <Link to="/facilities/all"> <div className="btn btn-lg dcp-orange">View SELECTED Facilities <i className="fa fa-arrow-right" aria-hidden="true" /></div></Link>
               </div>
             </div>

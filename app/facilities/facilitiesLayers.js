@@ -9,6 +9,7 @@ const facilitiesLayers = [
         name: 'Health Care',
         description: 'Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Alcoholism and Substance Abuse Services',
         color: '#b67eb7',
+        icon: 'heart',
         children: [
           {
             name: 'Hospitals and Clinics',
@@ -86,6 +87,7 @@ const facilitiesLayers = [
     slug: 'education_child_welfare_and_youth',
     color: '#f7ca00',
     subColor: '#fff8dd',
+    icon: 'graduation-cap',
     children: [
       {
         name: 'Schools (K-12)',
@@ -210,6 +212,7 @@ const facilitiesLayers = [
     slug: 'parks_gardens_and_historical_sites',
     color: '#4CAF50',
     subColor: '#dfeddc',
+    icon: 'pagelines',
     children: [
       {
         name: 'Parks and Plazas',
@@ -302,6 +305,7 @@ const facilitiesLayers = [
     slug: 'public_safety_emergency_services_and_administration_of_justice',
     color: '#2979FF',
     subColor: '#BBDEFB',
+    icon: 'ambulance',
     children: [
       {
         name: 'Emergency Services',
@@ -355,6 +359,7 @@ const facilitiesLayers = [
     slug: 'core_infrastructure_and_transportation',
     color: '#78909C',
     subColor: '#e3eef2',
+    icon: 'bus',
     children: [
       {
         name: 'Solid Waste',
@@ -454,6 +459,7 @@ const facilitiesLayers = [
     slug: 'administration_of_government',
     color: '#da664f',
     subColor: 'rgba(251, 128, 114, 0.3)',
+    icon: 'bar-chart',
     children: [
       {
         name: 'Offices, Training, and Testing',

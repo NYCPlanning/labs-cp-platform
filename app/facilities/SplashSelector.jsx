@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
+import NestedSelect from './facilitiesjanelayer/NestedSelect2';
+import facilitiesLayers from './facilitiesLayers';
+
 import './SplashSelector.scss';
 
 const ThisSelectableList = makeSelectable(List);
@@ -49,7 +52,27 @@ const SelectableList = wrapState(ThisSelectableList);
 
 const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi-comp
 
-  getInitialState: () => ({ selectedIndex: 3 }),
+  getInitialState: () => ({
+    selectedIndex: 0,
+  }),
+
+  componentWillMount() {
+
+    // set checked to false on everything
+    const layers = facilitiesLayers;
+
+    layers.forEach((domain) => {
+      domain.checked = false;
+      domain.children.forEach((group) => {
+        group.checked = false;
+        group.children.forEach((subgroup) => {
+          subgroup.checked = false;
+        });
+      });
+    });
+
+    this.setState({ layers: facilitiesLayers });
+  },
 
   handleIndexChange(index) {
     this.setState({
@@ -57,8 +80,68 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     });
   },
 
+  handleSelectUpdate() {
+    this.processChecked()
+  },
+
+  // set indeterminate states, check/uncheck children, etc
+  processChecked() {
+    const layers = this.state.layers;
+
+    // set indeterminate states, start from the bottom and work up
+    layers.forEach((domain) => {
+      let domainChecked = 0;
+      let domainIndeterminate = 0;
+
+      domain.children.forEach((group) => {
+        let groupChecked = 0;
+
+        group.children.forEach((subgroup) => {
+          if (subgroup.checked) groupChecked += 1;
+        });
+
+        group.checked = (groupChecked === group.children.length);
+        group.indeterminate = !!((groupChecked < group.children.length && groupChecked > 0));
+
+        if (group.checked) domainChecked += 1;
+        if (group.indeterminate) domainIndeterminate += 1;
+      });
+
+      console.log(domainIndeterminate, domainChecked);
+
+      domain.checked = (domainChecked === domain.children.length);
+      domain.indeterminate = (domainIndeterminate > 0) || (domainChecked < domain.children.length);
+
+      console.log(domain.indeterminate, domain.checked);
+    });
+
+
+    this.setState({ layers });
+  },
+
   render() {
     const index = this.state.selectedIndex;
+
+    const layers = this.state.layers;
+
+    const layerTabs = layers.map((layer, i) => (
+      <ListItem
+        value={i}
+        primaryText={layer.name}
+        leftIcon={<FontIcon className="fa fa-heart" />}
+      />
+    ));
+
+    const layerContent = layers.map((layer, i) => (
+      <div
+        className={`content ${index !== i ? 'hidden' : ''}`}
+      >
+        <NestedSelect
+          layers={[layer]}
+          onUpdate={this.handleSelectUpdate.bind(this, 0)}
+        />
+      </div>
+    ));
 
     return (
       <div className="splash-selector">
@@ -70,48 +153,10 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
             display: 'inline-block',
           }}
         >
-          <ListItem
-            value={1}
-            primaryText="Health and Human Services"
-            leftIcon={<FontIcon className="fa fa-heart" />}
-          />
-          <ListItem
-            value={2}
-            primaryText="Education, Child Welfare, and Youth"
-            leftIcon={<FontIcon className="fa fa-graduation-cap" />}
-          />
-          <ListItem
-            value={3}
-            primaryText="Parks, Cultural, and Other Community Facilities"
-            leftIcon={<FontIcon className="fa fa-pagelines" />}
-          />
-          <ListItem
-            value={4}
-            primaryText="Public Safety, Emergency Services, and Administration of Justice"
-            leftIcon={<FontIcon className="fa fa-ambulance" />}
-          />
-          <ListItem
-            value={5}
-            primaryText="Core Infrastructure and Transportation"
-            leftIcon={<FontIcon className="fa fa-bus" />}
-          />
-          <ListItem
-            value={6}
-            primaryText="Administration of Government"
-            leftIcon={<FontIcon className="fa fa-bar-chart" />}
-          />
+          {layerTabs}
         </SelectableList>
         <div className="content-area">
-          <div
-            className={`content ${index !== 1 ? 'hidden' : ''}`}
-          >
-            Content 1
-          </div>
-          <div
-            className={`content ${index !== 2 ? 'hidden' : ''}`}
-          >
-            Content 2
-          </div>
+          {layerContent}
         </div>
       </div>
     );
