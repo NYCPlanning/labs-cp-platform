@@ -21,9 +21,25 @@
     input[type=checkbox] {
       top: 5px;
     } 
+
+    .fa {
+      right: 8px;
+      top: 6px;
+    }
   }
 
   label {
     font-weight: 300;
+    border-radius: 2px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .fa {
+    position: absolute;
+    right: 34px;
+    top: 9px;
   }
 }

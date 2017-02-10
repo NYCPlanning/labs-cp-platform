@@ -51,18 +51,23 @@ h1, h2, h3, h4, h5 {
 }
 
 .fa-info-circle {
-  color: #d96b27;
+  color: #8e8e8e;
+
 }
 
 .tooltip-inner {
-  color: #464646;
-  background-color: #ebebeb;
+  color: #fff;
+  background-color: #464646;
   text-align: left;
   font-size: 11px;
 }
 
 .tooltip.top .tooltip-arrow {
-  border-top-color: #ebebeb;
+  border-top-color: #464646;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color: #464646;
 }
 
 section {
