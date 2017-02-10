@@ -74,10 +74,6 @@ const facilitiesLayers = [
             name: 'Community Centers and Community School Programs',
             description: 'Community centers that provide multiple social services at one site',
           },
-          {
-            name: 'School-Based Drug Prevention Programs',
-            description: 'Substance Abuse Prevention and Intervention programs at schools',
-          },
         ],
       },
     ],
@@ -129,6 +125,10 @@ const facilitiesLayers = [
             name: 'Preschools for Students with Disabilities',
             description: 'Center specialized on preschool students with disabilities',
           },
+          {
+            name: 'Other Schools Serving Students with Disabilities',
+            description: 'Center specialized on preschool students with disabilities',
+          },
         ],
       },
       {
@@ -154,6 +154,10 @@ const facilitiesLayers = [
           {
             name: 'Child Nutrition',
             description: 'Summer and year-round child feeding sites',
+          },
+          {
+            name: 'School-Based Food Services',
+            description: 'Feed services located at schools',
           },
         ],
       },
@@ -261,7 +265,7 @@ const facilitiesLayers = [
   {
     name: 'Libraries and Cultural Programs',
     slug: 'libraries_and_cultural_progams',
-    color: '#80DEEA',
+    color: '#73E5F4',
     subColor: '#E0F7FA',
     icon: 'book',
     children: [
@@ -333,6 +337,10 @@ const facilitiesLayers = [
             description: 'NYPD and NYCHA police stations',
           },
           {
+            name: 'School-Based Public Safety Program',
+            description: 'Public safety program on a school campus',
+          },
+          {
             name: 'Other Public Safety',
             description: 'Other public safety related support centers',
           },
@@ -358,7 +366,7 @@ const facilitiesLayers = [
   {
     name: 'Core Infrastructure and Transportation',
     slug: 'core_infrastructure_and_transportation',
-    color: '#78909C',
+    color: '#8D8EAA',
     subColor: '#e3eef2',
     icon: 'bus',
     children: [
@@ -458,8 +466,8 @@ const facilitiesLayers = [
   {
     name: 'Administration of Government',
     slug: 'administration_of_government',
-    color: '#da664f',
-    subColor: 'rgba(251, 128, 114, 0.3)',
+    color: '#CBCBD6',
+    subColor: '#07284B',
     icon: 'bar-chart',
     children: [
       {

@@ -61,203 +61,199 @@ const config = {
     },
     {
       value: 'NYCACS',
-      label: 'New York City Administration for Childrens Services',
+      label: 'NYC Administration for Childrens Services',
     },
     {
       value: 'NYCBOE',
-      label: 'New York City Board of Elections',
+      label: 'NYC Board of Elections',
     },
     {
       value: 'NYCBSA',
-      label: 'New York City Board of Standards and Appeals',
+      label: 'NYC Board of Standards and Appeals',
     },
     {
       value: 'NYCBP-BX',
-      label: 'New York City Borough President - Bronx',
+      label: 'NYC Borough President - Bronx',
     },
     {
       value: 'NYCBP-BK',
-      label: 'New York City Borough President - Brooklyn',
+      label: 'NYC Borough President - Brooklyn',
     },
     {
       value: 'NYCBP-MN',
-      label: 'New York City Borough President - Manhattan',
+      label: 'NYC Borough President - Manhattan',
     },
     {
       value: 'NYCBP-QN',
-      label: 'New York City Borough President - Queens',
+      label: 'NYC Borough President - Queens',
     },
     {
       value: 'NYCBP-SI',
-      label: 'New York City Borough President - Staten Island',
+      label: 'NYC Borough President - Staten Island',
     },
     {
       value: 'NYCBIC',
-      label: 'New York City Business Integrity Commission',
+      label: 'NYC Business Integrity Commission',
     },
     {
       value: 'NYCCFB',
-      label: 'New York City Campaign Finance Board',
+      label: 'NYC Campaign Finance Board',
     },
     {
       value: 'NYCCEO',
-      label: 'New York City Center for Economic Opportunity',
+      label: 'NYC Center for Economic Opportunity',
     },
     {
       value: 'NYCCSC',
-      label: 'New York City Civil Service Commission',
+      label: 'NYC Civil Service Commission',
     },
     {
       value: 'NYCCCRB',
-      label: 'New York City Civilian Complaint Review Board',
+      label: 'NYC Civilian Complaint Review Board',
     },
     {
       value: 'NYCCCHR',
-      label: 'New York City Commission on Human Rights',
+      label: 'NYC Commission on Human Rights',
     },
     {
       value: 'NYCCB',
-      label: 'New York City Community Boards',
+      label: 'NYC Community Boards',
     },
     {
       value: 'NYCCOIB',
-      label: 'New York City Conflict of Interest Board',
+      label: 'NYC Conflict of Interest Board',
     },
     {
       value: 'NYCCOUNCIL',
-      label: 'New York City Council',
+      label: 'NYC City Council',
     },
     {
       value: 'NYCDFTA',
-      label: 'New York City Department for the Aging',
+      label: 'NYC Department for the Aging',
     },
     {
       value: 'NYCDOB',
-      label: 'New York City Department of Buildings',
+      label: 'NYC Department of Buildings',
     },
     {
       value: 'NYCDCP',
-      label: 'New York City Department of City Planning',
+      label: 'NYC Department of City Planning',
     },
     {
       value: 'NYCDCAS',
-      label: 'New York City Department of Citywide Administrative Services',
+      label: 'NYC Department of Citywide Administrative Services',
     },
     {
       value: 'NYCDCA',
-      label: 'New York City Department of Consumer Affairs',
+      label: 'NYC Department of Consumer Affairs',
     },
     {
       value: 'NYCDOC',
-      label: 'New York City Department of Correction',
+      label: 'NYC Department of Correction',
     },
     {
       value: 'NYCDCLA',
-      label: 'New York City Department of Cultural Affairs',
+      label: 'NYC Department of Cultural Affairs',
     },
     {
       value: 'NYCDDC',
-      label: 'New York City Department of Design and Construction',
+      label: 'NYC Department of Design and Construction',
     },
     {
       value: 'NYCDOE',
-      label: 'New York City Department of Education',
-    },
-    {
-      value: 'NYSED',
-      label: 'New York State Education Department',
+      label: 'NYC Department of Education',
     },
     {
       value: 'NYCDEP',
-      label: 'New York City Department of Environmental Protection',
+      label: 'NYC Department of Environmental Protection',
     },
     {
       value: 'NYCDOF',
-      label: 'New York City Department of Finance',
+      label: 'NYC Department of Finance',
     },
     {
       value: 'NYCDOHMH',
-      label: 'New York City Department of Health and Mental Hygiene',
+      label: 'NYC Department of Health and Mental Hygiene',
     },
     {
       value: 'NYCDHS',
-      label: 'New York City Department of Homeless Services',
+      label: 'NYC Department of Homeless Services',
     },
     {
       value: 'NYCHPD',
-      label: 'New York City Department of Housing Preservation and Development',
+      label: 'NYC Department of Housing Preservation and Development',
     },
     {
       value: 'NYCDOITT',
-      label: 'New York City Department of Information Technology and Telecommunications',
+      label: 'NYC Department of Information Technology and Telecommunications',
     },
     {
       value: 'NYCDOI',
-      label: 'New York City Department of Investigation',
+      label: 'NYC Department of Investigation',
     },
     {
       value: 'NYCDPR',
-      label: 'New York City Department of Parks and Recreation',
+      label: 'NYC Department of Parks and Recreation',
     },
     {
       value: 'NYCDOP',
-      label: 'New York City Department of Probation',
+      label: 'NYC Department of Probation',
     },
     {
       value: 'NYCDORIS',
-      label: 'New York City Department of Records and Information Services',
+      label: 'NYC Department of Records and Information Services',
     },
     {
       value: 'NYCDSNY',
-      label: 'New York City Department of Sanitation',
+      label: 'NYC Department of Sanitation',
     },
     {
       value: 'NYCSBS',
-      label: 'New York City Department of Small Business Services',
+      label: 'NYC Department of Small Business Services',
     },
     {
       value: 'NYCDOT',
-      label: 'New York City Department of Transportation',
+      label: 'NYC Department of Transportation',
     },
     {
       value: 'NYCDYCD',
-      label: 'New York City Department of Youth and Community Development',
+      label: 'NYC Department of Youth and Community Development',
     },
     {
       value: 'NYCDA-BX',
-      label: 'New York City District Attorney - Bronx ',
+      label: 'NYC District Attorney - Bronx ',
     },
     {
       value: 'NYCDA-BK',
-      label: 'New York City District Attorney - Brooklyn',
+      label: 'NYC District Attorney - Brooklyn',
     },
     {
       value: 'NYCDA-MN',
-      label: 'New York City District Attorney - Manhattan',
+      label: 'NYC District Attorney - Manhattan',
     },
     {
       value: 'NYCDA-SNP',
-      label: 'New York City District Attorney - Office Special Narcotics',
+      label: 'NYC District Attorney - Office Special Narcotics',
     },
     {
       value: 'NYCDA-QN',
-      label: 'New York City District Attorney - Queens',
+      label: 'NYC District Attorney - Queens',
     },
     {
       value: 'NYCDA-SI',
-      label: 'New York City District Attorney - Staten Island',
+      label: 'NYC District Attorney - Staten Island',
     },
     {
       value: 'NYCEDC',
-      label: 'New York City Economic Development Corporation',
+      label: 'NYC Economic Development Corporation',
     },
     {
       value: 'NYCFDNY',
-      label: 'New York City Fire Department',
+      label: 'NYC Fire Department',
     },
     {
       value: 'NYCHHC',
-      label: 'New York City Health and Hospitals Corporation',
+      label: 'NYC Health and Hospitals Corporation',
     },
     {
       value: 'NYCHA',
@@ -265,111 +261,111 @@ const config = {
     },
     {
       value: 'NYCHRA/DSS',
-      label: 'New York City Human Resources Administration/Department of Social Services',
+      label: 'NYC Human Resources Administration/Department of Social Services',
     },
     {
       value: 'NYCIBO',
-      label: 'New York City Independent Budget Office',
+      label: 'NYC Independent Budget Office',
     },
     {
       value: 'NYCLPC',
-      label: 'New York City Landmarks Preservation Commission',
+      label: 'NYC Landmarks Preservation Commission',
     },
     {
       value: 'NYCLAW',
-      label: 'New York City Law Department',
+      label: 'NYC Law Department',
     },
     {
       value: 'NYCSBS',
-      label: 'New York City New York City Department of Small Business Services',
+      label: 'NYC NYC Department of Small Business Services',
     },
     {
       value: 'NYCOATH',
-      label: 'New York City Office of Administrative Trials and Hearings',
+      label: 'NYC Office of Administrative Trials and Hearings',
     },
     {
       value: 'NYCOCB',
-      label: 'New York City Office of Collective Bargaining',
+      label: 'NYC Office of Collective Bargaining',
     },
     {
       value: 'NYCOCA',
-      label: 'New York City Office of Court Administration',
+      label: 'NYC Office of Court Administration',
     },
     {
       value: 'NYCEM',
-      label: 'New York City Office of Emergency Management',
+      label: 'NYC Office of Emergency Management',
     },
     {
       value: 'NYCOLR',
-      label: 'New York City Office of Labor Relations',
+      label: 'NYC Office of Labor Relations',
     },
     {
       value: 'NYCOMB',
-      label: 'New York City Office of Management and Budget',
+      label: 'NYC Office of Management and Budget',
     },
     {
       value: 'NYCOPA',
-      label: 'New York City Office of Payroll Administration',
+      label: 'NYC Office of Payroll Administration',
     },
     {
       value: 'NYCPA',
-      label: 'New York City Office of Public Advocate',
+      label: 'NYC Office of Public Advocate',
     },
     {
       value: 'NYCACT',
-      label: 'New York City Office of the Actuary',
+      label: 'NYC Office of the Actuary',
     },
     {
       value: 'NYCCLERK',
-      label: 'New York City Office of the City Clerk',
+      label: 'NYC Office of the City Clerk',
     },
     {
       value: 'NYCCOMP',
-      label: 'New York City Office of the Comptroller',
+      label: 'NYC Office of the Comptroller',
     },
     {
       value: 'NYCMO',
-      label: 'New York City Office of the Mayor',
+      label: 'NYC Office of the Mayor',
     },
     {
       value: 'NYCOCME',
-      label: 'New York City Office of the Medical Examiner',
+      label: 'NYC Office of the Medical Examiner',
     },
     {
       value: 'NYPD',
-      label: 'New York City Police Department',
+      label: 'NYC Police Department',
     },
     {
       value: 'NYCPA-BX',
-      label: 'New York City Public Administrators Office - Bronx',
+      label: 'NYC Public Administrators Office - Bronx',
     },
     {
       value: 'NYCPA-BK',
-      label: 'New York City Public Administrators Office - Brooklyn',
+      label: 'NYC Public Administrators Office - Brooklyn',
     },
     {
       value: 'NYCPA-MN',
-      label: 'New York City Public Administrators Office - Manhattan',
+      label: 'NYC Public Administrators Office - Manhattan',
     },
     {
       value: 'NYCPA-QN',
-      label: 'New York City Public Administrators Office - Queens',
+      label: 'NYC Public Administrators Office - Queens',
     },
     {
       value: 'NYCPA-SI',
-      label: 'New York City Public Administrators Office - Staten Island',
+      label: 'NYC Public Administrators Office - Staten Island',
     },
     {
       value: 'NYCTAXCM',
-      label: 'New York City Tax Commission',
+      label: 'NYC Tax Commission',
     },
     {
       value: 'NYCTLC',
-      label: 'New York City Taxi and Limousine Commission',
+      label: 'NYC Taxi and Limousine Commission',
     },
     {
-      value: 'NYCUNKN',
-      label: 'New York City Unknown',
+      value: 'NYC-Unknown',
+      label: 'NYC Unknown',
     },
     {
       value: 'NYPD',
@@ -381,47 +377,47 @@ const config = {
     },
     {
       value: 'NYSDOCCS',
-      label: 'New York State Department of Corrections and Community Supervision',
+      label: 'NYS Department of Corrections and Community Supervision',
     },
     {
       value: 'NYSDEC',
-      label: 'New York State Department of Environmental Conservation',
+      label: 'NYS Department of Environmental Conservation',
     },
     {
       value: 'NYSDOH',
-      label: 'New York State Department of Health',
+      label: 'NYS Department of Health',
     },
     {
       value: 'NYSDOT',
-      label: 'New York State Department of Transportation',
+      label: 'NYS Department of Transportation',
     },
     {
       value: 'NYSED',
-      label: 'New York State Education Department',
+      label: 'NYS Education Department',
     },
     {
       value: 'NYSOPWDD',
-      label: 'New York State Office for People With Developmental Disabilities',
+      label: 'NYS Office for People With Developmental Disabilities',
     },
     {
       value: 'NYSOASAS',
-      label: 'New York State Office of Alcoholism and Substance Abuse Services',
+      label: 'NYS Office of Alcoholism and Substance Abuse Services',
     },
     {
       value: 'NYSOCFS',
-      label: 'New York State Office of Children and Family Services',
+      label: 'NYS Office of Children and Family Services',
     },
     {
       value: 'NYSOMH',
-      label: 'New York State Office of Mental Health',
+      label: 'NYS Office of Mental Health',
     },
     {
       value: 'NYSOPRHP',
-      label: 'New York State Office of Parks, Recreation and Historic Preservation',
+      label: 'NYS Office of Parks, Recreation and Historic Preservation',
     },
     {
       value: 'NYCOURTS',
-      label: 'New York State Unified Court System',
+      label: 'NYS Unified Court System',
     },
     {
       value: 'Non-public',
@@ -430,10 +426,6 @@ const config = {
     {
       value: 'PANYNJ',
       label: 'Port Authority of New York and New Jersey',
-    },
-    {
-      value: 'Non-public',
-      label: 'Private',
     },
     {
       value: 'QPL',
@@ -449,23 +441,19 @@ const config = {
     },
     {
       value: 'USCG',
-      label: 'United States Coast Guard',
+      label: 'US Coast Guard',
     },
     {
       value: 'USCOURTS',
-      label: 'United States Courts',
+      label: 'US Courts',
     },
     {
       value: 'USDOT',
-      label: 'United States Department of Transportation',
+      label: 'US Department of Transportation',
     },
     {
       value: 'USNPS',
-      label: 'United States National Park Service',
-    },
-    {
-      value: 'NYC-Unknown',
-      label: 'Unspecified City Agency',
+      label: 'National Park Service',
     },
   ],
 };
