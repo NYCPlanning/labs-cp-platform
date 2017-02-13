@@ -200,6 +200,7 @@ const FacilityPage = React.createClass({
         <div className={'col-md-6'}>
           <div style={{ marginBottom: '15px', marginTop: '15px' }}>
             <Card style={CardStyles} className="clearfix">
+              <CardHeader title="Property Details" />
               <CardText>
                 <div className="row equal">
                   <div className={'col-md-6'}>
@@ -219,48 +220,35 @@ const FacilityPage = React.createClass({
                     </div>
                   </div>
                 </div>
-              </CardText>
-            </Card>
 
-            <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-              <Card style={CardStyles} className="clearfix">
-                <CardText>
-                  <div className="row equal">
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Facility Size
-                          {childcareTooltip()}
-                        </div>
-                        <div className="panel-body">
-                          {d.capacity ? usageList(d.capacity, d.capacitytype) : usageList(d.area, d.areatype) }
-                        </div>
+                <div className="row equal">
+                  <div className={'col-md-6'}>
+                    <div className="panel panel-default">
+                      <div className="panel-heading">Facility Size
+                        {childcareTooltip()}
                       </div>
-                    </div>
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Utilization</div>
-                        <div className="panel-body">
-                          {usageList(d.utilization)}
-                        </div>
+                      <div className="panel-body">
+                        {d.capacity ? usageList(d.capacity, d.capacitytype) : usageList(d.area, d.areatype) }
                       </div>
                     </div>
                   </div>
-                </CardText>
-              </Card>
-            </div>
-          </div>
+                  <div className={'col-md-6'}>
+                    <div className="panel panel-default">
+                      <div className="panel-heading">Utilization</div>
+                      <div className="panel-body">
+                        {usageList(d.utilization)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles} initiallyExpanded>
-                <CardHeader title="Property Details" actAsExpander showExpandableButton />
-                <CardText expandable className="property-detail-container">
+                <div className="row property-detail-container">
                   <div className="property-detail-blocks"><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4><h4><small>BBL</small></h4></div>
                   <div className="property-detail-blocks"><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4><h4><small>BIN</small></h4></div>
                   <div className="property-detail-blocks"><h4>{d.propertytype ? d.propertytype : 'Privately Owned'}</h4></div>
-                </CardText>
-              </Card>
-            </div>
+                </div>
+              </CardText>
+            </Card>
           </div>
 
           <div className={'row'} style={{ marginBottom: '15px' }}>

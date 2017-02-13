@@ -9,6 +9,14 @@
     flex:1 1 auto;
   }
 
+  .row {
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
   .panel {
     margin: 0;
     width: 100%;
