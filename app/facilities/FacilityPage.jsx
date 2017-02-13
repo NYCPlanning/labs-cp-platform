@@ -255,8 +255,8 @@ const FacilityPage = React.createClass({
               <Card style={CardStyles} initiallyExpanded>
                 <CardHeader title="Property Details" actAsExpander showExpandableButton />
                 <CardText expandable className="property-detail-container">
-                  <div className="property-detail-blocks"><h4>{asList(d.bbl)}</h4><h4><small>BBL</small></h4></div>
-                  <div className="property-detail-blocks"><h4>{asList(d.bin)}</h4><h4><small>BIN</small></h4></div>
+                  <div className="property-detail-blocks"><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4><h4><small>BBL</small></h4></div>
+                  <div className="property-detail-blocks"><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4><h4><small>BIN</small></h4></div>
                   <div className="property-detail-blocks"><h4>{d.propertytype ? d.propertytype : 'Privately Owned'}</h4></div>
                 </CardText>
               </Card>
