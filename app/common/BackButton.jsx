@@ -8,14 +8,20 @@ const BackButton = props => (
     <RaisedButton
       label={props.location.state ? 'Back to Map' : props.defaultText}
       icon={props.location.state ?
-        <FontIcon className="fa fa-chevron-left" style={{ fontSize: '16px' }} /> :
+        <FontIcon
+          className="fa fa-chevron-left"
+          style={{
+            fontSize: '16px',
+            marginLeft: '0px',
+            paddingLeft: '12px',
+          }}
+        /> :
         <FontIcon className="fa fa-map" style={{ fontSize: '16px' }} />
       }
-      style={{
-        position: 'absolute',
-        top: '32px',
-        right: '20px',
-      }}
+      // style={{
+      //   position: 'relative',
+      //   marginTop: '32px',
+      // }}
     />
   </Link>
 );
