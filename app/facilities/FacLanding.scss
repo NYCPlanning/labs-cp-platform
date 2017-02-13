@@ -3,6 +3,17 @@
     margin: 0;
   }
 
+  .equal, .equal > div[class*='col-'] {
+    display: -webkit-flex;
+    display: flex;
+    flex:1 1 auto;
+  }
+
+  .panel {
+    margin: 0;
+    width: 100%;
+  }
+
   .subtext {
     color: #b3b3b3;
     font-weight: 200;
@@ -25,6 +36,7 @@
 
   ul {
     padding: 0;
+    margin: 0;
   }
 
   li {
@@ -43,19 +55,17 @@
 
   .usage-list {
     h3 {
-      text-align: left;
       display: inline-block;
     }
 
     h4 {
-      text-align: right;
       display: inline-block;
-      width: 50%;
+      margin-left: 15px;
     }
 
     span.label {
       right: 10px;
-      bottom: 4px;
+      bottom: 3px;
     }
   }
 
@@ -65,11 +75,13 @@
     }
   }
 
-  .classification {
-    .hierarchy {
-      .fa {
-        margin: 0 5px;
-      }
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+
+    li {
+      margin: 0;
     }
   }
 }
