@@ -11,6 +11,7 @@ import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
 
 import DetailPage from '../common/DetailPage';
+import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
@@ -171,11 +172,22 @@ const FacilityPage = React.createClass({
     return (
       <div className="facility-page">
         <div className="col-md-12">
-          <h1>{d.facilityname}</h1>
-          <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-            {d.facilitytype}
-          </span>
-          <h4><small>{d.address}</small></h4>
+          <div className={'row'}>
+            <div className="col-sm-9">
+              <h1>{d.facilityname}</h1>
+              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                {d.facilitytype}
+              </span>
+              <h4><small>{d.address}</small></h4>
+            </div>
+            <div className="col-sm-3">
+              <BackButton
+                location={this.props.location}
+                defaultText="Capital Projects Map"
+                defaultLink="/capitalprojects"
+              />
+            </div>
+          </div>
         </div>
 
         <div className={'col-md-6'}>
