@@ -4,6 +4,8 @@ import numeral from 'numeral';
 
 import agencies from '../agencies';
 
+import './ListItem.scss';
+
 const Item = (props) => {
   const d = props.feature.properties;
 
