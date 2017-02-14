@@ -173,6 +173,8 @@ const LayerSelector = React.createClass({
       checkedStatus = null;
     }
 
+    console.log('setting layers state', layers)
+
     this.setState({
       layers,
       checked: checkedStatus,

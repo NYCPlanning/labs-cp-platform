@@ -52,7 +52,7 @@ const NestedSelect = React.createClass({
       layer.checked = !layer.checked;
     }
 
-    this.props.onUpdate(layers);
+    this.props.onUpdate();
   },
 
   // recursive list item generator

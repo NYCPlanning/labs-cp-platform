@@ -9,9 +9,7 @@ const Checkbox = props => (
       onChange={props.onChange}
       ref={elem => elem && (elem.indeterminate = props.indeterminate)}
     />
-    <span
-      onClick={props.onChange}
-    />
+    <span />
   </div>
 );
 
