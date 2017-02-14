@@ -1,15 +1,12 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Moment from 'moment';
 
 import LayerSelector from './LayerSelector';
 import Download from '../../common/Download';
 import content from '../content';
 
 import defaultLayerConfig from './defaultlayerconfig';
-
-import Carto from '../../helpers/carto';
 
 const Facilities = React.createClass({
   propTypes: {

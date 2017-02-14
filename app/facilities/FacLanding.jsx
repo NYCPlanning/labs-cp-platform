@@ -33,7 +33,7 @@ const FacilitiesLandingPage = React.createClass({
     return (
 
       <div className="facilities-landing fluid-content">
-        <section className="header-area" id="about" style={{ backgroundImage: 'url(/img/facilities_landing_background.png)', padding: '60px' }}>
+        <section className="header-area" id="about">
           <div className="container">
             <div className="row">
               <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', opacity: '0.9', padding: '40px' }}>
