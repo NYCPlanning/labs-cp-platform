@@ -3,13 +3,16 @@ import React from 'react';
 const Checkbox = props => (
   <div className="checkbox-container">
     <input
+      id={props.value}
       type="checkbox"
       value={props.value}
       checked={props.checked}
       onChange={props.onChange}
       ref={elem => elem && (elem.indeterminate = props.indeterminate)}
     />
-    <span />
+    <label
+      htmlFor={props.value}
+    />
   </div>
 );
 

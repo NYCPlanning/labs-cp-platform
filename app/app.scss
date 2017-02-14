@@ -293,7 +293,7 @@ body:after {
       display: none;
     }
 
-    input[type="checkbox"] + span {
+    input[type="checkbox"] + label {
       display:inline-block;
       vertical-align:middle;  
       width:20px;
@@ -301,15 +301,15 @@ body:after {
       background: url('/img/checkbox_sprites.png') -42px top no-repeat;
     }
 
-    input[type="checkbox"] + span:hover {
+    input[type="checkbox"] + label:hover {
       cursor:pointer;
     }
 
-    input[type="checkbox"]:checked + span {
+    input[type="checkbox"]:checked + label {
       background: url('/img/checkbox_sprites.png') 0px top no-repeat;
     }
 
-    input[type="checkbox"]:indeterminate + span {
+    input[type="checkbox"]:indeterminate + label {
       background: url('/img/checkbox_sprites.png') -21px top no-repeat;
     }
   }
