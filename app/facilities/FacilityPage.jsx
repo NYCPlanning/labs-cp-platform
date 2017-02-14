@@ -9,13 +9,13 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
-
-import DetailPage from '../common/DetailPage';
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
+
+import '../app.scss';
 
 
 const FacilityPage = React.createClass({
@@ -173,19 +173,22 @@ const FacilityPage = React.createClass({
       <div className="facility-page">
         <div className="col-md-12">
           <div className={'row'}>
-            <div className="col-sm-9">
-              <h1>{d.facilityname}</h1>
-              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                {d.facilitytype}
-              </span>
-              <h4><small>{d.address}</small></h4>
-            </div>
-            <div className="col-sm-3">
+            <div
+              className="button-container col-md-3 col-md-push-9"
+              style={{ textAlign: 'right' }}
+            >
               <BackButton
                 location={this.props.location}
                 defaultText="Capital Projects Map"
                 defaultLink="/capitalprojects"
               />
+            </div>
+            <div className="col-md-9 col-md-pull-3">
+              <h1>{d.facilityname}</h1>
+              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                {d.facilitytype}
+              </span>
+              <h4><small>{d.address}</small></h4>
             </div>
           </div>
         </div>
@@ -296,14 +299,9 @@ const FacilityPage = React.createClass({
     const content = (this.state.data && this.state.sources) ? this.renderContent(this.state) : null;
 
     return (
-      <DetailPage
-        location={this.props.location}
-        defaultText="Facilities Map"
-        defaultLink="/facilities/all"
-        feedback
-      >
+      <div className="fluid-content display-content">
         {content}
-      </DetailPage>
+      </div>
     );
   },
 
