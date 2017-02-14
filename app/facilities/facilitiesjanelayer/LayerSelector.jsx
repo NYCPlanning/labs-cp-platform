@@ -13,9 +13,6 @@ import config from './config';
 import facilitiesLayers from '../facilitiesLayers';
 import Carto from '../../helpers/carto';
 
-import './LayerSelector.scss';
-
-
 const LayerSelector = React.createClass({
   propTypes: {
     updateSQL: PropTypes.func.isRequired,
@@ -294,11 +291,7 @@ const LayerSelector = React.createClass({
           units={'facilities'}
         />
 
-        <Subheader
-          style={{
-            paddingTop: '12px',
-          }}
-        >
+        <Subheader>
           Oversight Agency
           <InfoIcon text="The agency that funds or oversees this facility" />
         </Subheader>

@@ -6,96 +6,327 @@ import appConfig from '../../helpers/appConfig';
 
 
 const layerConfig = {
-  subway_lines: {
+  subways: {
     sources: [
       {
         id: 'subway_lines',
-        type: 'cartoraster',
-
-        options: {
-          carto_user: appConfig.carto_user,
-          carto_domain: appConfig.carto_domain,
-          cartocss: `
-            #doitt_subwaylines {
-                 line-width: 2;
-                 line-opacity:0.9;
-              }
-
-              #doitt_subwaylines[rt_symbol="1"] {
-                 line-color: #EE352E;
-              }
-              #doitt_subwaylines[rt_symbol="4"] {
-                 line-color: #00933C;
-              }
-              #doitt_subwaylines[rt_symbol="7"] {
-                 line-color: #B933AD ;
-              }
-              #doitt_subwaylines[rt_symbol="A"] {
-                 line-color: #0039A6 ;
-              }
-              #doitt_subwaylines[rt_symbol="B"] {
-                 line-color: #FF6319 ;
-              }
-              #doitt_subwaylines[rt_symbol="G"] {
-                 line-color: #6CBE45 ;
-              }
-              #doitt_subwaylines[rt_symbol="J"] {
-                 line-color: #996633 ;
-              }
-              #doitt_subwaylines[rt_symbol="L"] {
-                 line-color: #A7A9AC ;
-              }
-              #doitt_subwaylines[rt_symbol="N"] {
-                 line-color: #FCCC0A ;
-              }
-              #doitt_subwaylines[rt_symbol="SI"] {
-                 line-color: #0F3B82 ;
-              }`,
-          sql: 'select * from doitt_subwaylines',
-        },
+        type: 'geojson',
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20doitt_subwaylines&format=geojson`,
+      },
+      {
+        id: 'subway_stations',
+        type: 'geojson',
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20doitt_subwaystations&format=geojson`,
       },
     ],
     mapLayers: [
       {
-        id: 'subway_lines',
-        type: 'raster',
+        id: 'subway_green',
+        type: 'line',
         source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            '4',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(0, 147, 60, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_yellow',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            'N',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(252, 204, 10, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_gray',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            'L',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(167, 169, 172, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_brown',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            'J',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(153, 102, 51, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_light_green',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            'G',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(108, 190, 69, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_orange',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            'B',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(255, 99, 25, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_blue',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'any',
+          [
+            '==',
+            'rt_symbol',
+            'A',
+          ],
+          [
+            '==',
+            'rt_symbol',
+            'SI',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(0, 57, 166, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_purple',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            '7',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(185, 51, 173, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_red',
+        type: 'line',
+        source: 'subway_lines',
+        filter: [
+          'all',
+          [
+            '==',
+            'rt_symbol',
+            '1',
+          ],
+        ],
+        paint: {
+          'line-color': 'rgba(238, 53, 46, 1)',
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'subway_stations',
+        type: 'circle',
+        source: 'subway_stations',
+        minzoom: 12,
+        paint: {
+          'circle-color': 'rgba(255, 255, 255, 1)',
+          'circle-opacity': 1,
+          'circle-radius': {
+            stops: [
+              [
+                10,
+                2,
+              ],
+              [
+                14,
+                5,
+              ],
+            ],
+          },
+          'circle-stroke-width': 1,
+          'circle-pitch-scale': 'map',
+        },
+      },
+      {
+        id: 'subway_stations_labels',
+        type: 'symbol',
+        source: 'subway_stations',
+        minzoom: 14,
+        layout: {
+          'text-field': '{name}',
+          'symbol-placement': 'point',
+          'symbol-spacing': 250,
+          'symbol-avoid-edges': false,
+          'text-size': 14,
+          'text-anchor': 'center',
+        },
+        paint: {
+          'text-halo-color': 'rgba(255, 255, 255, 1)',
+          'text-halo-width': 1,
+          'text-translate': [
+            1,
+            20,
+          ],
+        },
       },
     ],
   },
 
-  subway_stations: {
-    sources: [
-      {
-        id: 'subway_stations',
-        type: 'cartoraster',
-        options: {
-          carto_user: appConfig.carto_user,
-          carto_domain: appConfig.carto_domain,
-          cartocss: `
-            #doitt_subwaystations{
-              marker-fill-opacity: 0.9;
-              marker-line-color: #000000;
-              marker-line-width: 1;
-              marker-line-opacity: 1;
-              marker-placement: point;
-              marker-type: ellipse;
-              marker-width: 5;
-              marker-fill: #FFFFFF;
-              marker-allow-overlap: true;
-            }`,
-          sql: 'select * from doitt_subwaystations',
-        },
-      },
-    ],
-    mapLayers: [
-      {
-        id: 'subway_stations',
-        type: 'raster',
-        source: 'subway_stations',
-      },
-    ],
-  },
+
 };
 
 const Transportation = React.createClass({
@@ -105,7 +336,9 @@ const Transportation = React.createClass({
 
   getInitialState() {
     return ({
-      activeCheckboxes: ['subway_lines'],
+      activeCheckboxes: [
+        'subways',
+      ],
     });
   },
 
@@ -153,15 +386,11 @@ const Transportation = React.createClass({
               <h4>Transportation Layers</h4>
 
               <Checkbox
-                label="Subway Lines"
-                checked={this.state.activeCheckboxes.includes('subway_lines')}
-                onCheck={this.handleCheck.bind(this, 'subway_lines')}
+                label="Subways"
+                checked={this.state.activeCheckboxes.includes('subways')}
+                onCheck={this.handleCheck.bind(this, 'subways')}
               />
-              <Checkbox
-                label="Subway Stations"
-                checked={this.state.activeCheckboxes.includes('subway_stations')}
-                onCheck={this.handleCheck.bind(this, 'subway_stations')}
-              />
+
             </div>
           </Tab>
           <Tab label="About">

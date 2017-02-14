@@ -1,15 +1,12 @@
 import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Moment from 'moment';
 
 import LayerSelector from './LayerSelector';
 import Download from '../../common/Download';
 import content from '../content';
 
 import defaultLayerConfig from './defaultlayerconfig';
-
-import Carto from '../../helpers/carto';
 
 const Facilities = React.createClass({
   propTypes: {
@@ -62,42 +59,20 @@ const Facilities = React.createClass({
   // updates the layerconfig and sends it up to Jane
   renderLegend() {
     const self = this;
-    const sql = `
-      WITH temp AS (
-        SELECT
-        unnest(string_to_array(datesourceupdated,',')) as date
-        FROM cpadmin.facilities
-        WHERE datesourceupdated NOT LIKE '%NULL%'
-      )
 
-      SELECT
-      min(date::date) as min,
-      max(date::date) as max
-      FROM temp
-    `;
+    const legendContent = (
+      <div className="legendSection">
+        <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#limitations-and-disclaimers">Read more</a>.</p>
+      </div>
+    );
 
-    Carto.SQL(sql, 'json')
-      .then((data) => {
-        const range = {
-          min: Moment(data[0].min).format('MM/DD/YYYY'),
-          max: Moment(data[0].max).format('MM/DD/YYYY'),
-        };
+    const newLayer = update(self.props.layer, {
+      legend: {
+        $set: legendContent,
+      },
+    });
 
-        const legendContent = (
-          <div className="legendSection">
-            <p>Click on the map for facility details</p>
-            <p>Data current as of {range.min} - {range.max}</p>
-          </div>
-        );
-
-        const newLayer = update(self.props.layer, {
-          legend: {
-            $set: legendContent,
-          },
-        });
-
-        this.props.onUpdate('facilities', newLayer);
-      });
+    this.props.onUpdate('facilities', newLayer);
   },
 
   render() {

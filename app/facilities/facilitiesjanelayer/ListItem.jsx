@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 
 import colors from '../colors';
 
+import './ListItem.scss';
+
 const Item = (props) => {
   const d = props.feature.properties;
 

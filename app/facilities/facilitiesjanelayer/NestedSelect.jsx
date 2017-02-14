@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 
+import InfoIcon from '../../common/InfoIcon';
 import Checkbox from './Checkbox';
 
 import './NestedSelect.scss';
@@ -81,24 +82,26 @@ const NestedSelect = React.createClass({
           },
           {
             background: '#ececec',
-            padding: '10px 16px 10px 34px',
+            padding: '10px 58px 10px 34px',
             marginBottom: '2px',
           },
           {
             fontSize: '12px',
             marginBottom: 0,
-            padding: '3px 5px 3px 34px',
+            padding: '3px 24px 3px 34px',
           },
         ];
 
         const style = styles[address.length];
+
+        const listItemText = item.description ? <div><p>{item.name}</p><InfoIcon text={item.description} /></div> : item.name;
 
         if (item.children) {
           const children = item.children ? this.composeListItems(item.children, newAddress) : null;
 
           return (
             <ListItem
-              primaryText={item.name}
+              primaryText={listItemText}
               style={style}
               key={`item${newAddress.join('')}`}
               leftCheckbox={checkbox}
@@ -112,7 +115,7 @@ const NestedSelect = React.createClass({
 
         return (
           <ListItem
-            primaryText={item.name}
+            primaryText={listItemText}
             style={style}
             className="subgroup"
             key={`item${newAddress.join('')}`}

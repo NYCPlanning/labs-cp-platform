@@ -1,9 +1,27 @@
 .nested-select {
   input[type=checkbox] {
+    display: none;
+  }
+
+  input[type="checkbox"] + span {
+    display:inline-block;
     position: absolute;
-    top: 11px;
-    left: 12px;
-    margin: 0;
+    width:20px;
+    height:20px;
+    margin:-2px 10px 0 0;
+    vertical-align:middle;
+    cursor:pointer;
+    left: 6px;
+    top: 9px;
+    background: url('/img/checkbox_sprites.png') -42px top no-repeat;
+  }
+
+  input[type="checkbox"]:checked + span {
+    background: url('/img/checkbox_sprites.png') 0px top no-repeat;
+  }
+
+  input[type="checkbox"]:indeterminate + span {
+    background: url('/img/checkbox_sprites.png') -21px top no-repeat;
   }
 
   /*override mui styles for listitem*/
@@ -19,11 +37,31 @@
 
   .subgroup {
     input[type=checkbox] {
-      top: 5px;
+      display: none;
     } 
+
+    input[type="checkbox"] + span {
+      top: 3px;
+    }
+
+    .fa {
+      right: 8px;
+      top: 6px;
+    }
   }
 
   label {
     font-weight: 300;
+    border-radius: 2px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .fa {
+    position: absolute;
+    right: 34px;
+    top: 9px;
   }
 }
