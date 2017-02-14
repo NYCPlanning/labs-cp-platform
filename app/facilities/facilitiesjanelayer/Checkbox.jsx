@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Checkbox = props => (
-  <div>
+  <div className="checkbox-container">
     <input
       type="checkbox"
       value={props.value}
@@ -9,7 +9,9 @@ const Checkbox = props => (
       onChange={props.onChange}
       ref={elem => elem && (elem.indeterminate = props.indeterminate)}
     />
-    <span />
+    <span
+      onClick={props.onChange}
+    />
   </div>
 );
 

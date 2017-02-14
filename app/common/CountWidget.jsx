@@ -19,7 +19,7 @@ const CountWidget = (props) => {
   } else {
     countText = (
       <span>
-        <span className={`bigNumber ${selectedCount === '0' ? 'zero' : ''}`}>{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {props.units} showing
+        <span className={`bigNumber ${selectedCount === '0' ? 'zero' : ''}`}>{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {props.units}
       </span>
     );
   }

@@ -146,39 +146,42 @@ const AdminBoundaries = React.createClass({
         <Tabs className="sidebar-tabs">
           <Tab label="Data">
             <div className="sidebar-tab-content">
-              <h4>Choose a Boundary Layer</h4>
+              <div className="padded">
+                <h4>Choose a Boundary Layer</h4>
 
-              <RadioButtonGroup
-                name="adminboundary"
-                onChange={this.handleChange}
-                valueSelected={this.state.value}
-              >
-                <RadioButton
-                  value="cd"
-                  label="Community Districts"
-                />
+                <RadioButtonGroup
+                  name="adminboundary"
+                  onChange={this.handleChange}
+                  valueSelected={this.state.value}
+                >
+                  <RadioButton
+                    value="cd"
+                    label="Community Districts"
+                  />
 
-                <RadioButton
-                  value="nta"
-                  label="Neighborhood Tabulation Areas"
-                />
+                  <RadioButton
+                    value="nta"
+                    label="Neighborhood Tabulation Areas"
+                  />
 
-                <RadioButton
-                  value="schooldistricts"
-                  label="School Districts"
-                />
+                  <RadioButton
+                    value="schooldistricts"
+                    label="School Districts"
+                  />
 
-              </RadioButtonGroup>
+                </RadioButtonGroup>
+              </div>
             </div>
           </Tab>
           <Tab label="About">
             <div className="sidebar-tab-content">
-              <h4>Administrative Boundaries</h4>
-              <p>This data layer contains several Administrative Boundary types relevant to New York City.  Most are available from The Department of City Planning&apos;s <a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple Open Data Site</a>.</p>
+              <div className="padded">
+                <h4>Administrative Boundaries</h4>
+                <p>This data layer contains several Administrative Boundary types relevant to New York City.  Most are available from The Department of City Planning&apos;s <a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple Open Data Site</a>.</p>
+              </div>
             </div>
           </Tab>
         </Tabs>
-
       </div>
     );
   },
