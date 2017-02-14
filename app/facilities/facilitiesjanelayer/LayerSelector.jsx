@@ -291,29 +291,20 @@ const LayerSelector = React.createClass({
           units={'facilities'}
         />
         <div className="scroll-container">
-          <Subheader>
-            Oversight Agency
-            <InfoIcon text="The agency that funds or oversees this facility" />
-          </Subheader>
-
           <ListItem
             disabled
             style={listItemStyle}
           >
             <Select
               multi
-              placeholder="Search and Select Oversight Agencies"
+              placeholder="Oversight Agencies"
               value={this.state.filterDimensions.oversightabbrev}
               name="form-field-name"
               options={config.agencies}
               onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
             />
+            <InfoIcon text="The agency that funds or oversees this facility" />
           </ListItem>
-
-          <Subheader>
-            Operator Type
-            <InfoIcon text="The type of entity operating the facility" />
-          </Subheader>
 
           <ListItem
             disabled
@@ -321,18 +312,14 @@ const LayerSelector = React.createClass({
           >
             <Select
               multi
-              placeholder="Search and Select Operator Types"
+              placeholder="Operator Types"
               value={this.state.filterDimensions.operatortype}
               name="form-field-name"
               options={config.operatorTypes}
               onChange={this.updateFilterDimension.bind(this, 'operatortype')}
             />
+            <InfoIcon text="The type of entity operating the facility" />
           </ListItem>
-
-          <Subheader>
-            Property Type
-            <InfoIcon text="Indicates whether the City owns or directly leases the property" />
-          </Subheader>
 
           <ListItem
             disabled
@@ -340,12 +327,13 @@ const LayerSelector = React.createClass({
           >
             <Select
               multi
-              placeholder="Search and Select Property Types"
+              placeholder="Property Types"
               value={this.state.filterDimensions.propertytype}
               name="form-field-name"
               options={config.propertyTypes}
               onChange={this.updateFilterDimension.bind(this, 'propertytype')}
             />
+            <InfoIcon text="Indicates whether the City owns or directly leases the property" />
           </ListItem>
 
           <Subheader>
