@@ -43,7 +43,7 @@ const LayerSelector = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'uid, the_geom_webmercator, domain, facilitygroup, facilitysubgroup, facilityname, address, facilitytype',
+      columns: 'uid, the_geom_webmercator, domain, facilityname, address, facilitytype, operatorname',
       tablename: 'cpadmin.facilities',
     };
 
