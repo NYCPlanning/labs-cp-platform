@@ -8,10 +8,13 @@ import Select from 'react-select';
 import CountWidget from '../../common/CountWidget';
 import InfoIcon from '../../common/InfoIcon';
 import NestedSelect from './NestedSelect';
+import Checkbox from './Checkbox';
 
 import config from './config';
 import facilitiesLayers from '../facilitiesLayers';
 import Carto from '../../helpers/carto';
+
+import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
   propTypes: {
@@ -79,7 +82,7 @@ const LayerSelector = React.createClass({
   },
 
   componentDidUpdate() {
-    if (this.state.expanded) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
+    if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
   },
 
   getTotalCount(sql) {
@@ -240,27 +243,18 @@ const LayerSelector = React.createClass({
     this.getSelectedCount(sql);
   },
 
-  selectAll() {
+  handleToggleAll() {
     const layers = this.state.layers;
 
     layers.forEach((domain) => {
       domain.children.forEach((group) => {
         group.children.forEach((subgroup) => {
-          (subgroup.checked) = true;
-        });
-      });
-    });
-
-    this.buildSQL();
-  },
-
-  selectNone() {
-    const layers = this.state.layers;
-
-    layers.forEach((domain) => {
-      domain.children.forEach((group) => {
-        group.children.forEach((subgroup) => {
-          (subgroup.checked) = false;
+          // if none or some are selected, select all
+          if (this.state.checked !== 'all') {
+            (subgroup.checked) = true;
+          } else {
+            (subgroup.checked) = false;
+          }
         });
       });
     });
@@ -284,7 +278,7 @@ const LayerSelector = React.createClass({
     };
 
     return (
-      <div className="sidebar-tab-content">
+      <div className="sidebar-tab-content facilities-filter">
         <CountWidget
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
@@ -340,27 +334,27 @@ const LayerSelector = React.createClass({
             Facility Category
             <a href="https://nycplanning.github.io/cpdocs/facdb/" target="_blank" rel="noreferrer noopener"><InfoIcon text="Learn more about facility types" /></a>
           </Subheader>
-          <ListItem
-            disabled
-            style={listItemStyle}
-          >
-            <div className="btn-group btn-group-xs" role="group">
-              <div className="btn dcp-orange btn-xs " onClick={this.selectAll} disabled={this.state.checked === 'all'}>Select All</div>
-              <div className="btn dcp-orange btn-xs " onClick={this.selectNone} disabled={this.state.checked === 'none'}>Select None</div>
-            </div>
-            <br />
-            <div className="btn-group btn-group-xs" role="group">
+
+          <div className="toggle-expand">
+            <Checkbox
+              value={'allChecked'}
+              checked={this.state.checked === 'all'}
+              indeterminate={this.state.checked !== 'all' && this.state.checked !== 'none'}
+              onChange={this.handleToggleAll}
+            />
+            All
+            <div className="btn-group btn-group-xs" role="group" style={{ float: 'right' }}>
               <div
                 className="btn dcp-orange btn-xs "
                 onClick={this.expandAll}
               >Expand All</div>
               <div className="btn dcp-orange btn-xs " onClick={this.collapseAll}>Collapse All</div>
             </div>
-          </ListItem>
-
+          </div>
 
           <ListItem
             disabled
+            style={listItemStyle}
           >
             <NestedSelect
               layers={this.state.layers}

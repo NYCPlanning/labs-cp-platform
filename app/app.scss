@@ -284,5 +284,35 @@ body:after {
 
 /*End Sidebar Tabs*/
 
+/*Custom Checkbox Sprite*/
+
+  .checkbox-container {
+
+    input[type=checkbox] {
+      display: none;
+    }
+
+    input[type="checkbox"] + span {
+      display:inline-block;
+      vertical-align:middle;  
+      width:20px;
+      height:20px;
+      background: url('/img/checkbox_sprites.png') -42px top no-repeat;
+    }
+
+    input[type="checkbox"] + span:hover {
+      cursor:pointer;
+    }
+
+    input[type="checkbox"]:checked + span {
+      background: url('/img/checkbox_sprites.png') 0px top no-repeat;
+    }
+
+    input[type="checkbox"]:indeterminate + span {
+      background: url('/img/checkbox_sprites.png') -21px top no-repeat;
+    }
+  }
 
 
+
+/* End Custom Checkbox Sprite*/
