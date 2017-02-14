@@ -76,8 +76,27 @@ const Facilities = React.createClass({
   },
 
   render() {
+    const tabStyle = {
+      backgroundColor: '#b1b1b1',
+    };
+
+    const inkBarStyle = {
+      backgroundColor: '#D96B27',
+    };
+
+    const tabTemplateStyle = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+    };
+
     return (
-      <Tabs className="sidebar-tabs">
+      <Tabs
+        className="sidebar-tabs"
+        tabItemContainerStyle={tabStyle}
+        tabTemplateStyle={tabTemplateStyle}
+        inkBarStyle={inkBarStyle}
+      >
         <Tab label="Data">
           <LayerSelector
             layers={this.props.context.layers}
@@ -92,7 +111,9 @@ const Facilities = React.createClass({
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">
-            {content.about}
+            <div className="padded">
+              {content.about}
+            </div>
           </div>
         </Tab>
       </Tabs>

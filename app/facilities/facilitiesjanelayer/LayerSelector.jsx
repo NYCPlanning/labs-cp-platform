@@ -284,103 +284,104 @@ const LayerSelector = React.createClass({
     };
 
     return (
-      <div>
+      <div className="sidebar-tab-content">
         <CountWidget
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
           units={'facilities'}
         />
+        <div className="scroll-container">
+          <Subheader>
+            Oversight Agency
+            <InfoIcon text="The agency that funds or oversees this facility" />
+          </Subheader>
 
-        <Subheader>
-          Oversight Agency
-          <InfoIcon text="The agency that funds or oversees this facility" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <Select
+              multi
+              placeholder="Search and Select Oversight Agencies"
+              value={this.state.filterDimensions.oversightabbrev}
+              name="form-field-name"
+              options={config.agencies}
+              onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <Select
-            multi
-            placeholder="Search and Select Oversight Agencies"
-            value={this.state.filterDimensions.oversightabbrev}
-            name="form-field-name"
-            options={config.agencies}
-            onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
-          />
-        </ListItem>
+          <Subheader>
+            Operator Type
+            <InfoIcon text="The type of entity operating the facility" />
+          </Subheader>
 
-        <Subheader>
-          Operator Type
-          <InfoIcon text="The type of entity operating the facility" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <Select
+              multi
+              placeholder="Search and Select Operator Types"
+              value={this.state.filterDimensions.operatortype}
+              name="form-field-name"
+              options={config.operatorTypes}
+              onChange={this.updateFilterDimension.bind(this, 'operatortype')}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <Select
-            multi
-            placeholder="Search and Select Operator Types"
-            value={this.state.filterDimensions.operatortype}
-            name="form-field-name"
-            options={config.operatorTypes}
-            onChange={this.updateFilterDimension.bind(this, 'operatortype')}
-          />
-        </ListItem>
+          <Subheader>
+            Property Type
+            <InfoIcon text="Indicates whether the City owns or directly leases the property" />
+          </Subheader>
 
-        <Subheader>
-          Property Type
-          <InfoIcon text="Indicates whether the City owns or directly leases the property" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <Select
+              multi
+              placeholder="Search and Select Property Types"
+              value={this.state.filterDimensions.propertytype}
+              name="form-field-name"
+              options={config.propertyTypes}
+              onChange={this.updateFilterDimension.bind(this, 'propertytype')}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <Select
-            multi
-            placeholder="Search and Select Property Types"
-            value={this.state.filterDimensions.propertytype}
-            name="form-field-name"
-            options={config.propertyTypes}
-            onChange={this.updateFilterDimension.bind(this, 'propertytype')}
-          />
-        </ListItem>
-
-        <Subheader>
-          Facility Category
-          <a href="https://nycplanning.github.io/cpdocs/facdb/" target="_blank" rel="noreferrer noopener"><InfoIcon text="Learn more about facility types" /></a>
-        </Subheader>
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <div className="btn-group btn-group-xs" role="group">
-            <div className="btn dcp-orange btn-xs " onClick={this.selectAll} disabled={this.state.checked === 'all'}>Select All</div>
-            <div className="btn dcp-orange btn-xs " onClick={this.selectNone} disabled={this.state.checked === 'none'}>Select None</div>
-          </div>
-          <br />
-          <div className="btn-group btn-group-xs" role="group">
-            <div
-              className="btn dcp-orange btn-xs "
-              onClick={this.expandAll}
-            >Expand All</div>
-            <div className="btn dcp-orange btn-xs " onClick={this.collapseAll}>Collapse All</div>
-          </div>
-        </ListItem>
+          <Subheader>
+            Facility Category
+            <a href="https://nycplanning.github.io/cpdocs/facdb/" target="_blank" rel="noreferrer noopener"><InfoIcon text="Learn more about facility types" /></a>
+          </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <div className="btn-group btn-group-xs" role="group">
+              <div className="btn dcp-orange btn-xs " onClick={this.selectAll} disabled={this.state.checked === 'all'}>Select All</div>
+              <div className="btn dcp-orange btn-xs " onClick={this.selectNone} disabled={this.state.checked === 'none'}>Select None</div>
+            </div>
+            <br />
+            <div className="btn-group btn-group-xs" role="group">
+              <div
+                className="btn dcp-orange btn-xs "
+                onClick={this.expandAll}
+              >Expand All</div>
+              <div className="btn dcp-orange btn-xs " onClick={this.collapseAll}>Collapse All</div>
+            </div>
+          </ListItem>
 
 
-        <ListItem
-          disabled
-        >
-          <NestedSelect
-            layers={this.state.layers}
-            onUpdate={this.buildSQL}
-            initiallyOpen={false}
-            expanded={this.state.expanded}
-          />
-        </ListItem>
+          <ListItem
+            disabled
+          >
+            <NestedSelect
+              layers={this.state.layers}
+              onUpdate={this.buildSQL}
+              initiallyOpen={false}
+              expanded={this.state.expanded}
+            />
+          </ListItem>
+        </div>
       </div>
     );
   },
