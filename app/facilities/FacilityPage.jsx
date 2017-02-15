@@ -48,11 +48,12 @@ const FacilityPage = React.createClass({
 
   dbStringToObject(string) {
     const array = this.dbStringToArray(string);
-    return array.map((a) => {
+    return array.map((a, i) => {
       const label = a.split(': ');
       return {
         agency: label[0],
         value: label[1],
+        index: i,
       };
     });
   },
@@ -135,12 +136,11 @@ const FacilityPage = React.createClass({
     const usageList = (data, type) => {
       if (data && type) {
         const sizes = this.dbStringToObject(data);
-        const types = this.dbStringToObject(type);
 
         const list = sizes.map(size =>
           (
-            <li key={size.agency} className="usage-list">
-              <h3>{size.value} <small>{types[0].value}</small></h3>
+            <li key={size.index} className="usage-list">
+              <h3>{size.value} <small>{this.dbStringAgencyLookup(type, size.agency).value}</small></h3>
               <h4><span className="label label-default">{size.agency}</span></h4>
             </li>
           ),
@@ -236,7 +236,7 @@ const FacilityPage = React.createClass({
                     <div className="panel panel-default">
                       <div className="panel-heading">Utilization</div>
                       <div className="panel-body">
-                        {usageList(d.utilization)}
+                        {usageList(d.utilization, d.capacitytype)}
                       </div>
                     </div>
                   </div>
