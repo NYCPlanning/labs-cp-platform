@@ -41,26 +41,8 @@ const CaptialProjectsExplorer = React.createClass({
 
   render() {
     // TODO these can be globally defined for the app
-    const mapInit = {
-      mapbox_accessToken: appConfig.mapbox_accessToken,
-      center: [-74.0058, 40.7094],
-      zoom: 13.62,
-      minZoom: null,
-      maxZoom: null,
-      pitch: 0,
-      hash: true,
-      navigationControlPosition: 'bottom-right',
-    };
-
-    const searchConfig = {
-      mapzen_api_key: appConfig.mapzen_api_key,
-      bounds: {
-        minLon: -74.292297,
-        maxLon: -73.618011,
-        minLat: 40.477248,
-        maxLat: 40.958123,
-      },
-    };
+    const mapInit = appConfig.mapInit;
+    const searchConfig = appConfig.searchConfig;
 
     // TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
     const mapConfig = {

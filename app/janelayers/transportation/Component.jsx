@@ -383,20 +383,23 @@ const Transportation = React.createClass({
         <Tabs className="sidebar-tabs">
           <Tab label="Data">
             <div className="sidebar-tab-content">
-              <h4>Transportation Layers</h4>
+              <div className="padded">
+                <h4>Transportation Layers</h4>
 
-              <Checkbox
-                label="Subways"
-                checked={this.state.activeCheckboxes.includes('subways')}
-                onCheck={this.handleCheck.bind(this, 'subways')}
-              />
-
+                <Checkbox
+                  label="Subways"
+                  checked={this.state.activeCheckboxes.includes('subways')}
+                  onCheck={this.handleCheck.bind(this, 'subways')}
+                />
+              </div>
             </div>
           </Tab>
           <Tab label="About">
             <div className="sidebar-tab-content">
-              <h4>Transportation Layers</h4>
-              <p>These layers are provided by the DoITT GIS Team, and are available on their <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">public carto server</a>.</p>
+              <div className="padded">
+                <h4>Transportation Layers</h4>
+                <p>These layers are provided by the DoITT GIS Team, and are available on their <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">public carto server</a>.</p>
+              </div>
             </div>
           </Tab>
         </Tabs>
