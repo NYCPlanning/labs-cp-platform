@@ -133,7 +133,7 @@ const FacilityPage = React.createClass({
     };
 
     const usageList = (data, type) => {
-      if (data) {
+      if (data && type) {
         const sizes = this.dbStringToObject(data);
         const types = this.dbStringToObject(type);
 
