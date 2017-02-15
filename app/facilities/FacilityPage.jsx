@@ -179,8 +179,8 @@ const FacilityPage = React.createClass({
             >
               <BackButton
                 location={this.props.location}
-                defaultText="Capital Projects Map"
-                defaultLink="/capitalprojects"
+                defaultText="Facilities Map"
+                defaultLink="/facilities/explorer"
               />
             </div>
             <div className="col-md-9 col-md-pull-3">
