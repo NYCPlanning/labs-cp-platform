@@ -28,14 +28,12 @@ const Nav = React.createClass({
   propTypes: {
     showModal: React.PropTypes.func.isRequired,
     auth: React.PropTypes.object.isRequired,
-    mini: React.PropTypes.bool,
     title: React.PropTypes.string,
     children: React.PropTypes.array,
   },
 
   getDefaultProps() {
     return {
-      mini: false,
       title: '',
       children: null,
     };
@@ -76,7 +74,7 @@ const Nav = React.createClass({
 
 
     return (
-      <nav className={`navbar navbar-default navbar-fixed-top ${this.props.mini ? 'mini-nav' : null}`}>
+      <nav className={'navbar navbar-default navbar-fixed-top'}>
         <div className="navbar-header">
           <button
             type="button"
