@@ -1,4 +1,4 @@
-import facilitiesLayers from './facilitiesLayers';
+import layerConfig from './layerConfig';
 
 const colors = {
   getColor(value) {
@@ -13,7 +13,7 @@ const colors = {
     return {
       property: 'domain',
       type: 'categorical',
-      stops: facilitiesLayers.map(layer => [
+      stops: layerConfig.map(layer => [
         layer.name,
         layer.color,
       ]),

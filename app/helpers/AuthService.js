@@ -10,7 +10,7 @@ export default class AuthService {
     this.lock = new Auth0Lock(clientId, domain, {
       initialScreen: 'login',
       closable: false,
-      allowSignUp: false,
+      allowSignUp: true,
       auth: {
         redirectUrl: `${document.location.origin}/authsuccess`,
         responseType: 'id_token',
@@ -25,16 +25,7 @@ export default class AuthService {
     });
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', this.doAuthentication.bind(this));
-
-
-    // binds login functions to keep this context
-    // this.login = this.login.bind(this);
-
-    // this.getProfile = this.getProfile.bind(this);
-
-    this.requestedURL = null;
   }
-
 
   doAuthentication(authResult) {
     this.lock.getProfile(authResult.idToken, (error, profile) => {
@@ -46,17 +37,18 @@ export default class AuthService {
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('profile', JSON.stringify(profile));
 
+      // redirect to the path the user was trying to get to, or home
       browserHistory.push(authResult.state || '/');
     });
   }
 
-  login() {
+  login(previousPath) {
     // Call the show method to display the widget.
 
     this.lock.show({
       auth: {
         params: {
-          state: this.requestedURL,
+          state: previousPath,
         },
       },
     });

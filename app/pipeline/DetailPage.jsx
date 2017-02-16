@@ -1,8 +1,8 @@
 import React from 'react';
 import Moment from 'moment';
 
+import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
-import DetailPage from '../common/DetailPage';
 import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
@@ -33,11 +33,25 @@ const DevelopmentPage = React.createClass({
     const d = data.properties;
 
     return (
-      <div>
-
+      <div className="development-page">
         <div className="col-md-12">
-          <h3>{d.dob_permit_address}</h3>
+          <div className={'row'}>
+            <div
+              className="button-container col-md-3 col-md-push-9"
+              style={{ textAlign: 'right' }}
+            >
+              <BackButton
+                location={this.props.location}
+                defaultText="Housing Development Map"
+                defaultLink="/pipeline"
+              />
+            </div>
+            <div className="col-md-9 col-md-pull-3">
+              <h3>{d.dob_permit_address}</h3>
+            </div>
+          </div>
         </div>
+
         <div className="col-md-6">
           <ModalMap feature={this.state.data} label={d.dob_permit_address} />
           <FeedbackForm
@@ -115,13 +129,9 @@ const DevelopmentPage = React.createClass({
     const content = this.state.data ? this.renderContent(this.state.data) : null;
 
     return (
-      <DetailPage
-        location={this.props.location}
-        defaultText="Housing Development Map"
-        defaultLink="/pipeline"
-      >
+      <div className="fluid-content display-content">
         {content}
-      </DetailPage>
+      </div>
     );
   },
 

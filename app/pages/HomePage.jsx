@@ -68,7 +68,7 @@ const HomePage = React.createClass({
 
   render() {
     return (
-      <div className="col-md-12 fluid-content" style={{ marginTop: '80px' }}>
+      <div className="col-md-12 fluid-content">
         <section className="headline-section">
           <div className="container">
             <div className="row">

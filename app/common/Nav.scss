@@ -2,20 +2,20 @@
 // avoids the conflict between the menu and the title
 
 @media (max-width: 1010px) {
-    .navbar-header {
-        float: none;
-    }
-    .navbar-left,.navbar-right {
-        float: none !important;
-    }
-    .navbar-toggle {
-        display: block;
-    }
-    .navbar-collapse {
-        border-top: 1px solid transparent;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .navbar-fixed-top {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
 		top: 0;
 		border-width: 0 0 1px;
 	}
@@ -46,7 +46,7 @@
 }
 
 nav {
-  height: 80px;
+  height: 50px;
   font-family: 'Oswald', sans-serif;
 }
 
@@ -59,7 +59,7 @@ ul.navbar-right {
 }
 
 .navbar-default .navbar-nav>li>a, .dropdown-menu>li>a {
-  padding: 30px 18px;
+  padding: 15px 18px;  
   color: #db691b;
   font-size: 16px;
   font-weight: 300;
@@ -80,25 +80,22 @@ ul.navbar-right {
 .navbar-default .navbar-brand {
   background-image: url(/../img/logo_120.png);
   background-repeat: no-repeat;
-  background-position: 16px 12px;
-  background-size: 112px;
-  height: 80px;
-  width: 144px;
+  background-position: 16px 9px;
+  background-size: 66px;
+  height: 50px;
+  width: 100px;
+  padding: 0;
 }
 
 .navbar-title {
   float: left;
   color: #d96b27;
-  font-size: 28px;
-  line-height: 80px;
+  font-size: 22px;
+  line-height: 50px;
 }
 
 #navbar {
   border-bottom: 0.5px solid rgba(219, 105, 27, 0);
-}
-
-.navbar-brand {
-  font-size: 28px;
 }
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
@@ -110,29 +107,8 @@ ul.navbar-right {
   font-size: 18px;
 }
 
-/*modifications for a 50px tall nav*/
-.mini-nav {
-  height: auto;
-
-  .navbar-nav>li>a, .dropdown-menu>li>a {
-    padding: 15px 18px;
-  }
-
-  .navbar-title {
-    font-size: 22px;
-    line-height: 50px;
-  }
-
-  .navbar-brand {
-    background-position: 16px 9px;
-    background-size: 66px;
-    height: 50px;
-    width: 100px;
-    padding: 0;
-  }
-
-  .title {
-    color: #959595;
-    font-weight: 300;
-  }
+.title {
+  color: #959595;
+  font-weight: 300;
 }
+

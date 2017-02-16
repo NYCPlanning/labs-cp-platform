@@ -62,7 +62,7 @@ const Facilities = React.createClass({
 
     const legendContent = (
       <div className="legendSection">
-        <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#limitations-and-disclaimers">Read more</a>.</p>
+        <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
       </div>
     );
 

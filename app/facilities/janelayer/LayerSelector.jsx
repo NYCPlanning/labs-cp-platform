@@ -11,7 +11,7 @@ import NestedSelect from './NestedSelect';
 import Checkbox from './Checkbox';
 
 import config from './config';
-import facilitiesLayers from '../facilitiesLayers';
+import layerConfig from '../layerConfig';
 import Carto from '../../helpers/carto';
 
 import './LayerSelector.scss';
@@ -55,7 +55,7 @@ const LayerSelector = React.createClass({
     if (this.props.layers) {
       layers = this.props.layers;
     } else {
-      layers = facilitiesLayers.map((domain) => {
+      layers = layerConfig.map((domain) => {
         domain.checked = true;
         domain.children = domain.children.map((group) => {
           group.checked = true;

@@ -9,12 +9,13 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
-
-import DetailPage from '../common/DetailPage';
+import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
+
+import '../app.scss';
 
 
 const FacilityPage = React.createClass({
@@ -48,11 +49,12 @@ const FacilityPage = React.createClass({
 
   dbStringToObject(string) {
     const array = this.dbStringToArray(string);
-    return array.map((a) => {
+    return array.map((a, i) => {
       const label = a.split(': ');
       return {
         agency: label[0],
         value: label[1],
+        index: i,
       };
     });
   },
@@ -135,12 +137,11 @@ const FacilityPage = React.createClass({
     const usageList = (data, type) => {
       if (data && type) {
         const sizes = this.dbStringToObject(data);
-        const types = this.dbStringToObject(type);
 
         const list = sizes.map(size =>
           (
-            <li key={size.agency} className="usage-list">
-              <h3>{size.value} <small>{types[0].value}</small></h3>
+            <li key={size.index} className="usage-list">
+              <h3>{size.value} <small>{this.dbStringAgencyLookup(type, size.agency).value}</small></h3>
               <h4><span className="label label-default">{size.agency}</span></h4>
             </li>
           ),
@@ -178,23 +179,37 @@ const FacilityPage = React.createClass({
     };
 
     return (
-      <div className="facility-page">
+      <div className="facility-page detail-page">
         <div className="col-md-12">
-          <h1>{d.facilityname}</h1>
-          <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
-          <ol className="breadcrumb">
-            <li>{d.domain}</li>
-            <li>{d.facilitygroup}</li>
-            <li>{d.facilitysubgroup}</li>
-            <li>
-              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                {d.facilitytype}
-              </span>
-              <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
-                <i className="fa fa-info-circle" aria-hidden="true" />
-              </OverlayTrigger>
-            </li>
-          </ol>
+          <div className={'row'}>
+            <div
+              className="button-container col-md-3 col-md-push-9"
+              style={{ textAlign: 'right' }}
+            >
+              <BackButton
+                location={this.props.location}
+                defaultText="Facilities Map"
+                defaultLink="/facilities/explorer"
+              />
+            </div>
+            <div className="col-md-9 col-md-pull-3">
+              <h1>{d.facilityname}</h1>
+              <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
+              <ol className="breadcrumb">
+                <li>{d.domain}</li>
+                <li>{d.facilitygroup}</li>
+                <li>{d.facilitysubgroup}</li>
+                <li>
+                  <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                    {d.facilitytype}
+                  </span>
+                  <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
+                    <i className="fa fa-info-circle" aria-hidden="true" />
+                  </OverlayTrigger>
+                </li>
+              </ol>
+            </div>
+          </div>
         </div>
 
         <div className={'col-md-6'}>
@@ -236,7 +251,7 @@ const FacilityPage = React.createClass({
                     <div className="panel panel-default">
                       <div className="panel-heading">Utilization</div>
                       <div className="panel-body">
-                        {usageList(d.utilization)}
+                        {usageList(d.utilization, d.capacitytype)}
                       </div>
                     </div>
                   </div>
@@ -282,14 +297,9 @@ const FacilityPage = React.createClass({
     const content = (this.state.data && this.state.sources) ? this.renderContent(this.state) : null;
 
     return (
-      <DetailPage
-        location={this.props.location}
-        defaultText="Facilities Map"
-        defaultLink="/facilities/all"
-        feedback
-      >
+      <div className="fluid-content display-content">
         {content}
-      </DetailPage>
+      </div>
     );
   },
 
