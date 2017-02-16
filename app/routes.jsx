@@ -34,7 +34,12 @@ const requireAuth = (nextState, replace) => {
   auth.requestedURL = nextState.location.pathname;
 
   if (!AuthHelper.loggedIn()) {
-    replace({ pathname: '/login' });
+    replace({
+      pathname: '/login',
+      state: {
+        previousPath: nextState.location.pathname,
+      },
+    });
   }
 };
 
