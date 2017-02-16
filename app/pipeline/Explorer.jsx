@@ -1,31 +1,31 @@
-import React, { PropTypes } from 'react';
+// PipeLineExplorer.jsx - Top level Component for the Pipeline Explorer Map
+import React from 'react';
 
-import Jane from '../../jane-maps/src';
+import appConfig from '../helpers/appConfig';
 import content from './content';
 
+import Jane from '../../jane-maps/src';
+import PipelineJaneLayer from './janelayer';
+
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
-import FacilitiesJaneLayer from './facilitiesjanelayer';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
 
-import appConfig from '../helpers/appConfig';
-
-const FacilitiesExplorer = React.createClass({
+const PipeLineExplorer = React.createClass({
   propTypes: {
-    showModal: PropTypes.func,
-    location: PropTypes.object,
+    showModal: React.PropTypes.func,
   },
 
   getDefaultProps() {
     return {
       showModal: null,
-      location: null,
     };
   },
 
   componentDidMount() {
-    const modalShown = JSON.parse(localStorage.getItem('facilities-splash'));
+    document.title = 'NYC Housing Development Explorer';
 
+    const modalShown = JSON.parse(localStorage.getItem('pipeline-splash'));
     if (!modalShown) {
       this.props.showModal({
         modalHeading: 'Welcome!',
@@ -33,7 +33,7 @@ const FacilitiesExplorer = React.createClass({
         modalCloseText: 'Got it.  Let me in!',
       });
 
-      localStorage.setItem('facilities-splash', 'true');
+      localStorage.setItem('pipeline-splash', 'true');
     }
   },
 
@@ -41,21 +41,15 @@ const FacilitiesExplorer = React.createClass({
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
 
-    // TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
     const mapConfig = {
-      selectedLayer: 'facilities',
+      selectedLayer: 'pipeline',
       layers: [
         ImageryJaneLayer,
         AdminBoundariesJaneLayer,
         TransportationJaneLayer,
-        FacilitiesJaneLayer,
+        PipelineJaneLayer,
       ],
     };
-
-    // Facilities Data Layer is composable, and will show different data/filters based on the route
-    // const mode = this.props.params.domain ? this.props.params.domain : 'all';
-
-    const layers = this.props.location.state ? this.props.location.state.layers : null;
 
     return (
       <div className="full-screen">
@@ -65,11 +59,10 @@ const FacilitiesExplorer = React.createClass({
           search
           searchConfig={searchConfig}
           mapConfig={mapConfig}
-          context={{ layers }}
         />
       </div>
     );
   },
 });
 
-module.exports = FacilitiesExplorer;
+module.exports = PipeLineExplorer;
