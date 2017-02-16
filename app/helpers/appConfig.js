@@ -16,6 +16,32 @@ const appConfig = {
 
   api_domain: (process.env.NODE_ENV === 'production') ? 'api.capitalplanning.nyc' : 'localhost:3000',
 
+  // Using the getter syntax to access the object 'this'
+  // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)
+  get mapInit() {
+    return {
+      mapbox_accessToken: this.mapbox_accessToken,
+      center: [-74.0058, 40.7094],
+      zoom: 13.62,
+      minZoom: 9,
+      maxZoom: null,
+      pitch: 0,
+      hash: true,
+      navigationControlPosition: 'bottom-right',
+    };
+  },
+
+  get searchConfig() {
+    return {
+      mapzen_api_key: this.mapzen_api_key,
+      bounds: {
+        minLon: -74.292297,
+        maxLon: -73.618011,
+        minLat: 40.477248,
+        maxLat: 40.958123,
+      },
+    };
+  },
 };
 
 module.exports = appConfig;

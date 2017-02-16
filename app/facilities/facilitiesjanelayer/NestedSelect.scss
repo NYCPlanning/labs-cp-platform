@@ -1,9 +1,13 @@
 .nested-select {
   input[type=checkbox] {
-    position: absolute;
-    top: 11px;
-    left: 12px;
-    margin: 0;
+    display: none;
+  }
+
+  input[type="checkbox"] + label {
+    left: 6px;
+    top: 9px;
+    margin:-2px 10px 0 0;
+    position: absolute
   }
 
   /*override mui styles for listitem*/
@@ -19,8 +23,12 @@
 
   .subgroup {
     input[type=checkbox] {
-      top: 5px;
+      display: none;
     } 
+
+    input[type="checkbox"] + label {
+      top: 3px;
+    }
 
     .fa {
       right: 8px;

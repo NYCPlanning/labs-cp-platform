@@ -49,11 +49,12 @@ const FacilityPage = React.createClass({
 
   dbStringToObject(string) {
     const array = this.dbStringToArray(string);
-    return array.map((a) => {
+    return array.map((a, i) => {
       const label = a.split(': ');
       return {
         agency: label[0],
         value: label[1],
+        index: i,
       };
     });
   },
@@ -98,7 +99,8 @@ const FacilityPage = React.createClass({
     );
 
     const wrapInLink = (link, text) => {
-      if (link) {
+      // The database stores 'NA' for links that do not exist
+      if (link && link !== 'NA') {
         return <a href={link}>{text}</a>;
       }
       return text;
@@ -126,26 +128,21 @@ const FacilityPage = React.createClass({
           </Table>
         );
 
-        if (sources.length > 1) {
-          return wrapInPanel(s.agencysourcename, s.agencysource, table);
-        }
-
-        return table;
+        return wrapInPanel(s.agencysourcename, s.agencysource, table);
       });
 
       return sourceDetails;
     };
 
-    const usageList = (data) => {
-      if (data) {
+    const usageList = (data, type) => {
+      if (data && type) {
         const sizes = this.dbStringToObject(data);
-        const types = this.dbStringToObject(d.capacitytype);
 
         const list = sizes.map(size =>
           (
-            <li key={size.agency} className="usage-list">
+            <li key={size.index} className="usage-list">
+              <h3>{size.value} <small>{this.dbStringAgencyLookup(type, size.agency).value}</small></h3>
               <h4><span className="label label-default">{size.agency}</span></h4>
-              <h3>{size.value} <small>{types[0].value}</small></h3>
             </li>
           ),
         );
@@ -167,6 +164,18 @@ const FacilityPage = React.createClass({
       return (
         <ul>{list}</ul>
       );
+    };
+
+    const childcareTooltip = () => {
+      if (d.facilitygroup === 'Child Care and Pre-Kindergarten') {
+        return (
+          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DOE, ACS, and DOHMH capacity numbers for DOE Universal Pre-K and Child Care sites do not match up, because they are all calculated and tracked for different purposes. DOE and ACS each track the number of program seats their agency subsidizes at a facility based on their respective contracts. DOHMH determines capacity as the maximum capacity the space will allow based on square footage.</Tooltip>}>
+            <i className="fa fa-info-circle" aria-hidden="true" />
+          </OverlayTrigger>
+        );
+      }
+
+      return null;
     };
 
     return (
@@ -191,81 +200,75 @@ const FacilityPage = React.createClass({
               <h4><small>{d.address}</small></h4>
             </div>
           </div>
+          <h1>{d.facilityname}</h1>
+          <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
+          <ol className="breadcrumb">
+            <li>{d.domain}</li>
+            <li>{d.facilitygroup}</li>
+            <li>{d.facilitysubgroup}</li>
+            <li>
+              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                {d.facilitytype}
+              </span>
+              <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
+                <i className="fa fa-info-circle" aria-hidden="true" />
+              </OverlayTrigger>
+            </li>
+          </ol>
         </div>
 
         <div className={'col-md-6'}>
-          <div className={'row'} style={{ marginBottom: '15px', marginTop: '15px' }}>
-            <div className={'col-md-6'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Operated By" />
-                <CardText>
-                  {<h3>{d.operatorname}</h3>}
-                </CardText>
-              </Card>
-            </div>
-            <div className={'col-md-6'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Overseen By" />
-                <CardText>
-                  <h3>{asList(d.oversightagency)}</h3>
-                </CardText>
-              </Card>
-            </div>
-          </div>
+          <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+            <Card style={CardStyles} className="clearfix">
+              <CardHeader title="Property Details" />
+              <CardText>
+                <div className="row equal">
+                  <div className={'col-md-6'}>
+                    <div className="panel panel-default">
+                      <div className="panel-heading">Operated By</div>
+                      <div className="panel-body">
+                        {<h3>{d.operatorname}</h3>}
+                      </div>
+                    </div>
+                  </div>
+                  <div className={'col-md-6'}>
+                    <div className="panel panel-default">
+                      <div className="panel-heading">Overseen By</div>
+                      <div className="panel-body">
+                        <h3>{asList(d.oversightagency)}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-6'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Facility Size" />
-                <CardText className={'text-center'}>
-                  {usageList(d.capacity)}
-                </CardText>
-              </Card>
-            </div>
-            <div className={'col-md-6'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Utilization" />
-                <CardText className={'text-center'}>
-                  {usageList(d.utilization)}
-                </CardText>
-              </Card>
-            </div>
-          </div>
+                <div className="row equal">
+                  <div className={'col-md-6'}>
+                    <div className="panel panel-default">
+                      <div className="panel-heading">Facility Size
+                        {childcareTooltip()}
+                      </div>
+                      <div className="panel-body">
+                        {d.capacity ? usageList(d.capacity, d.capacitytype) : usageList(d.area, d.areatype) }
+                      </div>
+                    </div>
+                  </div>
+                  <div className={'col-md-6'}>
+                    <div className="panel panel-default">
+                      <div className="panel-heading">Utilization</div>
+                      <div className="panel-body">
+                        {usageList(d.utilization, d.capacitytype)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles} initiallyExpanded>
-                <CardHeader title="Property Details" actAsExpander showExpandableButton />
-                <CardText expandable className="property-detail-container">
-                  <div className="property-detail-blocks"><h4>{asList(d.bbl)}</h4><h4><small>BBL</small></h4></div>
-                  <div className="property-detail-blocks"><h4>{asList(d.bin)}</h4><h4><small>BIN</small></h4></div>
+                <div className="row property-detail-container">
+                  <div className="property-detail-blocks"><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4><h4><small>BBL</small></h4></div>
+                  <div className="property-detail-blocks"><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4><h4><small>BIN</small></h4></div>
                   <div className="property-detail-blocks"><h4>{d.propertytype ? d.propertytype : 'Privately Owned'}</h4></div>
-                </CardText>
-              </Card>
-            </div>
-          </div>
-
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles} className="classifcation">
-                <CardHeader title="Classification" actAsExpander showExpandableButton />
-                <CardText expandable>
-                  <div>
-                    {d.domain} <i className="fa fa-arrow-right" aria-hidden="true" />&nbsp;
-                    {d.facilitygroup} <i className="fa fa-arrow-right" aria-hidden="true" />&nbsp;
-                    {d.facilitysubgroup} <i className="fa fa-level-down" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                      {d.facilitytype}
-                    </span>
-                    <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
-                      <i className="fa fa-info-circle" aria-hidden="true" />
-                    </OverlayTrigger>
-                  </div>
-                </CardText>
-              </Card>
-            </div>
+                </div>
+              </CardText>
+            </Card>
           </div>
 
           <div className={'row'} style={{ marginBottom: '15px' }}>
