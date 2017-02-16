@@ -10,7 +10,7 @@ import Footer from '../common/Footer';
 
 import content from './content';
 
-import './FacLanding.scss';
+import './LandingPage.scss';
 
 const FacilitiesLandingPage = React.createClass({
   propTypes: {
@@ -31,7 +31,6 @@ const FacilitiesLandingPage = React.createClass({
 
   render() {
     return (
-
       <div className="facilities-landing fluid-content">
         <section className="header-area" id="about">
           <div className="container">

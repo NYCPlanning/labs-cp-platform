@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
-import NestedSelect from './facilitiesjanelayer/NestedSelect';
-import facilitiesLayers from './facilitiesLayers';
+import NestedSelect from './janelayer/NestedSelect';
+import layerConfig from './layerConfig';
 
 import './SplashSelector.scss';
 
@@ -58,9 +58,9 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
   }),
 
   componentWillMount() {
-    // set checked to false on everything
-    const layers = facilitiesLayers;
+    const layers = layerConfig;
 
+    // set checked to false on everything
     layers.forEach((domain) => {
       domain.checked = false;
       domain.children.forEach((group) => {
@@ -71,7 +71,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
       });
     });
 
-    this.setState({ layers: facilitiesLayers });
+    this.setState({ layers });
   },
 
   handleIndexChange(index) {
@@ -131,6 +131,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     const layerContent = layers.map((layer, i) => (
       <div
         className={`content ${index !== i ? 'hidden' : ''}`}
+        key={layer.name}
       >
         <NestedSelect
           layers={[layer]}

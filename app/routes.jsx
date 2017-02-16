@@ -10,15 +10,15 @@ import appConfig from './helpers/appConfig';
 
 import HomePage from '../app/pages/HomePage';
 
-import FacilitiesLanding from '../app/facilities/FacLanding';
-import FacilitiesExplorer from '../app/facilities/FacilitiesExplorer';
-import FacilityPage from '../app/facilities/FacilityPage';
+import FacilitiesLanding from '../app/facilities/LandingPage';
+import FacilitiesExplorer from '../app/facilities/Explorer';
+import FacilityPage from '../app/facilities/DetailPage';
 
-import PipelineExplorer from '../app/pipeline/PipelineExplorer';
-import DevelopmentPage from '../app/pipeline/DevelopmentPage';
+import PipelineExplorer from '../app/pipeline/Explorer';
+import DevelopmentPage from '../app/pipeline/DetailPage';
 
 import CapitalProjects from '../app/capitalprojects/Explorer';
-import ProjectPage from '../app/capitalprojects/ProjectPage';
+import ProjectPage from '../app/capitalprojects/DetailPage';
 
 import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
 import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';

@@ -6,7 +6,7 @@ import content from './content';
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
 import FloodHazardsJaneLayer from '../janelayers/floodhazards';
-import ProjectsJaneLayer from './projectsJaneLayer';
+import ProjectsJaneLayer from './janelayer';
 import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
 
