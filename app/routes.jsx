@@ -68,7 +68,8 @@ const confirmPermissions = permission => ((nextState, replace) => {
 
   const permissions = AuthHelper.getProfile().permissions;
 
-  if (permissions.indexOf(permission) === -1) {
+
+  if (permissions && permissions.indexOf(permission) === -1) {
     // if trying to load homepage, reroute to facilities, else reroute to not found
     if (nextState.location.pathname === '/') {
       replace({ pathname: '/facilities' });
