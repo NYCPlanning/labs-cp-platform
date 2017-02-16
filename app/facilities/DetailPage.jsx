@@ -179,7 +179,7 @@ const FacilityPage = React.createClass({
     };
 
     return (
-      <div className="facility-page">
+      <div className="facility-page detail-page">
         <div className="col-md-12">
           <div className={'row'}>
             <div
@@ -194,27 +194,22 @@ const FacilityPage = React.createClass({
             </div>
             <div className="col-md-9 col-md-pull-3">
               <h1>{d.facilityname}</h1>
-              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                {d.facilitytype}
-              </span>
-              <h4><small>{d.address}</small></h4>
+              <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
+              <ol className="breadcrumb">
+                <li>{d.domain}</li>
+                <li>{d.facilitygroup}</li>
+                <li>{d.facilitysubgroup}</li>
+                <li>
+                  <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                    {d.facilitytype}
+                  </span>
+                  <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
+                    <i className="fa fa-info-circle" aria-hidden="true" />
+                  </OverlayTrigger>
+                </li>
+              </ol>
             </div>
           </div>
-          <h1>{d.facilityname}</h1>
-          <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
-          <ol className="breadcrumb">
-            <li>{d.domain}</li>
-            <li>{d.facilitygroup}</li>
-            <li>{d.facilitysubgroup}</li>
-            <li>
-              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                {d.facilitytype}
-              </span>
-              <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
-                <i className="fa fa-info-circle" aria-hidden="true" />
-              </OverlayTrigger>
-            </li>
-          </ol>
         </div>
 
         <div className={'col-md-6'}>
