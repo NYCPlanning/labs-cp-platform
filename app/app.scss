@@ -333,8 +333,10 @@ body:after {
 
 /*Detail Pages Font Override*/
 
-h2, h3, h4 {
-  font-family: 'Roboto', sans-serif;
+.detail-page {
+  h2, h3, h4 {
+    font-family: 'Roboto', sans-serif;
+  }
 }
 
 /*End Detail Pages Font Override*/
