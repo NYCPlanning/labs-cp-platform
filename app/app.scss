@@ -285,6 +285,19 @@ body:after {
 /*End Sidebar Tabs*/
 
 
+
+/*Detail Page Back Button*/
+
+// Align button to the left when stacked
+@media (max-width: 991px) {
+    .button-container {
+        text-align: left !important;
+    }
+}
+
+/*End Detail Page Back Button*/
+
+
 /*Custom Checkbox Sprite*/
 
   .checkbox-container {
@@ -317,4 +330,5 @@ body:after {
 
 
 /* End Custom Checkbox Sprite*/
+
 

@@ -5,7 +5,6 @@
 import React from 'react'
 import Numeral from 'numeral'
 import Moment from 'moment'
-import DetailPage from '../common/DetailPage.jsx'
 
 import ModalMap from '../common/ModalMap.jsx'
 
@@ -40,13 +39,9 @@ var ProjectPage = React.createClass({
     var content = this.state.data ? this.renderContent(this.state.data) : null
 
     return(
-      <DetailPage
-        location={this.props.location}
-        defaultText='Capital Projects Map'
-        defaultLink='/capitalprojects'
-      >
+      <div className="fluid-content display-content">
         {content}
-      </DetailPage>
+      </div>
     )
   },
 

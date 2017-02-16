@@ -6,12 +6,14 @@ import _ from 'underscore';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import DetailPage from '../common/DetailPage';
+import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import CommitmentExpenditureChart from './CommitmentExpenditureChart';
 import FeedbackForm from '../common/FeedbackForm';
 
 import Carto from '../helpers/carto';
+
+import '../app.scss';
 
 const ProjectPage = React.createClass({
 
@@ -78,15 +80,29 @@ const ProjectPage = React.createClass({
     return (
       <div className="project-page">
         <div className="col-md-12">
-          <h4><small>{d.maprojid}</small></h4>
-          <h1>{d.descriptio}</h1>
-          {
-            project_types.map(project_type => (
-              <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                {project_type}
-              </span>
-            ))
-          }
+          <div className={'row'}>
+            <div
+              className="button-container col-md-3 col-md-push-9"
+              style={{ textAlign: 'right' }}
+            >
+              <BackButton
+                location={this.props.location}
+                defaultText="Capital Projects Map"
+                defaultLink="/capitalprojects"
+              />
+            </div>
+            <div className="col-md-9 col-md-pull-3">
+              <h4><small>{d.maprojid}</small></h4>
+              <h1>{d.descriptio}</h1>
+              {
+                project_types.map(project_type => (
+                  <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                    {project_type}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
         </div>
 
         <div className={'col-md-6'}>
@@ -190,13 +206,9 @@ const ProjectPage = React.createClass({
     const content = this.state.feature ? this.renderContent() : null;
 
     return (
-      <DetailPage
-        location={this.props.location}
-        defaultText="Capital Projects Map"
-        defaultLink="/capitalprojects"
-      >
+      <div className="fluid-content display-content">
         {content}
-      </DetailPage>
+      </div>
     );
   },
 });
