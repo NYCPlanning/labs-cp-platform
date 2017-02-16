@@ -29,7 +29,7 @@ const facilitiesLayers = [
           },
           {
             name: 'Health Promotion and Disease Prevention',
-            description: '...',
+            description: 'Programs focused on improving health through education and disease prevention',
           },
           {
             name: 'Other Health Care',
@@ -123,10 +123,6 @@ const facilitiesLayers = [
           },
           {
             name: 'Preschools for Students with Disabilities',
-            description: 'Center specialized on preschool students with disabilities',
-          },
-          {
-            name: 'Other Schools Serving Students with Disabilities',
             description: 'Center specialized on preschool students with disabilities',
           },
         ],
@@ -337,7 +333,7 @@ const facilitiesLayers = [
             description: 'NYPD and NYCHA police stations',
           },
           {
-            name: 'School-Based Public Safety Program',
+            name: 'School-Based Safety Program',
             description: 'Public safety program on a school campus',
           },
           {
@@ -406,12 +402,8 @@ const facilitiesLayers = [
         color: '#f7ca00',
         children: [
           {
-            name: 'Public Parking Lots and Garages',
-            description: 'Public parking lots and garages',
-          },
-          {
-            name: 'Commercial Parking Lots and Garages',
-            description: 'Commercial parking lots and garages',
+            name: 'Parking Lots and Garages',
+            description: 'Publicly and commerially operated parking lots and garages',
           },
           {
             name: 'Bus Depots and Terminals',
