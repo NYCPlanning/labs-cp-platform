@@ -97,10 +97,26 @@
 /*FacDB Content Selection / Landing Page*/
 
 .facilities-landing {
+  margin-top: 50px;
+
   .header-area {
-    background: url(/img/facilities_landing_background.png) no-repeat; 
     padding: 60px;
   }
+}
+
+.facilities-landing:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+
+  display: block;
+  background: url(/img/facilities_landing_background.png) no-repeat; 
+  background-size:cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
 }
 
 .facilities-landing hr {

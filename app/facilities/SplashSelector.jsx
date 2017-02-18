@@ -40,6 +40,7 @@ function wrapState(ComposedComponent) {
           value={this.props.selectedIndex}
           onChange={this.handleRequestChange}
           style={this.props.style}
+          selectedItemStyle={this.props.selectedItemStyle}
         >
           {this.props.children}
         </ComposedComponent>
@@ -123,7 +124,18 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
       <ListItem
         value={i}
         primaryText={layer.name}
-        leftIcon={<FontIcon className={`fa fa-${layer.icon}`} />}
+        style={{
+          backgroundColor: '#FFF',
+          borderRight: `4px solid ${layer.color}`,
+        }}
+        leftIcon={
+          <FontIcon
+            className={`fa fa-${layer.icon}`}
+            style={{
+              color: '#1B2535',
+              textAlign: 'center',
+            }}
+          />}
         key={layer.name}
       />
     ));
@@ -131,12 +143,16 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     const layerContent = layers.map((layer, i) => (
       <div
         className={`content ${index !== i ? 'hidden' : ''}`}
+        style={{
+          backgroundColor: '#FFF',
+        }}
         key={layer.name}
       >
         <NestedSelect
           layers={[layer]}
           onUpdate={this.handleSelectUpdate.bind(this, 0)}
           initiallyOpen
+          abstractTopLevel
           key={layer.name}
         />
       </div>
@@ -148,9 +164,12 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
           <SelectableList
             onChange={this.handleIndexChange}
             selectedIndex={this.state.selectedIndex}
+            selectedItemStyle={{
+            }}
             style={{
               width: '50%',
               display: 'inline-block',
+              padding: 0,
             }}
           >
             {layerTabs}

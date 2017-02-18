@@ -31,7 +31,7 @@ const FacilitiesLandingPage = React.createClass({
 
   render() {
     return (
-      <div className="facilities-landing fluid-content">
+      <div className="facilities-landing">
         <section className="header-area" id="about">
           <div className="container">
             <div className="row">

@@ -13,12 +13,14 @@ const NestedSelect = React.createClass({
     layers: PropTypes.array.isRequired,
     expanded: PropTypes.bool,
     initiallyOpen: PropTypes.bool,
+    abstractTopLevel: PropTypes.bool,
   },
 
   getDefaultProps() {
     return {
       expanded: null,
       initiallyOpen: false,
+      abstractTopLevel: false,
     };
   },
 
@@ -75,7 +77,7 @@ const NestedSelect = React.createClass({
 
         const styles = [
           {
-            background: item.color,
+            background: this.props.abstractTopLevel ? 'inherit' : item.color,
             padding: '10px 16px 10px 34px',
             marginBottom: '2px',
 
@@ -101,7 +103,7 @@ const NestedSelect = React.createClass({
 
           return (
             <ListItem
-              primaryText={listItemText}
+              primaryText={this.props.abstractTopLevel && address.length === 0 ? 'All' : listItemText}
               style={style}
               key={`item${newAddress.join('')}`}
               leftCheckbox={checkbox}
