@@ -327,7 +327,7 @@ const LayerSelector = React.createClass({
               options={config.propertyTypes}
               onChange={this.updateFilterDimension.bind(this, 'propertytype')}
             />
-            <InfoIcon text="Indicates whether the City owns or directly leases the property" />
+            <InfoIcon text="Indicates whether the City owns or directly leases the property. This property type data is sourced from the Department of Citywide Administrative Services." />
           </ListItem>
 
           <Subheader>
