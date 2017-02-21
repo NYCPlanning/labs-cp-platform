@@ -103,7 +103,7 @@ const Nav = React.createClass({
             <li><Link to="/"> Home</Link></li>
             {this.props.children}
             <li onClick={this.showCollaborate}><a> Collaborate</a></li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform" target="_blank" rel="noopener noreferrer"> Send Feedback</a></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScP9JxDvfCmMUxzT9l0_MRYBtTgeAep7pHYO5QUtrRCXGxVTw/viewform" target="_blank" rel="noopener noreferrer"> Send Feedback</a></li>
             {userMenu}
           </ul>
         </div>
