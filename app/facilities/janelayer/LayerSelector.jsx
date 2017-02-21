@@ -20,11 +20,13 @@ const LayerSelector = React.createClass({
   propTypes: {
     updateSQL: PropTypes.func.isRequired,
     layers: PropTypes.array,
+    filterDimensions: PropTypes.object,
   },
 
   getDefaultProps() {
     return {
-      layers: [],
+      layers: null,
+      filterDimensions: null,
     };
   },
 
@@ -44,6 +46,7 @@ const LayerSelector = React.createClass({
 
   componentWillMount() {
     const self = this;
+    const filterDimensions = this.props.filterDimensions;
 
     this.sqlConfig = {
       columns: 'uid, the_geom_webmercator, domain, facilityname, address, facilitytype, operatorname',
@@ -66,6 +69,13 @@ const LayerSelector = React.createClass({
           return group;
         });
         return domain;
+      });
+    }
+
+    // Loop over any default filterDimensions and set them before initial load
+    if (filterDimensions) {
+      Object.keys(filterDimensions).forEach((k) => {
+        this.updateFilterDimension(k, filterDimensions[k]);
       });
     }
 
