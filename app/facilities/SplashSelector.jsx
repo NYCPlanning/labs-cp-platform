@@ -55,6 +55,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
 
   getInitialState: () => ({
     selectedIndex: 0,
+    noneSelected: true,
   }),
 
   componentWillMount() {
@@ -87,6 +88,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
   // set indeterminate states, check/uncheck children, etc
   processChecked() {
     const layers = this.state.layers;
+    let noneSelected = true;
 
     // set indeterminate states, start from the bottom and work up
     layers.forEach((domain) => {
@@ -97,7 +99,10 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
         let groupChecked = 0;
 
         group.children.forEach((subgroup) => {
-          if (subgroup.checked) groupChecked += 1;
+          if (subgroup.checked) {
+            groupChecked += 1;
+            noneSelected = false;
+          }
         });
 
         group.checked = (groupChecked === group.children.length);
@@ -111,7 +116,10 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
       domain.indeterminate = (domainIndeterminate > 0) || ((domainChecked < domain.children.length) && domainChecked > 0);
     });
 
-    this.setState({ layers });
+    this.setState({
+      layers,
+      noneSelected,
+    });
   },
 
   render() {
@@ -122,8 +130,24 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     const layerTabs = layers.map((layer, i) => (
       <ListItem
         value={i}
+        className={`list-item ${i === index ? 'selected' : null}`}
+        style={{
+          borderLeft: `4px solid ${layer.color}`,
+        }}
         primaryText={layer.name}
-        leftIcon={<FontIcon className={`fa fa-${layer.icon}`} />}
+        secondaryText={layer.description}
+        leftIcon={
+          <FontIcon
+            className={`fa fa-${layer.icon}`}
+            style={{
+              color: layer.color,
+              textAlign: 'center',
+              textShadow: '1px 1px 2px rgba(150, 150, 150, 1)',
+            }}
+          />}
+        rightIcon={
+          <FontIcon className={'fa fa-chevron-right'} />
+        }
         key={layer.name}
       />
     ));
@@ -137,6 +161,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
           layers={[layer]}
           onUpdate={this.handleSelectUpdate.bind(this, 0)}
           initiallyOpen
+          abstractTopLevel
           key={layer.name}
         />
       </div>
@@ -151,6 +176,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
             style={{
               width: '50%',
               display: 'inline-block',
+              padding: 0,
             }}
           >
             {layerTabs}
@@ -167,7 +193,12 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
             },
           }}
         >
-          <div className="btn btn-lg dcp-orange">View SELECTED Facilities <i className="fa fa-arrow-right" aria-hidden="true" /></div></Link>
+          <div
+            className={`btn btn-lg dcp-orange ${this.state.noneSelected ? 'disabled' : null}`}
+          >
+            View SELECTED Facilities <i className="fa fa-arrow-right" aria-hidden="true" />
+          </div>
+        </Link>
       </div>
     );
   },

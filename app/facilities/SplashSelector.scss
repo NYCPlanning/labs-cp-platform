@@ -4,18 +4,26 @@
   margin: 18px 0 18px 0;
   text-align: initial;
   position: relative;
-  height: 725px;
+  height: auto;
 
   .content-area {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: '#FFF';
     display: inline-block;
     height: 100%;
     position: absolute;
     width: 50%;
     overflow: scroll;
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
   }
 
   .hidden {
     display: none;
+  }
+
+  /*override ListItem secondary text styles*/
+  .list-item div:nth-of-type(2) {
+    height: auto !important;
+    overflow: initial !important;
+    white-space: initial !important;
   }
 }

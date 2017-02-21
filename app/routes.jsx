@@ -88,7 +88,7 @@ module.exports = (
   <Route path="/" component={App} auth={auth} >
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
 
-    <Route path="facilities" component={FacilitiesLanding} onEnter={requireAuth} />
+    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} onEnter={requireAuth} />
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} onEnter={requireAuth} />
     <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} onEnter={requireAuth} />
 

@@ -1,6 +1,7 @@
 const facilitiesLayers = [
   {
     name: 'Health and Human Services',
+    description: 'Health and social service providers, including hospitals, legal services, and homeless shelters',
     slug: 'health_and_human_services',
     color: '#BA68C8',
     subColor: '#f7e6f7',
@@ -80,6 +81,7 @@ const facilitiesLayers = [
   },
   {
     name: 'Education, Child Welfare, and Youth',
+    description: 'Providers of children and youth services and all schools, including higher education facilities',
     slug: 'education_child_welfare_and_youth',
     color: '#f7ca00',
     subColor: '#fff8dd',
@@ -209,6 +211,7 @@ const facilitiesLayers = [
   },
   {
     name: 'Parks, Gardens, and Historical Sites',
+    description: 'Historic sites, recreational areas, parks, and nature preserves',
     slug: 'parks_gardens_and_historical_sites',
     color: '#4CAF50',
     subColor: '#dfeddc',
@@ -260,6 +263,7 @@ const facilitiesLayers = [
   },
   {
     name: 'Libraries and Cultural Programs',
+    description: 'Public Libraries and Cultural Institutions',
     slug: 'libraries_and_cultural_progams',
     color: '#73E5F4',
     subColor: '#E0F7FA',
@@ -303,6 +307,7 @@ const facilitiesLayers = [
   },
   {
     name: 'Public Safety, Emergency Services, and Administration of Justice',
+    description: 'Police services, emergency response, courthouses, and correctional facilities',
     slug: 'public_safety_emergency_services_and_administration_of_justice',
     color: '#2979FF',
     subColor: '#BBDEFB',
@@ -361,6 +366,7 @@ const facilitiesLayers = [
   },
   {
     name: 'Core Infrastructure and Transportation',
+    description: 'Train and bus yards, parking lots, solid waste processors, and wastewater treatment plants',
     slug: 'core_infrastructure_and_transportation',
     color: '#8D8EAA',
     subColor: '#e3eef2',
@@ -457,6 +463,7 @@ const facilitiesLayers = [
   },
   {
     name: 'Administration of Government',
+    description: 'Sites owned or leased by the City for administration, operations, and maintenance',
     slug: 'administration_of_government',
     color: '#CBCBD6',
     subColor: '#07284B',
