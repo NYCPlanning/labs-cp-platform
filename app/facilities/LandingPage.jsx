@@ -35,7 +35,7 @@ const FacilitiesLandingPage = React.createClass({
         <section className="header-area" id="about">
           <div className="container">
             <div className="row">
-              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', opacity: '0.9', padding: '40px' }}>
+              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', padding: '40px' }}>
                 <h2 className="section-heading" style={{ fontSize: '32px' }}>The NYC Facilities Database</h2>
                 <hr className="light" />
                 <h3 className="section-heading">The most comprehensive dataset available of public and private facilities and program sites that impact the quality of NYC neighborhoods.</h3>
