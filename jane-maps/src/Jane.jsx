@@ -25,6 +25,7 @@ const Jane = React.createClass({
     context: React.PropTypes.object,
     search: React.PropTypes.bool,
     searchConfig: React.PropTypes.object,
+    fitBounds: React.PropTypes.array,
   },
 
   getDefaultProps() {
@@ -43,6 +44,7 @@ const Jane = React.createClass({
       context: null,
       search: false,
       searchConfig: null,
+      fitBounds: null,
     };
   },
 
@@ -70,6 +72,13 @@ const Jane = React.createClass({
 
     this.map.mapObject.on('click', this.handleMapLayerClick);
     this.map.mapObject.on('mousemove', this.handleMapMousemove);
+  },
+
+  componentDidUpdate(prevProps) {
+    // fit map to fitBounds property if it is different from previous props
+    if (JSON.stringify(prevProps.fitBounds) !== JSON.stringify(this.props.fitBounds)) {
+      this.map.mapObject.fitBounds(this.props.fitBounds);
+    }
   },
 
   onMapLoad() {

@@ -9,6 +9,7 @@ import TransportationJaneLayer from '../janelayers/transportation';
 import ImageryJaneLayer from '../janelayers/imagery';
 
 import appConfig from '../helpers/appConfig';
+import carto from '../helpers/carto';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {
@@ -23,7 +24,20 @@ const FacilitiesExplorer = React.createClass({
     };
   },
 
+  componentWillMount() {
+    this.bounds = null;
+
+    // alter default config of adminboundaries layer
+    if (this.props.location.state && this.props.location.state.adminboundaries) {
+      AdminBoundariesJaneLayer.visible = true;
+      AdminBoundariesJaneLayer.initialState = {
+        value: this.props.location.state.adminboundaries.type,
+      };
+    }
+  },
+
   componentDidMount() {
+    const self = this;
     const modalShown = JSON.parse(localStorage.getItem('facilities-splash'));
 
     if (!modalShown) {
@@ -34,6 +48,16 @@ const FacilitiesExplorer = React.createClass({
       });
 
       localStorage.setItem('facilities-splash', 'true');
+    }
+
+    if (this.props.location.state && this.props.location.state.adminboundaries) {
+      const value = this.props.location.state.adminboundaries.value;
+
+      carto.getNYCBounds('nta', value)
+        .then((bounds) => {
+          self.bounds = bounds;
+          self.forceUpdate();
+        });
     }
   },
 
@@ -55,7 +79,9 @@ const FacilitiesExplorer = React.createClass({
     // Facilities Data Layer is composable, and will show different data/filters based on the route
     // const mode = this.props.params.domain ? this.props.params.domain : 'all';
 
-    const layers = this.props.location.state ? this.props.location.state.layers : null;
+    const layers = this.props.location.state && this.props.location.state.layers ?
+      this.props.location.state.layers :
+      null;
 
     return (
       <div className="full-screen">
@@ -65,7 +91,10 @@ const FacilitiesExplorer = React.createClass({
           search
           searchConfig={searchConfig}
           mapConfig={mapConfig}
-          context={{ layers }}
+          context={{
+            layers,
+          }}
+          fitBounds={this.bounds}
         />
       </div>
     );
