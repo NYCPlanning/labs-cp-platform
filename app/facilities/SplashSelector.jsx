@@ -181,7 +181,10 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
           >
             {layerTabs}
           </SelectableList>
-          <div className="content-area">
+          <div
+            className="content-area"
+            style={{ borderLeft: `4px solid ${this.state.layers[this.state.selectedIndex].color}` }}
+          >
             {layerContent}
           </div>
         </div>

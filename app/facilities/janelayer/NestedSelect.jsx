@@ -78,12 +78,12 @@ const NestedSelect = React.createClass({
         const styles = [
           {
             background: this.props.abstractTopLevel ? 'inherit' : item.color,
-            padding: '10px 16px 10px 34px',
+            padding: '10px 62px 10px 34px',
             marginBottom: '2px',
 
           },
           {
-            background: '#ececec',
+            fontSize: '14px',
             padding: '10px 58px 10px 34px',
             marginBottom: '2px',
           },
