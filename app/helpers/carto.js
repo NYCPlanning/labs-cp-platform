@@ -95,6 +95,27 @@ module.exports = {
     });
   },
 
+  // gets the bounds of an nyc geometry such as a cd, nta, etc
+  getNYCBounds(type, id) {
+    return new Promise((resolve, reject) => {
+      this.SQL(`SELECT ST_Extent(the_geom) FROM dcp_ntaboundaries WHERE ntacode = '${id}'`, 'json')
+        .then((data) => {
+          const bounds = [];
+          const pairs = data[0]
+            .st_extent
+            .match(/\(([^)]+)\)/)[1]
+            .split(',');
+
+          pairs.forEach((pair, i) => {
+            bounds[i] = pair.split(' ');
+          });
+
+          resolve(bounds);
+        })
+        .catch(err => reject(err));
+    });
+  },
+
   getCount(sql) {
     const self = this;
     sql = `SELECT count(*) FROM (${sql}) a`;
