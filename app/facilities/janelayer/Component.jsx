@@ -11,13 +11,7 @@ import defaultLayerConfig from './defaultlayerconfig';
 const Facilities = React.createClass({
   propTypes: {
     onUpdate: React.PropTypes.func.isRequired,
-    context: React.PropTypes.shape({
-      layers: React.PropTypes.array,
-    }),
-  },
-
-  getDefaultProps() {
-    return { context: null };
+    layer: React.PropTypes.object.isRequired,
   },
 
   getInitialState() {
@@ -99,7 +93,7 @@ const Facilities = React.createClass({
       >
         <Tab label="Data">
           <LayerSelector
-            layers={this.props.context.layers}
+            layers={this.props.layer.initialState && this.props.layer.initialState.layers}
             updateSQL={this.updateLayerConfig}
           />
         </Tab>

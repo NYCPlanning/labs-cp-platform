@@ -2,13 +2,12 @@
 import React from 'react';
 
 import Jane from '../../jane-maps/src';
+import JaneLayer from '../../jane-maps/src/JaneLayer';
 import content from './content';
 
-import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
-import FloodHazardsJaneLayer from '../janelayers/floodhazards';
-import ProjectsJaneLayer from './janelayer';
-import TransportationJaneLayer from '../janelayers/transportation';
-import ImageryJaneLayer from '../janelayers/imagery';
+import CapitalProjectsComponent from './janelayer/Component';
+import CapitalProjectsListItem from './janelayer/ListItem';
+import supportingLayers from '../janelayers/supportingLayers';
 
 import appConfig from '../helpers/appConfig';
 
@@ -44,17 +43,6 @@ const CaptialProjectsExplorer = React.createClass({
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
 
-    // TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
-    const mapConfig = {
-      selectedLayer: 'capital-projects',
-      layers: [
-        ImageryJaneLayer,
-        FloodHazardsJaneLayer,
-        AdminBoundariesJaneLayer,
-        TransportationJaneLayer,
-        ProjectsJaneLayer,
-      ],
-    };
 
     return (
       <div className="full-screen">
@@ -63,8 +51,27 @@ const CaptialProjectsExplorer = React.createClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
-          mapConfig={mapConfig}
-        />
+        >
+          <JaneLayer
+            {...supportingLayers.aerials}
+          />
+          <JaneLayer
+            {...supportingLayers.adminboundaries}
+          />
+          <JaneLayer
+            {...supportingLayers.transportation}
+          />
+          <JaneLayer
+            id="capital-projects"
+            name="Capital Projects"
+            icon="usd"
+            interactivityMapLayers={['capital-projects-points', 'capital-projects-polygons']}
+            visible
+            selected
+            component={CapitalProjectsComponent}
+            listItem={CapitalProjectsListItem}
+          />
+        </Jane>
       </div>
     );
   },

@@ -16,9 +16,15 @@ const LayerList = React.createClass({
     onLayerReorder: PropTypes.func.isRequired,
     expanded: PropTypes.bool.isRequired,
     onLayerClick: PropTypes.func.isRequired,
-    selectedLayer: PropTypes.string.isRequired,
+    selectedLayer: PropTypes.string,
     onToggleExpanded: PropTypes.func.isRequired,
     onLayerToggle: PropTypes.func.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      selectedLayer: null,
+    };
   },
 
   getInitialState() {

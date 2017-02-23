@@ -6,17 +6,16 @@ const LayerContent = React.createClass({
   propTypes: {
     onLayerToggle: React.PropTypes.func.isRequired,
     layers: React.PropTypes.array.isRequired,
-    selectedLayer: React.PropTypes.string.isRequired,
+    selectedLayer: React.PropTypes.string,
     onClose: React.PropTypes.func.isRequired,
     onLayerUpdate: React.PropTypes.func.isRequired,
-    context: React.PropTypes.object,
     offset: React.PropTypes.bool.isRequired,
     visible: React.PropTypes.bool.isRequired,
   },
 
   getDefaultProps() {
     return {
-      context: null,
+      selectedLayer: null,
     };
   },
 
@@ -87,7 +86,6 @@ const LayerContent = React.createClass({
               <LayerComponent
                 layer={layer}
                 onUpdate={this.props.onLayerUpdate}
-                context={this.props.context}
               />
             )
           }

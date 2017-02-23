@@ -3,6 +3,18 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 
+const paint = {
+  lines: {
+    'line-color': '#626262',
+    'line-opacity': 0.7,
+    'line-width': 4,
+    'line-dasharray': [2, 2],
+  },
+  labels: {
+    'text-color': '#626262',
+  },
+};
+
 const defaultLayerConfig = {
   nta: {
     sources: [
@@ -17,20 +29,14 @@ const defaultLayerConfig = {
         id: 'ntaboundaries',
         source: 'ntaboundaries',
         type: 'line',
-        paint: {
-          'line-color': '#D96B27',
-          'line-width': 3,
-          'line-dasharray': [2, 2],
-        },
+        paint: paint.lines,
       },
       {
         id: 'ntaboundaries-labels',
         source: 'ntaboundaries',
         type: 'symbol',
         minzoom: 13,
-        paint: {
-          'text-color': '#D96B27',
-        },
+        paint: paint.labels,
         layout: {
           'text-field': '{ntaname}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
@@ -52,20 +58,14 @@ const defaultLayerConfig = {
         id: 'cdboundaries',
         source: 'cdboundaries',
         type: 'line',
-        paint: {
-          'line-color': '#D96B27',
-          'line-width': 3,
-          'line-dasharray': [2, 2],
-        },
+        paint: paint.lines,
       },
       {
         id: 'cdboundaries-labels',
         source: 'cdboundaries',
         minzoom: 11,
         type: 'symbol',
-        paint: {
-          'text-color': '#D96B27',
-        },
+        paint: paint.labels,
         layout: {
           'text-field': '{displaynam}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
@@ -87,20 +87,14 @@ const defaultLayerConfig = {
         id: 'schooldistricts',
         source: 'schooldistricts',
         type: 'line',
-        paint: {
-          'line-color': '#D96B27',
-          'line-width': 3,
-          'line-dasharray': [2, 2],
-        },
+        paint: paint.lines,
       },
       {
         id: 'schooldistricts-labels',
         source: 'schooldistricts',
         minzoom: 11,
         type: 'symbol',
-        paint: {
-          'text-color': '#D96B27',
-        },
+        paint: paint.labels,
         layout: {
           'text-field': '{SchoolDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],

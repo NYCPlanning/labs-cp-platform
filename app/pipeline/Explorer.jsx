@@ -5,11 +5,12 @@ import appConfig from '../helpers/appConfig';
 import content from './content';
 
 import Jane from '../../jane-maps/src';
-import PipelineJaneLayer from './janelayer';
+import JaneLayer from '../../jane-maps/src/JaneLayer';
 
-import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
-import TransportationJaneLayer from '../janelayers/transportation';
-import ImageryJaneLayer from '../janelayers/imagery';
+import supportingLayers from '../janelayers/supportingLayers';
+
+import PipelineComponent from './janelayer/Component';
+import PipelineListItem from './janelayer/ListItem';
 
 const PipeLineExplorer = React.createClass({
   propTypes: {
@@ -41,16 +42,6 @@ const PipeLineExplorer = React.createClass({
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
 
-    const mapConfig = {
-      selectedLayer: 'pipeline',
-      layers: [
-        ImageryJaneLayer,
-        AdminBoundariesJaneLayer,
-        TransportationJaneLayer,
-        PipelineJaneLayer,
-      ],
-    };
-
     return (
       <div className="full-screen">
         <Jane
@@ -58,8 +49,27 @@ const PipeLineExplorer = React.createClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
-          mapConfig={mapConfig}
-        />
+        >
+          <JaneLayer
+            {...supportingLayers.aerials}
+          />
+          <JaneLayer
+            {...supportingLayers.adminboundaries}
+          />
+          <JaneLayer
+            {...supportingLayers.transportation}
+          />
+          <JaneLayer
+            id="pipeline"
+            name="Housing Pipeline"
+            icon="building"
+            interactivityMapLayers={['pipeline-points']}
+            visible
+            selected
+            component={PipelineComponent}
+            listItem={PipelineListItem}
+          />
+        </Jane>
       </div>
     );
   },

@@ -7,12 +7,9 @@ import React from 'react';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
 import Jane from '../../jane-maps/src';
+import JaneLayer from '../../jane-maps/src/JaneLayer';
 
-
-import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
-import TransportationJaneLayer from '../janelayers/transportation';
-import ImageryJaneLayer from '../janelayers/imagery';
-
+import supportingLayers from '../janelayers/supportingLayers';
 import appConfig from '../helpers/appConfig';
 
 const ModalMap = React.createClass({
@@ -49,10 +46,11 @@ const ModalMap = React.createClass({
 
   render() {
     const feature = this.props.feature;
+    const geometry = this.props.feature.geometry;
 
     let center;
-    if (feature.geometry.type === 'Point') {
-      center = feature.geometry.coordinates;
+    if (geometry.type === 'Point') {
+      center = geometry.coordinates;
     } else {
       center = centroid(feature).geometry.coordinates;
     }
@@ -68,50 +66,56 @@ const ModalMap = React.createClass({
       navigationControlPosition: 'bottom-right',
     };
 
-    const mapConfig = {
-      layers: [
-        ImageryJaneLayer,
-        AdminBoundariesJaneLayer,
-        TransportationJaneLayer,
-      ],
-    };
-
-    if (this.props.feature.geometry.type !== 'Point') {
-      mapConfig.layers.push({
-        id: 'feature',
-        name: 'Feature',
-        visible: true,
-        sources: [
-          {
-            id: 'feature',
-            type: 'geojson',
-            data: this.props.feature,
-          },
-        ],
-        mapLayers: [
-          {
-            id: 'feature',
-            source: 'feature',
-            type: 'fill',
-            paint: {
-              'fill-color': 'steelblue',
-              'fill-opacity': 0.75,
-              'fill-antialias': true,
+    let PolygonJaneLayer = null;
+    if (geometry.type !== 'Point') {
+      PolygonJaneLayer = (
+        <JaneLayer
+          id="feature"
+          name="Feature"
+          icon="map-marker"
+          visible
+          sources={[
+            {
+              id: 'feature',
+              type: 'geojson',
+              data: this.props.feature,
             },
-          },
-        ],
-      });
+          ]}
+          mapLayers={[
+            {
+              id: 'feature',
+              source: 'feature',
+              type: 'fill',
+              paint: {
+                'fill-color': 'steelblue',
+                'fill-opacity': 0.75,
+                'fill-antialias': true,
+              },
+            },
+          ]}
+        />
+      );
     }
 
     return (
       <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
           mapInit={mapInit}
-          mapConfig={mapConfig}
-          poiFeature={this.props.feature.geometry.type === 'Point' ? this.props.feature : null}
-          poiLabel={this.props.feature.geometry.type === 'Point' ? this.props.label : null}
+          poiFeature={geometry.type === 'Point' ? this.props.feature : null}
+          poiLabel={geometry.type === 'Point' ? this.props.label : null}
           ref={x => (this.janeMap = x)}
-        />
+        >
+          <JaneLayer
+            {...supportingLayers.aerials}
+          />
+          <JaneLayer
+            {...supportingLayers.adminboundaries}
+          />
+          <JaneLayer
+            {...supportingLayers.transportation}
+          />
+          {PolygonJaneLayer}
+        </Jane>
       </div>
     );
   },
