@@ -4,7 +4,7 @@ import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
 import NestedSelect from './janelayer/NestedSelect';
-import layerConfig from './layerConfig';
+import layersGenerator from './layersGenerator';
 
 import './SplashSelector.scss';
 
@@ -59,19 +59,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
   }),
 
   componentWillMount() {
-    const layers = layerConfig;
-
-    // set checked to false on everything
-    layers.forEach((domain) => {
-      domain.checked = false;
-      domain.children.forEach((group) => {
-        group.checked = false;
-        group.children.forEach((subgroup) => {
-          subgroup.checked = false;
-        });
-      });
-    });
-
+    const layers = layersGenerator.allUnchecked();
     this.setState({ layers });
   },
 

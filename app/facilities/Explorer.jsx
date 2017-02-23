@@ -12,6 +12,7 @@ import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
 
 import supportingLayers from '../janelayers/supportingLayers';
+import layersGenerator from './layersGenerator';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {
@@ -64,7 +65,7 @@ const FacilitiesExplorer = React.createClass({
 
     const layers = locationState && locationState.layers ?
       this.props.location.state.layers :
-      null;
+      layersGenerator.allChecked();
 
     return (
       <div className="full-screen">
