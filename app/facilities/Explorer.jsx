@@ -1,12 +1,15 @@
 import React, { PropTypes } from 'react';
 
 import Jane from '../../jane-maps/src';
+import JaneLayer from '../../jane-maps/src/JaneLayer';
 import content from './content';
 
 import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
-import FacilitiesJaneLayer from './janelayer';
-import TransportationJaneLayer from '../janelayers/transportation';
-import ImageryJaneLayer from '../janelayers/imagery';
+import FacilitiesComponent from './janelayer/Component';
+import FacilitiesListItem from './janelayer/ListItem';
+
+import TransportationComponent from '../janelayers/transportation/Component';
+// import ImageryJaneLayer from '../janelayers/imagery';
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
@@ -66,15 +69,15 @@ const FacilitiesExplorer = React.createClass({
     const searchConfig = appConfig.searchConfig;
 
     // TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
-    const mapConfig = {
-      selectedLayer: 'facilities',
-      layers: [
-        ImageryJaneLayer,
-        AdminBoundariesJaneLayer,
-        TransportationJaneLayer,
-        FacilitiesJaneLayer,
-      ],
-    };
+    // const mapConfig = {
+    //   selectedLayer: 'facilities',
+    //   layers: [
+    //     ImageryJaneLayer,
+    //     AdminBoundariesJaneLayer,
+    //     TransportationJaneLayer,
+    //     FacilitiesJaneLayer,
+    //   ],
+    // };
 
     // Facilities Data Layer is composable, and will show different data/filters based on the route
     // const mode = this.props.params.domain ? this.props.params.domain : 'all';
@@ -90,12 +93,28 @@ const FacilitiesExplorer = React.createClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
-          mapConfig={mapConfig}
           context={{
             layers,
           }}
           fitBounds={this.bounds}
-        />
+        >
+          <JaneLayer
+            id="transportation"
+            name="Transportation"
+            icon="subway"
+            component={TransportationComponent}
+          />
+          <JaneLayer
+            id="facilities"
+            name="Facilities DB"
+            icon="university"
+            interactivityMapLayers={['facilities-points']}
+            visible
+            selected
+            component={FacilitiesComponent}
+            listItem={FacilitiesListItem}
+          />
+        </Jane>
       </div>
     );
   },

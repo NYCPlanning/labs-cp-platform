@@ -18,7 +18,6 @@ const Jane = React.createClass({
   propTypes: {
     poiFeature: React.PropTypes.object,
     poiLabel: React.PropTypes.string,
-    mapConfig: React.PropTypes.object.isRequired,
     layerContentVisible: React.PropTypes.bool,
     mapInit: React.PropTypes.object.isRequired,
     style: React.PropTypes.object,
@@ -26,6 +25,7 @@ const Jane = React.createClass({
     search: React.PropTypes.bool,
     searchConfig: React.PropTypes.object,
     fitBounds: React.PropTypes.array,
+    children: React.PropTypes.array.isRequired,
   },
 
   getDefaultProps() {
@@ -49,18 +49,39 @@ const Jane = React.createClass({
   },
 
   getInitialState() {
-    const defaultMapConfig = {
-      layers: [],
-    };
-
     return ({
       poiFeature: this.props.poiFeature ? this.props.poiFeature : null,
       poiLabel: this.props.poiLabel ? this.props.poiLabel : null,
       mapLoaded: false,
-      mapConfig: this.props.mapConfig ? this.props.mapConfig : defaultMapConfig,
       layerListExpanded: false,
       layerContentVisible: this.props.layerContentVisible,
       selectedFeatures: [],
+    });
+  },
+
+  componentWillMount() {
+    const mapConfig = {};
+
+    const layers = React.Children.map(this.props.children, (child) => {
+      if (child.props.selected) {
+        mapConfig.selectedLayer = child.props.id;
+      }
+
+      return {
+        id: child.props.id,
+        name: child.props.name,
+        icon: child.props.icon,
+        visible: child.props.visible || false,
+        component: child.props.component,
+        listItem: child.props.listItem,
+        interactivityMapLayers: child.props.interactivityMapLayers,
+      };
+    });
+
+    mapConfig.layers = layers;
+
+    this.setState({
+      mapConfig,
     });
   },
 
