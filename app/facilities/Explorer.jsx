@@ -4,15 +4,14 @@ import Jane from '../../jane-maps/src';
 import JaneLayer from '../../jane-maps/src/JaneLayer';
 import content from './content';
 
-import AdminBoundariesJaneLayer from '../janelayers/adminboundaries';
 import FacilitiesComponent from './janelayer/Component';
 import FacilitiesListItem from './janelayer/ListItem';
 
-import TransportationComponent from '../janelayers/transportation/Component';
-// import ImageryJaneLayer from '../janelayers/imagery';
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
+
+import supportingLayers from '../janelayers/supportingLayers';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {
@@ -30,13 +29,19 @@ const FacilitiesExplorer = React.createClass({
   componentWillMount() {
     this.bounds = null;
 
-    // alter default config of adminboundaries layer
-    if (this.props.location.state && this.props.location.state.adminboundaries) {
-      AdminBoundariesJaneLayer.visible = true;
-      AdminBoundariesJaneLayer.initialState = {
-        value: this.props.location.state.adminboundaries.type,
-      };
-    }
+    // // alter default config of adminboundaries layer
+    // if (this.props.location.state && this.props.location.state.adminboundaries) {
+    //   this.ModifiedSupportingJaneLayers = SupportingJaneLayers.map((JaneLayer) => {
+    //     if (JaneLayer.key === 'adminboundaries') {
+    //       JaneLayer.props.visible = true;
+    //       JaneLayer.props.initialState = {
+    //         value: this.props.location.state.adminboundaries.type,
+    //       };
+    //     }
+
+    //     return JaneLayer;
+    //   });
+    // }
   },
 
   componentDidMount() {
@@ -53,6 +58,7 @@ const FacilitiesExplorer = React.createClass({
       localStorage.setItem('facilities-splash', 'true');
     }
 
+    // update the map bounds if adminboundaries location state was passed in
     if (this.props.location.state && this.props.location.state.adminboundaries) {
       const value = this.props.location.state.adminboundaries.value;
 
@@ -68,23 +74,16 @@ const FacilitiesExplorer = React.createClass({
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
 
-    // TODO we need some kind of "stock layers list" that should automatically be added to mapConfig.layers and maintained elsewhere
-    // const mapConfig = {
-    //   selectedLayer: 'facilities',
-    //   layers: [
-    //     ImageryJaneLayer,
-    //     AdminBoundariesJaneLayer,
-    //     TransportationJaneLayer,
-    //     FacilitiesJaneLayer,
-    //   ],
-    // };
+    const locationState = this.props.location.state;
 
-    // Facilities Data Layer is composable, and will show different data/filters based on the route
-    // const mode = this.props.params.domain ? this.props.params.domain : 'all';
-
-    const layers = this.props.location.state && this.props.location.state.layers ?
+    const layers = locationState && locationState.layers ?
       this.props.location.state.layers :
       null;
+
+    const showAdminBoundaries = locationState && locationState.adminboundaries;
+    const adminBoundariesState = locationState && locationState.adminboundaries ?
+    { value: locationState.adminboundaries.type } :
+    null;
 
     return (
       <div className="full-screen">
@@ -93,16 +92,18 @@ const FacilitiesExplorer = React.createClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
-          context={{
-            layers,
-          }}
           fitBounds={this.bounds}
         >
           <JaneLayer
-            id="transportation"
-            name="Transportation"
-            icon="subway"
-            component={TransportationComponent}
+            {...supportingLayers.aerials}
+          />
+          <JaneLayer
+            {...supportingLayers.adminboundaries}
+            visible={showAdminBoundaries}
+            initialState={adminBoundariesState}
+          />
+          <JaneLayer
+            {...supportingLayers.transportation}
           />
           <JaneLayer
             id="facilities"
@@ -112,6 +113,7 @@ const FacilitiesExplorer = React.createClass({
             visible
             selected
             component={FacilitiesComponent}
+            initialState={{ layers }}
             listItem={FacilitiesListItem}
           />
         </Jane>

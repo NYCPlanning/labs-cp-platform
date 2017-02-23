@@ -18,7 +18,7 @@ import carto from '../helpers/carto';
 import '../app.scss';
 
 
-const FacilityPage = React.createClass({
+const DetailPage = React.createClass({
   propTypes: {
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -305,4 +305,4 @@ const FacilityPage = React.createClass({
 
 });
 
-module.exports = FacilityPage;
+module.exports = DetailPage;

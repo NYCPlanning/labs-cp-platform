@@ -21,7 +21,6 @@ const Jane = React.createClass({
     layerContentVisible: React.PropTypes.bool,
     mapInit: React.PropTypes.object.isRequired,
     style: React.PropTypes.object,
-    context: React.PropTypes.object,
     search: React.PropTypes.bool,
     searchConfig: React.PropTypes.object,
     fitBounds: React.PropTypes.array,
@@ -41,7 +40,6 @@ const Jane = React.createClass({
         left: 0,
         overflow: 'hidden',
       },
-      context: null,
       search: false,
       searchConfig: null,
       fitBounds: null,
@@ -60,25 +58,30 @@ const Jane = React.createClass({
   },
 
   componentWillMount() {
-    const mapConfig = {};
+    const mapConfig = {
+      layers: [],
+    };
 
-    const layers = React.Children.map(this.props.children, (child) => {
-      if (child.props.selected) {
-        mapConfig.selectedLayer = child.props.id;
+    React.Children.forEach(this.props.children, (child) => {
+      if (child !== null && child.type.name === 'JaneLayer') {
+        if (child.props.selected) {
+          mapConfig.selectedLayer = child.props.id;
+        }
+
+        mapConfig.layers.push({
+          id: child.props.id,
+          name: child.props.name,
+          icon: child.props.icon,
+          visible: child.props.visible,
+          component: child.props.component,
+          listItem: child.props.listItem,
+          interactivityMapLayers: child.props.interactivityMapLayers,
+          sources: child.props.sources,
+          mapLayers: child.props.mapLayers,
+          initialState: child.props.initialState,
+        });
       }
-
-      return {
-        id: child.props.id,
-        name: child.props.name,
-        icon: child.props.icon,
-        visible: child.props.visible || false,
-        component: child.props.component,
-        listItem: child.props.listItem,
-        interactivityMapLayers: child.props.interactivityMapLayers,
-      };
     });
-
-    mapConfig.layers = layers;
 
     this.setState({
       mapConfig,
@@ -366,7 +369,6 @@ const Jane = React.createClass({
           onLayerUpdate={this.handleLayerUpdate}
           onLayerToggle={this.handleLayerToggle}
           onClose={this.toggleLayerContent}
-          context={this.props.context}
         />
 
         <SelectedFeaturesPane
