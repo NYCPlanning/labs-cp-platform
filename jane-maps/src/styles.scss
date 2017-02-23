@@ -50,11 +50,11 @@
     margin-bottom: 2px;
     text-align: right;
     background-color: #FFF;
-    border-right: 4px solid #FFF;
+    border-right: 2px solid #FFF;
     transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
     &:hover {
-      border-right: 4px solid #9f9f9f;
+      border-right: 2px solid #9f9f9f;
     }
 
     &:hover, &:hover .fa {
@@ -64,8 +64,8 @@
 
     &.selected {
       background-color: #FFF;
-      border-right: 4px solid #C1C1C1;
-      border-right: 4px solid #d96b27;
+      border-right: 2px solid #C1C1C1;
+      border-right: 2px solid #d96b27;
     }
 
     &.selected .fa {
@@ -74,7 +74,7 @@
 
     &.disabled {
       background-color: #C1C1C1;
-      border-right: 4px solid #C1C1C1;
+      border-right: 2px solid #C1C1C1;
     }
 
     &.disabled, &.disabled .fa {
@@ -113,6 +113,17 @@
       text-align: left;
     }
 
+    .second-drawer-content {
+      padding: 0 16px;
+
+      h4 {
+        font-family: 'roboto', sans-serif;
+        color: rgba(0, 0, 0, 0.541176);
+        font-size: 14px;
+        font-weight: 500;
+        margin: 16px 0;
+      }
+    }
   }
 
   .drawer-header {

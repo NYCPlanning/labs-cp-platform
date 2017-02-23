@@ -1,6 +1,7 @@
 import React from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import GlobalModal from './common/GlobalModal';
@@ -12,6 +13,13 @@ import './app.scss';
 import '../jane-maps/src/styles.scss';
 
 injectTapEventPlugin();
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: '#b1b1b1',
+    accent1Color: '#D96B27',
+  },
+});
 
 const App = React.createClass({
   propTypes: {
@@ -73,7 +81,7 @@ const App = React.createClass({
     document.title = this.props.children.props.route.title || 'NYC Captial Planning Platform';
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <Nav
             title={this.props.children.props.route.title}

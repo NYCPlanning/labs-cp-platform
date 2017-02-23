@@ -184,6 +184,9 @@ const Jane = React.createClass({
     if (this.state.mapConfig.selectedLayer === layerid) {
       this.state.mapConfig.selectedLayer = '';
       if (this.state.layerContentVisible) this.toggleLayerContent();
+    } else {
+      // if layer being turned on is not selected, select it
+      this.state.mapConfig.selectedLayer = layerid;
     }
 
     this.setState({
