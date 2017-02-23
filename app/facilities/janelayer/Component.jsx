@@ -94,6 +94,7 @@ const Facilities = React.createClass({
         <Tab label="Data">
           <LayerSelector
             layers={this.props.layer.initialState && this.props.layer.initialState.layers}
+            filterDimensions={this.props.layer.initialState && this.props.layer.initialState.filterDimensions}
             updateSQL={this.updateLayerConfig}
           />
         </Tab>
