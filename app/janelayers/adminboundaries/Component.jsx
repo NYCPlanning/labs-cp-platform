@@ -5,45 +5,9 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 const paint = {
   lines: {
-    'line-color': '#940000',
+    'line-color': '#717171',
     'line-opacity': 1,
     'line-width': {
-      stops: [
-        [
-          9,
-          2,
-        ],
-        [
-          11,
-          2,
-        ],
-        [
-          14,
-          4,
-        ],
-      ],
-    },
-  },
-  casing: {
-    'line-color': '#FFFFFF',
-    'line-opacity': 0.6,
-    'line-width': {
-      stops: [
-        [
-          9,
-          0.5,
-        ],
-        [
-          11,
-          0.5,
-        ],
-        [
-          14,
-          1,
-        ],
-      ],
-    },
-    'line-gap-width': {
       stops: [
         [
           9,
@@ -87,13 +51,6 @@ const defaultLayerConfig = {
         source: 'ntaboundaries',
         type: 'line',
         paint: paint.lines,
-        layout: layout.lines,
-      },
-      {
-        id: 'ntaboundaries-casing',
-        source: 'ntaboundaries',
-        type: 'line',
-        paint: paint.casing,
         layout: layout.lines,
       },
       {
