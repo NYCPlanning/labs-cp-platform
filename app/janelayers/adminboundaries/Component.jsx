@@ -9,23 +9,16 @@ const paint = {
     'line-opacity': 1,
     'line-width': {
       stops: [
-        [
-          9,
-          2,
-        ],
-        [
-          11,
-          2,
-        ],
-        [
-          14,
-          4,
-        ],
+        [9, 1.5],
+        [14, 4],
       ],
     },
   },
   labels: {
     'text-color': '#626262',
+    'text-halo-color': '#FFFFFF',
+    'text-halo-width': 2,
+    'text-halo-blur': 2,
   },
 };
 
@@ -62,6 +55,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{ntaname}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -91,6 +90,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{displaynam}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -121,6 +126,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{SchoolDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
