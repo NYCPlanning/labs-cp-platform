@@ -308,10 +308,12 @@ body:after {
 
     input[type="checkbox"] + label {
       display:inline-block;
-      vertical-align:middle;  
-      width:20px;
-      height:20px;
-      background: url('/img/checkbox_sprites.png') -42px top no-repeat;
+      vertical-align:middle;
+      left: 10px !important;
+      margin-top: 0px !important;
+      width:17px;
+      height:17px;
+      background: url('/img/checkbox_sprites.png') -34px top no-repeat;
     }
 
     input[type="checkbox"] + label:hover {
@@ -323,7 +325,7 @@ body:after {
     }
 
     input[type="checkbox"]:indeterminate + label {
-      background: url('/img/checkbox_sprites.png') -21px top no-repeat;
+      background: url('/img/checkbox_sprites.png') -17px top no-repeat;
     }
   }
 
