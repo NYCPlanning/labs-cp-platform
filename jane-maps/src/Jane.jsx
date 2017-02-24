@@ -189,6 +189,9 @@ const Jane = React.createClass({
       this.state.mapConfig.selectedLayer = layerid;
     }
 
+    // if a layer is being turned on, open the second drawer if it is not already open
+    if (theLayer.visible && !this.state.layerContentVisible) this.toggleLayerContent();
+
     this.setState({
       mapConfig: this.state.mapConfig,
     });
