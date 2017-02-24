@@ -313,7 +313,7 @@ body:after {
       margin-top: 0px !important;
       width:17px;
       height:17px;
-      background: url('/img/checkbox_black_thin.png') -34px top no-repeat;
+      background: url('/img/checkbox_sprites.png') -34px top no-repeat;
     }
 
     input[type="checkbox"] + label:hover {
@@ -321,11 +321,11 @@ body:after {
     }
 
     input[type="checkbox"]:checked + label {
-      background: url('/img/checkbox_black_thin.png') 0px top no-repeat;
+      background: url('/img/checkbox_sprites.png') 0px top no-repeat;
     }
 
     input[type="checkbox"]:indeterminate + label {
-      background: url('/img/checkbox_black_thin.png') -17px top no-repeat;
+      background: url('/img/checkbox_sprites.png') -17px top no-repeat;
     }
   }
 
