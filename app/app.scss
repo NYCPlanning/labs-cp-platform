@@ -265,7 +265,7 @@ body:after {
     padding-top: 15px;
 
     .Select {
-      width: 264px;
+      width: calc(100% - 24px);
       display: inline-block;
     }
 

@@ -13,7 +13,7 @@ import appConfig from '../helpers/appConfig';
 
 import './styles.scss';
 
-const CaptialProjectsExplorer = React.createClass({
+const CapitalProjectsExplorer = React.createClass({
   propTypes: {
     showModal: React.PropTypes.func,
   },
@@ -77,4 +77,4 @@ const CaptialProjectsExplorer = React.createClass({
   },
 });
 
-module.exports = CaptialProjectsExplorer;
+module.exports = CapitalProjectsExplorer;

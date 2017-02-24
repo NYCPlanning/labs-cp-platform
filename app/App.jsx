@@ -78,7 +78,7 @@ const App = React.createClass({
       });
     }
 
-    document.title = this.props.children.props.route.title || 'NYC Captial Planning Platform';
+    document.title = this.props.children.props.route.title || 'NYC Capital Planning Platform';
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
