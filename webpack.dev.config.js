@@ -1,5 +1,8 @@
 const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin('css/bundle.css');
 
 module.exports = {
   entry: [
@@ -9,25 +12,23 @@ module.exports = {
     './main.jsx',
   ],
   output: {
-    path: './public',
+    path: path.join(__dirname, './public'),
     filename: 'js/bundle.js',
     publicPath: '/',
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
   module: {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
-    preLoaders: [
-      { test: /\.jsx?$/, loader: 'eslint', exclude: [/(node_modules|capitalprojectsold)/] },
-    ],
+
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loaders: [
-          'react-hot',
+          'react-hot-loader',
           'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
         ],
       },
@@ -38,15 +39,20 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass'),
+        loader: extractSass.extract({
+          loader: [{
+            loader: 'css-loader',
+          }, {
+            loader: 'sass-loader',
+          }],
+          // use style-loader in development
+          fallback: 'style-loader',
+        }),
       },
     ],
   },
-  eslint: {
-    configFile: './.eslintrc',
-  },
   plugins: [
-    new ExtractTextPlugin('css/bundle.css'),
+    extractSass,
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"development"',

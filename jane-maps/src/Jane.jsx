@@ -63,7 +63,7 @@ const Jane = React.createClass({
     };
 
     React.Children.forEach(this.props.children, (child) => {
-      if (child !== null && child.type.name === 'JaneLayer') {
+      if (child !== null && child.type.displayName === 'JaneLayer') {
         if (child.props.selected) {
           mapConfig.selectedLayer = child.props.id;
         }

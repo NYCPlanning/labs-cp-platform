@@ -1,6 +1,8 @@
 const webpack = require('webpack');
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const extractSass = new ExtractTextPlugin('css/bundle.css');
 
 module.exports = {
   entry: [
@@ -8,12 +10,12 @@ module.exports = {
     './main.jsx',
   ],
   output: {
-    path: 'public/js',
-    filename: 'bundle.js',
+    path: path.join(__dirname, './public'),
+    filename: 'js/bundle.js',
     publicPath: '/js/',
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
   module: {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
@@ -32,12 +34,20 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass'),
+        loader: extractSass.extract({
+          loader: [{
+            loader: 'css-loader',
+          }, {
+            loader: 'sass-loader',
+          }],
+          // use style-loader in development
+          fallback: 'style-loader',
+        }),
       },
     ],
   },
   plugins: [
-    new ExtractTextPlugin('../css/bundle.css'),
+    extractSass,
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
