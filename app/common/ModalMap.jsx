@@ -61,7 +61,7 @@ const ModalMap = React.createClass({
       zoom: 12,
       minZoom: null,
       maxZoom: null,
-      pitch: 30,
+      pitch: 0,
       hash: false,
       navigationControlPosition: 'bottom-right',
     };
@@ -105,6 +105,14 @@ const ModalMap = React.createClass({
           poiLabel={geometry.type === 'Point' ? this.props.label : null}
           ref={x => (this.janeMap = x)}
         >
+          {
+            geometry.type === 'Point' &&
+              <JaneLayer
+                {...supportingLayers.travelshed}
+                initialState={{ feature: this.props.feature }}
+                visible
+              />
+          }
           <JaneLayer
             {...supportingLayers.aerials}
           />
