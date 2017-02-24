@@ -91,8 +91,8 @@ const LayerContent = React.createClass({
           }
           {
               !layer.component && (
-                <div className="sidebar-tab-content">
-                  <h4>{layer.name}</h4>
+                <div className="second-drawer-content">
+                  <h4>This layer has no content</h4>
                 </div>
               )
             }
