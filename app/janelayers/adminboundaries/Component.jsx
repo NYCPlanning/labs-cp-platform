@@ -5,13 +5,70 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 const paint = {
   lines: {
-    'line-color': '#626262',
-    'line-opacity': 0.7,
-    'line-width': 4,
-    'line-dasharray': [2, 2],
+    'line-color': '#940000',
+    'line-opacity': 1,
+    'line-width': {
+      stops: [
+        [
+          9,
+          2,
+        ],
+        [
+          11,
+          2,
+        ],
+        [
+          14,
+          4,
+        ],
+      ],
+    },
+  },
+  casing: {
+    'line-color': '#FFFFFF',
+    'line-opacity': 0.6,
+    'line-width': {
+      stops: [
+        [
+          9,
+          0.5,
+        ],
+        [
+          11,
+          0.5,
+        ],
+        [
+          14,
+          1,
+        ],
+      ],
+    },
+    'line-gap-width': {
+      stops: [
+        [
+          9,
+          2,
+        ],
+        [
+          11,
+          2,
+        ],
+        [
+          14,
+          4,
+        ],
+      ],
+    },
   },
   labels: {
     'text-color': '#626262',
+  },
+};
+
+const layout = {
+  lines: {
+    'line-join': 'round',
+    'line-cap': 'round',
   },
 };
 
@@ -30,6 +87,14 @@ const defaultLayerConfig = {
         source: 'ntaboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'ntaboundaries-casing',
+        source: 'ntaboundaries',
+        type: 'line',
+        paint: paint.casing,
+        layout: layout.lines,
       },
       {
         id: 'ntaboundaries-labels',
@@ -44,7 +109,6 @@ const defaultLayerConfig = {
       },
     ],
   },
-
   cd: {
     sources: [
       {
@@ -59,6 +123,7 @@ const defaultLayerConfig = {
         source: 'cdboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'cdboundaries-labels',
@@ -88,6 +153,7 @@ const defaultLayerConfig = {
         source: 'schooldistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'schooldistricts-labels',
