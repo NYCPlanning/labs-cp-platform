@@ -19,7 +19,7 @@ const layerConfig = {
         id: 'bus_stations',
         type: 'circle',
         source: 'bus_stops',
-        minzoom: 12,
+        minzoom: 13,
         paint: {
           'circle-color': 'rgba(66, 182, 244, 1)',
           'circle-opacity': 0.7,
@@ -423,6 +423,11 @@ const Transportation = React.createClass({
                   label="Subways"
                   checked={this.state.activeCheckboxes.includes('subways')}
                   onCheck={this.handleCheck.bind(this, 'subways')}
+                />
+                <Checkbox
+                  label="Bus Stops"
+                  checked={this.state.activeCheckboxes.includes('busstops')}
+                  onCheck={this.handleCheck.bind(this, 'busstops')}
                 />
               </div>
             </div>
