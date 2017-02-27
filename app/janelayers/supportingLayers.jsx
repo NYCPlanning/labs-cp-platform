@@ -2,6 +2,7 @@ import appConfig from '../helpers/appConfig';
 
 import TransportationComponent from './transportation/Component';
 import AdminBoundariesComponent from './adminboundaries/Component';
+import TravelshedComponent from './travelshed/Component';
 
 const janeLayerConfig = {
   transportation: {
@@ -36,6 +37,13 @@ const janeLayerConfig = {
     name: 'Admin. Boundaries',
     icon: 'flag',
     component: AdminBoundariesComponent,
+  },
+
+  travelshed: {
+    id: 'travelshed',
+    name: 'Travelshed',
+    icon: 'road',
+    component: TravelshedComponent,
   },
 };
 
