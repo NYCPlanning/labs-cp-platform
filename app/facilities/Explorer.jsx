@@ -28,20 +28,6 @@ const FacilitiesExplorer = React.createClass({
 
   componentWillMount() {
     this.bounds = null;
-
-    // // alter default config of adminboundaries layer
-    // if (this.props.location.state && this.props.location.state.adminboundaries) {
-    //   this.ModifiedSupportingJaneLayers = SupportingJaneLayers.map((JaneLayer) => {
-    //     if (JaneLayer.key === 'adminboundaries') {
-    //       JaneLayer.props.visible = true;
-    //       JaneLayer.props.initialState = {
-    //         value: this.props.location.state.adminboundaries.type,
-    //       };
-    //     }
-
-    //     return JaneLayer;
-    //   });
-    // }
   },
 
   componentDidMount() {
@@ -80,11 +66,6 @@ const FacilitiesExplorer = React.createClass({
       this.props.location.state.layers :
       null;
 
-    const showAdminBoundaries = locationState && locationState.adminboundaries;
-    const adminBoundariesState = locationState && locationState.adminboundaries ?
-    { value: locationState.adminboundaries.type } :
-    null;
-
     return (
       <div className="full-screen">
         <Jane
@@ -99,15 +80,13 @@ const FacilitiesExplorer = React.createClass({
           />
           <JaneLayer
             {...supportingLayers.adminboundaries}
-            visible={showAdminBoundaries}
-            initialState={adminBoundariesState}
           />
           <JaneLayer
             {...supportingLayers.transportation}
           />
           <JaneLayer
             id="facilities"
-            name="Facilities DB"
+            name="Facilities and Program Sites"
             icon="university"
             interactivityMapLayers={['facilities-points']}
             visible

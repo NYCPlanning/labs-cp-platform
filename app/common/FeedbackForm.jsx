@@ -63,28 +63,21 @@ const FeedbackForm = React.createClass({
   onChangeInput(e) {
     // `setProperty` is injected by reformed
     this.props.setProperty(e.target.name, e.target.value);
-
-    this.validate();
-  },
-
-  validate() {
-    let valid = true;
-    const m = this.props.model;
-
-    if (m.comment && m.comment.length < 5) valid = false;
-
-    this.setState({ valid });
   },
 
   render() {
     // model is injected by reformed
     const { model } = this.props;
 
+    let valid = true;
+
+    if (!model.comment || model.comment.length < 5) valid = false;
+
     return (
       <div>
         { !this.state.submitted && !this.state.error && (
           <div>
-            <h4>Your Feedback</h4>
+            <h4>Suggest an Edit</h4>
             <p>See something wrong with this data point? Let us know.</p>
             <TextField
               name="comment"
@@ -100,7 +93,7 @@ const FeedbackForm = React.createClass({
               label="Submit"
               style={{ marginTop: 12 }}
               onTouchTap={this.onSubmit}
-              disabled={!this.state.valid}
+              disabled={!valid}
             />
           </div>
         )}
