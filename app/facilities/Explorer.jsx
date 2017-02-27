@@ -66,11 +66,6 @@ const FacilitiesExplorer = React.createClass({
       this.props.location.state.layers :
       layersGenerator.allChecked();
 
-    const showAdminBoundaries = locationState && locationState.adminboundaries;
-    const adminBoundariesState = locationState && locationState.adminboundaries ?
-      { value: locationState.adminboundaries.type } :
-      null;
-
     const filterDimensions = locationState && locationState.filterDimensions ?
       locationState.filterDimensions :
       null;
