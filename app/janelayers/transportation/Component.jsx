@@ -18,6 +18,11 @@ const layerConfig = {
         type: 'geojson',
         data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20doitt_subwaystations&format=geojson`,
       },
+      {
+        id: 'bus_stops',
+        type: 'geojson',
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20bus_stops&format=geojson`,
+      },
     ],
     mapLayers: [
       {
@@ -321,6 +326,30 @@ const layerConfig = {
             1,
             20,
           ],
+        },
+      },
+      {
+        id: 'bus_stations',
+        type: 'circle',
+        source: 'bus_stops',
+        minzoom: 12,
+        paint: {
+          'circle-color': 'rgba(66, 182, 244, 1)',
+          'circle-opacity': 0.7,
+          'circle-radius': {
+            stops: [
+              [
+                12,
+                2,
+              ],
+              [
+                16,
+                5,
+              ],
+            ],
+          },
+          'circle-stroke-width': 0,
+          'circle-pitch-scale': 'map',
         },
       },
     ],
