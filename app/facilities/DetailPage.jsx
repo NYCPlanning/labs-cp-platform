@@ -9,6 +9,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
+import Email from '../common/EmailButton';
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
@@ -191,6 +192,11 @@ const DetailPage = React.createClass({
                 defaultText="Facilities Map"
                 defaultLink="/facilities/explorer"
               />
+              <Email
+                subject={`Check out ${d.facilityname} on the NYC Facilities Explorer`}
+                body={`Here's the record page for ${d.facilityname} on the NYC Facilities Explorer: ${location.origin}${location.pathname}`}
+              />
+
             </div>
             <div className="col-md-9 col-md-pull-3">
               <h1>{d.facilityname}</h1>

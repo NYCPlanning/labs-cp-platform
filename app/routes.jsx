@@ -9,6 +9,7 @@ import AuthHelper from './helpers/AuthHelper';
 import appConfig from './helpers/appConfig';
 
 import HomePage from '../app/pages/HomePage';
+import About from '../app/pages/About';
 
 import FacilitiesLanding from '../app/facilities/LandingPage';
 import FacilitiesExplorer from '../app/facilities/Explorer';
@@ -87,6 +88,7 @@ const AuthSuccess = () => (
 module.exports = (
   <Route path="/" component={App} auth={auth} >
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="about" component={About} title={'About'} />
 
     <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} onEnter={requireAuth} />
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} onEnter={requireAuth} />

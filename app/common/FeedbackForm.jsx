@@ -77,7 +77,7 @@ const FeedbackForm = React.createClass({
       <div>
         { !this.state.submitted && !this.state.error && (
           <div>
-            <h4>Your Feedback</h4>
+            <h4>Suggest an Edit</h4>
             <p>See something wrong with this data point? Let us know.</p>
             <TextField
               name="comment"
