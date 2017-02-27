@@ -26,8 +26,22 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
+        enforce: 'pre',
+        exclude: /(node_modules|capitalprojectsold|jane-maps)/,
+        use: [
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnWarning: false,
+              failOnError: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loaders: [
+        use: [
           'react-hot-loader',
           'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
         ],
@@ -35,11 +49,11 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.scss$/,
-        loader: extractSass.extract({
+        use: extractSass.extract({
           loader: [{
             loader: 'css-loader',
           }, {
@@ -51,7 +65,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: extractSass.extract({
+        use: extractSass.extract({
           loader: [{
             loader: 'css-loader',
           }],

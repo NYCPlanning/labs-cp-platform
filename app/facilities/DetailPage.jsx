@@ -18,13 +18,13 @@ import carto from '../helpers/carto';
 
 import '../app.scss';
 
-
 const DetailPage = React.createClass({
   propTypes: {
     params: PropTypes.shape({
       id: PropTypes.string,
     }).isRequired,
     location: PropTypes.shape().isRequired,
+    auth: PropTypes.object.isRequired,
   },
 
   getInitialState() {
@@ -292,6 +292,8 @@ const DetailPage = React.createClass({
             <FeedbackForm
               ref_type="capitalproject"
               ref_id={this.props.params.id}
+              location={this.props.location}
+              auth={this.props.auth}
             />
           </div>
         </div>

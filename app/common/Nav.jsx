@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import AuthHelper from '../helpers/AuthHelper';
 
@@ -7,7 +7,6 @@ import './Nav.scss';
 
 const Nav = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.func.isRequired,
     auth: React.PropTypes.object.isRequired,
     title: React.PropTypes.string,
     children: React.PropTypes.array,
@@ -18,6 +17,11 @@ const Nav = React.createClass({
       title: '',
       children: null,
     };
+  },
+
+  handleLogout() {
+    this.props.auth.logout();
+    browserHistory.push(location.pathname);
   },
 
   render() {
@@ -37,13 +41,23 @@ const Nav = React.createClass({
         </a>
 
         <ul className="dropdown-menu">
-          <li><a onClick={this.props.auth.logout}>Log Out</a></li>
+          <li><a onClick={this.handleLogout}>Log Out</a></li>
         </ul>
-
       </li>
 
     ) :
-    (<li><Link to="/login"><i className="fa fa-user" aria-hidden="true" /> Log In</Link></li>);
+    (
+      <li>
+        <Link
+          to={{
+            pathname: '/login',
+            state: { previousPath: location.pathname },
+          }}
+        >
+          <i className="fa fa-user" aria-hidden="true" /> Log In
+        </Link>
+      </li>
+    );
 
 
     return (

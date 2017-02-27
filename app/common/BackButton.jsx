@@ -4,54 +4,55 @@ import FontIcon from 'material-ui/FontIcon';
 import { Link, browserHistory } from 'react-router';
 
 
-const BackButton = React.createClass({
-  propTypes: {
-    location: PropTypes.object.isRequired,
-    defaultText: PropTypes.string.isRequired,
-    defaultLink: PropTypes.string.isRequired,
-  },
+const Button = props => (
+  <RaisedButton
+    className="back-button"
+    label={props.label}
+    icon={<FontIcon
+      className={`fa ${props.iconClass}`}
+      style={{
+        fontSize: '16px',
+      }}
+    />}
+    onClick={props.onClick}
+    style={{
+      marginBottom: '15px',
+      marginRight: '15px',
+    }}
+  />
+);
 
-  render() {
-    const Button = props => (
-      <RaisedButton
-        className="back-button"
-        label={props.label}
-        icon={<FontIcon
-          className={`fa ${props.iconClass}`}
-          style={{
-            fontSize: '16px',
-          }}
-        />}
-        onClick={props.onClick}
-        style={{
-          marginBottom: '15px',
-          marginRight: '15px',
-        }}
+Button.propTypes = {
+  label: PropTypes.string.isRequired,
+  iconClass: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+const BackButton = (props) => {
+  if (props.location.state) {
+    return (
+      <Button
+        label={'Back to Map'}
+        iconClass={'fa-chevron-left'}
+        onClick={browserHistory.goBack}
       />
     );
+  }
 
+  return (
+    <Link to={props.defaultLink}>
+      <Button
+        label={this.props.defaultText}
+        iconClass={'fa-map'}
+        onClick={null}
+      />
+    </Link>
+  );
+};
 
-    if (this.props.location.state) {
-      return (
-        <Button
-          label={'Back to Map'}
-          iconClass={'fa-chevron-left'}
-          onClick={browserHistory.goBack}
-        />
-      );
-    }
-
-    return (
-      <Link to={this.props.defaultLink}>
-        <Button
-          label={this.props.defaultText}
-          iconClass={'fa-map'}
-          onClick={null}
-        />
-      </Link>
-    );
-  },
-});
-
+BackButton.propTypes = {
+  location: PropTypes.object.isRequired,
+  defaultLink: PropTypes.string.isRequired,
+};
 
 module.exports = BackButton;
