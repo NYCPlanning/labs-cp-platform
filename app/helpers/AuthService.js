@@ -17,9 +17,10 @@ export default class AuthService {
       },
       theme: {
         logo: '/img/logo_80.png',
+        primaryColor: '#EA6200',
       },
       languageDictionary: {
-        title: 'Please log in with your NYC email address',
+        title: 'Please log in',
       },
 
     });

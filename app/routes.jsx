@@ -57,20 +57,20 @@ const rerouteNotFound = (nextState, replace) => {
 
 // checks if the passed in permission exists in the user's profile
 const confirmPermissions = permission => ((nextState, replace) => {
-  // If not logged in, redirect. TODO can this use rerouteLoggedIn() so we are not repeating code?
-  if (!AuthHelper.loggedIn()) {
-    replace({
-      pathname: '/login',
-      state: {
-        previousPath: nextState.location.pathname,
-      },
-    });
-  }
+  // // If not logged in, redirect to /login. TODO can this use rerouteLoggedIn() so we are not repeating code?
+  // if (!AuthHelper.loggedIn()) {
+  //   replace({
+  //     pathname: '/facilities',
+  //     state: {
+  //       previousPath: nextState.location.pathname,
+  //     },
+  //   });
+  // }
 
   const permissions = AuthHelper.getProfile().permissions;
 
 
-  if (permissions && permissions.indexOf(permission) === -1) {
+  if ((permissions && permissions.indexOf(permission) === -1) || !AuthHelper.loggedIn()) {
     // if trying to load homepage, reroute to facilities, else reroute to not found
     if (nextState.location.pathname === '/') {
       replace({ pathname: '/facilities' });
@@ -90,9 +90,9 @@ module.exports = (
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="about" component={About} title={'About'} />
 
-    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} onEnter={requireAuth} />
-    <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} onEnter={requireAuth} />
-    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} onEnter={requireAuth} />
+    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} />
+    <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} />
+    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} />
 
     <Route path="pipeline" component={PipelineExplorer} title={'Housing Development Pipeline'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} onEnter={confirmPermissions('sitewide_access')} />
