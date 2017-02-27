@@ -10,15 +10,20 @@ const layerConfig = {
     sources: [
       {
         id: 'bus_stops',
-        type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20bus_stops&format=geojson`,
+        type: 'cartovector',
+        options: {
+          carto_user: appConfig.carto_user,
+          carto_domain: appConfig.carto_domain,
+          sql: ['SELECT * FROM bus_stops'],
+        },
       },
     ],
     mapLayers: [
       {
-        id: 'bus_stations',
+        id: 'bus_stops',
         type: 'circle',
         source: 'bus_stops',
+        'source-layer': 'layer0',
         minzoom: 13,
         paint: {
           'circle-color': 'rgba(66, 182, 244, 1)',
