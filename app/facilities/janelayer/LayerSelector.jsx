@@ -343,12 +343,8 @@ const LayerSelector = React.createClass({
               onChange={this.handleToggleAll}
             />
             All
-            <div className="btn-group btn-group-xs" role="group" style={{ float: 'right' }}>
-              <div
-                className="btn dcp-orange btn-xs "
-                onClick={this.expandAll}
-              >Expand All</div>
-              <div className="btn dcp-orange btn-xs " onClick={this.collapseAll}>Collapse All</div>
+            <div className="expand-collapse">
+              <span onClick={this.expandAll}>Expand</span> | <span onClick={this.collapseAll}>Collapse</span>
             </div>
           </div>
 

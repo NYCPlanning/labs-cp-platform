@@ -12,5 +12,15 @@
       top: 0px;
     }
   }
+
+  .expand-collapse {
+    float: right;
+    cursor: pointer;
+  }
+
+  .expand-collapse span:hover {
+    text-decoration: underline;
+  }
+
 }
 
