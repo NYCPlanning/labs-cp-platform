@@ -8,6 +8,7 @@ import Select from 'react-select';
 import $ from 'jquery';
 
 import SplashSelector from './SplashSelector';
+import SplashFilterShortcuts from './SplashFilterShortcuts';
 import Footer from '../common/Footer';
 
 import content from './content';
@@ -93,7 +94,7 @@ const FacilitiesLandingPage = React.createClass({
                 </div>
 
                 <hr className="light" />
-
+                <SplashFilterShortcuts />
                 <h3 className="section-heading">Which facilities would you like to explore?</h3>
                 <SplashSelector />
               </div>

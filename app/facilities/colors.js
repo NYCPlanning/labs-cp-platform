@@ -1,4 +1,4 @@
-import layerConfig from './layerConfig';
+import { layerDefaults } from './layerDefaults';
 
 const colors = {
   getColor(value) {
@@ -13,7 +13,7 @@ const colors = {
     return {
       property: 'domain',
       type: 'categorical',
-      stops: layerConfig.map(layer => [
+      stops: layerDefaults().map(layer => [
         layer.name,
         layer.color,
       ]),

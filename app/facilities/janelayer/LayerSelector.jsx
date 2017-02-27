@@ -11,7 +11,6 @@ import NestedSelect from './NestedSelect';
 import Checkbox from './Checkbox';
 
 import config from './config';
-import layerConfig from '../layerConfig';
 import Carto from '../../helpers/carto';
 
 import './LayerSelector.scss';
@@ -20,11 +19,13 @@ const LayerSelector = React.createClass({
   propTypes: {
     updateSQL: PropTypes.func.isRequired,
     layers: PropTypes.array,
+    filterDimensions: PropTypes.object,
   },
 
   getDefaultProps() {
     return {
       layers: [],
+      filterDimensions: null,
     };
   },
 
@@ -44,28 +45,18 @@ const LayerSelector = React.createClass({
 
   componentWillMount() {
     const self = this;
+    const layers = this.props.layers;
+    const filterDimensions = this.props.filterDimensions;
 
     this.sqlConfig = {
       columns: 'uid, the_geom_webmercator, domain, facilityname, address, facilitytype, operatorname',
       tablename: 'cpadmin.facilities',
     };
 
-    let layers = [];
-
-    if (this.props.layers) {
-      layers = this.props.layers;
-    } else {
-      layers = layerConfig.map((domain) => {
-        domain.checked = true;
-        domain.children = domain.children.map((group) => {
-          group.checked = true;
-          group.children = group.children.map((subgroup) => {
-            subgroup.checked = true;
-            return subgroup;
-          });
-          return group;
-        });
-        return domain;
+    // Loop over any default filterDimensions and set them before initial load
+    if (filterDimensions) {
+      Object.keys(filterDimensions).forEach((k) => {
+        this.updateFilterDimension(k, filterDimensions[k]);
       });
     }
 
