@@ -1,6 +1,11 @@
 import React from 'react';
 
 const RangeSlider = React.createClass({
+  propTypes: {
+    disable: React.PropTypes.bool.isRequired,
+    data: React.PropTypes.object.isRequired,
+  },
+
   componentDidMount() {
     const self = this;
     $(this.sliderEl).ionRangeSlider({ // eslint-disable-line no-undef

@@ -125,6 +125,7 @@ const App = React.createClass({
                 >
                   {
                     React.cloneElement(this.props.children, {
+                      auth: this.props.route.auth,
                       key: this.props.location.pathname,
                     })
                   }

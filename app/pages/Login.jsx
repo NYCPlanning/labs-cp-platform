@@ -17,8 +17,16 @@ const Login = React.createClass({
   },
 
   componentDidMount() {
+    let previousPath;
+
+    if (this.props.location.state && this.props.location.state.previousPath) {
+      previousPath = this.props.location.state.previousPath;
+    } else {
+      previousPath = location.pathname;
+    }
+
     // trigger Auth0-lock Login Modal, pass in previousPath so it can redirect after login.
-    this.props.auth.login(this.props.location.state.previousPath);
+    this.props.auth.login(previousPath);
   },
 
   render() {

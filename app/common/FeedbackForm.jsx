@@ -4,8 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
 import $ from 'jquery';
 
-import auth from '../helpers/AuthHelper';
 import appConfig from '../helpers/appConfig';
+import AuthHelper from '../helpers/AuthHelper';
 
 const FeedbackForm = React.createClass({
 
@@ -14,6 +14,8 @@ const FeedbackForm = React.createClass({
     model: PropTypes.object.isRequired,
     ref_type: PropTypes.string.isRequired,
     ref_id: PropTypes.string.isRequired,
+    auth: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   },
 
   getInitialState() {
@@ -22,6 +24,13 @@ const FeedbackForm = React.createClass({
       submitted: false,
       error: false,
     });
+  },
+
+  componentWillMount() {
+    // check localstorage for saved form state , if it exists pass it up to react reformed
+
+    const savedState = JSON.parse(localStorage.getItem('feedback-state'));
+    if (savedState !== null) this.props.setProperty('comment', savedState.comment);
   },
 
   onPostSuccess(data) {
@@ -35,9 +44,26 @@ const FeedbackForm = React.createClass({
   },
 
   onSubmit() {
+    // if not logged in, prompt login and pass current model up
+    if (!AuthHelper.loggedIn()) {
+      localStorage.setItem('feedback-state', JSON.stringify(this.props.model));
+      this.props.auth.login(this.props.location.pathname, {
+        closable: true,
+      });
+    } else {
+      this.postData();
+    }
+  },
+
+  onChangeInput(e) {
+    // `setProperty` is injected by reformed
+    this.props.setProperty(e.target.name, e.target.value);
+  },
+
+  postData() { // TODO move ajax to a helper class
     const data = this.props.model;
 
-    const profile = auth.getProfile();
+    const profile = AuthHelper.getProfile();
 
     // add user details to payload
     data.email = profile.email;
@@ -46,7 +72,10 @@ const FeedbackForm = React.createClass({
     data.ref_id = this.props.ref_id;
 
     // get the json web token from localstorage
-    const jwt = auth.getToken();
+    const jwt = AuthHelper.getToken();
+
+    // delete the feedback state from localstorage
+    localStorage.removeItem('feedback-state');
 
     $.ajax({
       url: `//${appConfig.api_domain}/api/feedback/`,
@@ -58,11 +87,6 @@ const FeedbackForm = React.createClass({
       success: this.onPostSuccess,
       error: this.onPostError,
     });
-  },
-
-  onChangeInput(e) {
-    // `setProperty` is injected by reformed
-    this.props.setProperty(e.target.name, e.target.value);
   },
 
   render() {
