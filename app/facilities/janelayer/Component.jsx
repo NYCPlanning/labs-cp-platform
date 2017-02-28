@@ -25,6 +25,7 @@ const Facilities = React.createClass({
   // updates the sql for the map source
   updateLayerConfig(sql) {
     this.setState({ sql });
+    console.log(sql);
 
     const newLayerConfig = update(defaultLayerConfig, {
       sources: {

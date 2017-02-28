@@ -6,6 +6,46 @@ import appConfig from '../../helpers/appConfig';
 
 
 const layerConfig = {
+  busstops: {
+    sources: [
+      {
+        id: 'bus_stops',
+        type: 'cartovector',
+        options: {
+          carto_user: appConfig.carto_user,
+          carto_domain: appConfig.carto_domain,
+          sql: ['SELECT * FROM bus_stops'],
+        },
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'bus_stops',
+        type: 'circle',
+        source: 'bus_stops',
+        'source-layer': 'layer0',
+        minzoom: 12,
+        paint: {
+          'circle-color': 'rgba(66, 182, 244, 1)',
+          'circle-opacity': 0.7,
+          'circle-radius': {
+            stops: [
+              [
+                12,
+                2,
+              ],
+              [
+                16,
+                5,
+              ],
+            ],
+          },
+          'circle-stroke-width': 0,
+          'circle-pitch-scale': 'map',
+        },
+      },
+    ],
+  },
   subways: {
     sources: [
       {
@@ -325,8 +365,160 @@ const layerConfig = {
       },
     ],
   },
-
-
+  path: {
+    sources: [
+      {
+        id: 'path_routes',
+        type: 'geojson',
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20routes_path_2017&format=geojson`,
+        // options: {
+        //   carto_user: appConfig.carto_user,
+        //   carto_domain: appConfig.carto_domain,
+        //   sql: ['SELECT * FROM bus_stops'],
+        // },
+      },
+      {
+        id: 'path_stops',
+        type: 'geojson',
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20stops_path_2017&format=geojson`,
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'path_routes',
+        type: 'line',
+        source: 'path_routes',
+        paint: {
+          'line-color': {
+            property: 'color',
+            type: 'identity',
+          },
+          'line-width': {
+            stops: [
+              [
+                10,
+                1,
+              ],
+              [
+                15,
+                4,
+              ],
+            ],
+          },
+        },
+      },
+      {
+        id: 'path_stops',
+        type: 'circle',
+        source: 'path_stops',
+        minzoom: 12,
+        // 'source-layer': 'layer0',
+        paint: {
+          'circle-color': 'rgba(233, 237, 28, 1)',
+          'circle-radius': {
+            stops: [
+              [
+                10,
+                2,
+              ],
+              [
+                14,
+                5,
+              ],
+            ],
+          },
+          'circle-stroke-width': 1,
+          'circle-pitch-scale': 'map',
+        },
+      },
+      {
+        id: 'path_stops_labels',
+        type: 'symbol',
+        source: 'path_stops',
+        minzoom: 14,
+        layout: {
+          'text-field': '{station}',
+          'symbol-placement': 'point',
+          'symbol-spacing': 250,
+          'symbol-avoid-edges': false,
+          'text-size': 14,
+          'text-anchor': 'center',
+        },
+        paint: {
+          'text-halo-color': 'rgba(255, 255, 255, 1)',
+          'text-halo-width': 1,
+          'text-translate': [
+            1,
+            20,
+          ],
+        },
+      },
+    ],
+  },
+  bike_routes: {
+    sources: [
+      {
+        id: 'bike_routes',
+        type: 'geojson',
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20nyc_bike_routes_2016&format=geojson`,
+        // type: 'cartovector',
+        // options: {
+        //   carto_user: appConfig.carto_user,
+        //   carto_domain: appConfig.carto_domain,
+        //   sql: ['SELECT * FROM nyc_bike_routes_2016'],
+        // },
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'bike_routes',
+        type: 'line',
+        source: 'bike_routes',
+        // 'source-layer': 'layer0',
+        minzoom: 11,
+        paint: {
+          'line-color': 'green',
+          // 'line-color': {
+          //   property: 'ft_facilit',
+          //   type: 'categorical',
+          //   stops: [
+          //       ['Sidewalk', '#fbb03b'],
+          //       ['Bike-Friendly Parking', '#223b53'],
+          //       ['Velodrome', '#e55e5e'],
+          //       ['Protected Path', '#3bb2d0'],
+          //       ['Sharrows/Standard', '#ccc'],
+          //       ['<Null>', '#fbb03b'],
+          //       ['Sharrows', '#223b53'],
+          //       ['Dirt Trail', '#e55e5e'],
+          //       ['Curbside', '#3bb2d0'],
+          //       ['Curbside/Sharrows', '#ccc'],
+          //       ['Ped Plaza', '#fbb03b'],
+          //       ['Standard', '#223b53'],
+          //       ['Standard/Sharrows', '#e55e5e'],
+          //       ['Signed Route', '#3bb2d0'],
+          //       ['Boardwalk', '#ccc'],
+          //       ['Sharrows/Protected Path', '#3bb2d0'],
+          //       ['Greenway', '#ccc'],
+          //       ['Opposite Sidewalk', '#ccc'],
+          //   ],
+          // },
+          'line-opacity': 0.7,
+          'line-width': {
+            stops: [
+              [
+                10,
+                0.5,
+              ],
+              [
+                16,
+                3,
+              ],
+            ],
+          },
+        },
+      },
+    ],
+  },
 };
 
 const Transportation = React.createClass({
@@ -390,6 +582,21 @@ const Transportation = React.createClass({
                   label="Subways"
                   checked={this.state.activeCheckboxes.includes('subways')}
                   onCheck={this.handleCheck.bind(this, 'subways')}
+                />
+                <Checkbox
+                  label="Bus Stops"
+                  checked={this.state.activeCheckboxes.includes('busstops')}
+                  onCheck={this.handleCheck.bind(this, 'busstops')}
+                />
+                <Checkbox
+                  label="PATH"
+                  checked={this.state.activeCheckboxes.includes('path')}
+                  onCheck={this.handleCheck.bind(this, 'path')}
+                />
+                <Checkbox
+                  label="Bike Routes"
+                  checked={this.state.activeCheckboxes.includes('bike_routes')}
+                  onCheck={this.handleCheck.bind(this, 'bike_routes')}
                 />
               </div>
             </div>
