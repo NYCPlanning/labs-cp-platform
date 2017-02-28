@@ -275,7 +275,7 @@ const LayerSelector = React.createClass({
           selectedCount={this.state.selectedCount}
           units={'facilities'}
         />
-        <div className="scroll-container">
+        <div className="scroll-container count-widget-offset">
           <ListItem
             disabled
             style={listItemStyle}

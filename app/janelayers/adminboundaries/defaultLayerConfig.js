@@ -1,12 +1,26 @@
 const paint = {
   lines: {
-    'line-color': '#626262',
+    'line-color': '#717171',
     'line-opacity': 0.7,
-    'line-width': 4,
-    'line-dasharray': [2, 2],
+    'line-width': {
+      stops: [
+        [9, 1],
+        [14, 4],
+      ],
+    },
   },
   labels: {
     'text-color': '#626262',
+    'text-halo-color': '#FFFFFF',
+    'text-halo-width': 2,
+    'text-halo-blur': 2,
+  },
+};
+
+const layout = {
+  lines: {
+    'line-join': 'round',
+    'line-cap': 'round',
   },
 };
 
@@ -25,6 +39,7 @@ const defaultLayerConfig = {
         source: 'ntaboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'ntaboundaries-labels',
@@ -35,6 +50,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{ntaname}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -54,6 +75,7 @@ const defaultLayerConfig = {
         source: 'cdboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'cdboundaries-labels',
@@ -64,6 +86,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{displaynam}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -83,6 +111,7 @@ const defaultLayerConfig = {
         source: 'schooldistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'schooldistricts-labels',
@@ -93,6 +122,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{SchoolDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -112,6 +147,7 @@ const defaultLayerConfig = {
         source: 'boroughboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'boroughboundaries-labels',
@@ -122,6 +158,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{BoroName}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -141,6 +183,7 @@ const defaultLayerConfig = {
         source: 'citycouncildistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'citycouncildistricts-labels',
@@ -151,6 +194,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{CounDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -170,6 +219,7 @@ const defaultLayerConfig = {
         source: 'firebattalions',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'firebattalions-labels',
@@ -180,6 +230,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{FireBN}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -199,6 +255,7 @@ const defaultLayerConfig = {
         source: 'firecompanies',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'firecompanies-labels',
@@ -209,6 +266,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{FireCoNum}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -228,6 +291,7 @@ const defaultLayerConfig = {
         source: 'firedivisions',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'firedivisions-labels',
@@ -238,6 +302,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{FireDiv}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -257,6 +327,7 @@ const defaultLayerConfig = {
         source: 'healtharea',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'healtharea-labels',
@@ -267,6 +338,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{HealthArea}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -286,6 +363,7 @@ const defaultLayerConfig = {
         source: 'healthcenter',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'healthcenter-labels',
@@ -296,6 +374,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{HCentDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -315,6 +399,7 @@ const defaultLayerConfig = {
         source: 'municipalcourtdistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'municipalcourtdistricts-labels',
@@ -325,6 +410,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{MuniCourt}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -344,6 +435,7 @@ const defaultLayerConfig = {
         source: 'policeprecincts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'policeprecincts-labels',
@@ -354,6 +446,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{Precinct}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -373,6 +471,7 @@ const defaultLayerConfig = {
         source: 'stateassemblydistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'stateassemblydistricts-labels',
@@ -383,6 +482,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{AssemDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -402,6 +507,7 @@ const defaultLayerConfig = {
         source: 'statesenatedistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'statesenatedistricts-labels',
@@ -412,6 +518,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{StSenDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -431,6 +543,7 @@ const defaultLayerConfig = {
         source: 'uscongressionaldistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'uscongressionaldistricts-labels',
@@ -441,6 +554,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{CongDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],

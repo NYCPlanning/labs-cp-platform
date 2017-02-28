@@ -19,6 +19,33 @@ export default class AuthService {
       languageDictionary: {
         title: 'Please log in',
       },
+      additionalSignUpFields: [
+        {
+          name: 'name',
+          placeholder: 'Your Name',
+        },
+        {
+          name: 'organization',
+          placeholder: 'Your Organization',
+        },
+        {
+          type: 'select',
+          name: 'industry',
+          placeholder: 'Your Industry',
+          options: [
+            { value: 'government', label: 'Government' },
+            { value: 'planning', label: 'Planning' },
+            { value: 'nonprofit', label: 'Non-Profit/Civic Group' },
+            { value: 'realestate', label: 'Real Estate' },
+            { value: 'technology', label: 'Technology' },
+            { value: 'student', label: 'Student' },
+            { value: 'independent', label: 'Independent' },
+            { value: 'other', label: 'Other' },
+          ],
+          // The following properties are optional
+          prefill: 'us',
+        },
+      ],
 
     });
     // Add callback for lock `authenticated` event
@@ -46,6 +73,7 @@ export default class AuthService {
     this.lock.show({
       closable: options.closable || true,
       auth: {
+        redirect: false,
         params: {
           state: previousPath,
         },

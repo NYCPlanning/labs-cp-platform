@@ -256,13 +256,16 @@ body:after {
      padding: 0 16px;
   }
 
-  .scroll-container {
+  .count-widget-offset {
     margin-top: 42px;
+    padding-top: 15px;
+  }
+
+  .scroll-container {
     position: absolute;
     top: 0;
     bottom: 0;
     overflow: auto;
-    padding-top: 15px;
 
     .Select {
       width: calc(100% - 24px);

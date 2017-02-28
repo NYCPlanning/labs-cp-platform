@@ -25,7 +25,6 @@ const Facilities = React.createClass({
   // updates the sql for the map source
   updateLayerConfig(sql) {
     this.setState({ sql });
-    console.log(sql);
 
     const newLayerConfig = update(defaultLayerConfig, {
       sources: {
@@ -79,6 +78,7 @@ const Facilities = React.createClass({
       backgroundColor: '#D96B27',
     };
 
+    // necessary for scrolling in tab Content
     const tabTemplateStyle = {
       position: 'absolute',
       top: 0,
