@@ -3,6 +3,7 @@ const exports = {
     return [
       {
         name: 'Health and Human Services',
+        description: 'Health and social service providers, including hospitals, legal services, and homeless shelters',
         slug: 'health_and_human_services',
         color: '#BA68C8',
         subColor: '#f7e6f7',
@@ -45,20 +46,16 @@ const exports = {
             color: '#3182bd',
             children: [
               {
-                name: 'Shelters and Transitional Housing',
-                description: 'Homeless shelters and transitional houseing',
-              },
-              {
-                name: 'Non-residential Housing and Homeless Services',
-                description: 'Non-residential homelessness prevention services',
-              },
-              {
                 name: 'Senior Services',
                 description: 'Neighborhood senior centers, meal delivery programs, and other services for seniors',
               },
               {
-                name: 'Programs for People with Disabilities',
-                description: 'Specialized child care, caregiver support, and recreational services',
+                name: 'Community Centers and Community School Programs',
+                description: 'Community centers that provide multiple social services at one site',
+              },
+              {
+                name: 'Financial Assistance and Social Services',
+                description: 'SNAP, Child Support, and Medicaid Centers operated by NYC Human Resources Administration',
               },
               {
                 name: 'Workforce Development',
@@ -69,12 +66,20 @@ const exports = {
                 description: 'Early intervention, criminal defense, and mediation services',
               },
               {
-                name: 'Soup Kitchens and Food Pantries',
-                description: 'Soup kitchens and food pantries',
+                name: 'Programs for People with Disabilities',
+                description: 'Specialized child care, caregiver support, and recreational services',
               },
               {
-                name: 'Community Centers and Community School Programs',
-                description: 'Community centers that provide multiple social services at one site',
+                name: 'Shelters and Transitional Housing',
+                description: 'Homeless shelters and transitional houseing',
+              },
+              {
+                name: 'Non-residential Housing and Homeless Services',
+                description: 'Non-residential homelessness prevention services',
+              },
+              {
+                name: 'Soup Kitchens and Food Pantries',
+                description: 'Soup kitchens and food pantries',
               },
             ],
           },
@@ -82,6 +87,7 @@ const exports = {
       },
       {
         name: 'Education, Child Welfare, and Youth',
+        description: 'Providers of children and youth services and all schools, including higher education facilities',
         slug: 'education_child_welfare_and_youth',
         color: '#f7ca00',
         subColor: '#fff8dd',
@@ -131,16 +137,16 @@ const exports = {
           },
           {
             name: 'Childrens Services',
-            description: 'Services overseen by NYC Health and Human Services',
+            description: 'Services overseen by NYC Health and Human Services and NYC Administration for Children\'s Services',
             color: '#da664f',
             children: [
               {
                 name: 'Foster Care Services and Residential Care',
-                description: 'Foster care services, preventative care, and juvenile non-secure placement',
+                description: 'Foster care services and juvenile non-secure placement',
               },
               {
                 name: 'Preventative Care, Evaluation Services, and Respite',
-                description: 'Foster care services, preventative care, and juvenile non-secure placement',
+                description: 'Preventative care and intervention services',
               },
             ],
           },
@@ -211,6 +217,7 @@ const exports = {
       },
       {
         name: 'Parks, Gardens, and Historical Sites',
+        description: 'Historic sites, recreational areas, parks, and nature preserves',
         slug: 'parks_gardens_and_historical_sites',
         color: '#4CAF50',
         subColor: '#dfeddc',
@@ -262,6 +269,7 @@ const exports = {
       },
       {
         name: 'Libraries and Cultural Programs',
+        description: 'Public Libraries and Cultural Institutions',
         slug: 'libraries_and_cultural_progams',
         color: '#73E5F4',
         subColor: '#E0F7FA',
@@ -305,6 +313,7 @@ const exports = {
       },
       {
         name: 'Public Safety, Emergency Services, and Administration of Justice',
+        description: 'Police services, emergency response, courthouses, and correctional facilities',
         slug: 'public_safety_emergency_services_and_administration_of_justice',
         color: '#2979FF',
         subColor: '#BBDEFB',
@@ -363,6 +372,7 @@ const exports = {
       },
       {
         name: 'Core Infrastructure and Transportation',
+        description: 'Train and bus yards, parking lots, solid waste processors, and wastewater treatment plants',
         slug: 'core_infrastructure_and_transportation',
         color: '#8D8EAA',
         subColor: '#e3eef2',
@@ -459,6 +469,7 @@ const exports = {
       },
       {
         name: 'Administration of Government',
+        description: 'Sites owned or leased by the City for administration, operations, and maintenance',
         slug: 'administration_of_government',
         color: '#CBCBD6',
         subColor: '#07284B',
@@ -480,7 +491,7 @@ const exports = {
             ],
           },
           {
-            name: 'Parking, Maintenance, and Storage',
+            name: 'City Agency Parking, Maintenance, and Storage',
             description: 'City owned or leased properites used for City vehicle and equipment-related operations by Dept. of Citywide Administrative Services',
             color: '#b0dae8',
             children: [
@@ -493,7 +504,7 @@ const exports = {
                 description: 'City agency vehicle maintenance sites',
               },
               {
-                name: 'Parking',
+                name: 'City Agency Parking',
                 description: 'City agency parking lots',
               },
               {
@@ -507,10 +518,6 @@ const exports = {
             description: 'City owned or leased property without a categorized use overseen by Dept. of Citywide Administrative Services',
             color: '#b67eb7',
             children: [
-              {
-                name: 'Undeveloped or No Use',
-                description: 'Property and structures without a designated use',
-              },
               {
                 name: 'Miscellaneous Use',
                 description: 'Property without a categorized use',
