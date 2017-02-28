@@ -2,7 +2,143 @@ import React, { PropTypes } from 'react';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
+
 import defaultLayerConfig from './defaultLayerConfig';
+
+const paint = {
+  lines: {
+    'line-color': '#717171',
+    'line-opacity': 0.7,
+    'line-width': {
+      stops: [
+        [9, 1],
+        [14, 4],
+      ],
+    },
+  },
+  labels: {
+    'text-color': '#626262',
+    'text-halo-color': '#FFFFFF',
+    'text-halo-width': 2,
+    'text-halo-blur': 2,
+  },
+};
+
+const layout = {
+  lines: {
+    'line-join': 'round',
+    'line-cap': 'round',
+  },
+};
+
+const defaultLayerConfig = {
+  nta: {
+    sources: [
+      {
+        id: 'ntaboundaries',
+        type: 'geojson',
+        source: '/data/ntaboundaries.geojson',
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'ntaboundaries',
+        source: 'ntaboundaries',
+        type: 'line',
+        paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'ntaboundaries-labels',
+        source: 'ntaboundaries',
+        type: 'symbol',
+        minzoom: 13,
+        paint: paint.labels,
+        layout: {
+          'text-field': '{ntaname}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
+        },
+      },
+    ],
+  },
+  cd: {
+    sources: [
+      {
+        id: 'cdboundaries',
+        type: 'geojson',
+        source: '/data/cdboundaries.geojson',
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'cdboundaries',
+        source: 'cdboundaries',
+        type: 'line',
+        paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'cdboundaries-labels',
+        source: 'cdboundaries',
+        minzoom: 11,
+        type: 'symbol',
+        paint: paint.labels,
+        layout: {
+          'text-field': '{displaynam}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
+        },
+      },
+    ],
+  },
+
+  schooldistricts: {
+    sources: [
+      {
+        id: 'schooldistricts',
+        type: 'geojson',
+        source: '/data/schooldistricts.geojson',
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'schooldistricts',
+        source: 'schooldistricts',
+        type: 'line',
+        paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'schooldistricts-labels',
+        source: 'schooldistricts',
+        minzoom: 11,
+        type: 'symbol',
+        paint: paint.labels,
+        layout: {
+          'text-field': '{SchoolDist}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
+        },
+      },
+    ],
+  },
+};
 
 const AdminBoundaries = React.createClass({
   propTypes: {
