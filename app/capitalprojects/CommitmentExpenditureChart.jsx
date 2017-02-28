@@ -36,11 +36,12 @@ const CommitmentExpenditureChart = React.createClass({
 
   handleBarMouseover(d) {
     const e = d3.event;
-
+    // Bandaid solution for Firefox popup positioning
+    const xOffset = (e.offsetX >= e.clientX) ? e.offsetX : e.layerX;
     this.setState({
       showPopup: true,
       offset: {
-        x: e.offsetX,
+        x: xOffset,
         y: e.offsetY,
       },
       popupType: d.type,
@@ -159,7 +160,7 @@ const CommitmentExpenditureChart = React.createClass({
           ref={x => (this.popup = x)}
           style={{
             opacity: this.state.showPopup ? 1 : 0.001,
-            left: this.state.offset.x - (popupWidth / 2), // TODO plus half width somehow
+            left: this.state.offset.x - (popupWidth / 2), // TODO fix position to center of bar
             top: '100px', // TODO base off of chart height
             zIndex: 999,
           }}
