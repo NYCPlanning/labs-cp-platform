@@ -156,7 +156,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     ));
 
     return (
-      <div>
+      <div className="splash-selector-container">
         <div className="splash-selector">
           <SelectableList
             onChange={this.handleIndexChange}
@@ -176,6 +176,7 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
             {layerContent}
           </div>
         </div>
+
         <Link
           to={{
             pathname: '/facilities/explorer',
@@ -184,10 +185,8 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
             },
           }}
         >
-          <div
-            className={`btn btn-lg dcp-orange ${this.state.noneSelected ? 'disabled' : null}`}
-          >
-            View SELECTED Facilities <i className="fa fa-arrow-right" aria-hidden="true" />
+          <div className={`btn btn-default ${this.state.noneSelected ? 'disabled' : null}`}>
+            View selected features <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" />
           </div>
         </Link>
       </div>
