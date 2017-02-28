@@ -3,6 +3,8 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 
+import defaultLayerConfig from './defaultLayerConfig';
+
 const paint = {
   lines: {
     'line-color': '#717171',
@@ -183,27 +185,92 @@ const AdminBoundaries = React.createClass({
         <Tabs className="sidebar-tabs">
           <Tab label="Data">
             <div className="sidebar-tab-content">
-              <div className="padded">
-                <h4>Choose a Boundary Layer</h4>
+              <div className="padded scroll-container">
 
+                <h4>Statistical Areas</h4>
                 <RadioButtonGroup
                   name="adminboundary"
                   onChange={this.handleChange}
                   valueSelected={this.state.value}
                 >
                   <RadioButton
+                    value="nta"
+                    label="Neighborhood Tabulation Areas"
+                  />
+                </RadioButtonGroup>
+
+                <h4>Municipal Boundaries</h4>
+                <RadioButtonGroup
+                  name="adminboundary"
+                  onChange={this.handleChange}
+                  valueSelected={this.state.value}
+                >
+                  <RadioButton
+                    value="boroughboundaries"
+                    label="Borough Boundaries"
+                  />
+
+                  <RadioButton
                     value="cd"
                     label="Community Districts"
                   />
 
                   <RadioButton
-                    value="nta"
-                    label="Neighborhood Tabulation Areas"
+                    value="citycouncildistricts"
+                    label="City Council Districts"
                   />
+
+                  <RadioButton
+                    value="municipalcourtdistricts"
+                    label="Municipal Court Districts"
+                  />
+
+                  <RadioButton
+                    value="stateassemblydistricts"
+                    label="State Assembly Districts"
+                  />
+
+                  <RadioButton
+                    value="statesenatedistricts"
+                    label="State Senate Districts"
+                  />
+
+                  <RadioButton
+                    value="uscongressionaldistricts"
+                    label="US Congressional Districts"
+                  />
+                </RadioButtonGroup>
+
+                <h4>Service Districts</h4>
+                <RadioButtonGroup
+                  name="adminboundary"
+                  onChange={this.handleChange}
+                  valueSelected={this.state.value}
+                >
 
                   <RadioButton
                     value="schooldistricts"
                     label="School Districts"
+                  />
+
+                  <RadioButton
+                    value="firedivisions"
+                    label="Fire Divisions"
+                  />
+
+                  <RadioButton
+                    value="firebattalions"
+                    label="Fire Battalions"
+                  />
+
+                  <RadioButton
+                    value="firecompanies"
+                    label="Fire Companies"
+                  />
+
+                  <RadioButton
+                    value="policeprecincts"
+                    label="Police Precincts"
                   />
 
                 </RadioButtonGroup>
