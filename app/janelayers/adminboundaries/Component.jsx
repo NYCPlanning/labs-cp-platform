@@ -6,10 +6,10 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 const paint = {
   lines: {
     'line-color': '#717171',
-    'line-opacity': 1,
+    'line-opacity': 0.7,
     'line-width': {
       stops: [
-        [9, 1.5],
+        [9, 1],
         [14, 4],
       ],
     },
