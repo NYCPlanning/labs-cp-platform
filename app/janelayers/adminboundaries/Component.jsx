@@ -5,13 +5,27 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 const paint = {
   lines: {
-    'line-color': '#626262',
+    'line-color': '#717171',
     'line-opacity': 0.7,
-    'line-width': 4,
-    'line-dasharray': [2, 2],
+    'line-width': {
+      stops: [
+        [9, 1],
+        [14, 4],
+      ],
+    },
   },
   labels: {
     'text-color': '#626262',
+    'text-halo-color': '#FFFFFF',
+    'text-halo-width': 2,
+    'text-halo-blur': 2,
+  },
+};
+
+const layout = {
+  lines: {
+    'line-join': 'round',
+    'line-cap': 'round',
   },
 };
 
@@ -30,6 +44,7 @@ const defaultLayerConfig = {
         source: 'ntaboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'ntaboundaries-labels',
@@ -40,11 +55,16 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{ntaname}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
   },
-
   cd: {
     sources: [
       {
@@ -59,6 +79,7 @@ const defaultLayerConfig = {
         source: 'cdboundaries',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'cdboundaries-labels',
@@ -69,6 +90,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{displaynam}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
@@ -88,6 +115,7 @@ const defaultLayerConfig = {
         source: 'schooldistricts',
         type: 'line',
         paint: paint.lines,
+        layout: layout.lines,
       },
       {
         id: 'schooldistricts-labels',
@@ -98,6 +126,12 @@ const defaultLayerConfig = {
         layout: {
           'text-field': '{SchoolDist}',
           'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
         },
       },
     ],
