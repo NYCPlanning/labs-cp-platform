@@ -2,8 +2,6 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from '../app/App';
-import Login from '../app/pages/Login';
-import Signup from '../app/pages/Signup';
 import AuthService from './helpers/AuthService';
 
 import HomePage from '../app/pages/HomePage';
@@ -79,8 +77,6 @@ module.exports = (
 
     <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} onEnter={confirmPermissions('sitewide_access')} />
 
-    <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
-    <Route path="signup" component={Signup} onEnter={rerouteLoggedIn} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="notfound" component={NotFound} />
     <Route path="*" onEnter={rerouteNotFound} />
