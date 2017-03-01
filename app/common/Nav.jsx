@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 
-import AuthHelper from '../helpers/AuthHelper';
+import AuthService from '../helpers/AuthService';
 
 import './Nav.scss';
 
 const Nav = React.createClass({
   propTypes: {
-    auth: React.PropTypes.object.isRequired,
     title: React.PropTypes.string,
     children: React.PropTypes.array,
   },
@@ -20,14 +19,17 @@ const Nav = React.createClass({
   },
 
   handleLogout() {
-    this.props.auth.logout();
-    browserHistory.push(location.pathname);
+    AuthService.logout();
+  },
+
+  handleLogin() {
+    AuthService.login();
   },
 
   render() {
-    const profile = AuthHelper.getProfile();
+    const profile = AuthService.getProfile();
 
-    const userMenu = AuthHelper.loggedIn() ? (
+    const userMenu = AuthService.loggedIn() ? (
       <li className="dropdown">
         <a
           className="dropdown-toggle"
@@ -36,27 +38,18 @@ const Nav = React.createClass({
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {profile.email}
+          <i className="fa fa-user" aria-hidden="true" /> {profile.username || profile.email}
           <span className="caret" />
         </a>
 
         <ul className="dropdown-menu">
-          <li><a onClick={this.handleLogout}>Log Out</a></li>
+          <li><a onClick={this.handleLogout}> Log Out</a></li>
         </ul>
       </li>
 
     ) :
     (
-      <li>
-        <Link
-          to={{
-            pathname: '/login',
-            state: { previousPath: location.pathname },
-          }}
-        >
-          <i className="fa fa-user" aria-hidden="true" /> Log In
-        </Link>
-      </li>
+      <li><a onClick={this.handleLogin}><i className="fa fa-user" aria-hidden="true" /> Log In</a></li>
     );
 
 

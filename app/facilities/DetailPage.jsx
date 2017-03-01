@@ -1,8 +1,3 @@
-// /facilities/FacilityPage.jsx - This component builds an individual page for each facility in the database and compiles its databse lookup details
-// Props:
-//  params.id - Facility ID being shown based on the route being passed in from carto. Provides row of data.
-//  auth - User's email login info based on auth0 login. Gets included in nav bar.
-
 import React, { PropTypes } from 'react';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
@@ -24,7 +19,13 @@ const DetailPage = React.createClass({
       id: PropTypes.string,
     }).isRequired,
     location: PropTypes.shape().isRequired,
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.object,
+  },
+
+  getDefaultProps() {
+    return ({
+      auth: null,
+    });
   },
 
   getInitialState() {
@@ -91,7 +92,7 @@ const DetailPage = React.createClass({
     };
 
     const wrapInPanel = (title, badge, content) => (
-      <div className="panel panel-default">
+      <div key={title} className="panel panel-default">
         <div className="panel-heading"><h4>{title}<span style={{ marginLeft: '10px', bottom: '4px' }} className="label label-default">{badge}</span></h4></div>
         <div className="panel-body">
           {content}
@@ -242,26 +243,30 @@ const DetailPage = React.createClass({
                   </div>
                 </div>
 
-                <div className="row equal">
-                  <div className={'col-md-6'}>
-                    <div className="panel panel-default">
-                      <div className="panel-heading">Facility Size
-                        {childcareTooltip()}
+                {(d.capacity.length > 0 && d.utilization.length > 0) && // hide capacity &utilization information boxes if the record has neither
+                  (
+                    <div className="row equal">
+                      <div className={'col-md-6'}>
+                        <div className="panel panel-default">
+                          <div className="panel-heading">Facility Size
+                            {childcareTooltip()}
+                          </div>
+                          <div className="panel-body">
+                            {d.capacity ? usageList(d.capacity, d.capacitytype) : usageList(d.area, d.areatype) }
+                          </div>
+                        </div>
                       </div>
-                      <div className="panel-body">
-                        {d.capacity ? usageList(d.capacity, d.capacitytype) : usageList(d.area, d.areatype) }
+                      <div className={'col-md-6'}>
+                        <div className="panel panel-default">
+                          <div className="panel-heading">Utilization</div>
+                          <div className="panel-body">
+                            {usageList(d.utilization, d.capacitytype)}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className={'col-md-6'}>
-                    <div className="panel panel-default">
-                      <div className="panel-heading">Utilization</div>
-                      <div className="panel-body">
-                        {usageList(d.utilization, d.capacitytype)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  )
+                }
 
                 <div className="row property-detail-container">
                   <div className="property-detail-blocks"><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4><h4><small>BBL</small></h4></div>

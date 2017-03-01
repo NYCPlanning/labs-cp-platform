@@ -28,6 +28,10 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+Button.defaultProps = {
+  onClick: () => {},
+};
+
 const BackButton = (props) => {
   if (props.location.state) {
     return (
@@ -42,9 +46,8 @@ const BackButton = (props) => {
   return (
     <Link to={props.defaultLink}>
       <Button
-        label={this.props.defaultText}
+        label={props.defaultText}
         iconClass={'fa-map'}
-        onClick={null}
       />
     </Link>
   );
@@ -53,6 +56,7 @@ const BackButton = (props) => {
 BackButton.propTypes = {
   location: PropTypes.object.isRequired,
   defaultLink: PropTypes.string.isRequired,
+  defaultText: PropTypes.string.isRequired,
 };
 
 module.exports = BackButton;

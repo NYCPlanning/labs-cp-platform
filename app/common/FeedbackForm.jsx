@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
 
 import appConfig from '../helpers/appConfig';
-import AuthHelper from '../helpers/AuthHelper';
+import AuthService from '../helpers/AuthService';
 
 const FeedbackForm = React.createClass({
 
@@ -13,8 +13,6 @@ const FeedbackForm = React.createClass({
     model: PropTypes.object.isRequired,
     ref_type: PropTypes.string.isRequired,
     ref_id: PropTypes.string.isRequired,
-    auth: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
   },
 
   getInitialState() {
@@ -44,11 +42,9 @@ const FeedbackForm = React.createClass({
 
   onSubmit() {
     // if not logged in, prompt login and pass current model up
-    if (!AuthHelper.loggedIn()) {
+    if (!AuthService.loggedIn()) {
       localStorage.setItem('feedback-state', JSON.stringify(this.props.model));
-      this.props.auth.login(this.props.location.pathname, {
-        closable: true,
-      });
+      AuthService.login();
     } else {
       this.postData();
     }
@@ -62,7 +58,7 @@ const FeedbackForm = React.createClass({
   postData() { // TODO move ajax to a helper class
     const data = this.props.model;
 
-    const profile = AuthHelper.getProfile();
+    const profile = AuthService.getProfile();
 
     // add user details to payload
     data.email = profile.email;
@@ -71,7 +67,7 @@ const FeedbackForm = React.createClass({
     data.ref_id = this.props.ref_id;
 
     // get the json web token from localstorage
-    const jwt = AuthHelper.getToken();
+    const jwt = AuthService.getToken();
 
     // delete the feedback state from localstorage
     localStorage.removeItem('feedback-state');
