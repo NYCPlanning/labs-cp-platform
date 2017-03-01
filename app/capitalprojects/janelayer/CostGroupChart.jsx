@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import * as d3 from 'd3';
 
 import carto from '../../helpers/carto';
+
+/* eslint-disable no-undef */
 
 const CostGroupChart = React.createClass({
 

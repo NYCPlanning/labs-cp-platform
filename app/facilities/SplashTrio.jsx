@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Select from 'react-select';
-import $ from 'jquery';
 
 import layersGenerator from './layersGenerator';
 
@@ -12,7 +11,7 @@ const SplashTrio = React.createClass({
   }),
 
   componentDidMount() {
-    $.getJSON('/data/ntas.json', (data) => {
+    $.getJSON('/data/ntas.json', (data) => { // eslint-disable-line no-undef
       this.setState({ ntaSelectionValues: data });
     });
   },

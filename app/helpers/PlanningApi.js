@@ -1,5 +1,4 @@
 // api.js - helper functions for the planning api
-import $ from 'jquery';
 
 import appConfig from './appConfig';
 
@@ -8,7 +7,7 @@ const PlanningApi = {
     const maprojidTrimmed = maprojid.replace(/ /g, '');
 
     const apiCall = `//${appConfig.api_domain}/api/capitalprojects/commitspend/${maprojidTrimmed}`;
-    return $.getJSON(apiCall);
+    return $.getJSON(apiCall); // eslint-disable-line no-undef
   },
 };
 
