@@ -125,7 +125,14 @@
   p {
     width: 80%;
     margin: 0 auto;
-    color: #e6e6e6;
+    color: #000000;
+  }
+
+  p.subtitle {
+    width: 80%;
+    margin: 0 auto;
+    color: #efefef;
+    margin-bottom: 30px;
   }
 
   h1.section-heading {
