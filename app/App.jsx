@@ -63,18 +63,15 @@ const App = React.createClass({
 
     let children = null;
 
-    // pass the auth object to the child components so they know who is logged in
     // pass showModal() method so any descendant can trigger the showing of the modal
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
-        auth: this.props.route.auth,
         showModal: this.showModal,
       });
     }
 
     if (this.previousChildren) {
       this.previousChildren = React.cloneElement(this.previousChildren, {
-        auth: this.props.route.auth,
         showModal: this.showModal,
       });
     }
@@ -87,7 +84,6 @@ const App = React.createClass({
           <Nav
             title={this.props.children.props.route.title}
             mini={this.props.children.props.route.miniNav}
-            auth={this.props.route.auth}
             showModal={this.showModal}
           />
           <div>

@@ -11,7 +11,6 @@ const SignupPrompt = () => (
     <p>We are updating the data and features on this explorer regularly. Sign up to learn about updates and keep your data fresh.</p>
 
     <RaisedButton
-      style={{ float: 'right' }}
       label="Sign Up"
       labelPosition="before"
       onTouchTap={() => {

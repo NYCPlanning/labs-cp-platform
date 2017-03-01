@@ -1,8 +1,9 @@
 // Auth.js - Auth0 helper, can trigger login and logout, get/set profile, etc
 import { browserHistory } from 'react-router';
 import Auth0Lock from 'auth0-lock';
-import { isTokenExpired } from './jwtHelper';
+import _ from 'underscore';
 
+import { isTokenExpired } from './jwtHelper';
 import appConfig from './appConfig';
 
 const clientId = appConfig.auth0_client_id;
@@ -72,10 +73,9 @@ const AuthService = {
   },
 
   login() {
-    const options = Object.assign(lockOptions, {
-      initialScreen: 'login',
-    });
-
+    const options = {};
+    _.extend(options, lockOptions, {}); // eslint-disable-line no-undef
+    console.log(options);
     const lock = new Auth0Lock(clientId, domain, options);
 
     lock.show();
@@ -83,7 +83,8 @@ const AuthService = {
   },
 
   signup() {
-    const options = Object.assign(lockOptions, {
+    const options = {};
+    _.extend(options, lockOptions, { // eslint-disable-line no-undef
       initialScreen: 'signUp',
       allowLogin: false,
       languageDictionary: {
