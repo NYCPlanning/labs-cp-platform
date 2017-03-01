@@ -1,8 +1,5 @@
-// /facilities/FacLanding.jsx - This component builds the landing page for the Facilities Explorer which links to the full database map and the subset views
-// Props:
-//  auth - User's email login info based on auth0 login. Gets included in nav bar.
-
 import React from 'react';
+import { Link } from 'react-router';
 
 import SplashSelector from './SplashSelector';
 import SplashTrio from './SplashTrio';
@@ -35,18 +32,15 @@ const FacilitiesLandingPage = React.createClass({
         <section className="header-area" id="about">
           <div className="container">
             <div className="row">
-              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', padding: '40px' }}>
-                <h1 className="section-heading">The NYC Facilities Database</h1>
-
-                <p className="subtitle">The most comprehensive dataset available of public and private facilities and program sites that shape the quality of NYC neighborhoods.</p>
-                <p>Read more about this dataset <a href="http://docs.capitalplanning.nyc/facdb/" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline' }}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLScP9JxDvfCmMUxzT9l0_MRYBtTgeAep7pHYO5QUtrRCXGxVTw/viewform" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>improve it.</a></p>
-                <hr className="light" />
-                <h3 className="section-heading">What do you want to explore?</h3>
-
+              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', padding: '40px', marginBottom: '40px' }}>
+                <h1 className="section-heading">Facilities Explorer</h1>
+                <p className="subtitle">The most comprehensive available dataset of public and private facilities and program sites that shape the quality of New York City neighborhoods</p>
+                <p className="learn-more"><Link to="/about">Learn More</Link></p>
                 <SplashTrio />
+              </div>
 
-                <hr className="light" />
-                <h3 className="section-heading">Build a custom map</h3>
+              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', padding: '40px' }}>
+                <h3 className="section-heading">Build a Custom Map</h3>
                 <SplashSelector />
               </div>
             </div>

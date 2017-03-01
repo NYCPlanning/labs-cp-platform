@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
 
 import layersGenerator from './layersGenerator';
@@ -17,43 +17,45 @@ const SplashTrio = React.createClass({
   },
 
   handleGeographySelection(selected) {
-    this.setState({ selectedGeography: selected.value });
+    browserHistory.push({
+      pathname: '/facilities/explorer',
+      state: {
+        adminboundaries: {
+          type: 'nta',
+          value: selected.value,
+        },
+      },
+    });
   },
 
   render() {
     return (
       <div className="splash-trio">
         <div className="box all-link">
-          <Link to="/facilities/explorer" className="btn btn-default">Explore all sites <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" /></Link>
+          <Link to="/facilities/explorer" className="btn btn-default">
+            <div className="vertical-align">Explore all sites</div>
+          </Link>
         </div>
-        <div className="box neighborhood-link ">
-          <div className="neighborhood-text">
-            Explore a neighborhood
-          </div>
+
+        <div className="box or-text">
+          <div className="vertical-align">or</div>
+        </div>
+
+        <div className="box neighborhood-link">
           <Select
             multi={false}
-            placeholder="Select one"
+            placeholder="Explore a neighborhood"
             value={this.state.selectedGeography}
             name="form-field-name"
             options={this.state.ntaSelectionValues}
             onChange={this.handleGeographySelection}
           />
-          <Link
-            to={{
-              pathname: '/facilities/explorer',
-              state: {
-                adminboundaries: {
-                  type: 'nta',
-                  value: this.state.selectedGeography,
-                },
-              },
-            }}
-          >
-            <div className="neighborhood-arrow">
-              <i className={`fa fa-arrow-right dcp-orange ${this.state.selectedGeography === null ? 'disabled' : null} `} aria-hidden="true" />
-            </div>
-          </Link>
         </div>
+
+        <div className="box or-text">
+          <div className="vertical-align">or</div>
+        </div>
+
         <div className="box preset-link">
           <Link
             className="btn btn-default"
@@ -69,7 +71,7 @@ const SplashTrio = React.createClass({
               },
             }}
           >
-            City Owned and Leased Sites <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" />
+            City Owned and Leased Sites
           </Link>
 
           <Link
@@ -92,7 +94,7 @@ const SplashTrio = React.createClass({
               },
             }}
           >
-            Community Facilities <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" />
+            Community Facilities
           </Link>
 
           <Link
@@ -115,7 +117,7 @@ const SplashTrio = React.createClass({
               },
             }}
           >
-            Children, Seniors, ADA Facilities <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" />
+            Children, Seniors, ADA Facilities
           </Link>
         </div>
       </div>
