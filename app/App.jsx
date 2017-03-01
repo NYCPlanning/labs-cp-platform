@@ -14,6 +14,7 @@ import '../jane-maps/src/styles.scss';
 
 injectTapEventPlugin();
 
+// set material ui default styles
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#b1b1b1',
@@ -123,12 +124,7 @@ const App = React.createClass({
                     top: 0,
                   }}
                 >
-                  {
-                    React.cloneElement(this.props.children, {
-                      auth: this.props.route.auth,
-                      key: this.props.location.pathname,
-                    })
-                  }
+                  {children}
                 </div>
               )}
             </ReactCSSTransitionGroup>
