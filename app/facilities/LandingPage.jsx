@@ -40,6 +40,8 @@ const FacilitiesLandingPage = React.createClass({
 
                 <p className="subtitle">The most comprehensive dataset available of public and private facilities and program sites that shape the quality of NYC neighborhoods.</p>
                 <p>Read more about this dataset <a href="http://docs.capitalplanning.nyc/facdb/" target="_blank" rel="noreferrer noopener" style={{ textDecoration: 'underline' }}>here</a> and help us <a href="https://docs.google.com/forms/d/e/1FAIpQLScP9JxDvfCmMUxzT9l0_MRYBtTgeAep7pHYO5QUtrRCXGxVTw/viewform" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>improve it.</a></p>
+                <hr className="light" />
+                <h3 className="section-heading">What do you want to explore?</h3>
 
                 <SplashTrio />
 
