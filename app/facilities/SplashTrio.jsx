@@ -25,7 +25,7 @@ const SplashTrio = React.createClass({
     return (
       <div className="splash-trio">
         <div className="box all-link">
-          <Link to="/facilities/explorer" className="btn btn-default">Explore 35,000+ sites <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" /></Link>
+          <Link to="/facilities/explorer" className="btn btn-default">Explore all sites <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" /></Link>
         </div>
         <div className="box neighborhood-link ">
           <div className="neighborhood-text">
