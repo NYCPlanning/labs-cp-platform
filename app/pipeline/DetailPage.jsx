@@ -1,12 +1,10 @@
 import React from 'react';
-import Moment from 'moment';
 
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
-
 
 const DevelopmentPage = React.createClass({
   propTypes: {
@@ -96,11 +94,12 @@ const DevelopmentPage = React.createClass({
               <h4>DOB Certificate of Occupancy Details</h4>
               <dl className="dl-horizontal">
                 <dt>Earliest CofO (Since 2010)</dt>
-                <dd>{Moment(d.dob_cofo_date_first).format('MM/DD/YYYY')}</dd>
+                {/* eslint-disable no-undef */}
+                <dd>{moment(d.dob_cofo_date_first).format('MM/DD/YYYY')}</dd>
 
                 <dt>Most Recent CofO</dt>
-                <dd>{Moment(d.dob_cofo_date_last).format('MM/DD/YYYY')}</dd>
-
+                <dd>{moment(d.dob_cofo_date_last).format('MM/DD/YYYY')}</dd>
+                {/* eslint-enable no-undef */}
                 <dt>Most Recent CofO Type</dt>
                 <dd>{d.dob_cofo_type_last}</dd>
 

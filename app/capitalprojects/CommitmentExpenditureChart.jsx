@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import * as d3 from 'd3';
-import moment from 'moment';
 import numeral from 'numeral';
 
 import PlanningApi from '../helpers/PlanningApi';
 
 // css for this component is in ./styles.scss
+/* eslint-disable no-undef */
 
 const CommitmentExpenditureChart = React.createClass({
 
@@ -81,7 +80,7 @@ const CommitmentExpenditureChart = React.createClass({
     const minDate = d3.min(dates);
     const maxDate = d3.max(dates);
 
-    const numMonths = moment(maxDate).diff(moment(minDate), 'months', true);
+    const numMonths = moment(maxDate).diff(moment(minDate), 'months', true); // eslint-disable-line no-undef
 
     const xScale = d3.scaleTime()
       .domain([minDate, maxDate])
@@ -166,7 +165,9 @@ const CommitmentExpenditureChart = React.createClass({
           }}
         >
           <div className="popup-top">
+            {/* eslint-disable no-undef */}
             {moment(this.state.popupMonth).format('MMM YYYY')}
+            {/* eslint-enable no-undef */}
           </div>
 
           <div className="popup-bottom">

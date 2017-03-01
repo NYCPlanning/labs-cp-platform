@@ -3,11 +3,10 @@ import React, { PropTypes } from 'react';
 import Subheader from 'material-ui/Subheader';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
-import Moment from 'moment';
 
 import Carto from '../helpers/carto';
 
-const date = Moment().format('YYYY-MM-DD');
+const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
 
 const Download = ({ sql, filePrefix }) => {
   const filteredSql = Carto.transformSqlSelectAll(sql);

@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Numeral from 'numeral';
-import Moment from 'moment';
 import _ from 'underscore';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
@@ -55,8 +54,8 @@ const ProjectPage = React.createClass({
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
 
     const getFY = ((date) => {
-      const year = Moment(date).year();
-      const month = Moment(date).month();
+      const year = moment(date).year();  // eslint-disable-line no-undef
+      const month = moment(date).month();  // eslint-disable-line no-undef
 
       return month <= 6 ? year : year + 1;
     });
@@ -69,11 +68,14 @@ const ProjectPage = React.createClass({
     };
 
     const tableRows = this.state.commitments.map(c => (
+
       <TableRow>
         <TableRowColumn>{c.costdescription}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
-        <TableRowColumn>{Moment(c.plancommdate, 'YY-MMM').format('MMM YYYY')}</TableRowColumn>
+        {/* eslint-disable no-undef */}
+        <TableRowColumn>{moment(c.plancommdate, 'YY-MMM').format('MMM YYYY')}</TableRowColumn>
+        {/* eslint-enable no-undef */}
       </TableRow>
     ));
 
@@ -143,7 +145,9 @@ const ProjectPage = React.createClass({
                 <CardHeader title="Years Active" />
                 <CardText className={'text-center'}>
                   <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
-                  <p className="subtext">{Moment(d.mindate).format('MMM YYYY')} thru {Moment(d.maxdate).format('MMM YYYY')}</p>
+                  {/* eslint-disable no-undef */}
+                  <p className="subtext">{moment(d.mindate).format('MMM YYYY')} thru {moment(d.maxdate).format('MMM YYYY')}</p>
+                  {/* eslint-enable no-undef */}
                 </CardText>
               </Card>
             </div>

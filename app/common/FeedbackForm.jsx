@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
-import $ from 'jquery';
 
 import appConfig from '../helpers/appConfig';
 import AuthHelper from '../helpers/AuthHelper';
@@ -77,7 +76,7 @@ const FeedbackForm = React.createClass({
     // delete the feedback state from localstorage
     localStorage.removeItem('feedback-state');
 
-    $.ajax({
+    $.ajax({ // eslint-disable-line no-undef
       url: `//${appConfig.api_domain}/api/feedback/`,
       type: 'POST',
       headers: { Authorization: `Bearer ${jwt}` },

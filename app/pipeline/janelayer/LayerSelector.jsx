@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'moment';
 import Select from 'react-select';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -94,7 +93,7 @@ const LayerSelector = React.createClass({
         ],
         dcp_pipeline_category: filterDimensions.dcp_pipeline_category.options,
         dcp_units_use_map: [-310, 1670],
-        dob_cofo_date: [Moment('2010-12-31T19:00:00-05:00').format('X'), Moment().format('X')],
+        dob_cofo_date: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
       },
     });
   },
@@ -164,8 +163,8 @@ const LayerSelector = React.createClass({
 
   createDateSQLChunk(dimension, range) {
     const dateRangeFormatted = {
-      from: Moment(range[0], 'X').format('YYYY-MM-DD'),
-      to: Moment(range[1], 'X').format('YYYY-MM-DD'),
+      from: moment(range[0], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+      to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
     if (this.state.dateFilter) {
@@ -200,7 +199,7 @@ const LayerSelector = React.createClass({
       ));
 
       if (invalidValues.length > 0 || values.length === 0) {
-        this.state.filterDimensions.dob_cofo_date = [Moment('2011-1-1').format('X'), Moment().format('X')];
+        this.state.filterDimensions.dob_cofo_date = [moment('2011-1-1').format('X'), moment().format('X')]; // eslint-disable-line no-undef
         this.state.dateFilter = false;
       } else {
         this.state.dateFilter = true;
@@ -302,7 +301,7 @@ const LayerSelector = React.createClass({
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
               disable={!this.state.dateFilter}
-              prettify={date => Moment(date, 'X').format('MMM YYYY')}
+              prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
             />
           </ListItem>
         </List>

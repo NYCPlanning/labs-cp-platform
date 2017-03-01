@@ -1,5 +1,4 @@
 import React from 'react';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
 const PoiMarker = React.createClass({
   propTypes: {
@@ -16,12 +15,12 @@ const PoiMarker = React.createClass({
     el.style.height = '32px';
     el.style.zIndex = 10;
 
-    this.marker = new mapboxgl.Marker(el, {
+    this.marker = new mapboxgl.Marker(el, { // eslint-disable-line no-undef
       offset: [-16, -32],
     });
 
 
-    this.label = new mapboxgl.Popup({
+    this.label = new mapboxgl.Popup({ // eslint-disable-line no-undef
       offset: [6, 0],
       anchor: 'left',
       closeButton: false,
