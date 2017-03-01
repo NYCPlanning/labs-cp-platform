@@ -3,9 +3,8 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from '../app/App';
 import Login from '../app/pages/Login';
+import Signup from '../app/pages/Signup';
 import AuthService from './helpers/AuthService';
-import AuthHelper from './helpers/AuthHelper';
-import appConfig from './helpers/appConfig';
 
 import HomePage from '../app/pages/HomePage';
 import About from '../app/pages/About';
@@ -27,10 +26,10 @@ import FeedbackPage from '../app/pages/FeedbackPage';
 
 import NotFound from '../app/pages/NotFound';
 
-const auth = new AuthService(appConfig.auth0_client_id, appConfig.auth0_domain);
+// const auth = new AuthService(appConfig.auth0_client_id, appConfig.auth0_domain);
 
 const rerouteLoggedIn = (nextState, replace) => {
-  if (AuthHelper.loggedIn()) {
+  if (AuthService.loggedIn()) {
     replace({ pathname: '/' });
   }
 };
@@ -42,10 +41,10 @@ const rerouteNotFound = (nextState, replace) => {
 
 // checks if the passed in permission exists in the user's profile
 const confirmPermissions = permission => ((nextState, replace) => {
-  const permissions = AuthHelper.getProfile().permissions;
+  const permissions = AuthService.getProfile().permissions;
 
   // if user doesn't have the permissions necessary to load this route, or is not logged in, redirect to '/'
-  if ((permissions && permissions.indexOf(permission) === -1) || !AuthHelper.loggedIn()) {
+  if ((permissions && permissions.indexOf(permission) === -1) || !AuthService.loggedIn()) {
     // if trying to load homepage, reroute to facilities, else reroute to not found
     if (nextState.location.pathname === '/') {
       replace({ pathname: '/facilities' });
@@ -61,7 +60,7 @@ const AuthSuccess = () => (
 );
 
 module.exports = (
-  <Route path="/" component={App} auth={auth} >
+  <Route path="/" component={App}>
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="about" component={About} title={'About'} />
 
@@ -81,6 +80,7 @@ module.exports = (
     <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} onEnter={confirmPermissions('sitewide_access')} />
 
     <Route path="login" component={Login} onEnter={rerouteLoggedIn} />
+    <Route path="signup" component={Signup} onEnter={rerouteLoggedIn} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="notfound" component={NotFound} />
     <Route path="*" onEnter={rerouteNotFound} />

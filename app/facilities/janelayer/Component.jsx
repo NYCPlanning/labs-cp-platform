@@ -5,6 +5,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import LayerSelector from './LayerSelector';
 import Download from '../../common/Download';
 import content from '../content';
+import SignupPrompt from '../../common/SignupPrompt';
 
 import defaultLayerConfig from './defaultlayerconfig';
 
@@ -106,10 +107,9 @@ const Facilities = React.createClass({
           />
         </Tab>
         <Tab label="About">
-          <div className="sidebar-tab-content">
-            <div className="padded">
-              {content.about}
-            </div>
+          <div className="sidebar-tab-content padded">
+            {content.about}
+            <SignupPrompt />
           </div>
         </Tab>
       </Tabs>

@@ -236,6 +236,10 @@ body:after {
   margin-left: 6px;
 }
 
+.padded {
+  padding: 0 16px;
+}
+
 .sidebar-tab-content {
   font-family: 'roboto', sans-serif;
   font-size: 12px;
@@ -250,10 +254,6 @@ body:after {
     font-size: 14px;
     font-weight: 500;
     margin: 16px 0;
-  }
-
-  .padded {
-     padding: 0 16px;
   }
 
   .count-widget-offset {

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
 
-import auth from '../helpers/AuthHelper';
+import AuthService from '../helpers/AuthService';
 import { api_domain } from '../helpers/appConfig';
 
 import './FeedbackPage.scss';
@@ -18,7 +18,7 @@ const FeedbackPage = React.createClass({
   },
 
   componentDidMount() {
-    const jwt = auth.getToken();
+    const jwt = AuthService.getToken();
 
     $.ajax({ // eslint-disable-line no-undef
       url: `//${api_domain}/api/feedback/list/${this.props.params.type}`,

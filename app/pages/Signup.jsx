@@ -1,11 +1,17 @@
 import React, { PropTypes } from 'react';
-import AuthService from '../helpers/AuthService';
 
-import './Login.scss';
-
-const Login = React.createClass({
+const Signup = React.createClass({
   propTypes: {
+    auth: PropTypes.shape({
+      signup: React.PropTypes.func,
+    }),
     location: PropTypes.object.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      auth: null,
+    };
   },
 
   componentDidMount() {
@@ -18,7 +24,7 @@ const Login = React.createClass({
     }
 
     // trigger Auth0-lock Login Modal, pass in previousPath so it can redirect after login.
-    AuthService.login(previousPath);
+    this.props.auth.signup(previousPath);
   },
 
   render() {
@@ -30,4 +36,4 @@ const Login = React.createClass({
   },
 });
 
-module.exports = Login;
+module.exports = Signup;
