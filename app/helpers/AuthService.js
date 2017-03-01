@@ -16,8 +16,6 @@ const lockOptions = {
   loginAfterSignUp: true,
   auth: {
     redirect: false,
-    // redirectUrl: `${document.location.origin}/authsuccess`,
-    // responseType: 'id_token',
   },
   theme: {
     logo: '/img/logo_80.png',
@@ -75,7 +73,6 @@ const AuthService = {
   login() {
     const options = {};
     _.extend(options, lockOptions, {}); // eslint-disable-line no-undef
-    console.log(options);
     const lock = new Auth0Lock(clientId, domain, options);
 
     lock.show();

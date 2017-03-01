@@ -3,7 +3,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import AuthService from '../helpers/AuthService';
 
-
 const SignupPrompt = () => (
   <div>
     <h4>Like what you see?</h4>
