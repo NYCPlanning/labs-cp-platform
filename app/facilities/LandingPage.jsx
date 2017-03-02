@@ -32,14 +32,14 @@ const FacilitiesLandingPage = React.createClass({
         <section className="header-area" id="about">
           <div className="container">
             <div className="row">
-              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', padding: '40px', marginBottom: '40px' }}>
+              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#777', padding: '40px', marginBottom: '40px' }}>
                 <h1 className="section-heading">NYC Facilities Explorer</h1>
-                <p className="subtitle">The most comprehensive available dataset of public and private facilities and program sites that shape the quality of New York City neighborhoods</p>
+                <p className="subtitle">The most comprehensive dataset available of public and private facilities and program sites that shape the quality of New York City neighborhoods</p>
                 <p className="learn-more"><Link to="/about">Learn More</Link></p>
                 <SplashTrio />
               </div>
 
-              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#606060', padding: '40px' }}>
+              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#777', padding: '40px' }}>
                 <h3 className="section-heading">Build a Custom Map</h3>
                 <SplashSelector />
               </div>
