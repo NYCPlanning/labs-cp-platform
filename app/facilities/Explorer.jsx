@@ -93,6 +93,7 @@ const FacilitiesExplorer = React.createClass({
             name="Facilities and Program Sites"
             icon="university"
             interactivityMapLayers={['facilities-points']}
+            highlightPointLayers={['facilities-points']}
             visible
             selected
             component={FacilitiesComponent}
