@@ -46,7 +46,7 @@ const DetailPage = React.createClass({
 
   // Helper methods for db arrays being stored as strings
   dbStringToArray(string) {
-    return string.replace(/[{}"]/g, '').split(',');
+    return string.replace(/[{}"]/g, '').split(';');
   },
 
   dbStringToObject(string) {
@@ -180,6 +180,8 @@ const DetailPage = React.createClass({
       return null;
     };
 
+    console.log(d);
+
     return (
       <div className="facility-page detail-page">
         <div className="col-md-12">
@@ -243,7 +245,7 @@ const DetailPage = React.createClass({
                   </div>
                 </div>
 
-                {(d.capacity.length > 0 && d.utilization.length > 0) && // hide capacity &utilization information boxes if the record has neither
+                {(d.capacity.length > 0 || d.utilization.length > 0 || d.area.length > 0) && // hide capacity &utilization information boxes if the record has neither
                   (
                     <div className="row equal">
                       <div className={'col-md-6'}>
@@ -269,9 +271,9 @@ const DetailPage = React.createClass({
                 }
 
                 <div className="row property-detail-container">
-                  <div className="property-detail-blocks"><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4><h4><small>BBL</small></h4></div>
-                  <div className="property-detail-blocks"><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4><h4><small>BIN</small></h4></div>
-                  <div className="property-detail-blocks"><h4>{d.propertytype ? d.propertytype : 'Privately Owned'}</h4></div>
+                  <div className="property-detail-blocks"><h4><small>BBL</small></h4><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4></div>
+                  <div className="property-detail-blocks"><h4><small>BIN</small></h4><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4></div>
+                  <div className="property-detail-blocks"><h4><small>&zwnj;</small></h4><h4>{d.propertytype ? d.propertytype : 'Privately Owned'}</h4></div>
                 </div>
               </CardText>
             </Card>
@@ -280,8 +282,8 @@ const DetailPage = React.createClass({
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-12'}>
               <Card style={CardStyles} className="source-data-details">
-                <CardHeader title="Source Data Details" actAsExpander showExpandableButton />
-                <CardText expandable>
+                <CardHeader title="Source Data Details" />
+                <CardText>
                   {sourceDataDetails()}
                 </CardText>
               </Card>
