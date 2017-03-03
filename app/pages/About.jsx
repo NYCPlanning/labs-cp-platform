@@ -47,7 +47,7 @@ const About = () => (
               <li>Administration of Government</li>
             </ul>
 
-            <p>Within each of these domains, each record is further categorized into a set of facility groups, subgroups, and types that are intended to make the data easy to navigate and more useful for specific planning purposes. Facility types and names are appear as they do in source datasets, wherever possible. A full listing of the facility categories is provided in the <b><a href="http://docs.capitalplanning.nyc/facdb/#ii-contents-and-classification-hierarchy">Contents and Classification</a></b> section of the metadata.</p>
+            <p>Within each of these domains, each record is further categorized into a set of facility groups, subgroups, and types that are intended to make the data easy to navigate and more useful for specific planning purposes. Facility types and names appear as they do in source datasets, wherever possible. A full listing of the facility categories is provided in the <b><a href="http://docs.capitalplanning.nyc/facdb/#ii-contents-and-classification-hierarchy">Contents and Classification</a></b> section of the metadata.</p>
 
             <p>This database and its <b><a href="http://capitalplanning.nyc.gov/facilities">interactive map</a></b> build upon City Planning’s decades-old work on the Selected Facilities and Program Sites Database, which this new product replaces. With the revamp of this product, we have improved data quality and expansiveness, restructured the database for easier use, and developed automated means of refreshing the data from the majority of sources, meaning the data will be refreshed on at least a quarterly basis (although source datasets may be refreshed less frequently).</p>
 

@@ -46,7 +46,7 @@ const DetailPage = React.createClass({
 
   // Helper methods for db arrays being stored as strings
   dbStringToArray(string) {
-    return string.replace(/[{}"]/g, '').split(',');
+    return string.replace(/[{}"]/g, '').split(';');
   },
 
   dbStringToObject(string) {
