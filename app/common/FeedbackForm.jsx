@@ -23,13 +23,6 @@ const FeedbackForm = React.createClass({
     });
   },
 
-  componentWillMount() {
-    // check localstorage for saved form state , if it exists pass it up to react reformed
-
-    const savedState = JSON.parse(localStorage.getItem('feedback-state'));
-    if (savedState !== null) this.props.setProperty('comment', savedState.comment);
-  },
-
   onPostSuccess(data) {
     if (data.success) {
       this.setState({ submitted: true });
@@ -43,7 +36,6 @@ const FeedbackForm = React.createClass({
   onSubmit() {
     // if not logged in, prompt login and pass current model up
     if (!AuthService.loggedIn()) {
-      localStorage.setItem('feedback-state', JSON.stringify(this.props.model));
       AuthService.login();
     } else {
       this.postData();
@@ -68,9 +60,6 @@ const FeedbackForm = React.createClass({
 
     // get the json web token from localstorage
     const jwt = AuthService.getToken();
-
-    // delete the feedback state from localstorage
-    localStorage.removeItem('feedback-state');
 
     $.ajax({ // eslint-disable-line no-undef
       url: `//${appConfig.api_domain}/api/feedback/`,

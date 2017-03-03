@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 
 import Jane from '../../jane-maps/src';
 import JaneLayer from '../../jane-maps/src/JaneLayer';
-import content from './content';
 
 import FacilitiesComponent from './janelayer/Component';
 import FacilitiesListItem from './janelayer/ListItem';
@@ -15,13 +14,11 @@ import layersGenerator from './layersGenerator';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {
-    showModal: PropTypes.func,
     location: PropTypes.object,
   },
 
   getDefaultProps() {
     return {
-      showModal: null,
       location: null,
     };
   },
@@ -32,17 +29,6 @@ const FacilitiesExplorer = React.createClass({
 
   componentDidMount() {
     const self = this;
-    const modalShown = JSON.parse(localStorage.getItem('facilities-splash'));
-
-    if (!modalShown) {
-      this.props.showModal({
-        modalHeading: 'Welcome!',
-        modalContent: content.splash,
-        modalCloseText: 'Got it.  Let me in!',
-      });
-
-      localStorage.setItem('facilities-splash', 'true');
-    }
 
     // update the map bounds if adminboundaries location state was passed in
     if (this.props.location.state && this.props.location.state.adminboundaries) {
