@@ -6,7 +6,7 @@ import appConfig from '../../helpers/appConfig';
 
 
 const layerConfig = {
-  busstops: {
+  buses: {
     sources: [
       {
         id: 'bus_stops',
@@ -17,8 +17,40 @@ const layerConfig = {
           sql: ['SELECT * FROM bus_stops'],
         },
       },
+      {
+        id: 'bus_routes',
+        type: 'cartovector',
+        options: {
+          carto_user: appConfig.carto_user,
+          carto_domain: appConfig.carto_domain,
+          sql: ['SELECT * FROM routes_bus_nyc_jan2017'],
+        },
+      },
     ],
     mapLayers: [
+      {
+        id: 'bus_routes',
+        type: 'line',
+        source: 'bus_routes',
+        // 'source-layer': 'layer0',
+        minzoom: 11,
+        paint: {
+          'line-color': 'blue',
+          'line-opacity': 0.7,
+          'line-width': {
+            stops: [
+              [
+                10,
+                0.5,
+              ],
+              [
+                16,
+                3,
+              ],
+            ],
+          },
+        },
+      },
       {
         id: 'bus_stops',
         type: 'circle',
@@ -588,6 +620,13 @@ const Transportation = React.createClass({
                   checked={this.state.activeCheckboxes.includes('busstops')}
                   onCheck={this.handleCheck.bind(this, 'busstops')}
                 />
+````````````````{/*
+                <Checkbox
+                  label="Bus Routes"
+                  checked={this.state.activeCheckboxes.includes('bus_routes')}
+                  onCheck={this.handleCheck.bind(this, 'busstops')}
+                />
+                */}
                 <Checkbox
                   label="PATH"
                   checked={this.state.activeCheckboxes.includes('path')}
