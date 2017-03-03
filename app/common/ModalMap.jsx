@@ -6,8 +6,8 @@
 import React from 'react';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import Jane from '../../jane-maps/src';
-import JaneLayer from '../../jane-maps/src/JaneLayer';
+import Jane from 'jane-maps';
+import JaneLayer from 'jane-maps/dist/JaneLayer';
 
 import supportingLayers from '../janelayers/supportingLayers';
 import appConfig from '../helpers/appConfig';

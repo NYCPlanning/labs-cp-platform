@@ -31,10 +31,6 @@ module.exports = {
         use: [
           {
             loader: 'eslint-loader',
-            options: {
-              failOnWarning: false,
-              failOnError: false,
-            },
           },
         ],
       },
