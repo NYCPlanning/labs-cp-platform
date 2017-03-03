@@ -111,7 +111,7 @@ const FacilitiesLandingPage = React.createClass({
                       Children, Seniors, ADA Facilities
                     </Link>
                   </div>
-             
+
                   <hr className="light" />
 
                   <h3 className="section-heading">Build a Custom Map</h3>
