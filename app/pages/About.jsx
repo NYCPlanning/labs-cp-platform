@@ -49,7 +49,7 @@ const About = () => (
 
             <p>Within each of these domains, each record is further categorized into a set of facility groups, subgroups, and types that are intended to make the data easy to navigate and more useful for specific planning purposes. Facility types and names appear as they do in source datasets, wherever possible. A full listing of the facility categories is provided in the <b><a href="http://docs.capitalplanning.nyc/facdb/#ii-contents-and-classification-hierarchy">Contents and Classification</a></b> section of the metadata.</p>
 
-            <p>This database and its <b><a href="http://capitalplanning.nyc.gov/facilities">interactive map</a></b> build upon City Planning’s decades-old work on the Selected Facilities and Program Sites Database, which this new product replaces. With the revamp of this product, we have improved data quality and expansiveness, restructured the database for easier use, and developed automated means of refreshing the data from the majority of sources, meaning the data will be refreshed on at least a quarterly basis (although source datasets may be refreshed less frequently).</p>
+            <p>This database and its <b><a href="http://capitalplanning.nyc.gov/facilities">interactive map</a></b> build upon City Planning’s decades-old work on the Selected Facilities and Program Sites Database, which this new product replaces. Improvements include more facility types, improved data quality, and a restructured the database for easier use. We have also automated our means of refreshing the data from the majority of sources – we anticipate that the data will be refreshed on at least a quarterly basis (although source datasets may be refreshed less frequently). Please read more about the limitations of this data product below.</p>
 
             <p>More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis.</p>
 
@@ -65,7 +65,7 @@ const About = () => (
             <h3>What are the limitations of the data?</h3>
             <p>The City Planning Facilities Database (FacDB) is only as good as the source data it aggregates, and the Department of City Planning cannot verify the accuracy of all records. We strongly encourage users to <b><a href="http://docs.capitalplanning.nyc/facdb/">read the metadata</a></b> before using this product for planning purposes.</p>
 
-            <p><b>Analysis Limitations.</b> Largely as a result of the limitations and inconsistencies described below, users should be careful in their use of this database not to develop analyses that may be suspect. For example, a comparison of the density or accessibility of facilities across neighborhoods should recognize that due to the structure of the database and the prevalence of duplicate records, a ‘count’ of facilities and program sites may not be an accurate reflection of facility concentration; that some of the facilities included are organizational headquarters or mailing addresses rather than service sites; and that this database is not authoritatively comprehensive.</p>
+            <p><b>Analysis Limitations.</b> Largely as a result of the limitations and inconsistencies described below, users should be careful in their use of this database not to develop analyses that may be suspect. For example, a comparison of the density or accessibility of facilities across neighborhoods should recognize that due to the structure of the database and the prevalence of duplicate records, a ‘count’ of facilities and program sites may not be an accurate reflection of facility concentration; that some of the facilities included are organizational headquarters or mailing addresses rather than service sites; and that this database is not authoritatively comprehensive. In addition, we rely on source data from other agencies to populate the explorer, and some of these sources may fall out-of-date – users can find the date of each source dataset’s latest update within each facility detail page.</p>
 
             <p><b>Missing Records.</b> Currently, FacDB is the most comprehensive, spatial data resource available of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Some facilities are deliberately excluded in the data that source agencies provide in order to protect the safety and privacy of their clients. Many records also could not be geocoded. To learn more about how the data is processed, please review the <b><a href="http://docs.capitalplanning.nyc/facdb/#iv-methodology">Methodology</a></b>.</p>
 
@@ -88,7 +88,16 @@ const About = () => (
 
             <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
 
-            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the <b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b>, <b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b>, the <b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b>, and the <b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b>, among others.</p>
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+
+            <ul type={'disc'}>
+              <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
+              <li><b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b> - Extensive land use and geographic data at the tax lot level in multiple formats.</li>
+              <li><b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b> – ZoLA provides a simple way to research zoning regulations in New York City.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b> - This interactive map identifies and provides information about New York City’s inventory of publicly-accessible waterfront spaces.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
+            </ul>
+
           </Paper>
         </div>
       </div>
@@ -120,7 +129,11 @@ const About = () => (
             zDepth={1}
           >
             <h3>Thanks</h3>
-            <p>We want to thank all contributing agencies and partners from the civic tech community.</p>
+            <p>The Capital Planning team – including Danny Fuchs (Director), Chris Whong, Hannah Kates, Amanda Doyle, Simon Mettler, Neera Chatterjee, and Jessica Mathew – express our deepest thanks to the amazing staff of the Department of City Planning for their support in the development of the Capital Planning Platform and NYC Facilities Explorer, including CIO Hassan Adekoya and COO Jon Kaufman, as well as former Director Carl Weisbrod, who brought Capital Planning back to the Department. Additional thanks to our interns Jonathan Pichot, Ian Stuart, and Ben Miller.</p>
+
+            <p>This database and explorer would not be possible if it weren’t for the incredible work of dozens of City, State, and Federal agencies who develop the source datasets that are the basis for this map. Particular thanks goes to those agencies who publish their data on open data portals.</p>
+
+            <p>Additional specific thanks goes to a broad array of people who have helped consult on the development of the Capital Planning Platform and Jane Maps, including Kristi Brown, Paul Ramsey, Tim Wisniewski, Chase Gilliam, Richard Dunks, Bill Hunt, Ariel Kennan, Tom Johnson, Dave Riordan, Matt Gardner, Mark Headd, Lauren Ellsworth, Steve Romalewski, the team at Stamen, and many more.</p>
           </Paper>
         </div>
       </div>
