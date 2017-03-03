@@ -4,13 +4,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+// get styles for jane-maps, TODO figure out the best way to include this
+import 'jane-maps/dist/styles.css';
+
 import GlobalModal from './common/GlobalModal';
 import Nav from './common/Nav';
 
 import './app.scss';
-
-// get styles for jane-maps, TODO figure out the best way to include this
-import '../jane-maps/src/styles.scss';
 
 injectTapEventPlugin();
 

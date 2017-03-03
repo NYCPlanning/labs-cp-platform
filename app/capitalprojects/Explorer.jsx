@@ -1,8 +1,8 @@
 // Explorer.jsx - Top level Component for the Facilities Explorer
 import React from 'react';
 
-import Jane from '../../jane-maps/src';
-import JaneLayer from '../../jane-maps/src/JaneLayer';
+import Jane from 'jane-maps';
+import JaneLayer from 'jane-maps/dist/JaneLayer';
 import content from './content';
 
 import CapitalProjectsComponent from './janelayer/Component';

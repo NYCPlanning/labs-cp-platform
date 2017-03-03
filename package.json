@@ -32,6 +32,7 @@
     "express": "^4.14.1",
     "express-spa": "0.0.2",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
+    "jane-maps": "^0.1.0",
     "jwt-decode": "^2.1.0",
     "material-ui": "^0.17.0",
     "node-sass": "^4.5.0",

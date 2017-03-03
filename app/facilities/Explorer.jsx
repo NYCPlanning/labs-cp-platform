@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import Jane from '../../jane-maps/src';
-import JaneLayer from '../../jane-maps/src/JaneLayer';
+import Jane from 'jane-maps';
+import JaneLayer from 'jane-maps/dist/JaneLayer';
+import content from './content';
 
 import FacilitiesComponent from './janelayer/Component';
 import FacilitiesListItem from './janelayer/ListItem';
