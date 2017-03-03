@@ -2,90 +2,6 @@ const exports = {
   layerDefaults() {
     return [
       {
-        name: 'Health and Human Services',
-        description: 'Health and social service providers, including hospitals, legal services, and homeless shelters',
-        slug: 'health_and_human_services',
-        color: '#BA68C8',
-        subColor: '#f7e6f7',
-        icon: 'heart',
-        children: [
-          {
-            name: 'Health Care',
-            description: 'Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Alcoholism and Substance Abuse Services',
-            color: '#b67eb7',
-            children: [
-              {
-                name: 'Hospitals and Clinics',
-                description: 'Urgent care hospitals, diagnostic and treatment centers, and school-based health facilities',
-              },
-              {
-                name: 'Mental Health',
-                description: 'Inpatient, outpatient, and emergency mental health services',
-              },
-              {
-                name: 'Residential Health Care',
-                description: 'Nursing homes, hospice care, and supportive housing',
-              },
-              {
-                name: 'Chemical Dependency',
-                description: 'Monitored support, inpatient, outpatient, and crisis services',
-              },
-              {
-                name: 'Health Promotion and Disease Prevention',
-                description: 'Programs focused on improving health through education and disease prevention',
-              },
-              {
-                name: 'Other Health Care',
-                description: 'Rehab, respite servies, vaccination services, AIDS counseling, and home health centers',
-              },
-            ],
-          },
-          {
-            name: 'Human Services',
-            description: 'Services overseen by NYC Dept. of Homeless Services, NYC Dept. of Human Resources, NYC Mayorality, and others',
-            color: '#3182bd',
-            children: [
-              {
-                name: 'Senior Services',
-                description: 'Neighborhood senior centers, meal delivery programs, and other services for seniors',
-              },
-              {
-                name: 'Community Centers and Community School Programs',
-                description: 'Community centers that provide multiple social services at one site',
-              },
-              {
-                name: 'Financial Assistance and Social Services',
-                description: 'SNAP, Child Support, and Medicaid Centers operated by NYC Human Resources Administration',
-              },
-              {
-                name: 'Workforce Development',
-                description: 'Workforce 1 Centers and other vocational services for adults',
-              },
-              {
-                name: 'Legal and Intervention Services',
-                description: 'Early intervention, criminal defense, and mediation services',
-              },
-              {
-                name: 'Programs for People with Disabilities',
-                description: 'Specialized child care, caregiver support, and recreational services',
-              },
-              {
-                name: 'Shelters and Transitional Housing',
-                description: 'Homeless shelters and transitional houseing',
-              },
-              {
-                name: 'Non-residential Housing and Homeless Services',
-                description: 'Non-residential homelessness prevention services',
-              },
-              {
-                name: 'Soup Kitchens and Food Pantries',
-                description: 'Soup kitchens and food pantries',
-              },
-            ],
-          },
-        ],
-      },
-      {
         name: 'Education, Child Welfare, and Youth',
         description: 'Providers of children and youth services and all schools, including higher education facilities',
         slug: 'education_child_welfare_and_youth',
@@ -365,6 +281,90 @@ const exports = {
               {
                 name: 'Detention and Correctional',
                 description: 'Correctional and dentention centers',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: 'Health and Human Services',
+        description: 'Health and social service providers, including hospitals, legal services, and homeless shelters',
+        slug: 'health_and_human_services',
+        color: '#BA68C8',
+        subColor: '#f7e6f7',
+        icon: 'heart',
+        children: [
+          {
+            name: 'Health Care',
+            description: 'Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Alcoholism and Substance Abuse Services',
+            color: '#b67eb7',
+            children: [
+              {
+                name: 'Hospitals and Clinics',
+                description: 'Urgent care hospitals, diagnostic and treatment centers, and school-based health facilities',
+              },
+              {
+                name: 'Mental Health',
+                description: 'Inpatient, outpatient, and emergency mental health services',
+              },
+              {
+                name: 'Residential Health Care',
+                description: 'Nursing homes, hospice care, and supportive housing',
+              },
+              {
+                name: 'Chemical Dependency',
+                description: 'Monitored support, inpatient, outpatient, and crisis services',
+              },
+              {
+                name: 'Health Promotion and Disease Prevention',
+                description: 'Programs focused on improving health through education and disease prevention',
+              },
+              {
+                name: 'Other Health Care',
+                description: 'Rehab, respite servies, vaccination services, AIDS counseling, and home health centers',
+              },
+            ],
+          },
+          {
+            name: 'Human Services',
+            description: 'Services overseen by NYC Dept. of Homeless Services, NYC Dept. of Human Resources, NYC Mayorality, and others',
+            color: '#3182bd',
+            children: [
+              {
+                name: 'Senior Services',
+                description: 'Neighborhood senior centers, meal delivery programs, and other services for seniors',
+              },
+              {
+                name: 'Community Centers and Community School Programs',
+                description: 'Community centers that provide multiple social services at one site',
+              },
+              {
+                name: 'Financial Assistance and Social Services',
+                description: 'SNAP, Child Support, and Medicaid Centers operated by NYC Human Resources Administration',
+              },
+              {
+                name: 'Workforce Development',
+                description: 'Workforce 1 Centers and other vocational services for adults',
+              },
+              {
+                name: 'Legal and Intervention Services',
+                description: 'Early intervention, criminal defense, and mediation services',
+              },
+              {
+                name: 'Programs for People with Disabilities',
+                description: 'Specialized child care, caregiver support, and recreational services',
+              },
+              {
+                name: 'Shelters and Transitional Housing',
+                description: 'NOTE: These records will be incorporated soon, once the data is finished being assembled for inclusion in the database.',
+              },
+              {
+                name: 'Non-residential Housing and Homeless Services',
+                description: 'Non-residential homelessness prevention services',
+              },
+              {
+                name: 'Soup Kitchens and Food Pantries',
+                description: 'Soup kitchens and food pantries',
               },
             ],
           },
