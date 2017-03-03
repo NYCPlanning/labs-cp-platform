@@ -1,13 +1,13 @@
 // Download.jsx - This component builds a download pane used in the explorer
 import React, { PropTypes } from 'react';
-import Subheader from 'material-ui/Subheader';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
-import Moment from 'moment';
+
+import SignupPrompt from './SignupPrompt';
 
 import Carto from '../helpers/carto';
 
-const date = Moment().format('YYYY-MM-DD');
+const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
 
 const Download = ({ sql, filePrefix }) => {
   const filteredSql = Carto.transformSqlSelectAll(sql);
@@ -16,48 +16,55 @@ const Download = ({ sql, filePrefix }) => {
   const allFilename = `${filePrefix}_all_${date}`;
   const filteredFilename = `${filePrefix}_filtered_${date}`;
 
+  const style = {
+    size: { fontSize: '11px' },
+  };
+
   return (
-    <div>
-      <Subheader>
-        Complete Dataset
-      </Subheader>
+    <div className="sidebar-tab-content padded">
+      <h4>Complete Dataset</h4>
 
       <FlatButton
         label="CSV"
         href={Carto.generateUrlString(completeSql, 'csv', allFilename)}
         download="text.csv"
-        icon={<FontIcon className="fa fa-file-excel-o" style={{ fontSize: '14px' }} />}
+        labelStyle={style.size}
+        icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
       />
       <FlatButton
         label="GeoJSON"
         href={Carto.generateUrlString(completeSql, 'geojson', allFilename)}
-        icon={<FontIcon className="fa fa-file-code-o" style={{ fontSize: '14px' }} />}
+        labelStyle={style.size}
+        icon={<FontIcon className="fa fa-file-code-o" style={style.size} />}
       />
       <FlatButton
         label="Shapefile"
+        labelStyle={style.size}
         href={Carto.generateUrlString(completeSql, 'shp', allFilename)}
-        icon={<FontIcon className="fa fa-file-archive-o" style={{ fontSize: '14px' }} />}
+        icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
       />
 
-      <Subheader>
-        Filtered Dataset
-      </Subheader>
+      <h4>Filtered Dataset</h4>
 
       <FlatButton
         label="CSV"
+        labelStyle={style.size}
         href={Carto.generateUrlString(filteredSql, 'csv', filteredFilename)}
-        icon={<FontIcon className="fa fa-file-excel-o" style={{ fontSize: '14px' }} />}
+        icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
       />
       <FlatButton
         label="GeoJSON"
+        labelStyle={style.size}
         href={Carto.generateUrlString(filteredSql, 'geojson', filteredFilename)}
-        icon={<FontIcon className="fa fa-file-code-o" style={{ fontSize: '14px' }} />}
+        icon={<FontIcon className="fa fa-file-code-o" style={style.size} />}
       />
       <FlatButton
         label="Shapefile"
+        labelStyle={style.size}
         href={Carto.generateUrlString(filteredSql, 'shp', filteredFilename)}
-        icon={<FontIcon className="fa fa-file-archive-o" style={{ fontSize: '14px' }} />}
+        icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
       />
+      <SignupPrompt />
     </div>
   );
 };

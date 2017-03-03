@@ -19,10 +19,12 @@ const About = () => (
             style={paperStyle}
             zDepth={1}
           >
-            <h3>The Platform</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et ante nisi. Vivamus fermentum sem non rutrum auctor. Donec facilisis scelerisque augue at vestibulum. Donec efficitur faucibus ante, tristique tempus velit. Nam sollicitudin leo sit amet mauris consectetur, tincidunt porta eros scelerisque. Duis sit amet mauris dui. In nec lobortis arcu. Mauris sed mi hendrerit, viverra nulla vestibulum, commodo mi. Integer quis luctus sapien. Donec eget leo tristique, sagittis metus vel, consectetur neque.</p>
+            <h3>What is the NYC Facilities Explorer?</h3>
+            <p>The New York City Department of City Planning aggregates information about facilities and program sites that are owned, operated, funded, licensed or certified by a City, State, or Federal agency in the City of New York into a central database called the City Planning Facilities Database. These facilities generally help to shape quality of life in the city’s neighborhoods, and this dataset is the basis for a series of planning activities.</p>
 
-            <p>Pellentesque id lorem ut sapien condimentum finibus vitae vel dui. Integer gravida mi ante. Nullam lobortis luctus euismod. Aliquam et ultrices mi, quis finibus nulla. Nam sit amet pulvinar quam, vel rutrum mauris. Sed sit amet massa lorem. Nam quis mollis ligula. Ut sit amet mauris in lectus vehicula euismod. Nunc cursus est placerat nisl congue lacinia a sed tortor. Sed blandit nibh tortor, at rhoncus dui suscipit congue. Cras ipsum metus, rhoncus eu leo eu, tincidunt congue lacus.</p>
+            <p>The NYC Facilities Explorer is designed to make this expansive database more accessible to planners and city-builders across the five boroughs, and to help all New Yorkers understand the breadth of government resources in their neighborhoods. Specifically, this explorer and dataset can be used to inform the siting or realignment of certain government and community facilities and programs, certain environmental impact assessments, community planning and engagement, infrastructure planning, and a range of other planning and community-building activities. We take a user-centered approach to designing database and explorer improvements, so please do <b><a href="https://docs.google.com/forms/d/e/1FAIpQLScP9JxDvfCmMUxzT9l0_MRYBtTgeAep7pHYO5QUtrRCXGxVTw/viewform">let us know</a></b> how you want to use this product - and how we can make it better.</p>
+
+            <p>The NYC Facilities Explorer is powered by open data and open source technology. It is a work-in-progress that City Planning is launching in beta because we believe in building technology collaboratively with the people who will use it most. We hope that the community of government employees, civic technologists, and New Yorkers who are interested in using this improved dataset and mapping platform to build stronger, more equitable neighborhoods will use the data responsibly and share their feedback on how we can make the tool more useful.</p>
           </Paper>
         </div>
       </div>
@@ -32,10 +34,25 @@ const About = () => (
             style={paperStyle}
             zDepth={1}
           >
-            <h3>The Team</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et ante nisi. Vivamus fermentum sem non rutrum auctor. Donec facilisis scelerisque augue at vestibulum. Donec efficitur faucibus ante, tristique tempus velit. Nam sollicitudin leo sit amet mauris consectetur, tincidunt porta eros scelerisque. Duis sit amet mauris dui. In nec lobortis arcu. Mauris sed mi hendrerit, viverra nulla vestibulum, commodo mi. Integer quis luctus sapien. Donec eget leo tristique, sagittis metus vel, consectetur neque.</p>
+            <h3>What’s included on the map?</h3>
+            <p>The City Planning Facilities Database aggregates more than 35,000 records from 43 different public data sources provided by City, State, and Federal agencies. While each source agency classifies its facilities according to their own naming systems, we have grouped all facilities and program sites into the following seven categories to help planners navigate the data more easily:</p>
 
-            <p>Pellentesque id lorem ut sapien condimentum finibus vitae vel dui. Integer gravida mi ante. Nullam lobortis luctus euismod. Aliquam et ultrices mi, quis finibus nulla. Nam sit amet pulvinar quam, vel rutrum mauris. Sed sit amet massa lorem. Nam quis mollis ligula. Ut sit amet mauris in lectus vehicula euismod. Nunc cursus est placerat nisl congue lacinia a sed tortor. Sed blandit nibh tortor, at rhoncus dui suscipit congue. Cras ipsum metus, rhoncus eu leo eu, tincidunt congue lacus.</p>
+            <ul type={'disc'}>
+              <li>Health and Human Services</li>
+              <li>Education, Child Welfare, and Youth</li>
+              <li>Parks, Gardens, and Historical Sites</li>
+              <li>Libraries and Cultural Programs</li>
+              <li>Public Safety, Emergency Services, and Administration of Justice</li>
+              <li>Core Infrastructure and Transportation</li>
+              <li>Administration of Government</li>
+            </ul>
+
+            <p>Within each of these domains, each record is further categorized into a set of facility groups, subgroups, and types that are intended to make the data easy to navigate and more useful for specific planning purposes. Facility types and names appear as they do in source datasets, wherever possible. A full listing of the facility categories is provided in the <b><a href="http://docs.capitalplanning.nyc/facdb/#ii-contents-and-classification-hierarchy">Contents and Classification</a></b> section of the metadata.</p>
+
+            <p>This database and its <b><a href="http://capitalplanning.nyc.gov/facilities">interactive map</a></b> build upon City Planning’s decades-old work on the Selected Facilities and Program Sites Database, which this new product replaces. With the revamp of this product, we have improved data quality and expansiveness, restructured the database for easier use, and developed automated means of refreshing the data from the majority of sources, meaning the data will be refreshed on at least a quarterly basis (although source datasets may be refreshed less frequently).</p>
+
+            <p>More facilities will be added as the data become available to the Department of City Planning. Special thanks goes to all the agencies who make their data available for this effort, particularly those who publish their data on a routine basis.</p>
+
           </Paper>
         </div>
       </div>
@@ -45,10 +62,54 @@ const About = () => (
             style={paperStyle}
             zDepth={1}
           >
-            <h3>Technology</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et ante nisi. Vivamus fermentum sem non rutrum auctor. Donec facilisis scelerisque augue at vestibulum. Donec efficitur faucibus ante, tristique tempus velit. Nam sollicitudin leo sit amet mauris consectetur, tincidunt porta eros scelerisque. Duis sit amet mauris dui. In nec lobortis arcu. Mauris sed mi hendrerit, viverra nulla vestibulum, commodo mi. Integer quis luctus sapien. Donec eget leo tristique, sagittis metus vel, consectetur neque.</p>
+            <h3>What are the limitations of the data?</h3>
+            <p>The City Planning Facilities Database (FacDB) is only as good as the source data it aggregates, and the Department of City Planning cannot verify the accuracy of all records. We strongly encourage users to <b><a href="http://docs.capitalplanning.nyc/facdb/">read the metadata</a></b> before using this product for planning purposes.</p>
 
-            <p>Pellentesque id lorem ut sapien condimentum finibus vitae vel dui. Integer gravida mi ante. Nullam lobortis luctus euismod. Aliquam et ultrices mi, quis finibus nulla. Nam sit amet pulvinar quam, vel rutrum mauris. Sed sit amet massa lorem. Nam quis mollis ligula. Ut sit amet mauris in lectus vehicula euismod. Nunc cursus est placerat nisl congue lacinia a sed tortor. Sed blandit nibh tortor, at rhoncus dui suscipit congue. Cras ipsum metus, rhoncus eu leo eu, tincidunt congue lacus.</p>
+            <p><b>Analysis Limitations.</b> Largely as a result of the limitations and inconsistencies described below, users should be careful in their use of this database not to develop analyses that may be suspect. For example, a comparison of the density or accessibility of facilities across neighborhoods should recognize that due to the structure of the database and the prevalence of duplicate records, a ‘count’ of facilities and program sites may not be an accurate reflection of facility concentration; that some of the facilities included are organizational headquarters or mailing addresses rather than service sites; and that this database is not authoritatively comprehensive.</p>
+
+            <p><b>Missing Records.</b> Currently, FacDB is the most comprehensive, spatial data resource available of facilities run by public and non-public entities in NYC, but it does not claim to capture every facility within the specified domains. Some facilities are deliberately excluded in the data that source agencies provide in order to protect the safety and privacy of their clients. Many records also could not be geocoded. To learn more about how the data is processed, please review the <b><a href="http://docs.capitalplanning.nyc/facdb/#iv-methodology">Methodology</a></b>.</p>
+
+            <p><b>Duplicates.</b> Please be aware that this beta version of the database includes cases of duplicate records for the same facility. This is because several of the source datasets have content that overlaps with other datasets. We are working to systematically identify these remaining duplicate records and retain all useful attributes from each record.</p>
+
+            <p><b>Administrative Addresses.</b> There are also known to be cases when the address provided in the source data is for a headquarters office rather than the facility site location. Unfortunately, these could not be systematically verified. We hope to resolve as many of these limitations as possible over time, and seek feedback from the user community on potential approaches to improving the data. For more detailed information on a specific facility please reach out to the respective oversight agency.</p>
+
+            <p><b>Public Accessibility of Sites.</b> DCP is unable to verify the public accessibility of all sites. For example, some playgrounds or playing fields may only be accessible to participants in certain programs.</p>
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>What is the Capital Planning Platform?</h3>
+            <p>The Capital Planning Platform is a new resource for collaborative planning, powered by open data and open source technology.</p>
+
+            <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
+
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the <b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b>, <b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b>, the <b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b>, and the <b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b>, among others.</p>
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>About the Technology</h3>
+            <p>The NYC Facilities Explorer and Capital Planning Platform are built in-house by the Capital Planning team at the Department of City Planning. We use free and open source software, as well as low-cost web services, to enable rapid prototyping and deployment of technology with a small, nimble team of developers, and to facilitate collaborative environment for technology development. Our technology is an ever-evolving work in progress, and we are always interested in partnering with civic-minded technologists to improve this technology and advance its adoption, so please drop us a line at <b><a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a></b>.</p>
+
+            <p><b>Web Mapping Technology.</b> We use a self-hosted Carto server that provides read-only access to our bulk spatial data, and serves up vector tiles, shapefiles, CSVs and json on-demand.  We use the MapboxGL.js library to control data styling, layering and camera views, providing a rich visual experience for exploring NYC&quot;s spatial open datasets.</p>
+
+            <p><b>React and React-Router.</b> The Capital Planning Platform is a Single Page Application (SPA), with all routing and business logic handled in the client, with calls to various web APIs for content and data as needed.  React.js provides a component-based approach to web development, allowing for tightly-coupled HTML and javascript that can be composed and easily re-used throughout the platform.</p>
+
+            <p><b>Third Party Services.</b> With a small development team and limited budget, we chose to make use of inexpensive third-party services for key parts of the stack, rather than building and maintaining them on our own.  These include Github for version control and issue tracking, Waffle for team collaboration and issue prioritization, Codeship for continuous integration, and Auth0 for token-based authentication and authorization.</p>
+
+            <p><b>Jane Maps - An Open Source Mapping Framework built on React and MapboxGL.</b> Through the course of the development of the platform, we saw a need for a frontend web mapping framework that could combine map data symbology and rendering with custom User Interfaces and Multi-Layering capabilities.  Jane Maps allows us to quickly compose MapboxGL maps with modular layer configurations that include UI such as filtering, downloads, &quot;about&quot; panes, and more.   By taking advantage of React&quot;s built-in lifecycle methods, Jane acts as a map controller, adding, manipulating, and removing sources and layers from a MapboxGL map in our site.  It also handles location search, interactivity, and legends.  See the Jane Maps repo on Github for more information.  Pull Requests are welcomed!</p>
+
+            <p>We call it Jane in honor of Jane Jacobs; we hope it helps provide a new way of looking at cities and neighborhoods, just as she did.</p>
           </Paper>
         </div>
       </div>
@@ -59,9 +120,7 @@ const About = () => (
             zDepth={1}
           >
             <h3>Thanks</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et ante nisi. Vivamus fermentum sem non rutrum auctor. Donec facilisis scelerisque augue at vestibulum. Donec efficitur faucibus ante, tristique tempus velit. Nam sollicitudin leo sit amet mauris consectetur, tincidunt porta eros scelerisque. Duis sit amet mauris dui. In nec lobortis arcu. Mauris sed mi hendrerit, viverra nulla vestibulum, commodo mi. Integer quis luctus sapien. Donec eget leo tristique, sagittis metus vel, consectetur neque.</p>
-
-            <p>Pellentesque id lorem ut sapien condimentum finibus vitae vel dui. Integer gravida mi ante. Nullam lobortis luctus euismod. Aliquam et ultrices mi, quis finibus nulla. Nam sit amet pulvinar quam, vel rutrum mauris. Sed sit amet massa lorem. Nam quis mollis ligula. Ut sit amet mauris in lectus vehicula euismod. Nunc cursus est placerat nisl congue lacinia a sed tortor. Sed blandit nibh tortor, at rhoncus dui suscipit congue. Cras ipsum metus, rhoncus eu leo eu, tincidunt congue lacus.</p>
+            <p>We want to thank all contributing agencies and partners from the civic tech community.</p>
           </Paper>
         </div>
       </div>

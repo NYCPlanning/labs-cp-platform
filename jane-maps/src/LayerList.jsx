@@ -74,7 +74,7 @@ const LayerList = React.createClass({
       let className = this.props.selectedLayer === layer.id ? 'list-item selected' : 'list-item';
       if (!layer.visible) className += ' disabled';
 
-      if (layer.inList !== false) {
+      if (layer.showInLayerList !== false) {
         return (
           <ListItem
             className={className}

@@ -110,7 +110,6 @@ const ModalMap = React.createClass({
               <JaneLayer
                 {...supportingLayers.travelshed}
                 initialState={{ feature: this.props.feature }}
-                visible
               />
           }
           <JaneLayer

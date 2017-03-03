@@ -1,8 +1,31 @@
+.splash-selector-container {
+  .btn {
+    width: 100%;
+    font-size: 20px;
+    position: relative;
+    text-align: right;
+    padding-right: 30px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+
+    i {
+      bottom: 11px;
+      right: 6px;
+      position: absolute;
+    }
+  }
+}
+
 .splash-selector {
   width:100%;
   background: white;
-  margin: 18px 0 18px 0;
-  text-align: initial;
+  margin: 18px 0 0 0;
+  text-align: left;
   position: relative;
   height: auto;
 

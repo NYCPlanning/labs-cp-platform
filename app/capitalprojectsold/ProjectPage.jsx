@@ -4,7 +4,6 @@
 //  auth - User's email login info based on auth0 login. Gets included in nav bar.
 import React from 'react'
 import Numeral from 'numeral'
-import Moment from 'moment'
 
 import ModalMap from '../common/ModalMap.jsx'
 

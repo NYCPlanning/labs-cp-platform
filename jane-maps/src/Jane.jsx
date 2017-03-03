@@ -76,6 +76,7 @@ const Jane = React.createClass({
           component: child.props.component,
           listItem: child.props.listItem,
           interactivityMapLayers: child.props.interactivityMapLayers,
+          highlightPointLayers: child.props.highlightPointLayers,
           sources: child.props.sources,
           mapLayers: child.props.mapLayers,
           initialState: child.props.initialState,
@@ -220,32 +221,6 @@ const Jane = React.createClass({
     });
   },
 
-  highlightFeature(feature) {
-    const map = this.map.mapObject;
-    try {
-      map.removeLayer('highlighted');
-      map.removeSource('highlighted');
-    } catch (err) {
-      // ignore
-    }
-
-    map.addSource('highlighted', {
-      type: 'geojson',
-      data: feature,
-    });
-
-    map.addLayer({
-      id: 'highlighted',
-      type: 'circle',
-      source: 'highlighted',
-      paint: {
-        'circle-radius': 14,
-        'circle-color': 'steelblue',
-        'circle-opacity': 0.5,
-      },
-    });
-  },
-
   toggleLayerContent() {
     this.setState({
       layerContentVisible: !this.state.layerContentVisible,
@@ -282,8 +257,15 @@ const Jane = React.createClass({
   render() {
     const mapConfig = this.state.mapConfig;
 
+    // remove highlightPoints layer if it exists
+    mapConfig.layers.forEach((layer, i) => {
+      if (layer.id === 'highlightPoints') mapConfig.layers.splice(i, 1);
+    });
+
     // add legendItems for each layer
     const legendItems = [];
+
+    // TODO combine all these forEach() into one big one
 
     mapConfig.layers.forEach((layer) => {
       if (layer.visible && layer.legend) {
@@ -303,6 +285,56 @@ const Jane = React.createClass({
           selectedFeatureItems.push(<SelectedFeatureItem feature={layerSelectedFeature} key={i.toString() + j.toString()} />);
         });
       }
+    });
+
+    // add highlighted points for each layer
+
+    const highlightPointFeatures = [];
+
+    mapConfig.layers.forEach((layer) => {
+      if (layer.visible && layer.highlightPointLayers) {
+        // get selected features
+        const layerSelectedFeatures = this.state.selectedFeatures.filter(feature => layer.interactivityMapLayers.indexOf(feature.layer.id) > -1);
+
+
+        layerSelectedFeatures.forEach((layerSelectedFeature) => {
+          highlightPointFeatures.push({
+            type: 'Feature',
+            geometry: layerSelectedFeature.geometry,
+            properties: {},
+          });
+        });
+      }
+    });
+
+    const highlightPointFeatureCollection = {
+      type: 'FeatureCollection',
+      features: highlightPointFeatures,
+    };
+
+    mapConfig.layers.push({
+      id: 'highlightPoints',
+      visible: 'true',
+      showInLayerList: false,
+      sources: [{
+        id: 'highlightPoints',
+        type: 'geojson',
+        data: highlightPointFeatureCollection,
+      }],
+      mapLayers: [{
+        id: 'highlightPoints',
+        type: 'circle',
+        source: 'highlightPoints',
+        paint: {
+          'circle-color': 'rgba(255, 255, 255, 1)',
+          'circle-opacity': 0,
+          'circle-radius': 10,
+          'circle-stroke-width': 3,
+          'circle-pitch-scale': 'map',
+          'circle-stroke-color': 'rgba(217, 107, 39, 1)',
+          'circle-stroke-opacity': 0.8,
+        },
+      }],
     });
 
 

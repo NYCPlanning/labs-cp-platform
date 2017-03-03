@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import * as d3 from 'd3';
-import moment from 'moment';
 import numeral from 'numeral';
 
 import PlanningApi from '../helpers/PlanningApi';
 
 // css for this component is in ./styles.scss
+/* eslint-disable no-undef */
 
 const CommitmentExpenditureChart = React.createClass({
 
@@ -36,11 +35,12 @@ const CommitmentExpenditureChart = React.createClass({
 
   handleBarMouseover(d) {
     const e = d3.event;
-
+    // Bandaid solution for Firefox popup positioning
+    const xOffset = (e.offsetX >= e.clientX) ? e.offsetX : e.layerX;
     this.setState({
       showPopup: true,
       offset: {
-        x: e.offsetX,
+        x: xOffset,
         y: e.offsetY,
       },
       popupType: d.type,
@@ -80,7 +80,7 @@ const CommitmentExpenditureChart = React.createClass({
     const minDate = d3.min(dates);
     const maxDate = d3.max(dates);
 
-    const numMonths = moment(maxDate).diff(moment(minDate), 'months', true);
+    const numMonths = moment(maxDate).diff(moment(minDate), 'months', true); // eslint-disable-line no-undef
 
     const xScale = d3.scaleTime()
       .domain([minDate, maxDate])
@@ -159,13 +159,15 @@ const CommitmentExpenditureChart = React.createClass({
           ref={x => (this.popup = x)}
           style={{
             opacity: this.state.showPopup ? 1 : 0.001,
-            left: this.state.offset.x - (popupWidth / 2), // TODO plus half width somehow
+            left: this.state.offset.x - (popupWidth / 2), // TODO fix position to center of bar
             top: '100px', // TODO base off of chart height
             zIndex: 999,
           }}
         >
           <div className="popup-top">
+            {/* eslint-disable no-undef */}
             {moment(this.state.popupMonth).format('MMM YYYY')}
+            {/* eslint-enable no-undef */}
           </div>
 
           <div className="popup-bottom">

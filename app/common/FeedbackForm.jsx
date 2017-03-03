@@ -2,10 +2,9 @@ import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
-import $ from 'jquery';
 
-import auth from '../helpers/AuthHelper';
 import appConfig from '../helpers/appConfig';
+import AuthService from '../helpers/AuthService';
 
 const FeedbackForm = React.createClass({
 
@@ -24,6 +23,13 @@ const FeedbackForm = React.createClass({
     });
   },
 
+  componentWillMount() {
+    // check localstorage for saved form state , if it exists pass it up to react reformed
+
+    const savedState = JSON.parse(localStorage.getItem('feedback-state'));
+    if (savedState !== null) this.props.setProperty('comment', savedState.comment);
+  },
+
   onPostSuccess(data) {
     if (data.success) {
       this.setState({ submitted: true });
@@ -35,9 +41,24 @@ const FeedbackForm = React.createClass({
   },
 
   onSubmit() {
+    // if not logged in, prompt login and pass current model up
+    if (!AuthService.loggedIn()) {
+      localStorage.setItem('feedback-state', JSON.stringify(this.props.model));
+      AuthService.login();
+    } else {
+      this.postData();
+    }
+  },
+
+  onChangeInput(e) {
+    // `setProperty` is injected by reformed
+    this.props.setProperty(e.target.name, e.target.value);
+  },
+
+  postData() { // TODO move ajax to a helper class
     const data = this.props.model;
 
-    const profile = auth.getProfile();
+    const profile = AuthService.getProfile();
 
     // add user details to payload
     data.email = profile.email;
@@ -46,9 +67,12 @@ const FeedbackForm = React.createClass({
     data.ref_id = this.props.ref_id;
 
     // get the json web token from localstorage
-    const jwt = auth.getToken();
+    const jwt = AuthService.getToken();
 
-    $.ajax({
+    // delete the feedback state from localstorage
+    localStorage.removeItem('feedback-state');
+
+    $.ajax({ // eslint-disable-line no-undef
       url: `//${appConfig.api_domain}/api/feedback/`,
       type: 'POST',
       headers: { Authorization: `Bearer ${jwt}` },
@@ -58,11 +82,6 @@ const FeedbackForm = React.createClass({
       success: this.onPostSuccess,
       error: this.onPostError,
     });
-  },
-
-  onChangeInput(e) {
-    // `setProperty` is injected by reformed
-    this.props.setProperty(e.target.name, e.target.value);
   },
 
   render() {

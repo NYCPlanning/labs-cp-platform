@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react';
-import $ from 'jquery';
 import Paper from 'material-ui/Paper';
-import Moment from 'moment';
 import { Link } from 'react-router';
 
-import auth from '../helpers/AuthHelper';
+import AuthService from '../helpers/AuthService';
 import { api_domain } from '../helpers/appConfig';
 
 import './FeedbackPage.scss';
@@ -20,9 +18,9 @@ const FeedbackPage = React.createClass({
   },
 
   componentDidMount() {
-    const jwt = auth.getToken();
+    const jwt = AuthService.getToken();
 
-    $.ajax({
+    $.ajax({ // eslint-disable-line no-undef
       url: `//${api_domain}/api/feedback/list/${this.props.params.type}`,
       type: 'GET',
       headers: { Authorization: `Bearer ${jwt}` },
@@ -49,7 +47,9 @@ const FeedbackPage = React.createClass({
               <i className="fa fa-user" aria-hidden="true" />
             </div>
             <div className="email">{d.email}</div>
-            <div className="created-at">{Moment(d.createdAt).from(new Date())}</div>
+            {/* eslint-disable no-undef */}
+            <div className="created-at">{moment(d.createdAt).from(new Date())}</div>
+            {/* eslint-enable no-undef */}
           </div>
           <div className="comment">{d.comment}</div>
           <div className="item "><Link to={`/${d.ref_type}/${d.ref_id}`}>{d.ref_type} | {d.ref_id}</Link></div>

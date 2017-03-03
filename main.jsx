@@ -13,7 +13,7 @@ function fireTracking() {
   ReactGA.pageview(window.location.pathname);
 }
 
-ReactDOM.render(
+ReactDOM.render( // eslint-disable-line no-undef
   <Router onUpdate={fireTracking} history={browserHistory}>
     {routes}
   </Router>,

@@ -3,106 +3,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 
-const paint = {
-  lines: {
-    'line-color': '#626262',
-    'line-opacity': 0.7,
-    'line-width': 4,
-    'line-dasharray': [2, 2],
-  },
-  labels: {
-    'text-color': '#626262',
-  },
-};
-
-const defaultLayerConfig = {
-  nta: {
-    sources: [
-      {
-        id: 'ntaboundaries',
-        type: 'geojson',
-        source: '/data/ntaboundaries.geojson',
-      },
-    ],
-    mapLayers: [
-      {
-        id: 'ntaboundaries',
-        source: 'ntaboundaries',
-        type: 'line',
-        paint: paint.lines,
-      },
-      {
-        id: 'ntaboundaries-labels',
-        source: 'ntaboundaries',
-        type: 'symbol',
-        minzoom: 13,
-        paint: paint.labels,
-        layout: {
-          'text-field': '{ntaname}',
-          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        },
-      },
-    ],
-  },
-
-  cd: {
-    sources: [
-      {
-        id: 'cdboundaries',
-        type: 'geojson',
-        source: '/data/cdboundaries.geojson',
-      },
-    ],
-    mapLayers: [
-      {
-        id: 'cdboundaries',
-        source: 'cdboundaries',
-        type: 'line',
-        paint: paint.lines,
-      },
-      {
-        id: 'cdboundaries-labels',
-        source: 'cdboundaries',
-        minzoom: 11,
-        type: 'symbol',
-        paint: paint.labels,
-        layout: {
-          'text-field': '{displaynam}',
-          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        },
-      },
-    ],
-  },
-
-  schooldistricts: {
-    sources: [
-      {
-        id: 'schooldistricts',
-        type: 'geojson',
-        source: '/data/schooldistricts.geojson',
-      },
-    ],
-    mapLayers: [
-      {
-        id: 'schooldistricts',
-        source: 'schooldistricts',
-        type: 'line',
-        paint: paint.lines,
-      },
-      {
-        id: 'schooldistricts-labels',
-        source: 'schooldistricts',
-        minzoom: 11,
-        type: 'symbol',
-        paint: paint.labels,
-        layout: {
-          'text-field': '{SchoolDist}',
-          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        },
-      },
-    ],
-  },
-};
+import defaultLayerConfig from './defaultLayerConfig';
 
 const AdminBoundaries = React.createClass({
   propTypes: {
@@ -144,32 +45,107 @@ const AdminBoundaries = React.createClass({
   },
 
   render() {
+    // necessary for scrolling in tabs
+    const tabTemplateStyle = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+    };
+
     return (
       <div>
-        <Tabs className="sidebar-tabs">
+        <Tabs
+          className="sidebar-tabs"
+          tabTemplateStyle={tabTemplateStyle}
+        >
           <Tab label="Data">
             <div className="sidebar-tab-content">
-              <div className="padded">
-                <h4>Choose a Boundary Layer</h4>
+              <div className="padded scroll-container">
 
+                <h4>Statistical Areas</h4>
                 <RadioButtonGroup
                   name="adminboundary"
                   onChange={this.handleChange}
                   valueSelected={this.state.value}
                 >
                   <RadioButton
+                    value="nta"
+                    label="Neighborhood Tabulation Areas"
+                  />
+                </RadioButtonGroup>
+
+                <h4>Municipal Boundaries</h4>
+                <RadioButtonGroup
+                  name="adminboundary"
+                  onChange={this.handleChange}
+                  valueSelected={this.state.value}
+                >
+                  <RadioButton
+                    value="boroughboundaries"
+                    label="Borough Boundaries"
+                  />
+
+                  <RadioButton
                     value="cd"
                     label="Community Districts"
                   />
 
                   <RadioButton
-                    value="nta"
-                    label="Neighborhood Tabulation Areas"
+                    value="citycouncildistricts"
+                    label="City Council Districts"
                   />
+
+                  <RadioButton
+                    value="municipalcourtdistricts"
+                    label="Municipal Court Districts"
+                  />
+
+                  <RadioButton
+                    value="stateassemblydistricts"
+                    label="State Assembly Districts"
+                  />
+
+                  <RadioButton
+                    value="statesenatedistricts"
+                    label="State Senate Districts"
+                  />
+
+                  <RadioButton
+                    value="uscongressionaldistricts"
+                    label="US Congressional Districts"
+                  />
+                </RadioButtonGroup>
+
+                <h4>Service Districts</h4>
+                <RadioButtonGroup
+                  name="adminboundary"
+                  onChange={this.handleChange}
+                  valueSelected={this.state.value}
+                >
 
                   <RadioButton
                     value="schooldistricts"
                     label="School Districts"
+                  />
+
+                  <RadioButton
+                    value="firedivisions"
+                    label="Fire Divisions"
+                  />
+
+                  <RadioButton
+                    value="firebattalions"
+                    label="Fire Battalions"
+                  />
+
+                  <RadioButton
+                    value="firecompanies"
+                    label="Fire Companies"
+                  />
+
+                  <RadioButton
+                    value="policeprecincts"
+                    label="Police Precincts"
                   />
 
                 </RadioButtonGroup>
