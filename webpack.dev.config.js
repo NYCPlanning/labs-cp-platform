@@ -19,10 +19,12 @@ module.exports = {
   devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx'],
+    modules: [
+      'node_modules',
+      path.join(__dirname, 'node_modules'),
+    ],
   },
   module: {
-    noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
-
     loaders: [
       {
         test: /\.jsx?$/,
@@ -38,8 +40,16 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         use: [
-          'react-hot-loader',
-          'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
+          {
+            loader: 'react-hot-loader',
+          },
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['babel-preset-react', 'babel-preset-es2015', 'babel-preset-stage-0'].map(require.resolve),
+              plugins: ['babel-plugin-transform-object-assign', 'babel-plugin-es6-promise'].map(require.resolve),
+            },
+          },
         ],
       },
       {

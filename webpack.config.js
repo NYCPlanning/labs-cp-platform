@@ -18,7 +18,6 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   module: {
-    noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
     loaders: [
       {
         test: /\.jsx?$/,
