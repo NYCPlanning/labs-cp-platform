@@ -99,6 +99,10 @@
 .facilities-landing {
   margin-top: 50px;
 
+  h1, h3 {
+    color:#fff;
+  }
+
   .header-area {
     padding: 60px;
   }
@@ -120,12 +124,6 @@
 
   hr {
     border-color: #FFF;
-  }
-
-  p {
-    width: 80%;
-    margin: 0 auto;
-    color: #000000;
   }
 
   p.subtitle {
@@ -159,7 +157,10 @@
   }
 
   .learn-more {
-    margin-bottom: 60px;
+    width: 80%;
+    height: 26px;
+    margin: 0 auto 30px auto;
+    color: #000000;
 
     a {
       color: white;
@@ -230,8 +231,9 @@
     }
   }
 
-  .splash-trio {
+  .splash-button-section {
     color: #333;
+    margin-bottom: 30px;
 
     .box.or-text {
       width: 5%;
@@ -292,6 +294,10 @@
       .Select {
         z-index: 99;
         font-size: 20px;
+      }
+
+      .Select-option {
+        font-size: 15px;
       }
 
       .Select-control {
