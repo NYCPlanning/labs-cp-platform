@@ -72,6 +72,18 @@ const AdminBoundaries = React.createClass({
                     value="nta"
                     label="Neighborhood Tabulation Areas"
                   />
+                  <RadioButton
+                    value="censustracts"
+                    label="Census Tracts"
+                  />
+                  <RadioButton
+                    value="puma"
+                    label="Public Use Microdata Areas (PUMA)"
+                  />
+                  <RadioButton
+                    value="taz"
+                    label="Traffic Analysis Zones"
+                  />
                 </RadioButtonGroup>
 
                 <h4>Municipal Boundaries</h4>

@@ -61,6 +61,114 @@ const defaultLayerConfig = {
     ],
   },
 
+  censustracts: {
+    sources: [
+      {
+        id: 'censustracts',
+        type: 'geojson',
+        source: '/data/CensusTracts.geojson',
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'censustracts',
+        source: 'censustracts',
+        type: 'line',
+        paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'censustracts-labels',
+        source: 'censustracts',
+        type: 'symbol',
+        minzoom: 13,
+        paint: paint.labels,
+        layout: {
+          'text-field': '{ct_2010}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 9],
+              [14, 14],
+            ],
+          },
+        },
+      },
+    ],
+  },
+
+  puma: {
+    sources: [
+      {
+        id: 'puma',
+        type: 'geojson',
+        source: '/data/puma.geojson',
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'puma',
+        source: 'puma',
+        type: 'line',
+        paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'puma-labels',
+        source: 'puma',
+        type: 'symbol',
+        minzoom: 13,
+        paint: paint.labels,
+        layout: {
+          'text-field': '{puma}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 12],
+              [14, 16],
+            ],
+          },
+        },
+      },
+    ],
+  },
+
+  taz: {
+    sources: [
+      {
+        id: 'taz',
+        type: 'geojson',
+        source: '/data/TrafficAnalysisZones.geojson',
+      },
+    ],
+    mapLayers: [
+      {
+        id: 'taz',
+        source: 'taz',
+        type: 'line',
+        paint: paint.lines,
+        layout: layout.lines,
+      },
+      {
+        id: 'taz-labels',
+        source: 'taz',
+        type: 'symbol',
+        minzoom: 13,
+        paint: paint.labels,
+        layout: {
+          'text-field': '{TAZCE10}',
+          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+          'text-size': {
+            stops: [
+              [11, 9],
+              [14, 14],
+            ],
+          },
+        },
+      },
+    ],
+  },
+
   cd: {
     sources: [
       {
