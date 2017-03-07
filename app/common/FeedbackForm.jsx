@@ -62,7 +62,7 @@ const FeedbackForm = React.createClass({
     const jwt = AuthService.getToken();
 
     $.ajax({ // eslint-disable-line no-undef
-      url: `//${appConfig.api_domain}/api/feedback/`,
+      url: `//${appConfig.api_domain}/feedback/`,
       type: 'POST',
       headers: { Authorization: `Bearer ${jwt}` },
       data: JSON.stringify(data),
