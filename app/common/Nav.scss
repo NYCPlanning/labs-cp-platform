@@ -59,7 +59,7 @@ ul.navbar-right {
 }
 
 .navbar-default .navbar-nav>li>a, .dropdown-menu>li>a {
-  padding: 15px 18px;  
+  padding: 15px 18px;
   color: #db691b;
   font-size: 16px;
   font-weight: 300;
@@ -112,3 +112,8 @@ ul.navbar-right {
   font-weight: 300;
 }
 
+@media screen and (max-width: 400px) {
+  .navbar-title {
+    font-size: 16px;
+  }
+}

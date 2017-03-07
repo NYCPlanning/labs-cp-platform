@@ -47,6 +47,16 @@ const CPTable = React.createClass({
             {...this.props}
           >
             <Column
+              header={<Cell>Managing Agency</Cell>}
+              cell={<TextCell data={this.state.data} col="magency" />}
+              width={100}
+            />
+            <Column
+              header={<Cell>Acronym</Cell>}
+              cell={<TextCell data={this.state.data} col="magencyacro" />}
+              width={100}
+            />
+            <Column
               header={<Cell>MA Project ID</Cell>}
               cell={<TextCell data={this.state.data} col="maprojid" />}
               width={100}
@@ -54,7 +64,7 @@ const CPTable = React.createClass({
             <Column
               header={<Cell>Description</Cell>}
               cell={<TextCell data={this.state.data} col="description" />}
-              width={100}
+              width={300}
             />
             <Column
               header={<Cell>City Cost</Cell>}
