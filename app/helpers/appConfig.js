@@ -14,7 +14,8 @@ const appConfig = {
 
   mapzen_api_key: 'mapzen-ZyMEp5H',
 
-  api_domain: (process.env.NODE_ENV === 'production') ? 'api.capitalplanning.nyc' : 'localhost:3000',
+  api_domain: (process.env.NODE_ENV === 'production') ? 'api.capitalplanning.nyc' :
+    (process.env.NODE_ENV === 'staging') ? 'api-staging.capitalplanning.nyc' : 'localhost:3000',
 
   // Using the getter syntax to access the object 'this'
   // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)
