@@ -1,3 +1,18 @@
+
+let api_domain;
+
+switch (process.env.NODE_ENV) {
+  case 'production':
+    api_domain = 'api.capitalplanning.nyc';
+    break;
+  case 'staging':
+    api_domain = 'api-staging.capitalplanning.nyc';
+    break;
+  default:
+    api_domain = 'localhost:3000';
+}
+
+
 const appConfig = {
 
   auth0_client_id: '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
@@ -14,8 +29,7 @@ const appConfig = {
 
   mapzen_api_key: 'mapzen-ZyMEp5H',
 
-  api_domain: (process.env.NODE_ENV === 'production') ? 'api.capitalplanning.nyc' :
-    (process.env.NODE_ENV === 'staging') ? 'api-staging.capitalplanning.nyc' : 'localhost:3000',
+  api_domain,
 
   // Using the getter syntax to access the object 'this'
   // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)

@@ -180,8 +180,6 @@ const DetailPage = React.createClass({
       return null;
     };
 
-    console.log(d);
-
     return (
       <div className="facility-page detail-page">
         <div className="col-md-12">
