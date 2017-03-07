@@ -3,6 +3,8 @@ import React from 'react';
 
 import FixedDataTable from 'fixed-data-table';
 
+import 'fixed-data-table/dist/fixed-data-table.css';
+
 import carto from '../helpers/carto';
 
 const { Table, Column, Cell } = FixedDataTable;
@@ -47,6 +49,26 @@ const CPTable = React.createClass({
             <Column
               header={<Cell>MA Project ID</Cell>}
               cell={<TextCell data={this.state.data} col="maprojid" />}
+              width={100}
+            />
+            <Column
+              header={<Cell>Description</Cell>}
+              cell={<TextCell data={this.state.data} col="description" />}
+              width={100}
+            />
+            <Column
+              header={<Cell>City Cost</Cell>}
+              cell={<TextCell data={this.state.data} col="citycost" />}
+              width={100}
+            />
+            <Column
+              header={<Cell>Non-City Cost</Cell>}
+              cell={<TextCell data={this.state.data} col="noncitycost" />}
+              width={100}
+            />
+            <Column
+              header={<Cell>Total Cost</Cell>}
+              cell={<TextCell data={this.state.data} col="totalcost" />}
               width={100}
             />
           </Table>
