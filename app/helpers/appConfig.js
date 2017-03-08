@@ -12,7 +12,6 @@ switch (process.env.NODE_ENV) {
     api_domain = 'localhost:3000';
 }
 
-
 const appConfig = {
 
   auth0_client_id: '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
@@ -23,9 +22,9 @@ const appConfig = {
 
   otp_domain: 'otp.capitalplanning.nyc',
 
-  carto_domain: 'carto.capitalplanning.nyc',
+  carto_domain: 'cartoprod.capitalplanning.nyc',
 
-  carto_user: 'cpadmin',
+  carto_user: 'cpp',
 
   mapzen_api_key: 'mapzen-ZyMEp5H',
 

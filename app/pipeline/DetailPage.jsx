@@ -23,7 +23,7 @@ const DevelopmentPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature('nchatterjee.dob_permits_cofos_hpd_geocode', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature('pipeline_projects', 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => { self.setState({ data }); });
   },
 
@@ -40,7 +40,7 @@ const DevelopmentPage = React.createClass({
             >
               <BackButton
                 location={this.props.location}
-                defaultText="Housing Development Map"
+                defaultText="Development Map"
                 defaultLink="/pipeline"
               />
             </div>

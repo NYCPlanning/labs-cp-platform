@@ -14,7 +14,7 @@ const layerConfig = {
         options: {
           carto_user: appConfig.carto_user,
           carto_domain: appConfig.carto_domain,
-          sql: ['SELECT * FROM bus_stops'],
+          sql: ['SELECT * FROM support_trans_mta_bus_stops'],
         },
       },
     ],
@@ -54,7 +54,7 @@ const layerConfig = {
         options: {
           carto_user: appConfig.carto_user,
           carto_domain: appConfig.carto_domain,
-          sql: ['SELECT * FROM routes_bus_nyc_jan2017'],
+          sql: ['SELECT * FROM support_trans_mta_bus_routes'],
         },
       },
     ],
@@ -89,12 +89,12 @@ const layerConfig = {
       {
         id: 'subway_lines',
         type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20doitt_subwaylines&format=geojson`,
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_mta_subway_routes&format=geojson`,
       },
       {
         id: 'subway_stations',
         type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20doitt_subwaystations&format=geojson`,
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_mta_subway_stops&format=geojson`,
       },
     ],
     mapLayers: [
@@ -408,7 +408,7 @@ const layerConfig = {
       {
         id: 'path_routes',
         type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20routes_path_2017&format=geojson`,
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_path_rail_routes&format=geojson`,
         // options: {
         //   carto_user: appConfig.carto_user,
         //   carto_domain: appConfig.carto_domain,
@@ -418,7 +418,7 @@ const layerConfig = {
       {
         id: 'path_stops',
         type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20stops_path_2017&format=geojson`,
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_path_rail_stops&format=geojson`,
       },
     ],
     mapLayers: [
@@ -498,7 +498,7 @@ const layerConfig = {
       {
         id: 'bike_routes',
         type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20nyc_bike_routes_2016&format=geojson`,
+        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_dot_bike_routes&format=geojson`,
         // type: 'cartovector',
         // options: {
         //   carto_user: appConfig.carto_user,

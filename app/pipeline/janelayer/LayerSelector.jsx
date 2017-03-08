@@ -101,7 +101,7 @@ const LayerSelector = React.createClass({
   componentDidMount() {
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
-      tablename: 'nchatterjee.dob_permits_cofos_hpd_geocode',
+      tablename: 'pipeline_projects',
     };
 
     this.buildSQL();
