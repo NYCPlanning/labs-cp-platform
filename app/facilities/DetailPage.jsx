@@ -110,13 +110,13 @@ const DetailPage = React.createClass({
 
     const sourceDataDetails = () => {
       const sourceDetails = sources.map((s) => {
-        const idAgency = this.dbStringAgencyLookup(d.idagency, s.agencysource);
+        const idAgency = this.dbStringAgencyLookup(d.idagency, s.datasource);
         const table = (
           <Table selectable={false}>
             <TableBody displayRowCheckbox={false}>
               <TableRow>
                 <TableRowColumn>Source Dataset</TableRowColumn>
-                <TableRowColumn><h5>{wrapInLink(s.linkdata, s.sourcedatasetname)}</h5></TableRowColumn>
+                <TableRowColumn><h5>{wrapInLink(s.datalink, s.dataname)}</h5></TableRowColumn>
               </TableRow>
               <TableRow>
                 <TableRowColumn>Facility ID in Source Data</TableRowColumn>
@@ -124,13 +124,13 @@ const DetailPage = React.createClass({
               </TableRow>
               <TableRow>
                 <TableRowColumn>Last Updated</TableRowColumn>
-                <TableRowColumn><h5>{s.datesourceupdated}</h5></TableRowColumn>
+                <TableRowColumn><h5>{s.datadate}</h5></TableRowColumn>
               </TableRow>
             </TableBody>
           </Table>
         );
 
-        return wrapInPanel(s.agencysourcename, s.agencysource, table);
+        return wrapInPanel(s.dataname, s.datasource, table);
       });
 
       return sourceDetails;
@@ -169,7 +169,7 @@ const DetailPage = React.createClass({
     };
 
     const childcareTooltip = () => {
-      if (d.facilitygroup === 'Child Care and Pre-Kindergarten') {
+      if (d.facgroup === 'Child Care and Pre-Kindergarten') {
         return (
           <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DOE, ACS, and DOHMH capacity numbers for DOE Universal Pre-K and Child Care sites do not match up, because they are all calculated and tracked for different purposes. DOE and ACS each track the number of program seats their agency subsidizes at a facility based on their respective contracts. DOHMH determines capacity as the maximum capacity the space will allow based on square footage.</Tooltip>}>
             <i className="fa fa-info-circle" aria-hidden="true" />
@@ -179,8 +179,6 @@ const DetailPage = React.createClass({
 
       return null;
     };
-
-    console.log(d);
 
     return (
       <div className="facility-page detail-page">
@@ -196,21 +194,21 @@ const DetailPage = React.createClass({
                 defaultLink="/facilities/explorer"
               />
               <Email
-                subject={`Check out ${d.facilityname} on the NYC Facilities Explorer`}
-                body={`Here's the record page for ${d.facilityname} on the NYC Facilities Explorer: ${location.origin}${location.pathname}`}
+                subject={`Check out ${d.facname} on the NYC Facilities Explorer`}
+                body={`Here's the record page for ${d.facname} on the NYC Facilities Explorer: ${location.origin}${location.pathname}`}
               />
 
             </div>
             <div className="col-md-9 col-md-pull-3">
-              <h1>{d.facilityname}</h1>
+              <h1>{d.facname}</h1>
               <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
               <ol className="breadcrumb">
-                <li>{d.domain}</li>
-                <li>{d.facilitygroup}</li>
-                <li>{d.facilitysubgroup}</li>
+                <li>{d.facdomain}</li>
+                <li>{d.facgroup}</li>
+                <li>{d.facsubgrp}</li>
                 <li>
                   <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                    {d.facilitytype}
+                    {d.factype}
                   </span>
                   <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
                     <i className="fa fa-info-circle" aria-hidden="true" />
@@ -231,7 +229,7 @@ const DetailPage = React.createClass({
                     <div className="panel panel-default">
                       <div className="panel-heading">Operated By</div>
                       <div className="panel-body">
-                        {<h3>{d.operatorname}</h3>}
+                        {<h3>{d.opname}</h3>}
                       </div>
                     </div>
                   </div>
@@ -239,13 +237,13 @@ const DetailPage = React.createClass({
                     <div className="panel panel-default">
                       <div className="panel-heading">Overseen By</div>
                       <div className="panel-body">
-                        <h3>{asList(d.oversightagency)}</h3>
+                        <h3>{asList(d.overagency)}</h3>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {(d.capacity.length > 0 || d.utilization.length > 0 || d.area.length > 0) && // hide capacity &utilization information boxes if the record has neither
+                {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
                   (
                     <div className="row equal">
                       <div className={'col-md-6'}>
@@ -254,7 +252,7 @@ const DetailPage = React.createClass({
                             {childcareTooltip()}
                           </div>
                           <div className="panel-body">
-                            {d.capacity ? usageList(d.capacity, d.capacitytype) : usageList(d.area, d.areatype) }
+                            {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
                           </div>
                         </div>
                       </div>
@@ -262,7 +260,7 @@ const DetailPage = React.createClass({
                         <div className="panel panel-default">
                           <div className="panel-heading">Utilization</div>
                           <div className="panel-body">
-                            {usageList(d.utilization, d.capacitytype)}
+                            {usageList(d.util, d.captype)}
                           </div>
                         </div>
                       </div>
@@ -273,7 +271,7 @@ const DetailPage = React.createClass({
                 <div className="row property-detail-container">
                   <div className="property-detail-blocks"><h4><small>BBL</small></h4><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4></div>
                   <div className="property-detail-blocks"><h4><small>BIN</small></h4><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4></div>
-                  <div className="property-detail-blocks"><h4><small>&zwnj;</small></h4><h4>{d.propertytype ? d.propertytype : 'Privately Owned'}</h4></div>
+                  <div className="property-detail-blocks"><h4><small>&zwnj;</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                 </div>
               </CardText>
             </Card>
@@ -293,7 +291,7 @@ const DetailPage = React.createClass({
 
         <div className={'col-md-6'}>
           <div style={{ marginTop: '15px' }}>
-            {state.data && <ModalMap feature={state.data} label={state.data.properties.facilityname} />}
+            {state.data && <ModalMap feature={state.data} label={state.data.properties.facname} />}
           </div>
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
             <FeedbackForm

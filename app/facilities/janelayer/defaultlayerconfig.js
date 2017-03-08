@@ -8,7 +8,7 @@ const layerConfig = {
       id: 'facilities',
       options: {
         carto_user: appConfig.carto_user,
-        carto_domain: appConfig.carto_domain,
+        carto_facdomain: appConfig.carto_facdomain,
       },
 
     },

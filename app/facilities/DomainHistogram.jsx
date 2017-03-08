@@ -5,7 +5,7 @@ import Subheader from 'material-ui/Subheader';
 import Carto from '../helpers/carto';
 
 
-const DomainHistogram = React.createClass({
+const facdomainHistogram = React.createClass({
 
   propTypes: {
     sql: React.PropTypes.string,
@@ -29,7 +29,7 @@ const DomainHistogram = React.createClass({
   fetchData(sql) {
     const self = this;
 
-    Carto.SQL(`SELECT count(*), domain FROM (${sql}) a WHERE domain IS NOT NULL GROUP BY domain ORDER BY domain ASC`, 'json')
+    Carto.SQL(`SELECT count(*), facdomain FROM (${sql}) a WHERE facdomain IS NOT NULL GROUP BY facdomain ORDER BY facdomain ASC`, 'json')
       .then((data) => {
         self.setState({
           data,
@@ -43,17 +43,17 @@ const DomainHistogram = React.createClass({
       this.state.data && (
         <div>
           <Subheader>
-            Facilities by Domain
+            Facilities by facdomain
           </Subheader>
 
           <VictoryBar
             data={this.state.data}
-            x="domain"
+            x="facdomain"
             y="count"
             labels={d => d.count}
             style={{
               data: {
-                fill: d => this.props.getColor(d.domain),
+                fill: d => this.props.getColor(d.facdomain),
                 width: 400 / this.state.data.length,
               },
               labels: { fontSize: 20 },
@@ -68,4 +68,4 @@ const DomainHistogram = React.createClass({
   },
 });
 
-module.exports = DomainHistogram;
+module.exports = facdomainHistogram;

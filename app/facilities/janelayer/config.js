@@ -1,6 +1,6 @@
 const config = {
 
-  operatorTypes: [
+  optypes: [
     {
       value: 'Public',
       label: 'Public',
@@ -11,7 +11,7 @@ const config = {
     },
   ],
 
-  propertyTypes: [
+  proptypes: [
     {
       value: 'City Owned',
       label: 'City Owned',

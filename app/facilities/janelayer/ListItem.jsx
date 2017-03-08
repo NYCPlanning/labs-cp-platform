@@ -17,13 +17,13 @@ const Item = (props) => {
     >
       <div
         className={'facilities-list-item'} style={{
-          borderLeft: `5px solid ${colors.getColor(d.domain)}`,
+          borderLeft: `5px solid ${colors.getColor(d.facdomain)}`,
         }}
       >
-        <div className={'title'}>{d.facilityname}</div>
-        <div className={'subtitle'}>{d.facilitytype}</div>
+        <div className={'title'}>{d.facname}</div>
+        <div className={'subtitle'}>{d.factype}</div>
         <div className={'subtitle'}>{d.address}</div>
-        <div className={'subtitle'}><span className={'operated-by'}>Operated by:</span> {d.operatorname}</div>
+        <div className={'subtitle'}><span className={'operated-by'}>Operated by:</span> {d.opname}</div>
         <i className="fa fa-chevron-right" />
       </div>
     </Link>

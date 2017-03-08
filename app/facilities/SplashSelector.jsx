@@ -79,11 +79,11 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
     let noneSelected = true;
 
     // set indeterminate states, start from the bottom and work up
-    layers.forEach((domain) => {
-      let domainChecked = 0;
-      let domainIndeterminate = 0;
+    layers.forEach((facdomain) => {
+      let facdomainChecked = 0;
+      let facdomainIndeterminate = 0;
 
-      domain.children.forEach((group) => {
+      facdomain.children.forEach((group) => {
         let groupChecked = 0;
 
         group.children.forEach((subgroup) => {
@@ -96,12 +96,12 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
         group.checked = (groupChecked === group.children.length);
         group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
 
-        if (group.checked) domainChecked += 1;
-        if (group.indeterminate) domainIndeterminate += 1;
+        if (group.checked) facdomainChecked += 1;
+        if (group.indeterminate) facdomainIndeterminate += 1;
       });
 
-      domain.checked = (domainChecked === domain.children.length);
-      domain.indeterminate = (domainIndeterminate > 0) || ((domainChecked < domain.children.length) && domainChecked > 0);
+      facdomain.checked = (facdomainChecked === facdomain.children.length);
+      facdomain.indeterminate = (facdomainIndeterminate > 0) || ((facdomainChecked < facdomain.children.length) && facdomainChecked > 0);
     });
 
     this.setState({

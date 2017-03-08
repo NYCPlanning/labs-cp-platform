@@ -36,9 +36,9 @@ const LayerSelector = React.createClass({
       totalCount: null,
       checked: 'all', // all, none, or null
       filterDimensions: {
-        operatortype: [],
-        oversightabbrev: [],
-        propertytype: [],
+        optype: [],
+        overabbrev: [],
+        proptype: [],
       },
     });
   },
@@ -49,7 +49,7 @@ const LayerSelector = React.createClass({
     const filterDimensions = this.props.filterDimensions;
 
     this.sqlConfig = {
-      columns: 'uid, the_geom_webmercator, domain, facilityname, address, facilitytype, operatorname',
+      columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
       tablename: 'cpadmin.facilities',
     };
 
@@ -66,7 +66,7 @@ const LayerSelector = React.createClass({
   },
 
   componentDidMount() {
-    // expand list if we are on a domain page
+    // expand list if we are on a facdomain page
     if (this.state.layers.length === 1) {
       this.expandAll();
     }
@@ -98,16 +98,16 @@ const LayerSelector = React.createClass({
       label: value.value,
     }));
 
-    this.state.filterDimensions[key] = key !== 'oversightabbrev' ? values : abbreviated;
+    this.state.filterDimensions[key] = key !== 'overabbrev' ? values : abbreviated;
     this.buildSQL();
   },
 
-  // builds WHERE clause partial for operatortype filter
+  // builds WHERE clause partial for optype filter
   createMultiSelectSQLChunk(dimension, values) {
     // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
     // like ( dimension = 'value1' OR dimension = 'value2')
     const subChunks = values.map((value) => {
-      if (dimension !== 'oversightabbrev') {
+      if (dimension !== 'overabbrev') {
         return `${dimension} = '${value.value}'`;
       }
 
@@ -129,11 +129,11 @@ const LayerSelector = React.createClass({
     let allIndeterminate = 0;
 
     // set indeterminate states, start from the bottom and work up
-    layers.forEach((domain) => {
-      let domainChecked = 0;
-      let domainIndeterminate = 0;
+    layers.forEach((facdomain) => {
+      let facdomainChecked = 0;
+      let facdomainIndeterminate = 0;
 
-      domain.children.forEach((group) => {
+      facdomain.children.forEach((group) => {
         let groupChecked = 0;
 
         group.children.forEach((subgroup) => {
@@ -143,15 +143,15 @@ const LayerSelector = React.createClass({
         group.checked = (groupChecked === group.children.length);
         group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
 
-        if (group.checked) domainChecked += 1;
-        if (group.indeterminate) domainIndeterminate += 1;
+        if (group.checked) facdomainChecked += 1;
+        if (group.indeterminate) facdomainIndeterminate += 1;
       });
 
-      domain.checked = (domainChecked === domain.children.length);
-      if (domain.checked) allChecked += 1;
+      facdomain.checked = (facdomainChecked === facdomain.children.length);
+      if (facdomain.checked) allChecked += 1;
 
-      domain.indeterminate = (domainIndeterminate > 0) || ((domainChecked < domain.children.length) && domainChecked > 0);
-      if (domain.indeterminate) allIndeterminate += 1;
+      facdomain.indeterminate = (facdomainIndeterminate > 0) || ((facdomainChecked < facdomain.children.length) && facdomainChecked > 0);
+      if (facdomain.indeterminate) allIndeterminate += 1;
     });
 
     let checkedStatus;
@@ -171,8 +171,8 @@ const LayerSelector = React.createClass({
 
     const selectedLayers = [];
 
-    this.state.layers.forEach((domain) => {
-      domain.children.forEach((group) => {
+    this.state.layers.forEach((facdomain) => {
+      facdomain.children.forEach((group) => {
         group.children.forEach((subgroup) => {
           if (subgroup.checked) {
             selectedLayers.push(subgroup.name);
@@ -191,13 +191,13 @@ const LayerSelector = React.createClass({
 
     const f = this.state.filterDimensions;
 
-    this.createMultiSelectSQLChunk('operatortype', f.operatortype);
-    this.createMultiSelectSQLChunk('oversightabbrev', f.oversightabbrev);
-    this.createMultiSelectSQLChunk('propertytype', f.propertytype);
+    this.createMultiSelectSQLChunk('optype', f.optype);
+    this.createMultiSelectSQLChunk('overabbrev', f.overabbrev);
+    this.createMultiSelectSQLChunk('proptype', f.proptype);
     this.createCategorySQLChunk();
   },
 
-  // builds the WHERE clause partial for facilitysubgroup filter
+  // builds the WHERE clause partial for facsubgrp filter
   createCategorySQLChunk() {
     const layers = this.processChecked();
 
@@ -205,10 +205,10 @@ const LayerSelector = React.createClass({
 
     layers.forEach((name, i) => {
       if (i > 0) layersChunk += ' OR ';
-      layersChunk += `facilitysubgroup = '${name}'`;
+      layersChunk += `facsubgrp = '${name}'`;
     });
 
-    this.sqlChunks.facilitysubgroup = (layersChunk.length > 0) ? `(${layersChunk})` : 'false';
+    this.sqlChunks.facsubgrp = (layersChunk.length > 0) ? `(${layersChunk})` : 'false';
   },
 
   buildSQL() {
@@ -237,8 +237,8 @@ const LayerSelector = React.createClass({
   handleToggleAll() {
     const layers = this.state.layers;
 
-    layers.forEach((domain) => {
-      domain.children.forEach((group) => {
+    layers.forEach((facdomain) => {
+      facdomain.children.forEach((group) => {
         group.children.forEach((subgroup) => {
           // if none or some are selected, select all
           if (this.state.checked !== 'all') {
@@ -283,10 +283,10 @@ const LayerSelector = React.createClass({
             <Select
               multi
               placeholder="Oversight Agencies"
-              value={this.state.filterDimensions.oversightabbrev}
+              value={this.state.filterDimensions.overabbrev}
               name="form-field-name"
               options={config.agencies}
-              onChange={this.updateFilterDimension.bind(this, 'oversightabbrev')}
+              onChange={this.updateFilterDimension.bind(this, 'overabbrev')}
             />
             <InfoIcon text="The agency that funds or oversees this facility" />
           </ListItem>
@@ -298,10 +298,10 @@ const LayerSelector = React.createClass({
             <Select
               multi
               placeholder="Operator Types"
-              value={this.state.filterDimensions.operatortype}
+              value={this.state.filterDimensions.optype}
               name="form-field-name"
-              options={config.operatorTypes}
-              onChange={this.updateFilterDimension.bind(this, 'operatortype')}
+              options={config.optypes}
+              onChange={this.updateFilterDimension.bind(this, 'optype')}
             />
             <InfoIcon text="The type of entity operating the facility" />
           </ListItem>
@@ -313,10 +313,10 @@ const LayerSelector = React.createClass({
             <Select
               multi
               placeholder="Property Types"
-              value={this.state.filterDimensions.propertytype}
+              value={this.state.filterDimensions.proptype}
               name="form-field-name"
-              options={config.propertyTypes}
-              onChange={this.updateFilterDimension.bind(this, 'propertytype')}
+              options={config.proptypes}
+              onChange={this.updateFilterDimension.bind(this, 'proptype')}
             />
             <InfoIcon text="Indicates whether the City owns or directly leases the property. This property type data is sourced from the Department of Citywide Administrative Services." />
           </ListItem>
