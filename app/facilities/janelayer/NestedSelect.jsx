@@ -103,7 +103,7 @@ const NestedSelect = React.createClass({
 
           return (
             <ListItem
-              primaryText={this.props.abstractTopLevel && address.length === 0 ? 'All facilities in this domain' : listItemText}
+              primaryText={this.props.abstractTopLevel && address.length === 0 ? 'All facilities in this facdomain' : listItemText}
               style={style}
               key={`item${newAddress.join('')}`}
               leftCheckbox={checkbox}

@@ -11,7 +11,7 @@ const colors = {
   // generate a mapboxGL style categorical color object based on mode
   // if(this.props.mode=='all') {
     return {
-      property: 'domain',
+      property: 'facdomain',
       type: 'categorical',
       stops: layerDefaults().map(layer => [
         layer.name,
@@ -20,7 +20,7 @@ const colors = {
     };
   // } else {
   //   return {
-  //     property: 'facilitygroup',
+  //     property: 'facgroup',
   //     type: 'categorical',
   //     stops: this.layerStructure[0].children.map(function(layer) {
   //       return [

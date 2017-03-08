@@ -51,7 +51,7 @@ const FacilitiesLandingPage = React.createClass({
                         pathname: '/facilities/explorer',
                         state: {
                           filterDimensions: {
-                            propertytype: [
+                            proptype: [
                               { value: 'City Owned', label: 'City Owned' },
                               { value: 'City Leased', label: 'City Leased' },
                             ],
