@@ -50,7 +50,7 @@ const LayerSelector = React.createClass({
 
     this.sqlConfig = {
       columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
-      tablename: 'cpadmin.facilities',
+      tablename: 'facdb_facilities',
     };
 
     // Loop over any default filterDimensions and set them before initial load

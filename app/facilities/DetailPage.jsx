@@ -37,7 +37,7 @@ const DetailPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature('facilities', 'uid', this.props.params.id)
+    carto.getFeature('facdb_facilities', 'uid', this.props.params.id)
       .then((data) => {
         self.setState({ data });
         self.fetchAgencyValues();
@@ -74,7 +74,7 @@ const DetailPage = React.createClass({
     const pgTableIds = this.dbStringToArray(d.pgtable);
     const pgTableSQL = pgTableIds.map(pg => `'${pg}'`).join(',');
 
-    const sql = `SELECT * FROM facilities_datasources WHERE pgtable IN (${pgTableSQL})`;
+    const sql = `SELECT * FROM facdb_datasources WHERE pgtable IN (${pgTableSQL})`;
 
     carto.SQL(sql, 'json')
       .then((sources) => {
