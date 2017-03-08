@@ -38,9 +38,9 @@ const Filter = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, agency, descriptio, totalcommitspend, maprojid',
-      pointsTablename: 'commitmentspointsjoined',
-      polygonsTablename: 'commitmentspolygonsjoined',
+      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid',
+      pointsTablename: 'cpdb_map_pts',
+      polygonsTablename: 'cpdb_map_poly',
     };
 
     self.buildSQL();
@@ -289,11 +289,11 @@ export default Filter;
 // CREATE MATERIALIZED VIEW commitmentspointsjoined as
 // SELECT a.*,
 //   array_agg(DISTINCT b.projecttype) AS projecttype,
-//   min(c.date) mindate,
-//   max(c.date) maxdate,
-//   sum(c.commitspend) as totalcommitspend,
-//   sum(c.commit) as totalcommit,
-//   sum(c.spend) as totalspend
+  // min(c.date) mindate,
+  // max(c.date) maxdate,
+  // sum(c.commitspend) as totalcommitspend,
+  // sum(c.commit) as totalcommit,
+  // sum(c.spend) as totalspend
 // FROM adoyle.commitmentspoints a
 // LEFT JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
 // LEFT JOIN (

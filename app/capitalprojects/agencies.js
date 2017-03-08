@@ -36,7 +36,7 @@ const AgencyHelper = {
   agencies,
 
   mapboxGLStyle: {
-    property: 'agency',
+    property: 'magency',
     type: 'categorical',
     stops: agencies.map(agency => [agency.acronym, agency.color]),
   },

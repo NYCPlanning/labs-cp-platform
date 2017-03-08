@@ -8,12 +8,12 @@ const NycGeom = {
     if (geomType === 'cd') {
       return {
         column: 'borocd',
-        dataset: 'cpadmin.dcp_cdboundaries',
+        dataset: 'support_admin_cdboundaries',
       };
     } else if (geomType === 'nta') {
       return {
         column: 'ntacode',
-        dataset: 'cpadmin.dcp_ntaboundaries',
+        dataset: 'support_admin_ntaboundries',
       };
     }
 
