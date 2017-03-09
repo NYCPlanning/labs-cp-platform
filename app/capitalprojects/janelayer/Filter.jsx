@@ -26,7 +26,7 @@ const Filter = React.createClass({
       selectedCount: null,
       totalCount: null,
       filterDimensions: {
-        agency: [],
+        magencyacro: [],
         projecttype: [],
         totalcommitspend: [1000, 100000000],
         activeyears: [2010, 2027],
@@ -134,7 +134,7 @@ const Filter = React.createClass({
     this.sqlChunks = {};
 
     const f = this.state.filterDimensions;
-    this.createMultiSelectSQLChunk('agency', f.agency);
+    this.createMultiSelectSQLChunk('magencyacro', f.magencyacro);
     this.createMultiSelectSQLChunk('projecttype', f.projecttype);
     this.createUnitsSQLChunk('totalcommitspend', this.state.filterDimensions.totalcommitspend);
     this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
@@ -201,10 +201,10 @@ const Filter = React.createClass({
           <Select
             multi
             placeholder="Select Agencies"
-            value={this.state.filterDimensions.agency}
+            value={this.state.filterDimensions.magencyacro}
             name="form-field-name"
             options={config.agencies}
-            onChange={this.updateFilterDimension.bind(this, 'agency')}
+            onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
           />
         </ListItem>
 

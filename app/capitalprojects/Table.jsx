@@ -20,7 +20,7 @@ const CPTable = React.createClass({
   componentDidMount() {
     const self = this;
 
-    carto.SQL('SELECT * FROM projects', 'json')
+    carto.SQL('SELECT * FROM cpdb_projects', 'json')
       .then((data) => {
         self.setState({
           data,

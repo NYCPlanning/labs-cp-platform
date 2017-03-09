@@ -21,7 +21,7 @@ const Item = (props) => {
           borderLeft: `5px solid ${agencies.getAgencyColor(d.agency)}`,
         }}
       >
-        <div className={'title'}>{d.descriptio}</div>
+        <div className={'title'}>{d.description}</div>
         <div className={'subtitle'}>Total Cost: ${numeral(d.totalcommitspend).format('0,0')}</div>
 
         <i className="fa fa-chevron-right" />

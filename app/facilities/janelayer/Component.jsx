@@ -101,10 +101,13 @@ const Facilities = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <Download
-            sql={this.state.sql}
-            filePrefix="facilities"
-          />
+          <div className="sidebar-tab-content padded">
+            <Download
+              sql={this.state.sql}
+              filePrefix="facilities"
+            />
+            <SignupPrompt />
+          </div>
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content padded">

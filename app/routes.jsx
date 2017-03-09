@@ -14,6 +14,7 @@ import FacilityPage from '../app/facilities/DetailPage';
 import PipelineExplorer from '../app/pipeline/Explorer';
 import DevelopmentPage from '../app/pipeline/DetailPage';
 
+import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
 import CapitalProjectsTable from '../app/capitalprojects/Table';
 import ProjectPage from '../app/capitalprojects/DetailPage';
@@ -70,6 +71,7 @@ module.exports = (
     <Route path="pipeline" component={PipelineExplorer} title={'Housing Development Pipeline'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} onEnter={confirmPermissions('sitewide_access')} />
 
+    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalprojects/explorer" component={CapitalProjectsExplorer} title={'Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} onEnter={confirmPermissions('sitewide_access')} />

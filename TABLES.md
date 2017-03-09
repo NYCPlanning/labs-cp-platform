@@ -37,18 +37,20 @@
 DROP VIEW IF EXISTS cpdb_map_pts;
 
 CREATE VIEW cpdb_map_pts AS (
-SELECT
-  a.the_geom,
-  a.the_geom_webmercator,
-  b.magencyacro,
-  b.magency,
-  b.magencyname,
-  b.description,
-  b.projectid,
-  c.*
-FROM cpdb_dcpattributes_pts a
-LEFT JOIN cpdb_projects b ON a.maprojid = b.maprojid
-LEFT JOIN cpdb_spending_grouped c ON a.maprojid = c.maprojid
+  SELECT
+    a.the_geom,
+    a.the_geom_webmercator,
+    b.magencyacro,
+    b.magency,
+    b.magencyname,
+    b.description,
+    b.projectid,
+    c.projecttype,
+    d.*
+  FROM cpdb_dcpattributes_pts a
+  LEFT JOIN cpdb_projects b ON a.maprojid = b.maprojid
+  LEFT JOIN cpdb_budgets_grouped c ON a.maprojid = c.maprojid
+  LEFT JOIN cpdb_spending_grouped d ON a.maprojid = d.maprojid
 );
 
 GRANT SELECT on cpdb_map_pts to publicuser;
@@ -106,4 +108,18 @@ SELECT TRIM(LEFT(capital_project,12)) as maprojid,
   FROM cpdb_commitments
 ) a
 GROUP BY a.maprojid
+```
+
+## cpdb_projecttypes_grouped
+```
+DROP MATERIALIZED VIEW IF EXISTS cpdb_budgets_grouped;
+
+CREATE MATERIALIZED VIEW cpdb_budgets_grouped AS (
+  SELECT
+    maprojid,
+    array_agg(DISTINCT projecttype) AS projecttype
+  FROM cpdb_budgets
+  GROUP BY maprojid
+)
+
 ```

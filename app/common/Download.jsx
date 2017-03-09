@@ -3,8 +3,6 @@ import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 
-import SignupPrompt from './SignupPrompt';
-
 import Carto from '../helpers/carto';
 
 const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
@@ -21,7 +19,7 @@ const Download = ({ sql, filePrefix }) => {
   };
 
   return (
-    <div className="sidebar-tab-content padded">
+    <div>
       <h4>Complete Dataset</h4>
 
       <FlatButton
@@ -64,7 +62,6 @@ const Download = ({ sql, filePrefix }) => {
         href={Carto.generateUrlString(filteredSql, 'shp', filteredFilename)}
         icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
       />
-      <SignupPrompt />
     </div>
   );
 };

@@ -1,0 +1,277 @@
+
+/* Landing Page*/
+
+.capitalprojects-landing {
+  margin-top: 50px;
+
+  h1, h3 {
+    color:#fff;
+  }
+
+  &:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    background: url(/img/facilities_landing_background.png) no-repeat;
+    background-size:cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+  }
+
+  hr {
+    border-color: #FFF;
+  }
+
+  p.subtitle {
+    width: 80%;
+    margin: 0 auto;
+    color: #efefef;
+    margin-bottom: 30px;
+  }
+
+  h1.section-heading {
+    font-size: 46px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  h2.section-heading {
+    color: #FFF;
+  }
+
+  h3.section-heading {
+    margin-bottom: 40px;
+    margin-top: 0;
+    font-size: 34px;
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .learn-more {
+    width: 80%;
+    height: 26px;
+    margin: 0 auto 30px auto;
+    color: #000000;
+
+    a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      background-color: #999;
+      height: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 18px;
+
+      &:hover {
+        background-color: #d96b27;
+      }
+    }
+  }
+
+  .header-area {
+    color: #FFF;
+  }
+
+  section.content-selection {
+    padding: 10px 0;
+  }
+
+  .content-selection h3 {
+    color: #d96b27;
+    padding: 10px 0;
+  }
+
+  .content-selection h4 {
+    color: #6e6e6e;
+  }
+
+  .content-selection .text-primary {
+    color: rgb(217, 107, 39);
+    text-shadow: 1px 2px #cfcfcf;
+  }
+
+  .content-selection .service-box {
+    padding: 20px;
+    height: 204px;
+    border-radius: 6px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .content-selection .service-box:hover {
+    background: #ececec;
+  }
+
+  .content-selection a:hover {
+    text-decoration: none;
+  }
+
+  .Select {
+    text-align: left;
+  }
+
+  .select-container {
+    padding-top: 20px;
+
+    .btn {
+      min-width: auto;
+      position: absolute;
+      right: 16px;
+      top: 21px;
+    }
+  }
+
+  .splash-button-section {
+    color: #333;
+    margin-bottom: 30px;
+
+    .box.or-text {
+      width: 50px;
+      height: 104px;
+      position: relative;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .box.all-link, .box.neighborhood-link {
+      min-width: 300px;
+    }
+
+    .box {
+      width: auto;
+      display: inline-block;
+      vertical-align: top;
+      padding: 0 5px;
+
+      &:last-child {
+        padding-right: 0;
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      a {
+        color: #d96b27;
+        font-weight: bold;
+        text-decoration: none;
+        width: 100%;
+      }
+    }
+
+    .vertical-align {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .btn {
+      position: relative;
+      border: 0;
+      border-radius: 8px;
+    }
+
+    .all-link {
+      .btn {
+        font-size: 20px;
+      }
+
+      a {
+        height: 104px;
+        position: relative;
+      }
+    }
+
+    .neighborhood-link {
+      .Select {
+        z-index: 99;
+        font-size: 20px;
+      }
+
+      .Select-option {
+        font-size: 15px;
+      }
+
+      .Select-control {
+        height: 104px;
+        border-radius: 8px;
+        position: relative;
+        border: 0;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #e6e6e6;
+        }
+      }
+
+      .Select-multi-value-wrapper {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+
+        .Select-placeholder {
+          color: #d96b27;
+          font-weight: bold;
+          text-align: center;
+          margin-right: 10px;
+        }
+
+        .Select-input {
+          position: relative;
+          bottom: 3px;
+        }
+      }
+    }
+
+    .preset-link {
+      a {
+        margin-bottom: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 920px) {
+    .header-area {
+      padding: 8px;
+    }
+
+    .footer dl {
+      height: auto;
+    }
+
+    .hide-mobile {
+      display: none;
+    }
+    .splash-button-section {
+      .box.or-text {
+        width: 100%;
+        height: 55px;
+      }
+      .box.all-link, .box.neighborhood-link {
+        width: 100%;
+        min-width: initial;
+        padding: 0;
+      }
+    }
+  }
+}

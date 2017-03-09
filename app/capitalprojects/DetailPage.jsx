@@ -32,7 +32,7 @@ const ProjectPage = React.createClass({
     const self = this;
     const maprojid = this.props.params.id;
 
-    const tableName = '(SELECT * FROM commitmentspointsjoined UNION ALL SELECT * FROM commitmentspolygonsjoined) a';
+    const tableName = '(SELECT * FROM cpdb_map_pts UNION ALL SELECT * FROM cpdb_map_poly) a';
 
     // go get the project's data as a geojson feature
     Carto.getFeature(tableName, 'maprojid', maprojid)
@@ -40,10 +40,10 @@ const ProjectPage = React.createClass({
         self.setState({ feature });
       });
 
-    Carto.SQL(`SELECT * FROM adoyle.budgetcommitments WHERE maprojid = '${maprojid}'`, 'json')
+    Carto.SQL(`SELECT * FROM cpdb_budgets WHERE maprojid = '${maprojid}'`, 'json')
       .then(budget => this.setState({ budget }));
 
-    Carto.SQL(`SELECT * FROM adoyle.commitscommitments WHERE maprojid = '${maprojid}' ORDER BY to_date(plancommdate,'YY-Mon')`, 'json')
+    Carto.SQL(`SELECT * FROM cpdb_commitments WHERE maprojid = '${maprojid}' ORDER BY to_date(plancommdate,'YY-Mon')`, 'json')
       .then(commitments => this.setState({ commitments }));
   },
 
@@ -113,7 +113,7 @@ const ProjectPage = React.createClass({
               <Card style={CardStyles}>
                 <CardHeader title="Managed By" />
                 <CardText>
-                  <h3>{d.agencyname}</h3>
+                  <h3>{d.magencyname}</h3>
                 </CardText>
               </Card>
             </div>

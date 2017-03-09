@@ -7,6 +7,7 @@ import Filter from './Filter';
 import Download from '../../common/Download';
 import content from '../content';
 import defaultlayerConfig from './defaultLayerConfig';
+import SignupPrompt from '../../common/SignupPrompt';
 
 const CapitalProjects = React.createClass({
   propTypes: {
@@ -62,20 +63,23 @@ const CapitalProjects = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <h4 style={{ paddingLeft: '16px' }}>Points</h4>
-          <Download
-            sql={this.state.pointsSql}
-            filePrefix="projects-points"
-          />
-          <Divider />
-          <h4 style={{ paddingLeft: '16px' }}>Polygons</h4>
-          <Download
-            sql={this.state.polygonsSql}
-            filePrefix="projects-polygons"
-          />
+          <div className="sidebar-tab-content padded">
+            <h3>Points</h3>
+            <Download
+              sql={this.state.pointsSql}
+              filePrefix="projects-points"
+            />
+            <Divider />
+            <h3>Polygons</h3>
+            <Download
+              sql={this.state.polygonsSql}
+              filePrefix="projects-polygons"
+            />
+            <SignupPrompt />
+          </div>
         </Tab>
         <Tab label="About">
-          <div className="sidebar-tab-content">
+          <div className="sidebar-tab-content padded">
             {content.about}
           </div>
         </Tab>
