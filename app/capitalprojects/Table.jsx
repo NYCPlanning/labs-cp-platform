@@ -1,15 +1,23 @@
 // Explorer.jsx - Top level Component for the Facilities Explorer
-import React from 'react';
-
+import React, {PropTypes} from 'react';
+import { Link } from 'react-router';
 import FixedDataTable from 'fixed-data-table';
+import Dimensions from 'react-dimensions';
+import Numeral from 'numeral';
 
 import 'fixed-data-table/dist/fixed-data-table.css';
 
 import carto from '../helpers/carto';
 
+import './Table.scss';
+
 const { Table, Column, Cell } = FixedDataTable;
 
 const CPTable = React.createClass({
+  propTypes: {
+    containerHeight: PropTypes.number.isRequired,
+    containerWidth: PropTypes.number.isRequired,
+  },
 
   getInitialState() {
     return {
@@ -22,10 +30,37 @@ const CPTable = React.createClass({
 
     carto.SQL('SELECT * FROM cpdb_projects', 'json')
       .then((data) => {
+        self.data = data;
+
         self.setState({
-          data,
+          filteredDataList: data,
         });
       });
+  },
+
+  onFilterChange(e) {
+    if (!e.target.value) {
+      this.setState({
+        filteredDataList: this.data,
+      });
+    }
+
+    const filterBy = e.target.value.toLowerCase();
+    const filteredDataList = [];
+
+    for (let i = 0; i < this.data.length; i += 1) {
+      const { maprojid, description } = this.data[i];
+      if (
+        maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
+        description.toLowerCase().indexOf(filterBy) !== -1
+      ) {
+        filteredDataList.push(this.data[i]);
+      }
+    }
+
+    this.setState({
+      filteredDataList,
+    });
   },
 
   render() {
@@ -35,57 +70,107 @@ const CPTable = React.createClass({
       </Cell>
     );
 
+    const MoneyCell = ({ rowIndex, data, col, ...props }) => (
+      <Cell {...props}>
+        {Numeral(data[rowIndex][col]).format('($ 0.00 a)')}
+      </Cell>
+    );
+
+    const DetailCell = ({ rowIndex, data, col, ...props }) => (
+      <Cell {...props}>
+        <Link
+          to={{
+            pathname: `/capitalproject/${data[rowIndex][col]}`,
+            state: { modal: true, returnTo: '/capitalprojects' },
+          }}
+        >
+          <button type="button" className="btn btn-primary btn-xs details-button">Details</button>
+        </Link>
+      </Cell>
+    );
+
+
+    const { containerHeight, containerWidth } = this.props;
+
+    const data = this.state.filteredDataList;
+
     return (
-      <div className="full-screen">
-        {this.state.data && (
-          <Table
-            rowHeight={50}
-            rowsCount={this.state.data.length}
-            headerHeight={50}
-            width={1000}
-            height={500}
-            {...this.props}
-          >
-            <Column
-              header={<Cell>Managing Agency</Cell>}
-              cell={<TextCell data={this.state.data} col="magency" />}
-              width={100}
-            />
-            <Column
-              header={<Cell>Acronym</Cell>}
-              cell={<TextCell data={this.state.data} col="magencyacro" />}
-              width={100}
-            />
-            <Column
-              header={<Cell>MA Project ID</Cell>}
-              cell={<TextCell data={this.state.data} col="maprojid" />}
-              width={100}
-            />
-            <Column
-              header={<Cell>Description</Cell>}
-              cell={<TextCell data={this.state.data} col="description" />}
-              width={300}
-            />
-            <Column
-              header={<Cell>City Cost</Cell>}
-              cell={<TextCell data={this.state.data} col="citycost" />}
-              width={100}
-            />
-            <Column
-              header={<Cell>Non-City Cost</Cell>}
-              cell={<TextCell data={this.state.data} col="noncitycost" />}
-              width={100}
-            />
-            <Column
-              header={<Cell>Total Cost</Cell>}
-              cell={<TextCell data={this.state.data} col="totalcost" />}
-              width={100}
-            />
-          </Table>
-      )}
+      <div className="full-screen projects-table">
+        {data && (
+          <div>
+            <div className="row">
+              <div className="col-md-3">
+                <input
+                  className="form-control"
+                  onChange={this.onFilterChange}
+                  placeholder="Filter by Project ID or Description"
+                />
+              </div>
+            </div>
+            <br />
+            <Table
+              rowHeight={50}
+              rowsCount={data.length}
+              headerHeight={50}
+              width={containerWidth}
+              height={containerHeight}
+              {...this.props}
+            >
+              <Column
+                header={<Cell>Managing Agency</Cell>}
+                cell={<TextCell data={data} col="magency" />}
+                width={80}
+              />
+              <Column
+                header={<Cell>Acronym</Cell>}
+                cell={<TextCell data={data} col="magencyacro" />}
+                width={80}
+              />
+              <Column
+                header={<Cell>MA Project ID</Cell>}
+                cell={<TextCell data={data} col="maprojid" />}
+                width={120}
+              />
+              <Column
+                header={<Cell>Description</Cell>}
+                cell={<TextCell data={data} col="description" />}
+                flexGrow={2}
+                width={300}
+              />
+              <Column
+                header={<Cell>City Cost</Cell>}
+                cell={<MoneyCell data={data} col="citycost" />}
+                width={100}
+              />
+              <Column
+                header={<Cell>Non-City Cost</Cell>}
+                cell={<MoneyCell data={data} col="noncitycost" />}
+                width={100}
+              />
+              <Column
+                header={<Cell>Total Cost</Cell>}
+                cell={<MoneyCell data={data} col="totalcost" />}
+                width={100}
+              />
+              <Column
+                header={<Cell>Details</Cell>}
+                cell={<DetailCell data={data} col="maprojid"/>}
+                width={100}
+              />
+            </Table>
+          </div>
+        )}
       </div>
     );
   },
 });
 
-module.exports = CPTable;
+module.exports = Dimensions({
+  getHeight() {
+    return window.innerHeight;
+  },
+
+  getWidth() {
+    return window.innerWidth;
+  },
+})(CPTable);

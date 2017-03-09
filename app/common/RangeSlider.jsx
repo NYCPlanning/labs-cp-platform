@@ -9,7 +9,7 @@ const RangeSlider = React.createClass({
   getDefaultProps() {
     return ({
       disable: false,
-    })
+    });
   },
 
   componentDidMount() {

@@ -95,7 +95,7 @@ const ProjectPage = React.createClass({
             </div>
             <div className="col-md-9 col-md-pull-3">
               <h4><small>{d.maprojid}</small></h4>
-              <h1>{d.descriptio}</h1>
+              <h1>{d.description}</h1>
               {
                 project_types.map(project_type => (
                   <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
