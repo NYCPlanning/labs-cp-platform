@@ -127,7 +127,15 @@ CREATE MATERIALIZED VIEW cpdb_projecttypes_grouped AS (
 
 ```
 
+
 # Updating cpdb_spending
+
+Spending data comes from checkbook nyc.  A bulk export must be requested (request capital contracts spending for all years), you will be notified via email when the file is ready to download.
+
+When you get it, it will be a zip of two csvs.  These cannot be uploaded to carto as-is because one is too large, so chunking them into files with 200k rows each or so, zipping the chunks, and uploading separately works.  Then UNION ALL into `cpdb_spending`.
+
+This is quite involved, and we should figure out a way to automate it.  I think the first step will always be painful because we can't get a bulk download from Checkbook NYC without some clicking.  It may be possible to do many API calls to get the whole dataset.
+
 Upload chunks.  Be sure to turn off column type guessing
 UNION ALL with this query, save as new table:
 ```
