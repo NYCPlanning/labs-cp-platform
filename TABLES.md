@@ -34,6 +34,8 @@
 # View Definitions
 
 ## cpdb_map_pts
+Used to generate vector tile of point data. TODO this can be trimmed down to only include the data we need in the explorer, it is no longer used on detail pages
+
 ```
 DROP VIEW IF EXISTS cpdb_map_pts;
 
@@ -57,7 +59,9 @@ CREATE VIEW cpdb_map_pts AS (
 GRANT SELECT on cpdb_map_pts to publicuser;
 ```
 
-## cpdb_map_pts
+## cpdb_map_poly
+Used to generate vector tile of polygon data. TODO this can be trimmed down to only include the data we need in the explorer, it is no longer used on detail pages
+
 ```
 DROP VIEW IF EXISTS cpdb_map_poly;
 
@@ -80,6 +84,40 @@ CREATE VIEW cpdb_map_poly AS (
 
 GRANT SELECT on cpdb_map_poly to publicuser;
 
+```
+
+## cpdb_map_combined
+
+Combined view that includes projects without spatial data.  This view is used by the capital projects detail pages AND the table view
+
+```
+DROP VIEW IF EXISTS cpdb_map_combined;
+
+CREATE VIEW cpdb_map_combined AS (
+  SELECT
+  	b.magencyacro,
+      b.magency,
+      b.magencyname,
+      b.description,
+      b.projectid,
+      b.citycost,
+      b.noncitycost,
+      b.totalcost,
+      c.projecttype,
+      d.*,
+      CASE
+      	WHEN e.the_geom IS NOT NULL THEN e.the_geom
+      	WHEN f.the_geom IS NOT NULL THEN f.the_geom
+      	ELSE NULL
+     	END as the_geom
+  FROM cpdb_projects b
+  LEFT JOIN cpdb_projecttypes_grouped c ON b.maprojid = c.maprojid
+  LEFT JOIN cpdb_spending_grouped d ON b.maprojid = d.maprojid
+  LEFT JOIN cpdb_dcpattributes_pts e ON b.maprojid = e.maprojid
+  LEFT JOIN cpdb_dcpattributes_poly f ON b.maprojid = f.maprojid
+);
+
+GRANT SELECT on cpdb_map_combined to publicuser;
 ```
 
 ## cpdb_spending_grouped
@@ -152,7 +190,7 @@ UNION ALL
 SELECT agency, associated_prime_vendor,calendar_year, capital_project, check_amount, contract_id, contract_purpose, department, document_id, expense_category, fiscal_year,industry, issue_date, m_wbe_category, payee_name, spending_category, sub_contract_reference_id, sub_vendor FROM part6
 ```
 
-CHANGE column type of issue_date to date
+CHANGE column type of issue_date to date, and check_amount to double precision.  Everything else can stay strings
 
 DELETE all records from cpdb_spending, INSERT from temporary table
 ```

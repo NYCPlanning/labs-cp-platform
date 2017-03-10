@@ -1,5 +1,5 @@
 // Explorer.jsx - Top level Component for the Facilities Explorer
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import FixedDataTable from 'fixed-data-table';
 import Dimensions from 'react-dimensions';
@@ -28,7 +28,7 @@ const CPTable = React.createClass({
   componentDidMount() {
     const self = this;
 
-    carto.SQL('SELECT * FROM cpdb_projects', 'json')
+    carto.SQL('SELECT magency, magencyacro, maprojid, description,citycost,noncitycost,totalcost, ST_GeometryType(the_geom) as geometry FROM cpdb_map_combined ORDER BY maprojid ASC', 'json')
       .then((data) => {
         self.data = data;
 
@@ -89,6 +89,18 @@ const CPTable = React.createClass({
       </Cell>
     );
 
+    const GeometryCell = ({ rowIndex, data, col, ...props }) => {
+      const hasGeom = (data[rowIndex][col] !== null) ?
+        <div className="fa fa-map-marker" /> :
+        <div className="fa fa-minus" />;
+
+      return (
+        <Cell {...props}>
+          {hasGeom}
+        </Cell>
+      );
+    };
+
 
     const { containerHeight, containerWidth } = this.props;
 
@@ -105,6 +117,9 @@ const CPTable = React.createClass({
                   onChange={this.onFilterChange}
                   placeholder="Filter by Project ID or Description"
                 />
+              </div>
+              <div className="col-md-3 match">
+                <span className="badge">{data.length}</span> Matching Projects
               </div>
             </div>
             <br />
@@ -153,8 +168,13 @@ const CPTable = React.createClass({
                 width={100}
               />
               <Column
+                header={<Cell>Geo</Cell>}
+                cell={<GeometryCell data={data} col="geometry" />}
+                width={50}
+              />
+              <Column
                 header={<Cell>Details</Cell>}
-                cell={<DetailCell data={data} col="maprojid"/>}
+                cell={<DetailCell data={data} col="maprojid" />}
                 width={100}
               />
             </Table>
@@ -167,7 +187,7 @@ const CPTable = React.createClass({
 
 module.exports = Dimensions({
   getHeight() {
-    return window.innerHeight;
+    return window.innerHeight - 140;
   },
 
   getWidth() {
