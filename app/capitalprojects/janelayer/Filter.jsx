@@ -38,7 +38,7 @@ const Filter = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid',
+      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid, totalspend',
       pointsTablename: 'cpdb_map_pts',
       polygonsTablename: 'cpdb_map_poly',
     };

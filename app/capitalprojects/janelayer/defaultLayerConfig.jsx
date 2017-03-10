@@ -1,7 +1,6 @@
 import React from 'react';
 
 import appConfig from '../../helpers/appConfig';
-import Agencies from '../agencies';
 
 const layerConfig = {
   sources: [
@@ -43,7 +42,13 @@ const layerConfig = {
             [15, 6],
           ],
         },
-        'circle-color': Agencies.mapboxGLStyle,
+        'circle-color': {
+          property: 'totalspend',
+          stops: [
+            [0, '#999'],
+            [1, '#FFCC00'],
+          ],
+        },
         'circle-opacity': 0.7,
       },
     },
@@ -53,7 +58,13 @@ const layerConfig = {
       'source-layer': 'layer1',
       type: 'fill',
       paint: {
-        'fill-color': Agencies.mapboxGLStyle,
+        'fill-color': {
+          property: 'totalspend',
+          stops: [
+            [0, '#999'],
+            [1, '#FFCC00'],
+          ],
+        },
         'fill-opacity': 0.75,
         'fill-antialias': true,
       },
@@ -62,27 +73,15 @@ const layerConfig = {
 
   legend: (
     <div className="legendSection">
-      <h4>Sponsor Agency</h4>
       <div className="legendItem">
-        <div className="colorBox" style={{ backgroundColor: 'rgb(51, 160, 44)' }} />
-        <div className="legendItemText">Dept. of Parks and Recreation - (DPR)</div>
+        <div className="colorBox" style={{ backgroundColor: '#999' }} />
+        <div className="legendItemText">Ongoing projects</div>
       </div>
       <div className="legendItem">
-        <div className="colorBox" style={{ backgroundColor: 'rgb(202, 178, 214)' }} />
-        <div className="legendItemText">Dept. of Transportation - (DOT)</div>
+        <div className="colorBox" style={{ backgroundColor: '#FFCC00' }} />
+        <div className="legendItemText">Planned projects</div>
       </div>
-      <div className="legendItem">
-        <div className="colorBox" style={{ backgroundColor: 'rgb(31, 120, 180)' }} />
-        <div className="legendItemText">Dept. of Environmental Protection - (DEP)</div>
-      </div>
-      <div className="legendItem">
-        <div className="colorBox" style={{ backgroundColor: 'rgb(255, 127, 0)' }} />
-        <div className="legendItemText">School Construction Authority - (SCA)</div>
-      </div>
-      <div className="legendItem">
-        <div className="colorBox" style={{ backgroundColor: 'rgb(255, 204, 0)' }} />
-        <div className="legendItemText">All other agencies</div>
-      </div>
+
     </div>
   ),
 };

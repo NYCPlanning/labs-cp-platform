@@ -32,7 +32,7 @@ const ProjectPage = React.createClass({
     const self = this;
     const maprojid = this.props.params.id;
 
-    const tableName = '(SELECT * FROM cpdb_map_pts UNION ALL SELECT * FROM cpdb_map_poly) a';
+    const tableName = 'cpdb_map_combined';
 
     // go get the project's data as a geojson feature
     Carto.getFeature(tableName, 'maprojid', maprojid)
@@ -78,6 +78,8 @@ const ProjectPage = React.createClass({
         {/* eslint-enable no-undef */}
       </TableRow>
     ));
+
+    const geometryExists = this.state.feature.geometry !== null;
 
     return (
       <div className="project-page">
@@ -193,7 +195,9 @@ const ProjectPage = React.createClass({
 
         <div className={'col-md-6'}>
           <div style={{ marginTop: '15px' }}>
-            <ModalMap feature={this.state.feature} label={d.descriptio} />
+            {
+              geometryExists && <ModalMap feature={this.state.feature} label={d.description} />
+            }
           </div>
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
             <FeedbackForm
