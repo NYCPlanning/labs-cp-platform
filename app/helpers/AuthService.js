@@ -10,46 +10,46 @@ const clientId = appConfig.auth0_client_id;
 const domain = appConfig.auth0_domain;
 
 const lockOptions = {
-  // allowSignUp: true,
-  // allowLogin: true,
-  // autoclose: true,
-  // loginAfterSignUp: true,
+  allowSignUp: true,
+  allowLogin: true,
+  autoclose: true,
+  loginAfterSignUp: true,
   auth: {
     redirect: false,
   },
-  // theme: {
-  //   logo: '/img/logo_80.png',
-  //   primaryColor: '#EA6200',
-  // },
-  // languageDictionary: {
-  //   title: 'Please log in',
-  // },
-  // additionalSignUpFields: [
-  //   {
-  //     name: 'name',
-  //     placeholder: 'Your Name',
-  //   },
-  //   {
-  //     name: 'organization',
-  //     placeholder: 'Your Organization',
-  //   },
-  //   {
-  //     type: 'select',
-  //     name: 'industry',
-  //     placeholder: 'Your Industry',
-  //     options: [
-  //       { value: 'government', label: 'Government' },
-  //       { value: 'planning', label: 'Planning' },
-  //       { value: 'nonprofit', label: 'Non-Profit/Civic Group' },
-  //       { value: 'realestate', label: 'Real Estate' },
-  //       { value: 'technology', label: 'Technology' },
-  //       { value: 'student', label: 'Student' },
-  //       { value: 'independent', label: 'Independent' },
-  //       { value: 'other', label: 'Other' },
-  //     ],
-  //     prefill: 'us',
-  //   },
-  // ],
+  theme: {
+    logo: '/img/logo_80.png',
+    primaryColor: '#EA6200',
+  },
+  languageDictionary: {
+    title: 'Please log in',
+  },
+  additionalSignUpFields: [
+    {
+      name: 'name',
+      placeholder: 'Your Name',
+    },
+    {
+      name: 'organization',
+      placeholder: 'Your Organization',
+    },
+    {
+      type: 'select',
+      name: 'industry',
+      placeholder: 'Your Industry',
+      options: [
+        { value: 'government', label: 'Government' },
+        { value: 'planning', label: 'Planning' },
+        { value: 'nonprofit', label: 'Non-Profit/Civic Group' },
+        { value: 'realestate', label: 'Real Estate' },
+        { value: 'technology', label: 'Technology' },
+        { value: 'student', label: 'Student' },
+        { value: 'independent', label: 'Independent' },
+        { value: 'other', label: 'Other' },
+      ],
+      prefill: 'us',
+    },
+  ],
 };
 
 const AuthService = {
