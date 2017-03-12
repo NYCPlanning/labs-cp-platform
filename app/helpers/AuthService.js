@@ -54,7 +54,6 @@ const lockOptions = {
 
 const AuthService = {
   doAuthentication(authResult) {
-    console.log(clientId);
     const lock = new Auth0Lock(clientId, domain);
     lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
@@ -74,13 +73,12 @@ const AuthService = {
   login() {
     const options = {};
     _.extend(options, lockOptions, {}); // eslint-disable-line no-undef
-    console.log(clientId, domain, options);
     const lock = new Auth0Lock(clientId, domain, options);
 
     lock.show();
     lock.on('authenticated', this.doAuthentication);
   },
-  
+
   signup() {
     const options = {};
     _.extend(options, lockOptions, { // eslint-disable-line no-undef
@@ -91,7 +89,6 @@ const AuthService = {
       },
     });
 
-    console.log(clientId);
     const lock = new Auth0Lock(clientId, domain, options);
 
     lock.show();
