@@ -1,10 +1,35 @@
 .projects-table {
-  .row {
-    margin-top: 20px;
+
+  // Override FixedDataTable Styles
+  .public_fixedDataTable_main {
+    float: right;
+    border: none;
   }
 
-  .details-button {
-    margin: 6px 16px;
+  .fixedDataTableCellLayout_main {
+    border-right-style: none;
+  }
+
+  .fixedDataTableCellGroupLayout_cellGroup {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .public_fixedDataTableRow_highlighted, .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
+    background-color: #FFF;
+  }
+
+  .public_fixedDataTableRow_main:hover {
+    background-color: #FAFAFA;
+  }
+
+  .public_fixedDataTable_header, .public_fixedDataTable_header .public_fixedDataTableCell_main {
+    background-color: #FFF;
+    background-image: none;
+  }
+  // End Override FixedDataTableStyles
+
+  .row {
+    margin-top: 20px;
   }
 
   .fa-minus, .fa-map-marker {
@@ -13,5 +38,17 @@
 
   .match {
     line-height: 34px;
+  }
+
+  .sidebar {
+    width:320px;
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom: 0;
+
+    .sidebar-tabs {
+      top: 0;
+    }
   }
 }

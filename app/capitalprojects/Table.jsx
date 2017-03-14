@@ -4,11 +4,12 @@ import { Link } from 'react-router';
 import FixedDataTable from 'fixed-data-table';
 import Dimensions from 'react-dimensions';
 import Numeral from 'numeral';
-
+import { Tabs, Tab } from 'material-ui/Tabs';
 import 'fixed-data-table/dist/fixed-data-table.css';
 
-import carto from '../helpers/carto';
 
+import TableFilter from './TableFilter';
+import carto from '../helpers/carto';
 import './Table.scss';
 
 const { Table, Column, Cell } = FixedDataTable;
@@ -84,23 +85,12 @@ const CPTable = React.createClass({
             state: { modal: true, returnTo: '/capitalprojects' },
           }}
         >
-          <button type="button" className="btn btn-primary btn-xs details-button">Details</button>
+          <button type="button" className="btn btn-primary btn-xs details-button">
+            <div className="fa fa-arrow-right" />
+          </button>
         </Link>
       </Cell>
     );
-
-    const GeometryCell = ({ rowIndex, data, col, ...props }) => {
-      const hasGeom = (data[rowIndex][col] !== null) ?
-        <div className="fa fa-map-marker" /> :
-        <div className="fa fa-minus" />;
-
-      return (
-        <Cell {...props}>
-          {hasGeom}
-        </Cell>
-      );
-    };
-
 
     const { containerHeight, containerWidth } = this.props;
 
@@ -108,77 +98,59 @@ const CPTable = React.createClass({
 
     return (
       <div className="full-screen projects-table">
+        <div className="sidebar">
+          <Tabs className="sidebar-tabs">
+            <Tab label="Data">
+              <input
+                className="form-control"
+                onChange={this.onFilterChange}
+                placeholder="Filter by Project ID or Description"
+              />
+
+              
+            </Tab>
+            <Tab label="Download">
+              <div className="sidebar-tab-content padded">
+              </div>
+            </Tab>
+            <Tab label="About">
+              <div className="sidebar-tab-content padded">
+                About
+              </div>
+            </Tab>
+          </Tabs>
+        </div>
         {data && (
-          <div>
-            <div className="row">
-              <div className="col-md-3">
-                <input
-                  className="form-control"
-                  onChange={this.onFilterChange}
-                  placeholder="Filter by Project ID or Description"
-                />
-              </div>
-              <div className="col-md-3 match">
-                <span className="badge">{data.length}</span> Matching Projects
-              </div>
-            </div>
-            <br />
-            <Table
-              rowHeight={50}
-              rowsCount={data.length}
-              headerHeight={50}
-              width={containerWidth}
-              height={containerHeight}
-              {...this.props}
-            >
-              <Column
-                header={<Cell>Managing Agency</Cell>}
-                cell={<TextCell data={data} col="magency" />}
-                width={80}
-              />
-              <Column
-                header={<Cell>Acronym</Cell>}
-                cell={<TextCell data={data} col="magencyacro" />}
-                width={80}
-              />
-              <Column
-                header={<Cell>MA Project ID</Cell>}
-                cell={<TextCell data={data} col="maprojid" />}
-                width={120}
-              />
-              <Column
-                header={<Cell>Description</Cell>}
-                cell={<TextCell data={data} col="description" />}
-                flexGrow={2}
-                width={300}
-              />
-              <Column
-                header={<Cell>City Cost</Cell>}
-                cell={<MoneyCell data={data} col="citycost" />}
-                width={100}
-              />
-              <Column
-                header={<Cell>Non-City Cost</Cell>}
-                cell={<MoneyCell data={data} col="noncitycost" />}
-                width={100}
-              />
-              <Column
-                header={<Cell>Total Cost</Cell>}
-                cell={<MoneyCell data={data} col="totalcost" />}
-                width={100}
-              />
-              <Column
-                header={<Cell>Geo</Cell>}
-                cell={<GeometryCell data={data} col="geometry" />}
-                width={50}
-              />
-              <Column
-                header={<Cell>Details</Cell>}
-                cell={<DetailCell data={data} col="maprojid" />}
-                width={100}
-              />
-            </Table>
-          </div>
+          <Table
+            rowHeight={50}
+            rowsCount={data.length}
+            headerHeight={50}
+            width={containerWidth}
+            height={containerHeight}
+            {...this.props}
+          >
+            <Column
+              header={<Cell>FMS ID</Cell>}
+              cell={<TextCell data={data} col="maprojid" />}
+              width={120}
+            />
+            <Column
+              header={<Cell>Description</Cell>}
+              cell={<TextCell data={data} col="description" />}
+              flexGrow={2}
+              width={300}
+            />
+
+            <Column
+              header={<Cell>Total Cost</Cell>}
+              cell={<MoneyCell data={data} col="totalcost" />}
+              width={100}
+            />
+            <Column
+              cell={<DetailCell data={data} col="maprojid" />}
+              width={50}
+            />
+          </Table>
         )}
       </div>
     );
@@ -187,10 +159,10 @@ const CPTable = React.createClass({
 
 module.exports = Dimensions({
   getHeight() {
-    return window.innerHeight - 140;
+    return window.innerHeight - 50;
   },
 
   getWidth() {
-    return window.innerWidth;
+    return window.innerWidth - 320;
   },
 })(CPTable);
