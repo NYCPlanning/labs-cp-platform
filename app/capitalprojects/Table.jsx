@@ -66,11 +66,9 @@ const CPTable = React.createClass({
   },
 
   handleUpdateSql(sql) {
-    console.log(sql);
     const self = this;
     carto.SQL(sql, 'json')
       .then((data) => {
-        console.log(data);
         self.data = data;
         self.setState({
           filteredDataList: data,
@@ -136,8 +134,7 @@ const CPTable = React.createClass({
               />
             </Tab>
             <Tab label="Download">
-              <div className="sidebar-tab-content padded">
-              </div>
+              <div className="sidebar-tab-content padded" />
             </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content padded">
