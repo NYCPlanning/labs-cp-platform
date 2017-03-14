@@ -9,6 +9,7 @@ import 'fixed-data-table/dist/fixed-data-table.css';
 
 
 import TableFilter from './TableFilter';
+import { agencies } from './config';
 import carto from '../helpers/carto';
 import './Table.scss';
 
@@ -27,16 +28,16 @@ const CPTable = React.createClass({
   },
 
   componentDidMount() {
-    const self = this;
-
-    carto.SQL('SELECT magency, magencyacro, maprojid, description,citycost,noncitycost,totalcost, ST_GeometryType(the_geom) as geometry FROM cpdb_map_combined ORDER BY maprojid ASC', 'json')
-      .then((data) => {
-        self.data = data;
-
-        self.setState({
-          filteredDataList: data,
-        });
-      });
+    // const self = this;
+    //
+    // carto.SQL('SELECT magency, magencyacro, maprojid, description,citycost,noncitycost,totalcost, ST_GeometryType(the_geom) as geometry FROM cpdb_map_combined ORDER BY maprojid ASC', 'json')
+    //   .then((data) => {
+    //     self.data = data;
+    //
+    //     self.setState({
+    //       filteredDataList: data,
+    //     });
+    //   });
   },
 
   onFilterChange(e) {
@@ -62,6 +63,19 @@ const CPTable = React.createClass({
     this.setState({
       filteredDataList,
     });
+  },
+
+  handleUpdateSql(sql) {
+    console.log(sql);
+    const self = this;
+    carto.SQL(sql, 'json')
+      .then((data) => {
+        console.log(data);
+        self.data = data;
+        self.setState({
+          filteredDataList: data,
+        });
+      });
   },
 
   render() {
@@ -92,6 +106,16 @@ const CPTable = React.createClass({
       </Cell>
     );
 
+    const AgencyCell = ({ rowIndex, data, col, ...props }) => {
+      const filteredAgencies = agencies.filter(agency => agency.value === data[rowIndex][col]);
+
+      return (
+        <Cell {...props}>
+          {filteredAgencies[0].label}
+        </Cell>
+      );
+    };
+
     const { containerHeight, containerWidth } = this.props;
 
     const data = this.state.filteredDataList;
@@ -101,13 +125,15 @@ const CPTable = React.createClass({
         <div className="sidebar">
           <Tabs className="sidebar-tabs">
             <Tab label="Data">
+              <TableFilter
+                updateSql={this.handleUpdateSql}
+                Sql={null}
+              />
               <input
                 className="form-control"
                 onChange={this.onFilterChange}
                 placeholder="Filter by Project ID or Description"
               />
-
-              
             </Tab>
             <Tab label="Download">
               <div className="sidebar-tab-content padded">
@@ -140,10 +166,19 @@ const CPTable = React.createClass({
               flexGrow={2}
               width={300}
             />
-
             <Column
-              header={<Cell>Total Cost</Cell>}
-              cell={<MoneyCell data={data} col="totalcost" />}
+              header={<Cell>Agency</Cell>}
+              cell={<AgencyCell data={data} col="magencyacro" />}
+              width={250}
+            />
+            <Column
+              header={<Cell>Spending</Cell>}
+              cell={<MoneyCell data={data} col="totalspend" />}
+              width={100}
+            />
+            <Column
+              header={<Cell>Commitments</Cell>}
+              cell={<MoneyCell data={data} col="totalcommit" />}
               width={100}
             />
             <Column

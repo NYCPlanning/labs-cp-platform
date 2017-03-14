@@ -16,7 +16,7 @@ import config from './config';
 
 const Filter = React.createClass({
   propTypes: {
-    updateSQL: React.PropTypes.func.isRequired,
+    updateSql: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -25,9 +25,10 @@ const Filter = React.createClass({
       totalCount: null,
       filterDimensions: {
         magencyacro: [],
-        projecttype: [],
-        totalcommitspend: [1000, 100000000],
-        activeyears: [2010, 2027],
+        // projecttype: [],
+        totalspend: [0, 100000000],
+        totalcommit: [1000, 100000000],
+        // activeyears: [2010, 2027],
       },
     });
   },
@@ -36,9 +37,8 @@ const Filter = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid, totalspend',
-      pointsTablename: 'cpdb_map_pts',
-      polygonsTablename: 'cpdb_map_poly',
+      columns: 'magency, magencyacro, maprojid, description, totalcommit, totalspend',
+      pointsTablename: 'cpdb_map_combined',
     };
 
     self.buildSQL();
@@ -85,14 +85,9 @@ const Filter = React.createClass({
     // join chunks with AND, or handle empty filters
     const chunksString = chunksArray.length > 0 ? chunksArray.join(' AND ') : 'true';
 
-    const pointsSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.pointsTablename} WHERE ${chunksString}`;
-    const polygonsSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.polygonsTablename} WHERE ${chunksString}`;
-    const sql = this.unionSQL(pointsSql, polygonsSql);
+    const sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.pointsTablename} WHERE ${chunksString}`;
 
-    if (this.state.totalCount == null) this.getTotalCount(sql);
-
-    this.getSelectedCount(`${pointsSql} UNION ALL ${polygonsSql}`);
-    this.props.updateSQL(pointsSql, polygonsSql);
+    this.props.updateSql(sql);
   },
 
   createMultiSelectSQLChunk(dimension, values) {
@@ -117,9 +112,9 @@ const Filter = React.createClass({
   createUnitsSQLChunk(dimension, range) {
     // conditional, if slider max value is at the starting point, only include results greater than the lower slider
     if (range[1] < 100000000) {
-      this.sqlChunks[dimension] = `(totalcommitspend >= '${range[0]}' AND totalcommitspend <= '${range[1]}')`;
+      this.sqlChunks[dimension] = `(${dimension} >= '${range[0]}' AND ${dimension} <= '${range[1]}')`;
     } else {
-      this.sqlChunks[dimension] = `(totalcommitspend >= '${range[0]}')`;
+      this.sqlChunks[dimension] = `(${dimension} >= '${range[0]}')`;
     }
   },
 
@@ -133,9 +128,10 @@ const Filter = React.createClass({
 
     const f = this.state.filterDimensions;
     this.createMultiSelectSQLChunk('magencyacro', f.magencyacro);
-    this.createMultiSelectSQLChunk('projecttype', f.projecttype);
-    this.createUnitsSQLChunk('totalcommitspend', this.state.filterDimensions.totalcommitspend);
-    this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
+    // this.createMultiSelectSQLChunk('projecttype', f.projecttype);
+    this.createUnitsSQLChunk('totalspend', this.state.filterDimensions.totalspend);
+    this.createUnitsSQLChunk('totalcommit', this.state.filterDimensions.totalcommit);
+    // this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
   },
 
   updateFilterDimension(key, values) {
@@ -153,7 +149,7 @@ const Filter = React.createClass({
   handleSliderChange(dimension, data) {
     // expects the data output from the ionRangeSlider
     // updates state with an array of the filter range
-    if (dimension === 'totalcommitspend') {
+    if (dimension === 'totalcommit' || dimension === 'totalspend') {
       this.state.filterDimensions[dimension] = [data.from_value, data.to_value];
     } else {
       this.state.filterDimensions[dimension] = [data.from, data.to];
@@ -170,46 +166,77 @@ const Filter = React.createClass({
 
     return (
       <div>
+        <Subheader>
+          Agency
+          <InfoIcon text="The City agency associated with the project in FMS" />
+        </Subheader>
 
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <Select
+            multi
+            placeholder="Select Agencies"
+            value={this.state.filterDimensions.magencyacro}
+            name="form-field-name"
+            options={config.agencies}
+            onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
+          />
+        </ListItem>
+
+        <Subheader>
+          Spending
+          <InfoIcon text="Total cost is all past spending + all future commitments" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={{
+            paddingTop: '0px',
+            zIndex: '0',
+          }}
+        >
+          <RangeSlider
+            data={this.state.filterDimensions.totalspend}
+            type={'double'}
+            onChange={this.handleSliderChange.bind(this, 'totalspend')}
+            step={1000}
+            prettify={num => Numeral(num).format('($ 0.00 a)')}
+            grid
+            force_edges
+            max_postfix="+"
+            values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+          />
+        </ListItem>
+
+        <Subheader>
+          Commitments
+          <InfoIcon text="Total cost is all past spending + all future commitments" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={{
+            paddingTop: '0px',
+            zIndex: '0',
+          }}
+        >
+          <RangeSlider
+            data={this.state.filterDimensions.totalcommit}
+            type={'double'}
+            onChange={this.handleSliderChange.bind(this, 'totalcommit')}
+            step={1000}
+            prettify={num => Numeral(num).format('($ 0.00 a)')}
+            grid
+            force_edges
+            max_postfix="+"
+            values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+          />
+        </ListItem>
       </div>
     );
   },
 });
 
 export default Filter;
-
-// materialized view SQL
-
-// DROP MATERIALIZED VIEW commitmentspointsjoined;
-// DROP MATERIALIZED VIEW commitmentspolygonsjoined;
-
-// CREATE MATERIALIZED VIEW commitmentspointsjoined as
-// SELECT a.*,
-//   array_agg(DISTINCT b.projecttype) AS projecttype,
-  // min(c.date) mindate,
-  // max(c.date) maxdate,
-  // sum(c.commitspend) as totalcommitspend,
-  // sum(c.commit) as totalcommit,
-  // sum(c.spend) as totalspend
-// FROM adoyle.commitmentspoints a
-// LEFT JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
-// LEFT JOIN (
-//   SELECT TRIM(LEFT(capital_project,12)) as maprojid,
-//     to_date(issue_date,'YYYY-MM-DD') as date,
-//     0 as commit,
-//     check_amount::double precision as spend,
-//     check_amount::double precision as commitspend
-//   FROM cpadmin.spending
-//   UNION ALL
-//   SELECT maprojid,
-//     to_date(plancommdate,'YY-Mon') as date,
-//     totalcost as commit,
-//   0 as spend,
-//     totalcost as commitspend
-//   FROM adoyle.commitscommitments
-// ) c ON c.maprojid = a.maprojid
-// GROUP BY a.cartodb_id
-
-
-// GRANT SELECT on commitmentspointsjoined to publicuser;
-// GRANT SELECT on commitmentspolygonsjoined to publicuser;
