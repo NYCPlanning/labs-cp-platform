@@ -130,7 +130,7 @@ const DetailPage = React.createClass({
           </Table>
         );
 
-        return wrapInPanel(s.dataname, s.datasource, table);
+        return wrapInPanel(s.datasourcefull, s.datasource, table);
       });
 
       return sourceDetails;
