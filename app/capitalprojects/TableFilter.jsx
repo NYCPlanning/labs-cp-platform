@@ -3,11 +3,8 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
 import Numeral from 'numeral';
-import Divider from 'material-ui/Divider';
 
-import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
-import CostGroupChart from './janelayer/CostGroupChart';
 import RangeSlider from '../common/RangeSlider';
 
 import Carto from '../helpers/carto';

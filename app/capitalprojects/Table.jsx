@@ -15,7 +15,53 @@ import './Table.scss';
 
 const { Table, Column, Cell } = FixedDataTable;
 
-const CPTable = React.createClass({
+const SortTypes = {
+  ASC: 'ASC',
+  DESC: 'DESC',
+};
+
+function reverseSortDirection(sortDir) {
+  return sortDir === SortTypes.DESC ? SortTypes.ASC : SortTypes.DESC;
+}
+
+class SortHeaderCell extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onSortChange = this.onSortChange.bind(this);
+  }
+
+  onSortChange(e) {
+    e.preventDefault();
+
+    if (this.props.onSortChange) {
+      this.props.onSortChange(
+        this.props.columnKey,
+        this.props.sortDir ? reverseSortDirection(this.props.sortDir) : SortTypes.DESC,
+      );
+    }
+  }
+
+  render() {
+    const { sortDir, children, ...props } = this.props;
+    return (
+      <Cell {...props}>
+        <a onClick={this.onSortChange}>
+          {children}{sortDir ? (sortDir === SortTypes.DESC ? '↓' : '↑') : '' }
+        </a>
+      </Cell>
+    );
+  }
+}
+
+SortHeaderCell.propTypes = {
+  sortDir: PropTypes.string, // eslint-disable-line
+  children: PropTypes.string.isRequired,
+  onSortChange: PropTypes.func.isRequired,
+  columnKey: PropTypes.string, // eslint-disable-line
+};
+
+
+const CPTable = React.createClass({ // eslint-disable-line
   propTypes: {
     containerHeight: PropTypes.number.isRequired,
     containerWidth: PropTypes.number.isRequired,
@@ -24,45 +70,70 @@ const CPTable = React.createClass({
   getInitialState() {
     return {
       data: null,
+      colSortDirs: {},
     };
   },
 
-  componentDidMount() {
-    // const self = this;
-    //
-    // carto.SQL('SELECT magency, magencyacro, maprojid, description,citycost,noncitycost,totalcost, ST_GeometryType(the_geom) as geometry FROM cpdb_map_combined ORDER BY maprojid ASC', 'json')
-    //   .then((data) => {
-    //     self.data = data;
-    //
-    //     self.setState({
-    //       filteredDataList: data,
-    //     });
-    //   });
-  },
-
-  onFilterChange(e) {
-    if (!e.target.value) {
-      this.setState({
-        filteredDataList: this.data,
-      });
+  handleFilterChange(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
+    let filterBy = null;
+    if (e.target.value) {
+      filterBy = e.target.value.toLowerCase();
     }
 
-    const filterBy = e.target.value.toLowerCase();
+    this.setState({ filterBy }, this.filterAndSortData);
+  },
+
+  handleSortChange(columnKey, sortDir) {
+    this.setState({
+      colSortDirs: {
+        [columnKey]: sortDir,
+      },
+    }, this.filterAndSortData);
+  },
+
+  filterAndSortData() {
     const filteredDataList = [];
 
-    for (let i = 0; i < this.data.length; i += 1) {
-      const { maprojid, description } = this.data[i];
-      if (
-        maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
-        description.toLowerCase().indexOf(filterBy) !== -1
-      ) {
+    const { filterBy } = this.state;
+
+
+    // filter
+    if (filterBy) {
+      for (let i = 0; i < this.data.length; i += 1) {
+        const { maprojid, description } = this.data[i];
+        if (
+          maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
+          description.toLowerCase().indexOf(filterBy) !== -1
+        ) {
+          filteredDataList.push(this.data[i]);
+        }
+      }
+    } else {
+      for (let i = 0; i < this.data.length; i += 1) {
         filteredDataList.push(this.data[i]);
       }
     }
 
-    this.setState({
-      filteredDataList,
+
+    // sort
+    const columnKey = Object.keys(this.state.colSortDirs)[0];
+    const sortDir = this.state.colSortDirs[columnKey];
+    console.log(columnKey, sortDir);
+
+    filteredDataList.sort((a, b) => {
+      let sortVal = 0;
+      if (a[columnKey] > b[columnKey]) sortVal = 1;
+      if (a[columnKey] < b[columnKey]) sortVal = -1;
+
+      if (sortVal !== 0 && sortDir === SortTypes.ASC) {
+        sortVal *= -1;
+      }
+
+      return sortVal;
     });
+
+
+    this.setState({ filteredDataList });
   },
 
   handleUpdateSql(sql) {
@@ -109,14 +180,14 @@ const CPTable = React.createClass({
 
       return (
         <Cell {...props}>
-          {filteredAgencies[0].label}
+          {filteredAgencies.length > 0 ? filteredAgencies[0].label : 'Not Found'}
         </Cell>
       );
     };
 
     const { containerHeight, containerWidth } = this.props;
 
-    const data = this.state.filteredDataList;
+    const { colSortDirs, filteredDataList } = this.state;
 
     return (
       <div className="full-screen projects-table">
@@ -129,7 +200,7 @@ const CPTable = React.createClass({
               />
               <input
                 className="form-control"
-                onChange={this.onFilterChange}
+                onChange={this.handleFilterChange}
                 placeholder="Filter by Project ID or Description"
               />
             </Tab>
@@ -143,10 +214,10 @@ const CPTable = React.createClass({
             </Tab>
           </Tabs>
         </div>
-        {data && (
+        {filteredDataList && (
           <Table
             rowHeight={50}
-            rowsCount={data.length}
+            rowsCount={filteredDataList.length}
             headerHeight={50}
             width={containerWidth}
             height={containerHeight}
@@ -154,32 +225,40 @@ const CPTable = React.createClass({
           >
             <Column
               header={<Cell>FMS ID</Cell>}
-              cell={<TextCell data={data} col="maprojid" />}
+              cell={<TextCell data={filteredDataList} col="maprojid" />}
               width={120}
             />
             <Column
               header={<Cell>Description</Cell>}
-              cell={<TextCell data={data} col="description" />}
+              cell={<TextCell data={filteredDataList} col="description" />}
               flexGrow={2}
               width={300}
             />
             <Column
               header={<Cell>Agency</Cell>}
-              cell={<AgencyCell data={data} col="magencyacro" />}
+              cell={<AgencyCell data={filteredDataList} col="magencyacro" />}
               width={250}
             />
             <Column
               header={<Cell>Spending</Cell>}
-              cell={<MoneyCell data={data} col="totalspend" />}
+              cell={<MoneyCell data={filteredDataList} col="totalspend" />}
               width={100}
             />
             <Column
-              header={<Cell>Commitments</Cell>}
-              cell={<MoneyCell data={data} col="totalcommit" />}
-              width={100}
+              columnKey="totalcommit"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.totalcommit}
+                >
+                  Commitments
+                </SortHeaderCell>
+              }
+              cell={<MoneyCell data={filteredDataList} col="totalcommit" />}
+              width={110}
             />
             <Column
-              cell={<DetailCell data={data} col="maprojid" />}
+              cell={<DetailCell data={filteredDataList} col="maprojid" />}
               width={50}
             />
           </Table>
