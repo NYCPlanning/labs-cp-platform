@@ -7,7 +7,7 @@ import Carto from '../helpers/carto';
 
 const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
 
-const Download = ({ sql, filePrefix }) => {
+const Download = ({ sql, filePrefix, onDownload }) => {
   const filteredSql = Carto.transformSqlSelectAll(sql);
   const completeSql = Carto.transformSqlRemoveWhere(filteredSql);
 
@@ -28,18 +28,21 @@ const Download = ({ sql, filePrefix }) => {
         download="text.csv"
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
+        onClick={() => onDownload('csv-complete')}
       />
       <FlatButton
         label="GeoJSON"
         href={Carto.generateUrlString(completeSql, 'geojson', allFilename)}
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-code-o" style={style.size} />}
+        onClick={() => onDownload('geojson-complete')}
       />
       <FlatButton
         label="Shapefile"
         labelStyle={style.size}
         href={Carto.generateUrlString(completeSql, 'shp', allFilename)}
         icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
+        onClick={() => onDownload('shp-complete')}
       />
 
       <h4>Filtered Dataset</h4>
@@ -49,18 +52,21 @@ const Download = ({ sql, filePrefix }) => {
         labelStyle={style.size}
         href={Carto.generateUrlString(filteredSql, 'csv', filteredFilename)}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
+        onClick={() => onDownload('csv-filtered')}
       />
       <FlatButton
         label="GeoJSON"
         labelStyle={style.size}
         href={Carto.generateUrlString(filteredSql, 'geojson', filteredFilename)}
         icon={<FontIcon className="fa fa-file-code-o" style={style.size} />}
+        onClick={() => onDownload('geojson-filtered')}
       />
       <FlatButton
         label="Shapefile"
         labelStyle={style.size}
         href={Carto.generateUrlString(filteredSql, 'shp', filteredFilename)}
         icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
+        onClick={() => onDownload('shp-filtered')}
       />
     </div>
   );
@@ -69,6 +75,11 @@ const Download = ({ sql, filePrefix }) => {
 Download.propTypes = {
   sql: PropTypes.string.isRequired,
   filePrefix: PropTypes.string.isRequired,
+  onDownload: PropTypes.func,
+};
+
+Download.defaultProps = {
+  onDownload: () => {},
 };
 
 module.exports = Download;

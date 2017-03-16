@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
 
+import ga from '../helpers/ga';
+
 const SplashDuo = React.createClass({
   getInitialState: () => ({
     selectedGeography: null,
@@ -25,6 +27,12 @@ const SplashDuo = React.createClass({
         },
       },
     });
+
+    ga.event({
+      category: 'facilities-entry',
+      action: 'neighborhood',
+      label: selected.label,
+    });
   },
 
   handleNeighborhoodBoxClick() {
@@ -37,7 +45,14 @@ const SplashDuo = React.createClass({
     return (
       <div className="splash-button-section">
         <div className="box all-link">
-          <Link to="/facilities/explorer" className="btn btn-default">
+          <Link
+            to="/facilities/explorer"
+            className="btn btn-default"
+            onClick={() => ga.event({
+              category: 'facilities-entry',
+              action: 'go-to-map',
+            })}
+          >
             <div className="vertical-align">Go to Map</div>
           </Link>
         </div>

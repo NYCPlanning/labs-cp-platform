@@ -28,6 +28,8 @@ const appConfig = {
 
   mapzen_api_key: 'mapzen-ZyMEp5H',
 
+  ga_tracking_code: 'UA-84250233-2',
+
   api_domain,
 
   // Using the getter syntax to access the object 'this'

@@ -5,6 +5,8 @@ import FontIcon from 'material-ui/FontIcon';
 
 import NestedSelect from './janelayer/NestedSelect';
 import layersGenerator from './layersGenerator';
+import ga from '../helpers/ga';
+
 
 import './SplashSelector.scss';
 
@@ -155,6 +157,15 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
       </div>
     ));
 
+    const selectedSubgroups = [];
+    this.state.layers.forEach((domain) => {
+      domain.children.forEach((group) => {
+        group.children.forEach((subgroup) => {
+          if (subgroup.checked) selectedSubgroups.push(subgroup.name);
+        });
+      });
+    });
+
     return (
       <div className="splash-selector-container">
         <div className="splash-selector">
@@ -184,6 +195,11 @@ const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi
               layers: this.state.layers,
             },
           }}
+          onClick={() => ga.event({
+            category: 'facilities-entry',
+            action: 'custom-selection',
+            label: JSON.stringify(selectedSubgroups),
+          })}
         >
           <div className={`btn btn-default ${this.state.noneSelected ? 'disabled' : null}`}>
             View selected features <i className="fa fa-arrow-right dcp-orange" aria-hidden="true" />

@@ -12,6 +12,7 @@ import Checkbox from './Checkbox';
 
 import config from './config';
 import Carto from '../../helpers/carto';
+import ga from '../../helpers/ga';
 
 import './LayerSelector.scss';
 
@@ -60,12 +61,15 @@ const LayerSelector = React.createClass({
       });
     }
 
+    this.mounted = false;
+
     this.setState({ layers }, () => {
       self.buildSQL(); // trigger map layer update
     });
   },
 
   componentDidMount() {
+    this.mounted = true; // used by buildSQL() to not trigger event on first build
     // expand list if we are on a facdomain page
     if (this.state.layers.length === 1) {
       this.expandAll();
@@ -229,6 +233,13 @@ const LayerSelector = React.createClass({
     const totalSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`;
 
     if (this.state.totalCount == null) this.getTotalCount(totalSql);
+
+    if (this.mounted) {
+      ga.event({
+        category: 'facilities-explorer',
+        action: 'set-filter',
+      });
+    }
 
     this.props.updateSQL(sql);
     this.getSelectedCount(sql);

@@ -6,6 +6,8 @@ import LayerSelector from './LayerSelector';
 import Download from '../../common/Download';
 import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
+import ga from '../../helpers/ga';
+
 
 import defaultLayerConfig from './defaultlayerconfig';
 
@@ -47,6 +49,14 @@ const Facilities = React.createClass({
     this.props.onUpdate('facilities', {
       sources: layerConfig.sources,
       mapLayers: layerConfig.mapLayers,
+    });
+  },
+
+  handleDownload(label) {
+    ga.event({
+      category: 'faciities-explorer',
+      action: 'download',
+      label,
     });
   },
 
@@ -105,6 +115,7 @@ const Facilities = React.createClass({
             <Download
               sql={this.state.sql}
               filePrefix="facilities"
+              onDownload={this.handleDownload}
             />
             <SignupPrompt />
           </div>

@@ -5,11 +5,11 @@ import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
 import layersGenerator from './layersGenerator';
-
-
 import content from './content';
+import ga from '../helpers/ga';
 
 import './LandingPage.scss';
+
 
 const FacilitiesLandingPage = React.createClass({
   propTypes: {
@@ -58,6 +58,11 @@ const FacilitiesLandingPage = React.createClass({
                           },
                         },
                       }}
+                      onClick={() => ga.event({
+                        category: 'facilities-entry',
+                        action: 'frequently-used',
+                        label: 'City Owned and Leased Sites',
+                      })}
                     >
                       City Owned and Leased Sites
                     </Link>
@@ -82,6 +87,11 @@ const FacilitiesLandingPage = React.createClass({
                           }),
                         },
                       }}
+                      onClick={() => ga.event({
+                        category: 'facilities-entry',
+                        action: 'frequently-used',
+                        label: 'Community Facilities for CEQR',
+                      })}
                     >
                       Community Facilities for CEQR
                     </Link>
@@ -106,6 +116,11 @@ const FacilitiesLandingPage = React.createClass({
                           }),
                         },
                       }}
+                      onClick={() => ga.event({
+                        category: 'facilities-entry',
+                        action: 'frequently-used',
+                        label: 'Children, Seniors, ADA Facilities',
+                      })}
                     >
                       Children, Seniors, ADA Facilities
                     </Link>
