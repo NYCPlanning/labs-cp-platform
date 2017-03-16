@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
@@ -6,6 +6,8 @@ import Numeral from 'numeral';
 
 import InfoIcon from '../common/InfoIcon';
 import RangeSlider from '../common/RangeSlider';
+import CountWidget from '../common/CountWidget';
+
 
 import Carto from '../helpers/carto';
 import config from './config';
@@ -13,13 +15,13 @@ import config from './config';
 
 const Filter = React.createClass({
   propTypes: {
-    updateSql: React.PropTypes.func.isRequired,
+    onUpdateSql: PropTypes.func.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
+    selectedCount: PropTypes.number.isRequired,
   },
 
   getInitialState() {
     return ({
-      selectedCount: null,
-      totalCount: null,
       filterDimensions: {
         magencyacro: [],
         // projecttype: [],
@@ -46,10 +48,7 @@ const Filter = React.createClass({
 
     Carto.getCount(sql)
       .then((count) => {
-        self.setState({
-          selectedCount: count,
-          totalCount: count,
-        });
+        self.totalCount = count;
       })
       .catch();
   },
@@ -84,7 +83,9 @@ const Filter = React.createClass({
 
     const sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.pointsTablename} WHERE ${chunksString}`;
 
-    this.props.updateSql(sql);
+    if (this.totalCount === undefined) this.getTotalCount(sql);
+
+    this.props.onUpdateSql(sql);
   },
 
   createMultiSelectSQLChunk(dimension, values) {
@@ -163,6 +164,28 @@ const Filter = React.createClass({
 
     return (
       <div>
+        <CountWidget
+          totalCount={this.totalCount}
+          selectedCount={this.props.selectedCount}
+          units={'projects'}
+        />
+
+        <Subheader>
+          FMS ID or Description Search
+          <InfoIcon text="Filter for matching FMS ID or Project Description" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <input
+            className="form-control"
+            onChange={this.props.onFilterChange}
+            placeholder="Filter by Project ID or Description"
+          />
+        </ListItem>
+
         <Subheader>
           Agency
           <InfoIcon text="The City agency associated with the project in FMS" />

@@ -43,10 +43,19 @@ class SortHeaderCell extends React.Component {
 
   render() {
     const { sortDir, children, ...props } = this.props;
+
+    let sortArrow;
+    if (sortDir) {
+      sortArrow = (sortDir === SortTypes.DESC) ? '↓' : '↑';
+    } else {
+      sortArrow = '';
+    }
+
     return (
       <Cell {...props}>
         <a onClick={this.onSortChange}>
-          {children}{sortDir ? (sortDir === SortTypes.DESC ? '↓' : '↑') : '' }
+          {children}
+          {sortArrow}
         </a>
       </Cell>
     );
@@ -118,7 +127,6 @@ const CPTable = React.createClass({ // eslint-disable-line
     // sort
     const columnKey = Object.keys(this.state.colSortDirs)[0];
     const sortDir = this.state.colSortDirs[columnKey];
-    console.log(columnKey, sortDir);
 
     filteredDataList.sort((a, b) => {
       let sortVal = 0;
@@ -143,7 +151,7 @@ const CPTable = React.createClass({ // eslint-disable-line
         self.data = data;
         self.setState({
           filteredDataList: data,
-        });
+        }, self.filterAndSortData);
       });
   },
 
@@ -189,20 +197,20 @@ const CPTable = React.createClass({ // eslint-disable-line
 
     const { colSortDirs, filteredDataList } = this.state;
 
+
+    const selectedCount = filteredDataList ? filteredDataList.length : null;
+
     return (
       <div className="full-screen projects-table">
         <div className="sidebar">
           <Tabs className="sidebar-tabs">
             <Tab label="Data">
               <TableFilter
-                updateSql={this.handleUpdateSql}
-                Sql={null}
+                onUpdateSql={this.handleUpdateSql}
+                onFilterChange={this.handleFilterChange}
+                selectedCount={selectedCount}
               />
-              <input
-                className="form-control"
-                onChange={this.handleFilterChange}
-                placeholder="Filter by Project ID or Description"
-              />
+
             </Tab>
             <Tab label="Download">
               <div className="sidebar-tab-content padded" />
@@ -224,23 +232,55 @@ const CPTable = React.createClass({ // eslint-disable-line
             {...this.props}
           >
             <Column
-              header={<Cell>FMS ID</Cell>}
+              columnKey="maprojid"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.maprojid}
+                >
+                  FMS ID
+                </SortHeaderCell>
+              }
               cell={<TextCell data={filteredDataList} col="maprojid" />}
               width={120}
             />
             <Column
-              header={<Cell>Description</Cell>}
+              columnKey="description"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.description}
+                >
+                  Description
+                </SortHeaderCell>
+              }
               cell={<TextCell data={filteredDataList} col="description" />}
               flexGrow={2}
               width={300}
             />
             <Column
-              header={<Cell>Agency</Cell>}
+              columnKey="magencyacro"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.magencyacro}
+                >
+                  Agency
+                </SortHeaderCell>
+              }
               cell={<AgencyCell data={filteredDataList} col="magencyacro" />}
               width={250}
             />
             <Column
-              header={<Cell>Spending</Cell>}
+              columnKey="totalspend"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.totalspend}
+                >
+                  Spending
+                </SortHeaderCell>
+              }
               cell={<MoneyCell data={filteredDataList} col="totalspend" />}
               width={100}
             />
