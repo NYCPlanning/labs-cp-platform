@@ -3,7 +3,7 @@ import React from 'react';
 const RangeSlider = React.createClass({
   propTypes: {
     disable: React.PropTypes.bool,
-    data: React.PropTypes.object.isRequired,
+    data: React.PropTypes.array.isRequired,
   },
 
   getDefaultProps() {

@@ -273,6 +273,7 @@ body:after {
     top: 0;
     bottom: 0;
     overflow: auto;
+    width: 100%;
 
     .Select {
       width: calc(100% - 24px);

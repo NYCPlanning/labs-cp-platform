@@ -36,7 +36,7 @@ const BackButton = (props) => {
   if (props.location.state) {
     return (
       <Button
-        label={'Back to Map'}
+        label={'Back'}
         iconClass={'fa-chevron-left'}
         onClick={browserHistory.goBack}
       />
