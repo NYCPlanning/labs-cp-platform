@@ -130,12 +130,22 @@ const ProjectPage = React.createClass({
           </div>
 
           <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
+            <div className={'col-md-6'}>
               <Card style={CardStyles}>
-                <CardHeader title="Total Cost" />
+                <CardHeader title="Spent" />
                 <CardText className={'text-center'}>
-                  <h2>{formatCost(d.totalcommitspend)}</h2>
-                  <p className="subtext">{formatCost(d.totalspend)} spent | {formatCost(d.totalcommit)} committed</p>
+                  <h2>{formatCost(d.totalspend)}</h2>
+                  <p className="subtext">spent to date</p>
+                </CardText>
+              </Card>
+            </div>
+
+            <div className={'col-md-6'}>
+              <Card style={CardStyles}>
+                <CardHeader title="Committed" />
+                <CardText className={'text-center'}>
+                  <h2>{formatCost(d.totalcommit)}</h2>
+                  <p className="subtext">committed as of Oct 2016</p>
                 </CardText>
               </Card>
             </div>

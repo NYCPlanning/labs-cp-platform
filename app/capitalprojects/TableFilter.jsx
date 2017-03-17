@@ -24,7 +24,7 @@ const Filter = React.createClass({
     return ({
       filterDimensions: {
         magencyacro: [],
-        // projecttype: [],
+        projecttype: [],
         totalspend: [0, 100000000],
         totalcommit: [1000, 100000000],
         // activeyears: [2010, 2027],
@@ -36,7 +36,7 @@ const Filter = React.createClass({
     const self = this;
 
     this.sqlConfig = {
-      columns: 'magency, magencyacro, maprojid, description, totalcommit, totalspend',
+      columns: 'magency, magencyacro, maprojid, description, totalcommit, totalspend, projecttype',
       pointsTablename: 'cpdb_map_combined',
     };
 
@@ -126,7 +126,7 @@ const Filter = React.createClass({
 
     const f = this.state.filterDimensions;
     this.createMultiSelectSQLChunk('magencyacro', f.magencyacro);
-    // this.createMultiSelectSQLChunk('projecttype', f.projecttype);
+    this.createMultiSelectSQLChunk('projecttype', f.projecttype);
     this.createUnitsSQLChunk('totalspend', this.state.filterDimensions.totalspend);
     this.createUnitsSQLChunk('totalcommit', this.state.filterDimensions.totalcommit);
     // this.createActiveYearsSQLChunk(this.state.filterDimensions.activeyears);
@@ -163,97 +163,117 @@ const Filter = React.createClass({
     };
 
     return (
-      <div>
+      <div className="sidebar-tab-content">
         <CountWidget
           totalCount={this.totalCount}
           selectedCount={this.props.selectedCount}
           units={'projects'}
         />
+        <div className="scroll-container count-widget-offset">
+          <Subheader>
+            FMS ID or Description Search
+            <InfoIcon text="Filter for matching FMS ID or Project Description" />
+          </Subheader>
 
-        <Subheader>
-          FMS ID or Description Search
-          <InfoIcon text="Filter for matching FMS ID or Project Description" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <input
+              className="form-control"
+              onChange={this.props.onFilterChange}
+              placeholder="Filter by Project ID or Description"
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <input
-            className="form-control"
-            onChange={this.props.onFilterChange}
-            placeholder="Filter by Project ID or Description"
-          />
-        </ListItem>
+          <Subheader>
+            Managing Agency
+            <InfoIcon text="The City agency associated with the project in FMS" />
+          </Subheader>
 
-        <Subheader>
-          Agency
-          <InfoIcon text="The City agency associated with the project in FMS" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <Select
+              multi
+              placeholder="Select Agencies"
+              value={this.state.filterDimensions.magencyacro}
+              name="form-field-name"
+              options={config.agencies}
+              onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <Select
-            multi
-            placeholder="Select Agencies"
-            value={this.state.filterDimensions.magencyacro}
-            name="form-field-name"
-            options={config.agencies}
-            onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
-          />
-        </ListItem>
+          <Subheader>
+            Project Type
+            <InfoIcon text="The Project Types associated with the project in FMS" />
+          </Subheader>
 
-        <Subheader>
-          Spending
-          <InfoIcon text="Total cost is all past spending + all future commitments" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <Select
+              multi
+              placeholder="Select Project Types"
+              value={this.state.filterDimensions.projecttype}
+              name="form-field-name"
+              options={config.projecttypes}
+              onChange={this.updateFilterDimension.bind(this, 'projecttype')}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={{
-            paddingTop: '0px',
-            zIndex: '0',
-          }}
-        >
-          <RangeSlider
-            data={this.state.filterDimensions.totalspend}
-            type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'totalspend')}
-            step={1000}
-            prettify={num => Numeral(num).format('($ 0.00 a)')}
-            grid
-            force_edges
-            max_postfix="+"
-            values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
-          />
-        </ListItem>
+          <Subheader>
+            Spent
+            <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
+          </Subheader>
 
-        <Subheader>
-          Commitments
-          <InfoIcon text="Total cost is all past spending + all future commitments" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={{
+              paddingTop: '0px',
+              zIndex: '0',
+            }}
+          >
+            <RangeSlider
+              data={this.state.filterDimensions.totalspend}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'totalspend')}
+              step={1000}
+              prettify={num => Numeral(num).format('($ 0.00 a)')}
+              grid
+              force_edges
+              max_postfix="+"
+              values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={{
-            paddingTop: '0px',
-            zIndex: '0',
-          }}
-        >
-          <RangeSlider
-            data={this.state.filterDimensions.totalcommit}
-            type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'totalcommit')}
-            step={1000}
-            prettify={num => Numeral(num).format('($ 0.00 a)')}
-            grid
-            force_edges
-            max_postfix="+"
-            values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
-          />
-        </ListItem>
+          <Subheader>
+            Committed
+            <InfoIcon text="Sum of all commitments in the latest capital commitment plan" />
+          </Subheader>
+
+          <ListItem
+            disabled
+            style={{
+              paddingTop: '0px',
+              zIndex: '0',
+            }}
+          >
+            <RangeSlider
+              data={this.state.filterDimensions.totalcommit}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'totalcommit')}
+              step={1000}
+              prettify={num => Numeral(num).format('($ 0.00 a)')}
+              grid
+              force_edges
+              max_postfix="+"
+              values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+            />
+          </ListItem>
+        </div>
       </div>
     );
   },

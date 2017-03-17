@@ -7,7 +7,7 @@ import Numeral from 'numeral';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import 'fixed-data-table/dist/fixed-data-table.css';
 
-
+import InfoIcon from '../common/InfoIcon';
 import TableFilter from './TableFilter';
 import { agencies } from './config';
 import carto from '../helpers/carto';
@@ -42,11 +42,12 @@ class SortHeaderCell extends React.Component {
   }
 
   render() {
-    const { sortDir, children, ...props } = this.props;
-
+    const { sortDir, children, ...props } = this.props; // eslint-disable-line
     let sortArrow;
     if (sortDir) {
-      sortArrow = (sortDir === SortTypes.DESC) ? '↓' : '↑';
+      sortArrow = (sortDir === SortTypes.DESC) ?
+        <span className="fa fa-arrow-down header-fa" /> :
+        <span className="fa fa-arrow-up header-fa" />;
     } else {
       sortArrow = '';
     }
@@ -64,7 +65,6 @@ class SortHeaderCell extends React.Component {
 
 SortHeaderCell.propTypes = {
   sortDir: PropTypes.string, // eslint-disable-line
-  children: PropTypes.string.isRequired,
   onSortChange: PropTypes.func.isRequired,
   columnKey: PropTypes.string, // eslint-disable-line
 };
@@ -79,7 +79,9 @@ const CPTable = React.createClass({ // eslint-disable-line
   getInitialState() {
     return {
       data: null,
-      colSortDirs: {},
+      colSortDirs: {
+        maprojid: 'DESC',
+      },
     };
   },
 
@@ -162,6 +164,12 @@ const CPTable = React.createClass({ // eslint-disable-line
       </Cell>
     );
 
+    const ArrayTextCell = ({ rowIndex, data, col, ...props }) => (
+      <Cell {...props}>
+        {data[rowIndex][col].join(', ')}
+      </Cell>
+    );
+
     const MoneyCell = ({ rowIndex, data, col, ...props }) => (
       <Cell {...props}>
         {Numeral(data[rowIndex][col]).format('($ 0.00 a)')}
@@ -183,7 +191,7 @@ const CPTable = React.createClass({ // eslint-disable-line
       </Cell>
     );
 
-    const AgencyCell = ({ rowIndex, data, col, ...props }) => {
+    const AgencyCell = ({ rowIndex, data, col, ...props }) => { // eslint-disable-line
       const filteredAgencies = agencies.filter(agency => agency.value === data[rowIndex][col]);
 
       return (
@@ -198,12 +206,21 @@ const CPTable = React.createClass({ // eslint-disable-line
     const { colSortDirs, filteredDataList } = this.state;
 
 
-    const selectedCount = filteredDataList ? filteredDataList.length : null;
+    const selectedCount = filteredDataList ? filteredDataList.length : 0;
+
+    const tabTemplateStyle = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+    };
 
     return (
       <div className="full-screen projects-table">
         <div className="sidebar">
-          <Tabs className="sidebar-tabs">
+          <Tabs
+            className="sidebar-tabs"
+            tabTemplateStyle={tabTemplateStyle}
+          >
             <Tab label="Data">
               <TableFilter
                 onUpdateSql={this.handleUpdateSql}
@@ -212,12 +229,9 @@ const CPTable = React.createClass({ // eslint-disable-line
               />
 
             </Tab>
-            <Tab label="Download">
-              <div className="sidebar-tab-content padded" />
-            </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content padded">
-                About
+                <p>This table displays data from the Capital Commitment Plan PDFs published in October 2016, joined with Checkbook NYC data pulled in March of 2017.</p>
               </div>
             </Tab>
           </Tabs>
@@ -265,11 +279,24 @@ const CPTable = React.createClass({ // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.magencyacro}
                 >
-                  Agency
+                  Man. Agency <InfoIcon text="The city agency associated with the project in FMS" />
                 </SortHeaderCell>
               }
-              cell={<AgencyCell data={filteredDataList} col="magencyacro" />}
-              width={250}
+              cell={<TextCell data={filteredDataList} col="magencyacro" />}
+              width={120}
+            />
+            <Column
+              columnKey="projecttype"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.projecttype}
+                >
+                  Project Type <InfoIcon text="Project Types associated with the project in FMS" />
+                </SortHeaderCell>
+              }
+              cell={<ArrayTextCell data={filteredDataList} col="projecttype" />}
+              width={200}
             />
             <Column
               columnKey="totalspend"
@@ -278,7 +305,7 @@ const CPTable = React.createClass({ // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.totalspend}
                 >
-                  Spending
+                  Spent <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
                 </SortHeaderCell>
               }
               cell={<MoneyCell data={filteredDataList} col="totalspend" />}
@@ -291,11 +318,12 @@ const CPTable = React.createClass({ // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.totalcommit}
                 >
-                  Commitments
+                  Committed <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
+
                 </SortHeaderCell>
               }
               cell={<MoneyCell data={filteredDataList} col="totalcommit" />}
-              width={110}
+              width={130}
             />
             <Column
               cell={<DetailCell data={filteredDataList} col="maprojid" />}
