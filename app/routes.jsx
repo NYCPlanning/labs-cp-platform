@@ -19,9 +19,6 @@ import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
 import CapitalProjectsTable from '../app/capitalprojects/Table';
 import ProjectPage from '../app/capitalprojects/DetailPage';
 
-import CapitalProjectsOld from '../app/capitalprojectsold/Explorer';
-import ProjectPageOld from '../app/capitalprojectsold/ProjectPage';
-
 import FeedbackPage from '../app/pages/FeedbackPage';
 
 import NotFound from '../app/pages/NotFound';
@@ -75,9 +72,6 @@ module.exports = (
     <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalprojects/explorer" component={CapitalProjectsExplorer} title={'Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} onEnter={confirmPermissions('sitewide_access')} />
-
-    <Route path="capitalprojectsold" component={CapitalProjectsOld} title={'Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalprojectsold/:id" component={ProjectPageOld} title={'Capital Project Details'} onEnter={confirmPermissions('sitewide_access')} />
 
     <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} onEnter={confirmPermissions('sitewide_access')} />
 
