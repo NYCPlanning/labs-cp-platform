@@ -53,7 +53,8 @@ const FeedbackForm = React.createClass({
     const profile = AuthService.getProfile();
 
     // add user details to payload
-    data.email = profile.email;
+    // check if username exists, set to null if not
+    data.username = ('username' in profile) ? profile.username : null;
     data.user_id = profile.user_id;
     data.ref_type = this.props.ref_type;
     data.ref_id = this.props.ref_id;
