@@ -648,7 +648,13 @@ const Transportation = React.createClass({
             <div className="sidebar-tab-content">
               <div className="padded">
                 <h4>Transportation Layers</h4>
-                <p>These layers are provided by the DoITT GIS Team, and are available on their <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">public carto server</a>.</p>
+                <p>Sources for these data layers are as follows:</p>
+                <h6>Subways</h6>
+                <p>Provided by the DoITT GIS Team, available on their <a href="https://nycdoittpublicdata.carto.com/u/nycpublicdata/">public carto server</a>.</p>
+                <h6>Bus Stops, PATH</h6>
+                <p>Baruch College CUNY, <a href="https://www.baruch.cuny.edu/confluence/display/geoportal/NYC+Mass+Transit+Spatial+Layers">Newman Library GIS Lab</a>.</p>
+                <h6>Bike Routes</h6>
+                <p />
               </div>
             </div>
           </Tab>
