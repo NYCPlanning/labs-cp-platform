@@ -21,7 +21,7 @@ const FeedbackPage = React.createClass({
     const jwt = AuthService.getToken();
 
     $.ajax({ // eslint-disable-line no-undef
-      url: `//${api_domain}/api/feedback/list/${this.props.params.type}`,
+      url: `//${api_domain}/feedback/list/${this.props.params.type}`,
       type: 'GET',
       headers: { Authorization: `Bearer ${jwt}` },
       success: (data) => {
