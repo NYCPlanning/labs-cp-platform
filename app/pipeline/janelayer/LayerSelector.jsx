@@ -89,7 +89,7 @@ const LayerSelector = React.createClass({
 
   componentDidMount() {
     this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
+      columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
       tablename: 'pipeline_projects_dev',
     };
 
@@ -143,7 +143,20 @@ const LayerSelector = React.createClass({
   createMultiSelectSQLChunk(dimension, values) {
     // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
     // like ( dimension = 'value1' OR dimension = 'value2')
+
+    // inject some additional values to handle the demolition use className
+    // demolitions where permit is issues should also show up under searches for complete.
+    const demolitionIsSelected = this.state.filterDimensions.dcp_permit_type.filter(d => d.value === 'Demolition').length > 0;
+    const completeIsSelected = values.filter(d => d.value === 'Complete').length > 0;
+    const permitIssuedIsSelected = values.filter(d => d.value === 'Permit issued').length > 0;
+
+    console.log('demolition is selected', demolitionIsSelected, completeIsSelected, permitIssuedIsSelected);
+
     const subChunks = values.map(value => `${dimension} = '${value.value}'`);
+
+    if (dimension === 'dcp_pipeline_status' && demolitionIsSelected && (completeIsSelected || permitIssuedIsSelected)) {
+      subChunks.push('dcp_pipeline_status = \'Demolition (complete)\'');
+    }
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
       const chunk = `(${subChunks.join(' OR ')})`;
