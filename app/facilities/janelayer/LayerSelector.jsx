@@ -8,7 +8,7 @@ import Select from 'react-select';
 import CountWidget from '../../common/CountWidget';
 import InfoIcon from '../../common/InfoIcon';
 import NestedSelect from './NestedSelect';
-import Checkbox from './Checkbox';
+import Checkbox from '../../common/Checkbox';
 
 import config from './config';
 import Carto from '../../helpers/carto';

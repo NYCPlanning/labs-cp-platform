@@ -77,6 +77,8 @@ const AuthService = {
 
     lock.show();
     lock.on('authenticated', this.doAuthentication);
+
+    return lock;
   },
 
   signup() {

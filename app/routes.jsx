@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from '../app/App';
 import AuthService from './helpers/AuthService';
+import Login from '../app/pages/Login';
 
 import HomePage from '../app/pages/HomePage';
 import About from '../app/pages/About';
@@ -45,9 +46,12 @@ const confirmPermissions = permission => ((nextState, replace) => {
     // if trying to load homepage, reroute to facilities, else reroute to not found
     if (nextState.location.pathname === '/') {
       replace({ pathname: '/facilities' });
-    } else {
-      replace({ pathname: '/notfound' });
     }
+
+    replace({
+      pathname: '/login',
+      state: { returnTo: nextState.location.pathname },
+    });
   }
 });
 
@@ -75,6 +79,7 @@ module.exports = (
 
     <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} onEnter={confirmPermissions('sitewide_access')} />
 
+    <Route path="login" component={Login} title={'Login'} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="notfound" component={NotFound} />
     <Route path="*" onEnter={rerouteNotFound} />

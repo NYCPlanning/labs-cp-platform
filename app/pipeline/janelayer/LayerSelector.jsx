@@ -1,10 +1,10 @@
 import React from 'react';
-import Select from 'react-select';
 import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../../common/CountWidget';
 import Carto from '../../helpers/carto';
+import Checkboxes from './Checkboxes';
 
 import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
@@ -32,38 +32,35 @@ const filterDimensions = {
         label: 'Application filed',
         value: 'Application filed',
       },
+    ],
+  },
+  dcp_permit_type: {
+    label: 'Permit Type',
+    options: [
       {
-        label: 'Demolition (complete)',
-        value: 'Demolition (complete)',
+        label: 'New Building',
+        value: 'New Building',
+      },
+      {
+        label: 'Demolition',
+        value: 'Demolition',
+      },
+      {
+        label: 'Alteration',
+        value: 'Alteration',
       },
     ],
   },
-  dcp_pipeline_category: {
+  dcp_development_type: {
     label: 'Development Type',
     options: [
       {
-        label: 'New Building - Residential',
-        value: 'New Building - Residential',
+        label: 'Residential',
+        value: 'Residential',
       },
       {
-        label: 'New Building - Non-residential',
-        value: 'New Building - Non-residential',
-      },
-      {
-        label: 'Alteration - Residential',
-        value: 'Alteration - Residential',
-      },
-      {
-        label: 'Alteration - Non-residential',
-        value: 'Alteration - Non-residential',
-      },
-      {
-        label: 'Demolition - Residential',
-        value: 'Demolition - Residential',
-      },
-      {
-        label: 'Demolition - Non-residential',
-        value: 'Demolition - Non-residential',
+        label: 'Non-residential',
+        value: 'Non-residential',
       },
     ],
   },
@@ -81,17 +78,9 @@ const LayerSelector = React.createClass({
       totalCount: null,
       dateFilter: true,
       filterDimensions: {
-        dcp_pipeline_status: [
-          {
-            label: 'Complete',
-            value: 'Complete',
-          },
-          {
-            label: 'Partial complete',
-            value: 'Partial complete',
-          },
-        ],
-        dcp_pipeline_category: filterDimensions.dcp_pipeline_category.options,
+        dcp_pipeline_status: filterDimensions.dcp_pipeline_status.options,
+        dcp_permit_type: filterDimensions.dcp_permit_type.options,
+        dcp_development_type: filterDimensions.dcp_development_type.options,
         dcp_units_use_map: [-310, 1670],
         dob_cofo_date: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
       },
@@ -101,7 +90,7 @@ const LayerSelector = React.createClass({
   componentDidMount() {
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_units_use_map, dob_permit_address',
-      tablename: 'pipeline_projects',
+      tablename: 'pipeline_projects_dev',
     };
 
     this.buildSQL();
@@ -140,6 +129,8 @@ const LayerSelector = React.createClass({
 
     const sql = sqlTemplate + chunksString;
 
+    console.log(sql);
+
     // since pipeline does not start with all selected, we must provide a query that will count all rows
     const totalSql = `SELECT * FROM ${this.sqlConfig.tablename}`;
     if (this.state.totalCount == null) this.getTotalCount(totalSql);
@@ -158,6 +149,8 @@ const LayerSelector = React.createClass({
       const chunk = `(${subChunks.join(' OR ')})`;
 
       this.sqlChunks[dimension] = chunk;
+    } else {
+      this.sqlChunks[dimension] = 'FALSE'; // if no options in the multiselect are selected, make the resulting SQL return no rows
     }
   },
 
@@ -180,7 +173,8 @@ const LayerSelector = React.createClass({
     this.sqlChunks = {};
     // generate SQL WHERE partials for each filter dimension
     this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
-    this.createMultiSelectSQLChunk('dcp_pipeline_category', this.state.filterDimensions.dcp_pipeline_category);
+    this.createMultiSelectSQLChunk('dcp_permit_type', this.state.filterDimensions.dcp_permit_type);
+    this.createMultiSelectSQLChunk('dcp_development_type', this.state.filterDimensions.dcp_development_type);
     this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
 
     if (this.state.dateFilter) {
@@ -230,7 +224,7 @@ const LayerSelector = React.createClass({
         <CountWidget
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
-          units={'developments'}
+          units={'records'}
         />
         <List>
           <Subheader
@@ -245,13 +239,25 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <Select
-              multi
+            <Checkboxes
               value={this.state.filterDimensions.dcp_pipeline_status}
-              name="form-field-name"
-              placeholder="No Status Filter Applied"
               options={filterDimensions.dcp_pipeline_status.options}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
+            />
+          </ListItem>
+
+          <Subheader>
+            Permit Type
+            <InfoIcon text="Categorizes developments based on the construction and housing types, determined using DOB Permit data" />
+          </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <Checkboxes
+              value={this.state.filterDimensions.dcp_permit_type}
+              options={filterDimensions.dcp_permit_type.options}
+              onChange={this.handleChange.bind(this, 'dcp_permit_type')}
             />
           </ListItem>
 
@@ -263,13 +269,10 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <Select
-              multi
-              value={this.state.filterDimensions.dcp_pipeline_category}
-              name="form-field-name"
-              placeholder="No Category Filter Applied"
-              options={filterDimensions.dcp_pipeline_category.options}
-              onChange={this.handleChange.bind(this, 'dcp_pipeline_category')}
+            <Checkboxes
+              value={this.state.filterDimensions.dcp_development_type}
+              options={filterDimensions.dcp_development_type.options}
+              onChange={this.handleChange.bind(this, 'dcp_development_type')}
             />
           </ListItem>
 
