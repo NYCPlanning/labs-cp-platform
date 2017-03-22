@@ -1,6 +1,7 @@
 // Checkboxes.jsx - A checkbox multiselect component, built to mirror the same inputs
 // and outputs as the react-select multiselect component
 
+
 import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 import _ from 'underscore';
@@ -8,6 +9,34 @@ import _ from 'underscore';
 import Checkbox from '../../common/Checkbox';
 
 import './Checkboxes.scss';
+
+const LegendCircle = (props) => {
+  const { color, type } = props;
+
+  const style = {
+    fill: {
+      height: '12px',
+      width: '12px',
+      background: color,
+      display: 'inline-block',
+      borderRadius: '6px',
+      marginLeft: '6px',
+    },
+    stroke: {
+      height: '13px',
+      width: '13px',
+      background: 'transparent',
+      display: 'inline-block',
+      borderRadius: '7px',
+      border: `2px solid ${color}`,
+      marginLeft: '7px',
+    },
+  };
+
+  return (
+    <div className="legend-circle" style={style[type]}> </div>
+  );
+};
 
 const Checkboxes = React.createClass({
 
@@ -38,7 +67,7 @@ const Checkboxes = React.createClass({
   },
 
   render() {
-    const { options, value } = this.props;
+    const { options, value, legendCircleType } = this.props;
 
     const checkboxListItems = options.map((option) => {
       const isChecked = value.filter(d => d.value === option.value).length > 0;
@@ -51,9 +80,15 @@ const Checkboxes = React.createClass({
         />
       );
 
+      const label = (
+        <div>
+          {option.label} {legendCircleType !== 'none' ? <LegendCircle color={option.color} type={legendCircleType} /> : null}
+        </div>
+      );
+
       return (
         <ListItem
-          primaryText={option.label}
+          primaryText={label}
           style={{
             padding: '4px 8px 4px 48px',
           }}

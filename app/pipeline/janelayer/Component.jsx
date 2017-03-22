@@ -45,13 +45,23 @@ const Pipeline = React.createClass({
     this.props.onUpdate('pipeline', {
       sources: newConfig.sources,
       mapLayers: newConfig.mapLayers,
-      legend: newConfig.legend,
+      // legend: newConfig.legend,
     });
   },
 
   render() {
+    // necessary for scrolling in tab Content
+    const tabTemplateStyle = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+    };
+
     return (
-      <Tabs className="sidebar-tabs">
+      <Tabs
+        className="sidebar-tabs"
+        tabTemplateStyle={tabTemplateStyle}
+      >
         <Tab label="Data">
           <LayerSelector
             updateSQL={this.updateLayerConfig}

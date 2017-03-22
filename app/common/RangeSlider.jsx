@@ -30,6 +30,7 @@ const RangeSlider = React.createClass({
       max_postfix: self.props.max_postfix,
       force_edges: self.props.force_edges,
       prettify_enabled: self.props.prettify_enabled,
+      keyboard: self.props.keyboard,
       values: self.props.values,
     });
 

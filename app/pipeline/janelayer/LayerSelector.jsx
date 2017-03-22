@@ -19,18 +19,22 @@ const filterDimensions = {
       {
         label: 'Complete',
         value: 'Complete',
+        color: '#525252',
       },
       {
         label: 'Partial complete',
         value: 'Partial complete',
+        color: '#969696',
       },
       {
         label: 'Permit issued',
         value: 'Permit issued',
+        color: '#cccccc',
       },
       {
         label: 'Application filed',
         value: 'Application filed',
+        color: '#f7f7f7',
       },
     ],
   },
@@ -40,14 +44,17 @@ const filterDimensions = {
       {
         label: 'New Building',
         value: 'New Building',
-      },
-      {
-        label: 'Demolition',
-        value: 'Demolition',
+        color: 'rgba(0, 228, 14, 0.7)',
       },
       {
         label: 'Alteration',
         value: 'Alteration',
+        color: 'rgba(81, 99, 230, 0.77)',
+      },
+      {
+        label: 'Demolition',
+        value: 'Demolition',
+        color: 'rgba(234, 62, 62, 1)',
       },
     ],
   },
@@ -81,8 +88,9 @@ const LayerSelector = React.createClass({
         dcp_pipeline_status: filterDimensions.dcp_pipeline_status.options,
         dcp_permit_type: filterDimensions.dcp_permit_type.options,
         dcp_development_type: filterDimensions.dcp_development_type.options,
-        dcp_units_use_map: [-310, 1670],
+        dcp_units_use_map: [-1445, 1669],
         dob_cofo_date: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
+        dob_pdate: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
       },
     });
   },
@@ -190,6 +198,8 @@ const LayerSelector = React.createClass({
     this.createMultiSelectSQLChunk('dcp_development_type', this.state.filterDimensions.dcp_development_type);
     this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
 
+    this.createDateSQLChunk('dob_pdate', this.state.filterDimensions.dob_pdate);
+
     if (this.state.dateFilter) {
       this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date);
     }
@@ -233,13 +243,13 @@ const LayerSelector = React.createClass({
     };
 
     return (
-      <div>
+      <div className="sidebar-tab-content facilities-filter">
         <CountWidget
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
           units={'records'}
         />
-        <List>
+        <div className="scroll-container count-widget-offset">
           <Subheader
             style={{
               paddingTop: '12px',
@@ -256,6 +266,7 @@ const LayerSelector = React.createClass({
               value={this.state.filterDimensions.dcp_pipeline_status}
               options={filterDimensions.dcp_pipeline_status.options}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
+              legendCircleType={'none'}
             />
           </ListItem>
 
@@ -271,6 +282,7 @@ const LayerSelector = React.createClass({
               value={this.state.filterDimensions.dcp_permit_type}
               options={filterDimensions.dcp_permit_type.options}
               onChange={this.handleChange.bind(this, 'dcp_permit_type')}
+              legendCircleType={'fill'}
             />
           </ListItem>
 
@@ -286,11 +298,12 @@ const LayerSelector = React.createClass({
               value={this.state.filterDimensions.dcp_development_type}
               options={filterDimensions.dcp_development_type.options}
               onChange={this.handleChange.bind(this, 'dcp_development_type')}
+              legendCircleType={'none'}
             />
           </ListItem>
 
           <Subheader>
-            Development Size (Net Units)
+            Total New Units
             <InfoIcon text="Net change in units resulting from development. Negative values occur from demolitions and/or alterations that reduce the number of units." />
           </Subheader>
           <ListItem
@@ -301,6 +314,26 @@ const LayerSelector = React.createClass({
               data={this.state.filterDimensions.dcp_units_use_map}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
+              grid
+              keyboard
+              max_postfix="+"
+            />
+          </ListItem>
+
+          <Subheader>
+            Permit Issued
+            <InfoIcon text="Reflects date(s) when permits were issued by DOB" />
+          </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <RangeSlider
+              data={this.state.filterDimensions.dob_pdate}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'dob_pdate')}
+              disable={!this.state.dateFilter}
+              prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
             />
           </ListItem>
 
@@ -320,7 +353,7 @@ const LayerSelector = React.createClass({
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
             />
           </ListItem>
-        </List>
+        </div>
       </div>
     );
   },
