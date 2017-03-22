@@ -9,6 +9,7 @@ import Checkboxes from './Checkboxes';
 import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
 
+import './LayerSelector.scss';
 
 const filterDimensions = {
   sqlChunks: {},
@@ -234,6 +235,19 @@ const LayerSelector = React.createClass({
     this.buildSQL();
   },
 
+  handleInputChange(i, e) { // handles changes to the manual inputs for total units
+    const self = this;
+    const value = parseInt(e.target.value);
+
+    console.log(value);
+
+    if (!isNaN(value)) {
+      const newFilterDimensions = this.state.filterDimensions;
+      newFilterDimensions.dcp_units_use_map[i] = value;
+      this.setState({ filterDimensions: newFilterDimensions }, () => { self.buildSQL(); });
+    }
+  },
+
   sqlChunks: {},
 
   render() {
@@ -243,7 +257,7 @@ const LayerSelector = React.createClass({
     };
 
     return (
-      <div className="sidebar-tab-content facilities-filter">
+      <div className="sidebar-tab-content pipeline-layer-selector">
         <CountWidget
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
@@ -310,6 +324,21 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
+            <div className="manual-input">
+              <input
+                type="text"
+                className="form-control mb-2 mr-sm-2 mb-sm-0"
+                value={this.state.filterDimensions.dcp_units_use_map[0]}
+                onChange={this.handleInputChange.bind(this, 0)}
+              />
+              <input
+                type="text"
+                style={{ float: 'right' }}
+                className="form-control mb-2 mr-sm-2 mb-sm-0"
+                value={this.state.filterDimensions.dcp_units_use_map[1]}
+                onChange={this.handleInputChange.bind(this, 1)}
+              />
+            </div>
             <RangeSlider
               data={this.state.filterDimensions.dcp_units_use_map}
               type={'double'}

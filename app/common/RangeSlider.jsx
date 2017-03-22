@@ -51,6 +51,11 @@ const RangeSlider = React.createClass({
         disable: false,
       });
     }
+
+    this.slider.update({
+      from: nextProps.data[0],
+      to: nextProps.data[1],
+    });
   },
 
   render() {
