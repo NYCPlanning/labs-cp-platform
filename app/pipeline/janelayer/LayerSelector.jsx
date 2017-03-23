@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem } from 'material-ui/List';
+import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../../common/CountWidget';
@@ -139,11 +139,8 @@ const LayerSelector = React.createClass({
 
     const sql = sqlTemplate + chunksString;
 
-    console.log(sql);
-
     // since pipeline does not start with all selected, we must provide a query that will count all rows
-    const totalSql = `SELECT * FROM ${this.sqlConfig.tablename}`;
-    if (this.state.totalCount == null) this.getTotalCount(totalSql);
+    if (this.state.totalCount == null) this.getTotalCount(sql);
 
     this.props.updateSQL(sql);
 
@@ -159,8 +156,6 @@ const LayerSelector = React.createClass({
     const demolitionIsSelected = this.state.filterDimensions.dcp_permit_type.filter(d => d.value === 'Demolition').length > 0;
     const completeIsSelected = values.filter(d => d.value === 'Complete').length > 0;
     const permitIssuedIsSelected = values.filter(d => d.value === 'Permit issued').length > 0;
-
-    console.log('demolition is selected', demolitionIsSelected, completeIsSelected, permitIssuedIsSelected);
 
     const subChunks = values.map(value => `${dimension} = '${value.value}'`);
 
@@ -197,9 +192,6 @@ const LayerSelector = React.createClass({
   },
 
   createSQLChunks() {
-
-    console.log('createSQLChunks');
-
     this.sqlChunks = {};
     // generate SQL WHERE partials for each filter dimension
     this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
@@ -269,10 +261,8 @@ const LayerSelector = React.createClass({
     this.buildSQL();
   },
 
-  handleInputChange(i, e) { // handles changes to the manual inputs for total units
+  handleInputChange() { // handles changes to the manual inputs for total units
     const self = this;
-
-    console.log(this.unitsMin, this.unitsMin.value)
 
     const newFilterDimensions = this.state.filterDimensions;
     newFilterDimensions.dcp_units_use_map = [this.unitsMin.value, this.unitsMax.value];
@@ -288,8 +278,6 @@ const LayerSelector = React.createClass({
     };
 
     const { filterDimensions, issueDateFilterDisabled, completionDateFilterDisabled, totalCount, selectedCount } = this.state;
-
-    console.log(filterDimensions)
 
     return (
       <div className="sidebar-tab-content pipeline-layer-selector">
@@ -364,16 +352,16 @@ const LayerSelector = React.createClass({
                 type="text"
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
                 defaultValue={filterDimensions.dcp_units_use_map[0]}
-                ref={(unitsMin) => this.unitsMin = unitsMin}
+                ref={(unitsMin) => { this.unitsMin = unitsMin; }}
               />
               <input
                 type="text"
                 style={{ float: 'right' }}
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
                 defaultValue={filterDimensions.dcp_units_use_map[1]}
-                ref={(unitsMax) => this.unitsMax = unitsMax}
+                ref={(unitsMax) => { this.unitsMax = unitsMax; }}
               />
-            <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" />
             </form>
             <RangeSlider
               data={filterDimensions.dcp_units_use_map}
@@ -381,7 +369,7 @@ const LayerSelector = React.createClass({
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
               grid
               keyboard
-              max_postfix="+"
+              force_edges
             />
           </ListItem>
 
@@ -399,6 +387,7 @@ const LayerSelector = React.createClass({
               onChange={this.handleSliderChange.bind(this, 'dob_qdate')}
               disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
+              force_edges
             />
           </ListItem>
 
@@ -416,6 +405,7 @@ const LayerSelector = React.createClass({
               onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
+              force_edges
             />
           </ListItem>
         </div>

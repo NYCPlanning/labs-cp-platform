@@ -16,25 +16,6 @@ const LayerConfig = {
       },
     ],
     mapLayers: [
-      // {
-      //   id: 'pipeline-outline',
-      //   source: 'pipeline-points',
-      //   'source-layer': 'layer0',
-      //   type: 'circle',
-      //   paint: {
-      //     'circle-radius': {
-      //       property: 'dcp_units_use_map',
-      //       stops: [
-      //         [{ zoom: 10, value: -12 }, 2],
-      //         [{ zoom: 10, value: 1669 }, 5],
-      //         [{ zoom: 14, value: -12 }, 6],
-      //         [{ zoom: 14, value: 1669 }, 15],
-      //       ],
-      //     },
-      //     'circle-color': '#FFF',
-      //     'circle-opacity': 0.7,
-      //   },
-      // },
       {
         id: 'pipeline-points',
         source: 'pipeline-points',
@@ -61,19 +42,13 @@ const LayerConfig = {
               ['Demolition', 'rgba(234, 62, 62, 1)'],
             ],
           },
-          // 'circle-stroke-color': {
-          //   property: 'dcp_pipeline_status',
-          //   type: 'categorical',
-          //   stops: [
-          //     ['Application filed', '#f7f7f7'],
-          //     ['Permit issued', '#cccccc'],
-          //     ['Partial complete', '#969696'],
-          //     ['Complete', '#525252'],
-          //     ['Demolition (complete)', '#525252'],
-          //   ],
-          // },
           'circle-stroke-color': '#000',
-          'circle-stroke-width': 1,
+          'circle-stroke-width': {
+            stops: [
+              [11, 0],
+              [12, 1],
+            ],
+          },
           'circle-stroke-opacity': 0.5,
           'circle-opacity': 0.5,
         },

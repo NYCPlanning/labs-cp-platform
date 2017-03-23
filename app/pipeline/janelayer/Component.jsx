@@ -6,6 +6,8 @@ import LayerSelector from './LayerSelector';
 import LayerConfig from './LayerConfig';
 import Download from '../../common/Download';
 import content from '../content';
+import SignupPrompt from '../../common/SignupPrompt';
+
 
 const Pipeline = React.createClass({
   propTypes: {
@@ -68,13 +70,16 @@ const Pipeline = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <Download
-            sql={this.state.sql}
-            filePrefix="developments"
-          />
+          <div className="sidebar-tab-content padded">
+            <Download
+              sql={this.state.sql}
+              filePrefix="developments"
+            />
+            <SignupPrompt />
+          </div>
         </Tab>
         <Tab label="About">
-          <div className="sidebar-tab-content">
+          <div className="sidebar-tab-content padded">
             {content.about}
           </div>
         </Tab>
