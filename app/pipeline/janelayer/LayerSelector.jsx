@@ -11,7 +11,7 @@ import InfoIcon from '../../common/InfoIcon';
 
 import './LayerSelector.scss';
 
-const filterDimensions = {
+const defaultFilterDimensions = {
   sqlChunks: {},
 
   dcp_pipeline_status: {
@@ -84,14 +84,15 @@ const LayerSelector = React.createClass({
     return ({
       selectedCount: null,
       totalCount: null,
-      dateFilter: true,
+      issueDateFilterDisabled: true,
+      completionDateFilterDisabled: true,
       filterDimensions: {
-        dcp_pipeline_status: filterDimensions.dcp_pipeline_status.options,
-        dcp_permit_type: filterDimensions.dcp_permit_type.options,
-        dcp_development_type: filterDimensions.dcp_development_type.options,
+        dcp_pipeline_status: defaultFilterDimensions.dcp_pipeline_status.options,
+        dcp_permit_type: defaultFilterDimensions.dcp_permit_type.options,
+        dcp_development_type: defaultFilterDimensions.dcp_development_type.options,
         dcp_units_use_map: [-1445, 1669],
         dob_cofo_date: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
-        dob_pdate: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
+        dob_qdate: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
       },
     });
   },
@@ -182,8 +183,12 @@ const LayerSelector = React.createClass({
       to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    if (this.state.dateFilter) {
+    if (dimension === 'dob_cofo_date') {
       this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= '${dateRangeFormatted.to}' OR dob_cofo_date_last <= '${dateRangeFormatted.from}')`;
+    }
+
+    if (dimension === 'dob_qdate') {
+      this.sqlChunks[dimension] = `(dob_qdate >= '${dateRangeFormatted.from}' AND dob_qdate <= '${dateRangeFormatted.to}')`;
     }
   },
 
@@ -192,6 +197,9 @@ const LayerSelector = React.createClass({
   },
 
   createSQLChunks() {
+
+    console.log('createSQLChunks');
+
     this.sqlChunks = {};
     // generate SQL WHERE partials for each filter dimension
     this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
@@ -199,10 +207,14 @@ const LayerSelector = React.createClass({
     this.createMultiSelectSQLChunk('dcp_development_type', this.state.filterDimensions.dcp_development_type);
     this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
 
-    this.createDateSQLChunk('dob_pdate', this.state.filterDimensions.dob_pdate);
+    this.createDateSQLChunk('dob_qdate', this.state.filterDimensions.dob_qdate);
 
-    if (this.state.dateFilter) {
+    if (!this.state.completionDateFilterDisabled) {
       this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date);
+    }
+
+    if (!this.state.issueDateFilterDisabled) {
+      this.createDateSQLChunk('dob_qdate', this.state.filterDimensions.dob_qdate);
     }
   },
 
@@ -212,15 +224,30 @@ const LayerSelector = React.createClass({
 
     // if dimension is status, check which items are included and disable/reset date slider accordingly
     if (dimension === 'dcp_pipeline_status') {
-      const invalidValues = values.filter(value => (
-        (value.value === 'Permit issued' || value.value === 'Application filed' || value.value === 'Demolition (complete)') ? value.value : null
+      const invalidValuesCompletion = values.filter(value => (
+        (value.value === 'Permit issued' || value.value === 'Application filed') ? value.value : null
       ));
 
-      if (invalidValues.length > 0 || values.length === 0) {
-        this.state.filterDimensions.dob_cofo_date = [moment('2011-1-1').format('X'), moment().format('X')]; // eslint-disable-line no-undef
-        this.state.dateFilter = false;
+
+      // Completion Slider
+      if (invalidValuesCompletion.length > 0 || values.length === 0) {
+        this.state.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // reset defaults
+        this.state.completionDateFilterDisabled = true;
       } else {
-        this.state.dateFilter = true;
+        this.state.completionDateFilterDisabled = false;
+      }
+
+      // Permit Issued Slider
+      const invalidValuesIssued = values.filter(value => (
+        (value.value === 'Application filed') ? value.value : null
+      ));
+
+
+      if (invalidValuesIssued.length > 0 || values.length === 0) {
+        this.state.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // reset defaults
+        this.state.issueDateFilterDisabled = true;
+      } else {
+        this.state.issueDateFilterDisabled = false;
       }
     }
 
@@ -231,21 +258,25 @@ const LayerSelector = React.createClass({
   handleSliderChange(dimension, data) {
     // expects the data output from the ionRangeSlider
     // updates state with an array of the filter range
+
+    // update the manual input elements
+    if (dimension === 'dcp_units_use_map') {
+      this.unitsMin.value = data.from;
+      this.unitsMax.value = data.to;
+    }
+
     this.state.filterDimensions[dimension] = [data.from, data.to];
     this.buildSQL();
   },
 
   handleInputChange(i, e) { // handles changes to the manual inputs for total units
     const self = this;
-    const value = parseInt(e.target.value);
 
-    console.log(value);
+    console.log(this.unitsMin, this.unitsMin.value)
 
-    if (!isNaN(value)) {
-      const newFilterDimensions = this.state.filterDimensions;
-      newFilterDimensions.dcp_units_use_map[i] = value;
-      this.setState({ filterDimensions: newFilterDimensions }, () => { self.buildSQL(); });
-    }
+    const newFilterDimensions = this.state.filterDimensions;
+    newFilterDimensions.dcp_units_use_map = [this.unitsMin.value, this.unitsMax.value];
+    this.setState({ filterDimensions: newFilterDimensions }, () => { self.buildSQL(); });
   },
 
   sqlChunks: {},
@@ -256,11 +287,15 @@ const LayerSelector = React.createClass({
       paddingTop: '0px',
     };
 
+    const { filterDimensions, issueDateFilterDisabled, completionDateFilterDisabled, totalCount, selectedCount } = this.state;
+
+    console.log(filterDimensions)
+
     return (
       <div className="sidebar-tab-content pipeline-layer-selector">
         <CountWidget
-          totalCount={this.state.totalCount}
-          selectedCount={this.state.selectedCount}
+          totalCount={totalCount}
+          selectedCount={selectedCount}
           units={'records'}
         />
         <div className="scroll-container count-widget-offset">
@@ -277,8 +312,8 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              value={this.state.filterDimensions.dcp_pipeline_status}
-              options={filterDimensions.dcp_pipeline_status.options}
+              value={filterDimensions.dcp_pipeline_status}
+              options={defaultFilterDimensions.dcp_pipeline_status.options}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
               legendCircleType={'none'}
             />
@@ -293,8 +328,8 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              value={this.state.filterDimensions.dcp_permit_type}
-              options={filterDimensions.dcp_permit_type.options}
+              value={filterDimensions.dcp_permit_type}
+              options={defaultFilterDimensions.dcp_permit_type.options}
               onChange={this.handleChange.bind(this, 'dcp_permit_type')}
               legendCircleType={'fill'}
             />
@@ -309,8 +344,8 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              value={this.state.filterDimensions.dcp_development_type}
-              options={filterDimensions.dcp_development_type.options}
+              value={filterDimensions.dcp_development_type}
+              options={defaultFilterDimensions.dcp_development_type.options}
               onChange={this.handleChange.bind(this, 'dcp_development_type')}
               legendCircleType={'none'}
             />
@@ -324,23 +359,24 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <div className="manual-input">
+            <form className="manual-input" onSubmit={this.handleInputChange}>
               <input
                 type="text"
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
-                value={this.state.filterDimensions.dcp_units_use_map[0]}
-                onChange={this.handleInputChange.bind(this, 0)}
+                defaultValue={filterDimensions.dcp_units_use_map[0]}
+                ref={(unitsMin) => this.unitsMin = unitsMin}
               />
               <input
                 type="text"
                 style={{ float: 'right' }}
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
-                value={this.state.filterDimensions.dcp_units_use_map[1]}
-                onChange={this.handleInputChange.bind(this, 1)}
+                defaultValue={filterDimensions.dcp_units_use_map[1]}
+                ref={(unitsMax) => this.unitsMax = unitsMax}
               />
-            </div>
+            <input type="submit" value="Submit" />
+            </form>
             <RangeSlider
-              data={this.state.filterDimensions.dcp_units_use_map}
+              data={filterDimensions.dcp_units_use_map}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
               grid
@@ -358,10 +394,10 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <RangeSlider
-              data={this.state.filterDimensions.dob_pdate}
+              data={filterDimensions.dob_qdate}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_pdate')}
-              disable={!this.state.dateFilter}
+              onChange={this.handleSliderChange.bind(this, 'dob_qdate')}
+              disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
             />
           </ListItem>
@@ -375,10 +411,10 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <RangeSlider
-              data={this.state.filterDimensions.dob_cofo_date}
+              data={filterDimensions.dob_cofo_date}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
-              disable={!this.state.dateFilter}
+              disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
             />
           </ListItem>
