@@ -8,7 +8,30 @@
 
   }
 
+  .badge {
+    margin-bottom: 10px;
+    margin-right: 5px;
+    font-size: 13px;
+  }
+
+  .panel-body {
+    h3 {
+      margin: 0;
+    }
+  }
+
   .dev-status {
     text-align: center;
+
+    h3 {
+      margin: 0;
+    }
+    h4 {
+      margin-top: 0;
+      color: grey;
+    }
+    p {
+      margin: 0;
+    }
   }
 }

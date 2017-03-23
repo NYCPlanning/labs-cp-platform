@@ -57,8 +57,9 @@ const DevelopmentPage = React.createClass({
                 </small>
               </h3>
               <h1>{d.dob_permit_address}, {NycGeom.getBoroughNameFromId(d.dob_permit_borough)}</h1>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_type_1}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_type_2}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_permit_type}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_development_type}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_pipeline_status}</span>
             </div>
           </div>
         </div>
@@ -104,7 +105,7 @@ const DevelopmentPage = React.createClass({
           <div className="row">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading">Development Status</div>
+                <div className="panel-heading">Development Milestones</div>
                 <div className="panel-body">
                   <div className={'col-md-4'}>
                     <div className="dev-status">
