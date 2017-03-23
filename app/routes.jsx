@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, Redirect} from 'react-router';
+import { Route, IndexRoute, Redirect } from 'react-router';
 
 import App from '../app/App';
 import AuthService from './helpers/AuthService';
@@ -46,12 +46,9 @@ const confirmPermissions = permission => ((nextState, replace) => {
     // if trying to load homepage, reroute to facilities, else reroute to not found
     if (nextState.location.pathname === '/') {
       replace({ pathname: '/facilities' });
+    } else {
+      replace({ pathname: '/notfound' });
     }
-
-    replace({
-      pathname: '/login',
-      state: { returnTo: nextState.location.pathname },
-    });
   }
 });
 
