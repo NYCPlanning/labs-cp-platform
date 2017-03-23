@@ -15,7 +15,7 @@ const Item = (props) => {
     >
       <div
         className={'facilities-list-item'} style={{
-          borderLeft: `5px solid ${colors.getStatusColor(d.dcp_pipeline_status)}`,
+          borderLeft: `5px solid ${colors.getStatusColor(d.dcp_permit_type)}`,
         }}
       >
         <div className={'title'}>{d.dob_permit_address}</div>

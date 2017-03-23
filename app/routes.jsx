@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRoute, Redirect} from 'react-router';
 
 import App from '../app/App';
 import AuthService from './helpers/AuthService';
@@ -69,7 +69,8 @@ module.exports = (
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} />
     <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} />
 
-    <Route path="pipeline" component={PipelineExplorer} title={'Housing Development Pipeline'} onEnter={confirmPermissions('sitewide_access')} />
+    <Redirect from="pipeline" to="pipeline/explorer" />
+    <Route path="pipeline/explorer" component={PipelineExplorer} title={'Housing Development Pipeline'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} onEnter={confirmPermissions('sitewide_access')} />
 
     <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects'} onEnter={confirmPermissions('sitewide_access')} />

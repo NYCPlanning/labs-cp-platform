@@ -223,7 +223,7 @@ const LayerSelector = React.createClass({
 
       // Completion Slider
       if (invalidValuesCompletion.length > 0 || values.length === 0) {
-        this.state.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // reset defaults
+        this.state.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
         this.state.completionDateFilterDisabled = true;
       } else {
         this.state.completionDateFilterDisabled = false;
@@ -236,7 +236,7 @@ const LayerSelector = React.createClass({
 
 
       if (invalidValuesIssued.length > 0 || values.length === 0) {
-        this.state.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // reset defaults
+        this.state.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
         this.state.issueDateFilterDisabled = true;
       } else {
         this.state.issueDateFilterDisabled = false;

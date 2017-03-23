@@ -34,8 +34,13 @@ const LegendCircle = (props) => {
   };
 
   return (
-    <div className="legend-circle" style={style[type]}> </div>
+    <div className="legend-circle" style={style[type]}>&zwnj;</div>
   );
+};
+
+LegendCircle.propTypes = {
+  color: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 const Checkboxes = React.createClass({
@@ -44,6 +49,7 @@ const Checkboxes = React.createClass({
     value: PropTypes.array.isRequired, // array of objects for currently checked items
     options: PropTypes.array.isRequired, // array of objects for all possible items
     onChange: PropTypes.func.isRequired, // function to send an updated array of objects to when a checkbox is toggled
+    legendCircleType: PropTypes.string.isRequired, // string indicating the type of legendCircle
   },
 
   handleChange(option) {
