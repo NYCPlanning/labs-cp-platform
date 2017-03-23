@@ -29,20 +29,24 @@ const NycGeom = {
     const cd = id % 100;
 
     if (geomType === 'cd') {
-      let boro;
-
-      if (borocode === '1') boro = 'Manhattan';
-      else if (borocode === '2') boro = 'Bronx';
-      else if (borocode === '3') boro = 'Brooklyn';
-      else if (borocode === '4') boro = 'Queens';
-      else if (borocode === '5') boro = 'Staten Island';
-
+      const boro = this.getBoroughNameFromId(borocode);
       return `${boro} Community District ${cd}`;
     } else if (geomType === 'nta') {
       return `${nta.getNtaName(id)} (${id})`;
     }
 
     return 'notfound';
+  },
+
+  getBoroughNameFromId(id) {
+    const borocode = id.toString();
+
+    if (borocode === '1') return 'Manhattan';
+    else if (borocode === '2') return 'Bronx';
+    else if (borocode === '3') return 'Brooklyn';
+    else if (borocode === '4') return 'Queens';
+    else if (borocode === '5') return 'Staten Island';
+    return '';
   },
 };
 

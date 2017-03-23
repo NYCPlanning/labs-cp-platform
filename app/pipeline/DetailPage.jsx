@@ -5,6 +5,9 @@ import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import carto from '../helpers/carto';
+import NycGeom from '../helpers/NycGeom';
+
+import './DetailPage.scss';
 
 const DevelopmentPage = React.createClass({
   propTypes: {
@@ -23,15 +26,16 @@ const DevelopmentPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature('pipeline_projects', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature('pipeline_projects_dev', 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => { self.setState({ data }); });
   },
 
   renderContent(data) {
     const d = data.properties;
+    const biswebLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
 
     return (
-      <div className="development-page">
+      <div className="pipeline-page detail-page">
         <div className="col-md-12">
           <div className={'row'}>
             <div
@@ -45,7 +49,85 @@ const DevelopmentPage = React.createClass({
               />
             </div>
             <div className="col-md-9 col-md-pull-3">
-              <h3>{d.dob_permit_address}</h3>
+              <h3 className="id-top-line">
+                <small>
+                  DOB Job <a target="_blank" rel="noopener noreferrer" href={biswebLink}>#{d.dob_job_number}</a> |
+                  BIN: {d.dob_permit_bbl} |
+                  BBL: {d.dob_permit_bin}
+                </small>
+              </h3>
+              <h1>{d.dob_permit_address}, {NycGeom.getBoroughNameFromId(d.dob_permit_borough)}</h1>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_permit_type}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_development_type}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_pipeline_status}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-6">
+          <div className="row equal">
+            <div className={'col-md-6'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">Total Existing Units</div>
+                <div className="panel-body">
+                  {<h3>{d.dob_permit_exist_units ? d.dob_permit_exist_units : 'N/A'}</h3>}
+                </div>
+              </div>
+            </div>
+            <div className={'col-md-6'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">Total Proposed Units</div>
+                <div className="panel-body">
+                  <h3>{d.dob_permit_proposed_units ? d.dob_permit_proposed_units : 'N/A'}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row equal">
+            <div className={'col-md-6'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">Proposed Unit Change</div>
+                <div className="panel-body">
+                  {<h3>{d.dob_permit_proposed_units - d.dob_permit_exist_units}</h3>}
+                </div>
+              </div>
+            </div>
+            <div className={'col-md-6'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">Completed Units (Net)</div>
+                <div className="panel-body">
+                  <h3>{d.dcp_units_complete ? d.dcp_units_complete : 'N/A'}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className={'col-md-12'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">Development Milestones</div>
+                <div className="panel-body">
+                  <div className={'col-md-4'}>
+                    <div className="dev-status">
+                      <h4>Permit Issued</h4>
+                      <h3>{moment(d.dob_qdate).format('MM/DD/YYYY')}</h3>
+                    </div>
+                  </div>
+                  <div className={'col-md-4'}>
+                    <div className="dev-status">
+                      <h4>Initial CofO*</h4>
+                      <h3>{moment(d.dob_cofo_date_first).format('MM/DD/YYYY')}</h3>
+                    </div>
+                  </div>
+                  <div className={'col-md-4'}>
+                    <div className="dev-status">
+                      <h4>Latest CofO</h4>
+                      <h3>{moment(d.dob_cofo_date_last).format('MM/DD/YYYY')}</h3>
+                      <p className="subtext">{d.dob_cofo_type_last}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -57,68 +139,6 @@ const DevelopmentPage = React.createClass({
             ref_type="development"
             ref_id={this.props.params.id}
           />
-        </div>
-        <div className="col-md-6">
-          <ul className="list-group">
-            <li className="list-group-item">
-              <h4>General Information</h4>
-              <dl className="dl-horizontal">
-                <dt>Development Type</dt>
-                <dd>{d.dcp_pipeline_category}</dd>
-
-                <dt>Status</dt>
-                <dd>{d.dcp_pipeline_status}</dd>
-
-                <dt>Total Net Units</dt>
-                <dd>{d.dcp_units_use_map}</dd>
-
-                <dt>Complete Units</dt>
-                <dd>{d.dcp_units_complete}</dd>
-
-                <dt>Incomplete Units (permit issued)</dt>
-                <dd>{d.dcp_units_outstanding}</dd>
-
-                <dt>Potential Units (permit application)</dt>
-                <dd>{d.dcp_units_pending}</dd>
-
-                <dt>BBL</dt>
-                <dd>{d.dob_permit_bbl}</dd>
-
-                <dt>Building Id (BIN)</dt>
-                <dd>{d.dob_permit_bin}</dd>
-              </dl>
-            </li>
-
-
-            <li className="list-group-item">
-              <h4>DOB Certificate of Occupancy Details</h4>
-              <dl className="dl-horizontal">
-                <dt>Earliest CofO (Since 2010)</dt>
-                {/* eslint-disable no-undef */}
-                <dd>{moment(d.dob_cofo_date_first).format('MM/DD/YYYY')}</dd>
-
-                <dt>Most Recent CofO</dt>
-                <dd>{moment(d.dob_cofo_date_last).format('MM/DD/YYYY')}</dd>
-                {/* eslint-enable no-undef */}
-                <dt>Most Recent CofO Type</dt>
-                <dd>{d.dob_cofo_type_last}</dd>
-
-
-              </dl>
-            </li>
-
-            <li className="list-group-item">
-              <h4>HPD Information</h4>
-              <dl className="dl-horizontal">
-                <dt>Project Name</dt>
-                <dd>{d.hpd_project_name}</dd>
-
-                <dt>HPD-Supported Units</dt>
-                <dd>{d.hpd_units_supported_total}</dd>
-
-              </dl>
-            </li>
-          </ul>
         </div>
       </div>
     );
