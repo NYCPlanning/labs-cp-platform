@@ -109,7 +109,7 @@ const DevelopmentPage = React.createClass({
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Permit Issued</h4>
-                      <h3>{moment(d.dob_pdate).format('MM/DD/YYYY')}</h3>
+                      <h3>{moment(d.dob_qdate).format('MM/DD/YYYY')}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
