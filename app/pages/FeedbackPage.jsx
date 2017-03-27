@@ -21,7 +21,7 @@ const FeedbackPage = React.createClass({
     const jwt = AuthService.getToken();
 
     $.ajax({ // eslint-disable-line no-undef
-      url: `//${api_domain}/api/feedback/list/${this.props.params.type}`,
+      url: `//${api_domain}/feedback/list/${this.props.params.type}`,
       type: 'GET',
       headers: { Authorization: `Bearer ${jwt}` },
       success: (data) => {
@@ -40,13 +40,15 @@ const FeedbackPage = React.createClass({
     };
 
     const feedback = this.state.data && this.state.data.map(d => (
+      // console.log(this.state.data);
       <Paper style={style} zDepth={1} className="feedback-item-container">
         <div className="feedback-item">
           <div className="meta">
             <div className="avatar">
               <i className="fa fa-user" aria-hidden="true" />
             </div>
-            <div className="email">{d.email}</div>
+            {/* check if username exists */}
+            <div className="username">{d.username ? d.username : 'unknown user'}</div>
             {/* eslint-disable no-undef */}
             <div className="created-at">{moment(d.createdAt).from(new Date())}</div>
             {/* eslint-enable no-undef */}

@@ -295,7 +295,7 @@ const DetailPage = React.createClass({
           </div>
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
             <FeedbackForm
-              ref_type="capitalproject"
+              ref_type="facility"
               ref_id={this.props.params.id}
               location={this.props.location}
               auth={this.props.auth}
