@@ -261,7 +261,9 @@ const LayerSelector = React.createClass({
     this.buildSQL();
   },
 
-  handleInputChange() { // handles changes to the manual inputs for total units
+  handleInputChange(e) { // handles changes to the manual inputs for total units
+    e.preventDefault();
+
     const self = this;
 
     const newFilterDimensions = this.state.filterDimensions;
