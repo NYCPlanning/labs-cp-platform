@@ -64,9 +64,12 @@ const AuthService = {
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('profile', JSON.stringify(profile));
 
-      // redirect to the path the user was trying to get to, or home
-      // browserHistory.push(authResult.state || '/');
-      browserHistory.push(params.targetPath);
+      // redirect to the path the user was trying to get to, or the same page
+      if (params && params.targetPath) {
+        browserHistory.push(params.targetPath);
+      } else {
+        browserHistory.push(location.pathname);
+      }
     });
   },
 
