@@ -53,7 +53,7 @@ const lockOptions = {
 };
 
 const AuthService = {
-  doAuthentication(authResult) {
+  doAuthentication(params, authResult) {
     const lock = new Auth0Lock(clientId, domain);
     lock.getProfile(authResult.idToken, (error, profile) => {
       if (error) {
@@ -66,17 +66,17 @@ const AuthService = {
 
       // redirect to the path the user was trying to get to, or home
       // browserHistory.push(authResult.state || '/');
-      browserHistory.push(location.pathname);
+      browserHistory.push(params.targetPath);
     });
   },
 
-  login() {
+  login(params) {
     const options = {};
     _.extend(options, lockOptions, {}); // eslint-disable-line no-undef
     const lock = new Auth0Lock(clientId, domain, options);
 
     lock.show();
-    lock.on('authenticated', this.doAuthentication);
+    lock.on('authenticated', this.doAuthentication.bind(this, params));
 
     return lock;
   },
@@ -101,7 +101,7 @@ const AuthService = {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
-    browserHistory.push(location.pathname);
+    browserHistory.push('/');
   },
 
   loggedIn() {
