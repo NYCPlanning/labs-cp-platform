@@ -34,6 +34,8 @@ const DevelopmentPage = React.createClass({
     const d = data.properties;
     const biswebLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
 
+    /* eslint-disable */
+
     return (
       <div className="pipeline-page detail-page">
         <div className="col-md-12">
@@ -110,7 +112,9 @@ const DevelopmentPage = React.createClass({
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Permit Issued</h4>
-                      <h3>{moment(d.dob_qdate).format('MM/DD/YYYY')}</h3>
+                      <h3>
+                        {moment(d.dob_qdate).format('MM/DD/YYYY')}
+                      </h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
@@ -142,6 +146,8 @@ const DevelopmentPage = React.createClass({
         </div>
       </div>
     );
+
+    /* eslint-enable */
   },
 
   render() {

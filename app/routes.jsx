@@ -47,7 +47,12 @@ const confirmPermissions = permission => ((nextState, replace) => {
     if (nextState.location.pathname === '/') {
       replace({ pathname: '/facilities' });
     } else {
-      replace({ pathname: '/notfound' });
+      replace({
+        pathname: '/login',
+        state: {
+          targetPath: nextState.location.pathname,
+        },
+      });
     }
   }
 });

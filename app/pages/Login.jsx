@@ -3,12 +3,13 @@ import AuthService from '../helpers/AuthService';
 
 
 const Login = React.createClass({
+  propTypes: {
+    location: PropTypes.object.isRequired,
+  },
 
   componentDidMount() {
-    const lock = AuthService.login();
-    lock.on('authenticated', () => {
-      console.log('authenticated!')
-    });
+    const targetPath = (this.props.location && this.props.location.state) ? this.props.location.state.targetPath : '/';
+    AuthService.login({ targetPath });
   },
 
   render() {

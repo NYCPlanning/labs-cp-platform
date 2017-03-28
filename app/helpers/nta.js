@@ -786,7 +786,7 @@ const ntas = [
 
 module.exports = {
   getNtaName(ntacode) {
-    const match = ntas.filter(nta => nta.ntacode == ntacode);
+    const match = ntas.filter(nta => nta.ntacode === ntacode);
 
     return match[0].ntaname;
   },
