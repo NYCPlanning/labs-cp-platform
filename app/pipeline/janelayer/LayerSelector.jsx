@@ -20,22 +20,22 @@ const defaultFilterDimensions = {
       {
         label: 'Complete',
         value: 'Complete',
-        color: '#525252',
+        color: '#238b45',
       },
       {
         label: 'Partial complete',
         value: 'Partial complete',
-        color: '#969696',
+        color: '#74c476',
       },
       {
         label: 'Permit issued',
         value: 'Permit issued',
-        color: '#cccccc',
+        color: '#bae4b3',
       },
       {
         label: 'Application filed',
         value: 'Application filed',
-        color: '#f7f7f7',
+        color: '#edf8e9',
       },
     ],
   },
@@ -78,6 +78,8 @@ const defaultFilterDimensions = {
 const LayerSelector = React.createClass({
   propTypes: {
     updateSQL: React.PropTypes.func.isRequired,
+    symbologyDimension: React.PropTypes.string.isRequired,
+    onSymbologyDimensionChange: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -276,10 +278,32 @@ const LayerSelector = React.createClass({
   render() {
     // override material ui ListItem spacing
     const listItemStyle = {
-      paddingTop: '0px',
+      padding: '0px 16px',
     };
 
     const { filterDimensions, issueDateFilterDisabled, completionDateFilterDisabled, totalCount, selectedCount } = this.state;
+    const { symbologyDimension } = this.props;
+
+    const PinSelect = (props) => {
+      const style = {
+        selected: {
+          color: '#D96B27',
+          paddingLeft: '5px',
+        },
+        unselected: {
+          color: '#9C9C9C',
+          paddingLeft: '5px',
+        },
+      };
+
+      return (
+        <div
+          style={props.selected ? style.selected : style.unselected}
+          className="fa fa-map-pin"
+          onClick={props.onClick}
+        />
+      );
+    };
 
     return (
       <div className="sidebar-tab-content pipeline-layer-selector">
@@ -289,13 +313,13 @@ const LayerSelector = React.createClass({
           units={'records'}
         />
         <div className="scroll-container count-widget-offset">
-          <Subheader
-            style={{
-              paddingTop: '12px',
-            }}
-          >
+          <Subheader>
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
+            <PinSelect
+              onClick={() => { this.props.onSymbologyDimensionChange('dcp_pipeline_status'); }}
+              selected={symbologyDimension === 'dcp_pipeline_status'}
+            />
           </Subheader>
           <ListItem
             disabled
@@ -305,13 +329,17 @@ const LayerSelector = React.createClass({
               value={filterDimensions.dcp_pipeline_status}
               options={defaultFilterDimensions.dcp_pipeline_status.options}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
-              legendCircleType={'none'}
+              legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
             />
           </ListItem>
 
           <Subheader>
             Permit Type
-            <InfoIcon text="Categorizes developments based on the construction and housing types, determined using DOB Permit data" />
+            <InfoIcon text="Categorizes developments based on the permit type, determined using DOB data" />
+            <PinSelect
+              onClick={() => { this.props.onSymbologyDimensionChange('dcp_permit_type'); }}
+              selected={symbologyDimension === 'dcp_permit_type'}
+            />
           </Subheader>
           <ListItem
             disabled
@@ -321,7 +349,7 @@ const LayerSelector = React.createClass({
               value={filterDimensions.dcp_permit_type}
               options={defaultFilterDimensions.dcp_permit_type.options}
               onChange={this.handleChange.bind(this, 'dcp_permit_type')}
-              legendCircleType={'fill'}
+              legendCircleType={symbologyDimension === 'dcp_permit_type' ? 'fill' : 'none'}
             />
           </ListItem>
 

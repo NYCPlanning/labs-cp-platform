@@ -97,6 +97,7 @@ const Checkboxes = React.createClass({
           primaryText={label}
           style={{
             padding: '4px 8px 4px 48px',
+            margin: 0,
           }}
           key={option.value}
           leftCheckbox={checkbox}
@@ -105,8 +106,8 @@ const Checkboxes = React.createClass({
     });
 
     return (
-      <div className="checkboxes">
-        <List>
+      <div className="checkboxes" >
+        <List style={{ padding: 0 }}>
           {checkboxListItems}
         </List>
       </div>

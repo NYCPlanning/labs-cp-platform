@@ -15,13 +15,46 @@ const Pipeline = React.createClass({
   },
 
   getInitialState() {
-    return ({ sql: '' });
+    return ({
+      sql: '',
+      symbologyDimension: 'dcp_permit_type',
+    });
   },
 
-  updateLayerConfig(sql) {
-    // use this method to build new mapConfig based on mode
+  updateSQL(sql) {
     this.sql = sql;
-    this.setState({ sql });
+    this.setState({ sql }, this.updateLayerConfig);
+  },
+
+  updateLayerConfig() {
+    // use this method to build new mapConfig based on mode
+
+    const { sql, symbologyDimension } = this.state;
+
+    let paint;
+
+    if (symbologyDimension === 'dcp_permit_type') {
+      paint = {
+        property: 'dcp_permit_type',
+        type: 'categorical',
+        stops: [
+          ['New Building', 'rgba(0, 228, 14, 1)'],
+          ['Alteration', 'rgba(81, 99, 230, 1)'],
+          ['Demolition', 'rgba(234, 62, 62, 1)'],
+        ],
+      };
+    } else {
+      paint = {
+        property: 'dcp_pipeline_status',
+        type: 'categorical',
+        stops: [
+          ['Application filed', '#edf8e9'],
+          ['Permit issued', '#bae4b3'],
+          ['Partial complete', '#74c476'],
+          ['Complete', '#238b45'],
+        ],
+      };
+    }
 
     const config = LayerConfig.points;
 
@@ -36,7 +69,18 @@ const Pipeline = React.createClass({
           },
         },
       },
+      mapLayers: {
+        0: {
+          paint: {
+            'circle-color': {
+              $set: paint,
+            },
+          },
+        },
+      },
     });
+
+    console.log(newConfig)
 
     // update the layer config
     this.sendNewConfig(newConfig);
@@ -49,6 +93,10 @@ const Pipeline = React.createClass({
       mapLayers: newConfig.mapLayers,
       // legend: newConfig.legend,
     });
+  },
+
+  handleSymbologyDimensionChange(symbologyDimension) {
+    this.setState({ symbologyDimension }, this.updateLayerConfig);
   },
 
   render() {
@@ -66,7 +114,9 @@ const Pipeline = React.createClass({
       >
         <Tab label="Data">
           <LayerSelector
-            updateSQL={this.updateLayerConfig}
+            symbologyDimension={this.state.symbologyDimension}
+            onSymbologyDimensionChange={this.handleSymbologyDimensionChange}
+            updateSQL={this.updateSQL}
           />
         </Tab>
         <Tab label="Download">
