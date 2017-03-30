@@ -14,9 +14,27 @@
     font-size: 13px;
   }
 
+  .panel-heading .badge {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+  }
+
   .panel-body {
     h3 {
       margin: 0;
+    }
+  }
+
+  .dev-pipeline {
+    text-align: center;
+
+    h3 {
+      margin: 0;
+    }
+    h4 {
+      margin: 0;
+      color: grey;
     }
   }
 
