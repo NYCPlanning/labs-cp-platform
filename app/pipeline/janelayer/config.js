@@ -62,7 +62,7 @@ const defaultFilterDimensions = {
 };
 
 function getColor(key, value) {
-  return defaultFilterDimensions[key].filter(d => d.value === value).color;
+  return defaultFilterDimensions[key].filter(obj => obj.value === value)[0].color;
 }
 
 const LayerConfig = {
@@ -99,9 +99,9 @@ const LayerConfig = {
             property: 'dcp_permit_type',
             type: 'categorical',
             stops: [
-              ['New Building', 'rgba(0, 228, 14, 1)'],
-              ['Alteration', 'rgba(81, 99, 230, 1)'],
-              ['Demolition', 'rgba(234, 62, 62, 1)'],
+              ['New Building', getColor('dcp_permit_type', 'New Building')],
+              ['Alteration', getColor('dcp_permit_type', 'Alteration')],
+              ['Demolition', getColor('dcp_permit_type', 'Demolition')],
             ],
           },
           'circle-stroke-color': '#000',
