@@ -33,7 +33,7 @@
     "express-spa": "0.0.2",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "fixed-data-table": "^0.6.3",
-    "jane-maps": "0.0.5",
+    "jane-maps": "0.0.6",
     "jwt-decode": "^2.1.0",
     "material-ui": "^0.17.0",
     "moment": "^2.18.1",

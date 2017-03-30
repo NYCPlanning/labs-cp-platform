@@ -1,7 +1,69 @@
-import React from 'react';
-
-import colors from '../colors';
 import appConfig from '../../helpers/appConfig';
+
+const defaultFilterDimensions = {
+  dcp_pipeline_status: [
+    {
+      label: 'Complete',
+      value: 'Complete',
+      color: '#238b45',
+    },
+    {
+      label: 'Partial complete',
+      value: 'Partial complete',
+      color: '#74c476',
+    },
+    {
+      label: 'Permit issued',
+      value: 'Permit issued',
+      color: '#bae4b3',
+    },
+    {
+      label: 'Application filed',
+      value: 'Application filed',
+      color: '#edf8e9',
+    },
+  ],
+
+  dcp_permit_type: [
+    {
+      label: 'New Building',
+      value: 'New Building',
+      color: 'rgba(0, 228, 14, 0.7)',
+    },
+    {
+      label: 'Alteration',
+      value: 'Alteration',
+      color: 'rgba(81, 99, 230, 0.77)',
+    },
+    {
+      label: 'Demolition',
+      value: 'Demolition',
+      color: 'rgba(234, 62, 62, 1)',
+    },
+  ],
+
+  dcp_development_type: [
+    {
+      label: 'Residential',
+      value: 'Residential',
+    },
+    {
+      label: 'Non-residential',
+      value: 'Non-residential',
+    },
+  ],
+
+  dcp_units_use_map: [-1445, 1669],
+
+  dob_cofo_date: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
+
+  dob_qdate: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
+
+};
+
+function getColor(key, value) {
+  return defaultFilterDimensions[key].filter(d => d.value === value).color;
+}
 
 const LayerConfig = {
   points: {
@@ -54,36 +116,6 @@ const LayerConfig = {
         },
       },
     ],
-    legend: (
-      <div>
-        <div className="legend-section">
-          <h4>Development Status</h4>
-          <div className="legendItem">
-            <div className="color-circle" style={{ backgroundColor: colors.getStatusColor('Complete') }} />
-            <div className="legendItemText">Complete</div>
-          </div>
-          <div className="legendItem">
-            <div className="color-circle" style={{ backgroundColor: colors.getStatusColor('Partial complete') }} />
-            <div className="legendItemText">Partial Complete</div>
-          </div>
-          <div className="legendItem">
-            <div className="color-circle" style={{ backgroundColor: colors.getStatusColor('Permit outstanding') }} />
-            <div className="legendItemText">Permit Outstanding</div>
-          </div>
-          <div className="legendItem">
-            <div className="color-circle" style={{ backgroundColor: colors.getStatusColor('Permit pending') }} />
-            <div className="legendItemText">Permit Pending</div>
-          </div>
-          <div className="legendItem">
-            <div className="color-circle" style={{ backgroundColor: colors.getStatusColor('Demolition (complete)') }} />
-            <div className="legendItemText">Demolition (Complete)</div>
-          </div>
-        </div>
-        <div className="legendSection">
-          <p>Larger markers represent higher net unit counts</p>
-        </div>
-      </div>
-    ),
   },
 
   polygons: {
@@ -111,13 +143,7 @@ const LayerConfig = {
         },
       },
     ],
-    legend: (
-
-      <div className="legend-section">
-         Legend
-      </div>
-    ),
   },
 };
 
-export default LayerConfig;
+export { defaultFilterDimensions, getColor, LayerConfig };

@@ -1,14 +1,6 @@
 import React from 'react';
 
-exports.splash = (
-  <div>
-    <h4>Welcome, Beta Tester!</h4>
-    <p>This interactive explorer of the new Housing Pipeline Dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress.</p>
-    <p>If you&apos;re seeing this message, it means we want your help improving this product! <a href="https://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions</a>.</p>
-  </div>
-);
-
-exports.about = (
+const about = (
   <div>
     <h4>Product Overview</h4>
     <p>
@@ -29,3 +21,5 @@ exports.about = (
     </p>
   </div>
 );
+
+export { about } // eslint-disable-line

@@ -4,7 +4,7 @@ import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
-import colors from './colors';
+import { getColor } from './janelayer/config';
 import carto from '../helpers/carto';
 import NycGeom from '../helpers/NycGeom';
 
@@ -152,7 +152,7 @@ const DevelopmentPage = React.createClass({
           <div className="row">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading"><span className={'badge'} style={{ backgroundColor: colors.getStatusColor(d.dcp_permit_type) }}>{d.dcp_permit_type}</span></div>
+                <div className="panel-heading"><span className={'badge'} style={{ backgroundColor: getColor('dcp_permit_type', d.dcp_permit_type) }}>{d.dcp_permit_type}</span></div>
                 <div className="panel-body">
                   {unitPipeline()}
                 </div>

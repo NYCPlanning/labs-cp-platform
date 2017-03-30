@@ -21,6 +21,7 @@ const LegendCircle = (props) => {
       display: 'inline-block',
       borderRadius: '6px',
       marginLeft: '6px',
+      border: '1px solid #65696A',
     },
     stroke: {
       height: '13px',

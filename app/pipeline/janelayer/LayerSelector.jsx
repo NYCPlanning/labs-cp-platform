@@ -9,71 +9,9 @@ import Checkboxes from './Checkboxes';
 import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
 
+import { defaultFilterDimensions } from './config';
+
 import './LayerSelector.scss';
-
-const defaultFilterDimensions = {
-  sqlChunks: {},
-
-  dcp_pipeline_status: {
-    label: 'Development Status',
-    options: [
-      {
-        label: 'Complete',
-        value: 'Complete',
-        color: '#238b45',
-      },
-      {
-        label: 'Partial complete',
-        value: 'Partial complete',
-        color: '#74c476',
-      },
-      {
-        label: 'Permit issued',
-        value: 'Permit issued',
-        color: '#bae4b3',
-      },
-      {
-        label: 'Application filed',
-        value: 'Application filed',
-        color: '#edf8e9',
-      },
-    ],
-  },
-  dcp_permit_type: {
-    label: 'Permit Type',
-    options: [
-      {
-        label: 'New Building',
-        value: 'New Building',
-        color: 'rgba(0, 228, 14, 0.7)',
-      },
-      {
-        label: 'Alteration',
-        value: 'Alteration',
-        color: 'rgba(81, 99, 230, 0.77)',
-      },
-      {
-        label: 'Demolition',
-        value: 'Demolition',
-        color: 'rgba(234, 62, 62, 1)',
-      },
-    ],
-  },
-  dcp_development_type: {
-    label: 'Development Type',
-    options: [
-      {
-        label: 'Residential',
-        value: 'Residential',
-      },
-      {
-        label: 'Non-residential',
-        value: 'Non-residential',
-      },
-    ],
-  },
-};
-
 
 const LayerSelector = React.createClass({
   propTypes: {
@@ -88,14 +26,7 @@ const LayerSelector = React.createClass({
       totalCount: null,
       issueDateFilterDisabled: true,
       completionDateFilterDisabled: true,
-      filterDimensions: {
-        dcp_pipeline_status: defaultFilterDimensions.dcp_pipeline_status.options,
-        dcp_permit_type: defaultFilterDimensions.dcp_permit_type.options,
-        dcp_development_type: defaultFilterDimensions.dcp_development_type.options,
-        dcp_units_use_map: [-1445, 1669],
-        dob_cofo_date: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
-        dob_qdate: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
-      },
+      filterDimensions: defaultFilterDimensions,
     });
   },
 
@@ -327,7 +258,7 @@ const LayerSelector = React.createClass({
           >
             <Checkboxes
               value={filterDimensions.dcp_pipeline_status}
-              options={defaultFilterDimensions.dcp_pipeline_status.options}
+              options={defaultFilterDimensions.dcp_pipeline_status}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
               legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
             />
@@ -347,7 +278,7 @@ const LayerSelector = React.createClass({
           >
             <Checkboxes
               value={filterDimensions.dcp_permit_type}
-              options={defaultFilterDimensions.dcp_permit_type.options}
+              options={defaultFilterDimensions.dcp_permit_type}
               onChange={this.handleChange.bind(this, 'dcp_permit_type')}
               legendCircleType={symbologyDimension === 'dcp_permit_type' ? 'fill' : 'none'}
             />
@@ -363,7 +294,7 @@ const LayerSelector = React.createClass({
           >
             <Checkboxes
               value={filterDimensions.dcp_development_type}
-              options={defaultFilterDimensions.dcp_development_type.options}
+              options={defaultFilterDimensions.dcp_development_type}
               onChange={this.handleChange.bind(this, 'dcp_development_type')}
               legendCircleType={'none'}
             />

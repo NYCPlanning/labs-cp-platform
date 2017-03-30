@@ -3,9 +3,9 @@ import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import LayerSelector from './LayerSelector';
-import LayerConfig from './LayerConfig';
+import { LayerConfig } from './config';
 import Download from '../../common/Download';
-import content from '../content';
+import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 
 
@@ -80,8 +80,6 @@ const Pipeline = React.createClass({
       },
     });
 
-    console.log(newConfig)
-
     // update the layer config
     this.sendNewConfig(newConfig);
   },
@@ -130,7 +128,7 @@ const Pipeline = React.createClass({
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content padded">
-            {content.about}
+            {about}
           </div>
         </Tab>
       </Tabs>
