@@ -2,7 +2,7 @@
 
 A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team
 
-##Architecture
+## Architecture
 As an SPA, all of the business logic and routing are done client-side.  The app is comprised of various React.js Components and makes use of React-Router for client-side routing. The React JSX files are built with webpack to create a single `bundle.js` file.
 
 The app makes heavy use of various web mapping technologies, including raster maps and interactivity served from a carto server, and client-side map rendering in leaflet.js and mapboxGL.js.
