@@ -65,6 +65,28 @@ function getColor(key, value) {
   return defaultFilterDimensions[key].filter(obj => obj.value === value)[0].color;
 }
 
+const circleColors = {
+  dcp_permit_type: {
+    property: 'dcp_permit_type',
+    type: 'categorical',
+    stops: [
+      ['New Building', getColor('dcp_permit_type', 'New Building')],
+      ['Alteration', getColor('dcp_permit_type', 'Alteration')],
+      ['Demolition', getColor('dcp_permit_type', 'Demolition')],
+    ],
+  },
+  dcp_pipeline_status: {
+    property: 'dcp_pipeline_status',
+    type: 'categorical',
+    stops: [
+      ['Application filed', getColor('dcp_pipeline_status', 'Application filed')],
+      ['Permit issued', getColor('dcp_pipeline_status', 'Permit issued')],
+      ['Partial complete', getColor('dcp_pipeline_status', 'Partial complete')],
+      ['Complete', getColor('dcp_pipeline_status', 'Complete')],
+    ],
+  },
+};
+
 const LayerConfig = {
   points: {
     sources: [
@@ -95,15 +117,7 @@ const LayerConfig = {
               [{ zoom: 14, value: 1669 }, 20],
             ],
           },
-          'circle-color': {
-            property: 'dcp_permit_type',
-            type: 'categorical',
-            stops: [
-              ['New Building', getColor('dcp_permit_type', 'New Building')],
-              ['Alteration', getColor('dcp_permit_type', 'Alteration')],
-              ['Demolition', getColor('dcp_permit_type', 'Demolition')],
-            ],
-          },
+          'circle-color': '#FFF',
           'circle-stroke-color': '#000',
           'circle-stroke-width': {
             stops: [
@@ -146,4 +160,4 @@ const LayerConfig = {
   },
 };
 
-export { defaultFilterDimensions, getColor, LayerConfig };
+export { defaultFilterDimensions, circleColors, getColor, LayerConfig };

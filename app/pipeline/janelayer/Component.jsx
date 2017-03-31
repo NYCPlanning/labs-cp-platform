@@ -3,7 +3,7 @@ import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import LayerSelector from './LayerSelector';
-import { LayerConfig } from './config';
+import { LayerConfig, circleColors } from './config';
 import Download from '../../common/Download';
 import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
@@ -31,32 +31,11 @@ const Pipeline = React.createClass({
 
     const { sql, symbologyDimension } = this.state;
 
-    let paint;
-
-    if (symbologyDimension === 'dcp_permit_type') {
-      paint = {
-        property: 'dcp_permit_type',
-        type: 'categorical',
-        stops: [
-          ['New Building', 'rgba(0, 228, 14, 1)'],
-          ['Alteration', 'rgba(81, 99, 230, 1)'],
-          ['Demolition', 'rgba(234, 62, 62, 1)'],
-        ],
-      };
-    } else {
-      paint = {
-        property: 'dcp_pipeline_status',
-        type: 'categorical',
-        stops: [
-          ['Application filed', '#edf8e9'],
-          ['Permit issued', '#bae4b3'],
-          ['Partial complete', '#74c476'],
-          ['Complete', '#238b45'],
-        ],
-      };
-    }
-
     const config = LayerConfig.points;
+
+    const circleColor = (symbologyDimension === 'dcp_permit_type') ?
+      circleColors.dcp_permit_type :
+      circleColors.dcp_pipeline_status;
 
     // set the sql for the vector source
     const newConfig = update(config, {
@@ -73,7 +52,7 @@ const Pipeline = React.createClass({
         0: {
           paint: {
             'circle-color': {
-              $set: paint,
+              $set: circleColor,
             },
           },
         },

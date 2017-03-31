@@ -120,7 +120,6 @@ const DevelopmentPage = React.createClass({
     };
 
     const backgroundColor = getColor('dcp_permit_type', d.dcp_permit_type);
-    console.log('color', d, backgroundColor, getColor);
 
     return (
       <div className="pipeline-page detail-page">
