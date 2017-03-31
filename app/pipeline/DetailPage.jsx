@@ -7,6 +7,7 @@ import FeedbackForm from '../common/FeedbackForm';
 import { getColor } from './janelayer/config';
 import carto from '../helpers/carto';
 import NycGeom from '../helpers/NycGeom';
+import devTables from '../helpers/devTables';
 
 import './DetailPage.scss';
 
@@ -27,7 +28,7 @@ const DevelopmentPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature('pipeline_projects_dev', 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature(devTables('pipeline_projects_dev'), 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => { self.setState({ data }); });
   },
 

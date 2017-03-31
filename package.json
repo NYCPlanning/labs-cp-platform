@@ -28,6 +28,7 @@
     "chroma-js": "^1.2.2",
     "compression": "^1.6.2",
     "css-loader": "^0.27.1",
+    "dotenv-webpack": "^1.4.3",
     "es6-promise": "^4.0.5",
     "express": "^4.14.1",
     "express-spa": "0.0.2",

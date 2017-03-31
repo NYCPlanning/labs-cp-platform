@@ -1,6 +1,7 @@
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const extractSass = new ExtractTextPlugin('css/bundle.css');
 
@@ -86,10 +87,11 @@ module.exports = {
   },
   plugins: [
     extractSass,
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"development"',
-      },
-    }),
+    // new webpack.DefinePlugin({
+    //   'process.env': {
+    //     NODE_ENV: '"development"',
+    //   },
+    // }),
+    new Dotenv(),
   ],
 };

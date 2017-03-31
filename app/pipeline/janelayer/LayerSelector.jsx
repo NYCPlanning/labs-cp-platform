@@ -8,6 +8,7 @@ import Checkboxes from './Checkboxes';
 
 import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
+import devTables from '../../helpers/devTables';
 
 import { defaultFilterDimensions } from './config';
 
@@ -33,7 +34,7 @@ const LayerSelector = React.createClass({
   componentDidMount() {
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
-      tablename: 'pipeline_projects_dev',
+      tablename: devTables('pipeline_projects'),
     };
 
     this.buildSQL();
