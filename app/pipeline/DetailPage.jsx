@@ -28,7 +28,7 @@ const DevelopmentPage = React.createClass({
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature(devTables('pipeline_projects_dev'), 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature(devTables('pipeline_projects'), 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => { self.setState({ data }); });
   },
 
