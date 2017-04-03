@@ -9,6 +9,9 @@ import carto from '../helpers/carto';
 import NycGeom from '../helpers/NycGeom';
 import devTables from '../helpers/devTables';
 
+import PipelineStore from '../stores/PipelineStore';
+import * as PipelineActions from '../actions/PipelineActions';
+
 import './DetailPage.scss';
 
 const DevelopmentPage = React.createClass({
@@ -22,6 +25,14 @@ const DevelopmentPage = React.createClass({
   getInitialState() {
     return ({
       data: null,
+    });
+  },
+
+  componentWillMount() {
+    PipelineStore.on('change', () => {
+      this.setState({
+        data: null,
+      });
     });
   },
 

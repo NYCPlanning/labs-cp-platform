@@ -12,6 +12,12 @@ class PipelineStore extends EventsEmitter {
     return true;
   }
 
+  createDetailView() {
+    console.log('foo');
+    // this.sql = 'some data';
+    this.emit('change');
+  }
+
   handleActions(action) {
     switch (action.type) {
       case 'FILTER_CHANGED': {
@@ -25,6 +31,8 @@ class PipelineStore extends EventsEmitter {
 }
 
 const pipelineStore = new PipelineStore();
+window.pipelineStore = pipelineStore;
+
 dispatcher.register(pipelineStore.handleActions.bind(pipelineStore));
 
 export default pipelineStore;
