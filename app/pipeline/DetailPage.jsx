@@ -22,16 +22,16 @@ const DevelopmentPage = React.createClass({
     location: React.PropTypes.shape().isRequired,
   },
 
-  getInitialState() {
-    return ({
-      data: null,
-    });
-  },
+  // getInitialState() {
+  //   return ({
+  //     data: null,
+  //   });
+  // },
 
   componentWillMount() {
     PipelineStore.on('change', () => {
       this.setState({
-        data: null,
+        data: PipelineStore.createDetailView(),
       });
     });
   },
