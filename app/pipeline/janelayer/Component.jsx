@@ -8,6 +8,8 @@ import Download from '../../common/Download';
 import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 
+import PipelineStore from '../../stores/PipelineStore';
+import * as PipelineActions from '../../actions/PipelineActions';
 
 const Pipeline = React.createClass({
   propTypes: {
