@@ -8,7 +8,7 @@
     "devserve": "webpack-dev-server --config webpack.dev.config.js --hot --progress --colors --history-api-fallback --inline --content-base public/",
     "probuild": "webpack -p --config webpack.config.js --progress --colors",
     "postinstall": "npm run probuild",
-    "test": "mocha",
+    "test": "jest --watch --verbose",
     "lint": "eslint -c .eslintrc lib"
   },
   "author": "",
@@ -80,6 +80,8 @@
     "eslint-plugin-jsx-a11y": "*",
     "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-standard": "^2.0.1",
+    "jest": "^19.0.2",
+    "jquery": "^3.2.1",
     "mocha": "^3.1.2",
     "react-hot-loader": "^1.3.0",
     "webpack-dev-server": "^2.4.1"

@@ -5,6 +5,10 @@ import Subheader from 'material-ui/Subheader';
 import CountWidget from '../../common/CountWidget';
 import Carto from '../../helpers/carto';
 import Checkboxes from './Checkboxes';
+import PipelineActions from '../../actions/PipelineActions';
+import PipelineStore from '../../stores/PipelineStore';
+
+console.log('pipelineActions', PipelineActions)
 
 import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
@@ -27,7 +31,13 @@ const LayerSelector = React.createClass({
       totalCount: null,
       issueDateFilterDisabled: true,
       completionDateFilterDisabled: true,
-      filterDimensions: defaultFilterDimensions,
+      filterDimensions: PipelineStore.getFilterDimensions(),
+    });
+  },
+
+  componentWillMount() {
+    PipelineStore.on('filterDimensionsChanged', () => {
+      this.setState({ filterDimensions: PipelineStore.getFilterDimensions() });
     });
   },
 
@@ -145,40 +155,9 @@ const LayerSelector = React.createClass({
   },
 
   handleChange(dimension, values) {
-    // before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
-    this.state.filterDimensions[dimension] = values;
+    console.log(dimension, values)
 
-    // if dimension is status, check which items are included and disable/reset date slider accordingly
-    if (dimension === 'dcp_pipeline_status') {
-      const invalidValuesCompletion = values.filter(value => (
-        (value.value === 'Permit issued' || value.value === 'Application filed') ? value.value : null
-      ));
-
-
-      // Completion Slider
-      if (invalidValuesCompletion.length > 0 || values.length === 0) {
-        this.state.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
-        this.state.completionDateFilterDisabled = true;
-      } else {
-        this.state.completionDateFilterDisabled = false;
-      }
-
-      // Permit Issued Slider
-      const invalidValuesIssued = values.filter(value => (
-        (value.value === 'Application filed') ? value.value : null
-      ));
-
-
-      if (invalidValuesIssued.length > 0 || values.length === 0) {
-        this.state.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
-        this.state.issueDateFilterDisabled = true;
-      } else {
-        this.state.issueDateFilterDisabled = false;
-      }
-    }
-
-    this.forceUpdate();
-    this.buildSQL();
+    PipelineActions.onFilterDimensionChange(dimension, values);
   },
 
   handleSliderChange(dimension, data) {
@@ -258,8 +237,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              value={filterDimensions.dcp_pipeline_status}
-              options={defaultFilterDimensions.dcp_pipeline_status}
+              options={filterDimensions.dcp_pipeline_status}
               onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
               legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
             />

@@ -3,11 +3,6 @@ import appConfig from './appConfig';
 module.exports = {
   // given a string, get matches from capitalprojects based on name or projectid
   // TODO make this generic
-  autoComplete(value) {
-    const sql = `SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE name ILIKE '%${value}%' OR projectid ILIKE '%${value}%'`;
-
-    return this.SQL(sql);
-  },
 
   getVectorTileUrls(vizJsons) {
     // takes an array of vizJsons
@@ -86,7 +81,6 @@ module.exports = {
         `SELECT * FROM ${tableName} WHERE ${column} = ${value}` :
         `SELECT * FROM ${tableName} WHERE ${column} = '${value}'`;
 
-      // returns a promise
       self.SQL(sql)
         .then((data) => {
           resolve(data.features[0]);
@@ -158,7 +152,7 @@ module.exports = {
             resolve(data.rows);
           }
         })
-        .fail(() => reject());
+        .fail(err => reject(err));
     });
   },
 };

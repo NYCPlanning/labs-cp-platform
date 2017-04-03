@@ -5,21 +5,25 @@ const defaultFilterDimensions = {
     {
       label: 'Complete',
       value: 'Complete',
+      checked: true,
       color: '#238b45',
     },
     {
       label: 'Partial complete',
       value: 'Partial complete',
+      checked: true,
       color: '#74c476',
     },
     {
       label: 'Permit issued',
       value: 'Permit issued',
+      checked: true,
       color: '#bae4b3',
     },
     {
       label: 'Application filed',
       value: 'Application filed',
+      checked: true,
       color: '#edf8e9',
     },
   ],
@@ -28,16 +32,19 @@ const defaultFilterDimensions = {
     {
       label: 'New Building',
       value: 'New Building',
+      checked: true,
       color: 'rgba(0, 228, 14, 0.7)',
     },
     {
       label: 'Alteration',
       value: 'Alteration',
+      checked: true,
       color: 'rgba(81, 99, 230, 0.77)',
     },
     {
       label: 'Demolition',
       value: 'Demolition',
+      checked: true,
       color: 'rgba(234, 62, 62, 1)',
     },
   ],
@@ -46,10 +53,12 @@ const defaultFilterDimensions = {
     {
       label: 'Residential',
       value: 'Residential',
+      checked: true,
     },
     {
       label: 'Non-residential',
       value: 'Non-residential',
+      checked: true,
     },
   ],
 

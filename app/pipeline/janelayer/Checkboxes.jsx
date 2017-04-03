@@ -53,37 +53,26 @@ const Checkboxes = React.createClass({
     legendCircleType: PropTypes.string.isRequired, // string indicating the type of legendCircle
   },
 
-  handleChange(option) {
-    const { value, onChange } = this.props;
+  handleChange(value) {
+    console.log('handleChange', value)
+    const { options, onChange } = this.props;
 
-    // if checked, remove from values and call props.onChange
-    // if not, add to values and call props.onChange
-    const wasChecked = value.filter(d => d.value === option.value).length > 0;
+    const thisOption = options.filter(option => option.value === value)[0];
+    thisOption.checked = !thisOption.checked;
 
-    let newValue;
-    if (wasChecked) {
-      // remove
-      newValue = _.reject(value, d => d.value === option.value);
-    } else {
-      // add
-      value.push(option);
-      newValue = value;
-    }
-
-    onChange(newValue);
+    onChange(options);
   },
 
   render() {
-    const { options, value, legendCircleType } = this.props;
+    const { options, legendCircleType } = this.props;
 
     const checkboxListItems = options.map((option) => {
-      const isChecked = value.filter(d => d.value === option.value).length > 0;
 
       const checkbox = (
         <Checkbox
           value={option.value}
-          checked={isChecked}
-          onChange={this.handleChange.bind(this, option)}
+          checked={option.checked}
+          onChange={this.handleChange.bind(this, option.value)}
         />
       );
 
