@@ -123,16 +123,8 @@ module.exports = {
     });
   },
 
-  transformSqlSelectAll(sql) {
-    return sql.replace(/SELECT (.*?) FROM/, 'SELECT * FROM');
-  },
-
-  transformSqlRemoveWhere(sql) {
-    return sql.replace(/ WHERE .*/, '');
-  },
-
-  generateUrlString(sql, format, filename = 'download') {
-    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}&filename=${filename}`;
+  generateUrlString(sql, fileType, filename = 'download') {
+    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${fileType}&filename=${filename}`;
     return encodeURI(apiString);
   },
 
