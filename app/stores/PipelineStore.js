@@ -1,7 +1,5 @@
 import EventsEmitter from 'events';
 import dispatcher from '../dispatcher';
-import devTables from '../helpers/devTables';
-import carto from '../helpers/carto';
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -13,11 +11,8 @@ class PipelineStore extends EventsEmitter {
     return true;
   }
 
-  // maybe props from DetailPage just become an object here?
-
   createDetailView() {
-    this.sql = carto.getFeature(devTables('pipeline_projects'), 'cartodb_id', parseInt(this.props.params.id));
-    this.emit('change');
+    this.sql = 'new sql';
     console.log(this.sql);
   }
 
