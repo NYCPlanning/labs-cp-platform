@@ -119,7 +119,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              options={filterDimensions.dcp_pipeline_status}
+              options={filterDimensions.dcp_pipeline_status.values}
               onChange={this.handleFilterDimensionChange.bind(this, 'dcp_pipeline_status')}
               legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
             />
@@ -138,8 +138,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              value={filterDimensions.dcp_permit_type}
-              options={defaultFilterDimensions.dcp_permit_type}
+              options={defaultFilterDimensions.dcp_permit_type.values}
               onChange={this.handleFilterDimensionChange.bind(this, 'dcp_permit_type')}
               legendCircleType={symbologyDimension === 'dcp_permit_type' ? 'fill' : 'none'}
             />
@@ -154,8 +153,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              value={filterDimensions.dcp_development_type}
-              options={defaultFilterDimensions.dcp_development_type}
+              options={defaultFilterDimensions.dcp_development_type.values}
               onChange={this.handleFilterDimensionChange.bind(this, 'dcp_development_type')}
               legendCircleType={'none'}
             />
@@ -173,20 +171,20 @@ const LayerSelector = React.createClass({
               <input
                 type="text"
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
-                defaultValue={filterDimensions.dcp_units_use_map[0]}
+                defaultValue={filterDimensions.dcp_units_use_map.values[0]}
                 ref={(unitsMin) => { this.unitsMin = unitsMin; }}
               />
               <input
                 type="text"
                 style={{ float: 'right' }}
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
-                defaultValue={filterDimensions.dcp_units_use_map[1]}
+                defaultValue={filterDimensions.dcp_units_use_map.values[1]}
                 ref={(unitsMax) => { this.unitsMax = unitsMax; }}
               />
               <input type="submit" value="Submit" />
             </form>
             <RangeSlider
-              data={filterDimensions.dcp_units_use_map}
+              data={filterDimensions.dcp_units_use_map.values}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
               grid
@@ -204,7 +202,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_qdate}
+              data={filterDimensions.dob_qdate.values}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dob_qdate')}
               disable={issueDateFilterDisabled}
@@ -222,7 +220,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_cofo_date}
+              data={filterDimensions.dob_cofo_date.values}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
               disable={completionDateFilterDisabled}
