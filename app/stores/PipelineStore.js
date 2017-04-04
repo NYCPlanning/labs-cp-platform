@@ -4,6 +4,7 @@ import update from 'react/lib/update';
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
+import carto from '../helpers/carto';
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -95,15 +96,17 @@ class PipelineStore extends EventsEmitter {
     if (filterDimension === 'dcp_pipeline_status') {
       // Completion Slider
       if (this.completionDateFilterDisabled()) {
-        this.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
+        this.filterDimensions.dob_cofo_date = defaultFilterDimensions.dob_cofo_date;
       }
       // issued slider
       if (this.issueDateFilterDisabled()) {
-        this.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
+        this.filterDimensions.dob_qdate = defaultFilterDimensions.dob_qdate;
       }
     }
 
     this.sql = this.buildSQL();
+
+    console.log(this.filterDimensions);
 
     this.emit('filterDimensionsChanged');
   }
@@ -210,6 +213,18 @@ class PipelineStore extends EventsEmitter {
     return this.sql;
   }
 
+  getDetailData() {
+    return this.detailData;
+  }
+
+  fetchDetailData(cartodb_id) {
+    carto.getFeature(devTables(this.sqlConfig.tablename), 'cartodb_id', cartodb_id)
+      .then((data) => {
+        this.detailData = data;
+        this.emit('detailDataAvailable');
+      });
+  }
+
   // do things when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -220,6 +235,11 @@ class PipelineStore extends EventsEmitter {
 
       case 'PIPELINE_SYMBOLOGYDIMENSION_CHANGE': {
         this.handleSymbologyDimensionChange(action.symbologyDimension);
+        break;
+      }
+
+      case 'PIPELINE_FETCH_DETAIL_DATA': {
+        this.fetchDetailData(action.cartodb_id);
         break;
       }
 

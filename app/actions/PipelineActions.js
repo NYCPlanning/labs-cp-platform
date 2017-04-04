@@ -15,6 +15,13 @@ const PipelineActions = {
       symbologyDimension,
     });
   },
+
+  fetchDetailData(cartodb_id) {
+    dispatcher.dispatch({
+      type: 'PIPELINE_FETCH_DETAIL_DATA',
+      cartodb_id,
+    });
+  },
 };
 
 export default PipelineActions;
