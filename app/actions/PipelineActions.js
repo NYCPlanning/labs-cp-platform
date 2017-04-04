@@ -8,6 +8,13 @@ const PipelineActions = {
       values,
     });
   },
+
+  onSymbologyDimensionChange(symbologyDimension) {
+    dispatcher.dispatch({
+      type: 'PIPELINE_SYMBOLOGYDIMENSION_CHANGE',
+      symbologyDimension,
+    });
+  },
 };
 
 export default PipelineActions;

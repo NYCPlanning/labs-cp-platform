@@ -3,7 +3,6 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../../common/CountWidget';
-import Carto from '../../helpers/carto';
 import Checkboxes from './Checkboxes';
 import PipelineActions from '../../actions/PipelineActions';
 import PipelineStore from '../../stores/PipelineStore';
@@ -16,70 +15,31 @@ import { defaultFilterDimensions } from './config';
 import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
-  propTypes: {
-    symbologyDimension: React.PropTypes.string.isRequired,
-    onSymbologyDimensionChange: React.PropTypes.func.isRequired,
-  },
 
   getInitialState() {
     return ({
       selectedCount: null,
       totalCount: null,
-      issueDateFilterDisabled: true,
-      completionDateFilterDisabled: true,
+      symbologyDimension: PipelineStore.getSymbologyDimension(),
       filterDimensions: PipelineStore.getFilterDimensions(),
     });
   },
 
   componentWillMount() {
     PipelineStore.on('filterDimensionsChanged', () => {
-      this.setState({ filterDimensions: PipelineStore.getFilterDimensions() });
+      this.setState({
+        filterDimensions: PipelineStore.getFilterDimensions(),
+        symbologyDimension: PipelineStore.getSymbologyDimension(),
+      });
     });
   },
 
-  getTotalCount(sql) {
-    const self = this;
-
-    Carto.getCount(sql)
-      .then((count) => {
-        self.setState({
-          selectedCount: count,
-          totalCount: count,
-        });
-      });
-  },
-
-  getSelectedCount(sql) {
-    const self = this;
-
-    Carto.getCount(sql)
-      .then((count) => { self.setState({ selectedCount: count }); });
-  },
-
-  buildSQL() {
-    // assemble sql chunks based on the current state
-    this.createSQLChunks();
-
-    const sqlTemplate = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE `;
-
-    const chunksArray = [];
-
-    Object.keys(this.sqlChunks).forEach(key => chunksArray.push(this.sqlChunks[key]));
-
-    const chunksString = chunksArray.join(' AND ');
-
-    const sql = sqlTemplate + chunksString;
-
-    // since pipeline does not start with all selected, we must provide a query that will count all rows
-    if (this.state.totalCount == null) this.getTotalCount(sql);
-
-    this.props.updateSQL(sql);
-
-    this.getSelectedCount(sql);
-  },
-
-  handleChange(dimension, values) {
+  handleFilterDimensionChange(dimension, values) {
     PipelineActions.onFilterDimensionChange(dimension, values);
+  },
+
+  handleSymbologyDimensionChange(symbologyDimension) {
+    PipelineActions.onSymbologyDimensionChange(symbologyDimension);
   },
 
   handleSliderChange(dimension, data) {
@@ -92,21 +52,13 @@ const LayerSelector = React.createClass({
       this.unitsMax.value = data.to;
     }
 
-    this.state.filterDimensions[dimension] = [data.from, data.to];
-    this.buildSQL();
+    PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
   },
 
   handleInputChange(e) { // handles changes to the manual inputs for total units
     e.preventDefault();
-
-    const self = this;
-
-    const newFilterDimensions = this.state.filterDimensions;
-    newFilterDimensions.dcp_units_use_map = [this.unitsMin.value, this.unitsMax.value];
-    this.setState({ filterDimensions: newFilterDimensions }, () => { self.buildSQL(); });
+    PipelineActions.onFilterDimensionChange('dcp_units_use_map', [this.unitsMin.value, this.unitsMax.value]);
   },
-
-  sqlChunks: {},
 
   render() {
     // override material ui ListItem spacing
@@ -114,8 +66,16 @@ const LayerSelector = React.createClass({
       padding: '0px 16px',
     };
 
-    const { filterDimensions, issueDateFilterDisabled, completionDateFilterDisabled, totalCount, selectedCount } = this.state;
-    const { symbologyDimension } = this.props;
+    const {
+      filterDimensions,
+      totalCount,
+      selectedCount,
+      symbologyDimension,
+    } = this.state;
+
+
+    const issueDateFilterDisabled = PipelineStore.issueDateFilterDisabled();
+    const completionDateFilterDisabled = PipelineStore.completionDateFilterDisabled();
 
     const PinSelect = (props) => {
       const style = {
@@ -150,7 +110,7 @@ const LayerSelector = React.createClass({
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
             <PinSelect
-              onClick={() => { this.props.onSymbologyDimensionChange('dcp_pipeline_status'); }}
+              onClick={() => { this.handleSymbologyDimensionChange('dcp_pipeline_status'); }}
               selected={symbologyDimension === 'dcp_pipeline_status'}
             />
           </Subheader>
@@ -160,7 +120,7 @@ const LayerSelector = React.createClass({
           >
             <Checkboxes
               options={filterDimensions.dcp_pipeline_status}
-              onChange={this.handleChange.bind(this, 'dcp_pipeline_status')}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_pipeline_status')}
               legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
             />
           </ListItem>
@@ -169,7 +129,7 @@ const LayerSelector = React.createClass({
             Permit Type
             <InfoIcon text="Categorizes developments based on the permit type, determined using DOB data" />
             <PinSelect
-              onClick={() => { this.props.onSymbologyDimensionChange('dcp_permit_type'); }}
+              onClick={() => { this.handleSymbologyDimensionChange('dcp_permit_type'); }}
               selected={symbologyDimension === 'dcp_permit_type'}
             />
           </Subheader>
@@ -180,7 +140,7 @@ const LayerSelector = React.createClass({
             <Checkboxes
               value={filterDimensions.dcp_permit_type}
               options={defaultFilterDimensions.dcp_permit_type}
-              onChange={this.handleChange.bind(this, 'dcp_permit_type')}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_permit_type')}
               legendCircleType={symbologyDimension === 'dcp_permit_type' ? 'fill' : 'none'}
             />
           </ListItem>
@@ -196,7 +156,7 @@ const LayerSelector = React.createClass({
             <Checkboxes
               value={filterDimensions.dcp_development_type}
               options={defaultFilterDimensions.dcp_development_type}
-              onChange={this.handleChange.bind(this, 'dcp_development_type')}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_development_type')}
               legendCircleType={'none'}
             />
           </ListItem>

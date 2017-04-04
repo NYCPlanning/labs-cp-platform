@@ -1,8 +1,9 @@
 import EventsEmitter from 'events';
+import update from 'react/lib/update';
 
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
-import { defaultFilterDimensions } from '../pipeline/janelayer/config';
+import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -13,46 +14,99 @@ class PipelineStore extends EventsEmitter {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
       tablename: devTables('pipeline_projects'),
     };
+    this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.buildSQL();
+  }
+
+  getLayerConfig() {
+    // use this method to build new mapConfig based on mode
+
+    const { sql, symbologyDimension } = this;
+
+    const config = LayerConfig.points;
+
+    const circleColor = (symbologyDimension === 'dcp_permit_type') ?
+      circleColors.dcp_permit_type :
+      circleColors.dcp_pipeline_status;
+
+    // set the sql for the vector source
+    const newConfig = update(config, {
+      sources: {
+        0: {
+          options: {
+            sql: {
+              $set: [sql],
+            },
+          },
+        },
+      },
+      mapLayers: {
+        0: {
+          paint: {
+            'circle-color': {
+              $set: circleColor,
+            },
+          },
+        },
+      },
+    });
+
+    return newConfig;
+  }
+
+  issueDateFilterDisabled() {
+    const values = this.filterDimensions.dcp_pipeline_status;
+
+    let invalid = false;
+    values.forEach((value) => {
+      if (value.checked) {
+        if (value.value === 'Application filed') {
+          invalid = true;
+        }
+      }
+    });
+
+    return invalid;
+  }
+
+  completionDateFilterDisabled() {
+    const values = this.filterDimensions.dcp_pipeline_status;
+
+    let invalid = false;
+    values.forEach((value) => {
+      if (value.checked) {
+        if (value.value === 'Permit issued' || value.value === 'Application filed') {
+          invalid = true;
+        }
+      }
+    });
+
+    return invalid;
   }
 
   handleFilterDimensionChange(filterDimension, values) {
     this.filterDimensions[filterDimension] = values;
+
+    // if dimension is status, check which items are included and disable/reset date dimensions accordingly
+    if (filterDimension === 'dcp_pipeline_status') {
+      // Completion Slider
+      if (this.completionDateFilterDisabled()) {
+        this.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
+      }
+      // issued slider
+      if (this.issueDateFilterDisabled()) {
+        this.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
+      }
+    }
+
     this.sql = this.buildSQL();
+
     this.emit('filterDimensionsChanged');
-    // // before setting state, set the label for each value to the agency acronym so that the full text does not appear in the multi-select component
-    //
-    // // if dimension is status, check which items are included and disable/reset date slider accordingly
-    // if (dimension === 'dcp_pipeline_status') {
-    //   const invalidValuesCompletion = values.filter(value => (
-    //     (value.value === 'Permit issued' || value.value === 'Application filed') ? value.value : null
-    //   ));
-    //
-    //
-    //   // Completion Slider
-    //   if (invalidValuesCompletion.length > 0 || values.length === 0) {
-    //     this.state.filterDimensions.dob_cofo_date = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
-    //     this.state.completionDateFilterDisabled = true;
-    //   } else {
-    //     this.state.completionDateFilterDisabled = false;
-    //   }
-    //
-    //   // Permit Issued Slider
-    //   const invalidValuesIssued = values.filter(value => (
-    //     (value.value === 'Application filed') ? value.value : null
-    //   ));
-    //
-    //
-    //   if (invalidValuesIssued.length > 0 || values.length === 0) {
-    //     this.state.filterDimensions.dob_qdate = [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')]; // eslint-disable-line
-    //     this.state.issueDateFilterDisabled = true;
-    //   } else {
-    //     this.state.issueDateFilterDisabled = false;
-    //   }
-    // }
-    //
-    // this.forceUpdate();
-    // this.buildSQL();
+  }
+
+  handleSymbologyDimensionChange(symbologyDimension) {
+    this.symbologyDimension = symbologyDimension;
+    this.emit('filterDimensionsChanged');
   }
 
   buildSQL() {
@@ -69,7 +123,6 @@ class PipelineStore extends EventsEmitter {
 
     const sql = sqlTemplate + chunksString;
 
-    console.log(sql)
     return sql;
   }
 
@@ -93,7 +146,6 @@ class PipelineStore extends EventsEmitter {
   }
 
   createCheckboxSQLChunk(dimension, values) {
-    console.log(dimension, values);
     // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
     // like ( dimension = 'value1' OR dimension = 'value2')
 
@@ -143,6 +195,10 @@ class PipelineStore extends EventsEmitter {
     return this.filterDimensions;
   }
 
+  getSymbologyDimension() {
+    return this.symbologyDimension;
+  }
+
   getSql() {
     return this.sql;
   }
@@ -151,6 +207,11 @@ class PipelineStore extends EventsEmitter {
     switch (action.type) {
       case 'PIPELINE_FILTERDIMENSION_CHANGE': {
         this.handleFilterDimensionChange(action.filterDimension, action.values);
+        break;
+      }
+
+      case 'PIPELINE_SYMBOLOGYDIMENSION_CHANGE': {
+        this.handleSymbologyDimensionChange(action.symbologyDimension);
         break;
       }
 
