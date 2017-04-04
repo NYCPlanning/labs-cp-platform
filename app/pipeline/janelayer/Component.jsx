@@ -22,7 +22,7 @@ const Pipeline = React.createClass({
 
   componentWillMount() {
     // listen for changes to the filter UI
-    PipelineStore.on('filterDimensionsChanged', () => {
+    PipelineStore.on('pipelineUpdated', () => {
       this.setState({ layerConfig: PipelineStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
     });
 

@@ -18,18 +18,18 @@ const LayerSelector = React.createClass({
 
   getInitialState() {
     return ({
-      symbologyDimension: PipelineStore.getSymbologyDimension(),
-      filterDimensions: PipelineStore.getFilterDimensions(),
+      symbologyDimension: PipelineStore.symbologyDimension,
+      filterDimensions: PipelineStore.filterDimensions,
     });
   },
 
   componentWillMount() {
-    PipelineStore.on('filterDimensionsChanged', () => {
+    PipelineStore.on('pipelineUpdated', () => {
       this.setState({
         totalCount: PipelineStore.totalCount,
         selectedCount: PipelineStore.selectedCount,
-        filterDimensions: PipelineStore.getFilterDimensions(),
-        symbologyDimension: PipelineStore.getSymbologyDimension(),
+        filterDimensions: PipelineStore.filterDimensions,
+        symbologyDimension: PipelineStore.symbologyDimension,
       });
     });
   },

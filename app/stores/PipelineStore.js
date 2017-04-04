@@ -22,7 +22,7 @@ class PipelineStore extends EventsEmitter {
       this.totalCount = count;
       this.selectedCount = count;
 
-      this.emit('filterDimensionsChanged');
+      this.emit('pipelineUpdated');
     });
   }
 
@@ -111,13 +111,13 @@ class PipelineStore extends EventsEmitter {
 
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
-      this.emit('filterDimensionsChanged');
+      this.emit('pipelineUpdated');
     });
   }
 
   handleSymbologyDimensionChange(symbologyDimension) {
     this.symbologyDimension = symbologyDimension;
-    this.emit('filterDimensionsChanged');
+    this.emit('pipelineUpdated');
   }
 
   buildSQL() {
@@ -200,14 +200,6 @@ class PipelineStore extends EventsEmitter {
 
   createUnitsSQLChunk(dimension, range) {
     this.sqlChunks[dimension] = `(dcp_units_use_map >= '${range[0]}' AND dcp_units_use_map <= '${range[1]}')`;
-  }
-
-  getFilterDimensions() {
-    return this.filterDimensions;
-  }
-
-  getSymbologyDimension() {
-    return this.symbologyDimension;
   }
 
   getCount() {
