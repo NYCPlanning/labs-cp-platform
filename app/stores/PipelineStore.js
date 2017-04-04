@@ -18,9 +18,8 @@ class PipelineStore extends EventsEmitter {
     this.sql = this.buildSQL();
   }
 
+  // builds a new LayerConfig based on sql and symbologyDimension
   getLayerConfig() {
-    // use this method to build new mapConfig based on mode
-
     const { sql, symbologyDimension } = this;
 
     const config = LayerConfig.points;
@@ -54,6 +53,8 @@ class PipelineStore extends EventsEmitter {
     return newConfig;
   }
 
+  // returns boolean, depends on which status is selected
+  // this is used by this store to reset values, AND by the view layer to disable sliders
   issueDateFilterDisabled() {
     const values = this.filterDimensions.dcp_pipeline_status;
 
@@ -69,6 +70,8 @@ class PipelineStore extends EventsEmitter {
     return invalid;
   }
 
+  // returns boolean, depends on which status is selected
+  // this is used by this store to reset values, AND by the view layer to disable sliders
   completionDateFilterDisabled() {
     const values = this.filterDimensions.dcp_pipeline_status;
 
@@ -84,6 +87,7 @@ class PipelineStore extends EventsEmitter {
     return invalid;
   }
 
+  // updates a single filterDimension, emits an event when everything is updated
   handleFilterDimensionChange(filterDimension, values) {
     this.filterDimensions[filterDimension] = values;
 
@@ -104,11 +108,13 @@ class PipelineStore extends EventsEmitter {
     this.emit('filterDimensionsChanged');
   }
 
+  // updates symbologyDimension, emits an event when done
   handleSymbologyDimensionChange(symbologyDimension) {
     this.symbologyDimension = symbologyDimension;
     this.emit('filterDimensionsChanged');
   }
 
+  // returns new sql based on the current filterDimensions
   buildSQL() {
     this.createSQLChunks();
 
@@ -126,9 +132,10 @@ class PipelineStore extends EventsEmitter {
     return sql;
   }
 
+  // generate SQL WHERE partials for each filter dimension
   createSQLChunks() {
     this.sqlChunks = {};
-    // generate SQL WHERE partials for each filter dimension
+
     this.createCheckboxSQLChunk('dcp_pipeline_status', this.filterDimensions.dcp_pipeline_status);
     this.createCheckboxSQLChunk('dcp_permit_type', this.filterDimensions.dcp_permit_type);
     this.createCheckboxSQLChunk('dcp_development_type', this.filterDimensions.dcp_development_type);
@@ -136,19 +143,17 @@ class PipelineStore extends EventsEmitter {
 
     this.createDateSQLChunk('dob_qdate', this.filterDimensions.dob_qdate);
 
-    // if (!this.state.completionDateFilterDisabled) {
-    //   this.createDateSQLChunk('dob_cofo_date', this.filterDimensions.dob_cofo_date);
-    // }
+    if (!this.completionDateFilterDisabled()) {
+      this.createDateSQLChunk('dob_cofo_date', this.filterDimensions.dob_cofo_date);
+    }
 
-    // if (!this.state.issueDateFilterDisabled) {
-    //   this.createDateSQLChunk('dob_qdate', this.filterDimensions.dob_qdate);
-    // }
+    if (!this.issueDateFilterDisabled()) {
+      this.createDateSQLChunk('dob_qdate', this.filterDimensions.dob_qdate);
+    }
   }
 
+  // SQL WHERE partial builder for Checkboxes
   createCheckboxSQLChunk(dimension, values) {
-    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
-    // like ( dimension = 'value1' OR dimension = 'value2')
-
     // inject some additional values to handle the demolition use className
     // demolitions where permit is issues should also show up under searches for complete.
     const demolitionIsSelected = this.filterDimensions.dcp_permit_type.filter(d => d.value === 'Demolition').length > 0;
@@ -172,6 +177,7 @@ class PipelineStore extends EventsEmitter {
     }
   }
 
+  // SQL WHERE partial builder for Date Range Sliders
   createDateSQLChunk(dimension, range) {
     const dateRangeFormatted = {
       from: moment(range[0], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
@@ -187,6 +193,7 @@ class PipelineStore extends EventsEmitter {
     }
   }
 
+  // SQL WHERE partial builder for Unit Count Slider
   createUnitsSQLChunk(dimension, range) {
     this.sqlChunks[dimension] = `(dcp_units_use_map >= '${range[0]}' AND dcp_units_use_map <= '${range[1]}')`;
   }
@@ -203,6 +210,7 @@ class PipelineStore extends EventsEmitter {
     return this.sql;
   }
 
+  // do things when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
       case 'PIPELINE_FILTERDIMENSION_CHANGE': {
@@ -217,8 +225,6 @@ class PipelineStore extends EventsEmitter {
 
       default:
     }
-
-    // handle appropriate actions
   }
 }
 
