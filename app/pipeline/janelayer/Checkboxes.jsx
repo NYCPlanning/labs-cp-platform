@@ -4,7 +4,6 @@
 
 import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
-import _ from 'underscore';
 
 import Checkbox from '../../common/Checkbox';
 
@@ -47,14 +46,12 @@ LegendCircle.propTypes = {
 const Checkboxes = React.createClass({
 
   propTypes: {
-    value: PropTypes.array.isRequired, // array of objects for currently checked items
     options: PropTypes.array.isRequired, // array of objects for all possible items
     onChange: PropTypes.func.isRequired, // function to send an updated array of objects to when a checkbox is toggled
     legendCircleType: PropTypes.string.isRequired, // string indicating the type of legendCircle
   },
 
   handleChange(value) {
-    console.log('handleChange', value)
     const { options, onChange } = this.props;
 
     const thisOption = options.filter(option => option.value === value)[0];
@@ -67,7 +64,6 @@ const Checkboxes = React.createClass({
     const { options, legendCircleType } = this.props;
 
     const checkboxListItems = options.map((option) => {
-
       const checkbox = (
         <Checkbox
           value={option.value}

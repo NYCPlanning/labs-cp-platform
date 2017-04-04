@@ -7,9 +7,8 @@ import { LayerConfig, circleColors } from './config';
 import Download from '../../common/Download';
 import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
-
 import PipelineStore from '../../stores/PipelineStore';
-import * as PipelineActions from '../../actions/PipelineActions';
+
 
 const Pipeline = React.createClass({
   propTypes: {
@@ -18,14 +17,22 @@ const Pipeline = React.createClass({
 
   getInitialState() {
     return ({
-      sql: '',
+      sql: PipelineStore.getSql(),
       symbologyDimension: 'dcp_permit_type',
     });
   },
 
-  updateSQL(sql) {
-    this.sql = sql;
-    this.setState({ sql }, this.updateLayerConfig);
+  componentWillMount() {
+    PipelineStore.on('filterDimensionsChanged', () => {
+      console.log('filterDimensionsChanged!', PipelineStore.getSql())
+      this.setState({ sql: PipelineStore.getSql() }, () => { this.updateLayerConfig(); });
+    });
+
+    this.updateLayerConfig();
+  },
+
+  componentDidMount() {
+
   },
 
   updateLayerConfig() {
@@ -61,11 +68,6 @@ const Pipeline = React.createClass({
       },
     });
 
-    // update the layer config
-    this.sendNewConfig(newConfig);
-  },
-
-  sendNewConfig(newConfig) {
     // pass the new config up to Jane
     this.props.onUpdate('pipeline', {
       sources: newConfig.sources,
@@ -95,7 +97,6 @@ const Pipeline = React.createClass({
           <LayerSelector
             symbologyDimension={this.state.symbologyDimension}
             onSymbologyDimensionChange={this.handleSymbologyDimensionChange}
-            updateSQL={this.updateSQL}
           />
         </Tab>
         <Tab label="Download">

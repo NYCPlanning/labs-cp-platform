@@ -8,11 +8,8 @@ import Checkboxes from './Checkboxes';
 import PipelineActions from '../../actions/PipelineActions';
 import PipelineStore from '../../stores/PipelineStore';
 
-console.log('pipelineActions', PipelineActions)
-
 import RangeSlider from '../../common/RangeSlider';
 import InfoIcon from '../../common/InfoIcon';
-import devTables from '../../helpers/devTables';
 
 import { defaultFilterDimensions } from './config';
 
@@ -20,7 +17,6 @@ import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
   propTypes: {
-    updateSQL: React.PropTypes.func.isRequired,
     symbologyDimension: React.PropTypes.string.isRequired,
     onSymbologyDimensionChange: React.PropTypes.func.isRequired,
   },
@@ -39,15 +35,6 @@ const LayerSelector = React.createClass({
     PipelineStore.on('filterDimensionsChanged', () => {
       this.setState({ filterDimensions: PipelineStore.getFilterDimensions() });
     });
-  },
-
-  componentDidMount() {
-    this.sqlConfig = {
-      columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
-      tablename: devTables('pipeline_projects'),
-    };
-
-    this.buildSQL();
   },
 
   getTotalCount(sql) {
@@ -91,72 +78,7 @@ const LayerSelector = React.createClass({
     this.getSelectedCount(sql);
   },
 
-  createMultiSelectSQLChunk(dimension, values) {
-    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
-    // like ( dimension = 'value1' OR dimension = 'value2')
-
-    // inject some additional values to handle the demolition use className
-    // demolitions where permit is issues should also show up under searches for complete.
-    const demolitionIsSelected = this.state.filterDimensions.dcp_permit_type.filter(d => d.value === 'Demolition').length > 0;
-    const completeIsSelected = values.filter(d => d.value === 'Complete').length > 0;
-    const permitIssuedIsSelected = values.filter(d => d.value === 'Permit issued').length > 0;
-
-    const subChunks = values.map(value => `${dimension} = '${value.value}'`);
-
-    if (dimension === 'dcp_pipeline_status' && demolitionIsSelected && (completeIsSelected || permitIssuedIsSelected)) {
-      subChunks.push('dcp_pipeline_status = \'Demolition (complete)\'');
-    }
-
-    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
-      const chunk = `(${subChunks.join(' OR ')})`;
-
-      this.sqlChunks[dimension] = chunk;
-    } else {
-      this.sqlChunks[dimension] = 'FALSE'; // if no options in the multiselect are selected, make the resulting SQL return no rows
-    }
-  },
-
-  createDateSQLChunk(dimension, range) {
-    const dateRangeFormatted = {
-      from: moment(range[0], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
-      to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
-    };
-
-    if (dimension === 'dob_cofo_date') {
-      this.sqlChunks[dimension] = `NOT (dob_cofo_date_first >= '${dateRangeFormatted.to}' OR dob_cofo_date_last <= '${dateRangeFormatted.from}')`;
-    }
-
-    if (dimension === 'dob_qdate') {
-      this.sqlChunks[dimension] = `(dob_qdate >= '${dateRangeFormatted.from}' AND dob_qdate <= '${dateRangeFormatted.to}')`;
-    }
-  },
-
-  createUnitsSQLChunk(dimension, range) {
-    this.sqlChunks[dimension] = `(dcp_units_use_map >= '${range[0]}' AND dcp_units_use_map <= '${range[1]}')`;
-  },
-
-  createSQLChunks() {
-    this.sqlChunks = {};
-    // generate SQL WHERE partials for each filter dimension
-    this.createMultiSelectSQLChunk('dcp_pipeline_status', this.state.filterDimensions.dcp_pipeline_status);
-    this.createMultiSelectSQLChunk('dcp_permit_type', this.state.filterDimensions.dcp_permit_type);
-    this.createMultiSelectSQLChunk('dcp_development_type', this.state.filterDimensions.dcp_development_type);
-    this.createUnitsSQLChunk('dcp_units_use_map', this.state.filterDimensions.dcp_units_use_map);
-
-    this.createDateSQLChunk('dob_qdate', this.state.filterDimensions.dob_qdate);
-
-    if (!this.state.completionDateFilterDisabled) {
-      this.createDateSQLChunk('dob_cofo_date', this.state.filterDimensions.dob_cofo_date);
-    }
-
-    if (!this.state.issueDateFilterDisabled) {
-      this.createDateSQLChunk('dob_qdate', this.state.filterDimensions.dob_qdate);
-    }
-  },
-
   handleChange(dimension, values) {
-    console.log(dimension, values)
-
     PipelineActions.onFilterDimensionChange(dimension, values);
   },
 
