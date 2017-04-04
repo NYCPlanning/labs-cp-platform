@@ -4,6 +4,7 @@ import update from 'react/lib/update';
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
+import carto from '../helpers/carto';
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -16,6 +17,13 @@ class PipelineStore extends EventsEmitter {
     };
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.buildSQL();
+
+    carto.getCount(this.sql).then((count) => {
+      this.totalCount = count;
+      this.selectedCount = count;
+
+      this.emit('filterDimensionsChanged');
+    });
   }
 
   getLayerConfig() {
@@ -101,7 +109,10 @@ class PipelineStore extends EventsEmitter {
 
     this.sql = this.buildSQL();
 
-    this.emit('filterDimensionsChanged');
+    carto.getCount(this.sql).then((count) => {
+      this.selectedCount = count;
+      this.emit('filterDimensionsChanged');
+    });
   }
 
   handleSymbologyDimensionChange(symbologyDimension) {
@@ -199,13 +210,13 @@ class PipelineStore extends EventsEmitter {
     return this.symbologyDimension;
   }
 
-// SQL accessors and mutators
+  getCount() {
+    return carto.getCount(this.sql);
+  }
 
   getSql() {
     return this.sql;
   }
-
-// Action Handler
 
   handleActions(action) {
     switch (action.type) {

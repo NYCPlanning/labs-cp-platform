@@ -18,8 +18,6 @@ const LayerSelector = React.createClass({
 
   getInitialState() {
     return ({
-      selectedCount: null,
-      totalCount: null,
       symbologyDimension: PipelineStore.getSymbologyDimension(),
       filterDimensions: PipelineStore.getFilterDimensions(),
     });
@@ -28,6 +26,8 @@ const LayerSelector = React.createClass({
   componentWillMount() {
     PipelineStore.on('filterDimensionsChanged', () => {
       this.setState({
+        totalCount: PipelineStore.totalCount,
+        selectedCount: PipelineStore.selectedCount,
         filterDimensions: PipelineStore.getFilterDimensions(),
         symbologyDimension: PipelineStore.getSymbologyDimension(),
       });
