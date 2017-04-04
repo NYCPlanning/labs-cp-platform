@@ -229,6 +229,8 @@ class PipelineStore extends EventsEmitter {
 }
 
 const pipelineStore = new PipelineStore();
+window.pipelineStore = pipelineStore;
+
 dispatcher.register(pipelineStore.handleActions.bind(pipelineStore));
 
 export default pipelineStore;

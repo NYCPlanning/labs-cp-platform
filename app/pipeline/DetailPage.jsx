@@ -9,6 +9,9 @@ import carto from '../helpers/carto';
 import NycGeom from '../helpers/NycGeom';
 import devTables from '../helpers/devTables';
 
+import PipelineStore from '../stores/PipelineStore';
+import * as PipelineActions from '../actions/PipelineActions';
+
 import './DetailPage.scss';
 
 const DevelopmentPage = React.createClass({
@@ -19,16 +22,18 @@ const DevelopmentPage = React.createClass({
     location: React.PropTypes.shape().isRequired,
   },
 
-  getInitialState() {
-    return ({
-      data: null,
+  componentWillMount() {
+    PipelineStore.on('change', () => {
+      this.setState({
+        data: PipelineStore.createDetailView(),
+      });
     });
   },
 
   componentDidMount() {
     const self = this;
     // after mount, fetch data and set state
-    carto.getFeature(devTables('pipeline_projects_dev'), 'cartodb_id', parseInt(this.props.params.id))
+    carto.getFeature(devTables('pipeline_projects'), 'cartodb_id', parseInt(this.props.params.id))
       .then((data) => { self.setState({ data }); });
   },
 
