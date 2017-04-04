@@ -3,7 +3,9 @@ import React, { PropTypes } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 
-const Download = ({ store, filePrefix, onDownload }) => {
+import carto from '../helpers/carto';
+
+const Download = ({ sql, filePrefix, onDownload }) => {
   const style = {
     size: { fontSize: '11px' },
   };
@@ -14,7 +16,7 @@ const Download = ({ store, filePrefix, onDownload }) => {
 
       <FlatButton
         label="CSV"
-        href={store.completeDownloadUrlString(filePrefix, 'csv')}
+        href={carto.completeDownloadUrlString(sql, filePrefix, 'csv')}
         download="text.csv"
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
@@ -22,7 +24,7 @@ const Download = ({ store, filePrefix, onDownload }) => {
       />
       <FlatButton
         label="GeoJSON"
-        href={store.completeDownloadUrlString(filePrefix, 'geojson')}
+        href={carto.completeDownloadUrlString(sql, filePrefix, 'geojson')}
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-code-o" style={style.size} />}
         onClick={() => onDownload('geojson-complete')}
@@ -30,7 +32,7 @@ const Download = ({ store, filePrefix, onDownload }) => {
       <FlatButton
         label="Shapefile"
         labelStyle={style.size}
-        href={store.completeDownloadUrlString(filePrefix, 'shp')}
+        href={carto.completeDownloadUrlString(sql, filePrefix, 'shp')}
         icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
         onClick={() => onDownload('shp-complete')}
       />
@@ -40,21 +42,21 @@ const Download = ({ store, filePrefix, onDownload }) => {
       <FlatButton
         label="CSV"
         labelStyle={style.size}
-        href={store.filteredDownloadUrlString(filePrefix, 'csv')}
+        href={carto.filteredDownloadUrlString(sql, filePrefix, 'csv')}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
         onClick={() => onDownload('csv-filtered')}
       />
       <FlatButton
         label="GeoJSON"
         labelStyle={style.size}
-        href={store.filteredDownloadUrlString(filePrefix, 'geojson')}
+        href={carto.filteredDownloadUrlString(sql, filePrefix, 'geojson')}
         icon={<FontIcon className="fa fa-file-code-o" style={style.size} />}
         onClick={() => onDownload('geojson-filtered')}
       />
       <FlatButton
         label="Shapefile"
         labelStyle={style.size}
-        href={store.filteredDownloadUrlString(filePrefix, 'shp')}
+        href={carto.filteredDownloadUrlString(sql, filePrefix, 'shp')}
         icon={<FontIcon className="fa fa-file-archive-o" style={style.size} />}
         onClick={() => onDownload('shp-filtered')}
       />
@@ -63,7 +65,7 @@ const Download = ({ store, filePrefix, onDownload }) => {
 };
 
 Download.propTypes = {
-  store: PropTypes.object.isRequired,
+  sql: PropTypes.string.isRequired,
   filePrefix: PropTypes.string.isRequired,
   onDownload: PropTypes.func,
 };

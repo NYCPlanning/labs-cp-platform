@@ -4,7 +4,6 @@ import update from 'react/lib/update';
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
-import carto from '../helpers/carto';
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -204,25 +203,6 @@ class PipelineStore extends EventsEmitter {
 
   getSql() {
     return this.sql;
-  }
-
-  getFilteredSql() {
-    return this.getSql().replace(/SELECT (.*?) FROM/, 'SELECT * FROM');
-  }
-
-  getCompleteSql() {
-    return this.getFilteredSql().replace(/ WHERE .*/, '');
-  }
-
-// Download string generation
-  completeDownloadUrlString(filePrefix, fileType) {
-    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
-    return carto.generateUrlString(this.getCompleteSql(), fileType, `${filePrefix}_complete_${date}`);
-  }
-
-  filteredDownloadUrlString(filePrefix, fileType) {
-    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
-    return carto.generateUrlString(this.getFilteredSql(), fileType, `${filePrefix}_filtered_${date}`);
   }
 
 // Action Handler
