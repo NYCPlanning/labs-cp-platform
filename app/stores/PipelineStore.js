@@ -5,7 +5,7 @@ import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
 import carto from '../helpers/carto';
-import SqlBuilder from '../helpers/SqlBuilder';
+import PipelineSqlBuilder from './PipelineSqlBuilder';
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -17,7 +17,7 @@ class PipelineStore extends EventsEmitter {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
       tablename: devTables('pipeline_projects'),
     };
-    this.sqlBuilder = new SqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
+    this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
   }
@@ -100,16 +100,18 @@ class PipelineStore extends EventsEmitter {
       // Completion Slider
       if (this.completionDateFilterDisabled()) {
         this.filterDimensions.dob_cofo_date = defaultFilterDimensions.dob_cofo_date;
+      } else {
+        this.filterDimensions.dob_cofo_date.disabled = false;
       }
       // issued slider
       if (this.issueDateFilterDisabled()) {
         this.filterDimensions.dob_qdate = defaultFilterDimensions.dob_qdate;
+      } else {
+        this.filterDimensions.dob_qdate.disabled = false;
       }
     }
 
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-
-    console.log(this.filterDimensions);
 
     this.emit('filterDimensionsChanged');
   }

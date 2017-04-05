@@ -2,7 +2,7 @@ import appConfig from '../../helpers/appConfig';
 
 const defaultFilterDimensions = {
   dcp_pipeline_status: {
-    type: 'multiSelect',
+    type: 'statusMultiSelect',
     values: [
       {
         label: 'Complete',
@@ -77,7 +77,7 @@ const defaultFilterDimensions = {
   },
 
   dob_cofo_date: {
-    type: 'dateRange',
+    type: 'cofoDateRange',
     values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
