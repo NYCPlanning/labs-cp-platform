@@ -5,7 +5,9 @@ import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
 import carto from '../helpers/carto';
+
 import PipelineSqlBuilder from './PipelineSqlBuilder';
+
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -113,13 +115,16 @@ class PipelineStore extends EventsEmitter {
 
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
 
-    this.emit('filterDimensionsChanged');
+    carto.getCount(this.sql).then((count) => {
+      this.selectedCount = count;
+      this.emit('pipelineUpdated');
+    });
   }
 
   // updates symbologyDimension, emits an event when done
   handleSymbologyDimensionChange(symbologyDimension) {
     this.symbologyDimension = symbologyDimension;
-    this.emit('filterDimensionsChanged');
+    this.emit('pipelineUpdated');
   }
 
   getFilterDimensions() {

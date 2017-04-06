@@ -22,7 +22,7 @@ const Pipeline = React.createClass({
 
   componentWillMount() {
     // listen for changes to the filter UI
-    PipelineStore.on('filterDimensionsChanged', () => {
+    PipelineStore.on('pipelineUpdated', () => {
       this.setState({ layerConfig: PipelineStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
     });
 
@@ -42,8 +42,6 @@ const Pipeline = React.createClass({
       bottom: 0,
     };
 
-    const sql = PipelineStore.getSql();
-
     return (
       <Tabs
         className="sidebar-tabs"
@@ -55,7 +53,7 @@ const Pipeline = React.createClass({
         <Tab label="Download">
           <div className="sidebar-tab-content padded">
             <Download
-              sql={sql}
+              sql={PipelineStore.getSql()}
               filePrefix="developments"
             />
             <SignupPrompt />
