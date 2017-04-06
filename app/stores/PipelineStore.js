@@ -8,6 +8,9 @@ import carto from '../helpers/carto';
 
 import PipelineSqlBuilder from './PipelineSqlBuilder';
 
+const initialLoadSql = `SELECT max(dcp_units_use_map) AS max_total_units, min(dcp_units_use_map) AS min_total_units, count(*)
+                        FROM pipeline_projects
+                        WHERE dcp_pipeline_status NOT IN ('Disapproved or Suspended', 'Application pre-filed')`;
 
 class PipelineStore extends EventsEmitter {
   constructor() {
@@ -22,6 +25,12 @@ class PipelineStore extends EventsEmitter {
     this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+
+    carto.SQL(initialLoadSql, 'json').then((data) => {
+      this.totalCount = data[0].count;
+      this.selectedCount = data[0].count;
+      this.emit('pipelineUpdated');
+    });
   }
 
   // builds a new LayerConfig based on sql and symbologyDimension
