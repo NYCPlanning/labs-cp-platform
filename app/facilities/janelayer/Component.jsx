@@ -8,8 +8,7 @@ import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 
-
-import defaultLayerConfig from './defaultlayerconfig';
+import FacilitiesStore from '../../stores/FacilitiesStore';
 
 const Facilities = React.createClass({
   propTypes: {
@@ -18,39 +17,32 @@ const Facilities = React.createClass({
   },
 
   getInitialState() {
-    return { sql: '' };
+    return ({
+      layerConfig: FacilitiesStore.getLayerConfig(),
+    });
   },
 
-  componentDidMount() {
-    this.renderLegend();
+  componentWillMount() {
+    // listen for changes to the filter UI
+    FacilitiesStore.on('facilitiesUpdated', () => {
+      this.setState({ layerConfig: FacilitiesStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
+    });
+
+    this.updateLayerConfig();
   },
+
+  // componentDidMount() {
+  //   console.log('PROPS:', this.props)
+  //   this.renderLegend();
+  // },
 
   // updates the sql for the map source
-  updateLayerConfig(sql) {
-    this.setState({ sql });
+  updateLayerConfig() {
+    console.log('UPDATELAYERCONFIG', this.state.layerConfig);
 
-    const newLayerConfig = update(defaultLayerConfig, {
-      sources: {
-        0: {
-          options: {
-            sql: {
-              $set: [sql],
-            },
-          },
-        },
-      },
-    });
-
-    this.sendNewConfig(newLayerConfig);
+    this.props.onUpdate('facilities', this.state.layerConfig);
   },
 
-  // sends the new layerConfig up the chain
-  sendNewConfig(layerConfig) {
-    this.props.onUpdate('facilities', {
-      sources: layerConfig.sources,
-      mapLayers: layerConfig.mapLayers,
-    });
-  },
 
   handleDownload(label) {
     ga.event({
@@ -113,7 +105,7 @@ const Facilities = React.createClass({
         <Tab label="Download">
           <div className="sidebar-tab-content padded">
             <Download
-              sql={this.state.sql}
+              sql={FacilitiesStore.sql}
               filePrefix="facilities"
               onDownload={this.handleDownload}
             />

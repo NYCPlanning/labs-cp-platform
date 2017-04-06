@@ -29,7 +29,8 @@ class SqlBuilder {
     });
 
     const sqlTemplate = `SELECT ${this.columns} FROM ${this.tablename} WHERE `;
-    const chunksString = chunks.join(' AND ');
+    // if there are no chunks, use 'WHERE TRUE' to select all
+    const chunksString = chunks.length > 0 ? chunks.join(' AND ') : 'TRUE';
     const sql = sqlTemplate + chunksString;
 
     return sql;

@@ -10,6 +10,9 @@ import InfoIcon from '../../common/InfoIcon';
 import NestedSelect from './NestedSelect';
 import Checkbox from '../../common/Checkbox';
 
+
+import FacilitiesActions from '../../actions/FacilitiesActions';
+import FacilitiesStore from '../../stores/FacilitiesStore';
 import config from './config';
 import Carto from '../../helpers/carto';
 import ga from '../../helpers/ga';
@@ -31,49 +34,40 @@ const LayerSelector = React.createClass({
   },
 
   getInitialState() {
-    return ({
-      layers: [],
-      selectedCount: null,
-      totalCount: null,
-      checked: 'all', // all, none, or null
-      filterDimensions: {
-        optype: [],
-        overabbrev: [],
-        proptype: [],
-      },
-    });
+    const { filterDimensions } = FacilitiesStore;
+    return ({ filterDimensions });
   },
 
   componentWillMount() {
-    const self = this;
-    const layers = this.props.layers;
-    const filterDimensions = this.props.filterDimensions;
+    FacilitiesStore.on('facilitiesUpdated', () => {
+      const { totalCount, selectedCount, filterDimensions } = FacilitiesStore;
 
-    this.sqlConfig = {
-      columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
-      tablename: 'facdb_facilities',
-    };
-
-    // Loop over any default filterDimensions and set them before initial load
-    if (filterDimensions) {
-      Object.keys(filterDimensions).forEach((k) => {
-        this.updateFilterDimension(k, filterDimensions[k]);
+      this.setState({
+        totalCount,
+        selectedCount,
+        filterDimensions,
       });
-    }
-
-    this.mounted = false;
-
-    this.setState({ layers }, () => {
-      self.buildSQL(); // trigger map layer update
     });
-  },
 
-  componentDidMount() {
-    this.mounted = true; // used by buildSQL() to not trigger event on first build
-    // expand list if we are on a facdomain page
-    if (this.state.layers.length === 1) {
-      this.expandAll();
-    }
+
+    // const self = this;
+    // const layers = this.props.layers;
+    // const filterDimensions = this.props.filterDimensions;
+    //
+
+    //
+    // // Loop over any default filterDimensions and set them before initial load
+    // if (filterDimensions) {
+    //   Object.keys(filterDimensions).forEach((k) => {
+    //     this.updateFilterDimension(k, filterDimensions[k]);
+    //   });
+    // }
+    //
+    // this.mounted = false;
+    //
+    // this.setState({ layers }, () => {
+    //   self.buildSQL(); // trigger map layer update
+    // });
   },
 
   componentDidUpdate() {
@@ -273,11 +267,21 @@ const LayerSelector = React.createClass({
   },
 
   render() {
+    const { overabbrev, optype, proptype } = this.state.filterDimensions;
+
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
       paddingTop: '0px',
       fontSize: '14px',
     };
+
+    const MultiSelect = props => (
+      <Select
+        multi
+        value={props.options.filter(option => option.checked === true).map(option => option.value)}
+        {...props}
+      />
+  );
 
     return (
       <div className="sidebar-tab-content facilities-filter">
@@ -291,12 +295,10 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <Select
-              multi
+            <MultiSelect
               placeholder="Oversight Agencies"
-              value={this.state.filterDimensions.overabbrev}
               name="form-field-name"
-              options={config.agencies}
+              options={overabbrev.values}
               onChange={this.updateFilterDimension.bind(this, 'overabbrev')}
             />
             <InfoIcon text="The agency that funds or oversees this facility" />
@@ -306,12 +308,10 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <Select
-              multi
+            <MultiSelect
               placeholder="Operator Types"
-              value={this.state.filterDimensions.optype}
               name="form-field-name"
-              options={config.optypes}
+              options={optype.values}
               onChange={this.updateFilterDimension.bind(this, 'optype')}
             />
             <InfoIcon text="The type of entity operating the facility" />
@@ -321,12 +321,10 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <Select
-              multi
+            <MultiSelect
               placeholder="Property Types"
-              value={this.state.filterDimensions.proptype}
               name="form-field-name"
-              options={config.proptypes}
+              options={proptype.values}
               onChange={this.updateFilterDimension.bind(this, 'proptype')}
             />
             <InfoIcon text="Indicates whether the City owns or directly leases the property. This property type data is sourced from the Department of Citywide Administrative Services." />

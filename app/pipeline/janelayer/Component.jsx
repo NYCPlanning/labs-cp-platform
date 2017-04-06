@@ -30,6 +30,7 @@ const Pipeline = React.createClass({
   },
 
   updateLayerConfig() {
+    console.log(this.state.layerConfig)
     // pass the new config up to Jane
     this.props.onUpdate('pipeline', this.state.layerConfig);
   },
