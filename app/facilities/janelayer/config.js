@@ -1,7 +1,13 @@
 import colors from '../colors';
 import appConfig from '../../helpers/appConfig';
 
+import layersGenerator from '../layersGenerator';
+
 const defaultFilterDimensions = {
+  facsubgrp: {
+    type: 'facilitiesLayerSelector',
+    values: layersGenerator.allChecked(),
+  },
   optype: {
     type: 'multiSelect',
     disabled: true,

@@ -15,8 +15,6 @@ import Checkbox from '../../common/Checkbox';
 
 import FacilitiesActions from '../../actions/FacilitiesActions';
 import FacilitiesStore from '../../stores/FacilitiesStore';
-import Carto from '../../helpers/carto';
-import ga from '../../helpers/ga';
 
 import './LayerSelector.scss';
 
@@ -47,208 +45,18 @@ const LayerSelector = React.createClass({
         filterDimensions,
       });
     });
-
-
-    // const self = this;
-    // const layers = this.props.layers;
-    // const filterDimensions = this.props.filterDimensions;
-    //
-
-    //
-    // // Loop over any default filterDimensions and set them before initial load
-    // if (filterDimensions) {
-    //   Object.keys(filterDimensions).forEach((k) => {
-    //     this.updateFilterDimension(k, filterDimensions[k]);
-    //   });
-    // }
-    //
-    // this.mounted = false;
-    //
-    // this.setState({ layers }, () => {
-    //   self.buildSQL(); // trigger map layer update
-    // });
   },
 
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
   },
 
-  getTotalCount(sql) {
-    const self = this;
-
-    Carto.getCount(sql)
-      .then((count) => {
-        self.setState({ totalCount: count });
-      });
-  },
-
-  getSelectedCount(sql) {
-    const self = this;
-
-    Carto.getCount(sql)
-      .then((count) => { self.setState({ selectedCount: count }); });
-  },
-
   updateFilterDimension(dimension, values) {
     FacilitiesActions.onFilterDimensionChange(dimension, values);
   },
 
-  // builds WHERE clause partial for optype filter
-  createMultiSelectSQLChunk(dimension, values) {
-    // for react-select multiselects, generates a WHERE partial by combining comparators with 'OR'
-    // like ( dimension = 'value1' OR dimension = 'value2')
-    const subChunks = values.map((value) => {
-      if (dimension !== 'overabbrev') {
-        return `${dimension} = '${value.value}'`;
-      }
-
-      return `${dimension} LIKE '%${value.value}%'`;
-    });
-
-    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
-      const joined = subChunks.join(' OR ');
-      const chunk = `(${joined})`;
-
-      this.sqlChunks[dimension] = chunk;
-    }
-  },
-
-  processChecked() {
-    const layers = this.state.layers;
-
-    let allChecked = 0;
-    let allIndeterminate = 0;
-
-    // set indeterminate states, start from the bottom and work up
-    layers.forEach((facdomain) => {
-      let facdomainChecked = 0;
-      let facdomainIndeterminate = 0;
-
-      facdomain.children.forEach((group) => {
-        let groupChecked = 0;
-
-        group.children.forEach((subgroup) => {
-          if (subgroup.checked) groupChecked += 1;
-        });
-
-        group.checked = (groupChecked === group.children.length);
-        group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
-
-        if (group.checked) facdomainChecked += 1;
-        if (group.indeterminate) facdomainIndeterminate += 1;
-      });
-
-      facdomain.checked = (facdomainChecked === facdomain.children.length);
-      if (facdomain.checked) allChecked += 1;
-
-      facdomain.indeterminate = (facdomainIndeterminate > 0) || ((facdomainChecked < facdomain.children.length) && facdomainChecked > 0);
-      if (facdomain.indeterminate) allIndeterminate += 1;
-    });
-
-    let checkedStatus;
-    // figure out whether all, none, or some are checked
-    if (allChecked === layers.length) {
-      checkedStatus = 'all';
-    } else if (allChecked === 0 && allIndeterminate === 0) {
-      checkedStatus = 'none';
-    } else {
-      checkedStatus = null;
-    }
-
-    this.setState({
-      layers,
-      checked: checkedStatus,
-    });
-
-    const selectedLayers = [];
-
-    this.state.layers.forEach((facdomain) => {
-      facdomain.children.forEach((group) => {
-        group.children.forEach((subgroup) => {
-          if (subgroup.checked) {
-            selectedLayers.push(subgroup.name);
-          }
-        });
-      });
-    });
-
-    return selectedLayers;
-  },
-
-
-  createSQLChunks() {
-    // create an array of where clause chunks to be joined by 'AND'
-    this.sqlChunks = {};
-
-    const f = this.state.filterDimensions;
-
-    this.createMultiSelectSQLChunk('optype', f.optype);
-    this.createMultiSelectSQLChunk('overabbrev', f.overabbrev);
-    this.createMultiSelectSQLChunk('proptype', f.proptype);
-    this.createCategorySQLChunk();
-  },
-
-  // builds the WHERE clause partial for facsubgrp filter
-  createCategorySQLChunk() {
-    const layers = this.processChecked();
-
-    let layersChunk = '';
-
-    layers.forEach((name, i) => {
-      if (i > 0) layersChunk += ' OR ';
-      layersChunk += `facsubgrp = '${name}'`;
-    });
-
-    this.sqlChunks.facsubgrp = (layersChunk.length > 0) ? `(${layersChunk})` : 'false';
-  },
-
-  buildSQL() {
-    // the main event!  This method is called whenever any change is detected in the UI,
-    // and ultimately ends up passing a new layerconfig to jane
-
-    this.createSQLChunks();
-
-    const chunksArray = [];
-
-    Object.keys(this.sqlChunks).forEach((key) => {
-      chunksArray.push(this.sqlChunks[key]);
-    });
-
-    const chunksString = chunksArray.length > 0 ? chunksArray.join(' AND ') : 'true';
-
-    const sql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename} WHERE ${chunksString}`;
-    const totalSql = `SELECT ${this.sqlConfig.columns} FROM ${this.sqlConfig.tablename}`;
-
-    if (this.state.totalCount == null) this.getTotalCount(totalSql);
-
-    if (this.mounted) {
-      ga.event({
-        category: 'facilities-explorer',
-        action: 'set-filter',
-      });
-    }
-
-    this.props.updateSQL(sql);
-    this.getSelectedCount(sql);
-  },
-
   handleToggleAll() {
-    const layers = this.state.layers;
-
-    layers.forEach((facdomain) => {
-      facdomain.children.forEach((group) => {
-        group.children.forEach((subgroup) => {
-          // if none or some are selected, select all
-          if (this.state.checked !== 'all') {
-            (subgroup.checked) = true;
-          } else {
-            (subgroup.checked) = false;
-          }
-        });
-      });
-    });
-
-    this.buildSQL();
+    FacilitiesActions.onToggleAll();
   },
 
   expandAll() {
@@ -259,8 +67,12 @@ const LayerSelector = React.createClass({
     this.setState({ expanded: false });
   },
 
+  handleLayerUpdate(layers) {
+    this.updateFilterDimension('facsubgrp', layers);
+  },
+
   render() {
-    const { overabbrev, optype, proptype } = this.state.filterDimensions;
+    const { overabbrev, optype, proptype, facsubgrp } = this.state.filterDimensions;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -275,7 +87,7 @@ const LayerSelector = React.createClass({
         placeholder: PropTypes.string.isRequired,
       },
 
-      handleChange(selectedOptions) {
+      handleMultiSelectChange(selectedOptions) {
         const { options } = this.props;
 
         // reset checked status for all options, check those that were just passed in
@@ -298,11 +110,13 @@ const LayerSelector = React.createClass({
             placeholder={placeholder}
             name="form-field-name"
             options={options}
-            onChange={this.handleChange}
+            onChange={this.handleMultiSelectChange}
           />
         );
       },
     });
+
+    const checkStatus = FacilitiesStore.checkStatus;
 
     return (
       <div className="sidebar-tab-content facilities-filter">
@@ -358,8 +172,8 @@ const LayerSelector = React.createClass({
           <div className="toggle-expand">
             <Checkbox
               value={'allChecked'}
-              checked={this.state.checked === 'all'}
-              indeterminate={this.state.checked !== 'all' && this.state.checked !== 'none'}
+              checked={checkStatus === 'all'}
+              indeterminate={checkStatus !== 'all' && checkStatus !== 'none'}
               onChange={this.handleToggleAll}
             />
             All
@@ -373,8 +187,8 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <NestedSelect
-              layers={this.state.layers}
-              onUpdate={this.buildSQL}
+              layers={facsubgrp.values}
+              onUpdate={this.handleLayerUpdate}
               initiallyOpen={false}
               expanded={this.state.expanded}
             />

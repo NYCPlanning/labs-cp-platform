@@ -8,6 +8,19 @@ const FacilitiesActions = {
       values,
     });
   },
+
+  setInitialFilters(filterDimensions) {
+    dispatcher.dispatch({
+      type: 'FACILITIES_SET_INITIAL_FILTERS',
+      filterDimensions,
+    });
+  },
+
+  onToggleAll() {
+    dispatcher.dispatch({
+      type: 'FACILITIES_TOGGLE_ALL_LAYERS',
+    });
+  },
 };
 
 export default FacilitiesActions;

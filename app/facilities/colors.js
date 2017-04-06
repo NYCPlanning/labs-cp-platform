@@ -1,4 +1,4 @@
-import { layerDefaults } from './layerDefaults';
+import { defaultLayers } from './defaultLayers';
 
 const colors = {
   getColor(value) {
@@ -13,7 +13,7 @@ const colors = {
     return {
       property: 'facdomain',
       type: 'categorical',
-      stops: layerDefaults().map(layer => [
+      stops: defaultLayers().map(layer => [
         layer.name,
         layer.color,
       ]),

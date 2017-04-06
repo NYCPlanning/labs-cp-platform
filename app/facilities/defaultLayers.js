@@ -1,5 +1,5 @@
 const exports = {
-  layerDefaults() {
+  defaultLayers() {
     return [
       {
         name: 'Education, Child Welfare, and Youth',

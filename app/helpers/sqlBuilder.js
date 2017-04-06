@@ -14,7 +14,6 @@ class SqlBuilder {
   // creates a SQL statement from a filterDimensions object
   buildSql(filters) {
     const chunks = [];
-
     // iterate over all filters, building WHERE clause chunks for each
     Object.keys(filters).forEach((dimension) => {
       const filter = filters[dimension];
