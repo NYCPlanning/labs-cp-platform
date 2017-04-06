@@ -18,9 +18,14 @@ class FacilitiesStore extends EventsEmitter {
       tablename: devTables('facdb_facilities'),
     };
     this.sqlBuilder = new SqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
-    console.log(this.filterDimensions);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-    console.log(this.sql);
+
+    // get the totalCount
+    carto.getCount(this.sql).then((count) => {
+      this.totalCount = count;
+      this.selectedCount = count;
+      this.emit('facilitiesUpdated');
+    });
   }
 
   // builds a new LayerConfig based on sql
@@ -43,17 +48,26 @@ class FacilitiesStore extends EventsEmitter {
     return newConfig;
   }
 
-  // // updates a single filterDimension, emits an event when everything is updated
-  // handleFilterDimensionChange(filterDimension, values) {
-  //   this.filterDimensions[filterDimension].values = values;
-  //
-  //   this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-  //
-  //   carto.getCount(this.sql).then((count) => {
-  //     this.selectedCount = count;
-  //     this.emit('facilitiesUpdated');
-  //   });
-  // }
+  // updates a single filterDimension, emits an event when everything is updated
+  handleFilterDimensionChange(filterDimension, values) {
+    this.filterDimensions[filterDimension].values = values;
+
+    // disable dimension if nothing is selected in the multiselects
+    if (filterDimension === 'overabbrev' || 'filterDimension === optype' || 'filterDimension === proptype') {
+      if (values.filter(value => value.checked === true).length > 0) {
+        this.filterDimensions[filterDimension].disabled = false;
+      } else {
+        this.filterDimensions[filterDimension].disabled = true;
+      }
+    }
+
+    this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    //
+    carto.getCount(this.sql).then((count) => {
+      this.selectedCount = count;
+      this.emit('facilitiesUpdated');
+    });
+  }
 
   // // updates symbologyDimension, emits an event when done
   // handleSymbologyDimensionChange(symbologyDimension) {
@@ -88,8 +102,8 @@ class FacilitiesStore extends EventsEmitter {
   // do things when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
-      case 'FACILITIES_FILTER_CHANGE': {
-        this.handleFilterChange(action.filter, action.values);
+      case 'FACILITIES_FILTERDIMENSION_CHANGE': {
+        this.handleFilterDimensionChange(action.filterDimension, action.values);
         break;
       }
 

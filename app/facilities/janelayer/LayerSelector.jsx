@@ -1,5 +1,7 @@
 // LayerSelector.jsx - This component builds the layer selector which is used in the facilities JaneLayer
 
+/* eslint-disable react/no-multi-comp */
+
 import React, { PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -13,7 +15,6 @@ import Checkbox from '../../common/Checkbox';
 
 import FacilitiesActions from '../../actions/FacilitiesActions';
 import FacilitiesStore from '../../stores/FacilitiesStore';
-import config from './config';
 import Carto from '../../helpers/carto';
 import ga from '../../helpers/ga';
 
@@ -22,8 +23,6 @@ import './LayerSelector.scss';
 const LayerSelector = React.createClass({
   propTypes: {
     updateSQL: PropTypes.func.isRequired,
-    layers: PropTypes.array,
-    filterDimensions: PropTypes.object,
   },
 
   getDefaultProps() {
@@ -90,14 +89,8 @@ const LayerSelector = React.createClass({
       .then((count) => { self.setState({ selectedCount: count }); });
   },
 
-  updateFilterDimension(key, values) {
-    const abbreviated = values.map(value => ({
-      value: value.value,
-      label: value.value,
-    }));
-
-    this.state.filterDimensions[key] = key !== 'overabbrev' ? values : abbreviated;
-    this.buildSQL();
+  updateFilterDimension(dimension, values) {
+    FacilitiesActions.onFilterDimensionChange(dimension, values);
   },
 
   // builds WHERE clause partial for optype filter
@@ -275,13 +268,41 @@ const LayerSelector = React.createClass({
       fontSize: '14px',
     };
 
-    const MultiSelect = props => (
-      <Select
-        multi
-        value={props.options.filter(option => option.checked === true).map(option => option.value)}
-        {...props}
-      />
-  );
+    const MultiSelect = React.createClass({
+      propTypes: {
+        options: PropTypes.array.isRequired,
+        onChange: PropTypes.func.isRequired,
+        placeholder: PropTypes.string.isRequired,
+      },
+
+      handleChange(selectedOptions) {
+        const { options } = this.props;
+
+        // reset checked status for all options, check those that were just passed in
+        options.forEach((option) => { option.checked = false; });
+        selectedOptions.forEach((option) => {
+          option.checked = true;
+        });
+
+        this.props.onChange(options);
+      },
+
+      render() {
+        const { options, placeholder } = this.props;
+        const checkedValues = options.filter(option => option.checked === true).map(option => option.value);
+
+        return (
+          <Select
+            multi
+            value={checkedValues}
+            placeholder={placeholder}
+            name="form-field-name"
+            options={options}
+            onChange={this.handleChange}
+          />
+        );
+      },
+    });
 
     return (
       <div className="sidebar-tab-content facilities-filter">
@@ -310,7 +331,6 @@ const LayerSelector = React.createClass({
           >
             <MultiSelect
               placeholder="Operator Types"
-              name="form-field-name"
               options={optype.values}
               onChange={this.updateFilterDimension.bind(this, 'optype')}
             />

@@ -38,8 +38,6 @@ const Facilities = React.createClass({
 
   // updates the sql for the map source
   updateLayerConfig() {
-    console.log('UPDATELAYERCONFIG', this.state.layerConfig);
-
     this.props.onUpdate('facilities', this.state.layerConfig);
   },
 
