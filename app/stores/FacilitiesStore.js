@@ -30,7 +30,7 @@ class FacilitiesStore extends EventsEmitter {
   }
 
 
-  // builds a new LayerConfig based on sql
+  // builds a new LayerConfig based on this.sql
   getLayerConfig() {
     const { sql } = this;
 
@@ -50,6 +50,7 @@ class FacilitiesStore extends EventsEmitter {
     return newConfig;
   }
 
+  // sets initial filterDimensions
   handleSetInitialFilters(filterDimensions) {
     this.filterDimensions = filterDimensions;
     this.updateSql();
@@ -88,6 +89,7 @@ class FacilitiesStore extends EventsEmitter {
     });
   }
 
+  // checks or unchecks all facsubgrp options depending on this.checkStatus
   handleToggleAll() {
     const layers = this.filterDimensions.facsubgrp.values;
 
@@ -95,7 +97,7 @@ class FacilitiesStore extends EventsEmitter {
       facdomain.children.forEach((group) => {
         group.children.forEach((subgroup) => {
           // if none or some are selected, select all
-          if (!this.allLayersChecked) {
+          if (this.checkStatus !== 'all') {
             (subgroup.checked) = true;
           } else {
             (subgroup.checked) = false;
@@ -103,9 +105,11 @@ class FacilitiesStore extends EventsEmitter {
         });
       });
     });
+
+    this.updateSql();
   }
 
-  // do things when certain events arrive from the dispatcher
+  // call local methods when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
       case 'FACILITIES_FILTERDIMENSION_CHANGE': {
@@ -127,6 +131,8 @@ class FacilitiesStore extends EventsEmitter {
     }
   }
 
+  // iterates over all facsubgrp options, sets check/indeterminate status of parents
+  // updates this.checkStatus (used to know whether all, none, or some are currently selected)
   processChecked(layers) {
     let allChecked = 0;
     let allIndeterminate = 0;
