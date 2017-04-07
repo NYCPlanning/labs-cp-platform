@@ -8,10 +8,6 @@ import carto from '../helpers/carto';
 
 import PipelineSqlBuilder from '../helpers/sqlbuilder/PipelineSqlBuilder';
 
-const initialLoadSql = `SELECT max(dcp_units_use_map) AS max_total_units, min(dcp_units_use_map) AS min_total_units, count(*)
-                        FROM pipeline_projects
-                        WHERE dcp_pipeline_status NOT IN ('Disapproved or Suspended', 'Application pre-filed')`;
-
 class PipelineStore extends EventsEmitter {
   constructor() {
     super();
@@ -20,15 +16,15 @@ class PipelineStore extends EventsEmitter {
     this.sqlChunks = {};
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
-      tablename: devTables('pipeline_projects'),
+      tablename: devTables('pipeline_projects_prod'),
     };
     this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
 
-    carto.SQL(initialLoadSql, 'json').then((data) => {
-      this.totalCount = data[0].count;
-      this.selectedCount = data[0].count;
+    carto.getCount(this.sql).then((count) => {
+      this.totalCount = count;
+      this.selectedCount = count;
       this.emit('pipelineUpdated');
     });
   }
