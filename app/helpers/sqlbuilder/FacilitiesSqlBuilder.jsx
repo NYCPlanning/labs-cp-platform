@@ -1,8 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import SqlBuilder from '../helpers/SqlBuilder';
+import SqlBuilder from './SqlBuilder';
 
 class FacilitiesSqlBuilder extends SqlBuilder {
 
+  // chunker for the complex hierarchical layer selector
   facilitiesLayerSelector(dimension, filters) {
     const layers = filters[dimension].values;
 

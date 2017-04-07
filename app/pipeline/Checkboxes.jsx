@@ -1,11 +1,10 @@
-// Checkboxes.jsx - A checkbox multiselect component, built to mirror the same inputs
-// and outputs as the react-select multiselect component
+// Checkboxes.jsx - A checkbox multiselect component
 
 
 import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 
-import Checkbox from '../../common/Checkbox';
+import Checkbox from '../common/Checkbox';
 
 import './Checkboxes.scss';
 

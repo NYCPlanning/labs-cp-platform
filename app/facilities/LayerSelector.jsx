@@ -7,14 +7,14 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Select from 'react-select';
 
-import CountWidget from '../../common/CountWidget';
-import InfoIcon from '../../common/InfoIcon';
+import CountWidget from '../common/CountWidget';
+import InfoIcon from '../common/InfoIcon';
 import NestedSelect from './NestedSelect';
-import Checkbox from '../../common/Checkbox';
+import Checkbox from '../common/Checkbox';
 
 
-import FacilitiesActions from '../../actions/FacilitiesActions';
-import FacilitiesStore from '../../stores/FacilitiesStore';
+import FacilitiesActions from '../actions/FacilitiesActions';
+import FacilitiesStore from '../stores/FacilitiesStore';
 
 import './LayerSelector.scss';
 

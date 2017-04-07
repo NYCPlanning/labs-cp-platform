@@ -2,13 +2,13 @@ import React from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
-import CountWidget from '../../common/CountWidget';
+import CountWidget from '../common/CountWidget';
 import Checkboxes from './Checkboxes';
-import PipelineActions from '../../actions/PipelineActions';
-import PipelineStore from '../../stores/PipelineStore';
+import PipelineActions from '../actions/PipelineActions';
+import PipelineStore from '../stores/PipelineStore';
 
-import RangeSlider from '../../common/RangeSlider';
-import InfoIcon from '../../common/InfoIcon';
+import RangeSlider from '../common/RangeSlider';
+import InfoIcon from '../common/InfoIcon';
 
 import { defaultFilterDimensions } from './config';
 

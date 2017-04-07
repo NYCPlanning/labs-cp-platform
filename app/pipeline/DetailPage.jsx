@@ -4,7 +4,7 @@ import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
-import { getColor } from './janelayer/config';
+import { getColor } from './config';
 import NycGeom from '../helpers/NycGeom';
 
 import PipelineStore from '../stores/PipelineStore';

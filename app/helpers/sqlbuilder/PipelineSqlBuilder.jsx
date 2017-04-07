@@ -1,5 +1,5 @@
   /* eslint-disable class-methods-use-this */
-import SqlBuilder from '../helpers/sqlBuilder';
+import SqlBuilder from './SqlBuilder';
 
 class PipelineSqlBuilder extends SqlBuilder {
 

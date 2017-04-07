@@ -18,18 +18,6 @@ const colors = {
         layer.color,
       ]),
     };
-  // } else {
-  //   return {
-  //     property: 'facgroup',
-  //     type: 'categorical',
-  //     stops: this.layerStructure[0].children.map(function(layer) {
-  //       return [
-  //         layer.name,
-  //         layer.color
-  //       ]
-  //     })
-  //   }
-  // }
   },
 };
 

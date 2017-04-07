@@ -18,6 +18,7 @@ class SqlBuilder {
     Object.keys(filters).forEach((dimension) => {
       const filter = filters[dimension];
 
+      // iterate over all enabled filterDimensions
       if (!filter.disabled) {
         if (filter.type === undefined) throw new Error(`filterDimension ${dimension} does not have a type property`);
         if (this[filter.type] === undefined) throw new Error(`Can't parse filterDimension of type '${filter.type}'`);
@@ -27,6 +28,7 @@ class SqlBuilder {
       }
     });
 
+    // build the final sql string
     const sqlTemplate = `SELECT ${this.columns} FROM ${this.tablename} WHERE `;
     // if there are no chunks, use 'WHERE TRUE' to select all
     const chunksString = chunks.length > 0 ? chunks.join(' AND ') : 'TRUE';
@@ -35,7 +37,7 @@ class SqlBuilder {
     return sql;
   }
 
-  // SQL WHERE partial builder for Checkboxes and Multiselects
+  // generic chunker for Checkboxes and Multiselects
   multiSelect(dimension, filters) {
     const values = filters[dimension].values;
 
@@ -51,7 +53,7 @@ class SqlBuilder {
     return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
   }
 
-  // SQL WHERE partial builder for Date Range Sliders
+  // generic chunker for Date Range Sliders
   dateRange(dimension, filters) {
     const range = filters[dimension].values;
 
@@ -63,6 +65,7 @@ class SqlBuilder {
     return `(dob_qdate >= '${dateRangeFormatted.from}' AND dob_qdate <= '${dateRangeFormatted.to}')`;
   }
 
+  // generic chunker for number range sliders
   numberRange(dimension, filters) {
     const range = filters[dimension].values;
     return `(${dimension} >= '${range[0]}' AND ${dimension} <= '${range[1]}')`;

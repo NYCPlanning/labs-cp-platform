@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-import LayerSelector from './LayerSelector';
+import LayerSelector from '../LayerSelector';
 
 import Download from '../../common/Download';
 import { about } from '../content';

@@ -2,12 +2,11 @@ import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-import LayerSelector from './LayerSelector';
+import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
 import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
-
 import FacilitiesStore from '../../stores/FacilitiesStore';
 
 const Facilities = React.createClass({
@@ -30,11 +29,6 @@ const Facilities = React.createClass({
 
     this.updateLayerConfig();
   },
-
-  // componentDidMount() {
-  //   console.log('PROPS:', this.props)
-  //   this.renderLegend();
-  // },
 
   // updates the sql for the map source
   updateLayerConfig() {

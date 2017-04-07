@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import { getColor } from './config';
+import { getColor } from '../config';
 
 const Item = (props) => {
   const d = props.feature.properties;

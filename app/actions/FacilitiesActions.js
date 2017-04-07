@@ -21,6 +21,13 @@ const FacilitiesActions = {
       type: 'FACILITIES_TOGGLE_ALL_LAYERS',
     });
   },
+
+  fetchDetailData(uid) {
+    dispatcher.dispatch({
+      type: 'FACILITIES_FETCH_DETAIL_DATA',
+      uid,
+    });
+  },
 };
 
 export default FacilitiesActions;

@@ -1,13 +1,14 @@
+/* eslint-disable  class-methods-use-this */
+
 import EventsEmitter from 'events';
 import update from 'react/lib/update';
 
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import carto from '../helpers/carto';
-import FacilitiesSqlBuilder from './FacilitiesSqlBuilder';
-import { defaultFilterDimensions, layerConfig } from '../facilities/janelayer/config';
+import FacilitiesSqlBuilder from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
+import { defaultFilterDimensions, layerConfig } from '../facilities/config';
 import ga from '../helpers/ga';
-
 
 class FacilitiesStore extends EventsEmitter {
   constructor() {
@@ -89,6 +90,52 @@ class FacilitiesStore extends EventsEmitter {
     });
   }
 
+  fetchDetailData(uid) {
+    carto.getFeature(devTables(this.sqlConfig.tablename), 'uid', uid)
+      .then((data) => {
+        this.detailData = data;
+        this.fetchAgencyValues();
+      });
+  }
+
+  fetchAgencyValues() {
+    const d = this.detailData.properties;
+
+    // Assumes a structure to the string given by the database
+    const pgTableIds = this.dbStringToArray(d.pgtable);
+    const pgTableSQL = pgTableIds.map(pg => `'${pg}'`).join(',');
+
+    const sql = `SELECT * FROM facdb_datasources WHERE pgtable IN (${pgTableSQL})`;
+
+    carto.SQL(sql, 'json')
+      .then((sources) => {
+        this.sources = sources;
+        this.emit('detailDataAvailable');
+      });
+  }
+
+  // Helper methods for db arrays being stored as strings
+  dbStringToArray(string) {
+    return string.replace(/[{}"]/g, '').split(';');
+  }
+
+  dbStringToObject(string) {
+    const array = this.dbStringToArray(string);
+    return array.map((a, i) => {
+      const label = a.split(': ');
+      return {
+        agency: label[0],
+        value: label[1],
+        index: i,
+      };
+    });
+  }
+
+  dbStringAgencyLookup(string, lookup) {
+    const object = this.dbStringToObject(string);
+    return object.find(o => o.agency === lookup);
+  }
+
   // checks or unchecks all facsubgrp options depending on this.checkStatus
   handleToggleAll() {
     const layers = this.filterDimensions.facsubgrp.values;
@@ -124,6 +171,11 @@ class FacilitiesStore extends EventsEmitter {
 
       case 'FACILITIES_TOGGLE_ALL_LAYERS': {
         this.handleToggleAll(action.filterDimensions);
+        break;
+      }
+
+      case 'FACILITIES_FETCH_DETAIL_DATA': {
+        this.fetchDetailData(action.uid);
         break;
       }
 

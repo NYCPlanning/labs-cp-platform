@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 
-import InfoIcon from '../../common/InfoIcon';
-import Checkbox from '../../common/Checkbox';
+import InfoIcon from '../common/InfoIcon';
+import Checkbox from '../common/Checkbox';
 
 import './NestedSelect.scss';
 

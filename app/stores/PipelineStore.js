@@ -3,10 +3,10 @@ import update from 'react/lib/update';
 
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
-import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/janelayer/config';
+import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/config';
 import carto from '../helpers/carto';
 
-import PipelineSqlBuilder from './PipelineSqlBuilder';
+import PipelineSqlBuilder from '../helpers/sqlbuilder/PipelineSqlBuilder';
 
 const initialLoadSql = `SELECT max(dcp_units_use_map) AS max_total_units, min(dcp_units_use_map) AS min_total_units, count(*)
                         FROM pipeline_projects

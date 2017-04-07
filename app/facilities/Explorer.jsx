@@ -12,7 +12,7 @@ import carto from '../helpers/carto';
 import supportingLayers from '../janelayers/supportingLayers';
 
 import FacilitiesActions from '../actions/FacilitiesActions';
-import { defaultFilterDimensions } from './janelayer/config';
+import { defaultFilterDimensions } from './config';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {

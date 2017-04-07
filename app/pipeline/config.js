@@ -1,4 +1,4 @@
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../helpers/appConfig';
 
 const defaultFilterDimensions = {
   dcp_pipeline_status: {

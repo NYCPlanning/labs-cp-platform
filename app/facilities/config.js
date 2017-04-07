@@ -1,7 +1,7 @@
-import colors from '../colors';
-import appConfig from '../../helpers/appConfig';
+import colors from './colors';
+import appConfig from '../helpers/appConfig';
 
-import layersGenerator from '../layersGenerator';
+import layersGenerator from './layersGenerator';
 
 const defaultFilterDimensions = {
   facsubgrp: {
