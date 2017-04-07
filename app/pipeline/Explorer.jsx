@@ -39,6 +39,7 @@ const PipeLineExplorer = React.createClass({
             name="Housing Pipeline"
             icon="building"
             interactivityMapLayers={['pipeline-points']}
+            highlightPointLayers={['pipeline-points']}
             visible
             selected
             component={PipelineComponent}

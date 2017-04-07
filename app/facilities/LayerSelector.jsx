@@ -5,14 +5,12 @@
 import React, { PropTypes } from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Select from 'react-select';
 
+import NestedSelect from './NestedSelect';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
-import NestedSelect from './NestedSelect';
+import MultiSelect from '../common/MultiSelect';
 import Checkbox from '../common/Checkbox';
-
-
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 
@@ -80,42 +78,6 @@ const LayerSelector = React.createClass({
       fontSize: '14px',
     };
 
-    const MultiSelect = React.createClass({
-      propTypes: {
-        options: PropTypes.array.isRequired,
-        onChange: PropTypes.func.isRequired,
-        placeholder: PropTypes.string.isRequired,
-      },
-
-      handleMultiSelectChange(selectedOptions) {
-        const { options } = this.props;
-
-        // reset checked status for all options, check those that were just passed in
-        options.forEach((option) => { option.checked = false; });
-        selectedOptions.forEach((option) => {
-          option.checked = true;
-        });
-
-        this.props.onChange(options);
-      },
-
-      render() {
-        const { options, placeholder } = this.props;
-        const checkedValues = options.filter(option => option.checked === true).map(option => option.value);
-
-        return (
-          <Select
-            multi
-            value={checkedValues}
-            placeholder={placeholder}
-            name="form-field-name"
-            options={options}
-            onChange={this.handleMultiSelectChange}
-          />
-        );
-      },
-    });
-
     const checkStatus = FacilitiesStore.checkStatus;
 
     return (
@@ -133,8 +95,10 @@ const LayerSelector = React.createClass({
             <MultiSelect
               placeholder="Oversight Agencies"
               name="form-field-name"
+              displayValues
               options={overabbrev.values}
               onChange={this.updateFilterDimension.bind(this, 'overabbrev')}
+              valueRenderer={option => option.value}
             />
             <InfoIcon text="The agency that funds or oversees this facility" />
           </ListItem>

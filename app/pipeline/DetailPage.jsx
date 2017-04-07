@@ -27,7 +27,7 @@ const DevelopmentPage = React.createClass({
   componentWillMount() {
     PipelineStore.on('detailDataAvailable', () => {
       this.setState({
-        data: PipelineStore.getDetailData(),
+        data: PipelineStore.detailData,
       });
     });
 

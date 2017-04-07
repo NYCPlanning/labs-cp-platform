@@ -136,22 +136,6 @@ class PipelineStore extends EventsEmitter {
     this.emit('pipelineUpdated');
   }
 
-  getFilterDimensions() {
-    return this.filterDimensions;
-  }
-
-  getSymbologyDimension() {
-    return this.symbologyDimension;
-  }
-
-  getSql() {
-    return this.sql;
-  }
-
-  getDetailData() {
-    return this.detailData;
-  }
-
   fetchDetailData(cartodb_id) {
     carto.getFeature(devTables(this.sqlConfig.tablename), 'cartodb_id', cartodb_id)
       .then((data) => {

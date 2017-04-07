@@ -53,7 +53,7 @@ const Pipeline = React.createClass({
         <Tab label="Download">
           <div className="sidebar-tab-content padded">
             <Download
-              sql={PipelineStore.getSql()}
+              sql={PipelineStore.sql}
               filePrefix="developments"
             />
             <SignupPrompt />
