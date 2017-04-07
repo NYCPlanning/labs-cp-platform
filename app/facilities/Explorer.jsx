@@ -10,7 +10,9 @@ import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
 
 import supportingLayers from '../janelayers/supportingLayers';
-import layersGenerator from './layersGenerator';
+
+import FacilitiesActions from '../actions/FacilitiesActions';
+import { defaultFilterDimensions } from './config';
 
 const FacilitiesExplorer = React.createClass({
   propTypes: {
@@ -25,6 +27,19 @@ const FacilitiesExplorer = React.createClass({
 
   componentWillMount() {
     this.bounds = null;
+    // update the layers and filterDimensions in the facilities store
+
+    const locationState = this.props.location.state;
+
+    const filterDimensions = locationState && locationState.filterDimensions ?
+      locationState.filterDimensions :
+      defaultFilterDimensions;
+
+    if (locationState && locationState.layers) {
+      filterDimensions.facsubgrp.values = this.props.location.state.layers;
+    }
+
+    FacilitiesActions.setInitialFilters(filterDimensions);
   },
 
   componentDidMount() {
@@ -45,16 +60,6 @@ const FacilitiesExplorer = React.createClass({
   render() {
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
-
-    const locationState = this.props.location.state;
-
-    const layers = locationState && locationState.layers ?
-      this.props.location.state.layers :
-      layersGenerator.allChecked();
-
-    const filterDimensions = locationState && locationState.filterDimensions ?
-      locationState.filterDimensions :
-      null;
 
     return (
       <div className="full-screen">
@@ -83,7 +88,6 @@ const FacilitiesExplorer = React.createClass({
             visible
             selected
             component={FacilitiesComponent}
-            initialState={{ layers, filterDimensions }}
             listItem={FacilitiesListItem}
           />
         </Jane>

@@ -8,8 +8,8 @@ import Email from '../common/EmailButton';
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
-
-import carto from '../helpers/carto';
+import FacilitiesActions from '../actions/FacilitiesActions';
+import FacilitiesStore from '../stores/FacilitiesStore';
 
 import '../app.scss';
 
@@ -34,52 +34,15 @@ const DetailPage = React.createClass({
     });
   },
 
-  componentDidMount() {
-    const self = this;
-    // after mount, fetch data and set state
-    carto.getFeature('facdb_facilities', 'uid', this.props.params.id)
-      .then((data) => {
-        self.setState({ data });
-        self.fetchAgencyValues();
+  componentWillMount() {
+    FacilitiesStore.on('detailDataAvailable', () => {
+      this.setState({
+        data: FacilitiesStore.detailData,
+        sources: FacilitiesStore.sources,
       });
-  },
-
-  // Helper methods for db arrays being stored as strings
-  dbStringToArray(string) {
-    return string.replace(/[{}"]/g, '').split(';');
-  },
-
-  dbStringToObject(string) {
-    const array = this.dbStringToArray(string);
-    return array.map((a, i) => {
-      const label = a.split(': ');
-      return {
-        agency: label[0],
-        value: label[1],
-        index: i,
-      };
     });
-  },
 
-  dbStringAgencyLookup(string, lookup) {
-    const object = this.dbStringToObject(string);
-    return object.find(o => o.agency === lookup);
-  },
-
-  fetchAgencyValues() {
-    const self = this;
-    const d = this.state.data.properties;
-
-    // Assumes a structure to the string given by the database
-    const pgTableIds = this.dbStringToArray(d.pgtable);
-    const pgTableSQL = pgTableIds.map(pg => `'${pg}'`).join(',');
-
-    const sql = `SELECT * FROM facdb_datasources WHERE pgtable IN (${pgTableSQL})`;
-
-    carto.SQL(sql, 'json')
-      .then((sources) => {
-        self.setState({ sources });
-      });
+    FacilitiesActions.fetchDetailData(parseInt(this.props.params.id));
   },
 
   renderContent(state) {
@@ -110,7 +73,7 @@ const DetailPage = React.createClass({
 
     const sourceDataDetails = () => {
       const sourceDetails = sources.map((s) => {
-        const idAgency = this.dbStringAgencyLookup(d.idagency, s.datasource);
+        const idAgency = FacilitiesStore.dbStringAgencyLookup(d.idagency, s.datasource);
         const table = (
           <Table selectable={false}>
             <TableBody displayRowCheckbox={false}>
@@ -138,12 +101,12 @@ const DetailPage = React.createClass({
 
     const usageList = (data, type) => {
       if (data && type) {
-        const sizes = this.dbStringToObject(data);
+        const sizes = FacilitiesStore.dbStringToObject(data);
 
         const list = sizes.map(size =>
           (
             <li key={size.index} className="usage-list">
-              <h3>{size.value} <small>{this.dbStringAgencyLookup(type, size.agency).value}</small></h3>
+              <h3>{size.value} <small>{FacilitiesStore.dbStringAgencyLookup(type, size.agency).value}</small></h3>
               <h4><span className="label label-default">{size.agency}</span></h4>
             </li>
           ),
@@ -158,7 +121,7 @@ const DetailPage = React.createClass({
     };
 
     const asList = (string) => {
-      const array = this.dbStringToArray(string);
+      const array = FacilitiesStore.dbStringToArray(string);
       const list = array.map(item =>
         <li key={item}>{item}</li>,
       );

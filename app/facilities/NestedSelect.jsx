@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { List, ListItem } from 'material-ui/List';
 
-import InfoIcon from '../../common/InfoIcon';
-import Checkbox from '../../common/Checkbox';
+import InfoIcon from '../common/InfoIcon';
+import Checkbox from '../common/Checkbox';
 
 import './NestedSelect.scss';
 
@@ -54,7 +54,7 @@ const NestedSelect = React.createClass({
       layer.checked = !layer.checked;
     }
 
-    this.props.onUpdate();
+    this.props.onUpdate(layers);
   },
 
   // recursive list item generator

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
-import NestedSelect from './janelayer/NestedSelect';
+import NestedSelect from './NestedSelect';
 import layersGenerator from './layersGenerator';
 import ga from '../helpers/ga';
 

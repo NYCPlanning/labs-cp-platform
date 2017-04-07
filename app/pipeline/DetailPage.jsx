@@ -4,10 +4,11 @@ import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
-import { getColor } from './janelayer/config';
-import carto from '../helpers/carto';
+import { getColor } from './config';
 import NycGeom from '../helpers/NycGeom';
-import devTables from '../helpers/devTables';
+
+import PipelineStore from '../stores/PipelineStore';
+import PipelineActions from '../actions/PipelineActions';
 
 import './DetailPage.scss';
 
@@ -20,16 +21,17 @@ const DevelopmentPage = React.createClass({
   },
 
   getInitialState() {
-    return ({
-      data: null,
-    });
+    return { data: null };
   },
 
-  componentDidMount() {
-    const self = this;
-    // after mount, fetch data and set state
-    carto.getFeature(devTables('pipeline_projects'), 'cartodb_id', parseInt(this.props.params.id))
-      .then((data) => { self.setState({ data }); });
+  componentWillMount() {
+    PipelineStore.on('detailDataAvailable', () => {
+      this.setState({
+        data: PipelineStore.detailData,
+      });
+    });
+
+    PipelineActions.fetchDetailData(parseInt(this.props.params.id));
   },
 
   renderContent(data) {
@@ -214,7 +216,6 @@ const DevelopmentPage = React.createClass({
       </div>
     );
   },
-
 });
 
 module.exports = DevelopmentPage;

@@ -3,11 +3,6 @@ import appConfig from './appConfig';
 module.exports = {
   // given a string, get matches from capitalprojects based on name or projectid
   // TODO make this generic
-  autoComplete(value) {
-    const sql = `SELECT st_centroid(the_geom) as the_geom, sagency, projectid, name FROM (SELECT * FROM adoyle.capeprojectspolygons UNION ALL SELECT * FROM adoyle.capeprojectspoints) a WHERE name ILIKE '%${value}%' OR projectid ILIKE '%${value}%'`;
-
-    return this.SQL(sql);
-  },
 
   getVectorTileUrls(vizJsons) {
     // takes an array of vizJsons
@@ -86,7 +81,6 @@ module.exports = {
         `SELECT * FROM ${tableName} WHERE ${column} = ${value}` :
         `SELECT * FROM ${tableName} WHERE ${column} = '${value}'`;
 
-      // returns a promise
       self.SQL(sql)
         .then((data) => {
           resolve(data.features[0]);
@@ -129,17 +123,27 @@ module.exports = {
     });
   },
 
-  transformSqlSelectAll(sql) {
+  getFilteredSql(sql) {
     return sql.replace(/SELECT (.*?) FROM/, 'SELECT * FROM');
   },
 
-  transformSqlRemoveWhere(sql) {
-    return sql.replace(/ WHERE .*/, '');
+  getCompleteSql(sql) {
+    return this.getFilteredSql(sql).replace(/ WHERE .*/, '');
   },
 
-  generateUrlString(sql, format, filename = 'download') {
-    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${format}&filename=${filename}`;
+  generateUrlString(sql, fileType, filename = 'download') {
+    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=${fileType}&filename=${filename}`;
     return encodeURI(apiString);
+  },
+
+  completeDownloadUrlString(sql, filePrefix, fileType) {
+    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
+    return this.generateUrlString(this.getCompleteSql(sql), fileType, `${filePrefix}_complete_${date}`);
+  },
+
+  filteredDownloadUrlString(sql, filePrefix, fileType) {
+    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
+    return this.generateUrlString(this.getFilteredSql(sql), fileType, `${filePrefix}_filtered_${date}`);
   },
 
   // does a carto SQL api call
@@ -158,7 +162,7 @@ module.exports = {
             resolve(data.rows);
           }
         })
-        .fail(() => reject());
+        .fail(err => reject(err));
     });
   },
 };
