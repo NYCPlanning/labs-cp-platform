@@ -4,35 +4,13 @@ import Jane from 'jane-maps';
 import JaneLayer from 'jane-maps/dist/JaneLayer';
 
 import appConfig from '../helpers/appConfig';
-import content from './content';
 import supportingLayers from '../janelayers/supportingLayers';
 import PipelineComponent from './janelayer/Component';
 import PipelineListItem from './janelayer/ListItem';
 
 const PipeLineExplorer = React.createClass({
-  propTypes: {
-    showModal: React.PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      showModal: null,
-    };
-  },
-
   componentDidMount() {
     document.title = 'NYC Housing Development Explorer';
-
-    const modalShown = JSON.parse(localStorage.getItem('pipeline-splash'));
-    if (!modalShown) {
-      this.props.showModal({
-        modalHeading: 'Welcome!',
-        modalContent: content.splash,
-        modalCloseText: 'Got it.  Let me in!',
-      });
-
-      localStorage.setItem('pipeline-splash', 'true');
-    }
   },
 
   render() {
@@ -61,6 +39,7 @@ const PipeLineExplorer = React.createClass({
             name="Housing Pipeline"
             icon="building"
             interactivityMapLayers={['pipeline-points']}
+            highlightPointLayers={['pipeline-points']}
             visible
             selected
             component={PipelineComponent}

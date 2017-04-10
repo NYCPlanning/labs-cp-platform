@@ -19,6 +19,14 @@
 
 # Housing Pipeline
 `pipeline_projects`
+`pipeline_projets_prod` - Materialized View with only those permits that will be included in the "total count" for the pipeline explorer.  Why?  `pipeline_projects` includes two statuses that we do not have filters for.
+
+
+CREATE MATERIALIZED VIEW pipeline_projects_prod AS (
+  SELECT * FROM pipeline_projects WHERE dcp_pipeline_status <> 'Application pre-filed' AND dcp_pipeline_status <> 'Disapproved or Suspended'
+)
+
+GRANT SELECT on pipeline_projects_prod to publicuser;
 
 # Supporting Data
 `support_water_pfirm15` - 2015 Preliminary Flood Insurance Risk Map

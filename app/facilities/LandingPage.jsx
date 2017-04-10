@@ -5,27 +5,15 @@ import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
 import layersGenerator from './layersGenerator';
-import content from './content';
 import ga from '../helpers/ga';
 
 import './LandingPage.scss';
 
 
 const FacilitiesLandingPage = React.createClass({
-  propTypes: {
-    showModal: React.PropTypes.func.isRequired,
-  },
 
   componentDidMount() {
     document.title = 'Capital Planning Platform';
-  },
-
-  showAbout() {
-    this.props.showModal({
-      modalHeading: 'About this Tool',
-      modalContent: content.aboutContent,
-      modalCloseText: 'Got it!',
-    });
   },
 
   render() {

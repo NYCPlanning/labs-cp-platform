@@ -2,14 +2,12 @@ import React from 'react';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-import LayerSelector from './LayerSelector';
+import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
 import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
-
-
-import defaultLayerConfig from './defaultlayerconfig';
+import FacilitiesStore from '../../stores/FacilitiesStore';
 
 const Facilities = React.createClass({
   propTypes: {
@@ -18,39 +16,25 @@ const Facilities = React.createClass({
   },
 
   getInitialState() {
-    return { sql: '' };
+    return ({
+      layerConfig: FacilitiesStore.getLayerConfig(),
+    });
   },
 
-  componentDidMount() {
-    this.renderLegend();
+  componentWillMount() {
+    // listen for changes to the filter UI
+    FacilitiesStore.on('facilitiesUpdated', () => {
+      this.setState({ layerConfig: FacilitiesStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
+    });
+
+    this.updateLayerConfig();
   },
 
   // updates the sql for the map source
-  updateLayerConfig(sql) {
-    this.setState({ sql });
-
-    const newLayerConfig = update(defaultLayerConfig, {
-      sources: {
-        0: {
-          options: {
-            sql: {
-              $set: [sql],
-            },
-          },
-        },
-      },
-    });
-
-    this.sendNewConfig(newLayerConfig);
+  updateLayerConfig() {
+    this.props.onUpdate('facilities', this.state.layerConfig);
   },
 
-  // sends the new layerConfig up the chain
-  sendNewConfig(layerConfig) {
-    this.props.onUpdate('facilities', {
-      sources: layerConfig.sources,
-      mapLayers: layerConfig.mapLayers,
-    });
-  },
 
   handleDownload(label) {
     ga.event({
@@ -113,7 +97,7 @@ const Facilities = React.createClass({
         <Tab label="Download">
           <div className="sidebar-tab-content padded">
             <Download
-              sql={this.state.sql}
+              sql={FacilitiesStore.sql}
               filePrefix="facilities"
               onDownload={this.handleDownload}
             />

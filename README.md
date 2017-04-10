@@ -2,7 +2,7 @@
 
 A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team
 
-##Architecture
+## Architecture
 As an SPA, all of the business logic and routing are done client-side.  The app is comprised of various React.js Components and makes use of React-Router for client-side routing. The React JSX files are built with webpack to create a single `bundle.js` file.
 
 The app makes heavy use of various web mapping technologies, including raster maps and interactivity served from a carto server, and client-side map rendering in leaflet.js and mapboxGL.js.
@@ -11,31 +11,31 @@ At the time of writing, the app is "backendless", and is using an in-house carto
 
 We are not storing carto api keys in the client-side code, so all interactions with the carto server are read-only. 
 
-###Express app
+### Express app
 In order to have pretty URLs, there is a minimal express.js application that serves the app when it is hosted on a server
 
-###React-Router
+### React-Router
 React router handles
 
-###Leaflet (cartodb.js)
+### Leaflet (cartodb.js)
 
-###MapboxGL
+### MapboxGL
 
-###Auth0
+### Auth0
 
 
 
-##Main Products
+## Main Products
 
 Our initial products are map-based data explorers for Capital Planning's 3 new data products
 
-###Capital Projects
+### Capital Projects
 A consolidated web map of NYC capital projects using agency-sourced data.  Users can filter by sponsor/managing agency, data, source, etc, and can click individual project geometries to get full details on a project
 
-###Faciities
+### Faciities
 Facilities DB is a new dataset of government-related facilities.  The map application includes various filters by domain, group, and subgroup, and also has set pages for some specific queries of the data.
 
-###Housing Pipeline
+### Housing Pipeline
 Shows locations of new housing units compiled primarily from DOB permit records and certificates of occupancy.
 
 
@@ -63,9 +63,9 @@ To get serve the project locally:
 
 
 
-###Development Workflow
+### Development Workflow
 
-###Deploying
+### Deploying
 By using dokku, the app can be deployed simply by pushing the repo to a different remote:
 
 To set up the production app:

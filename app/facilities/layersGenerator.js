@@ -1,16 +1,16 @@
-import { layerDefaults } from './layerDefaults';
+import { defaultLayers } from './defaultLayers';
 
 module.exports = {
   allChecked() {
-    return this.checkAllLayers(layerDefaults(), true);
+    return this.checkAllLayers(defaultLayers(), true);
   },
 
   allUnchecked() {
-    return this.checkAllLayers(layerDefaults(), false);
+    return this.checkAllLayers(defaultLayers(), false);
   },
 
   partialChecked(selected) {
-    return this.checkAllSelected(layerDefaults(), selected);
+    return this.checkAllSelected(defaultLayers(), selected);
   },
 
   checkAllLayers(layers, checked = true) {
