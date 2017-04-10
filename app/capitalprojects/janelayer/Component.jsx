@@ -1,13 +1,12 @@
 import React from 'react';
-import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import Divider from 'material-ui/Divider';
 
-import Filter from './Filter';
+import Filter from '../Filter';
 import Download from '../../common/Download';
 import content from '../content';
-import defaultlayerConfig from './defaultLayerConfig';
 import SignupPrompt from '../../common/SignupPrompt';
+import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
 
 const CapitalProjects = React.createClass({
   propTypes: {
@@ -16,40 +15,22 @@ const CapitalProjects = React.createClass({
 
   getInitialState() {
     return ({
-      pointsSql: '',
-      polygonsSql: '',
+      layerConfig: CapitalProjectsStore.getLayerConfig(),
     });
   },
 
-  // updates the sql for the map source
-  updateLayerConfig(pointsSql, polygonsSql) {
-    this.setState({
-      pointsSql,
-      polygonsSql,
+  componentWillMount() {
+    // listen for changes to the filter UI
+    CapitalProjectsStore.on('capitalProjectsUpdated', () => {
+      this.setState({ layerConfig: CapitalProjectsStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
     });
 
-    const newLayerConfig = update(defaultlayerConfig, {
-      sources: {
-        0: {
-          options: {
-            sql: {
-              $set: [pointsSql, polygonsSql],
-            },
-          },
-        },
-      },
-    });
-
-    this.sendNewConfig(newLayerConfig);
+    this.updateLayerConfig();
   },
 
-  // sends the new layerConfig up the chain
-  sendNewConfig(layerConfig) {
-    this.props.onUpdate('capital-projects', {
-      sources: layerConfig.sources,
-      mapLayers: layerConfig.mapLayers,
-      legend: layerConfig.legend,
-    });
+  updateLayerConfig() {
+    // pass the new config up to Jane
+    this.props.onUpdate('capital-projects', this.state.layerConfig);
   },
 
   render() {
@@ -66,13 +47,13 @@ const CapitalProjects = React.createClass({
           <div className="sidebar-tab-content padded">
             <h3>Points</h3>
             <Download
-              sql={this.state.pointsSql}
+              sql={CapitalProjectsStore.pointsSql}
               filePrefix="projects-points"
             />
             <Divider />
             <h3>Polygons</h3>
             <Download
-              sql={this.state.polygonsSql}
+              sql={CapitalProjectsStore.polygonsSql}
               filePrefix="projects-polygons"
             />
             <SignupPrompt />

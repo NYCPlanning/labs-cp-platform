@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import carto from '../../helpers/carto';
+import carto from '../helpers/carto';
 
 /* eslint-disable no-undef */
 
@@ -26,8 +26,8 @@ const CostGroupChart = React.createClass({
 
     const sql = `
       WITH ranges(range,i) AS (
-        VALUES 
-          ('<$10K',0), 
+        VALUES
+          ('<$10K',0),
           ('10K-100K', 1),
           ('100K-1M',2),
           ('1M-10M',3),
@@ -36,11 +36,11 @@ const CostGroupChart = React.createClass({
       )
 
       SELECT a.range, a.i, count(b.range)
-      FROM ranges a 
+      FROM ranges a
       LEFT JOIN (
-          SELECT 
-          CASE 
-              WHEN totalcommitspend < 10000 THEN '<$10K' 
+          SELECT
+          CASE
+              WHEN totalcommitspend < 10000 THEN '<$10K'
               WHEN totalcommitspend >= 10000 AND totalcommitspend < 100000 THEN '10K-100K'
               WHEN totalcommitspend >= 100000 AND totalcommitspend < 1000000 THEN '100K-1M'
               WHEN totalcommitspend >= 1000000 AND totalcommitspend < 10000000 THEN '1M-10M'
