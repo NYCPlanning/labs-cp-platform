@@ -355,6 +355,10 @@ const exports = {
                 description: 'Specialized child care, caregiver support, and recreational services',
               },
               {
+                name: 'Permanent Supportive SRO Housing',
+                description: 'Permanent supportive SRO housing contracted by DHS',
+              },
+              {
                 name: 'Shelters and Transitional Housing',
                 description: 'NOTE: These records will be incorporated soon, once the data is finished being assembled for inclusion in the database.',
               },
