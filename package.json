@@ -8,7 +8,8 @@
     "devserve": "webpack-dev-server --config webpack.dev.config.js --hot --progress --colors --history-api-fallback --inline --content-base public/",
     "probuild": "webpack -p --config webpack.config.js --progress --colors",
     "postinstall": "npm run probuild",
-    "test": "jest --watch --verbose",
+    "test": "jest --watch --verbose --coverage",
+    "test-debugger": "node --debug-brk ./node_modules/.bin/jest --runInBand",
     "lint": "eslint -c .eslintrc lib"
   },
   "author": "",
@@ -71,6 +72,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
+    "babel-jest": "^19.0.0",
     "babel-plugin-transform-class-properties": "^6.22.0",
     "chai": "^3.5.0",
     "eslint": "^3.19.0",
@@ -81,9 +83,12 @@
     "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-standard": "^3.0.1",
     "jest": "^19.0.2",
+    "jest-cli": "^19.0.2",
     "jquery": "^3.2.1",
     "mocha": "^3.1.2",
+    "nock": "^9.0.12",
     "react-hot-loader": "^1.3.0",
+    "regenerator-runtime": "^0.10.3",
     "webpack-dev-server": "^2.4.1"
   },
   "directories": {

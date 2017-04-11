@@ -1,76 +1,10 @@
 import appConfig from './appConfig';
 
+// TODO: Use request.js or another library for HTTP calls below
+const $ = require('jquery');
+const moment = require('moment');
+
 module.exports = {
-  // given a string, get matches from capitalprojects based on name or projectid
-  // TODO make this generic
-
-  getVectorTileUrls(vizJsons) {
-    // takes an array of vizJsons
-    // returns an promise, resolve returns array of vector tile templates
-    // TODO add logic so this works with both anonymous and named maps
-
-    const promises = vizJsons.map(vizJson => new Promise((resolve, reject) => {
-      $.getJSON(vizJson, (vizJsonData) => { // eslint-disable-line no-undef
-        const sourceOptions = vizJsonData.layers[1].options.layer_definition.layers[0].options;
-
-
-        const layerConfig = {
-          version: '1.0.1',
-          layers: [
-            {
-              type: 'cartodb',
-              options: {
-                sql: sourceOptions.sql,
-                cartocss: sourceOptions.cartocss,
-                cartocss_version: sourceOptions.cartocss_version,
-              },
-            },
-          ],
-        };
-
-        $.ajax({ // eslint-disable-line no-undef
-          type: 'POST',
-          url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
-          data: JSON.stringify(layerConfig),
-          dataType: 'text',
-          contentType: 'application/json',
-          success(data) {
-            data = JSON.parse(data);
-            const layergroupid = data.layergroupid;
-
-            const template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`;
-
-            resolve(template);
-          },
-        });
-      })
-      .fail(() => reject());
-    }));
-
-    return Promise.all(promises);
-  },
-
-  getVectorTileTemplate(mapConfig) {
-    return new Promise((resolve, reject) => {
-      $.ajax({ // eslint-disable-line no-undef
-        type: 'POST',
-        url: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map`,
-        data: JSON.stringify(mapConfig),
-        dataType: 'text',
-        contentType: 'application/json',
-        success(data) {
-          data = JSON.parse(data);
-          const layergroupid = data.layergroupid;
-
-          const template = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v1/map/${layergroupid}/0/{z}/{x}/{y}.mvt`;
-
-          resolve(template);
-        },
-      })
-      .fail(() => reject());
-    });
-  },
-
   // get a full row from a table as geojson
   // returns a promise that when resolved yeilds a GeoJson feature
   getFeature(tableName, column, value) {
@@ -148,7 +82,6 @@ module.exports = {
 
   // does a carto SQL api call
   // pass in format as a valid SQL api export format (shp, csv, geojson)
-  // TODO store host, user, etc in a central config
   SQL(sql, format) {
     format = format || 'geojson';
     const apiCall = this.generateUrlString(sql, format);
