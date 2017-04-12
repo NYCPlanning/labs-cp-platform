@@ -18,13 +18,7 @@ describe('API calls', () => {
 
     // const message = ['1f8b0800000000000003558e410ac2301045af22b3aa908649324d6c965ec0ad20520423146b2276a44ac8dd0dba72fb79eff1333cd232833f649879082f0e91c1c376b76f5a4712d199ceae08a555da9a8d689d91bdd33d9aef48d459bd867214c0e32d8047899a045cc6309d6bf6af9a81dff7cac0335e635a62a32c69aa76a976e2d334fcbea8f201d349275196000000'];
     //
-    // nock('https://cartoprod.capitalplanning.nyc')
-    //   .get('/user/cpp/api/v2/sql')
-    //   .query(true)
-    //   .reply(200, message,
-    //     'Content-Encoding': 'gzip',
-    //     'Content-Type': 'application/json');
-    //
+
     // return carto.getNYCBounds('nta', 'BK88')
     //   .then((data) => {
     //     // const nockCallObjects = nock.recorder.play();
@@ -92,6 +86,6 @@ describe('string generation', () => {
   });
 });
 
-test('SQL()', () => {
+test.skip('SQL()', () => {
 
 });

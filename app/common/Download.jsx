@@ -1,5 +1,6 @@
 // Download.jsx - This component builds a download pane used in the explorer
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 
