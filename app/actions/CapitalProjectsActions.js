@@ -8,6 +8,13 @@ const CapitalProjectsActions = {
       values,
     });
   },
+
+  fetchDetailData(id) {
+    dispatcher.dispatch({
+      type: 'CAPITALPROJECTS_FETCH_DETAIL_DATA',
+      id,
+    });
+  },
 };
 
 export default CapitalProjectsActions;
