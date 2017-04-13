@@ -13,7 +13,7 @@ import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
 
 const Filter = React.createClass({
   propTypes: {
-    onFilterChange: PropTypes.func.isRequired,
+    onFilterBy: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -83,7 +83,7 @@ const Filter = React.createClass({
             >
               <input
                 className="form-control"
-                onChange={this.props.onFilterChange}
+                onChange={this.props.onFilterBy}
                 placeholder="Filter by Project ID or Description"
               />
             </ListItem>

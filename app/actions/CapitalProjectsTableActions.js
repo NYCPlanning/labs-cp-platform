@@ -8,6 +8,21 @@ const CapitalProjectsTableActions = {
       values,
     });
   },
+
+  onFilterBy(filterBy) {
+    dispatcher.dispatch({
+      type: 'CAPITALPROJECTS_TABLE_FILTERBY',
+      filterBy,
+    });
+  },
+
+  onSortChange(columnKey, sortDir) {
+    dispatcher.dispatch({
+      type: 'CAPITALPROJECTS_TABLE_SORTCHANGE',
+      columnKey,
+      sortDir,
+    });
+  },
 };
 
 export default CapitalProjectsTableActions;
