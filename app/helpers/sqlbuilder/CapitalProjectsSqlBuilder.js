@@ -14,7 +14,23 @@ class FacilitiesSqlBuilder extends SqlBuilder {
     const values = filters[dimension].values;
 
     const checkedValues = values.filter(value => value.checked === true);
-    const subChunks = checkedValues.map(value => `array_to_string(projecttype, ', ') like '%${value.value}%'`);
+    const subChunks = checkedValues.map(value => `array_to_string(projecttype, ', ') LIKE '%${value.value}%'`);
+
+    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
+      const chunk = `(${subChunks.join(' OR ')})`;
+
+      return chunk;
+    }
+
+    return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
+  }
+
+  // chunker for sagency
+  sagencyMultiSelect(dimension, filters) {
+    const values = filters[dimension].values;
+
+    const checkedValues = values.filter(value => value.checked === true);
+    const subChunks = checkedValues.map(value => `array_to_string(sagencyacro, ', ') = '${value.value}'`);
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
       const chunk = `(${subChunks.join(' OR ')})`;

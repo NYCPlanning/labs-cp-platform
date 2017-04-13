@@ -83,7 +83,7 @@ const Filter = React.createClass({
         }
         <Divider />
         <Subheader>
-          Agency
+          Managing Agency
           <InfoIcon text="The City agency associated with the project in FMS" />
         </Subheader>
 
@@ -98,6 +98,26 @@ const Filter = React.createClass({
             displayValues
             options={filterDimensions.magencyacro.values}
             onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
+            valueRenderer={option => option.value}
+          />
+        </ListItem>
+
+        <Subheader>
+          Sponsor Agency
+          <InfoIcon text="The City agency providing part or all of the funds for a project" />
+        </Subheader>
+
+        <ListItem
+          disabled
+          style={listItemStyle}
+        >
+          <MultiSelect
+            multi
+            placeholder="Select Agencies"
+            name="form-field-name"
+            displayValues
+            options={filterDimensions.sagencyacro.values}
+            onChange={this.updateFilterDimension.bind(this, 'sagencyacro')}
             valueRenderer={option => option.value}
           />
         </ListItem>

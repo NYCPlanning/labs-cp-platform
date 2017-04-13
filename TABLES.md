@@ -57,10 +57,11 @@ CREATE VIEW cpdb_map_pts AS (
     b.description,
     b.projectid,
     c.projecttype,
+    c.sagencyacro,
     d.*
   FROM cpdb_dcpattributes_pts a
   LEFT JOIN cpdb_projects b ON a.maprojid = b.maprojid
-  LEFT JOIN cpdb_projecttypes_grouped c ON a.maprojid = c.maprojid
+  LEFT JOIN cpdb_projecttypes_grouped_1 c ON a.maprojid = c.maprojid
   LEFT JOIN cpdb_spending_grouped d ON a.maprojid = d.maprojid
 );
 
@@ -83,10 +84,11 @@ CREATE VIEW cpdb_map_poly AS (
     b.description,
     b.projectid,
     c.projecttype,
+    c.sagencyacro,
     d.*
   FROM cpdb_dcpattributes_poly a
   LEFT JOIN cpdb_projects b ON a.maprojid = b.maprojid
-  LEFT JOIN cpdb_projecttypes_grouped c ON a.maprojid = c.maprojid
+  LEFT JOIN cpdb_projecttypes_grouped_1 c ON a.maprojid = c.maprojid
   LEFT JOIN cpdb_spending_grouped d ON a.maprojid = d.maprojid
 );
 
@@ -161,12 +163,13 @@ GROUP BY a.maprojid
 
 ## cpdb_projecttypes_grouped
 ```
-DROP MATERIALIZED VIEW IF EXISTS cpdb_projecttypes_grouped;
+DROP MATERIALIZED VIEW IF EXISTS cpdb_projecttypes_grouped_1;
 
-CREATE MATERIALIZED VIEW cpdb_projecttypes_grouped AS (
+CREATE MATERIALIZED VIEW cpdb_projecttypes_grouped_1 AS (
   SELECT
     maprojid,
-    array_agg(DISTINCT projecttype) AS projecttype
+    array_agg(DISTINCT projecttype) AS projecttype,
+    array_agg(DISTINCT sagencyacro) AS sagencyacro
   FROM cpdb_budgets
   GROUP BY maprojid
 )

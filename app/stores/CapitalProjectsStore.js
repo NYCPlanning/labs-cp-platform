@@ -15,7 +15,7 @@ class CapitalProjectsStore extends EventsEmitter {
 
     this.filterDimensions = defaultFilterDimensions;
     this.sqlConfig = {
-      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid, totalspend',
+      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid, totalspend, sagencyacro',
       pointsTablename: 'cpdb_map_pts',
       polygonsTablename: 'cpdb_map_poly',
     };
@@ -84,7 +84,7 @@ class CapitalProjectsStore extends EventsEmitter {
     this.filterDimensions[filterDimension].values = values;
 
     // disable dimension if nothing is selected in the multiselects
-    if (filterDimension === 'magencyacro' || filterDimension === 'projecttype') {
+    if (filterDimension === 'magencyacro' || filterDimension === 'sagencyacro' || filterDimension === 'projecttype') {
       if (values.filter(value => value.checked === true).length > 0) {
         this.filterDimensions[filterDimension].disabled = false;
       } else {
@@ -100,7 +100,6 @@ class CapitalProjectsStore extends EventsEmitter {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
     this.pointsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.pointsTablename);
     this.polygonsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.polygonsTablename);
-
 
     carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
       .then((count) => {
