@@ -107,12 +107,14 @@ class PipelineStore extends EventsEmitter {
       // Completion Slider
       if (this.completionDateFilterDisabled()) {
         this.filterDimensions.dob_cofo_date = defaultFilterDimensions.dob_cofo_date;
+        this.filterDimensions.dob_cofo_date.disabled = true;
       } else {
         this.filterDimensions.dob_cofo_date.disabled = false;
       }
       // issued slider
       if (this.issueDateFilterDisabled()) {
         this.filterDimensions.dob_qdate = defaultFilterDimensions.dob_qdate;
+        this.filterDimensions.dob_qdate.disabled = true;
       } else {
         this.filterDimensions.dob_qdate.disabled = false;
       }

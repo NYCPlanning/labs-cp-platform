@@ -35,29 +35,43 @@ const DevelopmentPage = React.createClass({
   },
 
   renderContent(data) {
-    const d = data.properties;
-    const biswebLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
+    function addSign(value) {
+      if (value >= 0) {
+        return `+${value}`;
+      } else if (value <= 0) {
+        return `${value}`;
+      }
+      return value;
+    }
 
-    const netChange = d.dob_permit_proposed_units - d.dob_permit_exist_units;
+    function getNetUnitsStyle(value) {
+      if (value >= 0) {
+        return { color: '#38c338' };
+      } else if (value <= 0) {
+        return { color: 'red' };
+      }
+      return { color: '#000' };
+    }
+
+    const d = data.properties;
+    const biswebJobLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
+    const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
+    const netUnits = d.dob_permit_proposed_units - d.dob_permit_exist_units;
+    const netUnitsDisplay = addSign(netUnits);
     const unitsComplete = d.dcp_units_complete ? d.dcp_units_complete : 0;
 
-    const unitChange = () => {
-      if (d.dcp_pipeline_status !== 'Complete' && d.dcp_pipeline_status !== 'Demolition (complete)') {
-        if (netChange > 1) {
-          return `+${unitsComplete} of ${netChange}`;
-        } else if (netChange <= 0) {
-          return `-${Math.abs(unitsComplete)} of ${Math.abs(netChange)}`;
-        }
-        return '';
+    function getUnitChange() {
+      if (netUnits > 0) {
+        return `${unitsComplete} of ${netUnits}`;
+      } else if (netUnits <= 0) {
+        return `${Math.abs(unitsComplete)} of ${Math.abs(netUnits)}`;
       }
 
-      if (netChange > 1) {
-        return `+${netChange}`;
-      } else if (netChange <= 0) {
-        return `${netChange}`;
-      }
       return '';
-    };
+    }
+
+    const netUnitsStyle = getNetUnitsStyle(netUnits);
+    const unitChange = getUnitChange();
 
     /* eslint-disable */
     const permitDate = (date) => {
@@ -78,14 +92,14 @@ const DevelopmentPage = React.createClass({
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{unitChange()}</h3>
-                <h4>Units</h4>
+                <h3>{d.dob_permit_proposed_units}</h3>
+                <h4>Proposed Units</h4>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.dob_permit_proposed_units}</h3>
-                <h4>Total Proposed Units</h4>
+                <h3 style={netUnitsStyle}>{netUnitsDisplay}</h3>
+                <h4>Net Units</h4>
               </div>
             </div>
           </div>
@@ -93,16 +107,22 @@ const DevelopmentPage = React.createClass({
       } else if (d.dcp_permit_type === 'New Building') {
         return (
           <div>
-            <div className={'col-md-4 col-md-offset-4'}>
+            <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{unitChange()}</h3>
-                <h4>Units</h4>
+                <h3>0</h3>
+                <h4>Existing Units</h4>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h3>{d.dob_permit_proposed_units}</h3>
-                <h4>Total Proposed Units</h4>
+                <h4>Proposed Units</h4>
+              </div>
+            </div>
+            <div className={'col-md-4'}>
+              <div className="dev-pipeline">
+                <h3 style={netUnitsStyle}>{netUnitsDisplay}</h3>
+                <h4>Net Units</h4>
               </div>
             </div>
           </div>
@@ -110,10 +130,16 @@ const DevelopmentPage = React.createClass({
       } else if (d.dcp_permit_type === 'Demolition') {
         return (
           <div>
-            <div className={'col-md-12'}>
+            <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3>{unitChange()}</h3>
-                <h4>Units</h4>
+                <h3>{d.dob_permit_exist_units}</h3>
+                <h4>Existing Units</h4>
+              </div>
+            </div>
+            <div className={'col-md-6'}>
+              <div className="dev-pipeline">
+                <h3 style={netUnitsStyle}>{netUnitsDisplay}</h3>
+                <h4>Net Units</h4>
               </div>
             </div>
           </div>
@@ -141,12 +167,13 @@ const DevelopmentPage = React.createClass({
             <div className="col-md-9 col-md-pull-3">
               <h3 className="id-top-line">
                 <small>
-                  DOB Job <a target="_blank" rel="noopener noreferrer" href={biswebLink}>#{d.dob_job_number}</a> |
-                  BIN: {d.dob_permit_bbl} |
-                  BBL: {d.dob_permit_bin}
+                  DOB Job <a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>#{d.dob_job_number}</a> |
+                  BIN: <a target="_blank" rel="noopener noreferrer" href={biswebBinLink}>{d.dob_permit_bin}</a> |
+                  BBL: {d.dob_permit_bbl}
                 </small>
               </h3>
               <h1>{d.dob_permit_address}, {NycGeom.getBoroughNameFromId(d.dob_permit_borough)}</h1>
+              <span className={'badge'} style={{ backgroundColor }}>{d.dcp_permit_type}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_development_type}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_pipeline_status}</span>
             </div>
@@ -157,7 +184,7 @@ const DevelopmentPage = React.createClass({
           <div className="row">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading"><span className={'badge'} style={{ backgroundColor }}>{d.dcp_permit_type}</span></div>
+                <div className="panel-heading">Unit Counts</div>
                 <div className="panel-body">
                   {unitPipeline()}
                 </div>
@@ -189,6 +216,16 @@ const DevelopmentPage = React.createClass({
                       <p className="subtext">{d.dob_cofo_type_last}</p>
                     </div>
                   </div>
+                  {
+                    d.dcp_pipeline_status === 'Partial complete' && (
+                      <div className={'col-md-12'}>
+                        <div className="dev-status">
+                          <h4>Net Units Completed</h4>
+                          <h3 style={netUnitsStyle}>{unitChange}</h3>
+                        </div>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>

@@ -79,7 +79,7 @@ const DetailPage = React.createClass({
             <TableBody displayRowCheckbox={false}>
               <TableRow>
                 <TableRowColumn>Source Dataset</TableRowColumn>
-                <TableRowColumn><h5>{wrapInLink(s.datalink, s.dataname)}</h5></TableRowColumn>
+                <TableRowColumn><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></TableRowColumn>
               </TableRow>
               <TableRow>
                 <TableRowColumn>Facility ID in Source Data</TableRowColumn>
