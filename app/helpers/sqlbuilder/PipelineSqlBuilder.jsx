@@ -19,9 +19,9 @@ class PipelineSqlBuilder extends SqlBuilder {
     const values = filters[dimension].values;
     // inject some additional values to handle the demolition use className
     // demolitions where permit is issued should also show up under searches for complete.
-    const demolitionIsSelected = filters.dcp_permit_type.values.filter(d => d.value === 'Demolition').length > 0;
-    const completeIsSelected = values.filter(d => d.value === 'Complete').length > 0;
-    const permitIssuedIsSelected = values.filter(d => d.value === 'Permit issued').length > 0;
+    const demolitionIsSelected = filters.dcp_permit_type.values.filter(d => (d.value === 'Demolition' && d.checked === true)).length > 0;
+    const completeIsSelected = values.filter(d => (d.value === 'Complete' && d.checked === true)).length > 0;
+    const permitIssuedIsSelected = values.filter(d => (d.value === 'Permit issued' && d.checked === true)).length > 0;
 
     const checkedValues = values.filter(value => value.checked === true);
 
