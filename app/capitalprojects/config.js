@@ -286,6 +286,19 @@ const defaultFilterDimensions = {
   },
 };
 
+const defaultTableFilterDimensions = {
+  magencyacro: defaultFilterDimensions.magencyacro,
+  projecttype: defaultFilterDimensions.projecttype,
+  totalspend: {
+    type: 'numberRange',
+    values: [0, 100000000],
+  },
+  totalcommit: {
+    type: 'numberRange',
+    values: [1000, 100000000],
+  },
+};
+
 const defaultLayerConfig = {
   sources: [
     {
@@ -370,4 +383,4 @@ const defaultLayerConfig = {
   // ),
 };
 
-export { defaultFilterDimensions, defaultLayerConfig };
+export { defaultFilterDimensions, defaultTableFilterDimensions, defaultLayerConfig };

@@ -10,8 +10,10 @@ import 'fixed-data-table/dist/fixed-data-table.css';
 import InfoIcon from '../common/InfoIcon';
 import TableFilter from './TableFilter';
 import { agencies } from './config';
-import carto from '../helpers/carto';
 import './Table.scss';
+
+import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
+
 
 const { Table, Column, Cell } = FixedDataTable;
 
@@ -85,6 +87,16 @@ const CPTable = React.createClass({ // eslint-disable-line
     };
   },
 
+  componentWillMount() {
+    CapitalProjectsTableStore.on('updated', () => {
+      CapitalProjectsTableStore.getData()
+        .then((data) => {
+          console.log('got data', data);
+          this.setState({ data }, this.filterAndSortData);
+        });
+    });
+  },
+
   handleFilterChange(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
     let filterBy = null;
     if (e.target.value) {
@@ -105,23 +117,23 @@ const CPTable = React.createClass({ // eslint-disable-line
   filterAndSortData() {
     const filteredDataList = [];
 
-    const { filterBy } = this.state;
+    const { filterBy, data } = this.state;
 
 
     // filter
     if (filterBy) {
-      for (let i = 0; i < this.data.length; i += 1) {
-        const { maprojid, description } = this.data[i];
+      for (let i = 0; i < data.length; i += 1) {
+        const { maprojid, description } = data[i];
         if (
           maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
           description.toLowerCase().indexOf(filterBy) !== -1
         ) {
-          filteredDataList.push(this.data[i]);
+          filteredDataList.push(data[i]);
         }
       }
     } else {
-      for (let i = 0; i < this.data.length; i += 1) {
-        filteredDataList.push(this.data[i]);
+      for (let i = 0; i < data.length; i += 1) {
+        filteredDataList.push(data[i]);
       }
     }
 
@@ -144,17 +156,6 @@ const CPTable = React.createClass({ // eslint-disable-line
 
 
     this.setState({ filteredDataList });
-  },
-
-  handleUpdateSql(sql) {
-    const self = this;
-    carto.SQL(sql, 'json')
-      .then((data) => {
-        self.data = data;
-        self.setState({
-          filteredDataList: data,
-        }, self.filterAndSortData);
-      });
   },
 
   render() {
@@ -227,7 +228,6 @@ const CPTable = React.createClass({ // eslint-disable-line
                 onFilterChange={this.handleFilterChange}
                 selectedCount={selectedCount}
               />
-
             </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content padded">
