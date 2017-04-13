@@ -367,20 +367,6 @@ const defaultLayerConfig = {
       },
     },
   ],
-
-  // legend: (
-  //   <div className="legendSection">
-  //     <div className="legendItem">
-  //       <div className="colorBox" style={{ backgroundColor: '#999' }} />
-  //       <div className="legendItemText">Ongoing projects</div>
-  //     </div>
-  //     <div className="legendItem">
-  //       <div className="colorBox" style={{ backgroundColor: '#FFCC00' }} />
-  //       <div className="legendItemText">Planned projects</div>
-  //     </div>
-  //
-  //   </div>
-  // ),
 };
 
 export { defaultFilterDimensions, defaultTableFilterDimensions, defaultLayerConfig };
