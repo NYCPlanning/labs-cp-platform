@@ -1,267 +1,476 @@
-module.exports = {
-  agencies: [
+import appConfig from '../helpers/appConfig';
+
+const defaultFilterDimensions = {
+  magencyacro: {
+    type: 'multiSelect',
+    disabled: true,
+    values: [
+      {
+        value: 'ACS',
+        label: "Administration for Children's Services - ACS",
+      },
+      {
+        value: 'BPL',
+        label: 'Brooklyn Public Library - BPL',
+      },
+      {
+        value: 'CUNY',
+        label: 'City University of New York - CUNY',
+      },
+      {
+        value: 'DCAS',
+        label: 'Department of Citywide Administrative Services - DCAS',
+      },
+      {
+        value: 'DCLA',
+        label: 'Department of Cultural Affairs - DCLA',
+      },
+      {
+        value: 'DDC',
+        label: 'Department of Design and Construction - DDC',
+      },
+      {
+        value: 'DEP',
+        label: 'Department of Environmental Protection - DEP',
+      },
+      {
+        value: 'DFTA',
+        label: 'Department for the Aging',
+      },
+      {
+        value: 'DHP',
+        label: 'Department of Housing Preservation and Development',
+      },
+      {
+        value: 'DHS',
+        label: 'Department of Homeless Services',
+      },
+      {
+        value: 'DOC',
+        label: 'Department of Correction',
+      },
+      {
+        value: 'DOHMH',
+        label: 'Department of Health and Mental Hygiene - DOHMH',
+      },
+      {
+        value: 'DOITT',
+        label: 'Department of Info Tech and Telecom',
+      },
+      {
+        value: 'DOT',
+        label: 'Department of Transportation - DOT',
+      },
+      {
+        value: 'DPR',
+        label: 'Department of Parks and Recreation - DPR',
+      },
+      {
+        value: 'DSNY',
+        label: 'Department of Sanitation - DNSY',
+      },
+      {
+        value: 'FDNY',
+        label: 'Fire Department - FDNY',
+      },
+      {
+        value: 'HHC',
+        label: 'Health and Hospitals Corporation - HHC',
+      },
+      {
+        value: 'NYPD',
+        label: 'Police Department - NYPD',
+      },
+      {
+        value: 'NYPL',
+        label: 'New York Public Library - NYPL',
+      },
+      {
+        value: 'NYRL',
+        label: 'New York Research Library - NYRL',
+      },
+      {
+        value: 'QBPL',
+        label: 'Queens Borough Public Library - QBPL',
+      },
+      {
+        value: 'SBS',
+        label: 'Department of Small Business Services - SBS',
+      },
+      {
+        value: 'UK',
+        label: 'Unknown Agency Code',
+      },
+    ],
+  },
+
+  sagencyacro: {
+    type: 'sagencyMultiSelect',
+    disabled: true,
+    values: [
+      {
+        value: 'ACS',
+        label: "Administration for Children's Services - ACS",
+      },
+      {
+        value: 'BPL',
+        label: 'Brooklyn Public Library - BPL',
+      },
+      {
+        value: 'CUNY',
+        label: 'City University of New York - CUNY',
+      },
+      {
+        value: 'DCAS',
+        label: 'Department of Citywide Administrative Services - DCAS',
+      },
+      {
+        value: 'DCLA',
+        label: 'Department of Cultural Affairs - DCLA',
+      },
+      {
+        value: 'DDC',
+        label: 'Department of Design and Construction - DDC',
+      },
+      {
+        value: 'DEP',
+        label: 'Department of Environmental Protection - DEP',
+      },
+      {
+        value: 'DFTA',
+        label: 'Department for the Aging',
+      },
+      {
+        value: 'DHP',
+        label: 'Department of Housing Preservation and Development',
+      },
+      {
+        value: 'DHS',
+        label: 'Department of Homeless Services',
+      },
+      {
+        value: 'DOC',
+        label: 'Department of Correction',
+      },
+      {
+        value: 'DOHMH',
+        label: 'Department of Health and Mental Hygiene - DOHMH',
+      },
+      {
+        value: 'DOITT',
+        label: 'Department of Info Tech and Telecom',
+      },
+      {
+        value: 'DOT',
+        label: 'Department of Transportation - DOT',
+      },
+      {
+        value: 'DPR',
+        label: 'Department of Parks and Recreation - DPR',
+      },
+      {
+        value: 'DSNY',
+        label: 'Department of Sanitation - DNSY',
+      },
+      {
+        value: 'FDNY',
+        label: 'Fire Department - FDNY',
+      },
+      {
+        value: 'HHC',
+        label: 'Health and Hospitals Corporation - HHC',
+      },
+      {
+        value: 'NYPD',
+        label: 'Police Department - NYPD',
+      },
+      {
+        value: 'NYPL',
+        label: 'New York Public Library - NYPL',
+      },
+      {
+        value: 'NYRL',
+        label: 'New York Research Library - NYRL',
+      },
+      {
+        value: 'QBPL',
+        label: 'Queens Borough Public Library - QBPL',
+      },
+      {
+        value: 'SBS',
+        label: 'Department of Small Business Services - SBS',
+      },
+      {
+        value: 'UK',
+        label: 'Unknown Agency Code',
+      },
+    ],
+  },
+
+  projecttype: {
+    type: 'projectTypeMultiSelect',
+    disabled: true,
+    values: [
+      {
+        value: 'Aging',
+        label: 'Aging',
+      },
+      {
+        value: 'Brooklyn Public Library',
+        label: 'Brooklyn Public Library',
+      },
+      {
+        value: 'Childrens Services',
+        label: 'Childrens Services',
+      },
+      {
+        value: 'City University of New York',
+        label: 'City University of New York',
+      },
+      {
+        value: 'Correction',
+        label: 'Correction',
+      },
+      {
+        value: 'Courts',
+        label: 'Courts',
+      },
+      {
+        value: 'Cultural Affairs',
+        label: 'Cultural Affairs',
+      },
+      {
+        value: 'Dept. of Information Technology \& Telecomm', // eslint-disable-line no-useless-escape
+        label: 'Dept. of Information Technology & Telecomm',
+      },
+      {
+        value: 'Economic Development',
+        label: 'Economic Development',
+      },
+      {
+        value: 'EDP Equipment and Finance Costs',
+        label: 'EDP Equipment and Finance Costs',
+      },
+      {
+        value: 'Education',
+        label: 'Education',
+      },
+      {
+        value: 'Environmental Protection-Equipment',
+        label: 'Environmental Protection-Equipment',
+      },
+      {
+        value: 'Ferries and Aviation',
+        label: 'Ferries and Aviation',
+      },
+      {
+        value: 'Fire Department',
+        label: 'Fire Department',
+      },
+      {
+        value: 'Health and Hospitals Corporation',
+        label: 'Health and Hospitals Corporation',
+      },
+      {
+        value: 'Health and Mental Hygiene',
+        label: 'Health and Mental Hygiene',
+      },
+      {
+        value: 'Highway Bridges',
+        label: 'Highway Bridges',
+      },
+      {
+        value: 'Highways',
+        label: 'Highways',
+      },
+      {
+        value: 'Homeless Services',
+        label: 'Homeless Services',
+      },
+      {
+        value: 'Housing Authority',
+        label: 'Housing Authority',
+      },
+      {
+        value: 'Housing Preservation and Development',
+        label: 'Housing Preservation and Development',
+      },
+      {
+        value: 'Human Resources',
+        label: 'Human Resources',
+      },
+      {
+        value: 'MTA Bus Company',
+        label: 'MTA Bus Company',
+      },
+      {
+        value: 'New York Public Library',
+        label: 'New York Public Library',
+      },
+      {
+        value: 'New York Research Library',
+        label: 'New York Research Library',
+      },
+      {
+        value: 'Parks and Recreation',
+        label: 'Parks and Recreation',
+      },
+      {
+        value: 'Police',
+        label: 'Police',
+      },
+      {
+        value: 'Public Buildings',
+        label: 'Public Buildings',
+      },
+      {
+        value: 'Queens Borough Public Library',
+        label: 'Queens Borough Public Library',
+      },
+      {
+        value: 'Real Property',
+        label: 'Real Property',
+      },
+      {
+        value: 'Sanitation',
+        label: 'Sanitation',
+      },
+      {
+        value: 'Sewers',
+        label: 'Sewers',
+      },
+      {
+        value: 'Staten Island Rapid Transit',
+        label: 'Staten Island Rapid Transit',
+      },
+      {
+        value: 'Traffic',
+        label: 'Traffic',
+      },
+      {
+        value: 'Transit Authority',
+        label: 'Transit Authority',
+      },
+      {
+        value: 'Transportation - Equipment',
+        label: 'Transportation - Equipment',
+      },
+      {
+        value: 'Water Mains',
+        label: 'Water Mains',
+      },
+      {
+        value: 'Sources and Treatment',
+        label: 'Sources and Treatment',
+      },
+      {
+        value: 'Water Pollution Control',
+        label: 'Water Pollution Control',
+      },
+      {
+        value: 'Water Supply',
+        label: 'Water Supply',
+      },
+      {
+        value: 'Waterway Bridges',
+        label: 'Waterway Bridges',
+      },
+    ],
+  },
+
+  totalcommitspend: {
+    type: 'numberRange',
+    values: [1000, 100000000],
+  },
+
+  activeyears: {
+    type: 'capitalProjectsDateRange',
+    values: [2010, 2027],
+  },
+};
+
+const defaultTableFilterDimensions = {
+  magencyacro: defaultFilterDimensions.magencyacro,
+  sagencyacro: defaultFilterDimensions.sagencyacro,
+  projecttype: defaultFilterDimensions.projecttype,
+  totalspend: {
+    type: 'numberRange',
+    values: [0, 100000000],
+  },
+  totalcommit: {
+    type: 'numberRange',
+    values: [1000, 100000000],
+  },
+};
+
+const defaultLayerConfig = {
+  sources: [
     {
-      value: 'ACS',
-      label: "Administration for Children's Services - ACS",
-    },
-    {
-      value: 'BPL',
-      label: 'Brooklyn Public Library - BPL',
-    },
-    {
-      value: 'CUNY',
-      label: 'City University of New York - CUNY',
-    },
-    {
-      value: 'DCAS',
-      label: 'Department of Citywide Administrative Services - DCAS',
-    },
-    {
-      value: 'DCLA',
-      label: 'Department of Cultural Affairs - DCLA',
-    },
-    {
-      value: 'DDC',
-      label: 'Department of Design and Construction - DDC',
-    },
-    {
-      value: 'DEP',
-      label: 'Department of Environmental Protection - DEP',
-    },
-    {
-      value: 'DFTA',
-      label: 'Department for the Aging',
-    },
-    {
-      value: 'DHP',
-      label: 'Department of Housing Preservation and Development',
-    },
-    {
-      value: 'DHS',
-      label: 'Department of Homeless Services',
-    },
-    {
-      value: 'DOC',
-      label: 'Department of Correction',
-    },
-    {
-      value: 'DOHMH',
-      label: 'Department of Health and Mental Hygiene - DOHMH',
-    },
-    {
-      value: 'DOITT',
-      label: 'Department of Info Tech and Telecom',
-    },
-    {
-      value: 'DOT',
-      label: 'Department of Transportation - DOT',
-    },
-    {
-      value: 'DPR',
-      label: 'Department of Parks and Recreation - DPR',
-    },
-    {
-      value: 'DSNY',
-      label: 'Department of Sanitation - DNSY',
-    },
-    {
-      value: 'FDNY',
-      label: 'Fire Department - FDNY',
-    },
-    {
-      value: 'HHC',
-      label: 'Health and Hospitals Corporation - HHC',
-    },
-    {
-      value: 'NYPD',
-      label: 'Police Department - NYPD',
-    },
-    {
-      value: 'NYPL',
-      label: 'New York Public Library - NYPL',
-    },
-    {
-      value: 'NYRL',
-      label: 'New York Research Library - NYRL',
-    },
-    {
-      value: 'QBPL',
-      label: 'Queens Borough Public Library - QBPL',
-    },
-    {
-      value: 'SBS',
-      label: 'Department of Small Business Services - SBS',
-    },
-    {
-      value: 'UK',
-      label: 'Unknown Agency Code',
+      type: 'cartovector',
+      id: 'capital-projects',
+      options: {
+        carto_user: appConfig.carto_user,
+        carto_domain: appConfig.carto_domain,
+      },
     },
   ],
-
-  projecttypes: [
+  mapLayers: [
     {
-      value: 'Aging',
-      label: 'Aging',
+      id: 'capital-projects-points-outline',
+      source: 'capital-projects',
+      'source-layer': 'layer0',
+      type: 'circle',
+      paint: {
+        'circle-radius': {
+          stops: [
+            [10, 3],
+            [15, 7],
+          ],
+        },
+        'circle-color': '#012700',
+        'circle-opacity': 0.7,
+      },
     },
     {
-      value: 'Brooklyn Public Library',
-      label: 'Brooklyn Public Library',
+      id: 'capital-projects-points',
+      source: 'capital-projects',
+      'source-layer': 'layer0',
+      type: 'circle',
+      paint: {
+        'circle-radius': {
+          stops: [
+            [10, 2],
+            [15, 6],
+          ],
+        },
+        'circle-color': {
+          property: 'totalspend',
+          stops: [
+            [0, '#999'],
+            [1, '#FFCC00'],
+          ],
+        },
+        'circle-opacity': 0.7,
+      },
     },
     {
-      value: 'Childrens Services',
-      label: 'Childrens Services',
-    },
-    {
-      value: 'City University of New York',
-      label: 'City University of New York',
-    },
-    {
-      value: 'Correction',
-      label: 'Correction',
-    },
-    {
-      value: 'Courts',
-      label: 'Courts',
-    },
-    {
-      value: 'Cultural Affairs',
-      label: 'Cultural Affairs',
-    },
-    {
-      value: 'Dept. of Information Technology \& Telecomm', // eslint-disable-line no-useless-escape
-      label: 'Dept. of Information Technology & Telecomm',
-    },
-    {
-      value: 'Economic Development',
-      label: 'Economic Development',
-    },
-    {
-      value: 'EDP Equipment and Finance Costs',
-      label: 'EDP Equipment and Finance Costs',
-    },
-    {
-      value: 'Education',
-      label: 'Education',
-    },
-    {
-      value: 'Environmental Protection-Equipment',
-      label: 'Environmental Protection-Equipment',
-    },
-    {
-      value: 'Ferries and Aviation',
-      label: 'Ferries and Aviation',
-    },
-    {
-      value: 'Fire Department',
-      label: 'Fire Department',
-    },
-    {
-      value: 'Health and Hospitals Corporation',
-      label: 'Health and Hospitals Corporation',
-    },
-    {
-      value: 'Health and Mental Hygiene',
-      label: 'Health and Mental Hygiene',
-    },
-    {
-      value: 'Highway Bridges',
-      label: 'Highway Bridges',
-    },
-    {
-      value: 'Highways',
-      label: 'Highways',
-    },
-    {
-      value: 'Homeless Services',
-      label: 'Homeless Services',
-    },
-    {
-      value: 'Housing Authority',
-      label: 'Housing Authority',
-    },
-    {
-      value: 'Housing Preservation and Development',
-      label: 'Housing Preservation and Development',
-    },
-    {
-      value: 'Human Resources',
-      label: 'Human Resources',
-    },
-    {
-      value: 'MTA Bus Company',
-      label: 'MTA Bus Company',
-    },
-    {
-      value: 'New York Public Library',
-      label: 'New York Public Library',
-    },
-    {
-      value: 'New York Research Library',
-      label: 'New York Research Library',
-    },
-    {
-      value: 'Parks and Recreation',
-      label: 'Parks and Recreation',
-    },
-    {
-      value: 'Police',
-      label: 'Police',
-    },
-    {
-      value: 'Public Buildings',
-      label: 'Public Buildings',
-    },
-    {
-      value: 'Queens Borough Public Library',
-      label: 'Queens Borough Public Library',
-    },
-    {
-      value: 'Real Property',
-      label: 'Real Property',
-    },
-    {
-      value: 'Sanitation',
-      label: 'Sanitation',
-    },
-    {
-      value: 'Sewers',
-      label: 'Sewers',
-    },
-    {
-      value: 'Staten Island Rapid Transit',
-      label: 'Staten Island Rapid Transit',
-    },
-    {
-      value: 'Traffic',
-      label: 'Traffic',
-    },
-    {
-      value: 'Transit Authority',
-      label: 'Transit Authority',
-    },
-    {
-      value: 'Transportation - Equipment',
-      label: 'Transportation - Equipment',
-    },
-    {
-      value: 'Water Mains',
-      label: 'Water Mains',
-    },
-    {
-      value: 'Sources and Treatment',
-      label: 'Sources and Treatment',
-    },
-    {
-      value: 'Water Pollution Control',
-      label: 'Water Pollution Control',
-    },
-    {
-      value: 'Water Supply',
-      label: 'Water Supply',
-    },
-    {
-      value: 'Waterway Bridges',
-      label: 'Waterway Bridges',
+      id: 'capital-projects-polygons',
+      source: 'capital-projects',
+      'source-layer': 'layer1',
+      type: 'fill',
+      paint: {
+        'fill-color': {
+          property: 'totalspend',
+          stops: [
+            [0, '#999'],
+            [1, '#FFCC00'],
+          ],
+        },
+        'fill-opacity': 0.75,
+        'fill-antialias': true,
+      },
     },
   ],
 };
+
+export { defaultFilterDimensions, defaultTableFilterDimensions, defaultLayerConfig };

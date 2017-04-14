@@ -9,8 +9,8 @@ import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import CommitmentExpenditureChart from './CommitmentExpenditureChart';
 import FeedbackForm from '../common/FeedbackForm';
-
-import Carto from '../helpers/carto';
+import CapitalProjectsActions from '../actions/CapitalProjectsActions';
+import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 
 import '../app.scss';
 
@@ -23,33 +23,27 @@ const ProjectPage = React.createClass({
 
   getInitialState() {
     return ({
-      feature: null,
+      data: null,
+      budgets: null,
       commitments: null,
     });
   },
 
-  componentDidMount() {
-    const self = this;
-    const maprojid = this.props.params.id;
-
-    const tableName = 'cpdb_map_combined';
-
-    // go get the project's data as a geojson feature
-    Carto.getFeature(tableName, 'maprojid', maprojid)
-      .then((feature) => {
-        self.setState({ feature });
+  componentWillMount() {
+    CapitalProjectsStore.on('detailDataAvailable', () => {
+      this.setState({
+        data: CapitalProjectsStore.detailData,
+        budgets: CapitalProjectsStore.detailBudgets,
+        commitments: CapitalProjectsStore.detailCommitments,
       });
+    });
 
-    Carto.SQL(`SELECT * FROM cpdb_budgets WHERE maprojid = '${maprojid}'`, 'json')
-      .then(budget => this.setState({ budget }));
-
-    Carto.SQL(`SELECT * FROM cpdb_commitments WHERE maprojid = '${maprojid}' ORDER BY to_date(plancommdate,'YY-Mon')`, 'json')
-      .then(commitments => this.setState({ commitments }));
+    CapitalProjectsActions.fetchDetailData(this.props.params.id);
   },
 
   renderContent() {
-    const d = this.state.feature.properties;
-    const budget = this.state.budget;
+    const d = this.state.data.properties;
+    const { budgets } = this.state;
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
 
@@ -60,7 +54,8 @@ const ProjectPage = React.createClass({
       return month <= 6 ? year : year + 1;
     });
 
-    const project_types = _.uniq(budget.map(b => b.projecttype));
+    const project_types = _.uniq(budgets.map(b => b.projecttype));
+    const sponsorAgencies = _.uniq(budgets.map(b => b.sagencyname)).join(', ');
 
     const CardStyles = {
       zDepth: 1,
@@ -69,7 +64,7 @@ const ProjectPage = React.createClass({
 
     const tableRows = this.state.commitments.map(c => (
 
-      <TableRow>
+      <TableRow key={`${c.costdescription}-${c.plancommdate}`}>
         <TableRowColumn>{c.costdescription}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
@@ -79,7 +74,7 @@ const ProjectPage = React.createClass({
       </TableRow>
     ));
 
-    const geometryExists = this.state.feature.geometry !== null;
+    const geometryExists = this.state.data.geometry !== null;
 
     return (
       <div className="project-page">
@@ -98,9 +93,9 @@ const ProjectPage = React.createClass({
             <div className="col-md-9 col-md-pull-3">
               <h4><small>{d.maprojid}</small></h4>
               <h1>{d.description}</h1>
-              {
+              Project Type(s): {
                 project_types.map(project_type => (
-                  <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                  <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }} key={project_type}>
                     {project_type}
                   </span>
                 ))
@@ -123,7 +118,7 @@ const ProjectPage = React.createClass({
               <Card style={CardStyles}>
                 <CardHeader title="Sponsored By" />
                 <CardText>
-                  <h3 className={'text-muted'}>Coming Soon</h3>
+                  <h3>{sponsorAgencies}</h3>
                 </CardText>
               </Card>
             </div>
@@ -206,7 +201,7 @@ const ProjectPage = React.createClass({
         <div className={'col-md-6'}>
           <div style={{ marginTop: '15px' }}>
             {
-              geometryExists && <ModalMap feature={this.state.feature} label={d.description} />
+              geometryExists && <ModalMap feature={this.state.data} label={d.description} />
             }
           </div>
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
@@ -221,7 +216,7 @@ const ProjectPage = React.createClass({
   },
 
   render() {
-    const content = this.state.feature ? this.renderContent() : null;
+    const content = this.state.data ? this.renderContent() : null;
 
     return (
       <div className="fluid-content display-content">
