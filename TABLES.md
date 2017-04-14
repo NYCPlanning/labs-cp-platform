@@ -114,6 +114,7 @@ CREATE VIEW cpdb_map_combined AS (
       b.noncitycost,
       b.totalcost,
       c.projecttype,
+      c.sagencyacro,
       d.*,
       CASE
       	WHEN e.the_geom IS NOT NULL THEN e.the_geom
@@ -121,7 +122,7 @@ CREATE VIEW cpdb_map_combined AS (
       	ELSE NULL
      	END as the_geom
   FROM cpdb_projects b
-  LEFT JOIN cpdb_projecttypes_grouped c ON b.maprojid = c.maprojid
+  LEFT JOIN cpdb_projecttypes_grouped_1 c ON b.maprojid = c.maprojid
   LEFT JOIN cpdb_spending_grouped d ON b.maprojid = d.maprojid
   LEFT JOIN cpdb_dcpattributes_pts e ON b.maprojid = e.maprojid
   LEFT JOIN cpdb_dcpattributes_poly f ON b.maprojid = f.maprojid

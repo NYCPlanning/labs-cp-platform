@@ -120,7 +120,8 @@ const CPTable = React.createClass({ // eslint-disable-line
             </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content padded">
-                <p>This table displays data from the Capital Commitment Plan PDFs published in October 2016, joined with Checkbook NYC data pulled in March of 2017.</p>
+                <h4>About this Table</h4>
+                <p>This table displays data from the Capital Commitment Plan PDFs published in October 2016, joined with Checkbook NYC data pulled in March 2017.</p>
               </div>
             </Tab>
           </Tabs>
@@ -168,11 +169,24 @@ const CPTable = React.createClass({ // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.magencyacro}
                 >
-                  Man. Agency <InfoIcon text="The city agency associated with the project in FMS" />
+                  Man. Agency <InfoIcon text="The city agency managing the project." />
                 </SortHeaderCell>
               }
               cell={<TextCell data={data} col="magencyacro" />}
               width={120}
+            />
+            <Column
+              columnKey="sagencyacro"
+              header={
+                <SortHeaderCell
+                  onSortChange={this.handleSortChange}
+                  sortDir={colSortDirs.sagencyacro}
+                >
+                  Spon. Agency <InfoIcon text="The city agency funding the project." />
+                </SortHeaderCell>
+              }
+              cell={<ArrayTextCell data={data} col="sagencyacro" />}
+              width={130}
             />
             <Column
               columnKey="projecttype"
@@ -194,11 +208,11 @@ const CPTable = React.createClass({ // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.totalspend}
                 >
-                  Spent <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
+                  Spent to Date <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
                 </SortHeaderCell>
               }
               cell={<MoneyCell data={data} col="totalspend" />}
-              width={100}
+              width={130}
             />
             <Column
               columnKey="totalcommit"
@@ -207,12 +221,12 @@ const CPTable = React.createClass({ // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.totalcommit}
                 >
-                  Committed <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
+                  Planned Commitment <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
 
                 </SortHeaderCell>
               }
               cell={<MoneyCell data={data} col="totalcommit" />}
-              width={130}
+              width={180}
             />
             <Column
               cell={<DetailCell data={data} col="maprojid" />}

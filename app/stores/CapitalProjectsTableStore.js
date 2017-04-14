@@ -22,7 +22,7 @@ class CapitalProjectsStore extends EventsEmitter {
     };
 
     this.sqlConfig = {
-      columns: 'magency, magencyacro, maprojid, description, totalcommit, totalspend, projecttype',
+      columns: 'magency, magencyacro, sagencyacro, maprojid, description, totalcommit, totalspend, projecttype',
       tableName: 'cpdb_map_combined',
     };
     this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
@@ -45,7 +45,7 @@ class CapitalProjectsStore extends EventsEmitter {
     this.filterDimensions[filterDimension].values = values;
 
     // disable dimension if nothing is selected in the multiselects
-    if (filterDimension === 'magencyacro' || filterDimension === 'projecttype') {
+    if (filterDimension === 'magencyacro' || filterDimension === 'sagencyacro' || filterDimension === 'projecttype') {
       if (values.filter(value => value.checked === true).length > 0) {
         this.filterDimensions[filterDimension].disabled = false;
       } else {

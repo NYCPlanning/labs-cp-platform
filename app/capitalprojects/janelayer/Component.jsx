@@ -39,7 +39,7 @@ const CapitalProjects = React.createClass({
         </div>
         <div className="legendItem">
           <div className="colorBox" style={{ backgroundColor: '#FFCC00' }} />
-          <div className="legendItemText">Ongoing projects</div>
+          <div className="legendItemText">Ongoing Projects</div>
         </div>
       </div>
     );

@@ -43,7 +43,7 @@ const ProjectPage = React.createClass({
 
   renderContent() {
     const d = this.state.data.properties;
-    const budget = this.state.budgets;
+    const { budgets } = this.state;
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
 
@@ -54,7 +54,8 @@ const ProjectPage = React.createClass({
       return month <= 6 ? year : year + 1;
     });
 
-    const project_types = _.uniq(budget.map(b => b.projecttype));
+    const project_types = _.uniq(budgets.map(b => b.projecttype));
+    const sponsorAgencies = _.uniq(budgets.map(b => b.sagencyname)).join(', ');
 
     const CardStyles = {
       zDepth: 1,
@@ -92,7 +93,7 @@ const ProjectPage = React.createClass({
             <div className="col-md-9 col-md-pull-3">
               <h4><small>{d.maprojid}</small></h4>
               <h1>{d.description}</h1>
-              {
+              Project Type(s): {
                 project_types.map(project_type => (
                   <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }} key={project_type}>
                     {project_type}
@@ -117,7 +118,7 @@ const ProjectPage = React.createClass({
               <Card style={CardStyles}>
                 <CardHeader title="Sponsored By" />
                 <CardText>
-                  <h3 className={'text-muted'}>Coming Soon</h3>
+                  <h3>{sponsorAgencies}</h3>
                 </CardText>
               </Card>
             </div>

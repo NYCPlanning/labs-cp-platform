@@ -391,6 +391,7 @@ const defaultFilterDimensions = {
 
 const defaultTableFilterDimensions = {
   magencyacro: defaultFilterDimensions.magencyacro,
+  sagencyacro: defaultFilterDimensions.sagencyacro,
   projecttype: defaultFilterDimensions.projecttype,
   totalspend: {
     type: 'numberRange',

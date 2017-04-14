@@ -90,7 +90,7 @@ const Filter = React.createClass({
 
             <Subheader>
               Managing Agency
-              <InfoIcon text="The City agency associated with the project in FMS" />
+              <InfoIcon text="The City agency managing the project" />
             </Subheader>
 
             <ListItem
@@ -104,6 +104,26 @@ const Filter = React.createClass({
                 displayValues
                 options={filterDimensions.magencyacro.values}
                 onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
+                valueRenderer={option => option.value}
+              />
+            </ListItem>
+
+            <Subheader>
+              Sponsor Agency
+              <InfoIcon text="The City agency funding the project" />
+            </Subheader>
+
+            <ListItem
+              disabled
+              style={listItemStyle}
+            >
+              <MultiSelect
+                multi
+                placeholder="Select Agencies"
+                name="form-field-name"
+                displayValues
+                options={filterDimensions.sagencyacro.values}
+                onChange={this.updateFilterDimension.bind(this, 'sagencyacro')}
                 valueRenderer={option => option.value}
               />
             </ListItem>
@@ -127,7 +147,7 @@ const Filter = React.createClass({
             </ListItem>
 
             <Subheader>
-              Spent
+              Spent to Date
               <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
             </Subheader>
 
@@ -152,7 +172,7 @@ const Filter = React.createClass({
             </ListItem>
 
             <Subheader>
-              Committed
+              Planned Commitment
               <InfoIcon text="Sum of all commitments in the latest capital commitment plan" />
             </Subheader>
 
