@@ -21,7 +21,9 @@ class FacilitiesStore extends EventsEmitter {
     };
     this.sqlBuilder = new FacilitiesSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+  }
 
+  initialize() {
     // get the totalCount
     carto.getCount(this.sql).then((count) => {
       this.totalCount = count;
@@ -29,7 +31,6 @@ class FacilitiesStore extends EventsEmitter {
       this.emit('facilitiesUpdated');
     });
   }
-
 
   // builds a new LayerConfig based on this.sql
   getLayerConfig() {

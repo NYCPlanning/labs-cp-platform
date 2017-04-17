@@ -43,6 +43,8 @@ const LayerSelector = React.createClass({
         filterDimensions,
       });
     });
+
+    FacilitiesStore.initialize();
   },
 
   componentDidUpdate() {
