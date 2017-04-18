@@ -9,6 +9,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme();
 
 test('Download.jsx does its thing', () => {
+  Date.now = jest.fn(() => 1492014178000);
+
   const component = renderer.create(
     <MuiThemeProvider muiTheme={muiTheme}>
       <Download
