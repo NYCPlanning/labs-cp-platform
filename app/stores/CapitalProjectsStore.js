@@ -15,7 +15,7 @@ class CapitalProjectsStore extends EventsEmitter {
 
     this.filterDimensions = defaultFilterDimensions;
     this.sqlConfig = {
-      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommitspend, maprojid, totalspend, sagencyacro',
+      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommit, maprojid, totalspend, sagencyacro',
       pointsTablename: 'cpdb_map_pts',
       polygonsTablename: 'cpdb_map_poly',
     };
