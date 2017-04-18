@@ -73,14 +73,6 @@ const Facilities = React.createClass({
   },
 
   render() {
-    const tabStyle = {
-      backgroundColor: '#b1b1b1',
-    };
-
-    const inkBarStyle = {
-      backgroundColor: '#D96B27',
-    };
-
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
       position: 'absolute',
@@ -91,9 +83,7 @@ const Facilities = React.createClass({
     return (
       <Tabs
         className="sidebar-tabs"
-        tabItemContainerStyle={tabStyle}
         tabTemplateStyle={tabTemplateStyle}
-        inkBarStyle={inkBarStyle}
       >
         <Tab label="Data">
           <LayerSelector

@@ -378,7 +378,12 @@ const defaultFilterDimensions = {
     ],
   },
 
-  totalcommitspend: {
+  totalspend: {
+    type: 'numberRange',
+    values: [0, 100000000],
+  },
+
+  totalcommit: {
     type: 'numberRange',
     values: [1000, 100000000],
   },
@@ -393,14 +398,8 @@ const defaultTableFilterDimensions = {
   magencyacro: defaultFilterDimensions.magencyacro,
   sagencyacro: defaultFilterDimensions.sagencyacro,
   projecttype: defaultFilterDimensions.projecttype,
-  totalspend: {
-    type: 'numberRange',
-    values: [0, 100000000],
-  },
-  totalcommit: {
-    type: 'numberRange',
-    values: [1000, 100000000],
-  },
+  totalspend: defaultFilterDimensions.totalspend,
+  totalcommit: defaultFilterDimensions.totalcommit,
 };
 
 const defaultLayerConfig = {
