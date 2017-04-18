@@ -51,6 +51,10 @@ const LayerSelector = React.createClass({
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
   },
 
+  componentWillUnmount() {
+    FacilitiesStore.removeAllListeners('facilitiesUpdated');
+  },
+
   updateFilterDimension(dimension, values) {
     FacilitiesActions.onFilterDimensionChange(dimension, values);
   },
