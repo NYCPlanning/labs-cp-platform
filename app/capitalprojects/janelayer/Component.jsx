@@ -67,24 +67,28 @@ const CapitalProjects = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <div className="sidebar-tab-content padded">
-            <h3>Points</h3>
-            <Download
-              sql={CapitalProjectsStore.pointsSql}
-              filePrefix="projects-points"
-            />
-            <Divider />
-            <h3>Polygons</h3>
-            <Download
-              sql={CapitalProjectsStore.polygonsSql}
-              filePrefix="projects-polygons"
-            />
-            <SignupPrompt />
+          <div className="sidebar-tab-content">
+            <div className="scroll-container padded">
+              <h3>Points</h3>
+              <Download
+                sql={CapitalProjectsStore.pointsSql}
+                filePrefix="projects-points"
+              />
+              <Divider />
+              <h3>Polygons</h3>
+              <Download
+                sql={CapitalProjectsStore.polygonsSql}
+                filePrefix="projects-polygons"
+              />
+              <SignupPrompt />
+            </div>
           </div>
         </Tab>
         <Tab label="About">
-          <div className="sidebar-tab-content padded">
-            {content.about}
+          <div className="sidebar-tab-content">
+            <div className="scroll-container padded">
+              {content.about}
+            </div>
           </div>
         </Tab>
       </Tabs>
