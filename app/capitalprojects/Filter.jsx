@@ -38,6 +38,10 @@ const Filter = React.createClass({
     CapitalProjectsStore.initialize();
   },
 
+  componentWillUnmount() {
+    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
+  },
+
   updateFilterDimension(dimension, values) {
     CapitalProjectsActions.onFilterDimensionChange(dimension, values);
   },

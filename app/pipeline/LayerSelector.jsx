@@ -36,6 +36,10 @@ const LayerSelector = React.createClass({
     PipelineStore.initialize();
   },
 
+  componentWillUnmount() {
+    PipelineStore.removeAllListeners('pipelineUpdated');
+  },
+
   handleFilterDimensionChange(dimension, values) {
     PipelineActions.onFilterDimensionChange(dimension, values);
   },
