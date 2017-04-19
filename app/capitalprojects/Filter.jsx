@@ -19,7 +19,8 @@ const Filter = React.createClass({
   getInitialState() {
     return ({
       filterDimensions: CapitalProjectsStore.filterDimensions,
-      totalcommitspendRange: [0, 10],
+      totalSpendRange: [0, 100000000],
+      totalCommitRange: [1000, 100000000],
     });
   },
 
@@ -46,12 +47,17 @@ const Filter = React.createClass({
 
     let values;
     if (dimension === 'activeyears') values = [sliderState.from, sliderState.to];
-    if (dimension === 'totalcommitspend') {
-      values = [parseInt(sliderState.from_value), parseInt(sliderState.to_value)];
-      this.setState({
-        totalcommitspendRange: [sliderState.from, sliderState.to],
-      });
+
+    if (dimension === 'totalcommit') {
+      values = [sliderState.from_value, sliderState.to_value];
+      this.setState({ totalCommitRange: [sliderState.from, sliderState.to] });
     }
+
+    if (dimension === 'totalspend') {
+      values = [sliderState.from_value, sliderState.to_value];
+      this.setState({ totalSpendRange: [sliderState.from, sliderState.to] });
+    }
+
     this.updateFilterDimension(dimension, values);
   },
 
@@ -64,129 +70,155 @@ const Filter = React.createClass({
     const { totalCount, selectedCount, pointsSql, polygonsSql, filterDimensions } = this.state;
 
     return (
-      <div>
+      <div className="sidebar-tab-content">
         <CountWidget
           totalCount={totalCount}
           selectedCount={selectedCount}
           units={'projects'}
         />
-        <Subheader>
-          Number of Projects by Total Cost
-          <InfoIcon text="Total cost is all past spending + all future commitments" />
-        </Subheader>
-        {
-          pointsSql && polygonsSql &&
-            <CostGroupChart
-              pointsSql={pointsSql}
-              polygonsSql={polygonsSql}
+        <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
+          <Subheader>
+            Number of Projects by Planned Commitment
+            <InfoIcon text="Sum of commitments in the latest Capital Commitment Plan" />
+          </Subheader>
+          {
+            pointsSql && polygonsSql &&
+              <CostGroupChart
+                pointsSql={pointsSql}
+                polygonsSql={polygonsSql}
+              />
+          }
+          <Divider />
+          <Subheader>
+            Managing Agency
+            <InfoIcon text="The City agency associated with the project in FMS" />
+          </Subheader>
+
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <MultiSelect
+              multi
+              placeholder="Select Agencies"
+              name="form-field-name"
+              displayValues
+              options={filterDimensions.magencyacro.values}
+              onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
+              valueRenderer={option => option.value}
             />
-        }
-        <Divider />
-        <Subheader>
-          Managing Agency
-          <InfoIcon text="The City agency associated with the project in FMS" />
-        </Subheader>
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <MultiSelect
-            multi
-            placeholder="Select Agencies"
-            name="form-field-name"
-            displayValues
-            options={filterDimensions.magencyacro.values}
-            onChange={this.updateFilterDimension.bind(this, 'magencyacro')}
-            valueRenderer={option => option.value}
-          />
-        </ListItem>
+          <Subheader>
+            Sponsor Agency
+            <InfoIcon text="The City agency providing part or all of the funds for a project" />
+          </Subheader>
 
-        <Subheader>
-          Sponsor Agency
-          <InfoIcon text="The City agency providing part or all of the funds for a project" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <MultiSelect
+              multi
+              placeholder="Select Agencies"
+              name="form-field-name"
+              displayValues
+              options={filterDimensions.sagencyacro.values}
+              onChange={this.updateFilterDimension.bind(this, 'sagencyacro')}
+              valueRenderer={option => option.value}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <MultiSelect
-            multi
-            placeholder="Select Agencies"
-            name="form-field-name"
-            displayValues
-            options={filterDimensions.sagencyacro.values}
-            onChange={this.updateFilterDimension.bind(this, 'sagencyacro')}
-            valueRenderer={option => option.value}
-          />
-        </ListItem>
+          <Subheader>
+            Project Type
+            <InfoIcon text="The FMS Project Type" />
+          </Subheader>
 
-        <Subheader>
-          Project Type
-          <InfoIcon text="The FMS Project Type" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <MultiSelect
+              multi
+              placeholder="Select Project Types"
+              name="form-field-name"
+              options={filterDimensions.projecttype.values}
+              onChange={this.updateFilterDimension.bind(this, 'projecttype')}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={listItemStyle}
-        >
-          <MultiSelect
-            multi
-            placeholder="Select Project Types"
-            name="form-field-name"
-            options={filterDimensions.projecttype.values}
-            onChange={this.updateFilterDimension.bind(this, 'projecttype')}
-          />
-        </ListItem>
+          <Subheader>
+            Spent to Date
+            <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
+          </Subheader>
 
-        <Subheader>
-          Total Cost
-          <InfoIcon text="Total cost is all past spending + all future commitments" />
-        </Subheader>
+          <ListItem
+            disabled
+            style={{
+              paddingTop: '0px',
+              zIndex: '0',
+            }}
+          >
+            <RangeSlider
+              data={this.state.totalSpendRange}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'totalspend')}
+              step={1000}
+              prettify={num => Numeral(num).format('($ 0.00 a)')}
+              grid
+              force_edges
+              max_postfix="+"
+              values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+            />
+          </ListItem>
 
-        <ListItem
-          disabled
-          style={{
-            paddingTop: '0px',
-            zIndex: '0',
-          }}
-        >
-          <RangeSlider
-            data={this.state.totalcommitspendRange}
-            type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'totalcommitspend')}
-            step={1000}
-            prettify={num => Numeral(num).format('($ 0.00 a)')}
-            grid
-            force_edges
-            max_postfix="+"
-            values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
-          />
-        </ListItem>
+          <Subheader>
+            Planned Commitment
+            <InfoIcon text="Sum of all commitments in the latest capital commitment plan" />
+          </Subheader>
 
-        <Subheader>
-          Active Years
-          <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
-        </Subheader>
-        <ListItem
-          disabled
-          style={{
-            paddingTop: '0px',
-            zIndex: '0',
-          }}
-        >
-          <RangeSlider
-            data={filterDimensions.activeyears.values}
-            type={'double'}
-            onChange={this.handleSliderChange.bind(this, 'activeyears')}
-            step={1}
-            force_edges
-            prettify_enabled={false}
-            grid
-          />
-        </ListItem>
+          <ListItem
+            disabled
+            style={{
+              paddingTop: '0px',
+              zIndex: '0',
+            }}
+          >
+            <RangeSlider
+              data={this.state.totalCommitRange}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'totalcommit')}
+              step={1000}
+              prettify={num => Numeral(num).format('($ 0.00 a)')}
+              grid
+              force_edges
+              max_postfix="+"
+              values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+            />
+          </ListItem>
 
+          <Subheader>
+            Active Years
+            <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
+          </Subheader>
+          <ListItem
+            disabled
+            style={{
+              paddingTop: '0px',
+              zIndex: '0',
+            }}
+          >
+            <RangeSlider
+              data={filterDimensions.activeyears.values}
+              type={'double'}
+              onChange={this.handleSliderChange.bind(this, 'activeyears')}
+              step={1}
+              force_edges
+              prettify_enabled={false}
+              grid
+            />
+          </ListItem>
+        </div>
       </div>
     );
   },

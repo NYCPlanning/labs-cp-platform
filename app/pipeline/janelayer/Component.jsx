@@ -51,17 +51,21 @@ const Pipeline = React.createClass({
           <LayerSelector />
         </Tab>
         <Tab label="Download">
-          <div className="sidebar-tab-content padded">
-            <Download
-              sql={PipelineStore.sql}
-              filePrefix="developments"
-            />
-            <SignupPrompt />
+          <div className="sidebar-tab-content">
+            <div className="scroll-container padded">
+              <Download
+                sql={PipelineStore.sql}
+                filePrefix="developments"
+              />
+              <SignupPrompt />
+            </div>
           </div>
         </Tab>
         <Tab label="About">
-          <div className="sidebar-tab-content padded">
-            {about}
+          <div className="sidebar-tab-content">
+            <div className="scroll-container padded">
+              {about}
+            </div>
           </div>
         </Tab>
       </Tabs>

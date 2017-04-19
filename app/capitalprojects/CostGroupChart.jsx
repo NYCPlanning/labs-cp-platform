@@ -40,11 +40,11 @@ const CostGroupChart = React.createClass({
       LEFT JOIN (
           SELECT
           CASE
-              WHEN totalcommitspend < 10000 THEN '<$10K'
-              WHEN totalcommitspend >= 10000 AND totalcommitspend < 100000 THEN '10K-100K'
-              WHEN totalcommitspend >= 100000 AND totalcommitspend < 1000000 THEN '100K-1M'
-              WHEN totalcommitspend >= 1000000 AND totalcommitspend < 10000000 THEN '1M-10M'
-              WHEN totalcommitspend >= 10000000 AND totalcommitspend < 100000000 THEN '10M-100M'
+              WHEN totalcommit < 10000 THEN '<$10K'
+              WHEN totalcommit >= 10000 AND totalcommit < 100000 THEN '10K-100K'
+              WHEN totalcommit >= 100000 AND totalcommit < 1000000 THEN '100K-1M'
+              WHEN totalcommit >= 1000000 AND totalcommit < 10000000 THEN '1M-10M'
+              WHEN totalcommit >= 10000000 AND totalcommit < 100000000 THEN '10M-100M'
               ELSE '>100M'
           END as range
         FROM (${unioned}) x

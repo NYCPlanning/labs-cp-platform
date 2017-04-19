@@ -73,14 +73,6 @@ const Facilities = React.createClass({
   },
 
   render() {
-    const tabStyle = {
-      backgroundColor: '#b1b1b1',
-    };
-
-    const inkBarStyle = {
-      backgroundColor: '#D96B27',
-    };
-
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
       position: 'absolute',
@@ -91,9 +83,7 @@ const Facilities = React.createClass({
     return (
       <Tabs
         className="sidebar-tabs"
-        tabItemContainerStyle={tabStyle}
         tabTemplateStyle={tabTemplateStyle}
-        inkBarStyle={inkBarStyle}
       >
         <Tab label="Data">
           <LayerSelector
@@ -103,19 +93,23 @@ const Facilities = React.createClass({
           />
         </Tab>
         <Tab label="Download">
-          <div className="sidebar-tab-content padded">
-            <Download
-              sql={FacilitiesStore.sql}
-              filePrefix="facilities"
-              onDownload={this.handleDownload}
-            />
-            <SignupPrompt />
+          <div className="sidebar-tab-content ">
+            <div className="scroll-container padded">
+              <Download
+                sql={FacilitiesStore.sql}
+                filePrefix="facilities"
+                onDownload={this.handleDownload}
+              />
+              <SignupPrompt />
+            </div>
           </div>
         </Tab>
         <Tab label="About">
-          <div className="sidebar-tab-content padded">
-            {content.about}
-            <SignupPrompt />
+          <div className="sidebar-tab-content">
+            <div className="scroll-container padded">
+              {content.about}
+              <SignupPrompt />
+            </div>
           </div>
         </Tab>
       </Tabs>
