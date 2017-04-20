@@ -89,8 +89,6 @@ class FacilitiesStore extends EventsEmitter {
   updateSql() {
     this.processChecked(this.filterDimensions.facsubgrp.values);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-    console.log('SQL', this.filterDimensions, this.sql);
-
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('facilitiesUpdated');
@@ -232,8 +230,6 @@ class FacilitiesStore extends EventsEmitter {
     }
 
     this.checkStatus = checkStatus;
-
-    console.log('ProcessingChecked', layers, checkStatus);
 
     return layers;
   }
