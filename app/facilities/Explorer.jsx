@@ -33,7 +33,7 @@ const FacilitiesExplorer = React.createClass({
 
     const filterDimensions = locationState && locationState.filterDimensions ?
       locationState.filterDimensions :
-      defaultFilterDimensions;
+      JSON.parse(JSON.stringify(defaultFilterDimensions));
 
     if (locationState && locationState.layers) {
       filterDimensions.facsubgrp.values = this.props.location.state.layers;

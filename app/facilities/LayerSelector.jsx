@@ -43,10 +43,16 @@ const LayerSelector = React.createClass({
         filterDimensions,
       });
     });
+
+    FacilitiesStore.initialize();
   },
 
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
+  },
+
+  componentWillUnmount() {
+    FacilitiesStore.removeAllListeners('facilitiesUpdated');
   },
 
   updateFilterDimension(dimension, values) {

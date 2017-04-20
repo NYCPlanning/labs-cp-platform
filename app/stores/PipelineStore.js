@@ -21,7 +21,9 @@ class PipelineStore extends EventsEmitter {
     this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+  }
 
+  initialize() {
     carto.getCount(this.sql).then((count) => {
       this.totalCount = count;
       this.selectedCount = count;

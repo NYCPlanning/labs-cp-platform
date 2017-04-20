@@ -12,7 +12,7 @@ const SortTypes = {
   DESC: 'DESC',
 };
 
-class CapitalProjectsStore extends EventsEmitter {
+class CapitalProjectsTableStore extends EventsEmitter {
   constructor() {
     super();
 
@@ -28,15 +28,21 @@ class CapitalProjectsStore extends EventsEmitter {
     this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
 
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+  }
 
-    this.getRawData();
-
-    // get the totalCount
+  initialize() {
     carto.getCount(this.sql)
       .then((count) => {
         this.totalCount = count;
         this.selectedCount = count;
         this.emit('updated');
+      });
+
+    carto.SQL(this.sql, 'json')
+      .then((data) => {
+        this.data = data;
+        this.filterAndSortData();
+        this.emit('updatedTableData');
       });
   }
 
@@ -154,7 +160,7 @@ class CapitalProjectsStore extends EventsEmitter {
   }
 }
 
-const capitalProjectsStore = new CapitalProjectsStore();
+const capitalProjectsStore = new CapitalProjectsTableStore();
 window.capitalProjectsStore = capitalProjectsStore;
 
 dispatcher.register(capitalProjectsStore.handleActions.bind(capitalProjectsStore));
