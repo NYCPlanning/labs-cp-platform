@@ -61,6 +61,10 @@ const Filter = React.createClass({
     this.updateFilterDimension(dimension, values);
   },
 
+  resetFilter() {
+    CapitalProjectsActions.resetFilter();
+  },
+
   render() {
     // override material ui ListItem spacing
     const listItemStyle = {
@@ -75,6 +79,7 @@ const Filter = React.createClass({
           totalCount={totalCount}
           selectedCount={selectedCount}
           units={'projects'}
+          resetFilter={this.resetFilter.bind(this)}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
           <Subheader>

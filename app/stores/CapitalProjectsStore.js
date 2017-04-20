@@ -13,7 +13,7 @@ class CapitalProjectsStore extends EventsEmitter {
   constructor() {
     super();
 
-    this.filterDimensions = defaultFilterDimensions;
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
     this.sqlConfig = {
       columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommit, maprojid, totalspend, sagencyacro',
       pointsTablename: 'cpdb_map_pts',
@@ -95,6 +95,12 @@ class CapitalProjectsStore extends EventsEmitter {
     this.updateSql();
   }
 
+  resetFilter() {
+    console.log('here!');
+    // this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
+    // this.updateSql();
+  }
+
   // update the sql, get counts, and emit an event
   updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
@@ -118,6 +124,11 @@ class CapitalProjectsStore extends EventsEmitter {
 
       case 'CAPITALPROJECTS_FETCH_DETAIL_DATA': {
         this.fetchDetailData(action.id);
+        break;
+      }
+
+      case 'CAPTIALPROJECTS_RESET_FILTER': {
+        this.resetFilter();
         break;
       }
 

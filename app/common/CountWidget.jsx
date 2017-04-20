@@ -28,13 +28,21 @@ const CountWidget = (props) => {
     <div className="countWidget">
       <ListItem
         style={{
-          padding: '12px 16px 12px 55px',
+          padding: '12px 12px 12px 55px',
           backgroundColor: '#efefef',
         }}
         leftIcon={
           <FontIcon
             className="fa fa-filter"
             style={{ margin: '9px' }}
+          />
+        }
+        rightIcon={
+          <FontIcon
+            className="fa fa-undo"
+            hoverColor="green"
+            style={{ margin: '9px', cursor: 'pointer' }}
+            onClick={props.resetFilter()}
           />
         }
         disabled
@@ -49,6 +57,7 @@ CountWidget.propTypes = {
   totalCount: React.PropTypes.number,
   selectedCount: React.PropTypes.number,
   units: React.PropTypes.string.isRequired,
+  resetFilter: React.PropTypes.func.isRequired,
 };
 
 CountWidget.defaultProps = {

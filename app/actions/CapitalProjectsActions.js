@@ -15,6 +15,12 @@ const CapitalProjectsActions = {
       id,
     });
   },
+
+  resetFilter() {
+    dispatcher.dispatch({
+      type: 'CAPTIALPROJECTS_RESET_FILTER',
+    });
+  },
 };
 
 export default CapitalProjectsActions;
