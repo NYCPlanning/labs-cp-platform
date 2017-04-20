@@ -39,10 +39,27 @@ const FacilitiesLandingPage = React.createClass({
                         pathname: '/facilities/explorer',
                         state: {
                           filterDimensions: {
-                            proptype: [
-                              { value: 'City Owned', label: 'City Owned' },
-                              { value: 'City Leased', label: 'City Leased' },
-                            ],
+                            proptype: {
+                              type: 'multiSelect',
+                              disabled: false,
+                              values: [
+                                {
+                                  value: 'City Owned',
+                                  label: 'City Owned',
+                                  checked: true,
+                                },
+                                {
+                                  value: 'City Leased',
+                                  label: 'City Leased',
+                                  checked: true,
+                                },
+                                {
+                                  value: '',
+                                  label: 'Not Owned or Leased by City',
+                                  checked: false,
+                                },
+                              ],
+                            },
                           },
                         },
                       }}

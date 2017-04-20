@@ -74,7 +74,7 @@ class FacilitiesStore extends EventsEmitter {
     this.filterDimensions[filterDimension].values = values;
 
     // disable dimension if nothing is selected in the multiselects
-    if (filterDimension === 'overabbrev' || 'filterDimension === optype' || 'filterDimension === proptype') {
+    if (filterDimension === 'overabbrev' || filterDimension === 'optype' || filterDimension === 'proptype') {
       if (values.filter(value => value.checked === true).length > 0) {
         this.filterDimensions[filterDimension].disabled = false;
       } else {
@@ -89,7 +89,6 @@ class FacilitiesStore extends EventsEmitter {
   updateSql() {
     this.processChecked(this.filterDimensions.facsubgrp.values);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('facilitiesUpdated');
