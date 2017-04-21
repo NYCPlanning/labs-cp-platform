@@ -79,7 +79,7 @@ const Filter = React.createClass({
           totalCount={totalCount}
           selectedCount={selectedCount}
           units={'projects'}
-          resetFilter={this.resetFilter.bind(this)}
+          resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
           <Subheader>
@@ -230,39 +230,3 @@ const Filter = React.createClass({
 });
 
 export default Filter;
-
-// materialized view SQL
-
-// DROP MATERIALIZED VIEW commitmentspointsjoined;
-// DROP MATERIALIZED VIEW commitmentspolygonsjoined;
-
-// CREATE MATERIALIZED VIEW commitmentspointsjoined as
-// SELECT a.*,
-//   array_agg(DISTINCT b.projecttype) AS projecttype,
-  // min(c.date) mindate,
-  // max(c.date) maxdate,
-  // sum(c.commitspend) as totalcommitspend,
-  // sum(c.commit) as totalcommit,
-  // sum(c.spend) as totalspend
-// FROM adoyle.commitmentspoints a
-// LEFT JOIN adoyle.budgetcommitments b ON a.maprojid = b.maprojid
-// LEFT JOIN (
-//   SELECT TRIM(LEFT(capital_project,12)) as maprojid,
-//     to_date(issue_date,'YYYY-MM-DD') as date,
-//     0 as commit,
-//     check_amount::double precision as spend,
-//     check_amount::double precision as commitspend
-//   FROM cpadmin.spending
-//   UNION ALL
-//   SELECT maprojid,
-//     to_date(plancommdate,'YY-Mon') as date,
-//     totalcost as commit,
-//   0 as spend,
-//     totalcost as commitspend
-//   FROM adoyle.commitscommitments
-// ) c ON c.maprojid = a.maprojid
-// GROUP BY a.cartodb_id
-
-
-// GRANT SELECT on commitmentspointsjoined to publicuser;
-// GRANT SELECT on commitmentspolygonsjoined to publicuser;

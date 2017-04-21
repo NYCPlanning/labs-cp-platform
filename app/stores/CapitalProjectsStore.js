@@ -96,9 +96,8 @@ class CapitalProjectsStore extends EventsEmitter {
   }
 
   resetFilter() {
-    console.log('here!');
-    // this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
-    // this.updateSql();
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
+    this.updateSql();
   }
 
   // update the sql, get counts, and emit an event

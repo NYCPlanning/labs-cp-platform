@@ -53,6 +53,7 @@ class FacilitiesStore extends EventsEmitter {
 
   // sets initial filterDimensions
   handleSetInitialFilters(filterDimensions) {
+    this.initialFilterDimensions = JSON.parse(JSON.stringify(filterDimensions));
     this.filterDimensions = filterDimensions;
     this.updateSql();
   }
@@ -156,6 +157,11 @@ class FacilitiesStore extends EventsEmitter {
     this.updateSql();
   }
 
+  resetFilter() {
+    this.filterDimensions = defaultFilterDimensions;
+    this.updateSql();
+  }
+
   // call local methods when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -176,6 +182,11 @@ class FacilitiesStore extends EventsEmitter {
 
       case 'FACILITIES_FETCH_DETAIL_DATA': {
         this.fetchDetailData(action.uid);
+        break;
+      }
+
+      case 'FACILITIES_RESET_FILTER': {
+        this.resetFilter();
         break;
       }
 

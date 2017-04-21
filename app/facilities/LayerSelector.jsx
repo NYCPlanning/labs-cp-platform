@@ -69,6 +69,10 @@ const LayerSelector = React.createClass({
     this.updateFilterDimension('facsubgrp', layers);
   },
 
+  resetFilter() {
+    FacilitiesActions.resetFilter();
+  },
+
   render() {
     const { overabbrev, optype, proptype, facsubgrp } = this.state.filterDimensions;
 
@@ -86,6 +90,7 @@ const LayerSelector = React.createClass({
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
           units={'records'}
+          resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
           <ListItem
