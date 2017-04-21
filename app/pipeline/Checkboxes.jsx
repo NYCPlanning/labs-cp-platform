@@ -45,24 +45,24 @@ LegendCircle.propTypes = {
 const Checkboxes = React.createClass({
 
   propTypes: {
-    options: PropTypes.array.isRequired, // array of objects for all possible items
+    dimension: PropTypes.object.isRequired, // array of objects for all possible items
     onChange: PropTypes.func.isRequired, // function to send an updated array of objects to when a checkbox is toggled
     legendCircleType: PropTypes.string.isRequired, // string indicating the type of legendCircle
   },
 
   handleChange(value) {
-    const { options, onChange } = this.props;
+    const { dimension, onChange } = this.props;
 
-    const thisOption = options.filter(option => option.value === value)[0];
+    const thisOption = dimension.values.filter(option => option.value === value)[0];
     thisOption.checked = !thisOption.checked;
 
-    onChange(options);
+    onChange(dimension.values);
   },
 
   render() {
-    const { options, legendCircleType } = this.props;
+    const { dimension, legendCircleType } = this.props;
 
-    const checkboxListItems = options.map((option) => {
+    const checkboxListItems = dimension.values.map((option) => {
       const checkbox = (
         <Checkbox
           value={option.value}

@@ -30,10 +30,11 @@ const FacilitiesExplorer = React.createClass({
     // update the layers and filterDimensions in the facilities store
 
     const locationState = this.props.location.state;
+    const defaultFilterDimensionsCopy = JSON.parse(JSON.stringify(defaultFilterDimensions));
 
     const filterDimensions = locationState && locationState.filterDimensions ?
-      locationState.filterDimensions :
-      defaultFilterDimensions;
+      Object.assign(defaultFilterDimensionsCopy, locationState.filterDimensions) :
+      defaultFilterDimensionsCopy;
 
     if (locationState && locationState.layers) {
       filterDimensions.facsubgrp.values = this.props.location.state.layers;

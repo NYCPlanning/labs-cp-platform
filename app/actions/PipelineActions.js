@@ -22,6 +22,12 @@ const PipelineActions = {
       cartodb_id,
     });
   },
+
+  resetFilter() {
+    dispatcher.dispatch({
+      type: 'PIPELINE_RESET_FILTER',
+    });
+  },
 };
 
 export default PipelineActions;

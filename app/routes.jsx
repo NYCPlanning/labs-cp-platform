@@ -75,7 +75,7 @@ module.exports = (
     <Route path="pipeline/explorer" component={PipelineExplorer} title={'Housing Development Pipeline'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} onEnter={confirmPermissions('sitewide_access')} />
 
-    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalprojects/explorer" component={CapitalProjectsExplorer} title={'Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} onEnter={confirmPermissions('sitewide_access')} />

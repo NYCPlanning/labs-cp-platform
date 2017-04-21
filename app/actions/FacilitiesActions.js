@@ -28,6 +28,12 @@ const FacilitiesActions = {
       uid,
     });
   },
+
+  resetFilter() {
+    dispatcher.dispatch({
+      type: 'FACILITIES_RESET_FILTER',
+    });
+  },
 };
 
 export default FacilitiesActions;

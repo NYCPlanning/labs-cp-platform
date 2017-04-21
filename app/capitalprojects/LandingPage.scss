@@ -16,7 +16,7 @@
     z-index: -1;
 
     display: block;
-    background: url(/img/facilities_landing_background.png) no-repeat;
+    background: url(/img/cp_landing_background.png) no-repeat;
     background-size:cover;
     width: 100%;
     height: 100%;
@@ -135,6 +135,10 @@
   .splash-button-section {
     color: #333;
     margin-bottom: 30px;
+
+    h4 {
+      color: #d96b27;
+    }
 
     .box.or-text {
       width: 50px;

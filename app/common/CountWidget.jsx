@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Numeral from 'numeral';
 
 import { ListItem } from 'material-ui/List';
@@ -6,54 +6,85 @@ import FontIcon from 'material-ui/FontIcon';
 
 import './CountWidget.scss';
 
-const CountWidget = (props) => {
-  const totalCount = Numeral(props.totalCount).format('0,0');
-  const selectedCount = Numeral(props.selectedCount).format('0,0');
+const CountWidget = React.createClass({
+  propTypes: {
+    totalCount: PropTypes.number,
+    selectedCount: PropTypes.number,
+    units: PropTypes.string.isRequired,
+    resetFilter: PropTypes.func.isRequired,
+  },
 
-  let countText = '';
+  getDefaultProps() {
+    return {
+      totalCount: null,
+      selectedCount: null,
+    };
+  },
 
-  if (props.selectedCount === props.totalCount) {
-    countText = (
-      <span>Showing all <span className="bigNumber">{totalCount}</span> {props.units}</span>
+  getInitialState() {
+    return { resetSpin: false };
+  },
+
+  handleReset() {
+    this.props.resetFilter();
+    this.setState({ resetSpin: true }, () => {
+      setTimeout(() => {
+        this.setState({ resetSpin: false });
+      }, 1000);
+    });
+  },
+
+  render() {
+    const totalCount = Numeral(this.props.totalCount).format('0,0');
+    const selectedCount = Numeral(this.props.selectedCount).format('0,0');
+
+    let countText = '';
+
+    if (this.props.selectedCount === this.props.totalCount) {
+      countText = (
+        <span>Showing all <span className="bigNumber">{totalCount}</span> {this.props.units}</span>
+      );
+    } else {
+      countText = (
+        <span>
+          <span className={`bigNumber ${selectedCount === '0' ? 'zero' : ''}`}>{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {this.props.units}
+        </span>
+      );
+    }
+
+    let rightIcon = (
+      <FontIcon
+        className={`fa fa-refresh ${this.state.resetSpin ? 'fa-spin' : ''}`}
+        hoverColor="green"
+        style={{ margin: '9px', cursor: 'pointer', width: '20px' }}
+        onClick={this.handleReset}
+      />
     );
-  } else {
-    countText = (
-      <span>
-        <span className={`bigNumber ${selectedCount === '0' ? 'zero' : ''}`}>{selectedCount}</span> of <span className="bigNumber">{totalCount}</span> {props.units}
-      </span>
+
+    if (this.props.selectedCount === this.props.totalCount) rightIcon = null;
+
+
+    return (
+      <div className="countWidget">
+        <ListItem
+          style={{
+            padding: '12px 12px 12px 55px',
+            backgroundColor: '#efefef',
+          }}
+          leftIcon={
+            <FontIcon
+              className="fa fa-filter"
+              style={{ margin: '9px' }}
+            />
+          }
+          rightIcon={rightIcon}
+          disabled
+        >
+          {countText}
+        </ListItem>
+      </div>
     );
-  }
-
-  return (
-    <div className="countWidget">
-      <ListItem
-        style={{
-          padding: '12px 16px 12px 55px',
-          backgroundColor: '#efefef',
-        }}
-        leftIcon={
-          <FontIcon
-            className="fa fa-filter"
-            style={{ margin: '9px' }}
-          />
-        }
-        disabled
-      >
-        {countText}
-      </ListItem>
-    </div>
-  );
-};
-
-CountWidget.propTypes = {
-  totalCount: React.PropTypes.number,
-  selectedCount: React.PropTypes.number,
-  units: React.PropTypes.string.isRequired,
-};
-
-CountWidget.defaultProps = {
-  totalCount: null,
-  selectedCount: null,
-};
+  },
+});
 
 module.exports = CountWidget;

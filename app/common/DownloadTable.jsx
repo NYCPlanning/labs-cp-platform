@@ -18,7 +18,7 @@ const DownloadTable = ({ sql, commitmentsSql, filePrefix, commitmentsFilePrefix,
     <div>
       <Subheader style={{ paddingLeft: 0 }}>
         Complete Dataset
-        <InfoIcon text="Commitment level data represents capital commitments before aggregation to the project level" />
+        <InfoIcon text="Commitment level data represents capital commitments before aggregating to the project level" />
       </Subheader>
       <FlatButton
         label="Project Level"
@@ -38,7 +38,7 @@ const DownloadTable = ({ sql, commitmentsSql, filePrefix, commitmentsFilePrefix,
       />
 
       <Subheader style={{ paddingLeft: 0 }}>
-        Complete Dataset
+        Filtered Dataset
         <InfoIcon text="Commitment level data will correspond to projects in the current view" />
       </Subheader>
       <FlatButton

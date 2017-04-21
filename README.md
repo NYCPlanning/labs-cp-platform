@@ -65,6 +65,9 @@ To get serve the project locally:
 
 ### Development Workflow
 
+#### Letsencrypt
+Traffic to the various Dokku apps is encrypted with SSL, using the [dokku letsencrypt plugin](https://github.com/dokku/dokku-letsencrypt).  When a certificate expires, a simple command `dokku letsencrypt:auto-renew` can be run on the server to automatically renew old certificates.
+
 ### Deploying
 By using dokku, the app can be deployed simply by pushing the repo to a different remote:
 

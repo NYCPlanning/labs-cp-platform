@@ -12,11 +12,11 @@ const SortTypes = {
   DESC: 'DESC',
 };
 
-class CapitalProjectsStore extends EventsEmitter {
+class CapitalProjectsTableStore extends EventsEmitter {
   constructor() {
     super();
 
-    this.filterDimensions = defaultTableFilterDimensions;
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultTableFilterDimensions));
     this.colSortDirs = {
       maprojid: 'DESC',
     };
@@ -31,15 +31,21 @@ class CapitalProjectsStore extends EventsEmitter {
 
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
     this.commitmentsSql = 'SELECT * FROM cpdb_commitments';
+  }
 
-    this.getRawData();
-
-    // get the totalCount
+  initialize() {
     carto.getCount(this.sql)
       .then((count) => {
         this.totalCount = count;
         this.selectedCount = count;
         this.emit('updated');
+      });
+
+    carto.SQL(this.sql, 'json')
+      .then((data) => {
+        this.data = data;
+        this.filterAndSortData();
+        this.emit('updatedTableData');
       });
   }
 
@@ -135,6 +141,11 @@ class CapitalProjectsStore extends EventsEmitter {
     this.emit('updatedTableData');
   }
 
+  resetFilter() {
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultTableFilterDimensions));
+    this.updateSql();
+  }
+
   // call local methods when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -153,12 +164,17 @@ class CapitalProjectsStore extends EventsEmitter {
         break;
       }
 
+      case 'CAPTIALPROJECTS_TABLE_RESET_FILTER': {
+        this.resetFilter();
+        break;
+      }
+
       default:
     }
   }
 }
 
-const capitalProjectsStore = new CapitalProjectsStore();
+const capitalProjectsStore = new CapitalProjectsTableStore();
 window.capitalProjectsStore = capitalProjectsStore;
 
 dispatcher.register(capitalProjectsStore.handleActions.bind(capitalProjectsStore));

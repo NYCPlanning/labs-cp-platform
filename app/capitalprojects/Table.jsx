@@ -39,6 +39,8 @@ const CPTable = React.createClass({ // eslint-disable-line
         colSortDirs: CapitalProjectsTableStore.colSortDirs,
       });
     });
+
+    CapitalProjectsTableStore.initialize();
   },
 
   handleFilterBy(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
@@ -132,9 +134,11 @@ const CPTable = React.createClass({ // eslint-disable-line
               </div>
             </Tab>
             <Tab label="About">
-              <div className="sidebar-tab-content padded">
-                <h4>About this Table</h4>
-                <p>This table displays data from the Capital Commitment Plan PDFs published in October 2016, joined with Checkbook NYC data pulled in March 2017.</p>
+              <div className="sidebar-tab-content">
+                <div className="scroll-container padded">
+                  <h4>About this Table</h4>
+                  <p>This table displays data from the Capital Commitment Plan PDFs published in October 2016, joined with Checkbook NYC data pulled in March 2017.</p>
+                </div>
               </div>
             </Tab>
           </Tabs>

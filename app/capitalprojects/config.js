@@ -18,8 +18,16 @@ const defaultFilterDimensions = {
         label: 'City University of New York - CUNY',
       },
       {
+        value: 'DFTA',
+        label: 'Department for the Aging - DFTA',
+      },
+      {
         value: 'DCAS',
         label: 'Department of Citywide Administrative Services - DCAS',
+      },
+      {
+        value: 'DOC',
+        label: 'Department of Correction - DOC',
       },
       {
         value: 'DCLA',
@@ -30,36 +38,28 @@ const defaultFilterDimensions = {
         label: 'Department of Design and Construction - DDC',
       },
       {
+        value: 'DOE',
+        label: 'Department of Education - DOE',
+      },
+      {
         value: 'DEP',
         label: 'Department of Environmental Protection - DEP',
-      },
-      {
-        value: 'DFTA',
-        label: 'Department for the Aging',
-      },
-      {
-        value: 'DHP',
-        label: 'Department of Housing Preservation and Development',
-      },
-      {
-        value: 'DHS',
-        label: 'Department of Homeless Services',
-      },
-      {
-        value: 'DOC',
-        label: 'Department of Correction',
       },
       {
         value: 'DOHMH',
         label: 'Department of Health and Mental Hygiene - DOHMH',
       },
       {
-        value: 'DOITT',
-        label: 'Department of Info Tech and Telecom',
+        value: 'DHS',
+        label: 'Department of Homeless Services - DHS',
       },
       {
-        value: 'DOT',
-        label: 'Department of Transportation - DOT',
+        value: 'HPD',
+        label: 'Department of Housing Preservation and Development - HPD',
+      },
+      {
+        value: 'DOITT',
+        label: 'Department of Info Tech and Telecom - DOITT',
       },
       {
         value: 'DPR',
@@ -70,16 +70,24 @@ const defaultFilterDimensions = {
         label: 'Department of Sanitation - DNSY',
       },
       {
+        value: 'SBS',
+        label: 'Department of Small Business Services - SBS',
+      },
+      {
+        value: 'DOT',
+        label: 'Department of Transportation - DOT',
+      },
+      {
+        value: 'EDC',
+        label: 'Economic Development Corporation - EDC',
+      },
+      {
         value: 'FDNY',
         label: 'Fire Department - FDNY',
       },
       {
         value: 'HHC',
         label: 'Health and Hospitals Corporation - HHC',
-      },
-      {
-        value: 'NYPD',
-        label: 'Police Department - NYPD',
       },
       {
         value: 'NYPL',
@@ -90,12 +98,12 @@ const defaultFilterDimensions = {
         label: 'New York Research Library - NYRL',
       },
       {
-        value: 'QBPL',
-        label: 'Queens Borough Public Library - QBPL',
+        value: 'NYPD',
+        label: 'Police Department - NYPD',
       },
       {
-        value: 'SBS',
-        label: 'Department of Small Business Services - SBS',
+        value: 'QBPL',
+        label: 'Queens Borough Public Library - QBPL',
       },
       {
         value: 'UK',
@@ -121,48 +129,44 @@ const defaultFilterDimensions = {
         label: 'City University of New York - CUNY',
       },
       {
+        value: 'DFTA',
+        label: 'Department for the Aging - DFTA',
+      },
+      {
         value: 'DCAS',
         label: 'Department of Citywide Administrative Services - DCAS',
+      },
+      {
+        value: 'DOC',
+        label: 'Department of Correction - DOC',
       },
       {
         value: 'DCLA',
         label: 'Department of Cultural Affairs - DCLA',
       },
       {
-        value: 'DDC',
-        label: 'Department of Design and Construction - DDC',
+        value: 'DOE',
+        label: 'Department of Education - DOE',
       },
       {
         value: 'DEP',
         label: 'Department of Environmental Protection - DEP',
       },
       {
-        value: 'DFTA',
-        label: 'Department for the Aging',
-      },
-      {
-        value: 'DHP',
-        label: 'Department of Housing Preservation and Development',
-      },
-      {
-        value: 'DHS',
-        label: 'Department of Homeless Services',
-      },
-      {
-        value: 'DOC',
-        label: 'Department of Correction',
-      },
-      {
         value: 'DOHMH',
         label: 'Department of Health and Mental Hygiene - DOHMH',
       },
       {
-        value: 'DOITT',
-        label: 'Department of Info Tech and Telecom',
+        value: 'DHS',
+        label: 'Department of Homeless Services - DHS',
       },
       {
-        value: 'DOT',
-        label: 'Department of Transportation - DOT',
+        value: 'HPD',
+        label: 'Department of Housing Preservation and Development - HPD',
+      },
+      {
+        value: 'DOITT',
+        label: 'Department of Info Tech and Telecom - DOITT',
       },
       {
         value: 'DPR',
@@ -173,6 +177,14 @@ const defaultFilterDimensions = {
         label: 'Department of Sanitation - DNSY',
       },
       {
+        value: 'SBS',
+        label: 'Department of Small Business Services - SBS',
+      },
+      {
+        value: 'DOT',
+        label: 'Department of Transportation - DOT',
+      },
+      {
         value: 'FDNY',
         label: 'Fire Department - FDNY',
       },
@@ -181,8 +193,20 @@ const defaultFilterDimensions = {
         label: 'Health and Hospitals Corporation - HHC',
       },
       {
-        value: 'NYPD',
-        label: 'Police Department - NYPD',
+        value: 'NYCHA',
+        label: 'Housing Authority - NYCHA',
+      },
+      {
+        value: 'HRA',
+        label: 'Human Resources Administration - HRA',
+      },
+      {
+        value: 'DSS',
+        label: 'Department of Social Services - DSS',
+      },
+      {
+        value: 'MTA',
+        label: 'Metropolitan Transportation Authority - MTA',
       },
       {
         value: 'NYPL',
@@ -193,16 +217,16 @@ const defaultFilterDimensions = {
         label: 'New York Research Library - NYRL',
       },
       {
+        value: 'OCA',
+        label: 'Office of Court Administration - OCA',
+      },
+      {
+        value: 'NYPD',
+        label: 'Police Department - NYPD',
+      },
+      {
         value: 'QBPL',
         label: 'Queens Borough Public Library - QBPL',
-      },
-      {
-        value: 'SBS',
-        label: 'Department of Small Business Services - SBS',
-      },
-      {
-        value: 'UK',
-        label: 'Unknown Agency Code',
       },
     ],
   },
@@ -378,7 +402,12 @@ const defaultFilterDimensions = {
     ],
   },
 
-  totalcommitspend: {
+  totalspend: {
+    type: 'numberRange',
+    values: [0, 100000000],
+  },
+
+  totalcommit: {
     type: 'numberRange',
     values: [1000, 100000000],
   },
@@ -393,14 +422,8 @@ const defaultTableFilterDimensions = {
   magencyacro: defaultFilterDimensions.magencyacro,
   sagencyacro: defaultFilterDimensions.sagencyacro,
   projecttype: defaultFilterDimensions.projecttype,
-  totalspend: {
-    type: 'numberRange',
-    values: [0, 100000000],
-  },
-  totalcommit: {
-    type: 'numberRange',
-    values: [1000, 100000000],
-  },
+  totalspend: defaultFilterDimensions.totalspend,
+  totalcommit: defaultFilterDimensions.totalcommit,
 };
 
 const defaultLayerConfig = {

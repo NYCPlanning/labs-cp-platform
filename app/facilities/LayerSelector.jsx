@@ -43,10 +43,16 @@ const LayerSelector = React.createClass({
         filterDimensions,
       });
     });
+
+    FacilitiesStore.initialize();
   },
 
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
+  },
+
+  componentWillUnmount() {
+    FacilitiesStore.removeAllListeners('facilitiesUpdated');
   },
 
   updateFilterDimension(dimension, values) {
@@ -69,6 +75,10 @@ const LayerSelector = React.createClass({
     this.updateFilterDimension('facsubgrp', layers);
   },
 
+  resetFilter() {
+    FacilitiesActions.resetFilter();
+  },
+
   render() {
     const { overabbrev, optype, proptype, facsubgrp } = this.state.filterDimensions;
 
@@ -86,6 +96,7 @@ const LayerSelector = React.createClass({
           totalCount={this.state.totalCount}
           selectedCount={this.state.selectedCount}
           units={'records'}
+          resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
           <ListItem

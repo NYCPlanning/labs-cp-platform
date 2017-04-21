@@ -10,8 +10,6 @@ import PipelineStore from '../stores/PipelineStore';
 import RangeSlider from '../common/RangeSlider';
 import InfoIcon from '../common/InfoIcon';
 
-import { defaultFilterDimensions } from './config';
-
 import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
@@ -32,6 +30,12 @@ const LayerSelector = React.createClass({
         symbologyDimension: PipelineStore.symbologyDimension,
       });
     });
+
+    PipelineStore.initialize();
+  },
+
+  componentWillUnmount() {
+    PipelineStore.removeAllListeners('pipelineUpdated');
   },
 
   handleFilterDimensionChange(dimension, values) {
@@ -46,11 +50,11 @@ const LayerSelector = React.createClass({
     // expects the data output from the ionRangeSlider
     // updates state with an array of the filter range
 
-    // update the manual input elements
-    if (dimension === 'dcp_units_use_map') {
-      this.unitsMin.value = data.from;
-      this.unitsMax.value = data.to;
-    }
+    // // update the manual input elements
+    // if (dimension === 'dcp_units_use_map') {
+    //   this.unitsMin.value = data.from;
+    //   this.unitsMax.value = data.to;
+    // }
 
     PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
   },
@@ -58,6 +62,10 @@ const LayerSelector = React.createClass({
   handleInputChange(e) { // handles changes to the manual inputs for total units
     e.preventDefault();
     PipelineActions.onFilterDimensionChange('dcp_units_use_map', [this.unitsMin.value, this.unitsMax.value]);
+  },
+
+  resetFilter() {
+    PipelineActions.resetFilter();
   },
 
   render() {
@@ -98,12 +106,20 @@ const LayerSelector = React.createClass({
       );
     };
 
+    // the manual inputs are not react-based, so this makes sure their values reflect the slider
+    // if is necessary because this.unitsMin is a ref and does not exist until after the first render
+    if (this.unitsMin) {
+      this.unitsMin.value = filterDimensions.dcp_units_use_map.values[0];
+      this.unitsMax.value = filterDimensions.dcp_units_use_map.values[1];
+    }
+
     return (
       <div className="sidebar-tab-content pipeline-layer-selector">
         <CountWidget
           totalCount={totalCount}
           selectedCount={selectedCount}
           units={'records'}
+          resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset">
           <Subheader>
@@ -119,7 +135,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              options={filterDimensions.dcp_pipeline_status.values}
+              dimension={filterDimensions.dcp_pipeline_status}
               onChange={this.handleFilterDimensionChange.bind(this, 'dcp_pipeline_status')}
               legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
             />
@@ -138,7 +154,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              options={defaultFilterDimensions.dcp_permit_type.values}
+              dimension={filterDimensions.dcp_permit_type}
               onChange={this.handleFilterDimensionChange.bind(this, 'dcp_permit_type')}
               legendCircleType={symbologyDimension === 'dcp_permit_type' ? 'fill' : 'none'}
             />
@@ -153,7 +169,7 @@ const LayerSelector = React.createClass({
             style={listItemStyle}
           >
             <Checkboxes
-              options={defaultFilterDimensions.dcp_development_type.values}
+              dimension={filterDimensions.dcp_development_type}
               onChange={this.handleFilterDimensionChange.bind(this, 'dcp_development_type')}
               legendCircleType={'none'}
             />
@@ -171,7 +187,7 @@ const LayerSelector = React.createClass({
               <input
                 type="text"
                 className="form-control mb-2 mr-sm-2 mb-sm-0"
-                defaultValue={filterDimensions.dcp_units_use_map.values[0]}
+                defaultValue={filterDimensions.dcp_units_use_map.values[1]}
                 ref={(unitsMin) => { this.unitsMin = unitsMin; }}
               />
               <input

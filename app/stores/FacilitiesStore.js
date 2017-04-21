@@ -14,22 +14,28 @@ class FacilitiesStore extends EventsEmitter {
   constructor() {
     super();
 
-    this.filterDimensions = defaultFilterDimensions;
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
     this.sqlConfig = {
       columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
       tablename: devTables('facdb_facilities'),
     };
     this.sqlBuilder = new FacilitiesSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-
-    // get the totalCount
-    carto.getCount(this.sql).then((count) => {
-      this.totalCount = count;
-      this.selectedCount = count;
-      this.emit('facilitiesUpdated');
-    });
   }
 
+  initialize() {
+    const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.tablename}`, 'json')
+      .then((data) => {
+        this.totalCount = data[0].count;
+      });
+
+    const p2 = carto.getCount(this.sql)
+      .then((count) => {
+        this.selectedCount = count;
+      });
+
+    Promise.all([p1, p2]).then(() => this.emit('facilitiesUpdated'));
+  }
 
   // builds a new LayerConfig based on this.sql
   getLayerConfig() {
@@ -68,7 +74,7 @@ class FacilitiesStore extends EventsEmitter {
     this.filterDimensions[filterDimension].values = values;
 
     // disable dimension if nothing is selected in the multiselects
-    if (filterDimension === 'overabbrev' || 'filterDimension === optype' || 'filterDimension === proptype') {
+    if (filterDimension === 'overabbrev' || filterDimension === 'optype' || filterDimension === 'proptype') {
       if (values.filter(value => value.checked === true).length > 0) {
         this.filterDimensions[filterDimension].disabled = false;
       } else {
@@ -83,7 +89,6 @@ class FacilitiesStore extends EventsEmitter {
   updateSql() {
     this.processChecked(this.filterDimensions.facsubgrp.values);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('facilitiesUpdated');
@@ -156,6 +161,12 @@ class FacilitiesStore extends EventsEmitter {
     this.updateSql();
   }
 
+  resetFilter() {
+    // read defaultFilterDimensions, but don't assign because then we would mutate them
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
+    this.updateSql();
+  }
+
   // call local methods when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -176,6 +187,11 @@ class FacilitiesStore extends EventsEmitter {
 
       case 'FACILITIES_FETCH_DETAIL_DATA': {
         this.fetchDetailData(action.uid);
+        break;
+      }
+
+      case 'FACILITIES_RESET_FILTER': {
+        this.resetFilter();
         break;
       }
 
