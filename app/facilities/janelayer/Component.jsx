@@ -30,6 +30,10 @@ const Facilities = React.createClass({
     this.updateLayerConfig();
   },
 
+  componentWillUnmount() {
+    FacilitiesStore.removeAllListeners('facilitiesUpdated');
+  },
+
   // updates the sql for the map source
   updateLayerConfig() {
     const { layerConfig } = this.state;

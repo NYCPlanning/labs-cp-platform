@@ -28,6 +28,10 @@ const CapitalProjects = React.createClass({
     this.updateLayerConfig();
   },
 
+  componentWillUnmount() {
+    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
+  },
+
   updateLayerConfig() {
     // pass the new config up to Jane
     const { layerConfig } = this.state;

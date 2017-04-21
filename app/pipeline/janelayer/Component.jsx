@@ -29,6 +29,10 @@ const Pipeline = React.createClass({
     this.updateLayerConfig();
   },
 
+  componentWillUnmount() {
+    PipelineStore.removeAllListeners('pipelineUpdated');
+  },
+
   updateLayerConfig() {
     // pass the new config up to Jane
     this.props.onUpdate('pipeline', this.state.layerConfig);

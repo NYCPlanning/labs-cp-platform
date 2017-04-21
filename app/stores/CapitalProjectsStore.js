@@ -24,8 +24,9 @@ class CapitalProjectsStore extends EventsEmitter {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
     this.pointsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.pointsTablename);
     this.polygonsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.polygonsTablename);
+  }
 
-    // // get the totalCount
+  initialize() {
     carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
       .then((count) => {
         this.totalCount = count;

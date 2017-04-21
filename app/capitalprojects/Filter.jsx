@@ -34,6 +34,12 @@ const Filter = React.createClass({
         filterDimensions: CapitalProjectsStore.filterDimensions,
       });
     });
+
+    CapitalProjectsStore.initialize();
+  },
+
+  componentWillUnmount() {
+    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
   },
 
   updateFilterDimension(dimension, values) {

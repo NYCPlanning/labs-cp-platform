@@ -37,6 +37,8 @@ const CPTable = React.createClass({ // eslint-disable-line
         colSortDirs: CapitalProjectsTableStore.colSortDirs,
       });
     });
+
+    CapitalProjectsTableStore.initialize();
   },
 
   handleFilterBy(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
