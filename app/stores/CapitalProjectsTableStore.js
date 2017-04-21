@@ -16,7 +16,7 @@ class CapitalProjectsTableStore extends EventsEmitter {
   constructor() {
     super();
 
-    this.filterDimensions = defaultTableFilterDimensions;
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultTableFilterDimensions));
     this.colSortDirs = {
       maprojid: 'DESC',
     };
@@ -137,6 +137,11 @@ class CapitalProjectsTableStore extends EventsEmitter {
     this.emit('updatedTableData');
   }
 
+  resetFilter() {
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultTableFilterDimensions));
+    this.updateSql();
+  }
+
   // call local methods when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -152,6 +157,11 @@ class CapitalProjectsTableStore extends EventsEmitter {
 
       case 'CAPITALPROJECTS_TABLE_SORTCHANGE': {
         this.handleSortChange(action.columnKey, action.sortDir);
+        break;
+      }
+
+      case 'CAPTIALPROJECTS_TABLE_RESET_FILTER': {
+        this.resetFilter();
         break;
       }
 
