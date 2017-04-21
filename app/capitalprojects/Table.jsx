@@ -12,6 +12,8 @@ import { agencies } from './config';
 import CapitalProjectsTableActions from '../actions/CapitalProjectsTableActions';
 import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
 import SortHeaderCell from './SortHeaderCell';
+import DownloadTable from '../common/DownloadTable';
+import SignupPrompt from '../common/SignupPrompt';
 
 import './Table.scss';
 
@@ -117,6 +119,17 @@ const CPTable = React.createClass({ // eslint-disable-line
               <TableFilter
                 onFilterBy={this.handleFilterBy}
               />
+            </Tab>
+            <Tab label="Download">
+              <div className="sidebar-tab-content padded">
+                <DownloadTable
+                  sql={CapitalProjectsTableStore.sql}
+                  commitmentsSql={CapitalProjectsTableStore.commitmentsSql}
+                  filePrefix="projects"
+                  commitmentsFilePrefix="commitments"
+                />
+                <SignupPrompt />
+              </div>
             </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content padded">

@@ -24,10 +24,13 @@ class CapitalProjectsStore extends EventsEmitter {
     this.sqlConfig = {
       columns: 'magency, magencyacro, sagencyacro, maprojid, description, totalcommit, totalspend, projecttype',
       tableName: 'cpdb_map_combined',
+      commitmentsTableName: 'cpdb_commitments',
     };
+    // this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
     this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
 
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.commitmentsSql = 'SELECT * FROM cpdb_commitments';
 
     this.getRawData();
 
@@ -67,6 +70,7 @@ class CapitalProjectsStore extends EventsEmitter {
   // update the sql, get counts, and emit an event
   updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.commitmentsSql = `SELECT * FROM cpdb_commitments a WHERE a.maprojid IN (SELECT b.maprojid FROM (${this.sql}) b)`;
 
     this.getRawData();
 
