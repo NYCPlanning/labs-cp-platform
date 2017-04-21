@@ -13,7 +13,7 @@ exports.about = (
       As a result of these limitations and inconsistencies, the Capital Projects Explorer is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses - it is <strong>built for planning coordination purposes only</strong>.
     </p>
     <p>
-      Please consult <a href="http://docs.capitalplanning.nyc/cpdbv1/" target="_blank" rel="noreferrer noopener">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
+      Please consult <a href="http://docs.capitalplanning.nyc/cpdb/" target="_blank" rel="noreferrer noopener">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
     </p>
     <h4>Feedback</h4>
     <p>
