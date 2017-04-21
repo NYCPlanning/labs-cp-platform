@@ -59,7 +59,6 @@ class FacilitiesStore extends EventsEmitter {
 
   // sets initial filterDimensions
   handleSetInitialFilters(filterDimensions) {
-    this.initialFilterDimensions = JSON.parse(JSON.stringify(filterDimensions));
     this.filterDimensions = filterDimensions;
     this.updateSql();
   }
@@ -163,7 +162,8 @@ class FacilitiesStore extends EventsEmitter {
   }
 
   resetFilter() {
-    this.filterDimensions = defaultFilterDimensions;
+    // read defaultFilterDimensions, but don't assign because then we would mutate them
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
     this.updateSql();
   }
 

@@ -36,8 +36,6 @@ const FacilitiesExplorer = React.createClass({
       Object.assign(defaultFilterDimensionsCopy, locationState.filterDimensions) :
       defaultFilterDimensionsCopy;
 
-    console.log('ComponentWillMount', filterDimensions);
-
     if (locationState && locationState.layers) {
       filterDimensions.facsubgrp.values = this.props.location.state.layers;
     }

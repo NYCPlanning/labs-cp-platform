@@ -12,7 +12,7 @@ class PipelineStore extends EventsEmitter {
   constructor() {
     super();
 
-    this.filterDimensions = defaultFilterDimensions;
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
     this.sqlChunks = {};
     this.sqlConfig = {
       columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
@@ -108,20 +108,24 @@ class PipelineStore extends EventsEmitter {
     if (filterDimension === 'dcp_pipeline_status') {
       // Completion Slider
       if (this.completionDateFilterDisabled()) {
-        this.filterDimensions.dob_cofo_date = defaultFilterDimensions.dob_cofo_date;
+        this.filterDimensions.dob_cofo_date = JSON.parse(JSON.stringify(defaultFilterDimensions.dob_cofo_date));
         this.filterDimensions.dob_cofo_date.disabled = true;
       } else {
         this.filterDimensions.dob_cofo_date.disabled = false;
       }
       // issued slider
       if (this.issueDateFilterDisabled()) {
-        this.filterDimensions.dob_qdate = defaultFilterDimensions.dob_qdate;
+        this.filterDimensions.dob_qdate = JSON.parse(JSON.stringify(defaultFilterDimensions.dob_qdate));
         this.filterDimensions.dob_qdate.disabled = true;
       } else {
         this.filterDimensions.dob_qdate.disabled = false;
       }
     }
 
+    this.updateSql();
+  }
+
+  updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
 
     carto.getCount(this.sql).then((count) => {
@@ -144,6 +148,12 @@ class PipelineStore extends EventsEmitter {
       });
   }
 
+  resetFilter() {
+    // read defaultFilterDimensions, but don't assign because then we would mutate them
+    this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
+    this.updateSql();
+  }
+
   // do things when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -159,6 +169,11 @@ class PipelineStore extends EventsEmitter {
 
       case 'PIPELINE_FETCH_DETAIL_DATA': {
         this.fetchDetailData(action.cartodb_id);
+        break;
+      }
+
+      case 'PIPELINE_RESET_FILTER': {
+        this.resetFilter();
         break;
       }
 
