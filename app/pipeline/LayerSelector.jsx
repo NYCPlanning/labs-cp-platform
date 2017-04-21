@@ -32,6 +32,12 @@ const LayerSelector = React.createClass({
         symbologyDimension: PipelineStore.symbologyDimension,
       });
     });
+
+    PipelineStore.initialize();
+  },
+
+  componentWillUnmount() {
+    PipelineStore.removeAllListeners('pipelineUpdated');
   },
 
   handleFilterDimensionChange(dimension, values) {
