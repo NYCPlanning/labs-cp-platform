@@ -19,8 +19,8 @@ const Filter = React.createClass({
   getInitialState() {
     return ({
       filterDimensions: CapitalProjectsStore.filterDimensions,
-      totalSpendRange: [0, 100000000],
-      totalCommitRange: [1000, 100000000],
+      totalspendRange: [0, 9],
+      totalcommitRange: [0, 9],
     });
   },
 
@@ -32,6 +32,13 @@ const Filter = React.createClass({
         pointsSql: CapitalProjectsStore.pointsSql,
         polygonsSql: CapitalProjectsStore.polygonsSql,
         filterDimensions: CapitalProjectsStore.filterDimensions,
+      }, () => {
+        // check for default status of sliders with mapped values
+        const totalspendRange = this.state.filterDimensions.totalspend.values;
+        if (totalspendRange[0] === 0 && totalspendRange[1] === 100000000) this.setState({ totalspendRange: [0, 9] });
+
+        const totalcommitRange = this.state.filterDimensions.totalcommit.values;
+        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 100000000) this.setState({ totalcommitRange: [0, 9] });
       });
     });
 
@@ -56,12 +63,12 @@ const Filter = React.createClass({
 
     if (dimension === 'totalcommit') {
       values = [sliderState.from_value, sliderState.to_value];
-      this.setState({ totalCommitRange: [sliderState.from, sliderState.to] });
+      this.setState({ totalcommitRange: [sliderState.from, sliderState.to] });
     }
 
     if (dimension === 'totalspend') {
       values = [sliderState.from_value, sliderState.to_value];
-      this.setState({ totalSpendRange: [sliderState.from, sliderState.to] });
+      this.setState({ totalspendRange: [sliderState.from, sliderState.to] });
     }
 
     this.updateFilterDimension(dimension, values);
@@ -171,7 +178,7 @@ const Filter = React.createClass({
             }}
           >
             <RangeSlider
-              data={this.state.totalSpendRange}
+              data={this.state.totalspendRange}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'totalspend')}
               step={1000}
@@ -196,7 +203,7 @@ const Filter = React.createClass({
             }}
           >
             <RangeSlider
-              data={this.state.totalCommitRange}
+              data={this.state.totalcommitRange}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'totalcommit')}
               step={1000}

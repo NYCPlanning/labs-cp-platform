@@ -219,7 +219,7 @@ const defaultFilterDimensions = {
       {
         value: 'OCA',
         label: 'Office of Court Administration - OCA',
-      }, 
+      },
       {
         value: 'NYPD',
         label: 'Police Department - NYPD',

@@ -23,6 +23,12 @@ const CapitalProjectsTableActions = {
       sortDir,
     });
   },
+
+  resetFilter() {
+    dispatcher.dispatch({
+      type: 'CAPTIALPROJECTS_TABLE_RESET_FILTER',
+    });
+  },
 };
 
 export default CapitalProjectsTableActions;
