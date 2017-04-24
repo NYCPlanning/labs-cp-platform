@@ -22,7 +22,7 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.description}</div>
-        <div className={'subtitle'}>Total Cost: ${numeral(d.totalcommitspend).format('0,0')}</div>
+        <div className={'subtitle'}>Planned Commitments: ${numeral(d.totalcommit).format('0,0')}</div>
 
         <i className="fa fa-chevron-right" />
       </div>
