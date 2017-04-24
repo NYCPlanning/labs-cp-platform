@@ -497,14 +497,8 @@ const layerConfig = {
     sources: [
       {
         id: 'bike_routes',
-        type: 'geojson',
-        data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_dot_bike_routes&format=geojson`,
-        // type: 'cartovector',
-        // options: {
-        //   carto_user: appConfig.carto_user,
-        //   carto_domain: appConfig.carto_domain,
-        //   sql: ['SELECT * FROM nyc_bike_routes_2016'],
-        // },
+        type: 'vector',
+        tiles: [`https://${appConfig.api_domain}/bike_routes/{z}/{y}/{x}.mvt`],
       },
     ],
     mapLayers: [
