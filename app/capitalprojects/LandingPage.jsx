@@ -29,6 +29,9 @@ const LandingPage = React.createClass({
                     >
                       <div className="vertical-align">Search the <br /> Capital Commitment Plan</div>
                     </Link>
+                    <div className="blurb">
+                      Raw data for all capital projects within the most recent Capital Commitment Plan published by the Mayor’s Office of Management and Budget.
+                    </div>
                   </div>
 
                   <div className="box or-text">
@@ -42,6 +45,9 @@ const LandingPage = React.createClass({
                     >
                       <div className="vertical-align">Explore <br /> Capital Projects on a Map</div>
                     </Link>
+                    <div className="blurb">
+                      Capital projects within the Capital Commitment Plan that NYC Planning has worked with agencies to map - a subset of total planned spending.
+                    </div>
                   </div>
                 </div>
 

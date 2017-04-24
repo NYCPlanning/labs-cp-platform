@@ -152,6 +152,16 @@
       min-width: 300px;
     }
 
+    .blurb {
+      width: 295px;
+      position: relative;
+      margin-top: 15px;
+      color: #eeeeee;
+      font-weight: 300;
+      font-size: 12px;
+      text-align: center;
+    }
+
     .box {
       width: auto;
       display: inline-block;
@@ -275,6 +285,9 @@
         width: 100%;
         min-width: initial;
         padding: 0;
+      }
+      .blurb {
+        width: auto;
       }
     }
   }
