@@ -34,6 +34,13 @@ const FacilitiesActions = {
       type: 'FACILITIES_RESET_FILTER',
     });
   },
+
+  setSelectedFeatures(features) {
+    dispatcher.dispatch({
+      type: 'FACILITIES_SET_SELECTED_FEATURES',
+      features,
+    });
+  },
 };
 
 export default FacilitiesActions;
