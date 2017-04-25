@@ -2,7 +2,6 @@
 
 import EventsEmitter from 'events';
 import update from 'react/lib/update';
-import _ from 'underscore';
 
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
@@ -169,6 +168,7 @@ class FacilitiesStore extends EventsEmitter {
   }
 
   setSelectedFeatures(features) {
+    console.log(features)
     this.selectedFeatures = features;
     this.emit('selectedFeaturesUpdated');
   }

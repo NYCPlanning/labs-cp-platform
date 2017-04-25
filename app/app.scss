@@ -385,4 +385,9 @@ body:after {
   transition: right .45s cubic-bezier(.23,1,.32,1);
   overflow: auto;
 }
+
+.features-leave.features-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
+}
 /* End Implement right-side drawer outside of Jane */

@@ -7,9 +7,9 @@ const SelectedFeaturesPane = (props) => {
   return (
     <div className="selected-features" style={style}>
       <ReactCSSTransitionGroup
-        transitionName="example"
-        transitionEnterTimeout={0}
-        transitionLeaveTimeout={300}
+        transitionName="feature"
+        transitionEnter={false}
+        transitionLeaveTimeout={450}
       >
         {props.children}
       </ReactCSSTransitionGroup>

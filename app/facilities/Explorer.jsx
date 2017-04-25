@@ -73,7 +73,13 @@ const FacilitiesExplorer = React.createClass({
   },
 
   handleMapLayerClick(features) {
-    FacilitiesActions.setSelectedFeatures(features);
+    // set selectedFeatures to [] will cause the right drawer to animate away,
+    // then setting the new data will bring it back
+    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
+    FacilitiesActions.setSelectedFeatures([]);
+    setTimeout(() => {
+      FacilitiesActions.setSelectedFeatures(features);
+    }, 450);
   },
 
   clearSelectedFeatures() {
