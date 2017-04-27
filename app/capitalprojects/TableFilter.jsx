@@ -34,10 +34,10 @@ const Filter = React.createClass({
       }, () => {
         // check for default status of sliders with mapped values
         const totalspendRange = this.state.filterDimensions.totalspend.values;
-        if (totalspendRange[0] === 0 && totalspendRange[1] === 100000000) this.setState({ totalspendRange: [0, 9] });
+        if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
 
         const totalcommitRange = this.state.filterDimensions.totalcommit.values;
-        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 100000000) this.setState({ totalcommitRange: [0, 9] });
+        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
       });
     });
   },
@@ -171,6 +171,8 @@ const Filter = React.createClass({
                 prettify={num => Numeral(num).format('($ 0.00 a)')}
                 grid
                 force_edges
+                max_postfix="+"
+                values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
               />
             </ListItem>
 
@@ -199,6 +201,8 @@ const Filter = React.createClass({
                 prettify={num => Numeral(num).format('($ 0.00 a)')}
                 grid
                 force_edges
+                max_postfix="+"
+                values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
               />
             </ListItem>
           </div>
