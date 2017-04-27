@@ -26,7 +26,6 @@ class CapitalProjectsTableStore extends EventsEmitter {
       tableName: 'cpdb_projects_combined',
       commitmentsTableName: 'cpdb_commitments',
     };
-    // this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
     this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
 
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
@@ -34,12 +33,17 @@ class CapitalProjectsTableStore extends EventsEmitter {
   }
 
   initialize() {
-    carto.getCount(this.sql)
-      .then((count) => {
-        this.totalCount = count;
-        this.selectedCount = count;
-        this.emit('updated');
+    const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.tableName}`, 'json')
+      .then((data) => {
+        this.totalCount = data[0].count;
       });
+
+    const p2 = carto.getCount(this.sql)
+      .then((count) => {
+        this.selectedCount = count;
+      });
+
+    Promise.all([p1, p2]).then(() => this.emit('updated'));
 
     carto.SQL(this.sql, 'json')
       .then((data) => {

@@ -27,12 +27,25 @@ class CapitalProjectsStore extends EventsEmitter {
   }
 
   initialize() {
-    carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
-      .then((count) => {
-        this.totalCount = count;
-        this.selectedCount = count;
-        this.emit('capitalProjectsUpdated');
+    const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.pointsTablename}`, 'json')
+      .then((data) => {
+        this.pointsTotal = data[0].count;
       });
+
+    const p2 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.polygonsTablename}`, 'json')
+      .then((data) => {
+        this.polygonsTotal = data[0].count;
+      });
+
+    const p3 = carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
+      .then((count) => {
+        this.selectedCount = count;
+      });
+
+    Promise.all([p1, p2, p3]).then(() => {
+      this.totalCount = this.pointsTotal + this.polygonsTotal;
+      this.emit('capitalProjectsUpdated');
+    });
   }
 
   unionSQL(pointsSql, polygonsSql) {
