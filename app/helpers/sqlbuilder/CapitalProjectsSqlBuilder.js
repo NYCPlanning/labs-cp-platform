@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
 
-class FacilitiesSqlBuilder extends SqlBuilder {
-
+class CapitalProjectsSqlBuilder extends SqlBuilder {
   // chunker for "active years"
   capitalProjectsDateRange(dimension, filters) {
     const range = filters[dimension].values;
@@ -43,6 +42,6 @@ class FacilitiesSqlBuilder extends SqlBuilder {
 
 }
 
-Object.assign(FacilitiesSqlBuilder, SqlBuilder);
+Object.assign(CapitalProjectsSqlBuilder, SqlBuilder);
 
-export default FacilitiesSqlBuilder;
+export default CapitalProjectsSqlBuilder;
