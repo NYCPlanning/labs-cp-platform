@@ -83,6 +83,7 @@ const App = React.createClass({
         <div>
           <Nav
             title={this.props.children.props.route.title}
+            about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
             mini={this.props.children.props.route.miniNav}
             showModal={this.showModal}
           />

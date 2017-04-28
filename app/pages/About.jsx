@@ -19,6 +19,74 @@ const About = () => (
             style={paperStyle}
             zDepth={1}
           >
+            <h3>What is the Capital Planning Platform?</h3>
+            <p>The Capital Planning Platform is a new resource for collaborative planning, powered by open data and open source technology.</p>
+
+            <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
+
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+
+            <ul type={'disc'}>
+              <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
+              <li><b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b> - Extensive land use and geographic data at the tax lot level in multiple formats.</li>
+              <li><b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b> – ZoLA provides a simple way to research zoning regulations in New York City.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b> - This interactive map identifies and provides information about New York City’s inventory of publicly-accessible waterfront spaces.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
+            </ul>
+
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>About the Technology</h3>
+            <p>The NYC Facilities Explorer and Capital Planning Platform are built in-house by the Capital Planning team at the Department of City Planning. We use free and open source software, as well as low-cost web services, to enable rapid prototyping and deployment of technology with a small, nimble team of developers, and to facilitate collaborative environment for technology development. Our technology is an ever-evolving work in progress, and we are always interested in partnering with civic-minded technologists to improve this technology and advance its adoption, so please drop us a line at <b><a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a></b>.</p>
+
+            <p><b>Web Mapping Technology.</b> We use a self-hosted Carto server that provides read-only access to our bulk spatial data, and serves up vector tiles, shapefiles, CSVs geojson, and json on-demand.  We use the MapboxGL.js library to control data styling, layering and camera views, providing a rich visual experience for exploring NYC&quot;s spatial open datasets.</p>
+
+            <p><b>React and React-Router.</b> The Capital Planning Platform is a Single Page Application (SPA), with all routing and business logic handled in the client, with calls to various web APIs for content and data as needed.  React.js provides a component-based approach to web development, allowing for tightly-coupled HTML and javascript that can be composed and easily re-used throughout the platform.</p>
+
+            <p><b>Third Party Services.</b> With a small development team and limited budget, we chose to make use of inexpensive third-party services for key parts of the stack, rather than building and maintaining them on our own.  These include Github for version control and issue tracking, Waffle for team collaboration and issue prioritization, Codeship for continuous integration, and Auth0 for authentication and authorization.</p>
+
+            <p><b>Jane Maps - A framework for rich, composable web maps using React and MapboxGL</b> Through the course of the development of the platform, we saw a need for a frontend web mapping framework that could combine map data symbology and rendering with custom User Interfaces and Multi-Layering capabilities.  Jane Maps allows us to quickly compose MapboxGL maps with modular layer configurations that include UI such as filtering, downloads, &quot;about&quot; panes, and more.   By taking advantage of React&quot;s built-in lifecycle methods, Jane acts as a map controller, adding, manipulating, and removing sources and layers from a MapboxGL map in our site.  It also handles location search, interactivity, and legends.  See <a href="https://github.com/NYCPlanning/jane-maps">the Jane Maps repo on Github</a> for more information.  Pull Requests are welcomed!</p>
+
+            <p>We call it Jane in honor of Jane Jacobs; we hope it helps provide a new way of looking at cities and neighborhoods, just as she did.</p>
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>Thanks</h3>
+            <p>The Capital Planning team – including Danny Fuchs (Director), Chris Whong, Hannah Kates, Amanda Doyle, Simon Mettler, Neera Chatterjee, and Jessica Mathew – express our deepest thanks to the amazing staff of the Department of City Planning for their support in the development of the Capital Planning Platform and NYC Facilities Explorer, including CIO Hassan Adekoya and COO Jon Kaufman, as well as former Director Carl Weisbrod, who brought Capital Planning back to the Department. Additional thanks to our interns Jonathan Pichot, Ian Stuart, and Ben Miller.</p>
+
+            <p>This database and explorer would not be possible if it weren’t for the incredible work of dozens of City, State, and Federal agencies who develop the source datasets that are the basis for this map. Particular thanks goes to those agencies who publish their data on open data portals.</p>
+
+            <p>Additional specific thanks goes to a broad array of people who have helped consult on the development of the Capital Planning Platform and Jane Maps, including Kristi Brown, Paul Ramsey, Tim Wisniewski, Chase Gilliam, Richard Dunks, Bill Hunt, Ariel Kennan, Tom Johnson, Dave Riordan, Matt Gardner, Mark Headd, Lauren Ellsworth, Steve Romalewski, the team at Stamen, and many more.</p>
+          </Paper>
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+const AboutFacilities = () => (
+  <div className="fluid-content">
+    <div className="about-page container">
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
             <h3>What is the NYC Facilities Explorer?</h3>
             <p>The New York City Department of City Planning aggregates information about facilities and program sites that are owned, operated, funded, licensed or certified by a City, State, or Federal agency in the City of New York into a central database called the City Planning Facilities Database. These facilities generally help to shape quality of life in the city’s neighborhoods, and this dataset is the basis for a series of planning activities.</p>
 
@@ -142,4 +210,140 @@ const About = () => (
   </div>
 );
 
-module.exports = About;
+const AboutPipeline = () => (
+  <div className="fluid-content">
+    <div className="about-page container">
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>What is the Capital Planning Platform?</h3>
+            <p>The Capital Planning Platform is a new resource for collaborative planning, powered by open data and open source technology.</p>
+
+            <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
+
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+
+            <ul type={'disc'}>
+              <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
+              <li><b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b> - Extensive land use and geographic data at the tax lot level in multiple formats.</li>
+              <li><b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b> – ZoLA provides a simple way to research zoning regulations in New York City.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b> - This interactive map identifies and provides information about New York City’s inventory of publicly-accessible waterfront spaces.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
+            </ul>
+
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>About the Technology</h3>
+            <p>The NYC Facilities Explorer and Capital Planning Platform are built in-house by the Capital Planning team at the Department of City Planning. We use free and open source software, as well as low-cost web services, to enable rapid prototyping and deployment of technology with a small, nimble team of developers, and to facilitate collaborative environment for technology development. Our technology is an ever-evolving work in progress, and we are always interested in partnering with civic-minded technologists to improve this technology and advance its adoption, so please drop us a line at <b><a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a></b>.</p>
+
+            <p><b>Web Mapping Technology.</b> We use a self-hosted Carto server that provides read-only access to our bulk spatial data, and serves up vector tiles, shapefiles, CSVs geojson, and json on-demand.  We use the MapboxGL.js library to control data styling, layering and camera views, providing a rich visual experience for exploring NYC&quot;s spatial open datasets.</p>
+
+            <p><b>React and React-Router.</b> The Capital Planning Platform is a Single Page Application (SPA), with all routing and business logic handled in the client, with calls to various web APIs for content and data as needed.  React.js provides a component-based approach to web development, allowing for tightly-coupled HTML and javascript that can be composed and easily re-used throughout the platform.</p>
+
+            <p><b>Third Party Services.</b> With a small development team and limited budget, we chose to make use of inexpensive third-party services for key parts of the stack, rather than building and maintaining them on our own.  These include Github for version control and issue tracking, Waffle for team collaboration and issue prioritization, Codeship for continuous integration, and Auth0 for authentication and authorization.</p>
+
+            <p><b>Jane Maps - A framework for rich, composable web maps using React and MapboxGL</b> Through the course of the development of the platform, we saw a need for a frontend web mapping framework that could combine map data symbology and rendering with custom User Interfaces and Multi-Layering capabilities.  Jane Maps allows us to quickly compose MapboxGL maps with modular layer configurations that include UI such as filtering, downloads, &quot;about&quot; panes, and more.   By taking advantage of React&quot;s built-in lifecycle methods, Jane acts as a map controller, adding, manipulating, and removing sources and layers from a MapboxGL map in our site.  It also handles location search, interactivity, and legends.  See <a href="https://github.com/NYCPlanning/jane-maps">the Jane Maps repo on Github</a> for more information.  Pull Requests are welcomed!</p>
+
+            <p>We call it Jane in honor of Jane Jacobs; we hope it helps provide a new way of looking at cities and neighborhoods, just as she did.</p>
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>Thanks</h3>
+            <p>The Capital Planning team – including Danny Fuchs (Director), Chris Whong, Hannah Kates, Amanda Doyle, Simon Mettler, Neera Chatterjee, and Jessica Mathew – express our deepest thanks to the amazing staff of the Department of City Planning for their support in the development of the Capital Planning Platform and NYC Facilities Explorer, including CIO Hassan Adekoya and COO Jon Kaufman, as well as former Director Carl Weisbrod, who brought Capital Planning back to the Department. Additional thanks to our interns Jonathan Pichot, Ian Stuart, and Ben Miller.</p>
+
+            <p>This database and explorer would not be possible if it weren’t for the incredible work of dozens of City, State, and Federal agencies who develop the source datasets that are the basis for this map. Particular thanks goes to those agencies who publish their data on open data portals.</p>
+
+            <p>Additional specific thanks goes to a broad array of people who have helped consult on the development of the Capital Planning Platform and Jane Maps, including Kristi Brown, Paul Ramsey, Tim Wisniewski, Chase Gilliam, Richard Dunks, Bill Hunt, Ariel Kennan, Tom Johnson, Dave Riordan, Matt Gardner, Mark Headd, Lauren Ellsworth, Steve Romalewski, the team at Stamen, and many more.</p>
+          </Paper>
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+const AboutCapitalProjects = () => (
+  <div className="fluid-content">
+    <div className="about-page container">
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>What is the Capital Planning Platform?</h3>
+            <p>The Capital Planning Platform is a new resource for collaborative planning, powered by open data and open source technology.</p>
+
+            <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
+
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+
+            <ul type={'disc'}>
+              <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
+              <li><b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b> - Extensive land use and geographic data at the tax lot level in multiple formats.</li>
+              <li><b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b> – ZoLA provides a simple way to research zoning regulations in New York City.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b> - This interactive map identifies and provides information about New York City’s inventory of publicly-accessible waterfront spaces.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
+            </ul>
+
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>About the Technology</h3>
+            <p>The NYC Facilities Explorer and Capital Planning Platform are built in-house by the Capital Planning team at the Department of City Planning. We use free and open source software, as well as low-cost web services, to enable rapid prototyping and deployment of technology with a small, nimble team of developers, and to facilitate collaborative environment for technology development. Our technology is an ever-evolving work in progress, and we are always interested in partnering with civic-minded technologists to improve this technology and advance its adoption, so please drop us a line at <b><a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a></b>.</p>
+
+            <p><b>Web Mapping Technology.</b> We use a self-hosted Carto server that provides read-only access to our bulk spatial data, and serves up vector tiles, shapefiles, CSVs geojson, and json on-demand.  We use the MapboxGL.js library to control data styling, layering and camera views, providing a rich visual experience for exploring NYC&quot;s spatial open datasets.</p>
+
+            <p><b>React and React-Router.</b> The Capital Planning Platform is a Single Page Application (SPA), with all routing and business logic handled in the client, with calls to various web APIs for content and data as needed.  React.js provides a component-based approach to web development, allowing for tightly-coupled HTML and javascript that can be composed and easily re-used throughout the platform.</p>
+
+            <p><b>Third Party Services.</b> With a small development team and limited budget, we chose to make use of inexpensive third-party services for key parts of the stack, rather than building and maintaining them on our own.  These include Github for version control and issue tracking, Waffle for team collaboration and issue prioritization, Codeship for continuous integration, and Auth0 for authentication and authorization.</p>
+
+            <p><b>Jane Maps - A framework for rich, composable web maps using React and MapboxGL</b> Through the course of the development of the platform, we saw a need for a frontend web mapping framework that could combine map data symbology and rendering with custom User Interfaces and Multi-Layering capabilities.  Jane Maps allows us to quickly compose MapboxGL maps with modular layer configurations that include UI such as filtering, downloads, &quot;about&quot; panes, and more.   By taking advantage of React&quot;s built-in lifecycle methods, Jane acts as a map controller, adding, manipulating, and removing sources and layers from a MapboxGL map in our site.  It also handles location search, interactivity, and legends.  See <a href="https://github.com/NYCPlanning/jane-maps">the Jane Maps repo on Github</a> for more information.  Pull Requests are welcomed!</p>
+
+            <p>We call it Jane in honor of Jane Jacobs; we hope it helps provide a new way of looking at cities and neighborhoods, just as she did.</p>
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>Thanks</h3>
+            <p>The Capital Planning team – including Danny Fuchs (Director), Chris Whong, Hannah Kates, Amanda Doyle, Simon Mettler, Neera Chatterjee, and Jessica Mathew – express our deepest thanks to the amazing staff of the Department of City Planning for their support in the development of the Capital Planning Platform and NYC Facilities Explorer, including CIO Hassan Adekoya and COO Jon Kaufman, as well as former Director Carl Weisbrod, who brought Capital Planning back to the Department. Additional thanks to our interns Jonathan Pichot, Ian Stuart, and Ben Miller.</p>
+
+            <p>This database and explorer would not be possible if it weren’t for the incredible work of dozens of City, State, and Federal agencies who develop the source datasets that are the basis for this map. Particular thanks goes to those agencies who publish their data on open data portals.</p>
+
+            <p>Additional specific thanks goes to a broad array of people who have helped consult on the development of the Capital Planning Platform and Jane Maps, including Kristi Brown, Paul Ramsey, Tim Wisniewski, Chase Gilliam, Richard Dunks, Bill Hunt, Ariel Kennan, Tom Johnson, Dave Riordan, Matt Gardner, Mark Headd, Lauren Ellsworth, Steve Romalewski, the team at Stamen, and many more.</p>
+          </Paper>
+        </div>
+      </div>
+    </div>
+    <Footer />
+  </div>
+);
+
+module.exports = { About, AboutFacilities, AboutPipeline, AboutCapitalProjects };

@@ -6,7 +6,7 @@ import AuthService from './helpers/AuthService';
 import Login from '../app/pages/Login';
 
 import HomePage from '../app/pages/HomePage';
-import About from '../app/pages/About';
+import { About, AboutFacilities, AboutPipeline, AboutCapitalProjects } from '../app/pages/About';
 
 import FacilitiesLanding from '../app/facilities/LandingPage';
 import FacilitiesExplorer from '../app/facilities/Explorer';
@@ -66,19 +66,22 @@ module.exports = (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="about" component={About} title={'About'} />
+    <Route path="about/facilities" component={AboutFacilities} title={'About'} />
+    <Route path="about/pipeline" component={AboutPipeline} title={'About'} />
+    <Route path="about/capitalprojects" component={AboutCapitalProjects} title={'About'} />
 
-    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} />
-    <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} />
-    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} />
+    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
+    <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
+    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} />
 
     <Redirect from="pipeline" to="pipeline/explorer" />
-    <Route path="pipeline/explorer" component={PipelineExplorer} title={'Housing Development Pipeline'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="pipeline/explorer" component={PipelineExplorer} title={'Housing Development Pipeline'} about={'/about/pipeline'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} about={'/about/pipeline'} onEnter={confirmPermissions('sitewide_access')} />
 
-    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalprojects/explorer" component={CapitalProjectsExplorer} title={'Capital Projects Explorer'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects Explorer'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="capitalprojects/explorer" component={CapitalProjectsExplorer} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
 
     <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} onEnter={confirmPermissions('sitewide_access')} />
 
