@@ -64,8 +64,8 @@ const ProjectPage = React.createClass({
 
     const tableRows = this.state.commitments.map(c => (
 
-      <TableRow key={`${c.costdescription}-${c.plancommdate}`}>
-        <TableRowColumn>{c.costdescription}</TableRowColumn>
+      <TableRow key={`${c.commitmentdescription}-${c.plancommdate}`}>
+        <TableRowColumn>{c.commitmentdescription}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
