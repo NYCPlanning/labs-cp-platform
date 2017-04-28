@@ -24,7 +24,7 @@ const About = () => (
 
             <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
 
-            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://www1.nyc.gov/site/planning/index.page">DCP&quot;s website</a></b>.</p>
 
             <ul type={'disc'}>
               <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
@@ -81,6 +81,30 @@ const About = () => (
 const AboutFacilities = () => (
   <div className="fluid-content">
     <div className="about-page container">
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>What is the Capital Planning Platform?</h3>
+            <p>The Capital Planning Platform is a new resource for collaborative planning, powered by open data and open source technology.</p>
+
+            <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
+
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://www1.nyc.gov/site/planning/index.page">DCP&quot;s website</a></b>.</p>
+
+            <ul type={'disc'}>
+              <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
+              <li><b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b> - Extensive land use and geographic data at the tax lot level in multiple formats.</li>
+              <li><b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b> – ZoLA provides a simple way to research zoning regulations in New York City.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b> - This interactive map identifies and provides information about New York City’s inventory of publicly-accessible waterfront spaces.</li>
+              <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
+            </ul>
+
+          </Paper>
+        </div>
+      </div>
       <div className="row">
         <div className="col-lg-12">
           <Paper
@@ -151,30 +175,6 @@ const AboutFacilities = () => (
             style={paperStyle}
             zDepth={1}
           >
-            <h3>What is the Capital Planning Platform?</h3>
-            <p>The Capital Planning Platform is a new resource for collaborative planning, powered by open data and open source technology.</p>
-
-            <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
-
-            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
-
-            <ul type={'disc'}>
-              <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
-              <li><b><a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a></b> - Extensive land use and geographic data at the tax lot level in multiple formats.</li>
-              <li><b><a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a></b> – ZoLA provides a simple way to research zoning regulations in New York City.</li>
-              <li><b><a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a></b> - This interactive map identifies and provides information about New York City’s inventory of publicly-accessible waterfront spaces.</li>
-              <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
-            </ul>
-
-          </Paper>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-lg-12">
-          <Paper
-            style={paperStyle}
-            zDepth={1}
-          >
             <h3>About the Technology</h3>
             <p>The NYC Facilities Explorer and Capital Planning Platform are built in-house by the Capital Planning team at the Department of City Planning. We use free and open source software, as well as low-cost web services, to enable rapid prototyping and deployment of technology with a small, nimble team of developers, and to facilitate collaborative environment for technology development. Our technology is an ever-evolving work in progress, and we are always interested in partnering with civic-minded technologists to improve this technology and advance its adoption, so please drop us a line at <b><a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a></b>.</p>
 
@@ -224,7 +224,7 @@ const AboutPipeline = () => (
 
             <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
 
-            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://www1.nyc.gov/site/planning/index.page">DCP&quot;s website</a></b>.</p>
 
             <ul type={'disc'}>
               <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
@@ -292,7 +292,7 @@ const AboutCapitalProjects = () => (
 
             <p>The New York City Department of City Planning pioneered open data with <b><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple</a></b> a decade ago. With the creation of the DCP&quot;s Capital Planning Division in 2014, we envisioned a new civic technology resource: the Capital Planning Platform - a place for planners to access the maps, data, and analytics that they need to plan for public investments in neighborhoods and collaborate with one another. The NYC Facilities Explorer (beta) is a first step in building this vision. Over the months and years to come, we plan to add more map layers, new and improved datasets, and new analysis tools to this mapping platform to help automate a broad array of planning analyses and make the capital planning process more efficient, coordinated, and strategic across the public and private sectors in New York City.</p>
 
-            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://maps.nyc.gov/census/">DCP&quot;s website</a></b>.</p>
+            <p>The Capital Planning Platform complements other data and maps that DCP produces. We also encourage users to explore the following resources, among others, on <b><a href="http://www1.nyc.gov/site/planning/index.page">DCP&quot;s website</a></b>.</p>
 
             <ul type={'disc'}>
               <li><b><a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a></b> - An interactive tool for creating demographic, social, economic, and housing profiles for neighborhoods and user-defined groupings of Census tracts.</li>
@@ -302,6 +302,45 @@ const AboutCapitalProjects = () => (
               <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
             </ul>
 
+          </Paper>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <Paper
+            style={paperStyle}
+            zDepth={1}
+          >
+            <h3>What is the NYC Capital Projects Explorer?</h3>
+
+            <p>This explorer is a resource provided by DCP primarily created from data published by other City agencies.  The main purpose of this tool is to be a starting point for exploring potential, planned, and ongoing capital projects to better understand and communicate New York City’s capital project portfolio within and across particular agencies.  This integrated view provides a broad understanding of what projects are taking place within a certain area, and opportunities for strategic neighborhood planning.</p>
+
+            <p><b>Where the data come from</b></p>
+            <p>The majority of data points captured within DCP’s Capital Projects Database are derived from the <b><a href="http://www1.nyc.gov/site/omb/publications/finplan01-17.page">Capital Commitment Plan</a></b> published by OMB, which contains planned commitments to ongoing or potential future capital projects. Supporting data are obtained from <b><a href="http://www.checkbooknyc.com/spending_landing/category/3/yeartype/B/year/118?expandBottomCont=true">Checkbook NYC</a></b>, a resource provided by the Comptroller.  Spatial data are derived from but not limited to data created and published by <b><a href="http://maps.nyc.gov/doitt/nycitymap/">DDC</a></b>, <b><a href="http://dotgisiis01.dot.nycnet/FCPM_10yr_Plan/#18/40.74288/-73.91130">DOT</a></b>, <b><a href="https://www.nycgovparks.org/planning-and-building/capital-project-tracker">DPR</a></b>, <b><a href="https://maps.nyc.gov/resiliency/">ORR</a></b>, and DCP.</p>
+
+            <p><b>How you can use it</b></p>
+            <p>The table view of Capital Projects Database can reliably be used to quickly and easily explore and learn about ongoing and planned capital projects published in the Capital Commitment Plan.  The map view of the Capital Projects Database can be used as a starting point for knowing and reporting what capital projects are taking place and where, and identifying any synergies or conflicts among projects.</p>
+
+            <p>These resources can be used as a starting point to answer questions such as:</p>
+            <ul type={'disc'}>
+              <li>What projects are happening in a neighborhood or council district?</li>
+              <li>What other agencies’ projects might impact another project’s funding or schedule?</li>
+              <li>What capital investments are being made in growing neighborhoods?</li>
+              <li>Are there geographically specific lump sums that can be tapped into?</li>
+              <li>What are the most expensive projects in the City?</li>
+            </ul>
+
+            <p><b>Limitations</b></p>
+            <ul type={'disc'}>
+              <li>This is not a project management system, so data on project timeline or budget may be incorrect</li>
+              <li>All monies committed to or spent on a project may not be captured</li>
+              <li>Planned projects that may never come to fruition are captured</li>
+              <li>The spatial data are not 100% reliable, accurate, or exhaustive</li>
+            </ul>
+            <p>As a result of these limitations and inconsistencies, the Capital Projects Map is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses, - it is built for planning coordination and information purposes only.  Please consult NYC Planning’s <b><a href="http://docs.capitalplanning.nyc/cpdb/">Capital Planning Docs</a></b> for more details about the limitations.</p>
+
+            <p><b>Interested in more?</b></p>
+            <p>We’re continuously working to improve the Capital Projects Explorer to make it as valuable of a resource as possible.  Currently, we’re partnering with other City agencies to improve how we map capital projects to increase the reliability of the spatial data.  If you have any ideas on how to improve this resource please share any suggestions with the team, or contact us directly if you’re interested in partnering with us.</p>
           </Paper>
         </div>
       </div>

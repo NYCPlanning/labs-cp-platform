@@ -66,9 +66,9 @@ module.exports = (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="about" component={About} title={'About'} />
-    <Route path="about/facilities" component={AboutFacilities} title={'About'} />
-    <Route path="about/pipeline" component={AboutPipeline} title={'About'} />
-    <Route path="about/capitalprojects" component={AboutCapitalProjects} title={'About'} />
+    <Route path="about/facilities" component={AboutFacilities} title={'About'} about={'/about/facilities'} />
+    <Route path="about/pipeline" component={AboutPipeline} title={'About'} about={'/about/pipeline'} />
+    <Route path="about/capitalprojects" component={AboutCapitalProjects} title={'About'} about={'/about/capitalprojects'} />
 
     <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
@@ -89,5 +89,6 @@ module.exports = (
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="notfound" component={NotFound} />
     <Route path="*" onEnter={rerouteNotFound} />
+    <Route path="about/*" onEnter={rerouteNotFound} />
   </Route>
 );
