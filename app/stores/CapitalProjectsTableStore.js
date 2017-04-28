@@ -23,7 +23,7 @@ class CapitalProjectsTableStore extends EventsEmitter {
 
     this.sqlConfig = {
       columns: 'magency, magencyacro, sagencyacro, maprojid, description, totalcommit, totalspend, projecttype',
-      tableName: 'cpdb_map_combined',
+      tableName: 'cpdb_projects_combined',
       commitmentsTableName: 'cpdb_commitments',
     };
     // this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tableName);
