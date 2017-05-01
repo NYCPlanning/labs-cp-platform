@@ -1,7 +1,6 @@
 // PipeLineExplorer.jsx - Top level Component for the Pipeline Explorer Map
 import React from 'react';
-import Jane from 'jane-maps';
-import JaneLayer from 'jane-maps/dist/JaneLayer';
+import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
 import supportingLayers from '../janelayers/supportingLayers';

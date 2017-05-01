@@ -1,19 +1,12 @@
 import React, { PropTypes } from 'react';
-
 import { Jane, JaneLayer } from 'jane-maps';
-
-console.log('JANEMAPS', Jane, JaneLayer);
-
-import FacilitiesComponent from './janelayer/Component';
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
-
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
-
+import FacilitiesComponent from './janelayer/Component';
 import supportingLayers from '../janelayers/supportingLayers';
-
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
@@ -88,7 +81,6 @@ const FacilitiesExplorer = React.createClass({
   },
 
   render() {
-    console.log(Jane, JaneLayer);
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
 
