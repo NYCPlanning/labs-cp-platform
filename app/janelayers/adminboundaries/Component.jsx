@@ -18,8 +18,6 @@ const AdminBoundaries = React.createClass({
   },
 
   getInitialState() {
-    if (this.props.layer.initialState) return this.props.layer.initialState;
-
     return ({
       value: 'cd',
     });

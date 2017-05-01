@@ -113,22 +113,16 @@ const FacilitiesExplorer = React.createClass({
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
-          <JaneLayer
-            {...supportingLayers.aerials}
-          />
-          <JaneLayer
-            {...supportingLayers.adminboundaries}
-          />
-          <JaneLayer
-            {...supportingLayers.transportation}
-          />
+          {supportingLayers.aerials}
+          {supportingLayers.adminboundaries}
+          {supportingLayers.transportation}
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"
             icon="university"
             onMapLayerClick={this.handleMapLayerClick}
-            visible
             selected
+            visible
           >
             <FacilitiesComponent />
           </JaneLayer>
