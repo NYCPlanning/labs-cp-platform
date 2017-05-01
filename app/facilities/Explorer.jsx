@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import Jane from 'jane-maps';
-import JaneLayer from 'jane-maps/dist/JaneLayer';
+import { Jane, JaneLayer } from 'jane-maps';
+
+console.log('JANEMAPS', Jane, JaneLayer);
 
 import FacilitiesComponent from './janelayer/Component';
 
@@ -87,6 +88,7 @@ const FacilitiesExplorer = React.createClass({
   },
 
   render() {
+    console.log(Jane, JaneLayer);
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
 

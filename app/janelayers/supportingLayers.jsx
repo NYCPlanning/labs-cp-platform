@@ -1,5 +1,5 @@
 import React from 'react';
-import JaneLayer from 'jane-maps/dist/JaneLayer';
+import { JaneLayer } from 'jane-maps';
 import appConfig from '../helpers/appConfig';
 
 import TransportationComponent from './transportation/Component';
