@@ -69,7 +69,7 @@ const ProjectPage = React.createClass({
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
-        <TableRowColumn>{moment(c.plancommdate, 'YY-MMM').format('MMM YYYY')}</TableRowColumn>
+        <TableRowColumn>{moment(c.plancommdate, 'MM/YY').format('MMM YYYY')}</TableRowColumn>
         {/* eslint-enable no-undef */}
       </TableRow>
     ));

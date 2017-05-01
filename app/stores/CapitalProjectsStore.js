@@ -113,6 +113,11 @@ class CapitalProjectsStore extends EventsEmitter {
     this.updateSql();
   }
 
+  setSelectedFeatures(features) {
+    this.selectedFeatures = features;
+    this.emit('selectedFeaturesUpdated');
+  }
+
   // update the sql, get counts, and emit an event
   updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
@@ -141,6 +146,11 @@ class CapitalProjectsStore extends EventsEmitter {
 
       case 'CAPTIALPROJECTS_RESET_FILTER': {
         this.resetFilter();
+        break;
+      }
+
+      case 'CAPTIALPROJECTS_SET_SELECTED_FEATURES': {
+        this.setSelectedFeatures(action.features);
         break;
       }
 

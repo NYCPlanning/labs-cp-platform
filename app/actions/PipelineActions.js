@@ -28,6 +28,13 @@ const PipelineActions = {
       type: 'PIPELINE_RESET_FILTER',
     });
   },
+
+  setSelectedFeatures(features) {
+    dispatcher.dispatch({
+      type: 'PIPELINE_SET_SELECTED_FEATURES',
+      features,
+    });
+  },
 };
 
 export default PipelineActions;

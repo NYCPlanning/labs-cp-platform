@@ -6,8 +6,7 @@
 import React from 'react';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import Jane from 'jane-maps';
-import JaneLayer from 'jane-maps/dist/JaneLayer';
+import { Jane, JaneLayer } from 'jane-maps';
 
 import supportingLayers from '../janelayers/supportingLayers';
 import appConfig from '../helpers/appConfig';
@@ -105,22 +104,9 @@ const ModalMap = React.createClass({
           poiLabel={geometry.type === 'Point' ? this.props.label : null}
           ref={x => (this.janeMap = x)}
         >
-          {
-            geometry.type === 'Point' &&
-              <JaneLayer
-                {...supportingLayers.travelshed}
-                initialState={{ feature: this.props.feature }}
-              />
-          }
-          <JaneLayer
-            {...supportingLayers.aerials}
-          />
-          <JaneLayer
-            {...supportingLayers.adminboundaries}
-          />
-          <JaneLayer
-            {...supportingLayers.transportation}
-          />
+          {supportingLayers.aerials}
+          {supportingLayers.adminboundaries}
+          {supportingLayers.transportation}
           {PolygonJaneLayer}
         </Jane>
       </div>
