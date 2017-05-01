@@ -8,6 +8,7 @@ import PipelineActions from '../actions/PipelineActions';
 import PipelineStore from '../stores/PipelineStore';
 
 import RangeSlider from '../common/RangeSlider';
+import RangeInputs from '../common/RangeInputs';
 import InfoIcon from '../common/InfoIcon';
 
 import './LayerSelector.scss';
@@ -47,15 +48,7 @@ const LayerSelector = React.createClass({
   },
 
   handleSliderChange(dimension, data) {
-    // expects the data output from the ionRangeSlider
-    // updates state with an array of the filter range
-
-    // // update the manual input elements
-    // if (dimension === 'dcp_units_use_map') {
-    //   this.unitsMin.value = data.from;
-    //   this.unitsMax.value = data.to;
-    // }
-
+    console.log(data)
     PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
   },
 
@@ -105,13 +98,6 @@ const LayerSelector = React.createClass({
         />
       );
     };
-
-    // the manual inputs are not react-based, so this makes sure their values reflect the slider
-    // if is necessary because this.unitsMin is a ref and does not exist until after the first render
-    if (this.unitsMin) {
-      this.unitsMin.value = filterDimensions.dcp_units_use_map.values[0];
-      this.unitsMax.value = filterDimensions.dcp_units_use_map.values[1];
-    }
 
     return (
       <div className="sidebar-tab-content pipeline-layer-selector">
@@ -183,22 +169,10 @@ const LayerSelector = React.createClass({
             disabled
             style={listItemStyle}
           >
-            <form className="manual-input" onSubmit={this.handleInputChange}>
-              <input
-                type="text"
-                className="form-control mb-2 mr-sm-2 mb-sm-0"
-                defaultValue={filterDimensions.dcp_units_use_map.values[1]}
-                ref={(unitsMin) => { this.unitsMin = unitsMin; }}
-              />
-              <input
-                type="text"
-                style={{ float: 'right' }}
-                className="form-control mb-2 mr-sm-2 mb-sm-0"
-                defaultValue={filterDimensions.dcp_units_use_map.values[1]}
-                ref={(unitsMax) => { this.unitsMax = unitsMax; }}
-              />
-              <input type="submit" value="Submit" />
-            </form>
+            <RangeInputs
+              data={filterDimensions.dcp_units_use_map.values}
+              onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
+            />
             <RangeSlider
               data={filterDimensions.dcp_units_use_map.values}
               type={'double'}
