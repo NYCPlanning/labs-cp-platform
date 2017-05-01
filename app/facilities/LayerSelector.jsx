@@ -17,9 +17,6 @@ import FacilitiesStore from '../stores/FacilitiesStore';
 import './LayerSelector.scss';
 
 const LayerSelector = React.createClass({
-  propTypes: {
-    updateSQL: PropTypes.func.isRequired,
-  },
 
   getDefaultProps() {
     return {

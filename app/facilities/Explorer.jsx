@@ -129,8 +129,9 @@ const FacilitiesExplorer = React.createClass({
             onMapLayerClick={this.handleMapLayerClick}
             visible
             selected
-            component={FacilitiesComponent}
-          />
+          >
+            <FacilitiesComponent />
+          </JaneLayer>
         </Jane>
         { selectedFeaturesPane }
       </div>

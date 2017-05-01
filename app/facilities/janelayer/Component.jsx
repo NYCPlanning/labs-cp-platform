@@ -90,11 +90,7 @@ const Facilities = React.createClass({
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector
-            layers={this.props.layer.initialState && this.props.layer.initialState.layers}
-            filterDimensions={this.props.layer.initialState && this.props.layer.initialState.filterDimensions}
-            updateSQL={this.updateLayerConfig}
-          />
+          <LayerSelector />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content ">
