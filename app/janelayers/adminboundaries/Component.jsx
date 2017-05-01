@@ -7,13 +7,12 @@ import defaultLayerConfig from './defaultLayerConfig';
 
 const AdminBoundaries = React.createClass({
   propTypes: {
-    onUpdate: PropTypes.func.isRequired,
-    layer: PropTypes.object.isRequired,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {
     return {
-      context: null,
+      onUpdate: () => {},
     };
   },
 

@@ -2,7 +2,7 @@
 
 /* eslint-disable react/no-multi-comp */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 

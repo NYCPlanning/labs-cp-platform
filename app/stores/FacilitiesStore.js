@@ -168,7 +168,6 @@ class FacilitiesStore extends EventsEmitter {
   }
 
   setSelectedFeatures(features) {
-    console.log(features)
     this.selectedFeatures = features;
     this.emit('selectedFeaturesUpdated');
   }

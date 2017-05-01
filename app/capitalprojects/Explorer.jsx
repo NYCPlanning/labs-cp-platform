@@ -23,15 +23,9 @@ const CapitalProjectsExplorer = () => (
       search
       searchConfig={searchConfig}
     >
-      <JaneLayer
-        {...supportingLayers.aerials}
-      />
-      <JaneLayer
-        {...supportingLayers.adminboundaries}
-      />
-      <JaneLayer
-        {...supportingLayers.transportation}
-      />
+      {supportingLayers.aerials}
+      {supportingLayers.adminboundaries}
+      {supportingLayers.transportation}
       <JaneLayer
         id="capital-projects"
         name="Capital Projects"
@@ -39,9 +33,9 @@ const CapitalProjectsExplorer = () => (
         interactivityMapLayers={['capital-projects-points', 'capital-projects-polygons']}
         visible
         selected
-        component={CapitalProjectsComponent}
-        listItem={CapitalProjectsListItem}
-      />
+      >
+        <CapitalProjectsComponent />
+      </JaneLayer>
     </Jane>
   </div>
 );

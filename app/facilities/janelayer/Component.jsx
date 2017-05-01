@@ -11,8 +11,13 @@ import FacilitiesStore from '../../stores/FacilitiesStore';
 
 const Facilities = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func.isRequired,
-    layer: React.PropTypes.object.isRequired,
+    onUpdate: React.PropTypes.func,
+  },
+
+  getDefaultProps() {
+    return {
+      onUpdate: () => {},
+    };
   },
 
   getInitialState() {
