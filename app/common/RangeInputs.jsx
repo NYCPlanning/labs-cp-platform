@@ -22,14 +22,18 @@ const RangeInputs = React.createClass({
     if (nextProps.data[1] !== this.props.data[1]) this.max.value = prettify(nextProps.data[1]);
   },
 
-  updateMin() {
+  updateMin(e) {
+    e.preventDefault();
+
     this.props.onChange({
       from: this.min.value,
       to: this.props.data[1],
     });
   },
 
-  updateMax() {
+  updateMax(e) {
+    e.preventDefault();
+
     this.props.onChange({
       from: this.props.data[0],
       to: this.max.value,
