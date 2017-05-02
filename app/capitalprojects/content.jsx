@@ -4,20 +4,24 @@ exports.about = (
   <div>
     <h4>Product Overview</h4>
     <p>
-      The Capital Projects Explorer’s primary purpose is to provide a common operational picture to capital planners and budget staff across City agencies, which can in turn minimize conflicts among different agencies’ capital projects, maximize opportunities for coordinated capital investment planning and funding alignment, and provide a starting point for integrated neighborhood-based planning.
-    </p>
+  <b>The Capital Project Table</b> is a way to quickly and easily explore and learn about ongoing and planned capital projects within in the most recent Capital Commitment Plan published by OMB.  It’s main purpose is to be a starting point for exploring potential, planned, and ongoing capital projects to better understand and communicate New York City’s capital project portfolio within and across particular agencies.
+  </p>
+  <p>
+  <b>The Capital Project Map’s</b> main purpose is to be a starting point for exploring potential, planned, and ongoing capital projects to better understand and communicate New York City’s capital project portfolio within and across particular agencies. This integrated view provides a broad understanding of what projects are taking place within a certain area, and opportunities for strategic neighborhood planning.
+  </p>
 
     <h4>Limitations and Disclaimers</h4>
-    <p>
-      The Capital Projects Explorer is only as good as the source data it aggregates.  Currently, there is no data standard for capital project mapping and agencies are not required to map their capital projects; therefore, the Capital Projects Explorer makes some assumptions to aggregate and normalize the data into one data table.
-      As a result of these limitations and inconsistencies, the Capital Projects Explorer is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses - it is <strong>built for planning coordination purposes only</strong>.
-    </p>
-    <p>
-      Please consult <a href="http://docs.capitalplanning.nyc/cpdb/" target="_blank" rel="noreferrer noopener">NYC Planning’s Capital Planning Docs</a> for more details about these data limitations.
+    
+    <li>This is not a project management system, so data on project timeline or budget may be incorrect</li>
+    <li>All monies committed to or spent on a project may not be captured</li>
+    <li>Planned projects that may never come to fruition are captured</li>
+    <li>The spatial data are not 100% reliable, accurate, or exhaustive</li>
+    <p> 
+    As a result of these limitations and inconsistencies, the Capital Projects Map is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses, - it is built for planning coordination and information purposes only.  Please consult <a href="http://docs.capitalplanning.nyc/cpdb/" target="_blank" rel="noreferrer noopener">NYC Planning’s Capital Planning Docs</a> for more details about the limitations.
     </p>
     <h4>Feedback</h4>
     <p>
-      We are constantly looking for ways to improve this product. <a href="http://docs.google.com/forms/d/e/1FAIpQLSffdzVSCRmMQhGn32Z6bDnBEKPXJw20m6CkDMeco-z4B1FcNQ/viewform">Please share your feedback and suggestions </a> with Capital Planning.
+  We are constantly looking for ways to improve this product.  Please <a href="mailto:capital@planning.nyc.gov">share your feedback and suggestions</a> with Capital Planning.
     </p>
   </div>
 );
