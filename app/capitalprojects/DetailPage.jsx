@@ -62,10 +62,12 @@ const ProjectPage = React.createClass({
       height: '100%',
     };
 
+    console.log(this.state.commitments);
     const tableRows = this.state.commitments.map(c => (
 
-      <TableRow key={`${c.commitmentdescription}-${c.plancommdate}`}>
+      <TableRow key={c.cartodb_id}>
         <TableRowColumn>{c.commitmentdescription}</TableRowColumn>
+        <TableRowColumn>{c.commitmentcode}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
@@ -73,6 +75,7 @@ const ProjectPage = React.createClass({
         {/* eslint-enable no-undef */}
       </TableRow>
     ));
+
 
     const geometryExists = this.state.data.geometry !== null;
 
@@ -140,7 +143,7 @@ const ProjectPage = React.createClass({
                 <CardHeader title="Committed" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalcommit)}</h2>
-                  <p className="subtext">committed as of Oct 2016</p>
+                  <p className="subtext">committed as of April 2017</p>
                 </CardText>
               </Card>
             </div>
@@ -183,6 +186,7 @@ const ProjectPage = React.createClass({
                     >
                       <TableRow>
                         <TableHeaderColumn>Cost Description</TableHeaderColumn>
+                        <TableHeaderColumn>Cost Code</TableHeaderColumn>
                         <TableHeaderColumn>Budget Line</TableHeaderColumn>
                         <TableHeaderColumn>Total Cost</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>
