@@ -370,3 +370,24 @@ body:after {
     display: none;
   }
 }
+
+/* Implement right-side drawer outside of Jane */
+.selected-features {
+  width: 335px;
+  right: 0;
+  top: 9px;
+  height: auto;
+  position: absolute;
+  background: hsla(0,0%,100%,.91);
+  max-height: calc(100% - 132px);
+  box-shadow: 0 2px 4px rgba(0,0,0,.2), 0 -1px 0 rgba(0,0,0,.0196078);
+  border-radius: 2px;
+  transition: right .45s cubic-bezier(.23,1,.32,1);
+  overflow: auto;
+}
+
+.features-leave.features-leave-active {
+  opacity: 0.01;
+  transition: opacity 500ms ease-in;
+}
+/* End Implement right-side drawer outside of Jane */

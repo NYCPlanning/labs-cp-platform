@@ -1,16 +1,4 @@
 .pipeline-layer-selector {
-  .manual-input {
-    input {
-      width: 64px;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    input[type="submit"] {
-      display: none;
-    }
-  }
-
   .fa-map-pin:hover {
     cursor: pointer;
   }

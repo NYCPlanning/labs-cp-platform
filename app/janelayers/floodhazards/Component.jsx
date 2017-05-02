@@ -42,7 +42,13 @@ const defaultLayerConfig = {
 
 const Component = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func.isRequired,
+    onUpdate: React.PropTypes.func,
+  },
+
+  getDefaultProps() {
+    return {
+      onUpdate: () => {},
+    };
   },
 
   getInitialState() {

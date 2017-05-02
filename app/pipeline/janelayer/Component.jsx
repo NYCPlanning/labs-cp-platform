@@ -11,7 +11,13 @@ import PipelineStore from '../../stores/PipelineStore';
 
 const Pipeline = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func.isRequired,
+    onUpdate: React.PropTypes.func,
+  },
+
+  getDefaultProps() {
+    return {
+      onUpdate: () => {},
+    };
   },
 
   getInitialState() {

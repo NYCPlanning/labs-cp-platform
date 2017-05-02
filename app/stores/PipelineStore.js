@@ -154,6 +154,11 @@ class PipelineStore extends EventsEmitter {
     this.updateSql();
   }
 
+  setSelectedFeatures(features) {
+    this.selectedFeatures = features;
+    this.emit('selectedFeaturesUpdated');
+  }
+
   // do things when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -174,6 +179,11 @@ class PipelineStore extends EventsEmitter {
 
       case 'PIPELINE_RESET_FILTER': {
         this.resetFilter();
+        break;
+      }
+
+      case 'PIPELINE_SET_SELECTED_FEATURES': {
+        this.setSelectedFeatures(action.features);
         break;
       }
 

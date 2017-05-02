@@ -64,12 +64,12 @@ const ProjectPage = React.createClass({
 
     const tableRows = this.state.commitments.map(c => (
 
-      <TableRow key={`${c.costdescription}-${c.plancommdate}`}>
-        <TableRowColumn>{c.costdescription}</TableRowColumn>
+      <TableRow key={`${c.commitmentdescription}-${c.plancommdate}`}>
+        <TableRowColumn>{c.commitmentdescription}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
-        <TableRowColumn>{moment(c.plancommdate, 'YY-MMM').format('MMM YYYY')}</TableRowColumn>
+        <TableRowColumn>{moment(c.plancommdate, 'MM/YY').format('MMM YYYY')}</TableRowColumn>
         {/* eslint-enable no-undef */}
       </TableRow>
     ));

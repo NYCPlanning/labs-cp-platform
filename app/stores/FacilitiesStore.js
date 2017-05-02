@@ -167,6 +167,11 @@ class FacilitiesStore extends EventsEmitter {
     this.updateSql();
   }
 
+  setSelectedFeatures(features) {
+    this.selectedFeatures = features;
+    this.emit('selectedFeaturesUpdated');
+  }
+
   // call local methods when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -192,6 +197,11 @@ class FacilitiesStore extends EventsEmitter {
 
       case 'FACILITIES_RESET_FILTER': {
         this.resetFilter();
+        break;
+      }
+
+      case 'FACILITIES_SET_SELECTED_FEATURES': {
+        this.setSelectedFeatures(action.features);
         break;
       }
 
