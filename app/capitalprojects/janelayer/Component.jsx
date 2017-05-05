@@ -1,9 +1,8 @@
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Divider from 'material-ui/Divider';
 
 import Filter from '../Filter';
-import Download from '../../common/Download';
+import Download from '../Download';
 import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
@@ -79,16 +78,11 @@ const CapitalProjects = React.createClass({
         <Tab label="Download">
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
-              <h3>Points</h3>
               <Download
-                sql={CapitalProjectsStore.pointsSql}
-                filePrefix="projects-points"
-              />
-              <Divider />
-              <h3>Polygons</h3>
-              <Download
-                sql={CapitalProjectsStore.polygonsSql}
-                filePrefix="projects-polygons"
+                pointsSql={CapitalProjectsStore.pointsSql}
+                polygonsSql={CapitalProjectsStore.polygonsSql}
+                pointsPrefix="projects-points"
+                polygonsPrefix="projects-polygons"
               />
               <SignupPrompt />
             </div>
