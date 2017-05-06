@@ -1,7 +1,6 @@
-// const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); // eslint-disable-line
+const Dotenv = require('dotenv-webpack'); // eslint-disable-line
 
 const extractSass = new ExtractTextPlugin('css/bundle.css');
 
@@ -64,7 +63,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: extractSass.extract({
-          loader: [{
+          use: [{
             loader: 'css-loader',
           }, {
             loader: 'sass-loader',
@@ -76,7 +75,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: extractSass.extract({
-          loader: [{
+          use: [{
             loader: 'css-loader',
           }],
           // use style-loader in development
@@ -87,11 +86,6 @@ module.exports = {
   },
   plugins: [
     extractSass,
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV: '"development"',
-    //   },
-    // }),
     new Dotenv(),
   ],
 };
