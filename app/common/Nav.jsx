@@ -9,13 +9,15 @@ import './Nav.scss';
 
 const Nav = createReactClass({
   propTypes: {
-    title: PropTypes.string,
-    children: PropTypes.array,
+    title: React.PropTypes.string,
+    about: React.PropTypes.string,
+    children: React.PropTypes.array,
   },
 
   getDefaultProps() {
     return {
       title: '',
+      about: '/about',
       children: null,
     };
   },
@@ -84,7 +86,8 @@ const Nav = createReactClass({
           <ul className="nav navbar-nav navbar-right ">
             <li><Link to="/"> Home</Link></li>
             {this.props.children}
-            <li><Link to="/about">About</Link></li>
+            <li><Link to={this.props.about}>About</Link></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScP9JxDvfCmMUxzT9l0_MRYBtTgeAep7pHYO5QUtrRCXGxVTw/viewform" target="_blank" rel="noopener noreferrer"> Send Feedback</a></li>
             {userMenu}
           </ul>
         </div>
