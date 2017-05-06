@@ -24,11 +24,17 @@ class PipelineStore extends EventsEmitter {
   }
 
   initialize() {
-    carto.getCount(this.sql).then((count) => {
-      this.totalCount = count;
-      this.selectedCount = count;
-      this.emit('pipelineUpdated');
-    });
+    const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.tablename}`, 'json')
+      .then((data) => {
+        this.totalCount = data[0].count;
+      });
+
+    const p2 = carto.getCount(this.sql)
+      .then((count) => {
+        this.selectedCount = count;
+      });
+
+    Promise.all([p1, p2]).then(() => this.emit('pipelineUpdated'));
   }
 
   // builds a new LayerConfig based on sql and symbologyDimension
