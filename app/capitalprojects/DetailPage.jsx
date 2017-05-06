@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Numeral from 'numeral';
 import _ from 'underscore';
 
@@ -15,7 +16,7 @@ import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 
 import '../app.scss';
 
-const ProjectPage = React.createClass({
+const ProjectPage = createReactClass({
 
   propTypes: {
     params: PropTypes.object.isRequired,

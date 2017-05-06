@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
 import { Jane, JaneLayer } from 'jane-maps';
@@ -12,7 +13,7 @@ import { Jane, JaneLayer } from 'jane-maps';
 import supportingLayers from '../janelayers/supportingLayers';
 import appConfig from '../helpers/appConfig';
 
-const ModalMap = React.createClass({
+const ModalMap = createReactClass({
   propTypes: {
     feature: PropTypes.object.isRequired,
     label: PropTypes.string,

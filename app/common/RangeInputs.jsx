@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 import './RangeInputs.scss';
 
-const RangeInputs = React.createClass({
+const RangeInputs = createReactClass({
   propTypes: {
     data: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,

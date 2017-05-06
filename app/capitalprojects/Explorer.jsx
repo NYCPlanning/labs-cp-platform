@@ -1,5 +1,6 @@
 // Explorer.jsx - Top level Component for the Facilities Explorer
 import React from 'react';
+import createReactClass from 'create-react-class';
 
 import { Jane, JaneLayer } from 'jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
@@ -13,7 +14,7 @@ import { mapInit, searchConfig } from '../helpers/appConfig';
 
 import './styles.scss';
 
-const CapitalProjectsExplorer = React.createClass({
+const CapitalProjectsExplorer = createReactClass({
 
   getInitialState() {
     return {

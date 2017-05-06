@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import AuthService from '../helpers/AuthService';
 
 
-const Login = React.createClass({
+const Login = createReactClass({
   propTypes: {
     location: PropTypes.object.isRequired,
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Numeral from 'numeral';
@@ -13,7 +14,7 @@ import RangeSlider from '../common/RangeSlider';
 import RangeInputs from '../common/RangeInputs';
 import MultiSelect from '../common/MultiSelect';
 
-const Filter = React.createClass({
+const Filter = createReactClass({
   propTypes: {
   },
 

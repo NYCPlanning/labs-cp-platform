@@ -6,11 +6,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 
 import './GlobalModal.scss';
 
-const GlobalModal = React.createClass({
+const GlobalModal = createReactClass({
   propTypes: {
     closeText: PropTypes.string,
     heading: PropTypes.string.isRequired,

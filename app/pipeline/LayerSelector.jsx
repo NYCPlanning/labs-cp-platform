@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
@@ -13,7 +15,7 @@ import InfoIcon from '../common/InfoIcon';
 
 import './LayerSelector.scss';
 
-const LayerSelector = React.createClass({
+const LayerSelector = createReactClass({
 
   getInitialState() {
     return ({
@@ -96,6 +98,11 @@ const LayerSelector = React.createClass({
           onClick={props.onClick}
         />
       );
+    };
+
+    PinSelect.propTypes = {
+      selected: PropTypes.bool,
+      onClick: PropTypes.func,
     };
 
     return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
@@ -7,7 +8,7 @@ import reformed from 'react-reformed';
 import appConfig from '../helpers/appConfig';
 import AuthService from '../helpers/AuthService';
 
-const FeedbackForm = React.createClass({
+const FeedbackForm = createReactClass({
 
   propTypes: {
     setProperty: PropTypes.func.isRequired,

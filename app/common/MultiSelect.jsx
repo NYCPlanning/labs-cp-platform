@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Select from 'react-select';
 
-const MultiSelect = React.createClass({
+const MultiSelect = createReactClass({
   propTypes: {
     options: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,

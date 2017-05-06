@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import Divider from 'material-ui/Divider';
@@ -9,7 +10,7 @@ import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
 
-const CapitalProjects = React.createClass({
+const CapitalProjects = createReactClass({
   propTypes: {
     onUpdate: PropTypes.func,
   },

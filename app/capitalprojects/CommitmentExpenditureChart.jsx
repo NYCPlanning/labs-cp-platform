@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 import numeral from 'numeral';
 
@@ -8,7 +9,7 @@ import PlanningApi from '../helpers/PlanningApi';
 // css for this component is in ./styles.scss
 /* eslint-disable no-undef */
 
-const CommitmentExpenditureChart = React.createClass({
+const CommitmentExpenditureChart = createReactClass({
 
   propTypes: {
     maprojid: PropTypes.string.isRequired,

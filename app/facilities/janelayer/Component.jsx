@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -10,7 +11,7 @@ import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import FacilitiesStore from '../../stores/FacilitiesStore';
 
-const Facilities = React.createClass({
+const Facilities = createReactClass({
   propTypes: {
     onUpdate: PropTypes.func,
   },

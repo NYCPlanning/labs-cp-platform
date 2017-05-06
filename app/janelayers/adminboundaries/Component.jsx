@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 
 import defaultLayerConfig from './defaultLayerConfig';
 
-const AdminBoundaries = React.createClass({
+const AdminBoundaries = createReactClass({
   propTypes: {
     onUpdate: PropTypes.func,
   },

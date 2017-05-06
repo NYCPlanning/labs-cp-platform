@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import LayerSelector from '../LayerSelector';
@@ -10,7 +11,7 @@ import SignupPrompt from '../../common/SignupPrompt';
 import PipelineStore from '../../stores/PipelineStore';
 
 
-const Pipeline = React.createClass({
+const Pipeline = createReactClass({
   propTypes: {
     onUpdate: PropTypes.func,
   },

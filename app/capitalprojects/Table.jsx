@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import FixedDataTable from 'fixed-data-table';
 import Dimensions from 'react-dimensions';
@@ -21,7 +23,7 @@ import './Table.scss';
 const { Table, Column, Cell } = FixedDataTable;
 
 
-const CPTable = React.createClass({ // eslint-disable-line
+const CPTable = createReactClass({ // eslint-disable-line
   propTypes: {
     containerHeight: PropTypes.number.isRequired,
     containerWidth: PropTypes.number.isRequired,

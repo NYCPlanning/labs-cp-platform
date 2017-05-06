@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import Footer from '../common/Footer';
 
 import './LandingPage.scss';
 
-const LandingPage = React.createClass({
+const LandingPage = createReactClass({
 
   componentDidMount() {
     document.title = 'Capital Planning Platform';

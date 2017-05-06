@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
 
@@ -8,7 +9,7 @@ import { api_domain } from '../helpers/appConfig';
 
 import './FeedbackPage.scss';
 
-const FeedbackPage = React.createClass({
+const FeedbackPage = createReactClass({
 
   propTypes: {
     params: PropTypes.object.isRequired,
