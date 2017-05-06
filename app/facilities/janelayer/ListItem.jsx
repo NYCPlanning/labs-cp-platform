@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import colors from '../colors';
@@ -31,8 +32,8 @@ const Item = (props) => {
 };
 
 Item.propTypes = {
-  feature: React.PropTypes.shape({
-    properties: React.PropTypes.object.isRequired,
+  feature: PropTypes.shape({
+    properties: PropTypes.object.isRequired,
   }).isRequired,
 };
 

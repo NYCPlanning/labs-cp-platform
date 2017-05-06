@@ -21,6 +21,13 @@ const CapitalProjectsActions = {
       type: 'CAPTIALPROJECTS_RESET_FILTER',
     });
   },
+
+  setSelectedFeatures(features) {
+    dispatcher.dispatch({
+      type: 'CAPTIALPROJECTS_SET_SELECTED_FEATURES',
+      features,
+    });
+  },
 };
 
 export default CapitalProjectsActions;

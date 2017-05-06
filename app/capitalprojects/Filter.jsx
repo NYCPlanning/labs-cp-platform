@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Numeral from 'numeral';
@@ -10,9 +11,10 @@ import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import CostGroupChart from './CostGroupChart';
 import RangeSlider from '../common/RangeSlider';
+import RangeInputs from '../common/RangeInputs';
 import MultiSelect from '../common/MultiSelect';
 
-const Filter = React.createClass({
+const Filter = createReactClass({
   propTypes: {
   },
 
@@ -35,10 +37,10 @@ const Filter = React.createClass({
       }, () => {
         // check for default status of sliders with mapped values
         const totalspendRange = this.state.filterDimensions.totalspend.values;
-        if (totalspendRange[0] === 0 && totalspendRange[1] === 100000000) this.setState({ totalspendRange: [0, 9] });
+        if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
 
         const totalcommitRange = this.state.filterDimensions.totalcommit.values;
-        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 100000000) this.setState({ totalcommitRange: [0, 9] });
+        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
       });
     });
 
@@ -53,25 +55,8 @@ const Filter = React.createClass({
     CapitalProjectsActions.onFilterDimensionChange(dimension, values);
   },
 
-  handleSliderChange(dimension, sliderState) {
-    // because the totalcommitspend slider is using "values"
-    // the actual range we want is stored as from_value and to_value
-    // we need to store the mapped values to local state so we can update the UI
-
-    let values;
-    if (dimension === 'activeyears') values = [sliderState.from, sliderState.to];
-
-    if (dimension === 'totalcommit') {
-      values = [sliderState.from_value, sliderState.to_value];
-      this.setState({ totalcommitRange: [sliderState.from, sliderState.to] });
-    }
-
-    if (dimension === 'totalspend') {
-      values = [sliderState.from_value, sliderState.to_value];
-      this.setState({ totalspendRange: [sliderState.from, sliderState.to] });
-    }
-
-    this.updateFilterDimension(dimension, values);
+  handleSliderChange(dimension, data) {
+    this.updateFilterDimension(dimension, [data.from, data.to]);
   },
 
   resetFilter() {
@@ -177,16 +162,20 @@ const Filter = React.createClass({
               zIndex: '0',
             }}
           >
+            <RangeInputs
+              data={filterDimensions.totalspend.values}
+              onChange={this.handleSliderChange.bind(this, 'totalspend')}
+              prettify={num => Numeral(num).format('($ 0.00 a)')}
+            />
             <RangeSlider
-              data={this.state.totalspendRange}
+              data={filterDimensions.totalspend.values}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'totalspend')}
-              step={1000}
               prettify={num => Numeral(num).format('($ 0.00 a)')}
               grid
               force_edges
               max_postfix="+"
-              values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+              values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
             />
           </ListItem>
 
@@ -202,8 +191,13 @@ const Filter = React.createClass({
               zIndex: '0',
             }}
           >
+            <RangeInputs
+              data={filterDimensions.totalcommit.values}
+              onChange={this.handleSliderChange.bind(this, 'totalcommit')}
+              prettify={num => Numeral(num).format('($ 0.00 a)')}
+            />
             <RangeSlider
-              data={this.state.totalcommitRange}
+              data={filterDimensions.totalcommit.values}
               type={'double'}
               onChange={this.handleSliderChange.bind(this, 'totalcommit')}
               step={1000}
@@ -211,7 +205,7 @@ const Filter = React.createClass({
               grid
               force_edges
               max_postfix="+"
-              values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000]}
+              values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
             />
           </ListItem>
 

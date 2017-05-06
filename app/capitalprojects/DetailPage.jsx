@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Numeral from 'numeral';
 import _ from 'underscore';
 
@@ -14,7 +16,7 @@ import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 
 import '../app.scss';
 
-const ProjectPage = React.createClass({
+const ProjectPage = createReactClass({
 
   propTypes: {
     params: PropTypes.object.isRequired,
@@ -64,15 +66,17 @@ const ProjectPage = React.createClass({
 
     const tableRows = this.state.commitments.map(c => (
 
-      <TableRow key={`${c.costdescription}-${c.plancommdate}`}>
-        <TableRowColumn>{c.costdescription}</TableRowColumn>
+      <TableRow key={c.cartodb_id}>
+        <TableRowColumn>{c.commitmentdescription}</TableRowColumn>
+        <TableRowColumn>{c.commitmentcode}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
-        <TableRowColumn>{moment(c.plancommdate, 'YY-MMM').format('MMM YYYY')}</TableRowColumn>
+        <TableRowColumn>{moment(c.plancommdate, 'MM/YY').format('MMM YYYY')}</TableRowColumn>
         {/* eslint-enable no-undef */}
       </TableRow>
     ));
+
 
     const geometryExists = this.state.data.geometry !== null;
 
@@ -140,7 +144,7 @@ const ProjectPage = React.createClass({
                 <CardHeader title="Committed" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalcommit)}</h2>
-                  <p className="subtext">committed as of Oct 2016</p>
+                  <p className="subtext">committed as of April 2017</p>
                 </CardText>
               </Card>
             </div>
@@ -183,6 +187,7 @@ const ProjectPage = React.createClass({
                     >
                       <TableRow>
                         <TableHeaderColumn>Cost Description</TableHeaderColumn>
+                        <TableHeaderColumn>Cost Code</TableHeaderColumn>
                         <TableHeaderColumn>Budget Line</TableHeaderColumn>
                         <TableHeaderColumn>Total Cost</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>

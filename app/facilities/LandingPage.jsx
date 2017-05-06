@@ -1,4 +1,5 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import SplashSelector from './SplashSelector';
@@ -10,7 +11,7 @@ import ga from '../helpers/ga';
 import './LandingPage.scss';
 
 
-const FacilitiesLandingPage = React.createClass({
+const FacilitiesLandingPage = createReactClass({
 
   componentDidMount() {
     document.title = 'Capital Planning Platform';

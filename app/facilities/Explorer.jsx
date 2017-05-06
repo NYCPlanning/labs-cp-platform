@@ -1,20 +1,19 @@
-import React, { PropTypes } from 'react';
-
-import Jane from 'jane-maps';
-import JaneLayer from 'jane-maps/dist/JaneLayer';
-
-import FacilitiesComponent from './janelayer/Component';
-import FacilitiesListItem from './janelayer/ListItem';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
-
+import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
+import ListItem from './janelayer/ListItem';
+import FacilitiesComponent from './janelayer/Component';
 import supportingLayers from '../janelayers/supportingLayers';
-
 import FacilitiesActions from '../actions/FacilitiesActions';
+import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
 
-const FacilitiesExplorer = React.createClass({
+const FacilitiesExplorer = createReactClass({
   propTypes: {
     location: PropTypes.object,
   },
@@ -22,6 +21,12 @@ const FacilitiesExplorer = React.createClass({
   getDefaultProps() {
     return {
       location: null,
+    };
+  },
+
+  getInitialState() {
+    return {
+      selectedFeatures: [],
     };
   },
 
@@ -56,11 +61,42 @@ const FacilitiesExplorer = React.createClass({
           self.forceUpdate();
         });
     }
+
+    FacilitiesStore.on('selectedFeaturesUpdated', () => {
+      const selectedFeatures = FacilitiesStore.selectedFeatures;
+      this.setState({ selectedFeatures });
+    });
+  },
+
+  handleMapLayerClick(features) {
+    // set selectedFeatures to [] will cause the right drawer to animate away,
+    // then setting the new data will bring it back
+    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
+    FacilitiesActions.setSelectedFeatures([]);
+    setTimeout(() => {
+      FacilitiesActions.setSelectedFeatures(features);
+    }, 450);
+  },
+
+  clearSelectedFeatures() {
+    FacilitiesActions.setSelectedFeatures([]);
   },
 
   render() {
     const mapInit = appConfig.mapInit;
     const searchConfig = appConfig.searchConfig;
+
+    const { selectedFeatures } = this.state;
+
+    const listItems = selectedFeatures.map(feature => (
+      <ListItem feature={feature} key={feature.id} />
+    ));
+
+    const selectedFeaturesPane = (
+      <SelectedFeaturesPane>
+        {listItems}
+      </SelectedFeaturesPane>
+    );
 
     return (
       <div className="full-screen">
@@ -70,28 +106,24 @@ const FacilitiesExplorer = React.createClass({
           search
           searchConfig={searchConfig}
           fitBounds={this.bounds}
+          onDragEnd={this.clearSelectedFeatures}
+          onZoomEnd={this.clearSelectedFeatures}
         >
-          <JaneLayer
-            {...supportingLayers.aerials}
-          />
-          <JaneLayer
-            {...supportingLayers.adminboundaries}
-          />
-          <JaneLayer
-            {...supportingLayers.transportation}
-          />
+          {supportingLayers.aerials}
+          {supportingLayers.adminboundaries}
+          {supportingLayers.transportation}
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"
             icon="university"
-            interactivityMapLayers={['facilities-points']}
-            highlightPointLayers={['facilities-points']}
-            visible
+            onMapLayerClick={this.handleMapLayerClick}
             selected
-            component={FacilitiesComponent}
-            listItem={FacilitiesListItem}
-          />
+            visible
+          >
+            <FacilitiesComponent />
+          </JaneLayer>
         </Jane>
+        { selectedFeaturesPane }
       </div>
     );
   },

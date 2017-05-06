@@ -4,18 +4,19 @@
 // TODO: This is similar to SimplePointMap.jsx, maybe combine with that, or combine with a more generic MapboxGLMap.jsx
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import Jane from 'jane-maps';
-import JaneLayer from 'jane-maps/dist/JaneLayer';
+import { Jane, JaneLayer } from 'jane-maps';
 
 import supportingLayers from '../janelayers/supportingLayers';
 import appConfig from '../helpers/appConfig';
 
-const ModalMap = React.createClass({
+const ModalMap = createReactClass({
   propTypes: {
-    feature: React.PropTypes.object.isRequired,
-    label: React.PropTypes.string,
+    feature: PropTypes.object.isRequired,
+    label: PropTypes.string,
   },
 
   getDefaultProps() {
@@ -105,22 +106,9 @@ const ModalMap = React.createClass({
           poiLabel={geometry.type === 'Point' ? this.props.label : null}
           ref={x => (this.janeMap = x)}
         >
-          {
-            geometry.type === 'Point' &&
-              <JaneLayer
-                {...supportingLayers.travelshed}
-                initialState={{ feature: this.props.feature }}
-              />
-          }
-          <JaneLayer
-            {...supportingLayers.aerials}
-          />
-          <JaneLayer
-            {...supportingLayers.adminboundaries}
-          />
-          <JaneLayer
-            {...supportingLayers.transportation}
-          />
+          {supportingLayers.aerials}
+          {supportingLayers.adminboundaries}
+          {supportingLayers.transportation}
           {PolygonJaneLayer}
         </Jane>
       </div>

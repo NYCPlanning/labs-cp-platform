@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import Footer from '../common/Footer';
@@ -35,9 +37,9 @@ const collaborateContent = (
   </div>
 );
 
-const HomePage = React.createClass({
+const HomePage = createReactClass({
   propTypes: {
-    showModal: React.PropTypes.func,
+    showModal: PropTypes.func,
   },
 
   getDefaultProps() {

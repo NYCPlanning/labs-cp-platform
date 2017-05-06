@@ -1,11 +1,13 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 
 import carto from '../helpers/carto';
 
 /* eslint-disable no-undef */
 
-const CostGroupChart = React.createClass({
+const CostGroupChart = createReactClass({
 
   propTypes: {
     pointsSql: PropTypes.string.isRequired,

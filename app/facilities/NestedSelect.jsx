@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { List, ListItem } from 'material-ui/List';
 
 import InfoIcon from '../common/InfoIcon';
@@ -6,7 +8,7 @@ import Checkbox from '../common/Checkbox';
 
 import './NestedSelect.scss';
 
-const NestedSelect = React.createClass({
+const NestedSelect = createReactClass({
 
   propTypes: {
     onUpdate: PropTypes.func.isRequired,

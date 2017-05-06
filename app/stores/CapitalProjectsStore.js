@@ -15,9 +15,9 @@ class CapitalProjectsStore extends EventsEmitter {
 
     this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
     this.sqlConfig = {
-      columns: 'the_geom_webmercator, magency, magencyacro, description, totalcommit, maprojid, totalspend, sagencyacro',
-      pointsTablename: 'cpdb_map_pts',
-      polygonsTablename: 'cpdb_map_poly',
+      columns: '*',
+      pointsTablename: '(SELECT a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+      polygonsTablename: '(SELECT a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate  FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
     };
     this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, 'tablenameplaceholder');
 
@@ -27,12 +27,25 @@ class CapitalProjectsStore extends EventsEmitter {
   }
 
   initialize() {
-    carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
-      .then((count) => {
-        this.totalCount = count;
-        this.selectedCount = count;
-        this.emit('capitalProjectsUpdated');
+    const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.pointsTablename}`, 'json')
+      .then((data) => {
+        this.pointsTotal = data[0].count;
       });
+
+    const p2 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.polygonsTablename}`, 'json')
+      .then((data) => {
+        this.polygonsTotal = data[0].count;
+      });
+
+    const p3 = carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
+      .then((count) => {
+        this.selectedCount = count;
+      });
+
+    Promise.all([p1, p2, p3]).then(() => {
+      this.totalCount = this.pointsTotal + this.polygonsTotal;
+      this.emit('capitalProjectsUpdated');
+    });
   }
 
   unionSQL(pointsSql, polygonsSql) {
@@ -63,9 +76,21 @@ class CapitalProjectsStore extends EventsEmitter {
 
   fetchDetailData(maprojid) {
     // 3 api calls!
-    const getFeature = carto.getFeature('cpdb_map_combined', 'maprojid', maprojid);
+
+    const combined_table = `(
+      SELECT the_geom, magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate FROM (
+        SELECT magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate
+        FROM cpdb_projects_combined
+      ) a LEFT JOIN (
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_pts
+        UNION ALL
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_poly
+      ) b ON a.maprojid = b.projid
+    )x`;
+
+    const getFeature = carto.getFeature(combined_table, 'maprojid', maprojid);
     const getBudgets = carto.SQL(`SELECT * FROM cpdb_budgets WHERE maprojid = '${maprojid}'`, 'json');
-    const getCommitments = carto.SQL(`SELECT * FROM cpdb_commitments WHERE maprojid = '${maprojid}' ORDER BY to_date(plancommdate,'YY-Mon')`, 'json');
+    const getCommitments = carto.SQL(`SELECT * FROM cpdb_commitments WHERE maprojid = '${maprojid}' ORDER BY to_date(plancommdate,'MM/YY')`, 'json');
 
     Promise.all([
       getFeature,
@@ -101,6 +126,11 @@ class CapitalProjectsStore extends EventsEmitter {
     this.updateSql();
   }
 
+  setSelectedFeatures(features) {
+    this.selectedFeatures = features;
+    this.emit('selectedFeaturesUpdated');
+  }
+
   // update the sql, get counts, and emit an event
   updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
@@ -129,6 +159,11 @@ class CapitalProjectsStore extends EventsEmitter {
 
       case 'CAPTIALPROJECTS_RESET_FILTER': {
         this.resetFilter();
+        break;
+      }
+
+      case 'CAPTIALPROJECTS_SET_SELECTED_FEATURES': {
+        this.setSelectedFeatures(action.features);
         break;
       }
 

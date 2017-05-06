@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import numeral from 'numeral';
 
@@ -22,7 +23,7 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.description}</div>
-        <div className={'subtitle'}>Total Cost: ${numeral(d.totalcommitspend).format('0,0')}</div>
+        <div className={'subtitle'}>Planned Commitments: ${numeral(d.totalcommit).format('0,0')}</div>
 
         <i className="fa fa-chevron-right" />
       </div>
@@ -31,8 +32,8 @@ const Item = (props) => {
 };
 
 Item.propTypes = {
-  feature: React.PropTypes.shape({
-    properties: React.PropTypes.object.isRequired,
+  feature: PropTypes.shape({
+    properties: PropTypes.object.isRequired,
   }).isRequired,
 };
 

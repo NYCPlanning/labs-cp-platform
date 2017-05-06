@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -9,10 +11,15 @@ import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import FacilitiesStore from '../../stores/FacilitiesStore';
 
-const Facilities = React.createClass({
+const Facilities = createReactClass({
   propTypes: {
-    onUpdate: React.PropTypes.func.isRequired,
-    layer: React.PropTypes.object.isRequired,
+    onUpdate: PropTypes.func,
+  },
+
+  getDefaultProps() {
+    return {
+      onUpdate: () => {},
+    };
   },
 
   getInitialState() {
@@ -90,11 +97,7 @@ const Facilities = React.createClass({
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector
-            layers={this.props.layer.initialState && this.props.layer.initialState.layers}
-            filterDimensions={this.props.layer.initialState && this.props.layer.initialState.filterDimensions}
-            updateSQL={this.updateLayerConfig}
-          />
+          <LayerSelector />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content ">

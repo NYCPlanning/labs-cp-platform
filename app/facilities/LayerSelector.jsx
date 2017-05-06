@@ -1,8 +1,8 @@
 // LayerSelector.jsx - This component builds the layer selector which is used in the facilities JaneLayer
-
 /* eslint-disable react/no-multi-comp */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
@@ -16,10 +16,7 @@ import FacilitiesStore from '../stores/FacilitiesStore';
 
 import './LayerSelector.scss';
 
-const LayerSelector = React.createClass({
-  propTypes: {
-    updateSQL: PropTypes.func.isRequired,
-  },
+const LayerSelector = createReactClass({
 
   getDefaultProps() {
     return {

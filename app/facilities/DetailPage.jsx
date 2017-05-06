@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -13,7 +15,7 @@ import FacilitiesStore from '../stores/FacilitiesStore';
 
 import '../app.scss';
 
-const DetailPage = React.createClass({
+const DetailPage = createReactClass({
   propTypes: {
     params: PropTypes.shape({
       id: PropTypes.string,

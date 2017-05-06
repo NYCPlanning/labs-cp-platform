@@ -1,0 +1,14 @@
+.manual-range-input {
+  display: inline;
+  
+  input {
+    width: 120px;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  input[type="submit"] {
+    display: none;
+  }
+}

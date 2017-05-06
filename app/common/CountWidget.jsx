@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Numeral from 'numeral';
 
 import { ListItem } from 'material-ui/List';
@@ -6,7 +8,7 @@ import FontIcon from 'material-ui/FontIcon';
 
 import './CountWidget.scss';
 
-const CountWidget = React.createClass({
+const CountWidget = createReactClass({
   propTypes: {
     totalCount: PropTypes.number,
     selectedCount: PropTypes.number,

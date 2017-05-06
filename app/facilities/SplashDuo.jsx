@@ -1,10 +1,11 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
 
 import ga from '../helpers/ga';
 
-const SplashDuo = React.createClass({
+const SplashDuo = createReactClass({
   getInitialState: () => ({
     selectedGeography: null,
     ntaSelectionValues: [],

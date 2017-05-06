@@ -1,11 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import AuthService from '../helpers/AuthService';
 
 import './Nav.scss';
 
-const Nav = React.createClass({
+const Nav = createReactClass({
   propTypes: {
     title: React.PropTypes.string,
     about: React.PropTypes.string,

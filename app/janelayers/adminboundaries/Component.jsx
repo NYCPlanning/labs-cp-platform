@@ -1,25 +1,24 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 
 import defaultLayerConfig from './defaultLayerConfig';
 
-const AdminBoundaries = React.createClass({
+const AdminBoundaries = createReactClass({
   propTypes: {
-    onUpdate: PropTypes.func.isRequired,
-    layer: PropTypes.object.isRequired,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {
     return {
-      context: null,
+      onUpdate: () => {},
     };
   },
 
   getInitialState() {
-    if (this.props.layer.initialState) return this.props.layer.initialState;
-
     return ({
       value: 'cd',
     });

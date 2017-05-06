@@ -404,12 +404,12 @@ const defaultFilterDimensions = {
 
   totalspend: {
     type: 'numberRange',
-    values: [0, 100000000],
+    values: [0, 10000000000],
   },
 
   totalcommit: {
     type: 'numberRange',
-    values: [1000, 100000000],
+    values: [-20000000, 10000000000],
   },
 
   activeyears: {

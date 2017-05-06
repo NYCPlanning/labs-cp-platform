@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
@@ -53,7 +55,7 @@ function wrapState(ComposedComponent) {
 const SelectableList = wrapState(ThisSelectableList);
 
 
-const SplashSelector = React.createClass({ // eslint-disable-line react/no-multi-comp
+const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-comp
 
   getInitialState: () => ({
     selectedIndex: 0,

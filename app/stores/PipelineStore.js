@@ -24,11 +24,17 @@ class PipelineStore extends EventsEmitter {
   }
 
   initialize() {
-    carto.getCount(this.sql).then((count) => {
-      this.totalCount = count;
-      this.selectedCount = count;
-      this.emit('pipelineUpdated');
-    });
+    const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.tablename}`, 'json')
+      .then((data) => {
+        this.totalCount = data[0].count;
+      });
+
+    const p2 = carto.getCount(this.sql)
+      .then((count) => {
+        this.selectedCount = count;
+      });
+
+    Promise.all([p1, p2]).then(() => this.emit('pipelineUpdated'));
   }
 
   // builds a new LayerConfig based on sql and symbologyDimension
@@ -154,6 +160,11 @@ class PipelineStore extends EventsEmitter {
     this.updateSql();
   }
 
+  setSelectedFeatures(features) {
+    this.selectedFeatures = features;
+    this.emit('selectedFeaturesUpdated');
+  }
+
   // do things when certain events arrive from the dispatcher
   handleActions(action) {
     switch (action.type) {
@@ -174,6 +185,11 @@ class PipelineStore extends EventsEmitter {
 
       case 'PIPELINE_RESET_FILTER': {
         this.resetFilter();
+        break;
+      }
+
+      case 'PIPELINE_SET_SELECTED_FEATURES': {
+        this.setSelectedFeatures(action.features);
         break;
       }
 
