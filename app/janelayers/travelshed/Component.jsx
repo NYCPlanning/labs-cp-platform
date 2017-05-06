@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 const defaultLayerConfig = {
@@ -22,14 +24,16 @@ const defaultLayerConfig = {
   ],
 };
 
-const Component = React.createClass({
+const Component = createReactClass({
   propTypes: {
-    onUpdate: PropTypes.func.isRequired,
-    layer: PropTypes.object.isRequired,
+    onUpdate: PropTypes.func,
+    layer: PropTypes.object,
   },
 
   getDefaultProps() {
     return {
+      layer: null,
+      onUpdate: () => {},
       context: null,
     };
   },

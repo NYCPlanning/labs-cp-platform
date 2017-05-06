@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import { getColor } from '../config';
@@ -27,7 +28,7 @@ const Item = (props) => {
 };
 
 Item.propTypes = {
-  feature: React.PropTypes.object.isRequired,
+  feature: PropTypes.object.isRequired,
 };
 
 export default Item;

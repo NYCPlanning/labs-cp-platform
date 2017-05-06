@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Numeral from 'numeral';
 import _ from 'underscore';
 
@@ -14,7 +16,7 @@ import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 
 import '../app.scss';
 
-const ProjectPage = React.createClass({
+const ProjectPage = createReactClass({
 
   propTypes: {
     params: PropTypes.object.isRequired,
@@ -62,7 +64,6 @@ const ProjectPage = React.createClass({
       height: '100%',
     };
 
-    console.log(this.state.commitments);
     const tableRows = this.state.commitments.map(c => (
 
       <TableRow key={c.cartodb_id}>

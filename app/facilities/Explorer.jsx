@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
@@ -11,7 +13,7 @@ import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
 
-const FacilitiesExplorer = React.createClass({
+const FacilitiesExplorer = createReactClass({
   propTypes: {
     location: PropTypes.object,
   },

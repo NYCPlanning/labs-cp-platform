@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Checkbox = props => (
   <div className="checkbox-container">
@@ -17,10 +18,10 @@ const Checkbox = props => (
 );
 
 Checkbox.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  checked: React.PropTypes.bool.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  indeterminate: React.PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  indeterminate: PropTypes.bool,
 };
 
 Checkbox.defaultProps = {

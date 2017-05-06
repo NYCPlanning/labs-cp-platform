@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -22,11 +24,11 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const App = React.createClass({
+const App = createReactClass({
   propTypes: {
-    location: React.PropTypes.shape().isRequired,
-    children: React.PropTypes.element.isRequired,
-    route: React.PropTypes.shape().isRequired,
+    location: PropTypes.shape().isRequired,
+    children: PropTypes.element.isRequired,
+    route: PropTypes.shape().isRequired,
   },
 
   getInitialState() {

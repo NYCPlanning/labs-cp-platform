@@ -5,15 +5,17 @@
 //  closeText - A string to be used in the close button
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 
 import './GlobalModal.scss';
 
-const GlobalModal = React.createClass({
+const GlobalModal = createReactClass({
   propTypes: {
-    closeText: React.PropTypes.string,
-    heading: React.PropTypes.string.isRequired,
-    body: React.PropTypes.element.isRequired,
+    closeText: PropTypes.string,
+    heading: PropTypes.string.isRequired,
+    body: PropTypes.element.isRequired,
   },
 
   getDefaultProps() {

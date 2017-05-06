@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Numeral from 'numeral';
@@ -12,7 +14,7 @@ import CapitalProjectsTableActions from '../actions/CapitalProjectsTableActions'
 import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
 
 
-const Filter = React.createClass({
+const Filter = createReactClass({
   propTypes: {
     onFilterBy: PropTypes.func.isRequired,
   },

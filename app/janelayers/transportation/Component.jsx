@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 import Checkbox from 'material-ui/Checkbox';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -561,9 +563,9 @@ const listHeaderStyle = {
   marginBottom: '4px',
 };
 
-const Transportation = React.createClass({
+const Transportation = createReactClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {

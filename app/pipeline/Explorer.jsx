@@ -1,5 +1,6 @@
 // PipeLineExplorer.jsx - Top level Component for the Pipeline Explorer Map
 import React from 'react';
+import createReactClass from 'create-react-class';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
@@ -10,7 +11,7 @@ import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import PipelineActions from '../actions/PipelineActions';
 import PipelineStore from '../stores/PipelineStore';
 
-const PipeLineExplorer = React.createClass({
+const PipeLineExplorer = createReactClass({
   getInitialState() {
     return {
       selectedFeatures: [],

@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
@@ -12,12 +14,12 @@ import PipelineActions from '../actions/PipelineActions';
 
 import './DetailPage.scss';
 
-const DevelopmentPage = React.createClass({
+const DevelopmentPage = createReactClass({
   propTypes: {
-    params: React.PropTypes.shape({
-      id: React.PropTypes.string,
+    params: PropTypes.shape({
+      id: PropTypes.string,
     }).isRequired,
-    location: React.PropTypes.shape().isRequired,
+    location: PropTypes.shape().isRequired,
   },
 
   getInitialState() {

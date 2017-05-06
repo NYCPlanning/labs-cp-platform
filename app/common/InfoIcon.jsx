@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const InfoIcon = props => (
@@ -19,7 +20,7 @@ const InfoIcon = props => (
 );
 
 InfoIcon.propTypes = {
-  text: React.PropTypes.string,
+  text: PropTypes.string,
 };
 
 InfoIcon.defaultProps = {
