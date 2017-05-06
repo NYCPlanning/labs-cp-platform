@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import LayerSelector from '../LayerSelector';
@@ -11,7 +12,7 @@ import PipelineStore from '../../stores/PipelineStore';
 
 const Pipeline = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {

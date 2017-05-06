@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -42,7 +43,7 @@ const defaultLayerConfig = {
 
 const Component = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';

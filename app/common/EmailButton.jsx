@@ -1,6 +1,7 @@
 // <a class="react-sharing-button__link react-sharing-button--email" href="mailto:?subject=Check%20out%20this%20NYC%20facility%20record&amp;body=%2Ffacility%2F2781b5bdfcda75dbc13b9df87013b970" target="_blank" rel="noopener noreferrer">
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import { Link } from 'react-router';

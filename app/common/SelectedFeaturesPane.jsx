@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const SelectedFeaturesPane = (props) => {
@@ -19,7 +20,7 @@ const SelectedFeaturesPane = (props) => {
 };
 
 SelectedFeaturesPane.propTypes = {
-  children: React.PropTypes.array.isRequired,
+  children: PropTypes.array.isRequired,
 };
 
 export default SelectedFeaturesPane;

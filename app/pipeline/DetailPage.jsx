@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
@@ -14,10 +15,10 @@ import './DetailPage.scss';
 
 const DevelopmentPage = React.createClass({
   propTypes: {
-    params: React.PropTypes.shape({
-      id: React.PropTypes.string,
+    params: PropTypes.shape({
+      id: PropTypes.string,
     }).isRequired,
-    location: React.PropTypes.shape().isRequired,
+    location: PropTypes.shape().isRequired,
   },
 
   getInitialState() {

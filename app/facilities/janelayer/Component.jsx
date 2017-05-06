@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -11,7 +12,7 @@ import FacilitiesStore from '../../stores/FacilitiesStore';
 
 const Facilities = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {

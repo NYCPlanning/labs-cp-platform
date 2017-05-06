@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import Divider from 'material-ui/Divider';
 
@@ -10,7 +11,7 @@ import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
 
 const CapitalProjects = React.createClass({
   propTypes: {
-    onUpdate: React.PropTypes.func,
+    onUpdate: PropTypes.func,
   },
 
   getDefaultProps() {

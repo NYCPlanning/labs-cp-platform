@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Numeral from 'numeral';
 import _ from 'underscore';
 
@@ -62,7 +63,6 @@ const ProjectPage = React.createClass({
       height: '100%',
     };
 
-    console.log(this.state.commitments);
     const tableRows = this.state.commitments.map(c => (
 
       <TableRow key={c.cartodb_id}>

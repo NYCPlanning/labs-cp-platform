@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import Footer from '../common/Footer';
@@ -37,7 +38,7 @@ const collaborateContent = (
 
 const HomePage = React.createClass({
   propTypes: {
-    showModal: React.PropTypes.func,
+    showModal: PropTypes.func,
   },
 
   getDefaultProps() {

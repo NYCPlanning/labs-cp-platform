@@ -1,7 +1,6 @@
 // Checkboxes.jsx - A checkbox multiselect component
-
-
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { List, ListItem } from 'material-ui/List';
 
 import Checkbox from '../common/Checkbox';

@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const RangeSlider = React.createClass({
   propTypes: {
-    disable: React.PropTypes.bool,
-    data: React.PropTypes.array.isRequired,
+    disable: PropTypes.bool,
+    data: PropTypes.array.isRequired,
   },
 
   getDefaultProps() {

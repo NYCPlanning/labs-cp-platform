@@ -48,7 +48,6 @@ const LayerSelector = React.createClass({
   },
 
   handleSliderChange(dimension, data) {
-    console.log(data)
     PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
   },
 

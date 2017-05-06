@@ -4,6 +4,7 @@
 // TODO: This is similar to SimplePointMap.jsx, maybe combine with that, or combine with a more generic MapboxGLMap.jsx
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
 import { Jane, JaneLayer } from 'jane-maps';
@@ -13,8 +14,8 @@ import appConfig from '../helpers/appConfig';
 
 const ModalMap = React.createClass({
   propTypes: {
-    feature: React.PropTypes.object.isRequired,
-    label: React.PropTypes.string,
+    feature: PropTypes.object.isRequired,
+    label: PropTypes.string,
   },
 
   getDefaultProps() {
