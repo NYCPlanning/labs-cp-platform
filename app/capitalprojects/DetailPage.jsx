@@ -64,11 +64,18 @@ const ProjectPage = createReactClass({
       height: '100%',
     };
 
+    const codeWidth = {
+      width: '15%',
+    };
+    const commitmentDescriptionWidth = {
+      width: '25%',
+    };
+
     const tableRows = this.state.commitments.map(c => (
 
       <TableRow key={c.cartodb_id}>
-        <TableRowColumn>{c.commitmentdescription}</TableRowColumn>
-        <TableRowColumn>{c.commitmentcode}</TableRowColumn>
+        <TableRowColumn style={commitmentDescriptionWidth}>{c.commitmentdescription}</TableRowColumn>
+        <TableRowColumn style={codeWidth}>{c.commitmentcode}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
@@ -186,10 +193,10 @@ const ProjectPage = createReactClass({
                       adjustForCheckbox={false}
                     >
                       <TableRow>
-                        <TableHeaderColumn>Cost Description</TableHeaderColumn>
-                        <TableHeaderColumn>Cost Code</TableHeaderColumn>
+                        <TableHeaderColumn style={commitmentDescriptionWidth}>Description</TableHeaderColumn>
+                        <TableHeaderColumn style={codeWidth}>Code</TableHeaderColumn>
                         <TableHeaderColumn>Budget Line</TableHeaderColumn>
-                        <TableHeaderColumn>Total Cost</TableHeaderColumn>
+                        <TableHeaderColumn>Planned <br /> Commitment</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
