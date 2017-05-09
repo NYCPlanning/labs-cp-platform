@@ -207,6 +207,28 @@ const Filter = createReactClass({
                 values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
               />
             </ListItem>
+
+            <Subheader>
+              Active Years
+              <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
+            </Subheader>
+            <ListItem
+              disabled
+              style={{
+                paddingTop: '0px',
+                zIndex: '0',
+              }}
+            >
+              <RangeSlider
+                data={filterDimensions.activeyears.values}
+                type={'double'}
+                onChange={this.handleSliderChange.bind(this, 'activeyears')}
+                step={1}
+                force_edges
+                prettify_enabled={false}
+                grid
+              />
+            </ListItem>
           </div>
         </div>
       )
