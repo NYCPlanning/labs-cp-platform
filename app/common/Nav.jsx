@@ -87,7 +87,6 @@ const Nav = createReactClass({
             <li><Link to="/"> Home</Link></li>
             {this.props.children}
             <li><Link to={this.props.about}>About</Link></li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScP9JxDvfCmMUxzT9l0_MRYBtTgeAep7pHYO5QUtrRCXGxVTw/viewform" target="_blank" rel="noopener noreferrer"> Send Feedback</a></li>
             {userMenu}
           </ul>
         </div>
