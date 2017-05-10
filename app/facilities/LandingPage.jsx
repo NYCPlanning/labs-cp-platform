@@ -131,6 +131,39 @@ const FacilitiesLandingPage = createReactClass({
                       Children, Seniors, ADA Facilities
                     </Link>
                   </div>
+                  <div className="box preset-link ">
+                    <Link
+                      className="btn btn-default"
+                      to={{
+                        pathname: '/facilities/explorer',
+                        state: {
+                          layers: layersGenerator.partialChecked({
+                            'Health and Human Services': { 'Health Care': null, 'Human Services': null },
+                            'Education, Child Welfare, and Youth': {
+                              'Schools (K-12)': null,
+                              'Child Care and Pre-Kindergarten': null,
+                              'Child Welfare': null,
+                              'Childrens Services': null,
+                              'Youth Services': null,
+                              Camps: null,
+                            },
+                            'Libraries and Cultural Programs': { Libraries: { 'Public Libraries': null } },
+                            'Public Safety, Emergency Services, and Administration of Justice': {
+                              'Public Safety': { 'School-Based Safety Program': null },
+                            },
+                            'Core Infrastructure and Transportation': { 'Solid Waste': { 'Solid Waste Transfer and Carting': null } },
+                          }),
+                        },
+                      }}
+                      onClick={() => ga.event({
+                        category: 'facilities-entry',
+                        action: 'frequently-used',
+                        label: 'Selected Community Resources',
+                      })}
+                    >
+                      Selected Community Resources
+                    </Link>
+                  </div>
 
                   <hr className="light" />
 
