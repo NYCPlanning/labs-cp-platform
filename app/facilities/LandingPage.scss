@@ -337,12 +337,13 @@
 
     .preset-link {
       a {
-        margin-bottom: 4px;
+        margin-bottom: 6px;
+        width: 250px;
         text-overflow: ellipsis;
         overflow: hidden;
 
         &:last-child {
-          margin-bottom: 0;
+          margin-bottom: 10px;
         }
       }
     }
