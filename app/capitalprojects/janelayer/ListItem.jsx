@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import numeral from 'numeral';
 
-import agencies from '../agencies';
+// import agencies from '../agencies';
 
 import './ListItem.scss';
 
@@ -19,7 +19,7 @@ const Item = (props) => {
     >
       <div
         className={'capital-projects-list-item'} style={{
-          borderLeft: `5px solid ${agencies.getAgencyColor(d.agency)}`,
+          borderLeft: `5px solid${d.totalspend > 0 ? '#d98127' : '#8B8C98'}`,
         }}
       >
         <div className={'title'}>{d.description}</div>
