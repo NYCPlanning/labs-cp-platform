@@ -2,7 +2,6 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Numeral from 'numeral';
 import Divider from 'material-ui/Divider';
 
 import CapitalProjectsActions from '../actions/CapitalProjectsActions';
@@ -160,12 +159,12 @@ const Filter = createReactClass({
             style={{
               paddingTop: '0px',
               zIndex: '0',
+              position: 'initial',
             }}
           >
             <RangeInputs
               data={filterDimensions.totalspend.values}
               onChange={this.handleSliderChange.bind(this, 'totalspend')}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
             />
           </ListItem>
 
@@ -184,7 +183,6 @@ const Filter = createReactClass({
             <RangeInputs
               data={filterDimensions.totalcommit.values}
               onChange={this.handleSliderChange.bind(this, 'totalcommit')}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
             />
           </ListItem>
 

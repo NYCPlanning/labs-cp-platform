@@ -3,7 +3,6 @@
 
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
 function getBase(number) {
@@ -42,6 +41,14 @@ function getMultiplier(multiplierSymbol) {
 }
 
 const BigMoneyInput = createReactClass({
+  componentWillMount() {
+    const { value } = this.props;
+    this.setState({ multiplier: getMultiplier(getAbbrev(value)) });
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.baseEl.value = getBase(nextProps.value);
+  },
 
   handleSubmit(e) {
     if (e) e.preventDefault();
@@ -50,21 +57,25 @@ const BigMoneyInput = createReactClass({
     const { multiplier } = this.state;
 
     // gather base and multiplier, pass new value to onSubmit()
-    const newValue = parseInt(this.baseEl.value) * parseInt(multiplier);
-    console.log('newValue', newValue);
+    const newValue = parseFloat(this.baseEl.value) * parseInt(multiplier);
 
     onSubmit(newValue);
   },
 
   handleSelect(multiplierSymbol) {
     const multiplier = getMultiplier(multiplierSymbol);
-    console.log(multiplier);
     // set multiplier in component state, trigger submit
     this.setState({ multiplier }, () => { this.handleSubmit(); });
   },
 
   render() {
-    const { value, style } = this.props;
+    const { value, alignRight } = this.props;
+
+    const style = alignRight ? { float: 'right' } : {};
+    const dropdownStyle = {
+      left: 'initial',
+      right: 0,
+    };
 
     return (
       <form className="manual-range-input" onSubmit={this.handleSubmit} style={style}>
@@ -86,7 +97,9 @@ const BigMoneyInput = createReactClass({
               <Dropdown.Toggle>
                 {getAbbrev(value)}
               </Dropdown.Toggle>
-              <Dropdown.Menu className="super-colors">
+              <Dropdown.Menu
+                style={alignRight ? dropdownStyle : {}}
+              >
                 <MenuItem eventKey="--">--</MenuItem>
                 <MenuItem eventKey="K">thousand</MenuItem>
                 <MenuItem eventKey="M">million</MenuItem>

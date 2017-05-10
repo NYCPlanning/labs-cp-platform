@@ -1,6 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import Numeral from 'numeral';
 
 import BigMoneyInput from './BigMoneyInput';
 
@@ -38,8 +39,18 @@ const RangeInputs = createReactClass({
   render() {
     const { data } = this.props;
 
+    function prettify(value) {
+      return Numeral(value).format('($0.0 a)').toUpperCase();
+    }
+
     return (
-      <div>
+      <div className="range-input">
+        <div className="pretty-number-range">
+          <div className="number">{prettify(data[0])}</div>
+          <div className="number">{prettify(data[1])}</div>
+          <div className="divider" />
+        </div>
+        <br />
         <BigMoneyInput
           value={data[0]}
           onSubmit={this.updateMin}
@@ -47,7 +58,7 @@ const RangeInputs = createReactClass({
         <BigMoneyInput
           value={data[1]}
           onSubmit={this.updateMax}
-          style={{ float: 'right' }}
+          alignRight
         />
       </div>
     );
