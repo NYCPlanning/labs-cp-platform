@@ -138,7 +138,7 @@ const ProjectPage = createReactClass({
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
-                <CardHeader title="Spent" />
+                <CardHeader title="Spent to Date" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalspend)}</h2>
                   <p className="subtext">spent to date</p>
@@ -148,7 +148,7 @@ const ProjectPage = createReactClass({
 
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
-                <CardHeader title="Committed" />
+                <CardHeader title="Planned Commitment" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalcommit)}</h2>
                   <p className="subtext">committed as of April 2017</p>
