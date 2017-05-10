@@ -47,8 +47,8 @@ const RangeInputs = createReactClass({
       <div className="range-input">
         <div className="pretty-number-range">
           <div className="number">{prettify(data[0])}</div>
-          <div className="number">{prettify(data[1])}</div>
           <div className="divider" />
+          <div className="number">{prettify(data[1])}</div>
         </div>
         <br />
         <BigMoneyInput

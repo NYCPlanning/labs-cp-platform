@@ -75,6 +75,7 @@ const BigMoneyInput = createReactClass({
     const dropdownStyle = {
       left: 'initial',
       right: 0,
+      zIndex: 3,
     };
 
     return (
