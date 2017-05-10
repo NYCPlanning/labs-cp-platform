@@ -1,8 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+
+import BigMoneyInput from './BigMoneyInput';
 
 import './RangeInputs.scss';
+
 
 const RangeInputs = createReactClass({
   propTypes: {
@@ -17,55 +20,35 @@ const RangeInputs = createReactClass({
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    const { prettify } = this.props;
-
-    if (nextProps.data[0] !== this.props.data[0]) this.min.value = prettify(nextProps.data[0]);
-    if (nextProps.data[1] !== this.props.data[1]) this.max.value = prettify(nextProps.data[1]);
-  },
-
-  updateMin(e) {
-    e.preventDefault();
-
+  updateMin(value) {
     this.props.onChange({
-      from: this.min.value,
+      from: value,
       to: this.props.data[1],
     });
   },
 
-  updateMax(e) {
-    e.preventDefault();
-
+  updateMax(value) {
     this.props.onChange({
       from: this.props.data[0],
-      to: this.max.value,
+      to: value,
     });
   },
 
 
   render() {
-    const { data, prettify } = this.props;
+    const { data } = this.props;
 
     return (
       <div>
-        <form className="manual-range-input" onSubmit={this.updateMin}>
-          <input
-            type="text"
-            className="form-control mb-2 mr-sm-2 mb-sm-0"
-            defaultValue={prettify(data[0])}
-            ref={(min) => { this.min = min; }}
-          />
-        </form>
-        <form className="manual-range-input" onSubmit={this.updateMax}>
-          <input
-            type="text"
-            style={{ float: 'right' }}
-            className="form-control mb-2 mr-sm-2 mb-sm-0"
-            defaultValue={prettify(data[1])}
-            ref={(max) => { this.max = max; }}
-          />
-          <input type="submit" value="Submit" />
-        </form>
+        <BigMoneyInput
+          value={data[0]}
+          onSubmit={this.updateMin}
+        />
+        <BigMoneyInput
+          value={data[1]}
+          onSubmit={this.updateMax}
+          style={{ float: 'right' }}
+        />
       </div>
     );
   },

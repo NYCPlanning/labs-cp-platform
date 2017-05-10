@@ -1,12 +1,15 @@
 .manual-range-input {
-  display: inline;
-  
-  input {
-    width: 120px;
-    display: inline-block;
+  display: inline-block;
+
+  .input-group {
+    width: 130px;
     margin-bottom: 10px;
     text-align: center;
   }
+
+  // .input-group-addon:first-child {
+  //   padding: 4px;
+  // }
 
   input[type="submit"] {
     display: none;

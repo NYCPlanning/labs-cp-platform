@@ -167,16 +167,6 @@ const Filter = createReactClass({
               onChange={this.handleSliderChange.bind(this, 'totalspend')}
               prettify={num => Numeral(num).format('($ 0.00 a)')}
             />
-            <RangeSlider
-              data={filterDimensions.totalspend.values}
-              type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'totalspend')}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
-              grid
-              force_edges
-              max_postfix="+"
-              values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
-            />
           </ListItem>
 
           <Subheader>
@@ -195,17 +185,6 @@ const Filter = createReactClass({
               data={filterDimensions.totalcommit.values}
               onChange={this.handleSliderChange.bind(this, 'totalcommit')}
               prettify={num => Numeral(num).format('($ 0.00 a)')}
-            />
-            <RangeSlider
-              data={filterDimensions.totalcommit.values}
-              type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'totalcommit')}
-              step={1000}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
-              grid
-              force_edges
-              max_postfix="+"
-              values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
             />
           </ListItem>
 
