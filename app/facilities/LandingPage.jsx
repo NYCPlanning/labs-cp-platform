@@ -138,16 +138,23 @@ const FacilitiesLandingPage = createReactClass({
                         pathname: '/facilities/explorer',
                         state: {
                           layers: layersGenerator.partialChecked({
-                            'Health and Human Services': { 'Health Care': null, 'Human Services': null },
+                            'Health and Human Services': {
+                              'Health Care': {
+                                'Hospitals and Clinics': null,
+                                'Mental Health': null,
+                                'Residential Health Care': null,
+                                'Chemical Dependency': null },
+                              'Human Services': null,
+                            },
                             'Education, Child Welfare, and Youth': {
-                              'Schools (K-12)': null,
+                              'Schools (K-12)': { 'Public Schools': null },
                               'Child Care and Pre-Kindergarten': null,
-                              'Child Welfare': null,
-                              'Childrens Services': null,
+                              'Childrens Services': { 'Foster Care Services and Residential Care': null },
                               'Youth Services': null,
                               Camps: null,
                             },
-                            'Libraries and Cultural Programs': { Libraries: { 'Public Libraries': null } },
+                            'Libraries and Cultural Programs': {
+                              Libraries: { 'Public Libraries': null } },
                             'Public Safety, Emergency Services, and Administration of Justice': {
                               'Public Safety': { 'School-Based Safety Program': null },
                             },
