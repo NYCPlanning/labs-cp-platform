@@ -131,6 +131,46 @@ const FacilitiesLandingPage = createReactClass({
                       Children, Seniors, ADA Facilities
                     </Link>
                   </div>
+                  <div className="box preset-link ">
+                    <Link
+                      className="btn btn-default"
+                      to={{
+                        pathname: '/facilities/explorer',
+                        state: {
+                          layers: layersGenerator.partialChecked({
+                            'Health and Human Services': {
+                              'Health Care': {
+                                'Hospitals and Clinics': null,
+                                'Mental Health': null,
+                                'Residential Health Care': null,
+                                'Chemical Dependency': null },
+                              'Human Services': null,
+                            },
+                            'Education, Child Welfare, and Youth': {
+                              'Schools (K-12)': { 'Public Schools': null },
+                              'Child Care and Pre-Kindergarten': null,
+                              'Childrens Services': { 'Foster Care Services and Residential Care': null },
+                              'Youth Services': null,
+                              Camps: null,
+                            },
+                            'Libraries and Cultural Programs': {
+                              Libraries: { 'Public Libraries': null } },
+                            'Public Safety, Emergency Services, and Administration of Justice': {
+                              'Public Safety': { 'School-Based Safety Program': null },
+                            },
+                            'Core Infrastructure and Transportation': { 'Solid Waste': { 'Solid Waste Transfer and Carting': null } },
+                          }),
+                        },
+                      }}
+                      onClick={() => ga.event({
+                        category: 'facilities-entry',
+                        action: 'frequently-used',
+                        label: 'Selected Community Resources',
+                      })}
+                    >
+                      Selected Community Resources
+                    </Link>
+                  </div>
 
                   <hr className="light" />
 
