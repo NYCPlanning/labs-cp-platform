@@ -120,7 +120,7 @@ const CostGroupChart = createReactClass({
       .transition(t)
       .attr('y', d => y(d.count))
       .attr('height', d => (this.height + this.margin.top) - y(d.count))
-      .attr('fill', 'steelblue');
+      .attr('fill', '#d96b27');
 
     // bar labels
     barEnter.append('text')

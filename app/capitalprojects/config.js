@@ -469,8 +469,8 @@ const defaultLayerConfig = {
         'circle-color': {
           property: 'totalspend',
           stops: [
-            [0, '#999'],
-            [1, '#FFCC00'],
+            [0, '#8B8C98'],
+            [1, '#d98127'],
           ],
         },
         'circle-opacity': 0.7,
@@ -485,8 +485,8 @@ const defaultLayerConfig = {
         'fill-color': {
           property: 'totalspend',
           stops: [
-            [0, '#999'],
-            [1, '#FFCC00'],
+            [0, '#8B8C98'],
+            [1, '#d98127'],
           ],
         },
         'fill-opacity': 0.75,

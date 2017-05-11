@@ -64,11 +64,18 @@ const ProjectPage = createReactClass({
       height: '100%',
     };
 
+    const codeWidth = {
+      width: '15%',
+    };
+    const commitmentDescriptionWidth = {
+      width: '25%',
+    };
+
     const tableRows = this.state.commitments.map(c => (
 
       <TableRow key={c.cartodb_id}>
-        <TableRowColumn>{c.commitmentdescription}</TableRowColumn>
-        <TableRowColumn>{c.commitmentcode}</TableRowColumn>
+        <TableRowColumn style={commitmentDescriptionWidth}>{c.commitmentdescription}</TableRowColumn>
+        <TableRowColumn style={codeWidth}>{c.commitmentcode}</TableRowColumn>
         <TableRowColumn>{c.budgetline}</TableRowColumn>
         <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
         {/* eslint-disable no-undef */}
@@ -131,7 +138,7 @@ const ProjectPage = createReactClass({
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
-                <CardHeader title="Spent" />
+                <CardHeader title="Spent to Date" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalspend)}</h2>
                   <p className="subtext">spent to date</p>
@@ -141,7 +148,7 @@ const ProjectPage = createReactClass({
 
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
-                <CardHeader title="Committed" />
+                <CardHeader title="Planned Commitment" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalcommit)}</h2>
                   <p className="subtext">committed as of April 2017</p>
@@ -186,10 +193,10 @@ const ProjectPage = createReactClass({
                       adjustForCheckbox={false}
                     >
                       <TableRow>
-                        <TableHeaderColumn>Cost Description</TableHeaderColumn>
-                        <TableHeaderColumn>Cost Code</TableHeaderColumn>
+                        <TableHeaderColumn style={commitmentDescriptionWidth}>Description</TableHeaderColumn>
+                        <TableHeaderColumn style={codeWidth}>Code</TableHeaderColumn>
                         <TableHeaderColumn>Budget Line</TableHeaderColumn>
-                        <TableHeaderColumn>Total Cost</TableHeaderColumn>
+                        <TableHeaderColumn>Planned <br /> Commitment</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>
                       </TableRow>
                     </TableHeader>
