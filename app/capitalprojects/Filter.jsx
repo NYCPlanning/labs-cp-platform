@@ -177,7 +177,7 @@ const Filter = createReactClass({
             disabled
             style={{
               paddingTop: '0px',
-              zIndex: '0',
+              zIndex: 1,
             }}
           >
             <RangeInputs
