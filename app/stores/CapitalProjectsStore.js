@@ -16,8 +16,8 @@ class CapitalProjectsStore extends EventsEmitter {
     this.filterDimensions = JSON.parse(JSON.stringify(defaultFilterDimensions));
     this.sqlConfig = {
       columns: '*',
-      pointsTablename: '(SELECT a.the_geom, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
-      polygonsTablename: '(SELECT a.the_geom, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate  FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+      pointsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+      polygonsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate  FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
     };
     this.sqlBuilder = new CapitalProjectsSqlBuilder(this.sqlConfig.columns, 'tablenameplaceholder');
 
