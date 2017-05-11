@@ -190,6 +190,7 @@ const Filter = createReactClass({
             Active Years
             <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
           </Subheader>
+          
           <ListItem
             disabled
             style={{
