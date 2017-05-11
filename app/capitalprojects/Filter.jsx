@@ -2,7 +2,6 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Numeral from 'numeral';
 import Divider from 'material-ui/Divider';
 
 import CapitalProjectsActions from '../actions/CapitalProjectsActions';
@@ -160,22 +159,12 @@ const Filter = createReactClass({
             style={{
               paddingTop: '0px',
               zIndex: '0',
+              position: 'initial',
             }}
           >
             <RangeInputs
               data={filterDimensions.totalspend.values}
               onChange={this.handleSliderChange.bind(this, 'totalspend')}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
-            />
-            <RangeSlider
-              data={filterDimensions.totalspend.values}
-              type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'totalspend')}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
-              grid
-              force_edges
-              max_postfix="+"
-              values={[0, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
             />
           </ListItem>
 
@@ -188,24 +177,12 @@ const Filter = createReactClass({
             disabled
             style={{
               paddingTop: '0px',
-              zIndex: '0',
+              zIndex: 1,
             }}
           >
             <RangeInputs
               data={filterDimensions.totalcommit.values}
               onChange={this.handleSliderChange.bind(this, 'totalcommit')}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
-            />
-            <RangeSlider
-              data={filterDimensions.totalcommit.values}
-              type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'totalcommit')}
-              step={1000}
-              prettify={num => Numeral(num).format('($ 0.00 a)')}
-              grid
-              force_edges
-              max_postfix="+"
-              values={[1000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 10000000000]}
             />
           </ListItem>
 
