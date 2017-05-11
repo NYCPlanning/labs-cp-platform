@@ -85,7 +85,7 @@ const BigMoneyInput = createReactClass({
             $
           </span>
           <input
-            type="text"
+            type="number"
             className="form-control mb-2 mr-sm-2 mb-sm-0"
             defaultValue={getBase(value)}
             ref={(baseEl) => { this.baseEl = baseEl; }}

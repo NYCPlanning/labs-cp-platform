@@ -12,13 +12,6 @@ const RangeInputs = createReactClass({
   propTypes: {
     data: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
-    prettify: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      prettify: value => value,
-    };
   },
 
   updateMin(value) {
