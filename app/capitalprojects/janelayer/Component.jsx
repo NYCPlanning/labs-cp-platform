@@ -2,10 +2,9 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import Divider from 'material-ui/Divider';
 
 import Filter from '../Filter';
-import Download from '../../common/Download';
+import Download from '../Download';
 import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
@@ -46,11 +45,11 @@ const CapitalProjects = createReactClass({
     layerConfig.legend = (
       <div className="legendSection">
         <div className="legendItem">
-          <div className="colorBox" style={{ backgroundColor: '#999' }} />
+          <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
           <div className="legendItemText">Planned Projects</div>
         </div>
         <div className="legendItem">
-          <div className="colorBox" style={{ backgroundColor: '#FFCC00' }} />
+          <div className="colorBox" style={{ backgroundColor: '#d98127' }} />
           <div className="legendItemText">Ongoing Projects</div>
         </div>
       </div>
@@ -81,16 +80,11 @@ const CapitalProjects = createReactClass({
         <Tab label="Download">
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
-              <h3>Points</h3>
               <Download
-                sql={CapitalProjectsStore.pointsSql}
-                filePrefix="projects-points"
-              />
-              <Divider />
-              <h3>Polygons</h3>
-              <Download
-                sql={CapitalProjectsStore.polygonsSql}
-                filePrefix="projects-polygons"
+                pointsSql={CapitalProjectsStore.pointsSql}
+                polygonsSql={CapitalProjectsStore.polygonsSql}
+                pointsPrefix="projects-points"
+                polygonsPrefix="projects-polygons"
               />
               <SignupPrompt />
             </div>
