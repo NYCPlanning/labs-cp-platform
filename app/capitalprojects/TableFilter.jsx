@@ -7,10 +7,10 @@ import Subheader from 'material-ui/Subheader';
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
 import RangeInputs from '../common/RangeInputs';
+import RangeSlider from '../common/RangeSlider';
 import CountWidget from '../common/CountWidget';
 import CapitalProjectsTableActions from '../actions/CapitalProjectsTableActions';
 import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
-
 
 const Filter = createReactClass({
   propTypes: {
