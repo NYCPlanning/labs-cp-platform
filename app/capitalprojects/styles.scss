@@ -9,6 +9,16 @@
   }
 }
 
+@media (min-width: 992px) {
+  .project-page {
+    .equal, .equal > div[class*='col-'] {
+      display: -webkit-flex;
+      display: flex;
+      flex:1 1 auto;
+    }
+  }
+}
+
 /* Capital Expenditures Chart */
 
   .month-bar:hover {

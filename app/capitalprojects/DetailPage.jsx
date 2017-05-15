@@ -15,6 +15,7 @@ import CapitalProjectsActions from '../actions/CapitalProjectsActions';
 import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 
 import '../app.scss';
+import './styles.scss';
 
 const ProjectPage = createReactClass({
 
@@ -62,6 +63,7 @@ const ProjectPage = createReactClass({
     const CardStyles = {
       zDepth: 1,
       height: '100%',
+      width: '100%',
     };
 
     const codeWidth = {
@@ -116,7 +118,7 @@ const ProjectPage = createReactClass({
         </div>
 
         <div className={'col-md-6'}>
-          <div className={'row'} style={{ marginBottom: '15px', marginTop: '15px' }}>
+          <div className={'row equal'} style={{ marginBottom: '15px', marginTop: '15px' }}>
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
                 <CardHeader title="Managed By" />
