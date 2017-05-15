@@ -161,6 +161,10 @@ const exports = {
                 description: 'Community gardens',
               },
               {
+                name: 'Privately Owned Public Space',
+                description: 'Plazas, arcades, and other open space provided for public use by a private office or residential building owner',
+              },
+              {
                 name: 'Preserves and Conservation Areas',
                 description: 'Nature areas, preserves, wetlands, and state forests',
               },
