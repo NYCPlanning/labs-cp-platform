@@ -63,6 +63,7 @@ const ProjectPage = createReactClass({
     const CardStyles = {
       zDepth: 1,
       height: '100%',
+      width: '100%',
     };
 
     const tableRows = this.state.commitments.map(c => (
@@ -110,7 +111,7 @@ const ProjectPage = createReactClass({
         </div>
 
         <div className={'col-md-6'}>
-          <div className={'row equal'} style={{ marginBottom: '15px', marginTop: '15px', height: '100%' }}>
+          <div className={'row equal'} style={{ marginBottom: '15px', marginTop: '15px' }}>
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
                 <CardHeader title="Managed By" />
