@@ -424,6 +424,7 @@ const defaultTableFilterDimensions = {
   projecttype: defaultFilterDimensions.projecttype,
   totalspend: defaultFilterDimensions.totalspend,
   totalcommit: defaultFilterDimensions.totalcommit,
+  activeyears: defaultFilterDimensions.activeyears,
 };
 
 const defaultLayerConfig = {

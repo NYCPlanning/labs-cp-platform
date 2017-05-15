@@ -184,6 +184,27 @@ const Filter = createReactClass({
               />
             </ListItem>
 
+            <Subheader>
+              Active Years
+              <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
+            </Subheader>
+            <ListItem
+              disabled
+              style={{
+                paddingTop: '0px',
+                zIndex: '0',
+              }}
+            >
+              <RangeSlider
+                data={filterDimensions.activeyears.values}
+                type={'double'}
+                onChange={this.handleSliderChange.bind(this, 'activeyears')}
+                step={1}
+                force_edges
+                prettify_enabled={false}
+                grid
+              />
+            </ListItem>
           </div>
         </div>
       )
