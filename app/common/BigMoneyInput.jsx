@@ -89,6 +89,7 @@ const BigMoneyInput = createReactClass({
             className="form-control mb-2 mr-sm-2 mb-sm-0"
             defaultValue={getBase(value)}
             ref={(baseEl) => { this.baseEl = baseEl; }}
+            step={0.01}
           />
           <div className="input-group-btn">
             <Dropdown
