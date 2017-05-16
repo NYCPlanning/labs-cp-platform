@@ -26,7 +26,8 @@ const janeLayerConfig = {
         {
           id: 'nyaerials',
           type: 'raster',
-          tiles: `//${appConfig.api_domain}/tiles/dhsesorthos/{z}/{y}/{x}.png`,
+          tileSize: 256,
+          tiles: `//${appConfig.api_domain}/tiles/doitt/tms/1.0.0/photo/2016/{z}/{x}/{y}.png`,
         },
       ]}
       mapLayers={[
