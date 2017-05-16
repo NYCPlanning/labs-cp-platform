@@ -9,7 +9,6 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
-import CommitmentExpenditureChart from './CommitmentExpenditureChart';
 import FeedbackForm from '../common/FeedbackForm';
 import CapitalProjectsActions from '../actions/CapitalProjectsActions';
 import CapitalProjectsStore from '../stores/CapitalProjectsStore';
@@ -168,17 +167,6 @@ const ProjectPage = createReactClass({
                   {/* eslint-disable no-undef */}
                   <p className="subtext">{moment(d.mindate).format('MMM YYYY')} thru {moment(d.maxdate).format('MMM YYYY')}</p>
                   {/* eslint-enable no-undef */}
-                </CardText>
-              </Card>
-            </div>
-          </div>
-
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Costs Over Time" actAsExpander showExpandableButton />
-                <CardText expandable>
-                  <CommitmentExpenditureChart maprojid={this.props.params.id} />
                 </CardText>
               </Card>
             </div>
