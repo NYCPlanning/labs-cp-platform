@@ -33,7 +33,7 @@ const RangeInputs = createReactClass({
     const { data } = this.props;
 
     function prettify(value) {
-      return Numeral(value).format('($0.0 a)').toUpperCase();
+      return Numeral(value).format('($0.00 a)').toUpperCase();
     }
 
     return (
