@@ -9,12 +9,12 @@ import './ListItem.scss';
 
 const Item = (props) => {
   const d = props.feature.properties;
-  console.log(d);
+  // console.log(d);
 
   return (
     <div
       className={'capital-projects-list-item'} style={{
-        borderLeft: `5px solid${d.totalspend > 0 ? '#d98127' : '#8B8C98'}`,
+        borderLeft: `5px solid${'#5C99FF'}`,
       }}
     >
       <div className={'title'}>{d.schoolname} - {d.description ? d.description : 'No Description'}</div>
