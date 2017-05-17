@@ -8,7 +8,9 @@ import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 import CapitalProjectsActions from '../actions/CapitalProjectsActions';
 import supportingLayers from '../janelayers/supportingLayers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
-import ListItem from './janelayer/ListItem';
+import CPListItem from './CPListItem';
+import SCAListItem from './SCAListItem';
+import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
 import { mapInit, searchConfig } from '../helpers/appConfig';
 
@@ -42,9 +44,17 @@ const CapitalProjectsExplorer = createReactClass({
   render() {
     const { selectedFeatures } = this.state;
 
-    const listItems = selectedFeatures.map(feature => (
-      <ListItem feature={feature} key={feature.id} />
-    ));
+    const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
+
+    console.log(selectedFeaturesSource);
+
+    const listItems = selectedFeatures.map((feature) => {
+      if (selectedFeaturesSource === 'capital-projects') {
+        return <CPListItem feature={feature} key={feature.id} />;
+      }
+
+      return <SCAListItem feature={feature} key={feature.id} />;
+    });
 
     const selectedFeaturesPane = (
       <SelectedFeaturesPane>
@@ -65,6 +75,14 @@ const CapitalProjectsExplorer = createReactClass({
           {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
           {supportingLayers.transportation}
+          <JaneLayer
+            id="scaplan"
+            name="SCA Capital Plan"
+            icon="graduation-cap"
+            onMapLayerClick={this.handleMapLayerClick}
+          >
+            <SCAPlanComponent />
+          </JaneLayer>
           <JaneLayer
             id="capital-projects"
             name="Capital Projects"
