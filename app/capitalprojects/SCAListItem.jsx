@@ -13,14 +13,12 @@ const Item = (props) => {
 
   return (
     <div
-      className={'capital-projects-list-item'} style={{
+      className={'sca-list-item'} style={{
         borderLeft: `5px solid${'#5C99FF'}`,
       }}
     >
       <div className={'title'}>{d.schoolname} - {d.description ? d.description : 'No Description'}</div>
       <div className={'subtitle'}>{d.type}</div>
-
-      <i className="fa fa-chevron-right" />
     </div>
   );
 };
