@@ -24,6 +24,10 @@ const CapitalProjectsExplorer = createReactClass({
     };
   },
 
+  componentWillMount() {
+    CapitalProjectsActions.resetFilter();
+  },
+
   componentDidMount() {
     CapitalProjectsStore.on('selectedFeaturesUpdated', () => {
       const selectedFeatures = CapitalProjectsStore.selectedFeatures;
@@ -45,8 +49,6 @@ const CapitalProjectsExplorer = createReactClass({
     const { selectedFeatures } = this.state;
 
     const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
-
-    console.log(selectedFeaturesSource);
 
     const listItems = selectedFeatures.map((feature) => {
       if (selectedFeaturesSource === 'capital-projects') {

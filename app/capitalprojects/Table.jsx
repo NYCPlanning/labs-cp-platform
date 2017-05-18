@@ -44,6 +44,7 @@ const CPTable = createReactClass({ // eslint-disable-line
     });
 
     CapitalProjectsTableStore.initialize();
+    CapitalProjectsTableActions.resetFilter();
   },
 
   handleFilterBy(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()

@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import numeral from 'numeral';
-
-// import agencies from '../agencies';
 
 import './ListItem.scss';
 
 const Item = (props) => {
   const d = props.feature.properties;
-  console.log(d);
 
   return (
     <div

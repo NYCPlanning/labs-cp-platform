@@ -24,6 +24,8 @@ class FacilitiesStore extends EventsEmitter {
   }
 
   initialize() {
+    console.log('INITIALIZE FAC')
+
     const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.tablename}`, 'json')
       .then((data) => {
         this.totalCount = data[0].count;
