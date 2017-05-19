@@ -16,7 +16,11 @@ const exports = {
             children: [
               {
                 name: 'Public K-12 Schools',
-                description: 'Public and charter elementary, middle, and high schools',
+                description: 'Public elementary, middle, and high schools',
+              },
+              {
+                name: 'Charter K-12 Schools',
+                description: 'Publically funded charter elementary, middle, and high schools',
               },
               {
                 name: 'Non-Public K-12 Schools',
