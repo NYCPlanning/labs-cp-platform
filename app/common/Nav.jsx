@@ -9,9 +9,9 @@ import './Nav.scss';
 
 const Nav = createReactClass({
   propTypes: {
-    title: React.PropTypes.string,
-    about: React.PropTypes.string,
-    children: React.PropTypes.array,
+    title: PropTypes.string,
+    about: PropTypes.string,
+    children: PropTypes.array,
   },
 
   getDefaultProps() {

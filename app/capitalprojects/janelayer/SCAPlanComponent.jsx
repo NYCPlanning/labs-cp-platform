@@ -20,7 +20,6 @@ const SCAPlanComponent = createReactClass({
   },
 
   updateLayerConfig() {
-    // console.log('updatelayerconfig');
     // pass the new config up to Jane
     const layerConfig = {
       sources: [

@@ -27,6 +27,8 @@ class CapitalProjectsStore extends EventsEmitter {
   }
 
   initialize() {
+    console.log('INITIALIZE CPSTORE')
+
     const p1 = carto.SQL(`SELECT COUNT(*) FROM ${this.sqlConfig.pointsTablename}`, 'json')
       .then((data) => {
         this.pointsTotal = data[0].count;
