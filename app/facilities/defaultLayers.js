@@ -11,20 +11,28 @@ const exports = {
         children: [
           {
             name: 'Schools (K-12)',
-            description: 'Preschools, K-12 schools, and higher education overseen by NYC Dept. of Education and NYS Education Department',
+            description: 'K-12 and alternative equivalency programs overseen by NYC Dept. of Education and NYS Education Department',
             color: '#f7ca00',
             children: [
               {
-                name: 'Public Schools',
-                description: 'Public and charter elementary, middle, and high schools',
+                name: 'Public K-12 Schools',
+                description: 'Public elementary, middle, and high schools',
               },
               {
-                name: 'Non-public Schools',
+                name: 'Charter K-12 Schools',
+                description: 'Publically funded charter elementary, middle, and high schools',
+              },
+              {
+                name: 'Non-Public K-12 Schools',
                 description: 'Private elementary, middle, and high schools',
               },
               {
-                name: 'Other Schools Serving Students with Disabilities',
+                name: 'Special Ed and Schools for Students with Disabilities',
                 description: 'Specialized schools and educational services for students with disabilities',
+              },
+              {
+                name: 'GED and Alternative High School Equivalency',
+                description: 'Alternative programs for obtaining high school equivalency degree',
               },
             ],
           },
@@ -52,7 +60,7 @@ const exports = {
             ],
           },
           {
-            name: 'Childrens Services',
+            name: 'Child Services and Welfare',
             description: 'Services overseen by NYC Health and Human Services and NYC Administration for Children\'s Services',
             color: '#da664f',
             children: [
@@ -64,20 +72,9 @@ const exports = {
                 name: 'Preventative Care, Evaluation Services, and Respite',
                 description: 'Preventative care and intervention services',
               },
-            ],
-          },
-          {
-            name: 'Child Welfare',
-            description: 'Child feeding centers tracked by New York State Education Department',
-            color: '#5bb12f',
-            children: [
               {
                 name: 'Child Nutrition',
-                description: 'Summer and year-round child feeding sites',
-              },
-              {
-                name: 'School-Based Food Services',
-                description: 'Feed services located at schools',
+                description: 'Summer and year-round child feeding centers, either based at NYC Dept of Education schools or tracked by New York State Education Department',
               },
             ],
           },
@@ -159,6 +156,10 @@ const exports = {
               {
                 name: 'Gardens',
                 description: 'Community gardens',
+              },
+              {
+                name: 'Privately Owned Public Space',
+                description: 'Plazas, arcades, and other open space provided for public use by a private office or residential building owner',
               },
               {
                 name: 'Preserves and Conservation Areas',
