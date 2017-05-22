@@ -136,7 +136,19 @@ const DetailPage = createReactClass({
     const childcareTooltip = () => {
       if (d.facgroup === 'Child Care and Pre-Kindergarten') {
         return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DOE, ACS, and DOHMH capacity numbers for DOE Universal Pre-K and Child Care sites do not match up, because they are all calculated and tracked for different purposes. DOE and ACS each track the number of program seats their agency subsidizes at a facility based on their respective contracts. DOHMH determines capacity as the maximum capacity the space will allow based on square footage.</Tooltip>}>
+          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DOE, ACS, and DOHMH capacity numbers for DOE Universal Pre-K and Child Care sites do not match up, because they are all calculated and tracked for different purposes. DOE and ACS each track the number of program seats their agency oversees or funds at a facility based on their respective contracts. DOHMH determines capacity as the maximum capacity the space will allow based on square footage.</Tooltip>}>
+            <i className="fa fa-info-circle" aria-hidden="true" />
+          </OverlayTrigger>
+        );
+      }
+
+      return null;
+    };
+
+    const popsTooltip = () => {
+      if (d.facsubgrp === 'Privately Owned Public Space') {
+        return (
+          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP is only responsible for certifying the initial creation of POPs. DOB is responsible for inspecting POPs.</Tooltip>}>
             <i className="fa fa-info-circle" aria-hidden="true" />
           </OverlayTrigger>
         );
@@ -166,7 +178,7 @@ const DetailPage = createReactClass({
             </div>
             <div className="col-md-9 col-md-pull-3">
               <h1>{d.facname}</h1>
-              <h2 style={{ marginBottom: '5px' }}><small>{d.address}</small></h2>
+              <h2 style={{ marginBottom: '5px' }}><small>{d.address + ', ' + d.city + ', NY ' + d.zipcode}</small></h2>
               <ol className="breadcrumb">
                 <li>{d.facdomain}</li>
                 <li>{d.facgroup}</li>
@@ -200,7 +212,7 @@ const DetailPage = createReactClass({
                   </div>
                   <div className={'col-md-6'}>
                     <div className="panel panel-default">
-                      <div className="panel-heading">Overseen By</div>
+                      <div className="panel-heading">Overseen By {popsTooltip()}</div>
                       <div className="panel-body">
                         <h3>{asList(d.overagency)}</h3>
                       </div>
@@ -213,8 +225,7 @@ const DetailPage = createReactClass({
                     <div className="row equal">
                       <div className={'col-md-6'}>
                         <div className="panel panel-default">
-                          <div className="panel-heading">Facility Size
-                            {childcareTooltip()}
+                          <div className="panel-heading">Facility Size {childcareTooltip()}
                           </div>
                           <div className="panel-body">
                             {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }

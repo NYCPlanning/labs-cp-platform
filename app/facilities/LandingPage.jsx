@@ -125,10 +125,33 @@ const FacilitiesLandingPage = createReactClass({
                       onClick={() => ga.event({
                         category: 'facilities-entry',
                         action: 'frequently-used',
-                        label: 'Children, Seniors, ADA Facilities',
+                        label: 'Children, Seniors, ADA Programs',
                       })}
                     >
-                      Children, Seniors, ADA Facilities
+                      Children, Seniors, ADA Programs
+                    </Link>
+                  </div>
+                  <div className="box preset-link ">
+                    <Link
+                      className="btn btn-default"
+                      to={{
+                        pathname: '/facilities/explorer',
+                        state: {
+                          layers: layersGenerator.partialChecked({
+                            'Parks, Gardens, and Historical Sites': {
+                              'Parks and Plazas': {
+                                'Privately Owned Public Space': null },
+                            },
+                          }),
+                        },
+                      }}
+                      onClick={() => ga.event({
+                        category: 'facilities-entry',
+                        action: 'frequently-used',
+                        label: 'Privately Owned Public Space',
+                      })}
+                    >
+                      Privately Owned Public Space
                     </Link>
                   </div>
                   <div className="box preset-link ">
