@@ -35,6 +35,10 @@ const CapitalProjectsExplorer = createReactClass({
     });
   },
 
+  clearSelectedFeatures() {
+    CapitalProjectsActions.setSelectedFeatures([]);
+  },
+
   handleMapLayerClick(features) {
     // set selectedFeatures to [] will cause the right drawer to animate away,
     // then setting the new data will bring it back
