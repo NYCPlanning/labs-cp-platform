@@ -10,7 +10,7 @@ import PipelineActions from '../actions/PipelineActions';
 import PipelineStore from '../stores/PipelineStore';
 
 import RangeSlider from '../common/RangeSlider';
-import RangeInputs from '../common/RangeInputs';
+import SimpleRangeInputs from '../common/SimpleRangeInputs';
 import InfoIcon from '../common/InfoIcon';
 
 import './LayerSelector.scss';
@@ -175,7 +175,7 @@ const LayerSelector = createReactClass({
             disabled
             style={listItemStyle}
           >
-            <RangeInputs
+            <SimpleRangeInputs
               data={filterDimensions.dcp_units_use_map.values}
               onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
             />

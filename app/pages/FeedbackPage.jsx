@@ -42,7 +42,6 @@ const FeedbackPage = createReactClass({
     };
 
     const feedback = this.state.data && this.state.data.map(d => (
-      // console.log(this.state.data);
       <Paper style={style} zDepth={1} className="feedback-item-container">
         <div className="feedback-item">
           <div className="meta">
