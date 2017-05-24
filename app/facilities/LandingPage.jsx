@@ -2,6 +2,8 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
@@ -70,7 +72,9 @@ const FacilitiesLandingPage = createReactClass({
                         label: 'City Owned and Leased Sites',
                       })}
                     >
-                      City Owned and Leased Sites
+                      City Owned and Leased Sites <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">All facilities and program sites that are on property is that owned or leased by the City of New York.</Tooltip>}>
+                        <i className="fa fa-info-circle" aria-hidden="true" />
+                      </OverlayTrigger>
                     </Link>
                   </div>
                   <div className="box preset-link ">
@@ -99,7 +103,9 @@ const FacilitiesLandingPage = createReactClass({
                         label: 'Community Facilities for CEQR',
                       })}
                     >
-                      Community Facilities for CEQR
+                      Community Facilities for CEQR <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Community facilities as defined by the City Environmental Quality Review (CEQR) technical manual. Please note, ULURP applicants should continue to coordinate with DCP to get the appropriate datasets for CEQR analyses; this map is provided solely as a planning tool.</Tooltip>}>
+                        <i className="fa fa-info-circle" aria-hidden="true" />
+                      </OverlayTrigger>
                     </Link>
                   </div>
                   <div className="box preset-link ">
@@ -128,7 +134,9 @@ const FacilitiesLandingPage = createReactClass({
                         label: 'Children, Seniors, ADA Programs',
                       })}
                     >
-                      Children, Seniors, ADA Programs
+                      Children, Seniors, ADA Programs <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">All sites that serve children, seniors, and people with disabilities, including day cares, schools, youth programs, senior centers, and programs for adults with disabilities.</Tooltip>}>
+                        <i className="fa fa-info-circle" aria-hidden="true" />
+                      </OverlayTrigger>
                     </Link>
                   </div>
                   <div className="box preset-link ">
@@ -151,7 +159,9 @@ const FacilitiesLandingPage = createReactClass({
                         label: 'Privately Owned Public Space',
                       })}
                     >
-                      Privately Owned Public Space
+                      Privately Owned Public Space <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Also known as POPS: Plazas, arcades, and other open space provided for public use by a private office or residential building owner.</Tooltip>}>
+                        <i className="fa fa-info-circle" aria-hidden="true" />
+                      </OverlayTrigger>
                     </Link>
                   </div>
                   <div className="box preset-link ">
@@ -170,9 +180,12 @@ const FacilitiesLandingPage = createReactClass({
                               'Human Services': null,
                             },
                             'Education, Child Welfare, and Youth': {
-                              'Schools (K-12)': { 'Public Schools': null },
+                              'Schools (K-12)': {
+                                'Public K-12 Schools': null,
+                                'Charter K-12 Schools': null,
+                                'Special Ed and Schools for Students with Disabilities': null },
                               'Child Care and Pre-Kindergarten': null,
-                              'Childrens Services': { 'Foster Care Services and Residential Care': null },
+                              'Child Services and Welfare': { 'Foster Care Services and Residential Care': null },
                               'Youth Services': null,
                               Camps: null,
                             },
@@ -191,7 +204,9 @@ const FacilitiesLandingPage = createReactClass({
                         label: 'Selected Community Resources',
                       })}
                     >
-                      Selected Community Resources
+                      Selected Community Resources <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Public schools, day cares, youth programs, health and human services, senior services, public libraries, and solid waste transfer sites.</Tooltip>}>
+                        <i className="fa fa-info-circle" aria-hidden="true" />
+                      </OverlayTrigger>
                     </Link>
                   </div>
 
