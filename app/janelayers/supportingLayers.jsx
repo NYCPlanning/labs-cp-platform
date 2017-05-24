@@ -28,8 +28,7 @@ const janeLayerConfig = {
           id: 'nyaerials',
           type: 'raster',
           tileSize: 256,
-          // tiles: `//${appConfig.api_domain}/tiles/doitt/tms/1.0.0/photo/2016/{z}/{x}/{y}.png`,
-          tiles: 'https://maps.nyc.gov/xyz/1.0.0/photo/2016/{z}/{x}/{y}.png8',
+          tiles: `//${appConfig.api_domain}/tiles/doitt/tms/1.0.0/photo/2016/{z}/{x}/{y}.png`,
         },
       ]}
       mapLayers={[
