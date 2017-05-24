@@ -58,7 +58,7 @@ const DetailPage = createReactClass({
 
     const wrapInPanel = (title, badge, content) => (
       <div key={title} className="panel panel-default">
-        <div className="panel-heading"><h4>{title}<span style={{ marginLeft: '10px', bottom: '4px' }} className="label label-default">{badge}</span></h4></div>
+        <div className="panel-heading"><h4>{title}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{badge}</span></h4></div>
         <div className="panel-body">
           {content}
         </div>
@@ -81,7 +81,7 @@ const DetailPage = createReactClass({
             <TableBody displayRowCheckbox={false}>
               <TableRow>
                 <TableRowColumn>Source Dataset</TableRowColumn>
-                <TableRowColumn><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></TableRowColumn>
+                <TableRowColumn style={{ whiteSpace: 'initial' }}><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></TableRowColumn>
               </TableRow>
               <TableRow>
                 <TableRowColumn>Facility ID in Source Data</TableRowColumn>

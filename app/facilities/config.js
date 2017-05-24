@@ -41,7 +41,7 @@ const defaultFilterDimensions = {
     ],
   },
   overabbrev: {
-    type: 'multiSelect',
+    type: 'fuzzyMultiSelect',
     disabled: true,
     values: [
       {

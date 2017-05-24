@@ -53,6 +53,23 @@ class SqlBuilder {
     return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
   }
 
+  // generic chunker for Checkboxes and Multiselects that does a LIKE instead of an equals
+  fuzzyMultiSelect(dimension, filters) {
+    const values = filters[dimension].values;
+
+    const checkedValues = values.filter(value => value.checked === true);
+    const subChunks = checkedValues.map(value => `${dimension} LIKE '%${value.value}%'`);
+
+    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
+      const chunk = `(${subChunks.join(' OR ')})`;
+
+      return chunk;
+    }
+
+    return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
+  }
+
+
   // generic chunker for Date Range Sliders
   dateRange(dimension, filters) {
     const range = filters[dimension].values;
