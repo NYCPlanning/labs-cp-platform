@@ -21,6 +21,7 @@ class FacilitiesStore extends EventsEmitter {
     };
     this.sqlBuilder = new FacilitiesSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.mapConfig = this.getMapConfig;
   }
 
   initialize() {
@@ -38,7 +39,7 @@ class FacilitiesStore extends EventsEmitter {
   }
 
   // builds a new LayerConfig based on this.sql
-  getLayerConfig() {
+  getMapConfig() {
     const { sql } = this;
 
     // set the sql for the vector source
@@ -85,10 +86,11 @@ class FacilitiesStore extends EventsEmitter {
     this.updateSql();
   }
 
-  // update the sql, get counts, and emit an event
+  // update the sql, get counts, update MapConfig and emit an event
   updateSql() {
     this.processChecked(this.filterDimensions.facsubgrp.values);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.mapConfig = this.getMapConfig();
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('facilitiesUpdated');
