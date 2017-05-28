@@ -26,7 +26,7 @@ const FacilitiesExplorer = createReactClass({
 
   getInitialState() {
     return {
-      selectedFeatures: [],
+      selectedFeatures: FacilitiesStore.selectedFeatures,
     };
   },
 
@@ -62,7 +62,7 @@ const FacilitiesExplorer = createReactClass({
         });
     }
 
-    FacilitiesStore.on('selectedFeaturesUpdated', () => {
+    FacilitiesStore.on('facilitiesUpdated', () => {
       const selectedFeatures = FacilitiesStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
