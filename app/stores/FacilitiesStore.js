@@ -56,8 +56,6 @@ class FacilitiesStore extends EventsEmitter {
       },
     });
 
-    console.log(selectedFeatures, newConfig);
-
     // add selection feature to config
     if (selectedFeatures.length > 0) {
       const point = selectedFeatures[0].geometry;

@@ -111,6 +111,7 @@ const FacilitiesExplorer = createReactClass({
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
+          {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
           {supportingLayers.transportation}
           <JaneLayer

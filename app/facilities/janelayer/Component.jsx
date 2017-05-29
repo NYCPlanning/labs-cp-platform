@@ -65,8 +65,6 @@ const Facilities = createReactClass({
       </div>
     );
 
-    console.log('update', mapConfig)
-
     this.props.onUpdate(mapConfig);
   },
 
