@@ -1,47 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 
 import defaultLayerConfig from './defaultLayerConfig';
 
-const AdminBoundaries = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
+class AdminBoundaries extends React.Component {
 
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return ({
+    this.state = {
       value: 'cd',
-    });
-  },
+    };
+  }
 
-  componentDidMount() {
-    this.updateMapElements(defaultLayerConfig[this.state.value]);
-  },
+  componentDidUpdate() {
+    this.updateMapConfig();
+  }
 
-  updateMapElements(layerConfig) {
-    this.props.onUpdate('adminboundaries', {
-      sources: layerConfig.sources,
-      mapLayers: layerConfig.mapLayers,
-    });
-  },
+  updateMapConfig = () => {
+    const { value } = this.state;
+    const mapConfig = defaultLayerConfig[value];
 
-  handleChange(e, value) {
-    this.setState({
-      value,
-    });
+    this.props.onUpdate(mapConfig);
+  }
 
-    this.updateMapElements(defaultLayerConfig[value]);
-  },
+  handleChange = (e, value) => {
+    this.setState({ value });
+    this.updateMapConfig();
+  }
 
   render() {
     // necessary for scrolling in tabs
@@ -174,7 +163,11 @@ const AdminBoundaries = createReactClass({
         </Tabs>
       </div>
     );
-  },
-});
+  }
+}
+
+AdminBoundaries.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+};
 
 export default AdminBoundaries;

@@ -46,9 +46,8 @@ const janeLayerConfig = {
       id="adminboundaries"
       name="Admin. Boundaries"
       icon="flag"
-    >
-      <AdminBoundariesComponent />
-    </JaneLayer>
+      component={<AdminBoundariesComponent />}
+    />
   ),
 
   travelshed: (

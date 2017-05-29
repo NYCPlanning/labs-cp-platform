@@ -4,7 +4,7 @@ import Checkbox from 'material-ui/Checkbox';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import config from './config';
 
-class UIComponent extends React.Component {
+class Transportation extends React.Component {
 
   constructor(props) {
     super(props);
@@ -19,7 +19,7 @@ class UIComponent extends React.Component {
   }
 
   handleCheck(id) {
-    const { activeCheckboxes } = this.state
+    const { activeCheckboxes } = this.state;
     const i = activeCheckboxes.indexOf(id);
 
     if (i > -1) {
@@ -52,7 +52,6 @@ class UIComponent extends React.Component {
   }
 
   render() {
-
     const listItemStyle = {
       marginTop: '14px',
     };
@@ -123,8 +122,12 @@ class UIComponent extends React.Component {
           </Tab>
         </Tabs>
       </div>
-    )
+    );
   }
 }
 
-export default UIComponent;
+Transportation.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+};
+
+export default Transportation;
