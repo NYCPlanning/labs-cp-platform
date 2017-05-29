@@ -24,29 +24,50 @@ const Pipeline = createReactClass({
 
   getInitialState() {
     return ({
-      layerConfig: PipelineStore.getLayerConfig(),
+      mapConfig: PipelineStore.mapConfig,
+      totalCount: PipelineStore.totalCount,
+      selectedCount: PipelineStore.selectedCount,
+      filterDimensions: PipelineStore.filterDimensions,
+      symbologyDimension: PipelineStore.symbologyDimension,
     });
   },
 
   componentWillMount() {
     // listen for changes to the filter UI
     PipelineStore.on('pipelineUpdated', () => {
-      this.setState({ layerConfig: PipelineStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
+      this.setState({
+        mapConfig: PipelineStore.mapConfig,
+        totalCount: PipelineStore.totalCount,
+        selectedCount: PipelineStore.selectedCount,
+        filterDimensions: PipelineStore.filterDimensions,
+        symbologyDimension: PipelineStore.symbologyDimension,
+      });
     });
 
-    this.updateLayerConfig();
+    PipelineStore.initialize();
   },
 
   componentWillUnmount() {
     PipelineStore.removeAllListeners('pipelineUpdated');
   },
 
-  updateLayerConfig() {
-    // pass the new config up to Jane
-    this.props.onUpdate('pipeline', this.state.layerConfig);
+  componentDidUpdate() {
+    this.updateMapConfig();
+  },
+
+  updateMapConfig() {
+    const { mapConfig } = this.state;
+    this.props.onUpdate(mapConfig);
   },
 
   render() {
+    const {
+      totalCount,
+      selectedCount,
+      filterDimensions,
+      symbologyDimension,
+    } = this.state;
+
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
       position: 'absolute',
@@ -60,7 +81,12 @@ const Pipeline = createReactClass({
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector />
+          <LayerSelector
+            totalCount={totalCount}
+            selectedCount={selectedCount}
+            filterDimensions={filterDimensions}
+            symbologyDimension={symbologyDimension}
+          />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">

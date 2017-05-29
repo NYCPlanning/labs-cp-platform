@@ -21,6 +21,7 @@ class PipelineStore extends EventsEmitter {
     this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.mapConfig = this.getMapConfig();
   }
 
   initialize() {
@@ -37,8 +38,8 @@ class PipelineStore extends EventsEmitter {
     Promise.all([p1, p2]).then(() => this.emit('pipelineUpdated'));
   }
 
-  // builds a new LayerConfig based on sql and symbologyDimension
-  getLayerConfig() {
+  // builds a new mapConfig based on sql and symbologyDimension
+  getMapConfig() {
     const { sql, symbologyDimension } = this;
 
     const config = LayerConfig.points;
@@ -133,7 +134,7 @@ class PipelineStore extends EventsEmitter {
 
   updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-
+    this.mapConfig = this.getMapConfig();
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('pipelineUpdated');
@@ -143,6 +144,7 @@ class PipelineStore extends EventsEmitter {
   // updates symbologyDimension, emits an event when done
   handleSymbologyDimensionChange(symbologyDimension) {
     this.symbologyDimension = symbologyDimension;
+    this.mapConfig = this.getMapConfig();
     this.emit('pipelineUpdated');
   }
 
@@ -162,7 +164,7 @@ class PipelineStore extends EventsEmitter {
 
   setSelectedFeatures(features) {
     this.selectedFeatures = features;
-    this.emit('selectedFeaturesUpdated');
+    this.emit('pipelineUpdated');
   }
 
   // do things when certain events arrive from the dispatcher

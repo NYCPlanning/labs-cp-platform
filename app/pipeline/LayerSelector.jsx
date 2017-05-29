@@ -17,30 +17,6 @@ import './LayerSelector.scss';
 
 const LayerSelector = createReactClass({
 
-  getInitialState() {
-    return ({
-      symbologyDimension: PipelineStore.symbologyDimension,
-      filterDimensions: PipelineStore.filterDimensions,
-    });
-  },
-
-  componentWillMount() {
-    PipelineStore.on('pipelineUpdated', () => {
-      this.setState({
-        totalCount: PipelineStore.totalCount,
-        selectedCount: PipelineStore.selectedCount,
-        filterDimensions: PipelineStore.filterDimensions,
-        symbologyDimension: PipelineStore.symbologyDimension,
-      });
-    });
-
-    PipelineStore.initialize();
-  },
-
-  componentWillUnmount() {
-    PipelineStore.removeAllListeners('pipelineUpdated');
-  },
-
   handleFilterDimensionChange(dimension, values) {
     PipelineActions.onFilterDimensionChange(dimension, values);
   },
@@ -73,7 +49,7 @@ const LayerSelector = createReactClass({
       totalCount,
       selectedCount,
       symbologyDimension,
-    } = this.state;
+    } = this.props;
 
 
     const issueDateFilterDisabled = PipelineStore.issueDateFilterDisabled();
