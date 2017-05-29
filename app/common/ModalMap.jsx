@@ -106,10 +106,10 @@ const ModalMap = createReactClass({
           poiLabel={geometry.type === 'Point' ? this.props.label : null}
           ref={x => (this.janeMap = x)}
         >
-          {supportingLayers.aerials}
+          {/* {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
           {supportingLayers.transportation}
-          {PolygonJaneLayer}
+          {PolygonJaneLayer}*/}
         </Jane>
       </div>
     );

@@ -13,9 +13,8 @@ const janeLayerConfig = {
       id="transportation"
       name="Transportation"
       icon="subway"
-    >
-      <TransportationComponent />
-    </JaneLayer>
+      component={<TransportationComponent />}
+    />
   ),
 
   aerials: (
@@ -39,7 +38,6 @@ const janeLayerConfig = {
         },
       ]}
     >
-      <AerialsComponent />
     </JaneLayer>
   ),
 

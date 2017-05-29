@@ -8,7 +8,7 @@ import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesComponent from './janelayer/Component';
-// import supportingLayers from '../janelayers/supportingLayers';
+import supportingLayers from '../janelayers/supportingLayers';
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
@@ -110,7 +110,7 @@ const FacilitiesExplorer = createReactClass({
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
-
+          {supportingLayers.transportation}
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"
