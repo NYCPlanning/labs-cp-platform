@@ -3,7 +3,6 @@ import { JaneLayer } from 'jane-maps';
 
 import TransportationComponent from './transportation/Component';
 import AdminBoundariesComponent from './adminboundaries/Component';
-import TravelshedComponent from './travelshed/Component';
 import AerialsComponent from './aerials/Component';
 
 const janeLayerConfig = {
@@ -32,16 +31,6 @@ const janeLayerConfig = {
       icon="flag"
       component={<AdminBoundariesComponent />}
     />
-  ),
-
-  travelshed: (
-    <JaneLayer
-      id="travelshed"
-      name="Travelshed"
-      icon="road"
-    >
-      <TravelshedComponent />
-    </JaneLayer>
   ),
 };
 

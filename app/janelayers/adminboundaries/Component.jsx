@@ -167,7 +167,11 @@ class AdminBoundaries extends React.Component {
 }
 
 AdminBoundaries.propTypes = {
-  onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func,
+};
+
+AdminBoundaries.defaultProps = {
+  onUpdate: () => {},
 };
 
 export default AdminBoundaries;

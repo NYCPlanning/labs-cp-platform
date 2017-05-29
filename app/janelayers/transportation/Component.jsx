@@ -127,7 +127,11 @@ class Transportation extends React.Component {
 }
 
 Transportation.propTypes = {
-  onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func,
+};
+
+Transportation.defaultProps = {
+  onUpdate: () => {},
 };
 
 export default Transportation;

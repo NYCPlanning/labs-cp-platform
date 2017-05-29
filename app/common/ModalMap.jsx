@@ -11,6 +11,7 @@ import extent from 'turf-extent';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import supportingLayers from '../janelayers/supportingLayers';
+import TravelshedComponent from '../janelayers/travelshed/Component';
 import appConfig from '../helpers/appConfig';
 
 const ModalMap = createReactClass({
@@ -104,12 +105,24 @@ const ModalMap = createReactClass({
           mapInit={mapInit}
           poiFeature={geometry.type === 'Point' ? this.props.feature : null}
           poiLabel={geometry.type === 'Point' ? this.props.label : null}
+          initialDisabledJaneLayers={['transportation', 'aerials', 'adminboundaries', 'travelshed']}
           ref={x => (this.janeMap = x)}
         >
-          {/* {supportingLayers.aerials}
+          {
+            geometry.type === 'Point' &&
+            <JaneLayer
+              id="travelshed"
+              name="Travelshed"
+              icon="road"
+              component={<TravelshedComponent
+                feature={this.props.feature}
+              />}
+            />
+          }
+          {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
           {supportingLayers.transportation}
-          {PolygonJaneLayer}*/}
+          { /* PolygonJaneLayer */ }
         </Jane>
       </div>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import config from './config';
 
@@ -8,7 +9,7 @@ const tabTemplateStyle = {
   bottom: 0,
 };
 
-class AerialsComponent extends React.Component {
+class Aerials extends React.Component {
   componentDidUpdate() {
     this.updateMapConfig();
   }
@@ -39,4 +40,13 @@ class AerialsComponent extends React.Component {
   }
 }
 
-export default AerialsComponent;
+Aerials.propTypes = {
+  onUpdate: PropTypes.func,
+};
+
+
+Aerials.defaultProps = {
+  onUpdate: () => {},
+};
+
+export default Aerials;
