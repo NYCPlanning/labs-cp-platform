@@ -24,6 +24,8 @@ class CapitalProjectsStore extends EventsEmitter {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
     this.pointsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.pointsTablename);
     this.polygonsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.polygonsTablename);
+    this.mapConfig = this.getMapConfig();
+    this.selectedFeatures = [];
   }
 
   initialize() {
@@ -56,7 +58,7 @@ class CapitalProjectsStore extends EventsEmitter {
     `;
   }
 
-  getLayerConfig() {
+  getMapConfig() {
     const { pointsSql, polygonsSql } = this;
 
     const newLayerConfig = update(defaultLayerConfig, {
@@ -128,7 +130,8 @@ class CapitalProjectsStore extends EventsEmitter {
 
   setSelectedFeatures(features) {
     this.selectedFeatures = features;
-    this.emit('selectedFeaturesUpdated');
+    this.mapConfig = this.getMapConfig();
+    this.emit('capitalProjectsUpdated');
   }
 
   // update the sql, get counts, and emit an event
@@ -136,6 +139,7 @@ class CapitalProjectsStore extends EventsEmitter {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
     this.pointsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.pointsTablename);
     this.polygonsSql = this.sql.replace('tablenameplaceholder', this.sqlConfig.polygonsTablename);
+    this.mapConfig = this.getMapConfig();
 
     carto.getCount(this.unionSQL(this.pointsSql, this.polygonsSql))
       .then((count) => {

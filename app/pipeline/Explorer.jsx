@@ -21,7 +21,7 @@ const PipeLineExplorer = createReactClass({
   componentDidMount() {
     document.title = 'NYC Housing Development Explorer';
 
-    PipelineStore.on('selectedFeaturesUpdated', () => {
+    PipelineStore.on('pipelineUpdated', () => {
       const selectedFeatures = PipelineStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
@@ -64,6 +64,8 @@ const PipeLineExplorer = createReactClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
+          initialSelectedJaneLayer={'pipeline'}
+          initialDisabledJaneLayers={['transportation', 'adminboundaries', 'aerials']}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
@@ -75,11 +77,8 @@ const PipeLineExplorer = createReactClass({
             name="Housing Pipeline"
             icon="building"
             onMapLayerClick={this.handleMapLayerClick}
-            selected
-            visible
-          >
-            <PipelineComponent />
-          </JaneLayer>
+            component={<PipelineComponent />}
+          />
         </Jane>
         { selectedFeaturesPane }
       </div>

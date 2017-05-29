@@ -21,6 +21,8 @@ class FacilitiesStore extends EventsEmitter {
     };
     this.sqlBuilder = new FacilitiesSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.mapConfig = this.getMapConfig;
+    this.selectedFeatures = [];
   }
 
   initialize() {
@@ -38,11 +40,11 @@ class FacilitiesStore extends EventsEmitter {
   }
 
   // builds a new LayerConfig based on this.sql
-  getLayerConfig() {
-    const { sql } = this;
+  getMapConfig() {
+    const { sql, selectedFeatures } = this;
 
     // set the sql for the vector source
-    const newConfig = update(layerConfig, {
+    const newConfig = update(JSON.parse(JSON.stringify(layerConfig)), {
       sources: {
         0: {
           options: {
@@ -53,6 +55,35 @@ class FacilitiesStore extends EventsEmitter {
         },
       },
     });
+
+    // add selection feature to config
+    if (selectedFeatures.length > 0) {
+      const point = selectedFeatures[0].geometry;
+
+      newConfig.sources.push({
+        id: 'highlightPoints',
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: point,
+        },
+      });
+
+      newConfig.mapLayers.push({
+        id: 'highlightPoints',
+        type: 'circle',
+        source: 'highlightPoints',
+        paint: {
+          'circle-color': 'rgba(255, 255, 255, 1)',
+          'circle-opacity': 0,
+          'circle-radius': 10,
+          'circle-stroke-width': 3,
+          'circle-pitch-scale': 'map',
+          'circle-stroke-color': 'rgba(217, 107, 39, 1)',
+          'circle-stroke-opacity': 0.8,
+        },
+      });
+    }
 
     return newConfig;
   }
@@ -85,10 +116,11 @@ class FacilitiesStore extends EventsEmitter {
     this.updateSql();
   }
 
-  // update the sql, get counts, and emit an event
+  // update the sql, get counts, update MapConfig and emit an event
   updateSql() {
     this.processChecked(this.filterDimensions.facsubgrp.values);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.mapConfig = this.getMapConfig();
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('facilitiesUpdated');
@@ -169,7 +201,8 @@ class FacilitiesStore extends EventsEmitter {
 
   setSelectedFeatures(features) {
     this.selectedFeatures = features;
-    this.emit('selectedFeaturesUpdated');
+    this.mapConfig = this.getMapConfig();
+    this.emit('facilitiesUpdated');
   }
 
   // call local methods when certain events arrive from the dispatcher

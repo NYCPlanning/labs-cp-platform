@@ -11,7 +11,9 @@ import extent from 'turf-extent';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import supportingLayers from '../janelayers/supportingLayers';
+import TravelshedComponent from '../janelayers/travelshed/Component';
 import appConfig from '../helpers/appConfig';
+import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';
 
 const ModalMap = createReactClass({
   propTypes: {
@@ -47,7 +49,7 @@ const ModalMap = createReactClass({
 
   render() {
     const feature = this.props.feature;
-    const geometry = this.props.feature.geometry;
+    const geometry = feature.geometry;
 
     let center;
     if (geometry.type === 'Point') {
@@ -67,49 +69,42 @@ const ModalMap = createReactClass({
       navigationControlPosition: 'bottom-right',
     };
 
-    let PolygonJaneLayer = null;
-    if (geometry.type !== 'Point') {
-      PolygonJaneLayer = (
-        <JaneLayer
-          id="feature"
-          name="Feature"
-          icon="map-marker"
-          visible
-          sources={[
-            {
-              id: 'feature',
-              type: 'geojson',
-              data: this.props.feature,
-            },
-          ]}
-          mapLayers={[
-            {
-              id: 'feature',
-              source: 'feature',
-              type: 'fill',
-              paint: {
-                'fill-color': 'steelblue',
-                'fill-opacity': 0.75,
-                'fill-antialias': true,
-              },
-            },
-          ]}
-        />
-      );
-    }
-
     return (
       <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
           mapInit={mapInit}
           poiFeature={geometry.type === 'Point' ? this.props.feature : null}
           poiLabel={geometry.type === 'Point' ? this.props.label : null}
+          initialDisabledJaneLayers={['transportation', 'aerials', 'adminboundaries', 'travelshed']}
           ref={x => (this.janeMap = x)}
         >
+          {
+            geometry.type === 'Point' &&
+            <JaneLayer
+              id="travelshed"
+              name="Travelshed"
+              icon="road"
+              component={<TravelshedComponent
+                feature={feature}
+              />}
+            />
+          }
           {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
           {supportingLayers.transportation}
-          {PolygonJaneLayer}
+          { geometry.type !== 'Point' &&
+            <JaneLayer
+              id="feature"
+              name="Feature"
+              icon="map-marker"
+              hidden
+              component={
+                <PolygonJaneLayerComponent
+                  feature={feature}
+                />
+              }
+            />
+          }
         </Jane>
       </div>
     );

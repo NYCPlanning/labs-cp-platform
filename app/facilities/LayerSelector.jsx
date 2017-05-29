@@ -26,30 +26,11 @@ const LayerSelector = createReactClass({
   },
 
   getInitialState() {
-    const { filterDimensions } = FacilitiesStore;
-    return ({ filterDimensions });
-  },
-
-  componentWillMount() {
-    FacilitiesStore.on('facilitiesUpdated', () => {
-      const { totalCount, selectedCount, filterDimensions } = FacilitiesStore;
-
-      this.setState({
-        totalCount,
-        selectedCount,
-        filterDimensions,
-      });
-    });
-
-    FacilitiesStore.initialize();
+    return { expanded: false };
   },
 
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
-  },
-
-  componentWillUnmount() {
-    FacilitiesStore.removeAllListeners('facilitiesUpdated');
   },
 
   updateFilterDimension(dimension, values) {
@@ -77,7 +58,8 @@ const LayerSelector = createReactClass({
   },
 
   render() {
-    const { overabbrev, optype, proptype, facsubgrp } = this.state.filterDimensions;
+    const { totalCount, selectedCount, filterDimensions } = this.props;
+    const { overabbrev, optype, proptype, facsubgrp } = filterDimensions;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -90,8 +72,8 @@ const LayerSelector = createReactClass({
     return (
       <div className="sidebar-tab-content facilities-filter">
         <CountWidget
-          totalCount={this.state.totalCount}
-          selectedCount={this.state.selectedCount}
+          totalCount={totalCount}
+          selectedCount={selectedCount}
           units={'records'}
           resetFilter={this.resetFilter}
         />

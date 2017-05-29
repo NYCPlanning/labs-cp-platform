@@ -1,65 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-const defaultLayerConfig = {
-  sources: [
-    {
-      id: 'travelshed',
-      type: 'geojson',
-    },
-  ],
-  mapLayers: [
-    {
-      id: 'travelshed',
-      type: 'fill',
-      source: 'travelshed',
-      paint: {
-        'fill-color': 'steelblue',
-        'fill-opacity': 0.3,
-        'fill-outline-color': 'gray',
-      },
-    },
-  ],
-};
+import config from './config';
 
-const Component = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-    layer: PropTypes.object,
-  },
+class Travelshed extends React.Component {
 
-  getDefaultProps() {
-    return {
-      layer: null,
-      onUpdate: () => {},
-      context: null,
-    };
-  },
+  componentDidUpdate() {
+    this.updateMapConfig();
+  }
 
-  getInitialState() {
-    if (this.props.layer.initialState) return this.props.layer.initialState;
+  updateMapConfig = () => {
+    const { feature } = this.props;
+    const lat = feature.geometry.coordinates[1];
+    const lng = feature.geometry.coordinates[0];
 
-    return {};
-  },
-
-  componentDidMount() {
-    const lat = this.state.feature.geometry.coordinates[1];
-    const lng = this.state.feature.geometry.coordinates[0];
-
-    defaultLayerConfig.sources[0].source = `https://otp.capitalplanning.nyc/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace=${lat},${lng}&date=2016/09/23&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700`;
+    config.sources[0].source = `https://otp.capitalplanning.nyc/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace=${lat},${lng}&date=2016/09/23&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700`;
 
 
-    this.updateMapElements(defaultLayerConfig);
-  },
-
-  updateMapElements(layerConfig) {
-    this.props.onUpdate('travelshed', {
-      sources: layerConfig.sources,
-      mapLayers: layerConfig.mapLayers,
-    });
-  },
+    this.props.onUpdate(config);
+  }
 
   render() {
     return (
@@ -78,7 +38,16 @@ const Component = createReactClass({
         </Tabs>
       </div>
     );
-  },
-});
+  }
+}
 
-export default Component;
+Travelshed.propTypes = {
+  onUpdate: PropTypes.func,
+  feature: PropTypes.object.isRequired,
+};
+
+Travelshed.defaultProps = {
+  onUpdate: () => {},
+};
+
+export default Travelshed;

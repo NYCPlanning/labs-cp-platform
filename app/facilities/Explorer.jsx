@@ -26,7 +26,7 @@ const FacilitiesExplorer = createReactClass({
 
   getInitialState() {
     return {
-      selectedFeatures: [],
+      selectedFeatures: FacilitiesStore.selectedFeatures,
     };
   },
 
@@ -62,7 +62,7 @@ const FacilitiesExplorer = createReactClass({
         });
     }
 
-    FacilitiesStore.on('selectedFeaturesUpdated', () => {
+    FacilitiesStore.on('facilitiesUpdated', () => {
       const selectedFeatures = FacilitiesStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
@@ -105,6 +105,8 @@ const FacilitiesExplorer = createReactClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
+          initialSelectedJaneLayer={'facilities'}
+          initialDisabledJaneLayers={['transportation', 'adminboundaries', 'aerials']}
           fitBounds={this.bounds}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
@@ -117,11 +119,8 @@ const FacilitiesExplorer = createReactClass({
             name="Facilities and Program Sites"
             icon="university"
             onMapLayerClick={this.handleMapLayerClick}
-            selected
-            visible
-          >
-            <FacilitiesComponent />
-          </JaneLayer>
+            component={<FacilitiesComponent />}
+          />
         </Jane>
         { selectedFeaturesPane }
       </div>

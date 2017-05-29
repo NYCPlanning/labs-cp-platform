@@ -22,27 +22,43 @@ const CapitalProjects = createReactClass({
 
   getInitialState() {
     return ({
-      layerConfig: CapitalProjectsStore.getLayerConfig(),
+      mapConfig: CapitalProjectsStore.mapConfig,
+      pointsSql: CapitalProjectsStore.pointsSql,
+      polygonsSql: CapitalProjectsStore.polygonsSql,
+      totalCount: CapitalProjectsStore.totalCount,
+      selectedCount: CapitalProjectsStore.selectedCount,
+      filterDimensions: CapitalProjectsStore.filterDimensions,
     });
   },
 
   componentWillMount() {
     // listen for changes to the filter UI
     CapitalProjectsStore.on('capitalProjectsUpdated', () => {
-      this.setState({ layerConfig: CapitalProjectsStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
+      this.setState({
+        mapConfig: CapitalProjectsStore.mapConfig,
+        pointsSql: CapitalProjectsStore.pointsSql,
+        polygonsSql: CapitalProjectsStore.polygonsSql,
+        totalCount: CapitalProjectsStore.totalCount,
+        selectedCount: CapitalProjectsStore.selectedCount,
+        filterDimensions: CapitalProjectsStore.filterDimensions,
+      });
     });
 
-    this.updateLayerConfig();
+    CapitalProjectsStore.initialize();
   },
 
   componentWillUnmount() {
     CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
   },
 
-  updateLayerConfig() {
+  componentDidUpdate() {
+    this.updateMapConfig();
+  },
+
+  updateMapConfig() {
     // pass the new config up to Jane
-    const { layerConfig } = this.state;
-    layerConfig.legend = (
+    const { mapConfig } = this.state;
+    mapConfig.legend = (
       <div className="legendSection">
         <div className="legendItem">
           <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
@@ -54,10 +70,12 @@ const CapitalProjects = createReactClass({
         </div>
       </div>
     );
-    this.props.onUpdate('capital-projects', layerConfig);
+    this.props.onUpdate(mapConfig);
   },
 
   render() {
+    const { pointsSql, polygonsSql, totalCount, selectedCount, filterDimensions } = this.state;
+
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
       position: 'absolute',
@@ -72,9 +90,11 @@ const CapitalProjects = createReactClass({
       >
         <Tab label="Data">
           <Filter
-            updateSQL={this.updateLayerConfig}
-            pointsSql={this.state.pointsSql}
-            polygonsSql={this.state.polygonsSql}
+            pointsSql={pointsSql}
+            polygonsSql={polygonsSql}
+            totalCount={totalCount}
+            selectedCount={selectedCount}
+            filterDimensions={filterDimensions}
           />
         </Tab>
         <Tab label="Download">

@@ -24,36 +24,49 @@ const Facilities = createReactClass({
 
   getInitialState() {
     return ({
-      layerConfig: FacilitiesStore.getLayerConfig(),
+      mapConfig: FacilitiesStore.mapConfig,
+      filterDimensions: FacilitiesStore.filterDimensions,
+      totalCount: FacilitiesStore.totalCount,
+      selectedCount: FacilitiesStore.selectedCount,
     });
   },
 
   componentWillMount() {
     // listen for changes to the filter UI
+
     FacilitiesStore.on('facilitiesUpdated', () => {
-      this.setState({ layerConfig: FacilitiesStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
+      const { totalCount, selectedCount, filterDimensions, mapConfig } = FacilitiesStore;
+
+      this.setState({
+        totalCount,
+        selectedCount,
+        filterDimensions,
+        mapConfig,
+      });
     });
 
-    this.updateLayerConfig();
+    FacilitiesStore.initialize();
   },
 
   componentWillUnmount() {
     FacilitiesStore.removeAllListeners('facilitiesUpdated');
   },
 
-  // updates the sql for the map source
-  updateLayerConfig() {
-    const { layerConfig } = this.state;
+  componentDidUpdate() {
+    this.updateMapConfig();
+  },
 
-    layerConfig.legend = (
+  updateMapConfig() {
+    const { mapConfig } = this.state;
+
+    mapConfig.legend = (
       <div className="legendSection">
         <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
       </div>
     );
 
-    this.props.onUpdate('facilities', layerConfig);
+    this.props.onUpdate(mapConfig);
   },
-
 
   handleDownload(label) {
     ga.event({
@@ -91,13 +104,19 @@ const Facilities = createReactClass({
       bottom: 0,
     };
 
+    const { filterDimensions, totalCount, selectedCount } = this.state;
+
     return (
       <Tabs
         className="sidebar-tabs"
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector />
+          <LayerSelector
+            totalCount={totalCount}
+            selectedCount={selectedCount}
+            filterDimensions={filterDimensions}
+          />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content ">

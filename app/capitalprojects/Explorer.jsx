@@ -20,7 +20,7 @@ const CapitalProjectsExplorer = createReactClass({
 
   getInitialState() {
     return {
-      selectedFeatures: [],
+      selectedFeatures: CapitalProjectsStore.selectedFeatures,
     };
   },
 
@@ -29,7 +29,7 @@ const CapitalProjectsExplorer = createReactClass({
   },
 
   componentDidMount() {
-    CapitalProjectsStore.on('selectedFeaturesUpdated', () => {
+    CapitalProjectsStore.on('capitalProjectsUpdated', () => {
       const selectedFeatures = CapitalProjectsStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
@@ -75,6 +75,8 @@ const CapitalProjectsExplorer = createReactClass({
           layerContentVisible
           search
           searchConfig={searchConfig}
+          initialSelectedJaneLayer={'capital-projects'}
+          initialDisabledJaneLayers={['scaplan', 'transportation', 'adminboundaries', 'aerials']}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
@@ -86,19 +88,15 @@ const CapitalProjectsExplorer = createReactClass({
             name="SCA Capital Plan"
             icon="graduation-cap"
             onMapLayerClick={this.handleMapLayerClick}
-          >
-            <SCAPlanComponent />
-          </JaneLayer>
+            component={<SCAPlanComponent />}
+          />
           <JaneLayer
             id="capital-projects"
             name="Capital Projects"
             icon="usd"
             onMapLayerClick={this.handleMapLayerClick}
-            visible
-            selected
-          >
-            <CapitalProjectsComponent />
-          </JaneLayer>
+            component={<CapitalProjectsComponent />}
+          />
         </Jane>
         {selectedFeaturesPane}
       </div>

@@ -16,12 +16,12 @@ const SCAPlanComponent = createReactClass({
   },
 
   componentWillMount() {
-    this.updateLayerConfig();
+    this.updateMapConfig();
   },
 
-  updateLayerConfig() {
+  updateMapConfig() {
     // pass the new config up to Jane
-    const layerConfig = {
+    const mapConfig = {
       sources: [
         {
           id: 'sca-points',
@@ -69,7 +69,7 @@ const SCAPlanComponent = createReactClass({
       ],
     };
 
-    layerConfig.legend = (
+    mapConfig.legend = (
       <div className="legendSection">
         <div className="legendItem">
           <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
@@ -78,7 +78,7 @@ const SCAPlanComponent = createReactClass({
       </div>
 
     );
-    this.props.onUpdate('scaplan', layerConfig);
+    this.props.onUpdate(mapConfig);
   },
 
   render() {

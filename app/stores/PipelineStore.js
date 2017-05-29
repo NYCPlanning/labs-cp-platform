@@ -21,6 +21,8 @@ class PipelineStore extends EventsEmitter {
     this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.selectedFeatures = [];
+    this.mapConfig = this.getMapConfig();
   }
 
   initialize() {
@@ -37,9 +39,9 @@ class PipelineStore extends EventsEmitter {
     Promise.all([p1, p2]).then(() => this.emit('pipelineUpdated'));
   }
 
-  // builds a new LayerConfig based on sql and symbologyDimension
-  getLayerConfig() {
-    const { sql, symbologyDimension } = this;
+  // builds a new mapConfig based on sql and symbologyDimension
+  getMapConfig() {
+    const { sql, symbologyDimension, selectedFeatures } = this;
 
     const config = LayerConfig.points;
 
@@ -68,6 +70,35 @@ class PipelineStore extends EventsEmitter {
         },
       },
     });
+
+    // add selection feature to config
+    if (selectedFeatures.length > 0) {
+      const point = selectedFeatures[0].geometry;
+
+      newConfig.sources.push({
+        id: 'highlightPoints',
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: point,
+        },
+      });
+
+      newConfig.mapLayers.push({
+        id: 'highlightPoints',
+        type: 'circle',
+        source: 'highlightPoints',
+        paint: {
+          'circle-color': 'rgba(255, 255, 255, 1)',
+          'circle-opacity': 0,
+          'circle-radius': 15,
+          'circle-stroke-width': 3,
+          'circle-pitch-scale': 'map',
+          'circle-stroke-color': 'rgba(217, 107, 39, 1)',
+          'circle-stroke-opacity': 0.8,
+        },
+      });
+    }
 
     return newConfig;
   }
@@ -133,7 +164,7 @@ class PipelineStore extends EventsEmitter {
 
   updateSql() {
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-
+    this.mapConfig = this.getMapConfig();
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('pipelineUpdated');
@@ -143,6 +174,7 @@ class PipelineStore extends EventsEmitter {
   // updates symbologyDimension, emits an event when done
   handleSymbologyDimensionChange(symbologyDimension) {
     this.symbologyDimension = symbologyDimension;
+    this.mapConfig = this.getMapConfig();
     this.emit('pipelineUpdated');
   }
 
@@ -162,7 +194,8 @@ class PipelineStore extends EventsEmitter {
 
   setSelectedFeatures(features) {
     this.selectedFeatures = features;
-    this.emit('selectedFeaturesUpdated');
+    this.mapConfig = this.getMapConfig();
+    this.emit('pipelineUpdated');
   }
 
   // do things when certain events arrive from the dispatcher
