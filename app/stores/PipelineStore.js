@@ -21,6 +21,7 @@ class PipelineStore extends EventsEmitter {
     this.sqlBuilder = new PipelineSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.symbologyDimension = 'dcp_permit_type';
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
+    this.selectedFeatures = [];
     this.mapConfig = this.getMapConfig();
   }
 
@@ -40,7 +41,7 @@ class PipelineStore extends EventsEmitter {
 
   // builds a new mapConfig based on sql and symbologyDimension
   getMapConfig() {
-    const { sql, symbologyDimension } = this;
+    const { sql, symbologyDimension, selectedFeatures } = this;
 
     const config = LayerConfig.points;
 
@@ -69,6 +70,35 @@ class PipelineStore extends EventsEmitter {
         },
       },
     });
+
+    // add selection feature to config
+    if (selectedFeatures.length > 0) {
+      const point = selectedFeatures[0].geometry;
+
+      newConfig.sources.push({
+        id: 'highlightPoints',
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: point,
+        },
+      });
+
+      newConfig.mapLayers.push({
+        id: 'highlightPoints',
+        type: 'circle',
+        source: 'highlightPoints',
+        paint: {
+          'circle-color': 'rgba(255, 255, 255, 1)',
+          'circle-opacity': 0,
+          'circle-radius': 15,
+          'circle-stroke-width': 3,
+          'circle-pitch-scale': 'map',
+          'circle-stroke-color': 'rgba(217, 107, 39, 1)',
+          'circle-stroke-opacity': 0.8,
+        },
+      });
+    }
 
     return newConfig;
   }
@@ -164,6 +194,7 @@ class PipelineStore extends EventsEmitter {
 
   setSelectedFeatures(features) {
     this.selectedFeatures = features;
+    this.mapConfig = this.getMapConfig();
     this.emit('pipelineUpdated');
   }
 

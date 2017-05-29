@@ -5,7 +5,6 @@ import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 
 import CapitalProjectsActions from '../actions/CapitalProjectsActions';
-import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import CostGroupChart from './CostGroupChart';
@@ -15,40 +14,9 @@ import MultiSelect from '../common/MultiSelect';
 
 const Filter = createReactClass({
   propTypes: {
+
   },
 
-  getInitialState() {
-    return ({
-      filterDimensions: CapitalProjectsStore.filterDimensions,
-      totalspendRange: [0, 9],
-      totalcommitRange: [0, 9],
-    });
-  },
-
-  componentWillMount() {
-    CapitalProjectsStore.on('capitalProjectsUpdated', () => {
-      this.setState({
-        totalCount: CapitalProjectsStore.totalCount,
-        selectedCount: CapitalProjectsStore.selectedCount,
-        pointsSql: CapitalProjectsStore.pointsSql,
-        polygonsSql: CapitalProjectsStore.polygonsSql,
-        filterDimensions: CapitalProjectsStore.filterDimensions,
-      }, () => {
-        // check for default status of sliders with mapped values
-        const totalspendRange = this.state.filterDimensions.totalspend.values;
-        if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
-
-        const totalcommitRange = this.state.filterDimensions.totalcommit.values;
-        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
-      });
-    });
-
-    CapitalProjectsStore.initialize();
-  },
-
-  componentWillUnmount() {
-    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
-  },
 
   updateFilterDimension(dimension, values) {
     CapitalProjectsActions.onFilterDimensionChange(dimension, values);
@@ -68,7 +36,7 @@ const Filter = createReactClass({
       paddingTop: '0px',
     };
 
-    const { totalCount, selectedCount, pointsSql, polygonsSql, filterDimensions } = this.state;
+    const { totalCount, selectedCount, pointsSql, polygonsSql, filterDimensions } = this.props;
 
     return (
       <div className="sidebar-tab-content">
