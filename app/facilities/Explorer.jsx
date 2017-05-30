@@ -107,12 +107,12 @@ const FacilitiesExplorer = createReactClass({
           searchConfig={searchConfig}
           initialSelectedJaneLayer={'facilities'}
           initialDisabledJaneLayers={['transportation', 'adminboundaries', 'aerials']}
-          fitBounds={this.bounds}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
           {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
+          {supportingLayers.zoning}
           {supportingLayers.transportation}
           <JaneLayer
             id="facilities"

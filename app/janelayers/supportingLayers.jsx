@@ -4,6 +4,7 @@ import { JaneLayer } from 'jane-maps';
 import TransportationComponent from './transportation/Component';
 import AdminBoundariesComponent from './adminboundaries/Component';
 import AerialsComponent from './aerials/Component';
+import ZoningComponent from './zoning/Component';
 
 const janeLayerConfig = {
   transportation: (
@@ -21,6 +22,15 @@ const janeLayerConfig = {
       name="Aerial Imagery"
       icon="camera"
       component={<AerialsComponent />}
+    />
+  ),
+
+  zoning: (
+    <JaneLayer
+      id="zoning"
+      name="Zoning"
+      icon="building"
+      component={<ZoningComponent />}
     />
   ),
 
