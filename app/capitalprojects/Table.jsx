@@ -17,6 +17,8 @@ import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
 import SortHeaderCell from './SortHeaderCell';
 import DownloadTable from '../common/DownloadTable';
 import SignupPrompt from '../common/SignupPrompt';
+import ga from '../helpers/ga';
+
 
 import './Table.scss';
 
@@ -45,6 +47,14 @@ const CPTable = createReactClass({ // eslint-disable-line
 
     CapitalProjectsTableStore.initialize();
     CapitalProjectsTableActions.resetFilter();
+  },
+
+  handleDownload(label) {
+    ga.event({
+      category: 'capitalprojects-table',
+      action: 'download',
+      label,
+    });
   },
 
   handleFilterBy(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
@@ -133,6 +143,7 @@ const CPTable = createReactClass({ // eslint-disable-line
                   commitmentsSql={CapitalProjectsTableStore.commitmentsSql}
                   filePrefix="projects"
                   commitmentsFilePrefix="commitments"
+                  onDownload={this.handleDownload}
                 />
                 <SignupPrompt />
               </div>

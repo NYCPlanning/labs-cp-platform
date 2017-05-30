@@ -7,6 +7,7 @@ import Filter from '../Filter';
 import Download from '../Download';
 import content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
+import ga from '../../helpers/ga';
 import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
 
 const CapitalProjects = createReactClass({
@@ -53,6 +54,14 @@ const CapitalProjects = createReactClass({
 
   componentDidUpdate() {
     this.updateMapConfig();
+  },
+
+  handleDownload(label) {
+    ga.event({
+      category: 'capitalprojects-explorer',
+      action: 'download',
+      label,
+    });
   },
 
   updateMapConfig() {
@@ -105,6 +114,7 @@ const CapitalProjects = createReactClass({
                 polygonsSql={CapitalProjectsStore.polygonsSql}
                 pointsPrefix="projects-points"
                 polygonsPrefix="projects-polygons"
+                onDownload={this.handleDownload}
               />
               <SignupPrompt />
             </div>
