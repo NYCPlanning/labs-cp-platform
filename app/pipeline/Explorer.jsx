@@ -65,7 +65,12 @@ const PipeLineExplorer = createReactClass({
           search
           searchConfig={searchConfig}
           initialSelectedJaneLayer={'pipeline'}
-          initialDisabledJaneLayers={['transportation', 'adminboundaries', 'aerials']}
+          initialDisabledJaneLayers={[
+            'transportation',
+            'adminboundaries',
+            'zoning',
+            'aerials',
+          ]}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >

@@ -106,7 +106,12 @@ const FacilitiesExplorer = createReactClass({
           search
           searchConfig={searchConfig}
           initialSelectedJaneLayer={'facilities'}
-          initialDisabledJaneLayers={['transportation', 'adminboundaries', 'aerials']}
+          initialDisabledJaneLayers={[
+            'transportation',
+            'adminboundaries',
+            'zoning',
+            'aerials',
+          ]}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >

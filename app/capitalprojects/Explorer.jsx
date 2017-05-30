@@ -76,7 +76,12 @@ const CapitalProjectsExplorer = createReactClass({
           search
           searchConfig={searchConfig}
           initialSelectedJaneLayer={'capital-projects'}
-          initialDisabledJaneLayers={['scaplan', 'transportation', 'adminboundaries', 'aerials']}
+          initialDisabledJaneLayers={[
+            'transportation',
+            'adminboundaries',
+            'zoning',
+            'aerials',
+          ]}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
