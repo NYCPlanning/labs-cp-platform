@@ -26,7 +26,7 @@ const DownloadTable = ({ sql, commitmentsSql, filePrefix, commitmentsFilePrefix,
         download="text.csv"
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
-        onClick={() => onDownload('csv-complete')}
+        onClick={() => onDownload('csv-project-complete')}
       />
       <FlatButton
         label="Commitment Level"
@@ -34,7 +34,7 @@ const DownloadTable = ({ sql, commitmentsSql, filePrefix, commitmentsFilePrefix,
         download="text.csv"
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
-        onClick={() => onDownload('csv-complete')}
+        onClick={() => onDownload('csv-commitment-complete')}
       />
 
       <Subheader style={{ paddingLeft: 0 }}>
@@ -47,7 +47,7 @@ const DownloadTable = ({ sql, commitmentsSql, filePrefix, commitmentsFilePrefix,
         download="text.csv"
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
-        onClick={() => onDownload('csv-filtered')}
+        onClick={() => onDownload('csv-project-filtered')}
       />
       <FlatButton
         label="Commitment Level"
@@ -55,7 +55,7 @@ const DownloadTable = ({ sql, commitmentsSql, filePrefix, commitmentsFilePrefix,
         download="text.csv"
         labelStyle={style.size}
         icon={<FontIcon className="fa fa-file-excel-o" style={style.size} />}
-        onClick={() => onDownload('csv-filtered')}
+        onClick={() => onDownload('csv-commitment-filtered')}
       />
     </div>
   );

@@ -8,6 +8,7 @@ import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
 import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
+import ga from '../../helpers/ga';
 import PipelineStore from '../../stores/PipelineStore';
 
 
@@ -55,6 +56,14 @@ const Pipeline = createReactClass({
     this.updateMapConfig();
   },
 
+  handleDownload(label) {
+    ga.event({
+      category: 'pipeline-explorer',
+      action: 'download',
+      label,
+    });
+  },
+
   updateMapConfig() {
     const { mapConfig } = this.state;
     this.props.onUpdate(mapConfig);
@@ -94,6 +103,7 @@ const Pipeline = createReactClass({
               <Download
                 sql={PipelineStore.sql}
                 filePrefix="developments"
+                onDownload={this.handleDownload}
               />
               <SignupPrompt />
             </div>

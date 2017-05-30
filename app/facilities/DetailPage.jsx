@@ -178,7 +178,7 @@ const DetailPage = createReactClass({
             </div>
             <div className="col-md-9 col-md-pull-3">
               <h1>{d.facname}</h1>
-              <h2 style={{ marginBottom: '5px' }}><small>{d.address + ', ' + d.city + ', NY ' + d.zipcode}</small></h2>
+              <h2 style={{ marginBottom: '5px' }}><small>{`${d.address}, ${d.city}, NY ${d.zipcode}`}</small></h2>
               <ol className="breadcrumb">
                 <li>{d.facdomain}</li>
                 <li>{d.facgroup}</li>
