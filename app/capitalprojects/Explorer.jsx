@@ -82,6 +82,7 @@ const CapitalProjectsExplorer = createReactClass({
         >
           {supportingLayers.aerials}
           {supportingLayers.adminboundaries}
+          {supportingLayers.zoning}
           {supportingLayers.transportation}
           <JaneLayer
             id="scaplan"
