@@ -1,25 +1,14 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import appConfig from '../../helpers/appConfig';
 
-const SCAPlanComponent = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
+class SCAPlanComponent extends React.Component {
   componentWillMount() {
     this.updateMapConfig();
-  },
+  }
 
-  updateMapConfig() {
+  updateMapConfig = () => {
     // pass the new config up to Jane
     const mapConfig = {
       sources: [
@@ -79,7 +68,7 @@ const SCAPlanComponent = createReactClass({
 
     );
     this.props.onUpdate(mapConfig);
-  },
+  }
 
   render() {
     // necessary for scrolling in tab Content
@@ -121,7 +110,15 @@ const SCAPlanComponent = createReactClass({
         </Tab>
       </Tabs>
     );
-  },
-});
+  }
+}
+
+SCAPlanComponent.defaultProps = {
+  onUpdate: () => {},
+};
+
+SCAPlanComponent.propTypes = {
+  onUpdate: PropTypes.func,
+};
 
 export default SCAPlanComponent;

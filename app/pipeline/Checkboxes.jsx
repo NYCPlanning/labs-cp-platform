@@ -1,7 +1,6 @@
 // Checkboxes.jsx - A checkbox multiselect component
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { List, ListItem } from 'material-ui/List';
 
 import Checkbox from '../common/Checkbox';
@@ -42,22 +41,15 @@ LegendCircle.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-const Checkboxes = createReactClass({
-
-  propTypes: {
-    dimension: PropTypes.object.isRequired, // array of objects for all possible items
-    onChange: PropTypes.func.isRequired, // function to send an updated array of objects to when a checkbox is toggled
-    legendCircleType: PropTypes.string.isRequired, // string indicating the type of legendCircle
-  },
-
-  handleChange(value) {
+class Checkboxes extends React.Component {
+  handleChange = (value) => {
     const { dimension, onChange } = this.props;
 
     const thisOption = dimension.values.filter(option => option.value === value)[0];
     thisOption.checked = !thisOption.checked;
 
     onChange(dimension.values);
-  },
+  }
 
   render() {
     const { dimension, legendCircleType } = this.props;
@@ -97,7 +89,13 @@ const Checkboxes = createReactClass({
         </List>
       </div>
     );
-  },
-});
+  }
+}
+
+Checkboxes.propTypes = {
+  dimension: PropTypes.object.isRequired, // array of objects for all possible items
+  onChange: PropTypes.func.isRequired, // function to send an updated array of objects to when a checkbox is toggled
+  legendCircleType: PropTypes.string.isRequired, // string indicating the type of legendCircle
+};
 
 export default Checkboxes;

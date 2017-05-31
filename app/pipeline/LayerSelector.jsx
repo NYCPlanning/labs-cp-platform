@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
@@ -15,28 +14,27 @@ import InfoIcon from '../common/InfoIcon';
 
 import './LayerSelector.scss';
 
-const LayerSelector = createReactClass({
-
-  handleFilterDimensionChange(dimension, values) {
+class LayerSelector extends React.Component {
+  handleFilterDimensionChange = (dimension, values) => {
     PipelineActions.onFilterDimensionChange(dimension, values);
-  },
+  }
 
-  handleSymbologyDimensionChange(symbologyDimension) {
+  handleSymbologyDimensionChange = (symbologyDimension) => {
     PipelineActions.onSymbologyDimensionChange(symbologyDimension);
-  },
+  }
 
-  handleSliderChange(dimension, data) {
+  handleSliderChange = (dimension, data) => {
     PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
-  },
+  }
 
-  handleInputChange(e) { // handles changes to the manual inputs for total units
+  handleInputChange = (e) => { // handles changes to the manual inputs for total units
     e.preventDefault();
     PipelineActions.onFilterDimensionChange('dcp_units_use_map', [this.unitsMin.value, this.unitsMax.value]);
-  },
+  }
 
-  resetFilter() {
+  resetFilter = () => {
     PipelineActions.resetFilter();
-  },
+  }
 
   render() {
     // override material ui ListItem spacing
@@ -50,7 +48,6 @@ const LayerSelector = createReactClass({
       selectedCount,
       symbologyDimension,
     } = this.props;
-
 
     const issueDateFilterDisabled = PipelineStore.issueDateFilterDisabled();
     const completionDateFilterDisabled = PipelineStore.completionDateFilterDisabled();
@@ -203,8 +200,19 @@ const LayerSelector = createReactClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
+LayerSelector.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
+};
+
+LayerSelector.propTypes = {
+  filterDimensions: PropTypes.object.isRequired,
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  symbologyDimension: PropTypes.string.isRequired,
+};
 
 module.exports = LayerSelector;

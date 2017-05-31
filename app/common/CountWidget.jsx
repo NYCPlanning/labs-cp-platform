@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import Numeral from 'numeral';
 
 import { ListItem } from 'material-ui/List';
@@ -8,33 +7,20 @@ import FontIcon from 'material-ui/FontIcon';
 
 import './CountWidget.scss';
 
-const CountWidget = createReactClass({
-  propTypes: {
-    totalCount: PropTypes.number,
-    selectedCount: PropTypes.number,
-    units: PropTypes.string.isRequired,
-    resetFilter: PropTypes.func.isRequired,
-  },
+class CountWidget extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { resetSpin: false };
+  }
 
-  getDefaultProps() {
-    return {
-      totalCount: null,
-      selectedCount: null,
-    };
-  },
-
-  getInitialState() {
-    return { resetSpin: false };
-  },
-
-  handleReset() {
+  handleReset = () => {
     this.props.resetFilter();
     this.setState({ resetSpin: true }, () => {
       setTimeout(() => {
         this.setState({ resetSpin: false });
       }, 1000);
     });
-  },
+  }
 
   render() {
     const totalCount = Numeral(this.props.totalCount).format('0,0');
@@ -86,7 +72,19 @@ const CountWidget = createReactClass({
         </ListItem>
       </div>
     );
-  },
-});
+  }
+}
+
+CountWidget.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
+};
+
+CountWidget.propTypes = {
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  units: PropTypes.string.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+};
 
 module.exports = CountWidget;

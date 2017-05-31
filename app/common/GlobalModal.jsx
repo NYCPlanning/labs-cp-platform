@@ -6,35 +6,23 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
 
 import './GlobalModal.scss';
 
-const GlobalModal = createReactClass({
-  propTypes: {
-    closeText: PropTypes.string,
-    heading: PropTypes.string.isRequired,
-    body: PropTypes.element.isRequired,
-  },
+class GlobalModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showModal: false };
+  }
 
-  getDefaultProps() {
-    return {
-      closeText: 'Close',
-    };
-  },
-
-  getInitialState() {
-    return { showModal: false };
-  },
-
-  close() {
+  close = () => {
     this.setState({ showModal: false });
-  },
+  }
 
-  open() {
+  open = () => {
     this.setState({ showModal: true });
-  },
+  }
 
   render() {
     const closeText = this.props.closeText ? this.props.closeText : 'Close';
@@ -52,7 +40,17 @@ const GlobalModal = createReactClass({
         </Modal.Footer>
       </Modal>
     );
-  },
-});
+  }
+}
+
+GlobalModal.defaultProps = {
+  closeText: 'Close',
+};
+
+GlobalModal.propTypes = {
+  closeText: PropTypes.string,
+  heading: PropTypes.string.isRequired,
+  body: PropTypes.element.isRequired,
+};
 
 module.exports = GlobalModal;

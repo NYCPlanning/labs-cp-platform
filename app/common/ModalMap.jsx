@@ -5,7 +5,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
 import { Jane, JaneLayer } from 'jane-maps';
@@ -15,16 +14,7 @@ import TravelshedComponent from '../janelayers/travelshed/Component';
 import appConfig from '../helpers/appConfig';
 import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';
 
-const ModalMap = createReactClass({
-  propTypes: {
-    feature: PropTypes.object.isRequired,
-    label: PropTypes.string,
-  },
-
-  getDefaultProps() {
-    return { label: '' };
-  },
-
+class ModalMap extends React.Component {
   componentDidMount() {
     // get the mapbox GL map object
     this.map = this.janeMap.map.mapObject;
@@ -35,9 +25,9 @@ const ModalMap = createReactClass({
 
       this.map.fitBounds(glBounds, { padding: 100 });
     }
-  },
+  }
 
-  getCenter() {
+  getCenter = () => {
     const feature = this.props.feature;
     // single points get flyTo(), everything else gets fitBounds()
     if (feature.geometry.type === 'Point') {
@@ -45,7 +35,7 @@ const ModalMap = createReactClass({
     }
 
     return centroid(feature).geometry.coordinates; // get the centroid
-  },
+  }
 
   render() {
     const feature = this.props.feature;
@@ -108,7 +98,16 @@ const ModalMap = createReactClass({
         </Jane>
       </div>
     );
-  },
-});
+  }
+}
+
+ModalMap.defaultProps = {
+  label: '',
+};
+
+ModalMap.propTypes = {
+  feature: PropTypes.object.isRequired,
+  label: PropTypes.string,
+};
 
 module.exports = ModalMap;

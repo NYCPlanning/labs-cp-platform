@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -13,11 +12,10 @@ import ga from '../helpers/ga';
 import './LandingPage.scss';
 
 
-const FacilitiesLandingPage = createReactClass({
-
+class FacilitiesLandingPage extends React.Component {
   componentDidMount() {
     document.title = 'Capital Planning Platform';
-  },
+  }
 
   render() {
     return (
@@ -222,8 +220,7 @@ const FacilitiesLandingPage = createReactClass({
         <Footer />
       </div>
     );
-  },
-
-});
+  }
+}
 
 module.exports = FacilitiesLandingPage;

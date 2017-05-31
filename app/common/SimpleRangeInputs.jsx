@@ -1,47 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
 import './SimpleRangeInputs.scss';
 
-const RangeInputs = createReactClass({
-  propTypes: {
-    data: PropTypes.array.isRequired,
-    onChange: PropTypes.func.isRequired,
-    prettify: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      prettify: value => value,
-    };
-  },
-
+class RangeInputs extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { prettify } = this.props;
 
     if (nextProps.data[0] !== this.props.data[0]) this.min.value = prettify(nextProps.data[0]);
     if (nextProps.data[1] !== this.props.data[1]) this.max.value = prettify(nextProps.data[1]);
-  },
+  }
 
-  updateMin(e) {
+  updateMin = (e) => {
     e.preventDefault();
 
     this.props.onChange({
       from: this.min.value,
       to: this.props.data[1],
     });
-  },
+  }
 
-  updateMax(e) {
+  updateMax = (e) => {
     e.preventDefault();
 
     this.props.onChange({
       from: this.props.data[0],
       to: this.max.value,
     });
-  },
-
+  }
 
   render() {
     const { data, prettify } = this.props;
@@ -68,7 +54,17 @@ const RangeInputs = createReactClass({
         </form>
       </div>
     );
-  },
-});
+  }
+}
+
+RangeInputs.defaultProps = {
+  prettify: value => value,
+};
+
+RangeInputs.propTypes = {
+  data: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  prettify: PropTypes.func,
+};
 
 export default RangeInputs;

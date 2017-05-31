@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import FixedDataTable from 'fixed-data-table';
 import Dimensions from 'react-dimensions';
@@ -25,17 +24,11 @@ import './Table.scss';
 const { Table, Column, Cell } = FixedDataTable;
 
 
-const CPTable = createReactClass({ // eslint-disable-line
-  propTypes: {
-    containerHeight: PropTypes.number.isRequired,
-    containerWidth: PropTypes.number.isRequired,
-  },
-
-  getInitialState() {
-    return {
-      data: null,
-    };
-  },
+class CPTable extends React.Component { // eslint-disable-line
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+  }
 
   componentWillMount() {
     CapitalProjectsTableStore.on('updatedTableData', () => {
@@ -47,28 +40,28 @@ const CPTable = createReactClass({ // eslint-disable-line
 
     CapitalProjectsTableStore.initialize();
     CapitalProjectsTableActions.resetFilter();
-  },
+  }
 
-  handleDownload(label) {
+  handleDownload = (label) => {
     ga.event({
       category: 'capitalprojects-table',
       action: 'download',
       label,
     });
-  },
+  }
 
-  handleFilterBy(e) {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
+  handleFilterBy = (e) => {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
     let filterBy = null;
     if (e.target.value) {
       filterBy = e.target.value.toLowerCase();
     }
 
     CapitalProjectsTableActions.onFilterBy(filterBy);
-  },
+  }
 
-  handleSortChange(columnKey, sortDir) {
+  handleSortChange = (columnKey, sortDir) => {
     CapitalProjectsTableActions.onSortChange(columnKey, sortDir);
-  },
+  }
 
   render() {
     const TextCell = ({ rowIndex, data, col, ...props }) => (
@@ -283,8 +276,13 @@ const CPTable = createReactClass({ // eslint-disable-line
         )}
       </div>
     );
-  },
-});
+  }
+}
+
+CPTable.propTypes = {
+  containerHeight: PropTypes.number.isRequired,
+  containerWidth: PropTypes.number.isRequired,
+};
 
 module.exports = Dimensions({
   getHeight() {

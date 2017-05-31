@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { List, ListItem } from 'material-ui/List';
 
 import InfoIcon from '../common/InfoIcon';
@@ -8,25 +7,8 @@ import Checkbox from '../common/Checkbox';
 
 import './NestedSelect.scss';
 
-const NestedSelect = createReactClass({
-
-  propTypes: {
-    onUpdate: PropTypes.func.isRequired,
-    layers: PropTypes.array.isRequired,
-    expanded: PropTypes.bool,
-    initiallyOpen: PropTypes.bool,
-    abstractTopLevel: PropTypes.bool,
-  },
-
-  getDefaultProps() {
-    return {
-      expanded: null,
-      initiallyOpen: false,
-      abstractTopLevel: false,
-    };
-  },
-
-  handleToggle(address) {
+class NestedSelect extends React.Component {
+  handleToggle = (address) => {
     const layers = this.props.layers;
     // TODO write a recursive function to handle all of this
 
@@ -57,10 +39,10 @@ const NestedSelect = createReactClass({
     }
 
     this.props.onUpdate(layers);
-  },
+  }
 
   // recursive list item generator
-  composeListItems(items, address) {
+  composeListItems = (items, address) => {
     const self = this;
 
     if (items) {
@@ -130,7 +112,7 @@ const NestedSelect = createReactClass({
     }
 
     return null;
-  },
+  }
 
   render() {
     const layers = this.props.layers;
@@ -144,7 +126,21 @@ const NestedSelect = createReactClass({
         { listItems }
       </List>
     );
-  },
-});
+  }
+}
+
+NestedSelect.defaultProps = {
+  expanded: null,
+  initiallyOpen: false,
+  abstractTopLevel: false,
+};
+
+NestedSelect.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+  layers: PropTypes.array.isRequired,
+  expanded: PropTypes.bool,
+  initiallyOpen: PropTypes.bool,
+  abstractTopLevel: PropTypes.bool,
+};
 
 export default NestedSelect;

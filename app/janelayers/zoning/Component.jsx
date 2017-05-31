@@ -34,7 +34,6 @@ class Zoning extends React.Component {
       if (a < b) return 1;
       return 0;
     });
-    console.log(activeCheckboxes);
 
     this.setState({ activeCheckboxes });
   }
@@ -85,7 +84,7 @@ class Zoning extends React.Component {
             <div className="sidebar-tab-content">
               <div className="padded">
                 <h4>Zoning Layers</h4>
-                <p>The zoning datasets are provided at NYC Planning's Bytes of the Big Apple Open Data site.</p>
+                <p>The zoning datasets are provided at NYC Planning&#39;s Bytes of the Big Apple Open Data site.</p>
               </div>
             </div>
           </Tab>

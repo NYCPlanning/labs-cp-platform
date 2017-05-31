@@ -1,23 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import Select from 'react-select';
 
-const MultiSelect = createReactClass({
-  propTypes: {
-    options: PropTypes.array.isRequired,
-    onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    valueRenderer: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return ({
-      valueRenderer: null,
-    });
-  },
-
-  handleMultiSelectChange(selectedOptions) {
+class MultiSelect extends React.Component {
+  handleMultiSelectChange = (selectedOptions) => {
     const { options } = this.props;
 
     // reset checked status for all options, check those that were just passed in
@@ -27,7 +13,7 @@ const MultiSelect = createReactClass({
     });
 
     this.props.onChange(options);
-  },
+  }
 
   render() {
     const { options, placeholder, valueRenderer } = this.props;
@@ -45,7 +31,18 @@ const MultiSelect = createReactClass({
         valueRenderer={valueRenderer}
       />
     );
-  },
-});
+  }
+}
+
+MultiSelect.defaultProps = {
+  valueRenderer: null,
+};
+
+MultiSelect.propTypes = {
+  options: PropTypes.array.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  valueRenderer: PropTypes.func,
+};
 
 export default MultiSelect;

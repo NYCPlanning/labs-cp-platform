@@ -1,27 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import ReactDOM from 'react-dom';
 
 import carto from '../helpers/carto';
 
 /* eslint-disable no-undef */
 
-const CostGroupChart = createReactClass({
-
-  propTypes: {
-    pointsSql: PropTypes.string.isRequired,
-  },
-
+class CostGroupChart extends React.Component {
   // on mount, set up chart and go get data
   componentDidMount() {
     this.initializeChart();
     this.fetchData(this.props);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.pointsSql !== this.props.pointsSql) this.fetchData(nextProps);
-  },
+  }
 
   fetchData(props) {
     const unioned = `${props.pointsSql} UNION ALL ${props.polygonsSql}`;
@@ -60,7 +54,7 @@ const CostGroupChart = createReactClass({
       .then((data) => {
         this.renderBars(data);
       });
-  },
+  }
 
   initializeChart() {
     this.margin = {
@@ -91,7 +85,7 @@ const CostGroupChart = createReactClass({
       .attr('class', 'axis')
       .attr('transform', `translate(0,${(this.height + this.margin.top)})`)
       .call(d3.axisBottom(this.x));
-  },
+  }
 
   renderBars(data) {
     const chart = this.chart;
@@ -148,13 +142,17 @@ const CostGroupChart = createReactClass({
 
     this.chart.select('.axis')
       .call(d3.axisBottom(x));
-  },
+  }
 
   render() {
     return (
       <div className="chart-container" ref={(x) => { this.chartContainer = x; }} />
     );
-  },
-});
+  }
+}
+
+CostGroupChart.propTypes = {
+  pointsSql: PropTypes.string.isRequired,
+};
 
 export default CostGroupChart;

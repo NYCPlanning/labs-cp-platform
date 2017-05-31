@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import Checkbox from 'material-ui/Checkbox';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -41,37 +40,27 @@ const defaultLayerConfig = {
   ],
 };
 
-
-const Component = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
-  getInitialState() {
-    return ({
+class Component extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       activeCheckboxes: ['pfirm15'],
-    });
-  },
+    };
+  }
 
   componentDidMount() {
     this.sendNewConfig(defaultLayerConfig);
-  },
+  }
 
-  sendNewConfig(layerConfig) {
+  sendNewConfig = (layerConfig) => {
     this.props.onUpdate('floodhazards', {
       sources: layerConfig.sources,
       mapLayers: layerConfig.mapLayers,
       legend: layerConfig.legend,
     });
-  },
+  }
 
-  handleCheck(id) {
+  handleCheck = (id) => {
     const found = this.state.activeCheckboxes.includes(id);
     if (found) {
       this.setState({
@@ -82,7 +71,7 @@ const Component = createReactClass({
         activeCheckboxes: [...this.state.activeCheckboxes, id],
       }, this.updateMapElements);
     }
-  },
+  }
 
   render() {
     return (
@@ -114,7 +103,15 @@ const Component = createReactClass({
 
       </div>
     );
-  },
-});
+  }
+}
+
+Component.defaultProps = {
+  onUpdate: () => {},
+};
+
+Component.propTypes = {
+  onUpdate: PropTypes.func,
+};
 
 export default Component;

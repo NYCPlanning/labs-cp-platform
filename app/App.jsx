@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -24,18 +23,11 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const App = createReactClass({
-  propTypes: {
-    location: PropTypes.shape().isRequired,
-    children: PropTypes.element.isRequired,
-    route: PropTypes.shape().isRequired,
-  },
-
-  getInitialState() {
-    return ({
-      loggedIn: true,
-    });
-  },
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { loggedIn: true };
+  }
 
   componentWillReceiveProps(nextProps) {
     // from the react router pinterest example, this allows us to slide in a new page without unmounting the old one
@@ -46,13 +38,13 @@ const App = createReactClass({
     )) {
       this.previousChildren = this.props.children;
     }
-  },
+  }
 
   // modalOptions should be an object with modalHeading:String, modalContent:rendered JSX, modalCloseText: String
-  showModal(modalOptions) {
+  showModal = (modalOptions) => {
     this.setState(modalOptions);
     if (this.modal) this.modal.open();
-  },
+  }
 
   render() {
     const { location } = this.props;
@@ -131,7 +123,13 @@ const App = createReactClass({
         </div>
       </MuiThemeProvider>
     );
-  },
-});
+  }
+}
+
+App.propTypes = {
+  location: PropTypes.shape().isRequired,
+  children: PropTypes.element.isRequired,
+  route: PropTypes.shape().isRequired,
+};
 
 module.exports = App;

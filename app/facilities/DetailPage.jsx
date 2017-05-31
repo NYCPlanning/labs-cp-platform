@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -15,26 +14,11 @@ import FacilitiesStore from '../stores/FacilitiesStore';
 
 import '../app.scss';
 
-const DetailPage = createReactClass({
-  propTypes: {
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }).isRequired,
-    location: PropTypes.shape().isRequired,
-    auth: PropTypes.object,
-  },
-
-  getDefaultProps() {
-    return ({
-      auth: null,
-    });
-  },
-
-  getInitialState() {
-    return ({
-      data: null,
-    });
-  },
+class DetailPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+  }
 
   componentWillMount() {
     FacilitiesStore.on('detailDataAvailable', () => {
@@ -45,7 +29,7 @@ const DetailPage = createReactClass({
     });
 
     FacilitiesActions.fetchDetailData(parseInt(this.props.params.id));
-  },
+  }
 
   renderContent(state) {
     const d = state.data.properties;
@@ -280,7 +264,7 @@ const DetailPage = createReactClass({
         </div>
       </div>
     );
-  },
+  }
 
   render() {
     const content = (this.state.data && this.state.sources) ? this.renderContent(this.state) : null;
@@ -290,8 +274,19 @@ const DetailPage = createReactClass({
         {content}
       </div>
     );
-  },
+  }
+}
 
-});
+DetailPage.defaultProps = {
+  auth: null,
+};
+
+DetailPage.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
+  location: PropTypes.shape().isRequired,
+  auth: PropTypes.object,
+};
 
 module.exports = DetailPage;
