@@ -1,24 +1,26 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
 
 import ga from '../helpers/ga';
 
-const SplashDuo = createReactClass({
-  getInitialState: () => ({
-    selectedGeography: null,
-    ntaSelectionValues: [],
-    neighborhoodPlacholder: 'Explore a Neighborhood',
-  }),
+class SplashDuo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedGeography: null,
+      ntaSelectionValues: [],
+      neighborhoodPlacholder: 'Explore a Neighborhood',
+    };
+  }
 
   componentDidMount() {
     $.getJSON('/data/ntas.json', (data) => { // eslint-disable-line no-undef
       this.setState({ ntaSelectionValues: data });
     });
-  },
+  }
 
-  handleGeographySelection(selected) {
+  handleGeographySelection = (selected) => {
     browserHistory.push({
       pathname: '/facilities/explorer',
       state: {
@@ -34,13 +36,13 @@ const SplashDuo = createReactClass({
       action: 'neighborhood',
       label: selected.label,
     });
-  },
+  }
 
-  handleNeighborhoodBoxClick() {
+  handleNeighborhoodBoxClick = () => {
     this.setState({
       neighborhoodPlacholder: 'Type to search',
     });
-  },
+  }
 
   render() {
     return (
@@ -74,7 +76,7 @@ const SplashDuo = createReactClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
 export default SplashDuo;

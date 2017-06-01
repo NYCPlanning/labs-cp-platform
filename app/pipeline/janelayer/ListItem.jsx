@@ -15,7 +15,8 @@ const Item = (props) => {
       }}
     >
       <div
-        className={'facilities-list-item'} style={{
+        className={'facilities-list-item'}
+        style={{
           borderLeft: `5px solid ${getColor('dcp_permit_type', d.dcp_permit_type)}`,
         }}
       >

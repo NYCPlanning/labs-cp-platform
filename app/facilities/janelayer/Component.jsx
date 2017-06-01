@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import update from 'react/lib/update';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -11,25 +10,16 @@ import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import FacilitiesStore from '../../stores/FacilitiesStore';
 
-const Facilities = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
-  getInitialState() {
-    return ({
+class Facilities extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       mapConfig: FacilitiesStore.mapConfig,
       filterDimensions: FacilitiesStore.filterDimensions,
       totalCount: FacilitiesStore.totalCount,
       selectedCount: FacilitiesStore.selectedCount,
-    });
-  },
+    };
+  }
 
   componentWillMount() {
     // listen for changes to the filter UI
@@ -46,17 +36,17 @@ const Facilities = createReactClass({
     });
 
     FacilitiesStore.initialize();
-  },
-
-  componentWillUnmount() {
-    FacilitiesStore.removeAllListeners('facilitiesUpdated');
-  },
+  }
 
   componentDidUpdate() {
     this.updateMapConfig();
-  },
+  }
 
-  updateMapConfig() {
+  componentWillUnmount() {
+    FacilitiesStore.removeAllListeners('facilitiesUpdated');
+  }
+
+  updateMapConfig = () => {
     const { mapConfig } = this.state;
 
     mapConfig.legend = (
@@ -66,19 +56,19 @@ const Facilities = createReactClass({
     );
 
     this.props.onUpdate(mapConfig);
-  },
+  }
 
-  handleDownload(label) {
+  handleDownload = (label) => {
     ga.event({
       category: 'faciities-explorer',
       action: 'download',
       label,
     });
-  },
+  }
 
   // builds a legend with a composed date range, updates layer config,
   // updates the layerconfig and sends it up to Jane
-  renderLegend() {
+  renderLegend = () => {
     const self = this;
 
     const legendContent = (
@@ -94,7 +84,7 @@ const Facilities = createReactClass({
     });
 
     this.props.onUpdate('facilities', newLayer);
-  },
+  }
 
   render() {
     // necessary for scrolling in tab Content
@@ -140,7 +130,15 @@ const Facilities = createReactClass({
         </Tab>
       </Tabs>
     );
-  },
-});
+  }
+}
+
+Facilities.defaultProps = {
+  onUpdate: () => {},
+};
+
+Facilities.propTypes = {
+  onUpdate: PropTypes.func,
+};
 
 export default Facilities;

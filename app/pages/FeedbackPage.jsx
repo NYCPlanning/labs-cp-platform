@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
 
@@ -9,15 +8,11 @@ import { api_domain } from '../helpers/appConfig';
 
 import './FeedbackPage.scss';
 
-const FeedbackPage = createReactClass({
-
-  propTypes: {
-    params: PropTypes.object.isRequired,
-  },
-
-  getInitialState() {
-    return ({ data: null });
-  },
+class FeedbackPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+  }
 
   componentDidMount() {
     const jwt = AuthService.getToken();
@@ -30,7 +25,7 @@ const FeedbackPage = createReactClass({
         this.setState({ data });
       },
     });
-  },
+  }
 
   render() {
     const style = {
@@ -69,7 +64,11 @@ const FeedbackPage = createReactClass({
         <div className="col-md-3" />
       </div>
     );
-  },
-});
+  }
+}
+
+FeedbackPage.propTypes = {
+  params: PropTypes.object.isRequired,
+};
 
 export default FeedbackPage;

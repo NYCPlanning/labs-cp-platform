@@ -1,34 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import AuthService from '../helpers/AuthService';
 
 import './Nav.scss';
 
-const Nav = createReactClass({
-  propTypes: {
-    title: PropTypes.string,
-    about: PropTypes.string,
-    children: PropTypes.array,
-  },
-
-  getDefaultProps() {
-    return {
-      title: '',
-      about: '/about',
-      children: null,
-    };
-  },
-
-  handleLogout() {
+class Nav extends React.Component {
+  handleLogout = () => {
     AuthService.logout();
-  },
+  }
 
-  handleLogin() {
+  handleLogin = () => {
     AuthService.login();
-  },
+  }
 
   render() {
     const profile = AuthService.getProfile();
@@ -92,7 +77,19 @@ const Nav = createReactClass({
         </div>
       </nav>
     );
-  },
-});
+  }
+}
+
+Nav.defaultProps = {
+  title: '',
+  about: '/about',
+  children: null,
+};
+
+Nav.propTypes = {
+  title: PropTypes.string,
+  about: PropTypes.string,
+  children: PropTypes.array,
+};
 
 module.exports = Nav;

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import LayerSelector from '../LayerSelector';
@@ -11,27 +10,17 @@ import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import PipelineStore from '../../stores/PipelineStore';
 
-
-const Pipeline = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
-  getInitialState() {
-    return ({
+class Pipeline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       mapConfig: PipelineStore.mapConfig,
       totalCount: PipelineStore.totalCount,
       selectedCount: PipelineStore.selectedCount,
       filterDimensions: PipelineStore.filterDimensions,
       symbologyDimension: PipelineStore.symbologyDimension,
-    });
-  },
+    };
+  }
 
   componentWillMount() {
     // listen for changes to the filter UI
@@ -46,28 +35,28 @@ const Pipeline = createReactClass({
     });
 
     PipelineStore.initialize();
-  },
-
-  componentWillUnmount() {
-    PipelineStore.removeAllListeners('pipelineUpdated');
-  },
+  }
 
   componentDidUpdate() {
     this.updateMapConfig();
-  },
+  }
 
-  handleDownload(label) {
+  componentWillUnmount() {
+    PipelineStore.removeAllListeners('pipelineUpdated');
+  }
+
+  handleDownload = (label) => {
     ga.event({
       category: 'pipeline-explorer',
       action: 'download',
       label,
     });
-  },
+  }
 
-  updateMapConfig() {
+  updateMapConfig = () => {
     const { mapConfig } = this.state;
     this.props.onUpdate(mapConfig);
-  },
+  }
 
   render() {
     const {
@@ -118,7 +107,15 @@ const Pipeline = createReactClass({
         </Tab>
       </Tabs>
     );
-  },
-});
+  }
+}
+
+Pipeline.defaultProps = {
+  onUpdate: () => {},
+};
+
+Pipeline.propTypes = {
+  onUpdate: PropTypes.func,
+};
 
 export default Pipeline;

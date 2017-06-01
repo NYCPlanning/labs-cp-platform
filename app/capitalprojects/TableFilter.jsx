@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
@@ -12,18 +11,15 @@ import CountWidget from '../common/CountWidget';
 import CapitalProjectsTableActions from '../actions/CapitalProjectsTableActions';
 import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
 
-const Filter = createReactClass({
-  propTypes: {
-    onFilterBy: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return ({
+class Filter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       filterDimensions: CapitalProjectsTableStore.filterDimensions,
       totalspendRange: [0, 9],
       totalcommitRange: [0, 9],
-    });
-  },
+    };
+  }
 
   componentWillMount() {
     CapitalProjectsTableStore.on('updated', () => {
@@ -40,20 +36,19 @@ const Filter = createReactClass({
         if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
       });
     });
-  },
+  }
 
-  updateFilterDimension(dimension, values) {
+  updateFilterDimension = (dimension, values) => {
     CapitalProjectsTableActions.onFilterDimensionChange(dimension, values);
-  },
+  }
 
-  handleSliderChange(dimension, data) {
+  handleSliderChange = (dimension, data) => {
     this.updateFilterDimension(dimension, [data.from, data.to]);
-  },
+  }
 
-  resetFilter() {
+  resetFilter = () => {
     CapitalProjectsTableActions.resetFilter();
-  },
-
+  }
 
   render() {
     // override material ui ListItem spacing
@@ -209,7 +204,11 @@ const Filter = createReactClass({
         </div>
       )
     );
-  },
-});
+  }
+}
+
+Filter.propTypes = {
+  onFilterBy: PropTypes.func.isRequired,
+};
 
 export default Filter;

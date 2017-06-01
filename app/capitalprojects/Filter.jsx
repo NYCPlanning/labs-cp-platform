@@ -1,5 +1,5 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
@@ -12,23 +12,18 @@ import RangeSlider from '../common/RangeSlider';
 import RangeInputs from '../common/RangeInputs';
 import MultiSelect from '../common/MultiSelect';
 
-const Filter = createReactClass({
-  propTypes: {
-
-  },
-
-
-  updateFilterDimension(dimension, values) {
+class Filter extends React.Component {
+  updateFilterDimension = (dimension, values) => {
     CapitalProjectsActions.onFilterDimensionChange(dimension, values);
-  },
+  }
 
-  handleSliderChange(dimension, data) {
+  handleSliderChange = (dimension, data) => {
     this.updateFilterDimension(dimension, [data.from, data.to]);
-  },
+  }
 
-  resetFilter() {
+  resetFilter = () => {
     CapitalProjectsActions.resetFilter();
-  },
+  }
 
   render() {
     // override material ui ListItem spacing
@@ -178,7 +173,20 @@ const Filter = createReactClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+Filter.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
+};
+
+Filter.propTypes = {
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  pointsSql: PropTypes.string.isRequired,
+  polygonsSql: PropTypes.string.isRequired,
+  filterDimensions: PropTypes.object.isRequired,
+};
 
 export default Filter;

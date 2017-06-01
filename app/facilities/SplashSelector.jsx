@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
@@ -55,30 +54,32 @@ function wrapState(ComposedComponent) {
 const SelectableList = wrapState(ThisSelectableList);
 
 
-const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-comp
-
-  getInitialState: () => ({
-    selectedIndex: 0,
-    noneSelected: true,
-  }),
+class SplashSelector extends React.Component { // eslint-disable-line react/no-multi-comp
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedIndex: 0,
+      noneSelected: true,
+    };
+  }
 
   componentWillMount() {
     const layers = layersGenerator.allUnchecked();
     this.setState({ layers });
-  },
+  }
 
-  handleIndexChange(index) {
+  handleIndexChange = (index) => {
     this.setState({
       selectedIndex: index,
     });
-  },
+  }
 
-  handleSelectUpdate() {
+  handleSelectUpdate = () => {
     this.processChecked();
-  },
+  }
 
   // set indeterminate states, check/uncheck children, etc
-  processChecked() {
+  processChecked = () => {
     const layers = this.state.layers;
     let noneSelected = true;
 
@@ -112,7 +113,7 @@ const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-
       layers,
       noneSelected,
     });
-  },
+  }
 
   render() {
     const index = this.state.selectedIndex;
@@ -209,7 +210,7 @@ const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-
         </Link>
       </div>
     );
-  },
-});
+  }
+}
 
 export default SplashSelector;

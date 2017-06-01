@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -10,27 +9,19 @@ import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import CapitalProjectsStore from '../../stores/CapitalProjectsStore';
 
-const CapitalProjects = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
+class CapitalProjects extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
-  getInitialState() {
-    return ({
+    this.state = {
       mapConfig: CapitalProjectsStore.mapConfig,
       pointsSql: CapitalProjectsStore.pointsSql,
       polygonsSql: CapitalProjectsStore.polygonsSql,
       totalCount: CapitalProjectsStore.totalCount,
       selectedCount: CapitalProjectsStore.selectedCount,
       filterDimensions: CapitalProjectsStore.filterDimensions,
-    });
-  },
+    };
+  }
 
   componentWillMount() {
     // listen for changes to the filter UI
@@ -46,25 +37,25 @@ const CapitalProjects = createReactClass({
     });
 
     CapitalProjectsStore.initialize();
-  },
-
-  componentWillUnmount() {
-    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
-  },
+  }
 
   componentDidUpdate() {
     this.updateMapConfig();
-  },
+  }
 
-  handleDownload(label) {
+  componentWillUnmount() {
+    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
+  }
+
+  handleDownload = (label) => {
     ga.event({
       category: 'capitalprojects-explorer',
       action: 'download',
       label,
     });
-  },
+  }
 
-  updateMapConfig() {
+  updateMapConfig = () => {
     // pass the new config up to Jane
     const { mapConfig } = this.state;
     mapConfig.legend = (
@@ -80,7 +71,7 @@ const CapitalProjects = createReactClass({
       </div>
     );
     this.props.onUpdate(mapConfig);
-  },
+  }
 
   render() {
     const { pointsSql, polygonsSql, totalCount, selectedCount, filterDimensions } = this.state;
@@ -129,7 +120,15 @@ const CapitalProjects = createReactClass({
         </Tab>
       </Tabs>
     );
-  },
-});
+  }
+}
+
+CapitalProjects.defaultProps = {
+  onUpdate: () => {},
+};
+
+CapitalProjects.propTypes = {
+  onUpdate: PropTypes.func,
+};
 
 export default CapitalProjects;

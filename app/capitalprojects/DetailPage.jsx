@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import Numeral from 'numeral';
 import _ from 'underscore';
 
@@ -16,20 +15,16 @@ import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 import '../app.scss';
 import './styles.scss';
 
-const ProjectPage = createReactClass({
+class DetailPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-  propTypes: {
-    params: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-  },
-
-  getInitialState() {
-    return ({
+    this.state = {
       data: null,
       budgets: null,
       commitments: null,
-    });
-  },
+    };
+  }
 
   componentWillMount() {
     CapitalProjectsStore.on('detailDataAvailable', () => {
@@ -41,7 +36,7 @@ const ProjectPage = createReactClass({
     });
 
     CapitalProjectsActions.fetchDetailData(this.props.params.id);
-  },
+  }
 
   renderContent() {
     const d = this.state.data.properties;
@@ -215,7 +210,7 @@ const ProjectPage = createReactClass({
         </div>
       </div>
     );
-  },
+  }
 
   render() {
     const content = this.state.data ? this.renderContent() : null;
@@ -225,7 +220,12 @@ const ProjectPage = createReactClass({
         {content}
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = ProjectPage;
+DetailPage.propTypes = {
+  params: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+};
+
+module.exports = DetailPage;

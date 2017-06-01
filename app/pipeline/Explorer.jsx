@@ -1,6 +1,5 @@
 // PipeLineExplorer.jsx - Top level Component for the Pipeline Explorer Map
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
@@ -11,12 +10,11 @@ import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import PipelineActions from '../actions/PipelineActions';
 import PipelineStore from '../stores/PipelineStore';
 
-const PipeLineExplorer = createReactClass({
-  getInitialState() {
-    return {
-      selectedFeatures: [],
-    };
-  },
+class PipeLineExplorer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedFeatures: [] };
+  }
 
   componentDidMount() {
     document.title = 'NYC Housing Development Explorer';
@@ -25,9 +23,9 @@ const PipeLineExplorer = createReactClass({
       const selectedFeatures = PipelineStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
-  },
+  }
 
-  handleMapLayerClick(features) {
+  handleMapLayerClick = (features) => {
     // set selectedFeatures to [] will cause the right drawer to animate away,
     // then setting the new data will bring it back
     // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
@@ -35,11 +33,11 @@ const PipeLineExplorer = createReactClass({
     setTimeout(() => {
       PipelineActions.setSelectedFeatures(features);
     }, 450);
-  },
+  }
 
-  clearSelectedFeatures() {
+  clearSelectedFeatures = () => {
     PipelineActions.setSelectedFeatures([]);
-  },
+  }
 
   render() {
     const mapInit = appConfig.mapInit;
@@ -89,7 +87,7 @@ const PipeLineExplorer = createReactClass({
         { selectedFeaturesPane }
       </div>
     );
-  },
-});
+  }
+}
 
 module.exports = PipeLineExplorer;

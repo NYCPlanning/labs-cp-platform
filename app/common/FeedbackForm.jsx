@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
@@ -8,48 +7,41 @@ import reformed from 'react-reformed';
 import appConfig from '../helpers/appConfig';
 import AuthService from '../helpers/AuthService';
 
-const FeedbackForm = createReactClass({
-
-  propTypes: {
-    setProperty: PropTypes.func.isRequired,
-    model: PropTypes.object.isRequired,
-    ref_type: PropTypes.string.isRequired,
-    ref_id: PropTypes.string.isRequired,
-  },
-
-  getInitialState() {
-    return ({
+class FeedbackForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       valid: false,
       submitted: false,
       error: false,
-    });
-  },
+    };
+  }
 
-  onPostSuccess(data) {
+  onPostSuccess = (data) => {
     if (data.success) {
       this.setState({ submitted: true });
     }
-  },
+  }
 
-  onPostError() {
+  onPostError = () => {
     this.setState({ error: true });
-  },
+  }
 
-  onSubmit() {
+  onSubmit = () => {
     // if not logged in, prompt login and pass current model up
     if (!AuthService.loggedIn()) {
       AuthService.login();
     } else {
       this.postData();
     }
-  },
+  }
 
-  onChangeInput(e) {
+  onChangeInput = (e) => {
     // `setProperty` is injected by reformed
     this.props.setProperty(e.target.name, e.target.value);
-  },
+  }
 
-  postData() { // TODO move ajax to a helper class
+  postData = () => { // TODO move ajax to a helper class
     const data = this.props.model;
 
     const profile = AuthService.getProfile();
@@ -74,7 +66,7 @@ const FeedbackForm = createReactClass({
       success: this.onPostSuccess,
       error: this.onPostError,
     });
-  },
+  }
 
   render() {
     // model is injected by reformed
@@ -123,8 +115,15 @@ const FeedbackForm = createReactClass({
 
       </div>
     );
-  },
-});
+  }
+}
+
+FeedbackForm.propTypes = {
+  setProperty: PropTypes.func.isRequired,
+  model: PropTypes.object.isRequired,
+  ref_type: PropTypes.string.isRequired,
+  ref_id: PropTypes.string.isRequired,
+};
 
 // Wrap your form in the higher-order component
 export default reformed()(FeedbackForm);

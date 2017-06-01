@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
@@ -13,22 +12,11 @@ import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
 
-const FacilitiesExplorer = createReactClass({
-  propTypes: {
-    location: PropTypes.object,
-  },
-
-  getDefaultProps() {
-    return {
-      location: null,
-    };
-  },
-
-  getInitialState() {
-    return {
-      selectedFeatures: FacilitiesStore.selectedFeatures,
-    };
-  },
+class FacilitiesExplorer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedFeatures: FacilitiesStore.selectedFeatures };
+  }
 
   componentWillMount() {
     this.bounds = null;
@@ -46,7 +34,7 @@ const FacilitiesExplorer = createReactClass({
     }
 
     FacilitiesActions.setInitialFilters(filterDimensions);
-  },
+  }
 
   componentDidMount() {
     const self = this;
@@ -66,9 +54,9 @@ const FacilitiesExplorer = createReactClass({
       const selectedFeatures = FacilitiesStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
-  },
+  }
 
-  handleMapLayerClick(features) {
+  handleMapLayerClick = (features) => {
     // set selectedFeatures to [] will cause the right drawer to animate away,
     // then setting the new data will bring it back
     // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
@@ -76,11 +64,11 @@ const FacilitiesExplorer = createReactClass({
     setTimeout(() => {
       FacilitiesActions.setSelectedFeatures(features);
     }, 450);
-  },
+  }
 
-  clearSelectedFeatures() {
+  clearSelectedFeatures = () => {
     FacilitiesActions.setSelectedFeatures([]);
-  },
+  }
 
   render() {
     const mapInit = appConfig.mapInit;
@@ -130,7 +118,15 @@ const FacilitiesExplorer = createReactClass({
         { selectedFeaturesPane }
       </div>
     );
-  },
-});
+  }
+}
+
+FacilitiesExplorer.defaultProps = {
+  location: null,
+};
+
+FacilitiesExplorer.propTypes = {
+  location: PropTypes.object,
+};
 
 module.exports = FacilitiesExplorer;

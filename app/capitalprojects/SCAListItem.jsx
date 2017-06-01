@@ -8,7 +8,8 @@ const Item = (props) => {
 
   return (
     <div
-      className={'sca-list-item'} style={{
+      className={'sca-list-item'}
+      style={{
         borderLeft: `5px solid${'#5C99FF'}`,
       }}
     >

@@ -2,7 +2,7 @@
 /* eslint-disable react/no-multi-comp */
 
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
@@ -16,46 +16,39 @@ import FacilitiesStore from '../stores/FacilitiesStore';
 
 import './LayerSelector.scss';
 
-const LayerSelector = createReactClass({
-
-  getDefaultProps() {
-    return {
-      layers: [],
-      filterDimensions: null,
-    };
-  },
-
-  getInitialState() {
-    return { expanded: false };
-  },
+class LayerSelector extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { expanded: false };
+  }
 
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
-  },
+  }
 
-  updateFilterDimension(dimension, values) {
+  updateFilterDimension = (dimension, values) => {
     FacilitiesActions.onFilterDimensionChange(dimension, values);
-  },
+  }
 
-  handleToggleAll() {
+  handleToggleAll = () => {
     FacilitiesActions.onToggleAll();
-  },
+  }
 
-  expandAll() {
+  expandAll = () => {
     this.setState({ expanded: true });
-  },
+  }
 
-  collapseAll() {
+  collapseAll = () => {
     this.setState({ expanded: false });
-  },
+  }
 
-  handleLayerUpdate(layers) {
+  handleLayerUpdate = (layers) => {
     this.updateFilterDimension('facsubgrp', layers);
-  },
+  }
 
-  resetFilter() {
+  resetFilter = () => {
     FacilitiesActions.resetFilter();
-  },
+  }
 
   render() {
     const { totalCount, selectedCount, filterDimensions } = this.props;
@@ -150,8 +143,19 @@ const LayerSelector = createReactClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
+LayerSelector.defaultProps = {
+  filterDimensions: {},
+  totalCount: 0,
+  selectedCount: 0,
+};
+
+LayerSelector.propTypes = {
+  filterDimensions: PropTypes.object,
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+};
 
 module.exports = LayerSelector;

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
@@ -14,17 +13,11 @@ import PipelineActions from '../actions/PipelineActions';
 
 import './DetailPage.scss';
 
-const DevelopmentPage = createReactClass({
-  propTypes: {
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }).isRequired,
-    location: PropTypes.shape().isRequired,
-  },
-
-  getInitialState() {
-    return { data: null };
-  },
+class DevelopmentPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+  }
 
   componentWillMount() {
     PipelineStore.on('detailDataAvailable', () => {
@@ -34,9 +27,9 @@ const DevelopmentPage = createReactClass({
     });
 
     PipelineActions.fetchDetailData(parseInt(this.props.params.id));
-  },
+  }
 
-  renderContent(data) {
+  renderContent = (data) => {
     function addSign(value) {
       if (value >= 0) {
         return `+${value}`;
@@ -244,7 +237,7 @@ const DevelopmentPage = createReactClass({
         </div>
       </div>
     );
-  },
+  }
 
   render() {
     const content = this.state.data ? this.renderContent(this.state.data) : null;
@@ -254,7 +247,14 @@ const DevelopmentPage = createReactClass({
         {content}
       </div>
     );
-  },
-});
+  }
+}
+
+DevelopmentPage.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
+  location: PropTypes.shape().isRequired,
+};
 
 module.exports = DevelopmentPage;

@@ -1,6 +1,5 @@
 // Explorer.jsx - Top level Component for the Facilities Explorer
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { Jane, JaneLayer } from 'jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
@@ -16,30 +15,30 @@ import { mapInit, searchConfig } from '../helpers/appConfig';
 
 import './styles.scss';
 
-const CapitalProjectsExplorer = createReactClass({
-
-  getInitialState() {
-    return {
+class CapitalProjectsExplorer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       selectedFeatures: CapitalProjectsStore.selectedFeatures,
     };
-  },
+  }
 
   componentWillMount() {
     CapitalProjectsActions.resetFilter();
-  },
+  }
 
   componentDidMount() {
     CapitalProjectsStore.on('capitalProjectsUpdated', () => {
       const selectedFeatures = CapitalProjectsStore.selectedFeatures;
       this.setState({ selectedFeatures });
     });
-  },
+  }
 
-  clearSelectedFeatures() {
+  clearSelectedFeatures = () => {
     CapitalProjectsActions.setSelectedFeatures([]);
-  },
+  }
 
-  handleMapLayerClick(features) {
+  handleMapLayerClick = (features) => {
     // set selectedFeatures to [] will cause the right drawer to animate away,
     // then setting the new data will bring it back
     // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
@@ -47,7 +46,7 @@ const CapitalProjectsExplorer = createReactClass({
     setTimeout(() => {
       CapitalProjectsActions.setSelectedFeatures(features);
     }, 450);
-  },
+  }
 
   render() {
     const { selectedFeatures } = this.state;
@@ -107,8 +106,7 @@ const CapitalProjectsExplorer = createReactClass({
         {selectedFeaturesPane}
       </div>
     );
-  },
-});
-
+  }
+}
 
 module.exports = CapitalProjectsExplorer;

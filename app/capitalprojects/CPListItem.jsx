@@ -18,7 +18,8 @@ const Item = (props) => {
       }}
     >
       <div
-        className={'capital-projects-list-item'} style={{
+        className={'capital-projects-list-item'}
+        style={{
           borderLeft: `5px solid${d.totalspend > 0 ? '#d98127' : '#8B8C98'}`,
         }}
       >

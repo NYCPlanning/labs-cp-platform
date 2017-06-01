@@ -1,16 +1,14 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import Footer from '../common/Footer';
 
 import './LandingPage.scss';
 
-const LandingPage = createReactClass({
-
+class LandingPage extends React.Component {
   componentDidMount() {
     document.title = 'Capital Planning Platform';
-  },
+  }
 
   render() {
     return (
@@ -58,7 +56,7 @@ const LandingPage = createReactClass({
         <Footer />
       </div>
     );
-  },
-});
+  }
+}
 
 module.exports = LandingPage;
