@@ -7,7 +7,7 @@ import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesComponent from './janelayer/Component';
-import { TransportationJaneLayer } from '../janelayers';
+import { AerialsJaneLayer, TransportationJaneLayer } from '../janelayers';
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
@@ -96,10 +96,8 @@ class FacilitiesExplorer extends React.Component {
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
-
-          <TransportationJaneLayer
-            defaultDisabled
-          />
+          <AerialsJaneLayer defaultDisabled />
+          <TransportationJaneLayer defaultDisabled />
         </Jane>
         { selectedFeaturesPane }
       </div>

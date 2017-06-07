@@ -1,3 +1,4 @@
+import AerialsJaneLayer from './aerials/AerialsJaneLayer';
 import TransportationJaneLayer from './transportation/TransportationJaneLayer';
 
-export { TransportationJaneLayer };
+export { AerialsJaneLayer, TransportationJaneLayer };

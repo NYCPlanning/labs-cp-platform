@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import config from './config';
 
 const tabTemplateStyle = {
   position: 'absolute',
@@ -10,14 +8,6 @@ const tabTemplateStyle = {
 };
 
 class Aerials extends React.Component {
-  componentDidUpdate() {
-    this.updateMapConfig();
-  }
-
-  updateMapConfig = () => {
-    const mapConfig = config;
-    this.props.onUpdate(mapConfig);
-  }
 
   render() {
     return (
@@ -39,14 +29,5 @@ class Aerials extends React.Component {
     );
   }
 }
-
-Aerials.propTypes = {
-  onUpdate: PropTypes.func,
-};
-
-
-Aerials.defaultProps = {
-  onUpdate: () => {},
-};
 
 export default Aerials;
