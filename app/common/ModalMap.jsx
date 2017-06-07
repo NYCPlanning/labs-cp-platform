@@ -9,7 +9,7 @@ import centroid from 'turf-centroid';
 import extent from 'turf-extent';
 import { Jane, JaneLayer } from 'jane-maps';
 
-import supportingLayers from '../janelayers/supportingLayers';
+import supportingLayers from '../janelayers';
 import TravelshedComponent from '../janelayers/travelshed/Component';
 import appConfig from '../helpers/appConfig';
 import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';

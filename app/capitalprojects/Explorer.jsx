@@ -5,7 +5,7 @@ import { Jane, JaneLayer } from 'jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
 import CapitalProjectsStore from '../stores/CapitalProjectsStore';
 import CapitalProjectsActions from '../actions/CapitalProjectsActions';
-import supportingLayers from '../janelayers/supportingLayers';
+import supportingLayers from '../janelayers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import CPListItem from './CPListItem';
 import SCAListItem from './SCAListItem';

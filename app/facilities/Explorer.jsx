@@ -7,10 +7,12 @@ import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesComponent from './janelayer/Component';
-import supportingLayers from '../janelayers/supportingLayers';
+import { TransportationJaneLayer } from '../janelayers';
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
+
+console.log(TransportationJaneLayer);
 
 class FacilitiesExplorer extends React.Component {
   constructor(props) {
@@ -71,8 +73,7 @@ class FacilitiesExplorer extends React.Component {
   }
 
   render() {
-    const mapInit = appConfig.mapInit;
-    const searchConfig = appConfig.searchConfig;
+    const { mapboxGLOptions, searchConfig } = appConfig;
 
     const { selectedFeatures } = this.state;
 
@@ -89,30 +90,15 @@ class FacilitiesExplorer extends React.Component {
     return (
       <div className="full-screen">
         <Jane
-          mapInit={mapInit}
-          layerContentVisible
+          mapboxGLOptions={mapboxGLOptions}
           search
           searchConfig={searchConfig}
-          initialSelectedJaneLayer={'facilities'}
-          initialDisabledJaneLayers={[
-            'transportation',
-            'adminboundaries',
-            'zoning',
-            'aerials',
-          ]}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
-          {supportingLayers.aerials}
-          {supportingLayers.adminboundaries}
-          {supportingLayers.zoning}
-          {supportingLayers.transportation}
-          <JaneLayer
-            id="facilities"
-            name="Facilities and Program Sites"
-            icon="university"
-            onMapLayerClick={this.handleMapLayerClick}
-            component={<FacilitiesComponent />}
+
+          <TransportationJaneLayer
+            defaultDisabled
           />
         </Jane>
         { selectedFeaturesPane }

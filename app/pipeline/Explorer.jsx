@@ -3,7 +3,7 @@ import React from 'react';
 import { Jane, JaneLayer } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
-import supportingLayers from '../janelayers/supportingLayers';
+import supportingLayers from '../janelayers';
 import PipelineComponent from './janelayer/Component';
 import ListItem from './janelayer/ListItem';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
