@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Jane, JaneLayer } from 'jane-maps';
+import { Jane } from 'jane-maps';
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
-import FacilitiesComponent from './janelayer/Component';
 import {
-  AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer, ZoningJaneLayer, AdminBoundariesJaneLayer
+  AerialsJaneLayer,
+  TransportationJaneLayer,
+  FloodHazardsJaneLayer, ZoningJaneLayer,
+  AdminBoundariesJaneLayer,
 } from '../janelayers';
+
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
-
-console.log(TransportationJaneLayer);
 
 class FacilitiesExplorer extends React.Component {
   constructor(props) {
