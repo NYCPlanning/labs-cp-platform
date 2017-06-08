@@ -22,7 +22,7 @@ const SidebarComponent = props => (
             <h4>Statistical Areas</h4>
             <RadioButtonGroup
               name="adminboundary"
-              onChange={(value) => { props.onRadioChange(value); }}
+              onChange={(v) => { props.onRadioChange(v.target.value); }}
               valueSelected={props.selected}
             >
               <RadioButton
@@ -46,7 +46,7 @@ const SidebarComponent = props => (
             <h4>Municipal Boundaries</h4>
             <RadioButtonGroup
               name="adminboundary"
-              onChange={(value) => { props.onRadioChange(value); }}
+              onChange={(v) => { props.onRadioChange(v.target.value); }}
               valueSelected={props.selected}
             >
               <RadioButton
@@ -88,7 +88,7 @@ const SidebarComponent = props => (
             <h4>Service Districts</h4>
             <RadioButtonGroup
               name="adminboundary"
-              onChange={(value) => { props.onRadioChange(value); }}
+              onChange={(v) => { props.onRadioChange(v.target.value); }}
               valueSelected={props.selected}
             >
 
