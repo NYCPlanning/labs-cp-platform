@@ -101,7 +101,7 @@ class FacilitiesExplorer extends React.Component {
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultSelected />
+          <ZoningJaneLayer defaultDisabled />
         </Jane>
         { selectedFeaturesPane }
       </div>

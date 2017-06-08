@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer } from 'jane-maps';
 
 import SidebarComponent from './SidebarComponent';
-import { sources, mapLayers } from './config';
 import appConfig from '../../helpers/appConfig';
 
 
@@ -137,6 +136,32 @@ class ZoningJaneLayer extends React.Component {
       carto_user: appConfig.carto_user,
       carto_domain: appConfig.carto_domain,
       sql: ['SELECT * FROM support_zoning_co'],
+    };
+
+    const coConfig = {
+      id: 'co',
+      type: 'fill',
+      source: 'co',
+      'source-layer': 'layer0',
+      paint: {
+        'fill-opacity': 1,
+        'fill-color': 'rgba(158, 0, 0, 0)',
+        'fill-antialias': true,
+        'fill-outline-color': 'rgba(255, 0, 0, 1)',
+      },
+    };
+
+    const coLabelConfig = {
+      id: 'co_labels',
+      source: 'co',
+      type: 'symbol',
+      'source-layer': 'layer0',
+      paint: paint.co_labels,
+      layout: {
+        'symbol-placement': 'point',
+        'text-field': '{overlay}',
+      },
+      minzoom: 14,
     };
 
     return [
