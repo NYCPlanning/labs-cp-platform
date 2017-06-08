@@ -7,7 +7,9 @@ import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesComponent from './janelayer/Component';
-import { AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer } from '../janelayers';
+import {
+  AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer, ZoningJaneLayer,
+} from '../janelayers';
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
 import { defaultFilterDimensions } from './config';
@@ -99,6 +101,7 @@ class FacilitiesExplorer extends React.Component {
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
+          <ZoningJaneLayer defaultSelected />
         </Jane>
         { selectedFeaturesPane }
       </div>
