@@ -3,35 +3,7 @@ import PropTypes from 'prop-types';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-
-import defaultLayerConfig from './defaultLayerConfig';
-
-class AdminBoundaries extends React.Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: 'cd',
-    };
-  }
-
-  componentDidUpdate() {
-    this.updateMapConfig();
-  }
-
-  updateMapConfig = () => {
-    const { value } = this.state;
-    const mapConfig = defaultLayerConfig[value];
-
-    this.props.onUpdate(mapConfig);
-  }
-
-  handleChange = (e, value) => {
-    this.setState({ value });
-    this.updateMapConfig();
-  }
-
+class SidebarComponent extends React.Component {
   render() {
     // necessary for scrolling in tabs
     const tabTemplateStyle = {
@@ -53,8 +25,10 @@ class AdminBoundaries extends React.Component {
                 <h4>Statistical Areas</h4>
                 <RadioButtonGroup
                   name="adminboundary"
-                  onChange={this.handleChange}
-                  valueSelected={this.state.value}
+                  onChange={(value) => {
+                    this.props.onRadioChange(value);
+                  }}
+                  valueSelected={this.props.selected}
                 >
                   <RadioButton
                     value="nta"
@@ -166,12 +140,9 @@ class AdminBoundaries extends React.Component {
   }
 }
 
-AdminBoundaries.propTypes = {
-  onUpdate: PropTypes.func,
+SidebarComponent.propTypes = {
+  onRadioChange: PropTypes.func.isRequired,
+  selected: PropTypes.string.isRequired,
 };
 
-AdminBoundaries.defaultProps = {
-  onUpdate: () => {},
-};
-
-export default AdminBoundaries;
+export default SidebarComponent;
