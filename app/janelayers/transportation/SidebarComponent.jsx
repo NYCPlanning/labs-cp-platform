@@ -71,7 +71,7 @@ const SidebarComponent = props => (
 
 
 SidebarComponent.propTypes = {
-  checkboxes: PropTypes.array.isRequired,
+  checkboxes: PropTypes.object.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
 };
 
