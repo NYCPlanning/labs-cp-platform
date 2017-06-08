@@ -122,8 +122,8 @@ class ZoningJaneLayer extends React.Component {
     return [
       <Source id="zd" type="cartovector" options={sourceOptions} />,
 
-      <MapLayer id="zd" source="zd" config={zdConfig} />,
       <MapLayer id="zd_labels" source="zd" config={zdLabelConfig} />,
+      <MapLayer id="zd" source="zd" config={zdConfig} />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 

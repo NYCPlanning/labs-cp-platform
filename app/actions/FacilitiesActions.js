@@ -16,9 +16,15 @@ const FacilitiesActions = {
     });
   },
 
-  onToggleAll() {
+  selectAll() {
     dispatcher.dispatch({
-      type: 'FACILITIES_TOGGLE_ALL_LAYERS',
+      type: 'FACILITIES_SELECT_ALL',
+    });
+  },
+
+  selectNone() {
+    dispatcher.dispatch({
+      type: 'FACILITIES_SELECT_NONE',
     });
   },
 

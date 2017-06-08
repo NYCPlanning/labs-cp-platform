@@ -1,13 +1,12 @@
 /* eslint-disable  class-methods-use-this */
 
 import EventsEmitter from 'events';
-import update from 'react/lib/update';
 
 import dispatcher from '../dispatcher';
 import devTables from '../helpers/devTables';
 import carto from '../helpers/carto';
 import FacilitiesSqlBuilder from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
-import { defaultFilterDimensions, layerConfig } from '../facilities/config';
+import { defaultFilterDimensions } from '../facilities/config';
 import ga from '../helpers/ga';
 
 class FacilitiesStore extends EventsEmitter {
@@ -21,7 +20,6 @@ class FacilitiesStore extends EventsEmitter {
     };
     this.sqlBuilder = new FacilitiesSqlBuilder(this.sqlConfig.columns, this.sqlConfig.tablename);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-    this.mapConfig = this.getMapConfig;
     this.selectedFeatures = [];
   }
 
@@ -39,55 +37,6 @@ class FacilitiesStore extends EventsEmitter {
     Promise.all([p1, p2]).then(() => this.emit('facilitiesUpdated'));
   }
 
-  // builds a new LayerConfig based on this.sql
-  getMapConfig() {
-    const { sql, selectedFeatures } = this;
-
-    // set the sql for the vector source
-    const newConfig = update(JSON.parse(JSON.stringify(layerConfig)), {
-      sources: {
-        0: {
-          options: {
-            sql: {
-              $set: [sql],
-            },
-          },
-        },
-      },
-    });
-
-    // add selection feature to config
-    if (selectedFeatures.length > 0) {
-      const point = selectedFeatures[0].geometry;
-
-      newConfig.sources.push({
-        id: 'highlightPoints',
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          geometry: point,
-        },
-      });
-
-      newConfig.mapLayers.push({
-        id: 'highlightPoints',
-        type: 'circle',
-        source: 'highlightPoints',
-        paint: {
-          'circle-color': 'rgba(255, 255, 255, 1)',
-          'circle-opacity': 0,
-          'circle-radius': 10,
-          'circle-stroke-width': 3,
-          'circle-pitch-scale': 'map',
-          'circle-stroke-color': 'rgba(217, 107, 39, 1)',
-          'circle-stroke-opacity': 0.8,
-        },
-      });
-    }
-
-    return newConfig;
-  }
-
   // sets initial filterDimensions
   handleSetInitialFilters(filterDimensions) {
     this.filterDimensions = filterDimensions;
@@ -100,7 +49,6 @@ class FacilitiesStore extends EventsEmitter {
       category: 'facilities-explorer',
       action: 'set-filter',
     });
-
 
     this.filterDimensions[filterDimension].values = values;
 
@@ -118,9 +66,7 @@ class FacilitiesStore extends EventsEmitter {
 
   // update the sql, get counts, update MapConfig and emit an event
   updateSql() {
-    this.processChecked(this.filterDimensions.facsubgrp.values);
     this.sql = this.sqlBuilder.buildSql(this.filterDimensions);
-    this.mapConfig = this.getMapConfig();
     carto.getCount(this.sql).then((count) => {
       this.selectedCount = count;
       this.emit('facilitiesUpdated');
@@ -173,19 +119,27 @@ class FacilitiesStore extends EventsEmitter {
     return object.find(o => o.agency === lookup);
   }
 
-  // checks or unchecks all facsubgrp options depending on this.checkStatus
-  handleToggleAll() {
+  selectAll() {
     const layers = this.filterDimensions.facsubgrp.values;
 
     layers.forEach((facdomain) => {
       facdomain.children.forEach((group) => {
         group.children.forEach((subgroup) => {
-          // if none or some are selected, select all
-          if (this.checkStatus !== 'all') {
-            (subgroup.checked) = true;
-          } else {
-            (subgroup.checked) = false;
-          }
+          (subgroup.checked) = true;
+        });
+      });
+    });
+
+    this.updateSql();
+  }
+
+  selectNone() {
+    const layers = this.filterDimensions.facsubgrp.values;
+
+    layers.forEach((facdomain) => {
+      facdomain.children.forEach((group) => {
+        group.children.forEach((subgroup) => {
+          (subgroup.checked) = false;
         });
       });
     });
@@ -201,7 +155,6 @@ class FacilitiesStore extends EventsEmitter {
 
   setSelectedFeatures(features) {
     this.selectedFeatures = features;
-    this.mapConfig = this.getMapConfig();
     this.emit('facilitiesUpdated');
   }
 
@@ -218,8 +171,13 @@ class FacilitiesStore extends EventsEmitter {
         break;
       }
 
-      case 'FACILITIES_TOGGLE_ALL_LAYERS': {
-        this.handleToggleAll(action.filterDimensions);
+      case 'FACILITIES_SELECT_ALL': {
+        this.selectAll();
+        break;
+      }
+
+      case 'FACILITIES_SELECT_NONE': {
+        this.selectNone();
         break;
       }
 
@@ -240,52 +198,6 @@ class FacilitiesStore extends EventsEmitter {
 
       default:
     }
-  }
-
-  // iterates over all facsubgrp options, sets check/indeterminate status of parents
-  // updates this.checkStatus (used to know whether all, none, or some are currently selected)
-  processChecked(layers) {
-    let allChecked = 0;
-    let allIndeterminate = 0;
-    // set indeterminate states, start from the bottom and work up
-    layers.forEach((facdomain) => {
-      let facdomainChecked = 0;
-      let facdomainIndeterminate = 0;
-
-      facdomain.children.forEach((group) => {
-        let groupChecked = 0;
-
-        group.children.forEach((subgroup) => {
-          if (subgroup.checked) groupChecked += 1;
-        });
-
-        group.checked = (groupChecked === group.children.length);
-        group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
-
-        if (group.checked) facdomainChecked += 1;
-        if (group.indeterminate) facdomainIndeterminate += 1;
-      });
-
-      facdomain.checked = (facdomainChecked === facdomain.children.length);
-      if (facdomain.checked) allChecked += 1;
-
-      facdomain.indeterminate = (facdomainIndeterminate > 0) || ((facdomainChecked < facdomain.children.length) && facdomainChecked > 0);
-      if (facdomain.indeterminate) allIndeterminate += 1;
-    });
-
-    let checkStatus;
-    // figure out whether all, none, or some are checked
-    if (allChecked === layers.length) {
-      checkStatus = 'all';
-    } else if (allChecked === 0 && allIndeterminate === 0) {
-      checkStatus = 'none';
-    } else {
-      checkStatus = null;
-    }
-
-    this.checkStatus = checkStatus;
-
-    return layers;
   }
 }
 

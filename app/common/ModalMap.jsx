@@ -7,10 +7,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import { Jane, JaneLayer } from 'jane-maps';
-
-import supportingLayers from '../janelayers';
-import TravelshedComponent from '../janelayers/travelshed/Component';
+import { Jane, JaneLayer, Marker } from 'jane-maps';
+import {
+  AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer, ZoningJaneLayer,
+} from '../janelayers';
 import appConfig from '../helpers/appConfig';
 import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';
 
@@ -28,7 +28,7 @@ class ModalMap extends React.Component {
   }
 
   getCenter = () => {
-    const feature = this.props.feature;
+    const { feature } = this.props;
     // single points get flyTo(), everything else gets fitBounds()
     if (feature.geometry.type === 'Point') {
       return feature.geometry.coordinates;
@@ -38,7 +38,7 @@ class ModalMap extends React.Component {
   }
 
   render() {
-    const feature = this.props.feature;
+    const { feature, label } = this.props;
     const geometry = feature.geometry;
 
     let center;
@@ -48,7 +48,7 @@ class ModalMap extends React.Component {
       center = centroid(feature).geometry.coordinates;
     }
 
-    const mapInit = {
+    const mapboxGLOptions = {
       mapbox_accessToken: appConfig.mapbox_accessToken,
       center,
       zoom: 12,
@@ -62,26 +62,22 @@ class ModalMap extends React.Component {
     return (
       <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
-          mapInit={mapInit}
-          poiFeature={geometry.type === 'Point' ? this.props.feature : null}
-          poiLabel={geometry.type === 'Point' ? this.props.label : null}
-          initialDisabledJaneLayers={['transportation', 'aerials', 'adminboundaries', 'travelshed']}
+          mapboxGLOptions={mapboxGLOptions}
           ref={x => (this.janeMap = x)}
         >
+          <AerialsJaneLayer defaultDisabled />
+          <TransportationJaneLayer defaultDisabled />
+          <FloodHazardsJaneLayer defaultDisabled />
+          <ZoningJaneLayer defaultDisabled />
           {
             geometry.type === 'Point' &&
             <JaneLayer
-              id="travelshed"
-              name="Travelshed"
-              icon="road"
-              component={<TravelshedComponent
-                feature={feature}
-              />}
-            />
+              id="modalMapMarker"
+              hidden
+            >
+              <Marker feature={feature} label={label} />
+            </JaneLayer>
           }
-          {supportingLayers.aerials}
-          {supportingLayers.adminboundaries}
-          {supportingLayers.transportation}
           { geometry.type !== 'Point' &&
             <JaneLayer
               id="feature"

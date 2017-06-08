@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Jane } from 'jane-maps';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
+
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
+import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
+
 import {
   AerialsJaneLayer,
   TransportationJaneLayer,
@@ -15,7 +18,7 @@ import {
 
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
-import { defaultFilterDimensions } from './config';
+import { defaultFilterDimensions, mapLayerConfig } from './config';
 
 class FacilitiesExplorer extends React.Component {
   constructor(props) {
@@ -90,6 +93,12 @@ class FacilitiesExplorer extends React.Component {
       </SelectedFeaturesPane>
     );
 
+    const sourceOptions = {
+      carto_domain: appConfig.carto_domain,
+      carto_user: appConfig.carto_user,
+      sql: [FacilitiesStore.sql],
+    };
+
     return (
       <div className="full-screen">
         <Jane
@@ -102,8 +111,25 @@ class FacilitiesExplorer extends React.Component {
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultSelected />
           <AdminBoundariesJaneLayer defaultDisabled />
+          <ZoningJaneLayer defaultDisabled />
+          <JaneLayer
+            id="facilities"
+            name="Facilities and Program Sites"
+            icon="university"
+            onMapLayerClick={this.handleMapLayerClick}
+            defaultSelected
+            component={<FacilitiesSidebarComponent />}
+          >
+            <Source id="facilities" type="cartovector" options={sourceOptions} />
+            <MapLayer id="facilities-points-outline" source="facilities" config={mapLayerConfig.facilitiesPointsOutline} />
+            <MapLayer id="facilities-points" source="facilities" config={mapLayerConfig.facilitiesPoints} />
+            <Legend>
+              <div className="legendSection">
+                <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
+              </div>
+            </Legend>
+          </JaneLayer>
         </Jane>
         { selectedFeaturesPane }
       </div>

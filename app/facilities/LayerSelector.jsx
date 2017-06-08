@@ -12,9 +12,52 @@ import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
 import Checkbox from '../common/Checkbox';
 import FacilitiesActions from '../actions/FacilitiesActions';
-import FacilitiesStore from '../stores/FacilitiesStore';
 
 import './LayerSelector.scss';
+
+   // iterates over all facsubgrp options, sets check/indeterminate status of parents
+  // updates this.checkStatus (used to know whether all, none, or some are currently selected)
+function processChecked(layers) {
+  let allChecked = 0;
+  let allIndeterminate = 0;
+  // set indeterminate states, start from the bottom and work up
+  layers.forEach((facdomain) => {
+    let facdomainChecked = 0;
+    let facdomainIndeterminate = 0;
+
+    facdomain.children.forEach((group) => {
+      let groupChecked = 0;
+
+      group.children.forEach((subgroup) => {
+        if (subgroup.checked) groupChecked += 1;
+      });
+
+      group.checked = (groupChecked === group.children.length);
+      group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
+
+      if (group.checked) facdomainChecked += 1;
+      if (group.indeterminate) facdomainIndeterminate += 1;
+    });
+
+    facdomain.checked = (facdomainChecked === facdomain.children.length);
+    if (facdomain.checked) allChecked += 1;
+
+    facdomain.indeterminate = (facdomainIndeterminate > 0) || ((facdomainChecked < facdomain.children.length) && facdomainChecked > 0);
+    if (facdomain.indeterminate) allIndeterminate += 1;
+  });
+
+  let checkStatus;
+  // figure out whether all, none, or some are checked
+  if (allChecked === layers.length) {
+    checkStatus = 'all';
+  } else if (allChecked === 0 && allIndeterminate === 0) {
+    checkStatus = 'none';
+  } else {
+    checkStatus = null;
+  }
+
+  return { layers, checkStatus };
+}
 
 class LayerSelector extends React.Component {
   constructor(props) {
@@ -30,8 +73,12 @@ class LayerSelector extends React.Component {
     FacilitiesActions.onFilterDimensionChange(dimension, values);
   }
 
-  handleToggleAll = () => {
-    FacilitiesActions.onToggleAll();
+  handleToggleAll = (checkStatus) => {
+    if (checkStatus !== 'all') {
+      FacilitiesActions.selectAll();
+    } else {
+      FacilitiesActions.selectNone();
+    }
   }
 
   expandAll = () => {
@@ -60,7 +107,7 @@ class LayerSelector extends React.Component {
       fontSize: '14px',
     };
 
-    const checkStatus = FacilitiesStore.checkStatus;
+    const { layers, checkStatus } = processChecked(facsubgrp.values);
 
     return (
       <div className="sidebar-tab-content facilities-filter">
@@ -121,7 +168,7 @@ class LayerSelector extends React.Component {
               value={'allChecked'}
               checked={checkStatus === 'all'}
               indeterminate={checkStatus !== 'all' && checkStatus !== 'none'}
-              onChange={this.handleToggleAll}
+              onChange={() => { this.handleToggleAll(checkStatus); }}
             />
             All
             <div className="expand-collapse">
@@ -134,7 +181,7 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <NestedSelect
-              layers={facsubgrp.values}
+              layers={layers}
               onUpdate={this.handleLayerUpdate}
               initiallyOpen={false}
               expanded={this.state.expanded}
