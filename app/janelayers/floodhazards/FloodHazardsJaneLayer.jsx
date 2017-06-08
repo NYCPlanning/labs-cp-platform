@@ -7,7 +7,6 @@ import appConfig from '../../helpers/appConfig';
 
 
 class FloodHazardsJaneLayer extends React.Component {
-
   static propTypes = {
     defaultSelected: PropTypes.bool,
     defaultDisabled: PropTypes.bool,

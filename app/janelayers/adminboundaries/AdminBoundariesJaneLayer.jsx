@@ -6,6 +6,16 @@ import SidebarComponent from './SidebarComponent';
 import { mapLayers } from './config';
 
 class AdminBoundariesJaneLayer extends React.Component {
+  static propTypes = {
+    defaultSelected: PropTypes.bool,
+    defaultDisabled: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    defaultSelected: false,
+    defaultDisabled: false,
+  }
+
   constructor() {
     super();
     this.state = { selected: 'cd' };
@@ -112,6 +122,18 @@ class AdminBoundariesJaneLayer extends React.Component {
     ].map((child, index) => ({ ...child, key: index }));
   }
 
+  renderMunicipalCourtDistricts() {
+    if (!this.state.selected.municipalcourtdistricts) {
+      return;
+    }
+
+    return [
+      <Source id="municipalcourtdistricts" type="geojson" data="/data/MunicipalCourtDistricts.geojson" />,
+      <MapLayer id="municipalcourtdistricts" source="municipalcourtdistricts" config={mapLayers.municipalcourtdistricts} />,
+      <MapLayer id="municipalcourtdistricts_labels" source="municipalcourtdistricts" config={mapLayers.municipalcourtdistricts_labels} />,
+    ].map((child, index) => ({ ...child, key: index }));
+  }
+
   renderFireBattalions() {
     if (!this.state.selected.firebattalions) {
       return;
@@ -202,7 +224,8 @@ class AdminBoundariesJaneLayer extends React.Component {
         id="admin_boundaries"
         name="Admin Boundaries"
         icon="subway"
-        selectedLayer={this.props.selectedLayer}
+        defaultSelected={this.props.defaultSelected}
+        defaultDisabled={this.props.defaultDisabled}
         component={<SidebarComponent selected={this.state.selected} onRadioChange={this.onRadioChange} />}
       >
         { this.renderNTA() }
@@ -227,9 +250,5 @@ class AdminBoundariesJaneLayer extends React.Component {
     );
   }
 }
-
-AdminBoundariesJaneLayer.propTypes = {
-  selectedLayer: PropTypes.string.isRequired,
-};
 
 export default AdminBoundariesJaneLayer;
