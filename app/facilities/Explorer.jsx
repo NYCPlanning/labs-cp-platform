@@ -18,7 +18,8 @@ import {
 
 import FacilitiesActions from '../actions/FacilitiesActions';
 import FacilitiesStore from '../stores/FacilitiesStore';
-import { defaultFilterDimensions, mapLayerConfig } from './config';
+import { defaultFilterDimensions } from './config';
+import colors from './colors';
 
 class FacilitiesExplorer extends React.Component {
   constructor(props) {
@@ -117,13 +118,31 @@ class FacilitiesExplorer extends React.Component {
             id="facilities"
             name="Facilities and Program Sites"
             icon="university"
-            onMapLayerClick={this.handleMapLayerClick}
             defaultSelected
             component={<FacilitiesSidebarComponent />}
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
-            <MapLayer id="facilities-points-outline" source="facilities" config={mapLayerConfig.facilitiesPointsOutline} />
-            <MapLayer id="facilities-points" source="facilities" config={mapLayerConfig.facilitiesPoints} />
+
+            <MapLayer id="facilities-points-outline"
+                      source="facilities"
+                      sourceLayer="layer0"
+                      type="circle"
+                      paint={{
+                        'circle-radius': { stops: [[10, 2], [15, 6]] },
+                        'circle-color': colors.getColorObject(),
+                        'circle-opacity': 0.7,
+                      }} />
+
+            <MapLayer id="facilities-points"
+                      source="facilities"
+                      sourceLayer="layer0"
+                      type="circle"
+                      paint={{
+                        'circle-radius': { stops: [[10, 3], [15, 7]] },
+                        'circle-color': '#012700',
+                        'circle-opacity': 0.7,
+                      }}
+                      onClick={this.handleMapLayerClick}/>
             <Legend>
               <div className="legendSection">
                 <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>

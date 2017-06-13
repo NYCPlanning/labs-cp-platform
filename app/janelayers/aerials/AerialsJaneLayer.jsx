@@ -36,7 +36,7 @@ class AerialsJaneLayer extends React.Component {
         />
         <MapLayer
           id="doitt_aerials"
-          config={{ type: 'raster' }}
+          type="raster"
           source="doitt_aerials"
         />
       </JaneLayer>

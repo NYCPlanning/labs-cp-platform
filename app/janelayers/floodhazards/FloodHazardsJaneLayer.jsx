@@ -50,9 +50,7 @@ class FloodHazardsJaneLayer extends React.Component {
     };
 
     const mapLayerConfig = {
-      id: 'pfirm15',
-      source: 'floodhazards',
-      'source-layer': 'layer0',
+      sourceLayer: 'layer0',
       type: 'fill',
       paint: {
         'fill-color': {
@@ -72,7 +70,7 @@ class FloodHazardsJaneLayer extends React.Component {
     return [
       <Source id="pfirm15" type="cartovector" options={sourceOptions} />,
 
-      <MapLayer id="pfirm15" source="pfirm15" config={mapLayerConfig} />,
+      <MapLayer id="pfirm15" source="pfirm15" {...mapLayerConfig} />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 

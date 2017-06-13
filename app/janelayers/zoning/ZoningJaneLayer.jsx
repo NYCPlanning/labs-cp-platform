@@ -70,7 +70,7 @@ class ZoningJaneLayer extends React.Component {
       id: 'zd',
       type: 'fill',
       source: 'zd',
-      'source-layer': 'layer0',
+      sourceLayer: 'layer0',
       paint: {
         'fill-color': {
           property: 'primaryzone',
@@ -110,7 +110,7 @@ class ZoningJaneLayer extends React.Component {
       id: 'zd_labels',
       source: 'zd',
       type: 'symbol',
-      'source-layer': 'layer0',
+      sourceLayer: 'layer0',
       paint: paint.labels,
       layout: {
         'symbol-placement': 'point',
@@ -122,8 +122,8 @@ class ZoningJaneLayer extends React.Component {
     return [
       <Source id="zd" type="cartovector" options={sourceOptions} />,
 
-      <MapLayer id="zd_labels" source="zd" config={zdLabelConfig} />,
-      <MapLayer id="zd" source="zd" config={zdConfig} />,
+      <MapLayer id="zd_labels" source="zd" {...zdLabelConfig} />,
+      <MapLayer id="zd" source="zd" {...zdConfig} />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 
@@ -142,7 +142,7 @@ class ZoningJaneLayer extends React.Component {
       id: 'co',
       type: 'fill',
       source: 'co',
-      'source-layer': 'layer0',
+      sourceLayer: 'layer0',
       paint: {
         'fill-opacity': 1,
         'fill-color': 'rgba(158, 0, 0, 0)',
@@ -155,7 +155,7 @@ class ZoningJaneLayer extends React.Component {
       id: 'co_labels',
       source: 'co',
       type: 'symbol',
-      'source-layer': 'layer0',
+      sourceLayer: 'layer0',
       paint: paint.co_labels,
       layout: {
         'symbol-placement': 'point',
@@ -167,8 +167,8 @@ class ZoningJaneLayer extends React.Component {
     return [
       <Source id="co" type="cartovector" options={sourceOptions} />,
 
-      <MapLayer id="co" source="co" config={coConfig} />,
-      <MapLayer id="co_labels" source="co" config={coLabelConfig} />,
+      <MapLayer id="co" source="co" {...coConfig} />,
+      <MapLayer id="co_labels" source="co" {...coLabelConfig} />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 
