@@ -8,17 +8,13 @@ module.exports = {
   // get a full row from a table as geojson
   // returns a promise that when resolved yeilds a GeoJson feature
   getFeature(tableName, column, value) {
-    const self = this;
-
     return new Promise((resolve, reject) => {
       const sql = typeof (value) === 'number' ?
         `SELECT * FROM ${tableName} WHERE ${column} = ${value}` :
         `SELECT * FROM ${tableName} WHERE ${column} = '${value}'`;
 
-      self.SQL(sql)
-        .then((data) => {
-          resolve(data.features[0]);
-        })
+      this.SQL(sql)
+        .then((data) => resolve(data.features[0]))
         .catch(err => reject(err));
     });
   },

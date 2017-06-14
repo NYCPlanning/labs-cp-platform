@@ -4,6 +4,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Provider } from 'react-redux';
+import store from './store';
 
 // get styles for jane-maps, TODO figure out the best way to include this
 import 'jane-maps/dist/styles.css';
@@ -73,55 +75,57 @@ class App extends React.Component {
     document.title = this.props.children.props.route.title || 'NYC Capital Planning Platform';
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          <Nav
-            title={this.props.children.props.route.title}
-            about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
-            mini={this.props.children.props.route.miniNav}
-            showModal={this.showModal}
-          />
+      <Provider store={store}>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <div>
-            {
-              this.state.modalHeading &&
-              this.state.modalContent &&
-              <GlobalModal
-                heading={this.state.modalHeading}
-                body={this.state.modalContent}
-                closeText={this.state.modalCloseText}
-                ref={(modal) => { this.modal = modal; }}
-              />
-            }
-            {isModal ?
-              this.previousChildren :
-              children
-            }
-            <ReactCSSTransitionGroup
-              transitionName="background"
-              transitionAppear
-              transitionAppearTimeout={250}
-              transitionEnterTimeout={250}
-              transitionLeaveTimeout={250}
-            >
+            <Nav
+              title={this.props.children.props.route.title}
+              about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
+              mini={this.props.children.props.route.miniNav}
+              showModal={this.showModal}
+            />
+            <div>
+              {
+                this.state.modalHeading &&
+                this.state.modalContent &&
+                <GlobalModal
+                  heading={this.state.modalHeading}
+                  body={this.state.modalContent}
+                  closeText={this.state.modalCloseText}
+                  ref={(modal) => { this.modal = modal; }}
+                />
+              }
+              {isModal ?
+                this.previousChildren :
+                children
+              }
+              <ReactCSSTransitionGroup
+                transitionName="background"
+                transitionAppear
+                transitionAppearTimeout={250}
+                transitionEnterTimeout={250}
+                transitionLeaveTimeout={250}
+              >
 
-              {isModal && (
-                <div
-                  style={{
-                    zIndex: 1000,
-                    position: 'absolute',
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    top: 0,
-                  }}
-                >
-                  {children}
-                </div>
-              )}
-            </ReactCSSTransitionGroup>
+                {isModal && (
+                  <div
+                    style={{
+                      zIndex: 1000,
+                      position: 'absolute',
+                      right: 0,
+                      left: 0,
+                      bottom: 0,
+                      top: 0,
+                    }}
+                  >
+                    {children}
+                  </div>
+                )}
+              </ReactCSSTransitionGroup>
+            </div>
           </div>
-        </div>
-      </MuiThemeProvider>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

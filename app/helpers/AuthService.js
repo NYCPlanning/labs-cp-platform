@@ -1,7 +1,7 @@
 // Auth.js - Auth0 helper, can trigger login and logout, get/set profile, etc
 import { browserHistory } from 'react-router';
 import Auth0Lock from 'auth0-lock';
-import _ from 'underscore';
+import _ from 'lodash';
 
 import { isTokenExpired } from './jwtHelper';
 import appConfig from './appConfig';

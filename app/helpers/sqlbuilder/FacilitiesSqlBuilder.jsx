@@ -1,5 +1,10 @@
-/* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
+import devTables from '../devTables';
+
+export const sqlConfig = {
+  columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
+  tablename: devTables('facdb_facilities'),
+};
 
 class FacilitiesSqlBuilder extends SqlBuilder {
 
@@ -33,4 +38,6 @@ class FacilitiesSqlBuilder extends SqlBuilder {
 
 Object.assign(FacilitiesSqlBuilder, SqlBuilder);
 
-export default FacilitiesSqlBuilder;
+const sqlBuilder = new FacilitiesSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
+
+export const getSql = (filterDimensions) => sqlBuilder.buildSql(filterDimensions);

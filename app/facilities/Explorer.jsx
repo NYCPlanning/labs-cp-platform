@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
-
+import { connect } from 'react-redux';
 
 import appConfig from '../helpers/appConfig';
 import carto from '../helpers/carto';
@@ -16,17 +16,11 @@ import {
   AdminBoundariesJaneLayer,
 } from '../janelayers';
 
-import FacilitiesActions from '../actions/FacilitiesActions';
-import FacilitiesStore from '../stores/FacilitiesStore';
+import * as facilitiesActions from '../actions/facilities';
 import { defaultFilterDimensions } from './config';
 import colors from './colors';
 
 class FacilitiesExplorer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedFeatures: FacilitiesStore.selectedFeatures };
-  }
-
   componentWillMount() {
     this.bounds = null;
     // update the layers and filterDimensions in the facilities store
@@ -42,49 +36,38 @@ class FacilitiesExplorer extends React.Component {
       filterDimensions.facsubgrp.values = this.props.location.state.layers;
     }
 
-    FacilitiesActions.setInitialFilters(filterDimensions);
+    this.props.setFilters(filterDimensions);
   }
 
   componentDidMount() {
-    const self = this;
-
     // update the map bounds if adminboundaries location state was passed in
     if (this.props.location.state && this.props.location.state.adminboundaries) {
       const value = this.props.location.state.adminboundaries.value;
 
       carto.getNYCBounds('nta', value)
         .then((bounds) => {
-          self.bounds = bounds;
-          self.forceUpdate();
+          this.bounds = bounds;
+          this.forceUpdate();
         });
     }
-
-    FacilitiesStore.on('facilitiesUpdated', () => {
-      const selectedFeatures = FacilitiesStore.selectedFeatures;
-      this.setState({ selectedFeatures });
-    });
   }
 
   handleMapLayerClick = (features) => {
     // set selectedFeatures to [] will cause the right drawer to animate away,
     // then setting the new data will bring it back
     // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
-    FacilitiesActions.setSelectedFeatures([]);
-    setTimeout(() => {
-      FacilitiesActions.setSelectedFeatures(features);
-    }, 450);
-  }
+    this.props.setSelectedFeatures([]);
+    setTimeout(() => this.props.setSelectedFeatures(features), 450);
+  };
 
   clearSelectedFeatures = () => {
-    FacilitiesActions.setSelectedFeatures([]);
-  }
+    this.props.setSelectedFeatures([]);
+  };
 
   render() {
     const { mapboxGLOptions, searchConfig } = appConfig;
 
-    const { selectedFeatures } = this.state;
-
-    const listItems = selectedFeatures.map(feature => (
+    const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
     ));
 
@@ -97,7 +80,7 @@ class FacilitiesExplorer extends React.Component {
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
       carto_user: appConfig.carto_user,
-      sql: [FacilitiesStore.sql],
+      sql: [this.props.sql],
     };
 
     return (
@@ -161,7 +144,19 @@ FacilitiesExplorer.defaultProps = {
 };
 
 FacilitiesExplorer.propTypes = {
+  sql: PropTypes.string,
   location: PropTypes.object,
+  selectedFeatures: PropTypes.array,
+  setSelectedFeatures: PropTypes.func.isRequired,
+  setFilters: PropTypes.func.isRequired,
 };
 
-module.exports = FacilitiesExplorer;
+const mapStateToProps = ({ facilities }) => ({
+  selectedFeatures: facilities.selectedFeatures,
+  sql: facilities.sql
+});
+
+export default connect(mapStateToProps, {
+  setSelectedFeatures: facilitiesActions.setSelectedFeatures,
+  setFilters: facilitiesActions.setFilters,
+})(FacilitiesExplorer);

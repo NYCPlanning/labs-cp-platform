@@ -5,18 +5,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import NestedSelect from './NestedSelect';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
 import Checkbox from '../common/Checkbox';
-import FacilitiesActions from '../actions/FacilitiesActions';
+import * as facilityActions from '../actions/facilities';
 
 import './LayerSelector.scss';
 
-   // iterates over all facsubgrp options, sets check/indeterminate status of parents
-  // updates this.checkStatus (used to know whether all, none, or some are currently selected)
+// iterates over all facsubgrp options, sets check/indeterminate status of parents
+// updates this.checkStatus (used to know whether all, none, or some are currently selected)
 function processChecked(layers) {
   let allChecked = 0;
   let allIndeterminate = 0;
@@ -33,7 +35,7 @@ function processChecked(layers) {
       });
 
       group.checked = (groupChecked === group.children.length);
-      group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
+      group.indeterminate = (groupChecked < group.children.length) && groupChecked > 0;
 
       if (group.checked) facdomainChecked += 1;
       if (group.indeterminate) facdomainIndeterminate += 1;
@@ -65,37 +67,52 @@ class LayerSelector extends React.Component {
     this.state = { expanded: false };
   }
 
+  componentDidMount() {
+    this.props.fetchTotalFacilitiesCount();
+    this.props.fetchSelectedFacilitiesCount(this.props.filterDimensions);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(this.props.sql, nextProps.sql)) {
+      this.props.fetchSelectedFacilitiesCount(nextProps.filterDimensions);
+    }
+  }
+
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
   }
 
   updateFilterDimension = (dimension, values) => {
-    FacilitiesActions.onFilterDimensionChange(dimension, values);
-  }
+    this.props.setFilterDimension(dimension, values);
+  };
 
   handleToggleAll = (checkStatus) => {
-    if (checkStatus !== 'all') {
-      FacilitiesActions.selectAll();
-    } else {
-      FacilitiesActions.selectNone();
-    }
-  }
+    const filterDimensions = _.cloneDeep(this.props.filterDimensions);
+    const allChecked = checkStatus === 'all';
+
+    filterDimensions.facsubgrp.values.forEach((facdomain) =>
+      facdomain.children.forEach((group) =>
+        group.children.forEach((subgroup) =>
+          subgroup.checked = !allChecked)));
+
+    this.props.setFilters(filterDimensions);
+  };
 
   expandAll = () => {
     this.setState({ expanded: true });
-  }
+  };
 
   collapseAll = () => {
     this.setState({ expanded: false });
-  }
+  };
 
   handleLayerUpdate = (layers) => {
     this.updateFilterDimension('facsubgrp', layers);
-  }
+  };
 
   resetFilter = () => {
-    FacilitiesActions.resetFilter();
-  }
+    this.props.resetFilters();
+  };
 
   render() {
     const { totalCount, selectedCount, filterDimensions } = this.props;
@@ -200,9 +217,25 @@ LayerSelector.defaultProps = {
 };
 
 LayerSelector.propTypes = {
+  sql: PropTypes.string,
   filterDimensions: PropTypes.object,
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
+  fetchTotalFacilitiesCount: PropTypes.func.isRequired,
+  fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
 };
 
-module.exports = LayerSelector;
+const mapStateToProps = ({ facilities }) => ({
+  filterDimensions: facilities.filterDimensions,
+  sql: facilities.sql,
+  totalCount: facilities.totalCount,
+  selectedCount: facilities.selectedCount,
+});
+
+export default connect(mapStateToProps, {
+  fetchTotalFacilitiesCount: facilityActions.fetchTotalCount,
+  fetchSelectedFacilitiesCount: facilityActions.fetchSelectedCount,
+  setFilters: facilityActions.setFilters,
+  resetFilters: facilityActions.resetFilters,
+  setFilterDimension: facilityActions.setFilterDimension,
+})(LayerSelector);
