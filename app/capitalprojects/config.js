@@ -1,5 +1,3 @@
-import appConfig from '../helpers/appConfig';
-
 const defaultFilterDimensions = {
   magencyacro: {
     type: 'multiSelect',
@@ -427,74 +425,4 @@ const defaultTableFilterDimensions = {
   activeyears: defaultFilterDimensions.activeyears,
 };
 
-const defaultLayerConfig = {
-  sources: [
-    {
-      type: 'cartovector',
-      id: 'capital-projects',
-      options: {
-        carto_user: appConfig.carto_user,
-        carto_domain: appConfig.carto_domain,
-      },
-    },
-  ],
-  mapLayers: [
-    {
-      id: 'capital-projects-points-outline',
-      source: 'capital-projects',
-      'source-layer': 'layer0',
-      type: 'circle',
-      paint: {
-        'circle-radius': {
-          stops: [
-            [10, 3],
-            [15, 7],
-          ],
-        },
-        'circle-color': '#012700',
-        'circle-opacity': 0.7,
-      },
-    },
-    {
-      id: 'capital-projects-points',
-      source: 'capital-projects',
-      'source-layer': 'layer0',
-      type: 'circle',
-      paint: {
-        'circle-radius': {
-          stops: [
-            [10, 2],
-            [15, 6],
-          ],
-        },
-        'circle-color': {
-          property: 'totalspend',
-          stops: [
-            [0, '#8B8C98'],
-            [1, '#d98127'],
-          ],
-        },
-        'circle-opacity': 0.7,
-      },
-    },
-    {
-      id: 'capital-projects-polygons',
-      source: 'capital-projects',
-      'source-layer': 'layer1',
-      type: 'fill',
-      paint: {
-        'fill-color': {
-          property: 'totalspend',
-          stops: [
-            [0, '#8B8C98'],
-            [1, '#d98127'],
-          ],
-        },
-        'fill-opacity': 0.75,
-        'fill-antialias': true,
-      },
-    },
-  ],
-};
-
-export { defaultFilterDimensions, defaultTableFilterDimensions, defaultLayerConfig };
+export { defaultFilterDimensions, defaultTableFilterDimensions };

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Jane, JaneLayer } from 'jane-maps';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
 import * as capitalProjectsActions from '../actions/capitalProjects';
 import {
@@ -20,6 +20,74 @@ import SCAPlanComponent from './janelayer/SCAPlanComponent';
 import appConfig from '../helpers/appConfig';
 
 import './styles.scss';
+
+const SCAPointsSourceOptions = {
+  carto_user: appConfig.carto_user,
+  carto_domain: appConfig.carto_domain,
+  sql: ['SELECT * FROM cpdb_sca_pts'],
+};
+
+const SCAPointsPaint = {
+  'circle-radius': {
+    stops: [
+      [10, 2],
+      [15, 6],
+    ],
+  },
+  'circle-color': '#5C99FF',
+  'circle-opacity': 0.7,
+};
+
+const SCAOutlinePaint = {
+  'circle-radius': {
+    stops: [
+      [10, 3],
+      [15, 7],
+    ],
+  },
+  'circle-color': '#012700',
+  'circle-opacity': 0.7,
+};
+
+const capitalProjectsPolygonsPaint = {
+  'fill-color': {
+    property: 'totalspend',
+    stops: [
+      [0, '#8B8C98'],
+      [1, '#d98127'],
+    ],
+  },
+  'fill-opacity': 0.75,
+  'fill-antialias': true,
+};
+
+const capitalProjectsPointsPaint = {
+  'circle-radius': {
+    stops: [
+      [10, 2],
+      [15, 6],
+    ],
+  },
+  'circle-color': {
+    property: 'totalspend',
+    stops: [
+      [0, '#8B8C98'],
+      [1, '#d98127'],
+    ],
+  },
+  'circle-opacity': 0.7,
+};
+
+const capitalProjectsPointsOutlinePaint = {
+  'circle-radius': {
+    stops: [
+      [10, 3],
+      [15, 7],
+    ],
+  },
+  'circle-color': '#012700',
+  'circle-opacity': 0.7,
+};
 
 class CapitalProjectsExplorer extends React.Component {
   clearSelectedFeatures = () => {
@@ -54,6 +122,12 @@ class CapitalProjectsExplorer extends React.Component {
       </SelectedFeaturesPane>
     );
 
+    const capitalProjectsSourceOptions = {
+      carto_user: appConfig.carto_user,
+      carto_domain: appConfig.carto_domain,
+      sql: [this.props.pointsSql, this.props.polygonsSql],
+    };
+
     return (
       <div className="full-screen cp-explorer">
         <Jane
@@ -74,15 +148,72 @@ class CapitalProjectsExplorer extends React.Component {
             name="SCA Capital Plan"
             icon="graduation-cap"
             onMapLayerClick={this.handleMapLayerClick}
-            component={<SCAPlanComponent />}
-          />
+            component={<SCAPlanComponent />}>
+
+            <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions}/>
+
+            <MapLayer id="sca-points-points"
+                      source="sca-points"
+                      sourceLayer="layer0"
+                      type="circle"
+                      paint={SCAPointsPaint}/>
+
+            <MapLayer id="sca-points-outline"
+                      source="sca-points"
+                      sourceLayer="layer0"
+                      type="circle"
+                      paint={SCAOutlinePaint}/>
+
+            <Legend>
+              <div className="legendSection">
+                <div className="legendItem">
+                  <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
+                  <div className="legendItemText">SCA Projects</div>
+                </div>
+              </div>
+            </Legend>
+          </JaneLayer>
+
           <JaneLayer
             id="capital-projects"
             name="Capital Projects"
             icon="usd"
             onMapLayerClick={this.handleMapLayerClick}
-            component={<CapitalProjectsComponent />}
-          />
+            component={<CapitalProjectsComponent />}>
+
+            <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions}/>
+
+            <MapLayer id="capital-projects-polygons"
+                      source="capital-projects"
+                      sourceLayer="layer1"
+                      type="fill"
+                      paint={capitalProjectsPolygonsPaint}/>
+
+            <MapLayer id="capital-projects-points"
+                      source="capital-projects"
+                      sourceLayer="layer0"
+                      type="circle"
+                      paint={capitalProjectsPointsPaint}/>
+
+            <MapLayer id="capital-projects-points-outline"
+                      source="capital-projects"
+                      sourceLayer="layer0"
+                      type="circle"
+                      paint={capitalProjectsPointsOutlinePaint}/>
+
+            <Legend>
+              <div className="legendSection">
+                <div className="legendItem">
+                  <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
+                  <div className="legendItemText">Planned Projects</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorBox" style={{ backgroundColor: '#d98127' }} />
+                  <div className="legendItemText">Ongoing Projects</div>
+                </div>
+              </div>
+            </Legend>
+          </JaneLayer>
         </Jane>
         {selectedFeaturesPane}
       </div>
@@ -91,11 +222,15 @@ class CapitalProjectsExplorer extends React.Component {
 }
 
 CapitalProjectsExplorer.propTypes = {
+  pointsSql: PropTypes.string,
+  polygonsSql: PropTypes.string,
   setSelectedFeatures: PropTypes.func.isRequired,
-  selectedFeatures: PropTypes.array.isRequired
+  selectedFeatures: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
+  pointsSql: capitalProjects.pointsSql,
+  polygonsSql: capitalProjects.polygonsSql,
   selectedFeatures: capitalProjects.selectedFeatures,
 });
 

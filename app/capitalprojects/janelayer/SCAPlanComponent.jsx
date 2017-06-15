@@ -1,75 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import appConfig from '../../helpers/appConfig';
 
 class SCAPlanComponent extends React.Component {
-  componentWillMount() {
-    this.updateMapConfig();
-  }
-
-  updateMapConfig = () => {
-    // pass the new config up to Jane
-    const mapConfig = {
-      sources: [
-        {
-          id: 'sca-points',
-          type: 'cartovector',
-          options: {
-            carto_user: appConfig.carto_user,
-            carto_domain: appConfig.carto_domain,
-            sql: ['SELECT * FROM cpdb_sca_pts'],
-          },
-        },
-      ],
-      mapLayers: [
-        {
-          id: 'sca-points-outline',
-          source: 'sca-points',
-          'source-layer': 'layer0',
-          type: 'circle',
-          paint: {
-            'circle-radius': {
-              stops: [
-                [10, 3],
-                [15, 7],
-              ],
-            },
-            'circle-color': '#012700',
-            'circle-opacity': 0.7,
-          },
-        },
-        {
-          id: 'sca-points-points',
-          source: 'sca-points',
-          'source-layer': 'layer0',
-          type: 'circle',
-          paint: {
-            'circle-radius': {
-              stops: [
-                [10, 2],
-                [15, 6],
-              ],
-            },
-            'circle-color': '#5C99FF',
-            'circle-opacity': 0.7,
-          },
-        },
-      ],
-    };
-
-    mapConfig.legend = (
-      <div className="legendSection">
-        <div className="legendItem">
-          <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
-          <div className="legendItemText">SCA Projects</div>
-        </div>
-      </div>
-
-    );
-    this.props.onUpdate(mapConfig);
-  }
-
   render() {
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
@@ -81,8 +13,7 @@ class SCAPlanComponent extends React.Component {
     return (
       <Tabs
         className="sidebar-tabs"
-        tabTemplateStyle={tabTemplateStyle}
-      >
+        tabTemplateStyle={tabTemplateStyle}>
         <Tab label="About">
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
@@ -112,13 +43,5 @@ class SCAPlanComponent extends React.Component {
     );
   }
 }
-
-SCAPlanComponent.defaultProps = {
-  onUpdate: () => {},
-};
-
-SCAPlanComponent.propTypes = {
-  onUpdate: PropTypes.func,
-};
 
 export default SCAPlanComponent;

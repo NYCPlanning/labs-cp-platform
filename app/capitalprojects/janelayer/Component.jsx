@@ -28,35 +28,13 @@ class CapitalProjects extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    this.updateMapConfig();
-  }
-
   handleDownload = (label) => {
     ga.event({
       category: 'capitalprojects-explorer',
       action: 'download',
       label,
     });
-  }
-
-  updateMapConfig = () => {
-    // pass the new config up to Jane
-    const { mapConfig } = this.props;
-    mapConfig.legend = (
-      <div className="legendSection">
-        <div className="legendItem">
-          <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
-          <div className="legendItemText">Planned Projects</div>
-        </div>
-        <div className="legendItem">
-          <div className="colorBox" style={{ backgroundColor: '#d98127' }} />
-          <div className="legendItemText">Ongoing Projects</div>
-        </div>
-      </div>
-    );
-    this.props.onUpdate(mapConfig);
-  }
+  };
 
   render() {
     const { pointsSql, polygonsSql, totalCount, selectedCount, filterDimensions } = this.props;
@@ -108,10 +86,6 @@ class CapitalProjects extends React.Component {
   }
 }
 
-CapitalProjects.defaultProps = {
-  onUpdate: () => {},
-};
-
 CapitalProjects.propTypes = {
   onUpdate: PropTypes.func,
   fetchTotalPointsCount: PropTypes.func.isRequired,
@@ -120,7 +94,6 @@ CapitalProjects.propTypes = {
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
-  mapConfig: capitalProjects.mapConfig,
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   totalCount: capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,

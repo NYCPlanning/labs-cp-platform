@@ -6,20 +6,13 @@ import config from './config';
 
 class Travelshed extends React.Component {
 
-  componentDidUpdate() {
-    this.updateMapConfig();
-  }
-
   updateMapConfig = () => {
     const { feature } = this.props;
     const lat = feature.geometry.coordinates[1];
     const lng = feature.geometry.coordinates[0];
 
     config.sources[0].source = `https://otp.capitalplanning.nyc/otp/routers/default/isochrone?routeId=default&batch=true&fromPlace=${lat},${lng}&date=2016/09/23&time=12:00:00&mode=TRANSIT,WALK&cutoffSec=900&cutoffSec=1800&cutoffSec=2700`;
-
-
-    this.props.onUpdate(config);
-  }
+  };
 
   render() {
     return (
@@ -42,12 +35,7 @@ class Travelshed extends React.Component {
 }
 
 Travelshed.propTypes = {
-  onUpdate: PropTypes.func,
   feature: PropTypes.object.isRequired,
-};
-
-Travelshed.defaultProps = {
-  onUpdate: () => {},
 };
 
 export default Travelshed;
