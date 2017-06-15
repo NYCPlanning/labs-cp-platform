@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import { connect } from 'react-redux';
 
 import LayerSelector from '../LayerSelector';
 
@@ -8,41 +9,22 @@ import Download from '../../common/Download';
 import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
-import PipelineStore from '../../stores/PipelineStore';
+import * as pipelineActions from '../../actions/pipeline';
 
 class Pipeline extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mapConfig: PipelineStore.mapConfig,
-      totalCount: PipelineStore.totalCount,
-      selectedCount: PipelineStore.selectedCount,
-      filterDimensions: PipelineStore.filterDimensions,
-      symbologyDimension: PipelineStore.symbologyDimension,
-    };
+  componentDidMount() {
+    this.props.fetchTotalCount();
+    this.props.fetchSelectedCount(this.props.filterDimensions);
   }
 
-  componentWillMount() {
-    // listen for changes to the filter UI
-    PipelineStore.on('pipelineUpdated', () => {
-      this.setState({
-        mapConfig: PipelineStore.mapConfig,
-        totalCount: PipelineStore.totalCount,
-        selectedCount: PipelineStore.selectedCount,
-        filterDimensions: PipelineStore.filterDimensions,
-        symbologyDimension: PipelineStore.symbologyDimension,
-      });
-    });
-
-    PipelineStore.initialize();
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.fetchSelectedCount(nextProps.filterDimensions);
+    }
   }
 
   componentDidUpdate() {
     this.updateMapConfig();
-  }
-
-  componentWillUnmount() {
-    PipelineStore.removeAllListeners('pipelineUpdated');
   }
 
   handleDownload = (label) => {
@@ -53,18 +35,13 @@ class Pipeline extends React.Component {
     });
   }
 
-  updateMapConfig = () => {
-    const { mapConfig } = this.state;
-    this.props.onUpdate(mapConfig);
-  }
-
   render() {
     const {
       totalCount,
       selectedCount,
       filterDimensions,
       symbologyDimension,
-    } = this.state;
+    } = this.props;
 
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
@@ -90,7 +67,7 @@ class Pipeline extends React.Component {
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
               <Download
-                sql={PipelineStore.sql}
+                sql={this.props.sql}
                 filePrefix="developments"
                 onDownload={this.handleDownload}
               />
@@ -110,12 +87,20 @@ class Pipeline extends React.Component {
   }
 }
 
-Pipeline.defaultProps = {
-  onUpdate: () => {},
-};
-
 Pipeline.propTypes = {
-  onUpdate: PropTypes.func,
+  fetchTotalCount: PropTypes.func.isRequired,
+  fetchSelectedCount: PropTypes.func.isRequired,
 };
 
-export default Pipeline;
+const mapStateToProps = ({ pipeline }) => ({
+  sql: pipeline.sql,
+  totalCount: pipeline.totalCount,
+  selectedCount: pipeline.selectedCount,
+  filterDimensions: pipeline.filterDimensions,
+  symbologyDimension: pipeline.symbologyDimension,
+});
+
+export default connect(mapStateToProps, {
+  fetchTotalCount: pipelineActions.fetchTotalCount,
+  fetchSelectedCount: pipelineActions.fetchSelectedCount
+})(Pipeline);

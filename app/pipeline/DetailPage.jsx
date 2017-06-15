@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
@@ -8,25 +9,13 @@ import FeedbackForm from '../common/FeedbackForm';
 import { getColor } from './config';
 import NycGeom from '../helpers/NycGeom';
 
-import PipelineStore from '../stores/PipelineStore';
-import PipelineActions from '../actions/PipelineActions';
+import * as pipelineActions from '../actions/pipeline';
 
 import './DetailPage.scss';
 
 class DevelopmentPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: null };
-  }
-
   componentWillMount() {
-    PipelineStore.on('detailDataAvailable', () => {
-      this.setState({
-        data: PipelineStore.detailData,
-      });
-    });
-
-    PipelineActions.fetchDetailData(parseInt(this.props.params.id));
+    this.props.fetchDetails(parseInt(this.props.params.id));
   }
 
   renderContent = (data) => {
@@ -228,7 +217,7 @@ class DevelopmentPage extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <ModalMap feature={this.state.data} label={d.dob_permit_address} />
+          <ModalMap feature={this.props.pipelineDetails} label={d.dob_permit_address} />
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"
@@ -240,11 +229,12 @@ class DevelopmentPage extends React.Component {
   }
 
   render() {
-    const content = this.state.data ? this.renderContent(this.state.data) : null;
-
+    if (!this.props.pipelineDetails) {
+      return null
+    }
     return (
       <div className="fluid-content display-content">
-        {content}
+        {this.renderContent(this.props.pipelineDetails)}
       </div>
     );
   }
@@ -254,7 +244,15 @@ DevelopmentPage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
+  pipelineDetails: PropTypes.object.isRequired,
   location: PropTypes.shape().isRequired,
+  fetchDetails: PropTypes.func.isRequired,
 };
 
-module.exports = DevelopmentPage;
+const mapStateToProps = ({ pipeline }) => ({
+  pipelineDetails: pipeline.pipelineDetails,
+});
+
+export default connect(mapStateToProps, {
+  fetchDetails: pipelineActions.fetchDetails
+})(DevelopmentPage);
