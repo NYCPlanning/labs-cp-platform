@@ -1,5 +1,3 @@
-import appConfig from '../helpers/appConfig';
-
 const defaultFilterDimensions = {
   dcp_pipeline_status: {
     type: 'statusMultiSelect',
@@ -115,77 +113,4 @@ const circleColors = {
   },
 };
 
-const LayerConfig = {
-  points: {
-    sources: [
-      {
-        type: 'cartovector',
-        id: 'pipeline-points',
-        options: {
-          carto_user: appConfig.carto_user,
-          carto_domain: appConfig.carto_domain,
-        },
-      },
-    ],
-    mapLayers: [
-      {
-        id: 'pipeline-points',
-        source: 'pipeline-points',
-        'source-layer': 'layer0',
-        type: 'circle',
-        paint: {
-          'circle-radius': {
-            property: 'dcp_units_use_map',
-            stops: [
-              [{ zoom: 10, value: -12 }, 1],
-              [{ zoom: 10, value: 1669 }, 2],
-              [{ zoom: 10, value: 1669 }, 4],
-              [{ zoom: 14, value: -12 }, 5],
-              [{ zoom: 14, value: 100 }, 10],
-              [{ zoom: 14, value: 1669 }, 20],
-            ],
-          },
-          'circle-color': '#FFF',
-          'circle-stroke-color': '#000',
-          'circle-stroke-width': {
-            stops: [
-              [11, 0],
-              [12, 1],
-            ],
-          },
-          'circle-stroke-opacity': 0.5,
-          'circle-opacity': 0.5,
-        },
-      },
-    ],
-  },
-
-  polygons: {
-    sources: [
-      {
-        type: 'cartovector',
-        id: 'pipeline-polygons',
-        options: {
-          carto_user: appConfig.carto_user,
-          carto_domain: appConfig.carto_domain,
-        },
-      },
-    ],
-    mapLayers: [
-      {
-        id: 'pipeline-polygons',
-        source: 'pipeline-polygons',
-        'source-layer': 'layer0',
-        type: 'fill',
-        paint: {
-          'fill-color': 'steelblue',
-          'fill-opacity': 0.75,
-          'fill-outline-color': '#838763',
-          'fill-antialias': true,
-        },
-      },
-    ],
-  },
-};
-
-export { defaultFilterDimensions, circleColors, getColor, LayerConfig };
+export { defaultFilterDimensions, circleColors, getColor };

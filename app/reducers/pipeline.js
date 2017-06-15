@@ -1,6 +1,5 @@
-import update from 'react/lib/update';
 import * as AT from '../constants/actionTypes';
-import { defaultFilterDimensions, LayerConfig, circleColors } from '../pipeline/config';
+import { defaultFilterDimensions } from '../pipeline/config';
 import { getSql } from '../helpers/sqlbuilder/PipelineSqlBuilder';
 import _ from 'lodash';
 
@@ -14,61 +13,11 @@ filterDimensions.dcp_pipeline_status.values
   .filter((value) => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
   .length > 0;
 
-const getMapConfig = (sql, symbologyDimension, selectedFeatures) => {
-  // set the sql for the vector source
-  const newConfig = update(LayerConfig.points, {
-    sources: {
-      0: { options: { sql: { $set: [sql] }}},
-    },
-    mapLayers: {
-      0: {
-        paint: {
-          'circle-color': {
-            $set: symbologyDimension === 'dcp_permit_type'
-              ? circleColors.dcp_permit_type
-              : circleColors.dcp_pipeline_status
-          },
-        },
-      },
-    },
-  });
-
-  // add selection feature to config
-  if (selectedFeatures.length > 0) {
-    newConfig.sources.push({
-      id: 'highlightPoints',
-      type: 'geojson',
-      data: {
-        type: 'Feature',
-        geometry: selectedFeatures[0].geometry,
-      },
-    });
-
-    newConfig.mapLayers.push({
-      id: 'highlightPoints',
-      type: 'circle',
-      source: 'highlightPoints',
-      paint: {
-        'circle-color': 'rgba(255, 255, 255, 1)',
-        'circle-opacity': 0,
-        'circle-radius': 15,
-        'circle-stroke-width': 3,
-        'circle-pitch-scale': 'map',
-        'circle-stroke-color': 'rgba(217, 107, 39, 1)',
-        'circle-stroke-opacity': 0.8,
-      },
-    });
-  }
-
-  return newConfig;
-};
-
 const initialState = {
   filterDimensions: defaultFilterDimensions,
   issueDateFilterDisabled: isIssueDateDisabled(defaultFilterDimensions),
   completionDateFilterDisabled: isCompletionDateDisabled(defaultFilterDimensions),
   sql: getSql(defaultFilterDimensions),
-  mapConfig: getMapConfig(getSql(defaultFilterDimensions), 'dcp_permit_type', []),
   selectedFeatures: [],
   symbologyDimension: 'dcp_permit_type',
   pipelineDetails: null,
@@ -89,16 +38,10 @@ const pipelineReducer = (state = initialState, action) => {
       return Object.assign({}, state, { selectedCount: action.payload[0].count });
 
     case AT.SET_SELECTED_PIPELINE_FEATURES:
-      return Object.assign({}, state, {
-        selectedFeatures: action.payload.selectedFeatures,
-        mapConfig: getMapConfig(state.sql, state.symbologyDimension, action.payload.selectedFeatures)
-      });
+      return Object.assign({}, state, { selectedFeatures: action.payload.selectedFeatures });
 
     case AT.SET_PIPELINE_SYMBOLOGY:
-      return Object.assign({}, state, {
-        symbologyDimension: action.paypload.symbologyDimension,
-        mapConfig: getMapConfig(state.sql, action.paypload.symbologyDimension, state.selectedFeatures)
-      });
+      return Object.assign({}, state, { symbologyDimension: action.payload.symbologyDimension });
 
     case AT.RESET_PIPELINE_FILTERS:
       return Object.assign({}, state, {
@@ -132,11 +75,7 @@ const pipelineReducer = (state = initialState, action) => {
         }
       }
 
-      return Object.assign({}, state, {
-        filterDimensions: dimensions,
-        sql: getSql(dimensions),
-        mapConfig: getMapConfig(getSql(dimensions), state.symbologyDimension, state.selectedFeatures)
-      });
+      return Object.assign({}, state, { filterDimensions: dimensions, sql: getSql(dimensions) });
 
     default:
       return state;

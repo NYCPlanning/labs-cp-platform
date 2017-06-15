@@ -23,10 +23,6 @@ class Pipeline extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    this.updateMapConfig();
-  }
-
   handleDownload = (label) => {
     ga.event({
       category: 'pipeline-explorer',

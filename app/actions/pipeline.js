@@ -7,14 +7,14 @@ export const fetchDetails = (cartodbId) =>
     tableName: sqlConfig.tablename,
     column: 'cartodb_id',
     value: cartodbId
-  }, AT.FETCH_FACILITY_DETAILS);
+  }, AT.FETCH_PIPELINE_DETAILS);
 
 export const fetchTotalCount = () => ({
   type: AT.CARTO_REQUEST,
   payload: {
     sql: `SELECT COUNT(*) FROM ${sqlConfig.tablename}`,
     requestFormat: 'json',
-    nextType: AT.FETCH_FACILITIES_TOTAL_COUNT
+    nextType: AT.FETCH_PIPELINE_TOTAL_COUNT
   }
 });
 
@@ -23,12 +23,12 @@ export const fetchSelectedCount = (filterDimensions) => ({
   payload: {
     sql: `SELECT count(*) FROM (${getSql(filterDimensions)}) a`,
     requestFormat: 'json',
-    nextType: AT.FETCH_FACILITIES_SELECTED_COUNT
+    nextType: AT.FETCH_PIPELINE_SELECTED_COUNT
   }
 });
 
 export const setSelectedFeatures = (selectedFeatures) => ({
-  type: AT.SET_SELECTED_FACILITIES_FEATURES,
+  type: AT.SET_SELECTED_PIPELINE_FEATURES,
   payload: { selectedFeatures }
 });
 
