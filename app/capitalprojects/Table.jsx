@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import FixedDataTable from 'fixed-data-table';
 import Dimensions from 'react-dimensions';
 import Numeral from 'numeral';
@@ -11,13 +12,12 @@ import 'fixed-data-table/dist/fixed-data-table.css';
 import InfoIcon from '../common/InfoIcon';
 import TableFilter from './TableFilter';
 import { agencies } from './config';
-import CapitalProjectsTableActions from '../actions/CapitalProjectsTableActions';
-import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
+import * as capitalProjectsTableActions from '../actions/capitalProjectsTable';
 import SortHeaderCell from './SortHeaderCell';
 import DownloadTable from '../common/DownloadTable';
 import SignupPrompt from '../common/SignupPrompt';
 import ga from '../helpers/ga';
-
+import _ from 'lodash';
 
 import './Table.scss';
 
@@ -30,16 +30,17 @@ class CPTable extends React.Component { // eslint-disable-line
     this.state = { data: null };
   }
 
-  componentWillMount() {
-    CapitalProjectsTableStore.on('updatedTableData', () => {
-      this.setState({
-        data: CapitalProjectsTableStore.filteredSortedData,
-        colSortDirs: CapitalProjectsTableStore.colSortDirs,
-      });
-    });
+  componentDidMount() {
+    this.props.fetchDetails();
+    this.props.fetchTotalCount();
+    this.props.fetchSelectedCount(this.props.filterDimensions);
+    this.props.resetFilters();
+  }
 
-    CapitalProjectsTableStore.initialize();
-    CapitalProjectsTableActions.resetFilter();
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(this.props.sql, nextProps.sql)) {
+      this.props.fetchSelectedCount(nextProps.filterDimensions);
+    }
   }
 
   handleDownload = (label) => {
@@ -51,17 +52,16 @@ class CPTable extends React.Component { // eslint-disable-line
   }
 
   handleFilterBy = (e) => {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
-    let filterBy = null;
-    if (e.target.value) {
-      filterBy = e.target.value.toLowerCase();
-    }
+    const filterBy = e.target.value
+      ? e.target.value.toLowerCase()
+      : null;
 
-    CapitalProjectsTableActions.onFilterBy(filterBy);
-  }
+    this.props.setFilterBy(filterBy);
+  };
 
   handleSortChange = (columnKey, sortDir) => {
-    CapitalProjectsTableActions.onSortChange(columnKey, sortDir);
-  }
+    this.props.setSort(columnKey, sortDir);
+  };
 
   render() {
     const TextCell = ({ rowIndex, data, col, ...props }) => (
@@ -107,9 +107,7 @@ class CPTable extends React.Component { // eslint-disable-line
       );
     };
 
-    const { containerHeight, containerWidth } = this.props;
-
-    const { colSortDirs, data } = this.state;
+    const { filteredSortedData, colSortDirs, containerHeight, containerWidth } = this.props;
 
     const tabTemplateStyle = {
       position: 'absolute',
@@ -132,8 +130,8 @@ class CPTable extends React.Component { // eslint-disable-line
             <Tab label="Download">
               <div className="sidebar-tab-content padded">
                 <DownloadTable
-                  sql={CapitalProjectsTableStore.sql}
-                  commitmentsSql={CapitalProjectsTableStore.commitmentsSql}
+                  sql={this.props.sql}
+                  commitmentsSql={this.props.commitmentsSql}
                   filePrefix="projects"
                   commitmentsFilePrefix="commitments"
                   onDownload={this.handleDownload}
@@ -166,10 +164,10 @@ class CPTable extends React.Component { // eslint-disable-line
             </Tab>
           </Tabs>
         </div>
-        {data && (
+        {filteredSortedData && (
           <Table
             rowHeight={50}
-            rowsCount={data.length}
+            rowsCount={filteredSortedData.length}
             headerHeight={50}
             width={containerWidth}
             height={containerHeight}
@@ -185,7 +183,7 @@ class CPTable extends React.Component { // eslint-disable-line
                   FMS ID
                 </SortHeaderCell>
               }
-              cell={<TextCell data={data} col="maprojid" />}
+              cell={<TextCell data={filteredSortedData} col="maprojid" />}
               width={120}
             />
             <Column
@@ -198,7 +196,7 @@ class CPTable extends React.Component { // eslint-disable-line
                   Description
                 </SortHeaderCell>
               }
-              cell={<TextCell data={data} col="description" />}
+              cell={<TextCell data={filteredSortedData} col="description" />}
               flexGrow={2}
               width={300}
             />
@@ -212,7 +210,7 @@ class CPTable extends React.Component { // eslint-disable-line
                   Man. Agency <InfoIcon text="The city agency managing the project." />
                 </SortHeaderCell>
               }
-              cell={<TextCell data={data} col="magencyacro" />}
+              cell={<TextCell data={filteredSortedData} col="magencyacro" />}
               width={120}
             />
             <Column
@@ -225,7 +223,7 @@ class CPTable extends React.Component { // eslint-disable-line
                   Spon. Agency <InfoIcon text="The city agency funding the project." />
                 </SortHeaderCell>
               }
-              cell={<ArrayTextCell data={data} col="sagencyacro" />}
+              cell={<ArrayTextCell data={filteredSortedData} col="sagencyacro" />}
               width={130}
             />
             <Column
@@ -238,7 +236,7 @@ class CPTable extends React.Component { // eslint-disable-line
                   Project Type <InfoIcon text="Project Types associated with the project in FMS" />
                 </SortHeaderCell>
               }
-              cell={<ArrayTextCell data={data} col="projecttype" />}
+              cell={<ArrayTextCell data={filteredSortedData} col="projecttype" />}
               width={200}
             />
             <Column
@@ -251,7 +249,7 @@ class CPTable extends React.Component { // eslint-disable-line
                   Spent to Date <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
                 </SortHeaderCell>
               }
-              cell={<MoneyCell data={data} col="totalspend" style={{ textAlign: 'right' }} />}
+              cell={<MoneyCell data={filteredSortedData} col="totalspend" style={{ textAlign: 'right' }} />}
               width={130}
             />
             <Column
@@ -265,11 +263,11 @@ class CPTable extends React.Component { // eslint-disable-line
 
                 </SortHeaderCell>
               }
-              cell={<MoneyCell data={data} col="totalcommit" style={{ textAlign: 'right' }} />}
+              cell={<MoneyCell data={filteredSortedData} col="totalcommit" style={{ textAlign: 'right' }} />}
               width={180}
             />
             <Column
-              cell={<DetailCell data={data} col="maprojid" />}
+              cell={<DetailCell data={filteredSortedData} col="maprojid" />}
               width={50}
             />
           </Table>
@@ -282,9 +280,79 @@ class CPTable extends React.Component { // eslint-disable-line
 CPTable.propTypes = {
   containerHeight: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
+  resetFilters: PropTypes.func.isRequired,
+  filterDimensions: PropTypes.object,
+  colSortDirs: PropTypes.object,
+  sql: PropTypes.string,
+  commitmentsSql: PropTypes.string,
+  setFilterBy: PropTypes.func.isRequired,
+  setSort: PropTypes.func.isRequired,
+  filteredSortedData: PropTypes.array,
+  fetchTotalCount: PropTypes.func.isRequired,
+  fetchSelectedCount: PropTypes.func.isRequired,
 };
 
-module.exports = Dimensions({
+const filterAndSortData = (data, filterBy, colSortDirs) => {
+  const filteredSortedData = [];
+
+  // filter
+  if (filterBy) {
+    for (let i = 0; i < data.length; i += 1) {
+      const { maprojid, description } = data[i];
+      if (
+        maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
+        description.toLowerCase().indexOf(filterBy) !== -1
+      ) {
+        filteredSortedData.push(data[i]);
+      }
+    }
+  } else {
+    for (let i = 0; i < data.length; i += 1) {
+      filteredSortedData.push(data[i]);
+    }
+  }
+
+  // sort
+  const columnKey = Object.keys(colSortDirs)[0];
+  const sortDir = colSortDirs[columnKey];
+
+  filteredSortedData.sort((a, b) => {
+    let sortVal = 0;
+    if (a[columnKey] > b[columnKey]) sortVal = 1;
+    if (a[columnKey] < b[columnKey]) sortVal = -1;
+
+    if (sortVal !== 0 && sortDir === 'ASC') {
+      sortVal *= -1;
+    }
+
+    return sortVal;
+  });
+
+  return filteredSortedData;
+};
+
+const mapStateToProps = ({ capitalProjectsTable }) => ({
+  filterDimensions: capitalProjectsTable.filterDimensions,
+  sql: capitalProjectsTable.sql,
+  commitmentsSql: capitalProjectsTable.commitmentsSql,
+  colSortDirs: capitalProjectsTable.colSortDirs,
+  filteredSortedData: filterAndSortData(
+    capitalProjectsTable.capitalProjectDetails,
+    capitalProjectsTable.filterBy,
+    capitalProjectsTable.colSortDirs
+  )
+});
+
+const ConnectedTable = connect(mapStateToProps, {
+  fetchDetails: capitalProjectsTableActions.fetchDetails,
+  resetFilters: capitalProjectsTableActions.resetFilters,
+  setFilterBy: capitalProjectsTableActions.setTableFilterBy,
+  setSort: capitalProjectsTableActions.setTableSort,
+  fetchTotalCount: capitalProjectsTableActions.fetchTotalCount,
+  fetchSelectedCount: capitalProjectsTableActions.fetchSelectedCount,
+})(CPTable);
+
+export default Dimensions({
   getHeight() {
     return window.innerHeight - 50;
   },
@@ -292,4 +360,4 @@ module.exports = Dimensions({
   getWidth() {
     return window.innerWidth - 320;
   },
-})(CPTable);
+})(ConnectedTable);

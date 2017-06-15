@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
+import { connect } from 'react-redux';
 
-import CapitalProjectsActions from '../actions/CapitalProjectsActions';
+import * as capitalProjectsActions from '../actions/capitalProjects';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import CostGroupChart from './CostGroupChart';
@@ -14,16 +15,16 @@ import MultiSelect from '../common/MultiSelect';
 
 class Filter extends React.Component {
   updateFilterDimension = (dimension, values) => {
-    CapitalProjectsActions.onFilterDimensionChange(dimension, values);
-  }
+    this.props.setFilterDimension(dimension, values);
+  };
 
   handleSliderChange = (dimension, data) => {
     this.updateFilterDimension(dimension, [data.from, data.to]);
-  }
+  };
 
   resetFilter = () => {
-    CapitalProjectsActions.resetFilter();
-  }
+    this.props.resetFilter();
+  };
 
   render() {
     // override material ui ListItem spacing
@@ -187,6 +188,11 @@ Filter.propTypes = {
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
   filterDimensions: PropTypes.object.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  setFilterDimension: PropTypes.func.isRequired,
 };
 
-export default Filter;
+export default connect(null, {
+  resetFilter: capitalProjectsActions.resetFilters,
+  setFilterDimension: capitalProjectsActions.setFilterDimension,
+})(Filter);

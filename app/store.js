@@ -2,6 +2,8 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 
 // Reducers
 import facilities from './reducers/facilities';
+import capitalProjects from './reducers/capitalProjects';
+import capitalProjectsTable from './reducers/capitalProjectsTable';
 
 // Middleware
 import carto from './middleware/carto';
@@ -16,7 +18,9 @@ if (process.env.NODE_ENV === 'production') {
 
 const store = createStore(
   combineReducers({
-    facilities
+    facilities,
+    capitalProjects,
+    capitalProjectsTable
   }),
   applyMiddleware(...middleware)
 );

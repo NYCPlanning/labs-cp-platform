@@ -1,54 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
+import { connect } from 'react-redux';
 import Subheader from 'material-ui/Subheader';
+import _ from 'lodash';
 
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
 import RangeInputs from '../common/RangeInputs';
 import RangeSlider from '../common/RangeSlider';
 import CountWidget from '../common/CountWidget';
-import CapitalProjectsTableActions from '../actions/CapitalProjectsTableActions';
-import CapitalProjectsTableStore from '../stores/CapitalProjectsTableStore';
+import * as capitalProjectsTableActions from '../actions/capitalProjectsTable';
 
 class Filter extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
-      filterDimensions: CapitalProjectsTableStore.filterDimensions,
       totalspendRange: [0, 9],
       totalcommitRange: [0, 9],
     };
   }
 
-  componentWillMount() {
-    CapitalProjectsTableStore.on('updated', () => {
-      this.setState({
-        totalCount: CapitalProjectsTableStore.totalCount,
-        selectedCount: CapitalProjectsTableStore.selectedCount,
-        filterDimensions: CapitalProjectsTableStore.filterDimensions,
-      }, () => {
-        // check for default status of sliders with mapped values
-        const totalspendRange = this.state.filterDimensions.totalspend.values;
-        if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(this.props.sql, nextProps.sql)) {
+      const totalspendRange = this.props.filterDimensions.totalspend.values;
+      if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
 
-        const totalcommitRange = this.state.filterDimensions.totalcommit.values;
-        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
-      });
-    });
+      const totalcommitRange = this.props.filterDimensions.totalcommit.values;
+      if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
+    }
   }
 
   updateFilterDimension = (dimension, values) => {
-    CapitalProjectsTableActions.onFilterDimensionChange(dimension, values);
-  }
+    this.props.setFilterDimension(dimension, values);
+  };
 
   handleSliderChange = (dimension, data) => {
     this.updateFilterDimension(dimension, [data.from, data.to]);
-  }
+  };
 
   resetFilter = () => {
-    CapitalProjectsTableActions.resetFilter();
-  }
+    this.props.resetFilters();
+  };
 
   render() {
     // override material ui ListItem spacing
@@ -56,7 +50,7 @@ class Filter extends React.Component {
       paddingTop: '0px',
     };
 
-    const { totalCount, selectedCount, filterDimensions } = this.state;
+    const { totalCount, selectedCount, filterDimensions } = this.props;
 
     return (
       filterDimensions && (
@@ -209,6 +203,18 @@ class Filter extends React.Component {
 
 Filter.propTypes = {
   onFilterBy: PropTypes.func.isRequired,
+  filterDimensions: PropTypes.object,
+  sql: PropTypes.string,
 };
 
-export default Filter;
+const mapStateToProps = ({ capitalProjectsTable }) => ({
+  sql: capitalProjectsTable.sql,
+  filterDimensions: capitalProjectsTable.filterDimensions,
+  selectedCount: capitalProjectsTable.selectedCount,
+  totalCount: capitalProjectsTable.totalCount,
+});
+
+export default connect(mapStateToProps, {
+  resetFilters: capitalProjectsTableActions.resetFilters,
+  setFilterDimension: capitalProjectsTableActions.setFilterDimension,
+})(Filter);

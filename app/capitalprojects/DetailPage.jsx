@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Numeral from 'numeral';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
@@ -9,38 +10,21 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
-import CapitalProjectsActions from '../actions/CapitalProjectsActions';
-import CapitalProjectsStore from '../stores/CapitalProjectsStore';
+import * as capitalProjectsActions from '../actions/capitalProjects';
 
 import '../app.scss';
 import './styles.scss';
 
 class DetailPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: null,
-      budgets: null,
-      commitments: null,
-    };
-  }
-
-  componentWillMount() {
-    CapitalProjectsStore.on('detailDataAvailable', () => {
-      this.setState({
-        data: CapitalProjectsStore.detailData,
-        budgets: CapitalProjectsStore.detailBudgets,
-        commitments: CapitalProjectsStore.detailCommitments,
-      });
-    });
-
-    CapitalProjectsActions.fetchDetailData(this.props.params.id);
+  componentDidMount() {
+    this.props.fetchDetails(this.props.params.id);
+    this.props.fetchBudgets(this.props.params.id);
+    this.props.fetchCommitments(this.props.params.id);
   }
 
   renderContent() {
-    const d = this.state.data.properties;
-    const { budgets } = this.state;
+    const d = this.props.details.properties;
+    const { budgets } = this.props;
 
     const formatCost = (number => Numeral(number).format('($ 0.00 a)').toUpperCase());
 
@@ -67,7 +51,7 @@ class DetailPage extends React.Component {
       width: '25%',
     };
 
-    const tableRows = this.state.commitments.map(c => (
+    const tableRows = this.props.commitments.map(c => (
 
       <TableRow key={c.cartodb_id}>
         <TableRowColumn style={commitmentDescriptionWidth}>{(c.commitmentdescription === '' ? '--' : c.commitmentdescription)}</TableRowColumn>
@@ -81,7 +65,7 @@ class DetailPage extends React.Component {
     ));
 
 
-    const geometryExists = this.state.data.geometry !== null;
+    const geometryExists = this.props.details.geometry !== null;
 
     return (
       <div className="project-page">
@@ -198,7 +182,7 @@ class DetailPage extends React.Component {
         <div className={'col-md-6'}>
           <div style={{ marginTop: '15px' }}>
             {
-              geometryExists && <ModalMap feature={this.state.data} label={d.description} />
+              geometryExists && <ModalMap feature={this.props.details} label={d.description} />
             }
           </div>
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
@@ -213,11 +197,13 @@ class DetailPage extends React.Component {
   }
 
   render() {
-    const content = this.state.data ? this.renderContent() : null;
+    if (!this.props.details || !this.props.budgets || !this.props.commitments) {
+      return null;
+    }
 
     return (
       <div className="fluid-content display-content">
-        {content}
+        { this.renderContent() }
       </div>
     );
   }
@@ -226,6 +212,22 @@ class DetailPage extends React.Component {
 DetailPage.propTypes = {
   params: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  fetchDetails: PropTypes.func.isRequired,
+  fetchBudgets: PropTypes.func.isRequired,
+  fetchCommitments: PropTypes.func.isRequired,
+  details: PropTypes.object,
+  budgets: PropTypes.object,
+  commitments: PropTypes.object,
 };
 
-module.exports = DetailPage;
+const mapStateToProps = ({ capitalProjects }) => ({
+  details: capitalProjects.capitalProjectDetails,
+  budgets: capitalProjects.capitalProjectBudgets,
+  commitments: capitalProjects.capitalProjectCommitments,
+});
+
+export default connect(mapStateToProps, {
+  fetchDetails: capitalProjectsActions.fetchDetails,
+  fetchBudgets: capitalProjectsActions.fetchBudgets,
+  fetchCommitments: capitalProjectsActions.fetchCommitments,
+})(DetailPage);
