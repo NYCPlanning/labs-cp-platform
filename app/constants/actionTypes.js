@@ -6,6 +6,7 @@ const asyncType = type => ({
 
 // Carto & API
 export const CARTO_REQUEST = 'CARTO_REQUEST';
+export const FETCH_NYC_BOUNDS = asyncType('FETCH_NYC_BOUNDS');
 
 // Facilities
 export const FETCH_FACILITY_DETAILS = asyncType('FETCH_FACILITY_DETAILS');

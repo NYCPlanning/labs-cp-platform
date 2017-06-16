@@ -5,20 +5,6 @@ const $ = require('jquery');
 const moment = require('moment');
 
 export default {
-  // get a full row from a table as geojson
-  // returns a promise that when resolved yeilds a GeoJson feature
-  getFeature(tableName, column, value) {
-    return new Promise((resolve, reject) => {
-      const sql = typeof (value) === 'number' ?
-        `SELECT * FROM ${tableName} WHERE ${column} = ${value}` :
-        `SELECT * FROM ${tableName} WHERE ${column} = '${value}'`;
-
-      this.SQL(sql)
-        .then((data) => resolve(data.features[0]))
-        .catch(err => reject(err));
-    });
-  },
-
   // gets the bounds of an nyc geometry such as a cd, nta, etc
   getNYCBounds(type, id) {
     return new Promise((resolve, reject) => {
@@ -35,19 +21,6 @@ export default {
           });
 
           resolve(bounds);
-        })
-        .catch(err => reject(err));
-    });
-  },
-
-  getCount(sql) {
-    const self = this;
-    sql = `SELECT count(*) FROM (${sql}) a`;
-
-    return new Promise((resolve, reject) => {
-      self.SQL(sql, 'json')
-        .then((data) => {
-          resolve(data[0].count);
         })
         .catch(err => reject(err));
     });

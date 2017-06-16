@@ -4,7 +4,6 @@ import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
 import { connect } from 'react-redux';
 
 import appConfig from '../helpers/appConfig';
-import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
@@ -23,10 +22,8 @@ import colors from './colors';
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class FacilitiesExplorer extends React.Component {
-  componentWillMount() {
-    this.bounds = null;
+  componentDidMount() {
     // update the layers and filterDimensions in the facilities store
-
     const locationState = this.props.location.state;
     const defaultFilterDimensionsCopy = JSON.parse(JSON.stringify(defaultFilterDimensions));
 
@@ -39,19 +36,11 @@ class FacilitiesExplorer extends React.Component {
     }
 
     this.props.setFilters(filterDimensions);
-  }
 
-  componentDidMount() {
     // update the map bounds if adminboundaries location state was passed in
-    if (this.props.location.state && this.props.location.state.adminboundaries) {
-      const value = this.props.location.state.adminboundaries.value;
-
-      carto.getNYCBounds('nta', value)
-        .then((bounds) => {
-          this.bounds = bounds;
-          this.forceUpdate();
-        });
-    }
+    // if (this.props.location.state && this.props.location.state.adminboundaries) {
+    //   this.props.fetchNYCBounds(this.props.location.state.adminboundaries.value);
+    // }
   }
 
   handleMapLayerClick = (features) => {
