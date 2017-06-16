@@ -8,6 +8,10 @@ const asyncType = type => ({
 export const CARTO_REQUEST = 'CARTO_REQUEST';
 export const FETCH_NYC_BOUNDS = asyncType('FETCH_NYC_BOUNDS');
 
+// Modals
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+
 // Facilities
 export const FETCH_FACILITY_DETAILS = asyncType('FETCH_FACILITY_DETAILS');
 export const FETCH_FACILITY_AGENCY_VALUES = asyncType('FETCH_FACILITY_AGENCY_VALUES');

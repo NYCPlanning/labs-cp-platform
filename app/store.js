@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 
 // Reducers
+import modal from './reducers/modal';
 import facilities from './reducers/facilities';
 import pipeline from './reducers/pipeline';
 import capitalProjects from './reducers/capitalProjects';
@@ -19,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const store = createStore(
   combineReducers({
+    modal,
     facilities,
     pipeline,
     capitalProjects,
