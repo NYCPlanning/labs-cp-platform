@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import { Link, browserHistory } from 'react-router';
 
-
 const Button = props => (
   <RaisedButton
     className="back-button"
@@ -60,4 +59,4 @@ BackButton.propTypes = {
   defaultText: PropTypes.string.isRequired,
 };
 
-module.exports = BackButton;
+export default BackButton;

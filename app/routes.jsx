@@ -62,7 +62,7 @@ const AuthSuccess = () => (
   <div />
 );
 
-module.exports = (
+export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
     <Route path="about" component={About} title={'About'} />

@@ -47,7 +47,7 @@ class HomePage extends React.Component {
       modalContent: aboutContent,
       modalCloseText: 'Close',
     });
-  }
+  };
 
   showCollaborate = () => {
     this.props.showModal({
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
       modalContent: collaborateContent,
       modalCloseText: 'Close',
     });
-  }
+  };
 
   render() {
     return (
@@ -171,4 +171,4 @@ HomePage.propTypes = {
   showModal: PropTypes.func,
 };
 
-module.exports = HomePage;
+export default HomePage;

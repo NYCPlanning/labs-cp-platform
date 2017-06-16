@@ -1,6 +1,6 @@
 import React from 'react';
 
-exports.splash = (
+export const splash = (
   <div>
     <h4>Welcome, Beta Tester!</h4>
     <p>This interactive explorer of the new Facilities dataset is currently under development by the Department of City Planning. You are likely to find some bugs, as this is a work in progress. We also encourage you to <a href="http://docs.capitalplanning.nyc/facdb/" target="_blank" rel="noreferrer noopener">read more about the data</a> powering this map.</p>
@@ -8,7 +8,7 @@ exports.splash = (
   </div>
 );
 
-exports.about = (
+export const about = (
   <div>
     <h4>Product Overview</h4>
     <p>

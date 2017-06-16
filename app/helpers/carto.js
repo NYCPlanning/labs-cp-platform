@@ -4,7 +4,7 @@ import appConfig from './appConfig';
 const $ = require('jquery');
 const moment = require('moment');
 
-module.exports = {
+export default {
   // get a full row from a table as geojson
   // returns a promise that when resolved yeilds a GeoJson feature
   getFeature(tableName, column, value) {

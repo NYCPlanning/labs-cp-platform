@@ -27,11 +27,6 @@ class LayerSelector extends React.Component {
     this.props.setFilterDimension(dimension, [data.from, data.to]);
   };
 
-  handleInputChange = (e) => { // handles changes to the manual inputs for total units
-    e.preventDefault();
-    this.props.setFilterDimension('dcp_units_use_map', [this.unitsMin.value, this.unitsMax.value]);
-  };
-
   resetFilter = () => {
     this.props.resetFilter();
   };

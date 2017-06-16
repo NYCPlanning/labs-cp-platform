@@ -16,11 +16,9 @@ class CountWidget extends React.Component {
   handleReset = () => {
     this.props.resetFilter();
     this.setState({ resetSpin: true }, () => {
-      setTimeout(() => {
-        this.setState({ resetSpin: false });
-      }, 1000);
+      setTimeout(() => this.setState({ resetSpin: false }), 1000);
     });
-  }
+  };
 
   render() {
     const totalCount = Numeral(this.props.totalCount).format('0,0');
@@ -87,4 +85,4 @@ CountWidget.propTypes = {
   resetFilter: PropTypes.func.isRequired,
 };
 
-module.exports = CountWidget;
+export default CountWidget;

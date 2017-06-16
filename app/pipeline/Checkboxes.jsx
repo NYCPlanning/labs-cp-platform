@@ -49,7 +49,7 @@ class Checkboxes extends React.Component {
     thisOption.checked = !thisOption.checked;
 
     onChange(dimension.values);
-  }
+  };
 
   render() {
     const { dimension, legendCircleType } = this.props;
@@ -72,10 +72,7 @@ class Checkboxes extends React.Component {
       return (
         <ListItem
           primaryText={label}
-          style={{
-            padding: '4px 8px 4px 48px',
-            margin: 0,
-          }}
+          style={{ padding: '4px 8px 4px 48px', margin: 0 }}
           key={option.value}
           leftCheckbox={checkbox}
         />

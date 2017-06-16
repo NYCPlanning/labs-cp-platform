@@ -29,7 +29,7 @@ class Pipeline extends React.Component {
       action: 'download',
       label,
     });
-  }
+  };
 
   render() {
     const {

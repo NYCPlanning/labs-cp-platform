@@ -21,6 +21,8 @@ import appConfig from '../helpers/appConfig';
 
 import './styles.scss';
 
+const { mapboxGLOptions, searchConfig } = appConfig;
+
 const SCAPointsSourceOptions = {
   carto_user: appConfig.carto_user,
   carto_domain: appConfig.carto_domain,
@@ -103,23 +105,14 @@ class CapitalProjectsExplorer extends React.Component {
   };
 
   render() {
-    const { mapboxGLOptions, searchConfig } = appConfig;
     const { selectedFeatures } = this.props;
 
     const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
 
-    const listItems = selectedFeatures.map((feature) => {
-      if (selectedFeaturesSource === 'capital-projects') {
-        return <CPListItem feature={feature} key={feature.id} />;
-      }
-
-      return <SCAListItem feature={feature} key={feature.id} />;
-    });
-
-    const selectedFeaturesPane = (
-      <SelectedFeaturesPane>
-        {listItems}
-      </SelectedFeaturesPane>
+    const listItems = selectedFeatures.map((feature) =>
+      selectedFeaturesSource === 'capital-projects'
+        ? <CPListItem feature={feature} key={feature.id}/>
+        : <SCAListItem feature={feature} key={feature.id}/>
     );
 
     const capitalProjectsSourceOptions = {
@@ -215,7 +208,10 @@ class CapitalProjectsExplorer extends React.Component {
             </Legend>
           </JaneLayer>
         </Jane>
-        {selectedFeaturesPane}
+
+        <SelectedFeaturesPane>
+          {listItems}
+        </SelectedFeaturesPane>
       </div>
     );
   }

@@ -73,7 +73,7 @@ class LayerSelector extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(this.props.sql, nextProps.sql)) {
+    if (this.props.sql !== nextProps.sql) {
       this.props.fetchSelectedFacilitiesCount(nextProps.filterDimensions);
     }
   }

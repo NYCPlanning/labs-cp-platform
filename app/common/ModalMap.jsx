@@ -35,7 +35,7 @@ class ModalMap extends React.Component {
     }
 
     return centroid(feature).geometry.coordinates; // get the centroid
-  }
+  };
 
   render() {
     const { feature, label } = this.props;
@@ -84,11 +84,7 @@ class ModalMap extends React.Component {
               name="Feature"
               icon="map-marker"
               hidden
-              component={
-                <PolygonJaneLayerComponent
-                  feature={feature}
-                />
-              }
+              component={<PolygonJaneLayerComponent feature={feature} />}
             />
           }
         </Jane>
@@ -106,4 +102,4 @@ ModalMap.propTypes = {
   label: PropTypes.string,
 };
 
-module.exports = ModalMap;
+export default ModalMap;

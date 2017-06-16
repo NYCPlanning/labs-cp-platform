@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
-import content from '../content';
+import * as content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 

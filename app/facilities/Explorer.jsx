@@ -20,6 +20,8 @@ import * as facilitiesActions from '../actions/facilities';
 import { defaultFilterDimensions } from './config';
 import colors from './colors';
 
+const { mapboxGLOptions, searchConfig } = appConfig;
+
 class FacilitiesExplorer extends React.Component {
   componentWillMount() {
     this.bounds = null;
@@ -65,17 +67,9 @@ class FacilitiesExplorer extends React.Component {
   };
 
   render() {
-    const { mapboxGLOptions, searchConfig } = appConfig;
-
     const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
     ));
-
-    const selectedFeaturesPane = (
-      <SelectedFeaturesPane>
-        {listItems}
-      </SelectedFeaturesPane>
-    );
 
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
@@ -133,7 +127,10 @@ class FacilitiesExplorer extends React.Component {
             </Legend>
           </JaneLayer>
         </Jane>
-        { selectedFeaturesPane }
+
+        <SelectedFeaturesPane>
+          {listItems}
+        </SelectedFeaturesPane>
       </div>
     );
   }

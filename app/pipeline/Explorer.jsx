@@ -15,6 +15,11 @@ import {
   AdminBoundariesJaneLayer,
 } from '../janelayers';
 
+import PipelineComponent from './janelayer/Component';
+import ListItem from './janelayer/ListItem';
+import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
+import * as pipelineActions from '../actions/pipeline';
+
 const pointsLayerPaint = {
   'circle-radius': {
     property: 'dcp_units_use_map',
@@ -56,10 +61,7 @@ const highlightPointsPaint = {
   'circle-stroke-opacity': 0.8,
 };
 
-import PipelineComponent from './janelayer/Component';
-import ListItem from './janelayer/ListItem';
-import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
-import * as pipelineActions from '../actions/pipeline';
+const { mapboxGLOptions, searchConfig } = appConfig;
 
 class PipeLineExplorer extends React.Component {
   handleMapLayerClick = (features) => {
@@ -75,18 +77,9 @@ class PipeLineExplorer extends React.Component {
   };
 
   render() {
-    const mapboxGLOptions = appConfig.mapboxGLOptions;
-    const searchConfig = appConfig.searchConfig;
-
     const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
     ));
-
-    const selectedFeaturesPane = (
-      <SelectedFeaturesPane>
-        {listItems}
-      </SelectedFeaturesPane>
-    );
 
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
@@ -155,7 +148,10 @@ class PipeLineExplorer extends React.Component {
             }
           </JaneLayer>
         </Jane>
-        { selectedFeaturesPane }
+
+        <SelectedFeaturesPane>
+          {listItems}
+        </SelectedFeaturesPane>
       </div>
     );
   }

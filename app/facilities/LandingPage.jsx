@@ -223,4 +223,4 @@ class FacilitiesLandingPage extends React.Component {
   }
 }
 
-module.exports = FacilitiesLandingPage;
+export default FacilitiesLandingPage;

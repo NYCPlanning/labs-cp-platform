@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import _ from 'lodash';
 
 import Filter from '../Filter';
 import Download from '../Download';
-import content from '../content';
+import * as content from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
@@ -20,9 +19,9 @@ class CapitalProjects extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      !_.isEqual(this.props.sql, nextProps.sql) ||
-      !_.isEqual(this.props.polygonsSql, nextProps.polygonsSql) ||
-      !_.isEqual(this.props.pointsSql, nextProps.pointsSql)
+      this.props.sql !== nextProps.sql ||
+      this.props.polygonsSql !== nextProps.polygonsSql ||
+      this.props.pointsSql !== nextProps.pointsSql
     ) {
       this.props.fetchSelectedCount(nextProps.filterDimensions);
     }

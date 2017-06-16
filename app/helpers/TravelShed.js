@@ -15,4 +15,4 @@ const travelshed = {
   },
 };
 
-module.exports = travelshed;
+export default travelshed;

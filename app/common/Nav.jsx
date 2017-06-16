@@ -9,11 +9,11 @@ import './Nav.scss';
 class Nav extends React.Component {
   handleLogout = () => {
     AuthService.logout();
-  }
+  };
 
   handleLogin = () => {
     AuthService.login();
-  }
+  };
 
   render() {
     const profile = AuthService.getProfile();
@@ -92,4 +92,4 @@ Nav.propTypes = {
   children: PropTypes.array,
 };
 
-module.exports = Nav;
+export default Nav;

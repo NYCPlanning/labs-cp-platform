@@ -17,7 +17,6 @@ import SortHeaderCell from './SortHeaderCell';
 import DownloadTable from '../common/DownloadTable';
 import SignupPrompt from '../common/SignupPrompt';
 import ga from '../helpers/ga';
-import _ from 'lodash';
 
 import './Table.scss';
 
@@ -38,7 +37,7 @@ class CPTable extends React.Component { // eslint-disable-line
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(this.props.sql, nextProps.sql)) {
+    if (this.props.sql !== nextProps.sql) {
       this.props.fetchSelectedCount(nextProps.filterDimensions);
     }
   }

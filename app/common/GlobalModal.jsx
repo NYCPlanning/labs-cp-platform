@@ -18,11 +18,11 @@ class GlobalModal extends React.Component {
 
   close = () => {
     this.setState({ showModal: false });
-  }
+  };
 
   open = () => {
     this.setState({ showModal: true });
-  }
+  };
 
   render() {
     const closeText = this.props.closeText ? this.props.closeText : 'Close';
@@ -53,4 +53,4 @@ GlobalModal.propTypes = {
   body: PropTypes.element.isRequired,
 };
 
-module.exports = GlobalModal;
+export default GlobalModal;

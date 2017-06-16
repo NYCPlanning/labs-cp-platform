@@ -60,4 +60,4 @@ const appConfig = {
   },
 };
 
-module.exports = appConfig;
+export default appConfig;

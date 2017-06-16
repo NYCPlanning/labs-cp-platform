@@ -784,7 +784,7 @@ const ntas = [
   },
 ];
 
-module.exports = {
+export default {
   getNtaName(ntacode) {
     const match = ntas.filter(nta => nta.ntacode === ntacode);
 

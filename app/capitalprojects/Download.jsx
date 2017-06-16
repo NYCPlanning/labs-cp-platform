@@ -130,4 +130,4 @@ Download.defaultProps = {
   onDownload: () => {},
 };
 
-module.exports = Download;
+export default Download;

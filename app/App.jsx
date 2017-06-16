@@ -136,4 +136,4 @@ App.propTypes = {
   route: PropTypes.shape().isRequired,
 };
 
-module.exports = App;
+export default App;

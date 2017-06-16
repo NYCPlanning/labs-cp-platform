@@ -20,4 +20,4 @@ Login.propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-module.exports = Login;
+export default Login;

@@ -63,4 +63,4 @@ const Footer = () => (
   </div>
 );
 
-module.exports = Footer;
+export default Footer;

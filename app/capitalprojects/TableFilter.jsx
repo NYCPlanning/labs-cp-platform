@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import { connect } from 'react-redux';
 import Subheader from 'material-ui/Subheader';
-import _ from 'lodash';
 
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
@@ -23,7 +22,7 @@ class Filter extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(this.props.sql, nextProps.sql)) {
+    if (this.props.sql !== nextProps.sql) {
       const totalspendRange = this.props.filterDimensions.totalspend.values;
       if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
 
