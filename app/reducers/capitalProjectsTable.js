@@ -20,7 +20,7 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
       return Object.assign({}, state, { capitalProjectDetails: action.payload });
 
     case AT.FETCH_CAPITAL_PROJECTS_TABLE_TOTAL_COUNT.SUCCESS:
-      return Object.assign({}, state, { pointsTotalCount: action.payload[0].count });
+      return Object.assign({}, state, { totalCount: action.payload[0].count });
 
     case AT.FETCH_CAPITAL_PROJECTS_TABLE_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

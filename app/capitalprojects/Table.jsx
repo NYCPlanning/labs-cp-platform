@@ -8,6 +8,7 @@ import Dimensions from 'react-dimensions';
 import Numeral from 'numeral';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import 'fixed-data-table/dist/fixed-data-table.css';
+import _ from 'lodash';
 
 import InfoIcon from '../common/InfoIcon';
 import TableFilter from './TableFilter';
@@ -26,19 +27,32 @@ const { Table, Column, Cell } = FixedDataTable;
 class CPTable extends React.Component { // eslint-disable-line
   constructor(props) {
     super(props);
-    this.state = { data: null };
+    this.state = { filteredSortedData: null };
   }
 
   componentDidMount() {
-    this.props.fetchDetails();
     this.props.fetchTotalCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
+    this.props.fetchDetails(this.props.filterDimensions);
     this.props.resetFilters();
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.sql !== nextProps.sql) {
+      this.props.fetchDetails(nextProps.filterDimensions);
       this.props.fetchSelectedCount(nextProps.filterDimensions);
+    }
+
+    if (!_.isEqual(this.props.filterBy, nextProps.filterBy) ||
+        !_.isEqual(this.props.colSortDirs, nextProps.colSortDirs) ||
+        this.props.capitalProjectDetails.length !== nextProps.capitalProjectDetails.length) {
+      this.setState({
+        filteredSortedData: filterAndSortData(
+          nextProps.capitalProjectDetails,
+          nextProps.filterBy,
+          nextProps.colSortDirs
+        )
+      })
     }
   }
 
@@ -48,7 +62,7 @@ class CPTable extends React.Component { // eslint-disable-line
       action: 'download',
       label,
     });
-  }
+  };
 
   handleFilterBy = (e) => {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
     const filterBy = e.target.value
@@ -96,17 +110,8 @@ class CPTable extends React.Component { // eslint-disable-line
       </Cell>
     );
 
-    const AgencyCell = ({ rowIndex, data, col, ...props }) => { // eslint-disable-line
-      const filteredAgencies = agencies.filter(agency => agency.value === data[rowIndex][col]);
-
-      return (
-        <Cell {...props}>
-          {filteredAgencies.length > 0 ? filteredAgencies[0].label : 'Not Found'}
-        </Cell>
-      );
-    };
-
-    const { filteredSortedData, colSortDirs, containerHeight, containerWidth } = this.props;
+    const { colSortDirs, containerHeight, containerWidth } = this.props;
+    const { filteredSortedData } = this.state;
 
     const tabTemplateStyle = {
       position: 'absolute',
@@ -286,7 +291,8 @@ CPTable.propTypes = {
   commitmentsSql: PropTypes.string,
   setFilterBy: PropTypes.func.isRequired,
   setSort: PropTypes.func.isRequired,
-  filteredSortedData: PropTypes.array,
+  filterBy: PropTypes.string,
+  capitalProjectDetails: PropTypes.array,
   fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
 };
@@ -335,11 +341,8 @@ const mapStateToProps = ({ capitalProjectsTable }) => ({
   sql: capitalProjectsTable.sql,
   commitmentsSql: capitalProjectsTable.commitmentsSql,
   colSortDirs: capitalProjectsTable.colSortDirs,
-  filteredSortedData: filterAndSortData(
-    capitalProjectsTable.capitalProjectDetails,
-    capitalProjectsTable.filterBy,
-    capitalProjectsTable.colSortDirs
-  )
+  filterBy: capitalProjectsTable.filterBy,
+  capitalProjectDetails: capitalProjectsTable.capitalProjectDetails,
 });
 
 const ConnectedTable = connect(mapStateToProps, {

@@ -1,13 +1,14 @@
 import * as AT from '../constants/actionTypes';
-import * as cartoActions from './carto';
 import { tableSqlConfig, getTableSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
 
-export const fetchDetails = (capitalProjectId) =>
-  cartoActions.getFeature({
-    tableName: tableSqlConfig.combinedTable,
-    column: 'uid',
-    value: capitalProjectId
-  }, AT.FETCH_CAPITAL_PROJECT_TABLE_DETAILS);
+export const fetchDetails = (filterDimensions) => ({
+  type: AT.CARTO_REQUEST,
+  payload: {
+    sql: getTableSql(filterDimensions),
+    requestFormat: 'json',
+    nextType: AT.FETCH_CAPITAL_PROJECT_TABLE_DETAILS
+  }
+});
 
 export const fetchTotalCount = () => ({
   type: AT.CARTO_REQUEST,
