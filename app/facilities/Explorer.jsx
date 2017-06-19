@@ -22,6 +22,14 @@ import colors from './colors';
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class FacilitiesExplorer extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      highlightedPoint: null,
+    };
+  }
+
   componentDidMount() {
     // update the layers and filterDimensions in the facilities store
     const locationState = this.props.location.state;
@@ -47,6 +55,11 @@ class FacilitiesExplorer extends React.Component {
     // set selectedFeatures to [] will cause the right drawer to animate away,
     // then setting the new data will bring it back
     // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
+
+    this.setState({
+      highlightedPoint: features.length ? features[0].geometry : null
+    });
+
     this.props.setSelectedFeatures([]);
     setTimeout(() => this.props.setSelectedFeatures(features), 450);
   };
@@ -54,6 +67,17 @@ class FacilitiesExplorer extends React.Component {
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
   };
+
+  highlightedSourceOptions = () => ({
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: this.state.highlightedPoint,
+      },
+    ],
+  });
 
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
@@ -89,26 +113,50 @@ class FacilitiesExplorer extends React.Component {
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
 
-            <MapLayer id="facilities-points-outline"
-                      source="facilities"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={{
-                        'circle-radius': { stops: [[10, 2], [15, 6]] },
-                        'circle-color': colors.getColorObject(),
-                        'circle-opacity': 0.7,
-                      }} />
+            { this.state.highlightedPoint &&
+              <Source id="highlighted" type="geojson" data={this.highlightedSourceOptions()} /> }
 
-            <MapLayer id="facilities-points"
-                      source="facilities"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={{
-                        'circle-radius': { stops: [[10, 3], [15, 7]] },
-                        'circle-color': '#012700',
-                        'circle-opacity': 0.7,
-                      }}
-                      onClick={this.handleMapLayerClick}/>
+            { this.state.highlightedPoint &&
+              <MapLayer
+                id="facilities-points-highlight"
+                source="highlighted"
+                type="circle"
+                paint={{
+                  'circle-color': 'rgba(255, 255, 255, 1)',
+                  'circle-opacity': 0,
+                  'circle-radius': 15,
+                  'circle-stroke-width': 3,
+                  'circle-pitch-scale': 'map',
+                  'circle-stroke-color': 'rgba(217, 107, 39, 1)',
+                  'circle-stroke-opacity': 0.8,
+                }}
+              /> }
+
+              <MapLayer
+                id="facilities-points-outline"
+                source="facilities"
+                sourceLayer="layer0"
+                type="circle"
+                paint={{
+                  'circle-radius': { stops: [[10, 2], [15, 6]] },
+                  'circle-color': colors.getColorObject(),
+                  'circle-opacity': 0.7,
+                }}
+              />
+
+            <MapLayer
+              id="facilities-points"
+              source="facilities"
+              sourceLayer="layer0"
+              type="circle"
+              paint={{
+                'circle-radius': { stops: [[10, 3], [15, 7]] },
+                'circle-color': '#012700',
+                'circle-opacity': 0.7,
+              }}
+              onClick={this.handleMapLayerClick}
+            />
+
             <Legend>
               <div className="legendSection">
                 <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
@@ -139,7 +187,7 @@ FacilitiesExplorer.propTypes = {
 
 const mapStateToProps = ({ facilities }) => ({
   selectedFeatures: facilities.selectedFeatures,
-  sql: facilities.sql
+  sql: facilities.sql,
 });
 
 export default connect(mapStateToProps, {
