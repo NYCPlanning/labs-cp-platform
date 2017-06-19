@@ -13,7 +13,7 @@ filterDimensions.dcp_pipeline_status.values
   .filter((value) => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
   .length > 0;
 
-const initialState = {
+export const initialState = {
   filterDimensions: defaultFilterDimensions,
   issueDateFilterDisabled: isIssueDateDisabled(defaultFilterDimensions),
   completionDateFilterDisabled: isCompletionDateDisabled(defaultFilterDimensions),

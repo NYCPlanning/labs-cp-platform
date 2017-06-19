@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const defaultFilterDimensions = {
   dcp_pipeline_status: {
     type: 'statusMultiSelect',
