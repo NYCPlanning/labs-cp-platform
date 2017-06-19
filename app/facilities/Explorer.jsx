@@ -62,6 +62,12 @@ class FacilitiesExplorer extends React.Component {
     ],
   });
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.setSelectedFeatures([]);
+    }
+  }
+
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
