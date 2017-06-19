@@ -21,7 +21,7 @@ const capitalProjectsReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case AT.FETCH_CAPITAL_PROJECT_DETAILS.SUCCESS:
-      return Object.assign({}, state, { capitalProjectDetails: action.payload });
+      return Object.assign({}, state, { capitalProjectDetails: action.payload.features[0] });
 
     case AT.FETCH_CAPITAL_PROJECT_BUDGETS.SUCCESS:
       return Object.assign({}, state, { capitalProjectBudgets: action.payload });

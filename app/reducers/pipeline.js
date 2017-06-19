@@ -29,7 +29,7 @@ const pipelineReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case AT.FETCH_PIPELINE_DETAILS.SUCCESS:
-      return Object.assign({}, state, { pipelineDetails: action.payload });
+      return Object.assign({}, state, { pipelineDetails: action.payload.features[0] });
 
     case AT.FETCH_PIPELINE_TOTAL_COUNT.SUCCESS:
       return Object.assign({}, state, { totalCount: action.payload[0].count });

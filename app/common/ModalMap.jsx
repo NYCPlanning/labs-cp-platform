@@ -17,7 +17,7 @@ import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';
 class ModalMap extends React.Component {
   componentDidMount() {
     // get the mapbox GL map object
-    this.map = this.janeMap.map.mapObject;
+    this.map = this.janeMap.map;
 
     if (this.props.feature.geometry.type !== 'Point') {
       const bounds = extent(this.props.feature.geometry);
