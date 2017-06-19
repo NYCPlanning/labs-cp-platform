@@ -22,14 +22,6 @@ import colors from './colors';
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class FacilitiesExplorer extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      highlightedPoint: null,
-    };
-  }
-
   componentDidMount() {
     // update the layers and filterDimensions in the facilities store
     const locationState = this.props.location.state;
@@ -52,20 +44,11 @@ class FacilitiesExplorer extends React.Component {
   }
 
   handleMapLayerClick = (features) => {
-    // set selectedFeatures to [] will cause the right drawer to animate away,
-    // then setting the new data will bring it back
-    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
-
-    this.setState({
-      highlightedPoint: features.length ? features[0].geometry : null
-    });
-
-    this.props.setSelectedFeatures([]);
-    setTimeout(() => this.props.setSelectedFeatures(features), 450);
+    this.props.setSelectedFeatures(features);
   };
 
   clearSelectedFeatures = () => {
-    this.props.setSelectedFeatures([]);
+    setTimeout(() => this.props.setSelectedFeatures([]), 250);
   };
 
   highlightedSourceOptions = () => ({
@@ -74,7 +57,7 @@ class FacilitiesExplorer extends React.Component {
       {
         type: 'Feature',
         properties: {},
-        geometry: this.state.highlightedPoint,
+        geometry: this.props.selectedFeatures[0].geometry,
       },
     ],
   });
@@ -113,10 +96,10 @@ class FacilitiesExplorer extends React.Component {
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
 
-            { this.state.highlightedPoint &&
-              <Source id="highlighted" type="geojson" data={this.highlightedSourceOptions()} /> }
+            { !!this.props.selectedFeatures.length &&
+              <Source id="highlighted" type="geojson" data={this.highlightedSourceOptions()} nocache /> }
 
-            { this.state.highlightedPoint &&
+            { !!this.props.selectedFeatures.length &&
               <MapLayer
                 id="facilities-points-highlight"
                 source="highlighted"

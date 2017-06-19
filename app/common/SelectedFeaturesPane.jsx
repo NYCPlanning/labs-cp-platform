@@ -10,11 +10,9 @@ const SelectedFeaturesPane = (props) => {
       <ReactCSSTransitionGroup
         transitionName="feature"
         transitionEnter={false}
-        transitionLeaveTimeout={450}
-      >
+        transitionLeaveTimeout={250}>
         {props.children}
       </ReactCSSTransitionGroup>
-
     </div>
   );
 };
