@@ -76,37 +76,32 @@ class CPTable extends React.Component { // eslint-disable-line
     this.props.setSort(columnKey, sortDir);
   };
 
+  linkToProject = (rowData) => (content) => (
+    <Link
+      to={{
+        pathname: `/capitalproject/${rowData.maprojid}`,
+        state: { modal: true, returnTo: '/capitalprojects' },
+      }}>
+      { content }
+    </Link>
+  );
+
   render() {
-    const TextCell = ({ rowIndex, data, col, ...props }) => (
+    const TextCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
       <Cell {...props}>
         {data[rowIndex][col]}
       </Cell>
     );
 
-    const ArrayTextCell = ({ rowIndex, data, col, ...props }) => (
+    const ArrayTextCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
       <Cell {...props}>
         {data[rowIndex][col].join(', ')}
       </Cell>
     );
 
-    const MoneyCell = ({ rowIndex, data, col, ...props }) => (
+    const MoneyCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
       <Cell {...props}>
         {Numeral(data[rowIndex][col]).format('($ 0.00 a)')}
-      </Cell>
-    );
-
-    const DetailCell = ({ rowIndex, data, col, ...props }) => (
-      <Cell {...props}>
-        <Link
-          to={{
-            pathname: `/capitalproject/${data[rowIndex][col]}`,
-            state: { modal: true, returnTo: '/capitalprojects' },
-          }}
-        >
-          <button type="button" className="btn btn-primary btn-xs details-button">
-            <div className="fa fa-arrow-right" />
-          </button>
-        </Link>
       </Cell>
     );
 
@@ -269,10 +264,6 @@ class CPTable extends React.Component { // eslint-disable-line
               }
               cell={<MoneyCell data={filteredSortedData} col="totalcommit" style={{ textAlign: 'right' }} />}
               width={180}
-            />
-            <Column
-              cell={<DetailCell data={filteredSortedData} col="maprojid" />}
-              width={50}
             />
           </Table>
         )}
