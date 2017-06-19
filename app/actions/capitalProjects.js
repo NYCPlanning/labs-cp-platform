@@ -5,7 +5,7 @@ import { sqlConfig, unionSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBui
 export const fetchDetails = (capitalProjectId) =>
   cartoActions.getFeature({
     tableName: sqlConfig.combinedTable,
-    column: 'uid',
+    column: 'maprojid',
     value: capitalProjectId
   }, AT.FETCH_CAPITAL_PROJECT_DETAILS);
 

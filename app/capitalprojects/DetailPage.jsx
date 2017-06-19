@@ -216,8 +216,8 @@ DetailPage.propTypes = {
   fetchBudgets: PropTypes.func.isRequired,
   fetchCommitments: PropTypes.func.isRequired,
   details: PropTypes.object,
-  budgets: PropTypes.object,
-  commitments: PropTypes.object,
+  budgets: PropTypes.array,
+  commitments: PropTypes.array,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
