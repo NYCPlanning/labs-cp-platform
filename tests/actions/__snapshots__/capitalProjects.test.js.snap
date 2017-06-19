@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions/capitalProjects fetchBudgets 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_CAPITAL_PROJECT_BUDGETS_FAILURE",
+      "PENDING": "FETCH_CAPITAL_PROJECT_BUDGETS_PENDING",
+      "SUCCESS": "FETCH_CAPITAL_PROJECT_BUDGETS_SUCCESS",
+    },
+    "requestFormat": "json",
+    "sql": "SELECT * FROM cpdb_budgets WHERE maprojid = 'capitalProjectId'",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/capitalProjects fetchCommitments 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_CAPITAL_PROJECT_COMMITMENTS_FAILURE",
+      "PENDING": "FETCH_CAPITAL_PROJECT_COMMITMENTS_PENDING",
+      "SUCCESS": "FETCH_CAPITAL_PROJECT_COMMITMENTS_SUCCESS",
+    },
+    "requestFormat": "json",
+    "sql": "SELECT * FROM cpdb_commitments WHERE maprojid = 'capitalProjectId' ORDER BY to_date(plancommdate,'MM/YY')",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/capitalProjects fetchDetails 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_CAPITAL_PROJECT_DETAILS_FAILURE",
+      "PENDING": "FETCH_CAPITAL_PROJECT_DETAILS_PENDING",
+      "SUCCESS": "FETCH_CAPITAL_PROJECT_DETAILS_SUCCESS",
+    },
+    "requestFormat": "geojson",
+    "sql": "SELECT * FROM (
+      SELECT the_geom, magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate FROM (
+        SELECT magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate
+        FROM cpdb_projects_combined
+      ) a LEFT JOIN (
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_pts
+        UNION ALL
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_poly
+      ) b ON a.maprojid = b.projid
+    )x WHERE maprojid = 'capitalProjectId'",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/capitalProjects fetchTotalPointsCount 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_CAPITAL_PROJECTS_TOTAL_POINTS_COUNT_FAILURE",
+      "PENDING": "FETCH_CAPITAL_PROJECTS_TOTAL_POINTS_COUNT_PENDING",
+      "SUCCESS": "FETCH_CAPITAL_PROJECTS_TOTAL_POINTS_COUNT_SUCCESS",
+    },
+    "requestFormat": "json",
+    "sql": "SELECT COUNT(*) FROM (SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/capitalProjects fetchTotalPolygonsCount 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_CAPITAL_PROJECTS_TOTAL_POLYGONS_COUNT_FAILURE",
+      "PENDING": "FETCH_CAPITAL_PROJECTS_TOTAL_POLYGONS_COUNT_PENDING",
+      "SUCCESS": "FETCH_CAPITAL_PROJECTS_TOTAL_POLYGONS_COUNT_SUCCESS",
+    },
+    "requestFormat": "json",
+    "sql": "SELECT COUNT(*) FROM (SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate  FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/capitalProjects resetFilters 1`] = `
+Object {
+  "type": "RESET_CAPITAL_PROJECTS_FILTERS",
+}
+`;
+
+exports[`actions/capitalProjects setFilterDimension 1`] = `
+Object {
+  "payload": Object {
+    "filterDimension": "dimension",
+    "values": "values",
+  },
+  "type": "SET_CAPITAL_PROJECTS_FILTER_DIMENSION",
+}
+`;
+
+exports[`actions/capitalProjects setSelectedFeatures 1`] = `
+Object {
+  "payload": Object {
+    "selectedFeatures": Array [],
+  },
+  "type": "SET_SELECTED_CAPITAL_PROJECTS_FEATURES",
+}
+`;

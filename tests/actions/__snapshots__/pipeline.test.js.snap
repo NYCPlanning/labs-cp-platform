@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions/pipeline fetchDetails 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_PIPELINE_DETAILS_FAILURE",
+      "PENDING": "FETCH_PIPELINE_DETAILS_PENDING",
+      "SUCCESS": "FETCH_PIPELINE_DETAILS_SUCCESS",
+    },
+    "requestFormat": "geojson",
+    "sql": "SELECT * FROM pipeline_projects_prod WHERE cartodb_id = 'cartodbId'",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/pipeline fetchSelectedCount 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_PIPELINE_SELECTED_COUNT_FAILURE",
+      "PENDING": "FETCH_PIPELINE_SELECTED_COUNT_PENDING",
+      "SUCCESS": "FETCH_PIPELINE_SELECTED_COUNT_SUCCESS",
+    },
+    "requestFormat": "json",
+    "sql": "SELECT count(*) FROM (SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address FROM pipeline_projects_prod WHERE (dcp_pipeline_status = 'Complete' OR dcp_pipeline_status = 'Partial complete' OR dcp_pipeline_status = 'Permit issued' OR dcp_pipeline_status = 'Application filed' OR dcp_pipeline_status = 'Demolition (complete)') AND (dcp_permit_type = 'New Building' OR dcp_permit_type = 'Alteration' OR dcp_permit_type = 'Demolition') AND (dcp_development_type = 'Residential' OR dcp_development_type = 'Non-residential') AND (dcp_units_use_map >= '-1445' AND dcp_units_use_map <= '1669')) a",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/pipeline fetchTotalCount 1`] = `
+Object {
+  "payload": Object {
+    "nextType": Object {
+      "FAILURE": "FETCH_PIPELINE_TOTAL_COUNT_FAILURE",
+      "PENDING": "FETCH_PIPELINE_TOTAL_COUNT_PENDING",
+      "SUCCESS": "FETCH_PIPELINE_TOTAL_COUNT_SUCCESS",
+    },
+    "requestFormat": "json",
+    "sql": "SELECT COUNT(*) FROM pipeline_projects_prod",
+  },
+  "type": "CARTO_REQUEST",
+}
+`;
+
+exports[`actions/pipeline resetFilters 1`] = `
+Object {
+  "type": "RESET_PIPELINE_FILTERS",
+}
+`;
+
+exports[`actions/pipeline setFilterDimension 1`] = `
+Object {
+  "payload": Object {
+    "filterDimension": "dimension",
+    "values": "values",
+  },
+  "type": "SET_PIPELINE_FILTER_DIMENSION",
+}
+`;
+
+exports[`actions/pipeline setSelectedFeatures 1`] = `
+Object {
+  "payload": Object {
+    "selectedFeatures": Array [],
+  },
+  "type": "SET_SELECTED_PIPELINE_FEATURES",
+}
+`;
+
+exports[`actions/pipeline setSymbology 1`] = `
+Object {
+  "payload": Object {
+    "symbologyDimension": "symbologyDimension",
+  },
+  "type": "SET_PIPELINE_SYMBOLOGY",
+}
+`;
