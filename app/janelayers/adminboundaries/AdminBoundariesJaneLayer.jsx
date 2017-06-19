@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer } from 'jane-maps';
 
 import SidebarComponent from './SidebarComponent';
-import { mapLayers } from './config';
+import mapLayers from './config';
 
 class AdminBoundariesJaneLayer extends React.Component {
   static propTypes = {
@@ -14,7 +14,7 @@ class AdminBoundariesJaneLayer extends React.Component {
   static defaultProps = {
     defaultSelected: false,
     defaultDisabled: false,
-  }
+  };
 
   constructor() {
     super();
@@ -27,8 +27,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderNTA() {
-    if (!this.state.selected.nta) {
-      return;
+    if (this.state.selected !== 'nta') {
+      return null;
     }
 
     return [
@@ -39,8 +39,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderCensusTracts() {
-    if (!this.state.selected.censustracts) {
-      return;
+    if (this.state.selected !== 'censustracts') {
+      return null;
     }
 
     return [
@@ -51,8 +51,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderPUMA() {
-    if (!this.state.selected.puma) {
-      return;
+    if (this.state.selected !== 'puma') {
+      return null;
     }
 
     return [
@@ -63,8 +63,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderTAZ() {
-    if (!this.state.selected.taz) {
-      return;
+    if (this.state.selected !== 'taz') {
+      return null;
     }
 
     return [
@@ -75,8 +75,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderCD() {
-    if (!this.state.selected.cd) {
-      return;
+    if (this.state.selected !== 'cd') {
+      return null;
     }
 
     return [
@@ -87,8 +87,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderSchoolDistricts() {
-    if (!this.state.selected.schooldistricts) {
-      return;
+    if (this.state.selected !== 'schooldistricts') {
+      return null;
     }
 
     return [
@@ -99,8 +99,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderBoroughBoundaries() {
-    if (!this.state.selected.boroughboundaries) {
-      return;
+    if (this.state.selected !== 'boroughboundaries') {
+      return null;
     }
 
     return [
@@ -111,8 +111,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderCityCouncilDistricts() {
-    if (!this.state.selected.citycouncildistricts) {
-      return;
+    if (this.state.selected !== 'citycouncildistricts') {
+      return null;
     }
 
     return [
@@ -123,8 +123,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderMunicipalCourtDistricts() {
-    if (!this.state.selected.municipalcourtdistricts) {
-      return;
+    if (this.state.selected !== 'municipalcourtdistricts') {
+      return null;
     }
 
     return [
@@ -135,8 +135,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderFireBattalions() {
-    if (!this.state.selected.firebattalions) {
-      return;
+    if (this.state.selected !== 'firebattalions') {
+      return null;
     }
 
     return [
@@ -147,8 +147,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderFireCompanies() {
-    if (!this.state.selected.firecompanies) {
-      return;
+    if (this.state.selected !== 'firecompanies') {
+      return null;
     }
 
     return [
@@ -159,8 +159,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderFireDivisions() {
-    if (!this.state.selected.firedivisions) {
-      return;
+    if (this.state.selected !== 'firedivisions') {
+      return null;
     }
 
     return [
@@ -171,8 +171,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderPolicePrecincts() {
-    if (!this.state.selected.policeprecincts) {
-      return;
+    if (this.state.selected !== 'policeprecincts') {
+      return null;
     }
 
     return [
@@ -183,8 +183,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderStateAssemblyDistricts() {
-    if (!this.state.selected.stateassemblydistricts) {
-      return;
+    if (this.state.selected !== 'stateassemblydistricts') {
+      return null;
     }
 
     return [
@@ -195,8 +195,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderStateSenateDistricts() {
-    if (!this.state.selected.statesenatedistricts) {
-      return;
+    if (this.state.selected !== 'statesenatedistricts') {
+      return null;
     }
 
     return [
@@ -207,8 +207,8 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderUSCongressionalDistricts() {
-    if (!this.state.selected.uscongressionaldistricts) {
-      return;
+    if (this.state.selected !== 'uscongressionaldistricts') {
+      return null;
     }
 
     return [
