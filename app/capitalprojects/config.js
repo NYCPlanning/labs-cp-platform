@@ -195,12 +195,8 @@ const defaultFilterDimensions = {
         label: 'Housing Authority - NYCHA',
       },
       {
-        value: 'HRA',
-        label: 'Human Resources Administration - HRA',
-      },
-      {
-        value: 'DSS',
-        label: 'Department of Social Services - DSS',
+        value: 'HRA/DSS',
+        label: 'Human Resources Administration - HRA / Department of Social Services - DSS',
       },
       {
         value: 'MTA',
