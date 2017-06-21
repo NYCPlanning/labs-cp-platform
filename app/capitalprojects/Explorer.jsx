@@ -178,6 +178,7 @@ class CapitalProjectsExplorer extends React.Component {
             icon="usd"
             onMapLayerClick={this.handleMapLayerClick}
             component={<CapitalProjectsComponent />}
+            defaultSelected={true}
           >
 
             <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions} />
