@@ -66,6 +66,10 @@ class FacilitiesExplorer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetFilter();
+  }
+
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
@@ -172,6 +176,7 @@ FacilitiesExplorer.propTypes = {
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
   setFilters: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
   fetchNYCBounds: PropTypes.func.isRequired,
 };
 
@@ -185,5 +190,6 @@ const mapStateToProps = ({ facilities }) => ({
 export default connect(mapStateToProps, {
   setSelectedFeatures: facilitiesActions.setSelectedFeatures,
   setFilters: facilitiesActions.setFilters,
+  resetFilter: facilitiesActions.resetFilter,
   fetchNYCBounds: facilitiesActions.fetchNYCBounds,
 })(FacilitiesExplorer);

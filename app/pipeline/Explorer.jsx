@@ -71,6 +71,10 @@ class PipeLineExplorer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetFilter();
+  }
+
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
@@ -160,6 +164,7 @@ PipeLineExplorer.propTypes = {
   symbologyDimension: PropTypes.string,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ pipeline }) => ({
@@ -170,4 +175,5 @@ const mapStateToProps = ({ pipeline }) => ({
 
 export default connect(mapStateToProps, {
   setSelectedFeatures: pipelineActions.setSelectedFeatures,
+  resetFilter: pipelineActions.resetFilter,
 })(PipeLineExplorer);

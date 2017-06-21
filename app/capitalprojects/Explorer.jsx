@@ -106,6 +106,10 @@ class CapitalProjectsExplorer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetFilters();
+  }
+
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
   };
@@ -252,6 +256,7 @@ CapitalProjectsExplorer.propTypes = {
   polygonsSql: PropTypes.string,
   setSelectedFeatures: PropTypes.func.isRequired,
   selectedFeatures: PropTypes.array.isRequired,
+  resetFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
@@ -262,4 +267,5 @@ const mapStateToProps = ({ capitalProjects }) => ({
 
 export default connect(mapStateToProps, {
   setSelectedFeatures: capitalProjectsActions.setSelectedFeatures,
+  resetFilter: capitalProjectsActions.resetFilter,
 })(CapitalProjectsExplorer);
