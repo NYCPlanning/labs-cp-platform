@@ -44,13 +44,6 @@ const pointsLayerPaint = {
   'circle-opacity': 0.5,
 };
 
-const polygonsLayerPaint = {
-  'fill-color': 'steelblue',
-  'fill-opacity': 0.75,
-  'fill-outline-color': '#838763',
-  'fill-antialias': true,
-};
-
 const highlightPointsPaint = {
   'circle-color': 'rgba(255, 255, 255, 1)',
   'circle-opacity': 0,
@@ -65,11 +58,7 @@ const { mapboxGLOptions, searchConfig } = appConfig;
 
 class PipeLineExplorer extends React.Component {
   handleMapLayerClick = (features) => {
-    // set selectedFeatures to [] will cause the right drawer to animate away,
-    // then setting the new data will bring it back
-    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
-    this.props.setSelectedFeatures([]);
-    setTimeout(() => this.props.setSelectedFeatures(features), 450);
+    this.props.setSelectedFeatures(features);
   };
 
   clearSelectedFeatures = () => {
@@ -113,20 +102,21 @@ class PipeLineExplorer extends React.Component {
             name="Housing Pipeline"
             icon="building"
             defaultSelected
-            onMapLayerClick={this.handleMapLayerClick}
             component={<PipelineComponent />}
           >
 
             <Source id="pipeline-points" type="cartovector" options={sourceOptions} />
-            <Source id="pipeline-polygons" type="cartovector" options={sourceOptions} />
 
             {
               this.props.selectedFeatures.length > 0 &&
               <Source
-                id="highlightPoints" type="geojson" data={{
+                id="highlightPoints"
+                type="geojson"
+                data={{
                   type: 'Feature',
                   geometry: this.props.selectedFeatures[0].geometry,
                 }}
+                nocache
               />
             }
 
@@ -135,15 +125,8 @@ class PipeLineExplorer extends React.Component {
               source="pipeline-points"
               sourceLayer="layer0"
               type="circle"
+              onClick={this.handleMapLayerClick}
               paint={pointsLayerPaintWithSymbology}
-            />
-
-            <MapLayer
-              id="pipeline-polygons"
-              source="pipeline-polygons"
-              sourceLayer="layer0"
-              type="fill"
-              paint={polygonsLayerPaint}
             />
 
             {
