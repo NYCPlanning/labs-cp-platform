@@ -4,8 +4,8 @@ import SqlBuilder from './SqlBuilder';
 export const sqlConfig = {
   columns: '*',
   combinedTable: `(
-      SELECT the_geom, magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate FROM (
-        SELECT magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate
+      SELECT the_geom, magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM (
+        SELECT magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype
         FROM cpdb_projects_combined
       ) a LEFT JOIN (
         SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_pts
@@ -14,8 +14,8 @@ export const sqlConfig = {
       ) b ON a.maprojid = b.projid
     )x`,
   tableName: 'tablenameplaceholder',
-  pointsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
-  polygonsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate  FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+  pointsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+  polygonsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
 };
 
 export const tableSqlConfig = {
