@@ -45,7 +45,7 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
         : dimension.disabled;
 
       const filterDimensions = Object.assign({}, state.filterDimensions, {
-        [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue })
+        [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue }),
       });
 
       return Object.assign({}, state, {
@@ -60,8 +60,8 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
     case AT.SET_CAPITAL_PROJECTS_TABLE_SORT:
       return Object.assign({}, state, {
         colSortDirs: Object.assign({}, state.colSortDirs, {
-          [action.payload.columnKey]: action.payload.sortDir
-        })
+          [action.payload.columnKey]: action.payload.sortDir,
+        }),
       });
 
     default:

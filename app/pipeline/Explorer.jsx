@@ -88,9 +88,9 @@ class PipeLineExplorer extends React.Component {
     };
 
     const pointsLayerPaintWithSymbology = _.assign({}, pointsLayerPaint, {
-      ['circle-color']: this.props.symbologyDimension === 'dcp_permit_type'
+      'circle-color': this.props.symbologyDimension === 'dcp_permit_type'
         ? circleColors.dcp_permit_type
-        : circleColors.dcp_pipeline_status
+        : circleColors.dcp_pipeline_status,
     });
 
     return (
@@ -112,39 +112,48 @@ class PipeLineExplorer extends React.Component {
             id="pipeline"
             name="Housing Pipeline"
             icon="building"
-            defaultSelected={true}
+            defaultSelected
             onMapLayerClick={this.handleMapLayerClick}
-            component={<PipelineComponent />}>
+            component={<PipelineComponent />}
+          >
 
-            <Source id="pipeline-points" type="cartovector" options={sourceOptions}/>
+            <Source id="pipeline-points" type="cartovector" options={sourceOptions} />
             <Source id="pipeline-polygons" type="cartovector" options={sourceOptions} />
 
             {
               this.props.selectedFeatures.length > 0 &&
-              <Source id="highlightPoints" type="geojson" data={{
-                type: 'Feature',
-                geometry: this.props.selectedFeatures[0].geometry
-              }} />
+              <Source
+                id="highlightPoints" type="geojson" data={{
+                  type: 'Feature',
+                  geometry: this.props.selectedFeatures[0].geometry,
+                }}
+              />
             }
 
-            <MapLayer id="pipeline-points"
-                      source="pipeline-points"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={pointsLayerPaintWithSymbology}/>
+            <MapLayer
+              id="pipeline-points"
+              source="pipeline-points"
+              sourceLayer="layer0"
+              type="circle"
+              paint={pointsLayerPaintWithSymbology}
+            />
 
-            <MapLayer id="pipeline-polygons"
-                      source="pipeline-polygons"
-                      sourceLayer="layer0"
-                      type="fill"
-                      paint={polygonsLayerPaint}/>
+            <MapLayer
+              id="pipeline-polygons"
+              source="pipeline-polygons"
+              sourceLayer="layer0"
+              type="fill"
+              paint={polygonsLayerPaint}
+            />
 
             {
               this.props.selectedFeatures.length > 0 &&
-              <MapLayer id="highlightPoints"
-                        source="highlightPoints"
-                        type="circle"
-                        paint={highlightPointsPaint}/>
+              <MapLayer
+                id="highlightPoints"
+                source="highlightPoints"
+                type="circle"
+                paint={highlightPointsPaint}
+              />
             }
           </JaneLayer>
         </Jane>

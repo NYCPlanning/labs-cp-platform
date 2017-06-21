@@ -1,10 +1,10 @@
 import * as AT from '../constants/actionTypes';
 
-export const openModal = (modalOptions) => ({
+export const openModal = modalOptions => ({
   type: AT.OPEN_MODAL,
-  payload: { modalOptions }
+  payload: { modalOptions },
 });
 
 export const closeModal = () => ({
-  type: AT.CLOSE_MODAL
+  type: AT.CLOSE_MODAL,
 });

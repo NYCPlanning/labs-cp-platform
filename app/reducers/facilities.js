@@ -33,13 +33,13 @@ const facilitiesReducer = (state = initialState, action) => {
     case AT.SET_FACILITIES_FILTERS:
       return Object.assign({}, state, {
         filterDimensions: action.payload.filterDimensions,
-        sql: getSql(action.payload.filterDimensions)
+        sql: getSql(action.payload.filterDimensions),
       });
 
     case AT.RESET_FACILITIES_FILTERS:
       return Object.assign({}, state, {
         filterDimensions: initialState.filterDimensions,
-        sql: getSql(initialState.filterDimensions)
+        sql: getSql(initialState.filterDimensions),
       });
 
     case AT.SET_FACILITIES_FILTER_DIMENSION:
@@ -55,7 +55,7 @@ const facilitiesReducer = (state = initialState, action) => {
         : dimension.disabled;
 
       const filterDimensions = Object.assign({}, state.filterDimensions, {
-        [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue })
+        [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue }),
       });
 
       return Object.assign({}, state, { filterDimensions, sql: getSql(filterDimensions) });

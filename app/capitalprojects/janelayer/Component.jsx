@@ -103,5 +103,5 @@ const mapStateToProps = ({ capitalProjects }) => ({
 export default connect(mapStateToProps, {
   fetchTotalPointsCount: capitalProjectsActions.fetchTotalPointsCount,
   fetchTotalPolygonsCount: capitalProjectsActions.fetchTotalPolygonsCount,
-  fetchSelectedCount: capitalProjectsActions.fetchSelectedCount
+  fetchSelectedCount: capitalProjectsActions.fetchSelectedCount,
 })(CapitalProjects);

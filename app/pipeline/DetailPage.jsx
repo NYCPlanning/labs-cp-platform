@@ -230,7 +230,7 @@ class DevelopmentPage extends React.Component {
 
   render() {
     if (!this.props.pipelineDetails) {
-      return null
+      return null;
     }
     return (
       <div className="fluid-content display-content">
@@ -254,5 +254,5 @@ const mapStateToProps = ({ pipeline }) => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchDetails: pipelineActions.fetchDetails
+  fetchDetails: pipelineActions.fetchDetails,
 })(DevelopmentPage);

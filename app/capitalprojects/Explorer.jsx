@@ -109,10 +109,10 @@ class CapitalProjectsExplorer extends React.Component {
 
     const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
 
-    const listItems = selectedFeatures.map((feature) =>
+    const listItems = selectedFeatures.map(feature =>
       selectedFeaturesSource === 'capital-projects'
-        ? <CPListItem feature={feature} key={feature.id}/>
-        : <SCAListItem feature={feature} key={feature.id}/>
+        ? <CPListItem feature={feature} key={feature.id} />
+        : <SCAListItem feature={feature} key={feature.id} />,
     );
 
     const capitalProjectsSourceOptions = {
@@ -141,21 +141,26 @@ class CapitalProjectsExplorer extends React.Component {
             name="SCA Capital Plan"
             icon="graduation-cap"
             onMapLayerClick={this.handleMapLayerClick}
-            component={<SCAPlanComponent />}>
+            component={<SCAPlanComponent />}
+          >
 
-            <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions}/>
+            <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions} />
 
-            <MapLayer id="sca-points-points"
-                      source="sca-points"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={SCAPointsPaint}/>
+            <MapLayer
+              id="sca-points-points"
+              source="sca-points"
+              sourceLayer="layer0"
+              type="circle"
+              paint={SCAPointsPaint}
+            />
 
-            <MapLayer id="sca-points-outline"
-                      source="sca-points"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={SCAOutlinePaint}/>
+            <MapLayer
+              id="sca-points-outline"
+              source="sca-points"
+              sourceLayer="layer0"
+              type="circle"
+              paint={SCAOutlinePaint}
+            />
 
             <Legend>
               <div className="legendSection">
@@ -172,27 +177,34 @@ class CapitalProjectsExplorer extends React.Component {
             name="Capital Projects"
             icon="usd"
             onMapLayerClick={this.handleMapLayerClick}
-            component={<CapitalProjectsComponent />}>
+            component={<CapitalProjectsComponent />}
+          >
 
-            <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions}/>
+            <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions} />
 
-            <MapLayer id="capital-projects-polygons"
-                      source="capital-projects"
-                      sourceLayer="layer1"
-                      type="fill"
-                      paint={capitalProjectsPolygonsPaint}/>
+            <MapLayer
+              id="capital-projects-polygons"
+              source="capital-projects"
+              sourceLayer="layer1"
+              type="fill"
+              paint={capitalProjectsPolygonsPaint}
+            />
 
-            <MapLayer id="capital-projects-points"
-                      source="capital-projects"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={capitalProjectsPointsPaint}/>
+            <MapLayer
+              id="capital-projects-points"
+              source="capital-projects"
+              sourceLayer="layer0"
+              type="circle"
+              paint={capitalProjectsPointsPaint}
+            />
 
-            <MapLayer id="capital-projects-points-outline"
-                      source="capital-projects"
-                      sourceLayer="layer0"
-                      type="circle"
-                      paint={capitalProjectsPointsOutlinePaint}/>
+            <MapLayer
+              id="capital-projects-points-outline"
+              source="capital-projects"
+              sourceLayer="layer0"
+              type="circle"
+              paint={capitalProjectsPointsOutlinePaint}
+            />
 
             <Legend>
               <div className="legendSection">
@@ -231,5 +243,5 @@ const mapStateToProps = ({ capitalProjects }) => ({
 });
 
 export default connect(mapStateToProps, {
-  setSelectedFeatures: capitalProjectsActions.setSelectedFeatures
+  setSelectedFeatures: capitalProjectsActions.setSelectedFeatures,
 })(CapitalProjectsExplorer);

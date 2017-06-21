@@ -279,7 +279,7 @@ DetailPage.propTypes = {
 
 const mapStateToProps = ({ facilities }) => ({
   facilityDetails: facilities.facilityDetails,
-  sources: facilities.sources
+  sources: facilities.sources,
 });
 
 export default connect(mapStateToProps, {

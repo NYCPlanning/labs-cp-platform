@@ -50,9 +50,9 @@ class CPTable extends React.Component { // eslint-disable-line
         filteredSortedData: filterAndSortData(
           nextProps.capitalProjectDetails,
           nextProps.filterBy,
-          nextProps.colSortDirs
-        )
-      })
+          nextProps.colSortDirs,
+        ),
+      });
     }
   }
 
@@ -76,12 +76,13 @@ class CPTable extends React.Component { // eslint-disable-line
     this.props.setSort(columnKey, sortDir);
   };
 
-  linkToProject = (rowData) => (content) => (
+  linkToProject = rowData => content => (
     <Link
       to={{
         pathname: `/capitalproject/${rowData.maprojid}`,
         state: { modal: true, returnTo: '/capitalprojects' },
-      }}>
+      }}
+    >
       { content }
     </Link>
   );
@@ -90,19 +91,19 @@ class CPTable extends React.Component { // eslint-disable-line
     const TextCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
       <Cell {...props}>
         {data[rowIndex][col]}
-      </Cell>
+      </Cell>,
     );
 
     const ArrayTextCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
       <Cell {...props}>
         {data[rowIndex][col].join(', ')}
-      </Cell>
+      </Cell>,
     );
 
     const MoneyCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
       <Cell {...props}>
         {Numeral(data[rowIndex][col]).format('($ 0.00 a)')}
-      </Cell>
+      </Cell>,
     );
 
     const { colSortDirs, containerHeight, containerWidth } = this.props;

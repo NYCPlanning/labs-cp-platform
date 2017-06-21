@@ -1,8 +1,8 @@
 // Helper methods for db arrays being stored as strings
-export const dbStringToArray = (string) =>
+export const dbStringToArray = string =>
   string.replace(/[{}"]/g, '').split(';');
 
-export const dbStringToObject = (string) =>
+export const dbStringToObject = string =>
   dbStringToArray(string).map((a, i) => {
     const label = a.split(': ');
     return {

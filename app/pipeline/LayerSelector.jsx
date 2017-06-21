@@ -43,7 +43,7 @@ class LayerSelector extends React.Component {
       selectedCount,
       symbologyDimension,
       issueDateFilterDisabled,
-      completionDateFilterDisabled
+      completionDateFilterDisabled,
     } = this.props;
 
     const PinSelect = (props) => {

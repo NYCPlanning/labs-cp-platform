@@ -2,11 +2,11 @@ import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 
-export const fetchFacilityDetails = (facilityId) =>
+export const fetchFacilityDetails = facilityId =>
   cartoActions.getFeature({
     tableName: sqlConfig.tablename,
     column: 'uid',
-    value: facilityId
+    value: facilityId,
   }, AT.FETCH_FACILITY_DETAILS);
 
 export const fetchTotalCount = () => ({
@@ -14,34 +14,34 @@ export const fetchTotalCount = () => ({
   payload: {
     sql: `SELECT COUNT(*) FROM ${sqlConfig.tablename}`,
     requestFormat: 'json',
-    nextType: AT.FETCH_FACILITIES_TOTAL_COUNT
-  }
+    nextType: AT.FETCH_FACILITIES_TOTAL_COUNT,
+  },
 });
 
-export const fetchSelectedCount = (filterDimensions) => ({
+export const fetchSelectedCount = filterDimensions => ({
   type: AT.CARTO_REQUEST,
   payload: {
     sql: `SELECT count(*) FROM (${getSql(filterDimensions)}) a`,
     requestFormat: 'json',
-    nextType: AT.FETCH_FACILITIES_SELECTED_COUNT
-  }
+    nextType: AT.FETCH_FACILITIES_SELECTED_COUNT,
+  },
 });
 
-export const setSelectedFeatures = (selectedFeatures) => ({
+export const setSelectedFeatures = selectedFeatures => ({
   type: AT.SET_SELECTED_FACILITIES_FEATURES,
-  payload: { selectedFeatures }
+  payload: { selectedFeatures },
 });
 
-export const setFilters = (filterDimensions) => ({
+export const setFilters = filterDimensions => ({
   type: AT.SET_FACILITIES_FILTERS,
-  payload: { filterDimensions }
+  payload: { filterDimensions },
 });
 
 export const setFilterDimension = (filterDimension, values) => ({
   type: AT.SET_FACILITIES_FILTER_DIMENSION,
-  payload: { filterDimension, values }
+  payload: { filterDimension, values },
 });
 
 export const resetFilters = () => ({
-  type: AT.RESET_FACILITIES_FILTERS
+  type: AT.RESET_FACILITIES_FILTERS,
 });

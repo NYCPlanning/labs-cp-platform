@@ -50,4 +50,4 @@ Object.assign(PipelineSqlBuilder, SqlBuilder);
 
 const sqlBuilder = new PipelineSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
 
-export const getSql = (filterDimensions) => sqlBuilder.buildSql(filterDimensions);
+export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);

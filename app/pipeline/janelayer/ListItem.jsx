@@ -13,8 +13,10 @@ const Item = ({ feature }) => {
 
   return (
     <Link to={{ pathname: `/development/${cartodb_id}`, state: { modal: true, returnTo: '/pipeline' } }}>
-      <div className="facilities-list-item"
-           style={{ borderLeft: `5px solid ${getColor('dcp_permit_type', dcp_permit_type)}` }}>
+      <div
+        className="facilities-list-item"
+        style={{ borderLeft: `5px solid ${getColor('dcp_permit_type', dcp_permit_type)}` }}
+      >
 
         <div className="title">
           { dob_permit_address }

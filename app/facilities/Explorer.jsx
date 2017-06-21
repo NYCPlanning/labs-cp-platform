@@ -121,17 +121,17 @@ class FacilitiesExplorer extends React.Component {
                 }}
               /> }
 
-              <MapLayer
-                id="facilities-points-outline"
-                source="facilities"
-                sourceLayer="layer0"
-                type="circle"
-                paint={{
-                  'circle-radius': { stops: [[10, 2], [15, 6]] },
-                  'circle-color': colors.getColorObject(),
-                  'circle-opacity': 0.7,
-                }}
-              />
+            <MapLayer
+              id="facilities-points-outline"
+              source="facilities"
+              sourceLayer="layer0"
+              type="circle"
+              paint={{
+                'circle-radius': { stops: [[10, 2], [15, 6]] },
+                'circle-color': colors.getColorObject(),
+                'circle-opacity': 0.7,
+              }}
+            />
 
             <MapLayer
               id="facilities-points"

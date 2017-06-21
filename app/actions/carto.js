@@ -9,7 +9,7 @@ export const getFeature = ({ tableName, column, value }, nextType) => {
 
   return {
     type: AT.CARTO_REQUEST,
-    payload: { sql, requestFormat, nextType }
+    payload: { sql, requestFormat, nextType },
   };
 };
 
@@ -23,15 +23,15 @@ export const fetchAgencyValues = ({ properties }, nextType) => {
 
   return {
     type: AT.CARTO_REQUEST,
-    payload: { sql, requestFormat, nextType }
+    payload: { sql, requestFormat, nextType },
   };
 };
 
-export const fetchNYCBounds = (id) => ({
+export const fetchNYCBounds = id => ({
   type: AT.CARTO_REQUEST,
   payload: {
     sql: `SELECT ST_Extent(the_geom) FROM support_admin_ntaboundaries WHERE ntacode = '${id}'`,
     requestFormat: 'json',
-    nextType: AT.FETCH_NYC_BOUNDS
-  }
+    nextType: AT.FETCH_NYC_BOUNDS,
+  },
 });

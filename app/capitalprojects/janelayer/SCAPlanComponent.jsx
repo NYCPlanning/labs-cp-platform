@@ -13,7 +13,8 @@ class SCAPlanComponent extends React.Component {
     return (
       <Tabs
         className="sidebar-tabs"
-        tabTemplateStyle={tabTemplateStyle}>
+        tabTemplateStyle={tabTemplateStyle}
+      >
         <Tab label="About">
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">

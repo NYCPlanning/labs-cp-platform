@@ -2,11 +2,11 @@ import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, getSql } from '../helpers/sqlbuilder/PipelineSqlBuilder';
 
-export const fetchDetails = (cartodbId) =>
+export const fetchDetails = cartodbId =>
   cartoActions.getFeature({
     tableName: sqlConfig.tablename,
     column: 'cartodb_id',
-    value: cartodbId
+    value: cartodbId,
   }, AT.FETCH_PIPELINE_DETAILS);
 
 export const fetchTotalCount = () => ({
@@ -14,34 +14,34 @@ export const fetchTotalCount = () => ({
   payload: {
     sql: `SELECT COUNT(*) FROM ${sqlConfig.tablename}`,
     requestFormat: 'json',
-    nextType: AT.FETCH_PIPELINE_TOTAL_COUNT
-  }
+    nextType: AT.FETCH_PIPELINE_TOTAL_COUNT,
+  },
 });
 
-export const fetchSelectedCount = (filterDimensions) => ({
+export const fetchSelectedCount = filterDimensions => ({
   type: AT.CARTO_REQUEST,
   payload: {
     sql: `SELECT count(*) FROM (${getSql(filterDimensions)}) a`,
     requestFormat: 'json',
-    nextType: AT.FETCH_PIPELINE_SELECTED_COUNT
-  }
+    nextType: AT.FETCH_PIPELINE_SELECTED_COUNT,
+  },
 });
 
-export const setSelectedFeatures = (selectedFeatures) => ({
+export const setSelectedFeatures = selectedFeatures => ({
   type: AT.SET_SELECTED_PIPELINE_FEATURES,
-  payload: { selectedFeatures }
+  payload: { selectedFeatures },
 });
 
 export const setFilterDimension = (filterDimension, values) => ({
   type: AT.SET_PIPELINE_FILTER_DIMENSION,
-  payload: { filterDimension, values }
+  payload: { filterDimension, values },
 });
 
-export const setSymbology = (symbologyDimension) => ({
+export const setSymbology = symbologyDimension => ({
   type: AT.SET_PIPELINE_SYMBOLOGY,
-  payload: { symbologyDimension }
+  payload: { symbologyDimension },
 });
 
 export const resetFilters = () => ({
-  type: AT.RESET_PIPELINE_FILTERS
+  type: AT.RESET_PIPELINE_FILTERS,
 });

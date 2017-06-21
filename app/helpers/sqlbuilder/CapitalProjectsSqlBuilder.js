@@ -69,10 +69,10 @@ Object.assign(CapitalProjectsSqlBuilder, SqlBuilder);
 const sqlBuilder = new CapitalProjectsSqlBuilder(sqlConfig.columns, sqlConfig.tableName);
 const tableSqlBuilder = new CapitalProjectsSqlBuilder(tableSqlConfig.columns, tableSqlConfig.tableName);
 
-export const getSql = (filterDimensions) => sqlBuilder.buildSql(filterDimensions);
-export const getTableSql = (filterDimensions) => tableSqlBuilder.buildSql(filterDimensions);
-export const getPointsSql = (filterDimensions) => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
-export const getPolygonsSql = (filterDimensions) => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
+export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);
+export const getTableSql = filterDimensions => tableSqlBuilder.buildSql(filterDimensions);
+export const getPointsSql = filterDimensions => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
+export const getPolygonsSql = filterDimensions => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
 
 export const unionSql = (filterDimensions) => {
   const pointsSql = getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);

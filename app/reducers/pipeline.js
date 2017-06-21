@@ -3,14 +3,14 @@ import { defaultFilterDimensions } from '../pipeline/config';
 import { getSql } from '../helpers/sqlbuilder/PipelineSqlBuilder';
 import _ from 'lodash';
 
-const isIssueDateDisabled = (filterDimensions) =>
+const isIssueDateDisabled = filterDimensions =>
 filterDimensions.dcp_pipeline_status.values
-  .filter((value) => value.checked && value.value === 'Application filed')
+  .filter(value => value.checked && value.value === 'Application filed')
   .length > 0;
 
-const isCompletionDateDisabled = (filterDimensions) =>
+const isCompletionDateDisabled = filterDimensions =>
 filterDimensions.dcp_pipeline_status.values
-  .filter((value) => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
+  .filter(value => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
   .length > 0;
 
 export const initialState = {

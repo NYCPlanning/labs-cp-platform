@@ -90,9 +90,9 @@ class LayerSelector extends React.Component {
     const filterDimensions = _.cloneDeep(this.props.filterDimensions);
     const allChecked = checkStatus === 'all';
 
-    filterDimensions.facsubgrp.values.forEach((facdomain) =>
-      facdomain.children.forEach((group) =>
-        group.children.forEach((subgroup) =>
+    filterDimensions.facsubgrp.values.forEach(facdomain =>
+      facdomain.children.forEach(group =>
+        group.children.forEach(subgroup =>
           subgroup.checked = !allChecked)));
 
     this.props.setFilters(filterDimensions);

@@ -98,5 +98,5 @@ const mapStateToProps = ({ pipeline }) => ({
 
 export default connect(mapStateToProps, {
   fetchTotalCount: pipelineActions.fetchTotalCount,
-  fetchSelectedCount: pipelineActions.fetchSelectedCount
+  fetchSelectedCount: pipelineActions.fetchSelectedCount,
 })(Pipeline);

@@ -15,7 +15,7 @@ class SidebarComponent extends React.Component {
       action: 'download',
       label,
     });
-  }
+  };
 
   render() {
     // necessary for scrolling in tab Content
