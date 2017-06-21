@@ -15,6 +15,7 @@ const initialState = {
   capitalProjectBudgets: null,
   capitalProjectCommitments: null,
   sources: [],
+  costGroupData: [],
 };
 
 const capitalProjectsReducer = (state = initialState, action) => {
@@ -81,6 +82,9 @@ const capitalProjectsReducer = (state = initialState, action) => {
           [action.payload.columnKey]: action.payload.sortDir,
         }),
       });
+
+    case AT.FETCH_COST_GROUP_DATA.SUCCESS:
+      return Object.assign({}, state, { costGroupData: action.payload });
 
     default:
       return state;

@@ -67,3 +67,44 @@ export const setFilterDimension = (filterDimension, values) => ({
 export const resetFilters = () => ({
   type: AT.RESET_CAPITAL_PROJECTS_FILTERS,
 });
+
+export const fetchCostGroupData = (pointsSql, polygonsSql) => {
+  const sql = `
+      WITH ranges(range,i) AS (
+        VALUES
+          ('<$10K',0),
+          ('10K-100K', 1),
+          ('100K-1M',2),
+          ('1M-10M',3),
+          ('10M-100M',4),
+          ('>100M',5)
+      )
+
+      SELECT a.range, a.i, count(b.range)
+      FROM ranges a
+      LEFT JOIN (
+          SELECT
+          CASE
+              WHEN totalcommit < 10000 THEN '<$10K'
+              WHEN totalcommit >= 10000 AND totalcommit < 100000 THEN '10K-100K'
+              WHEN totalcommit >= 100000 AND totalcommit < 1000000 THEN '100K-1M'
+              WHEN totalcommit >= 1000000 AND totalcommit < 10000000 THEN '1M-10M'
+              WHEN totalcommit >= 10000000 AND totalcommit < 100000000 THEN '10M-100M'
+              ELSE '>100M'
+          END as range
+        FROM (${pointsSql} UNION ALL ${polygonsSql}) x
+      ) b
+      ON a.range = b.range
+      GROUP BY a.range, a.i
+      ORDER BY a.i
+    `;
+
+  return {
+    type: AT.CARTO_REQUEST,
+    payload: {
+      sql,
+      requestFormat: 'json',
+      nextType: AT.FETCH_COST_GROUP_DATA,
+    }
+  };
+};
