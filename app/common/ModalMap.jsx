@@ -7,18 +7,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import { Jane, JaneLayer, Marker } from 'jane-maps';
+import { Jane, JaneLayer, Marker, Source, MapLayer } from 'jane-maps';
 import {
   AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer, ZoningJaneLayer,
 } from '../janelayers';
 import appConfig from '../helpers/appConfig';
-import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';
 
 class ModalMap extends React.Component {
   componentDidMount() {
     // get the mapbox GL map object
-    this.map = this.janeMap.map;
-
     if (this.props.feature.geometry.type !== 'Point') {
       const bounds = extent(this.props.feature.geometry);
       const glBounds = [[bounds[0], bounds[1]], [bounds[2], bounds[3]]];
@@ -63,7 +60,7 @@ class ModalMap extends React.Component {
       <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
           mapboxGLOptions={mapboxGLOptions}
-          ref={x => (this.janeMap = x)}
+          ref={node => (this.map = node && node.GLMap.map)}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
@@ -75,7 +72,7 @@ class ModalMap extends React.Component {
               id="modalMapMarker"
               hidden
             >
-              <Marker feature={feature} label={label} />
+              <Marker feature={feature} label={label} flyTo={true}/>
             </JaneLayer>
           }
           { geometry.type !== 'Point' &&
@@ -84,8 +81,14 @@ class ModalMap extends React.Component {
               name="Feature"
               icon="map-marker"
               hidden
-              component={<PolygonJaneLayerComponent feature={feature} />}
-            />
+            >
+              <Source id="feature" type="geojson" data={feature} />
+              <MapLayer id="feature" source="feature" type="fill" paint={{
+                'fill-color': 'steelblue',
+                'fill-opacity': 0.75,
+                'fill-antialias': true,
+              }}/>
+            </JaneLayer>
           }
         </Jane>
       </div>
