@@ -18,8 +18,8 @@ describe('reducers/pipeline', () => {
   test('AT.SET_PIPELINE_SYMBOLOGY', () =>
     expect(pipelineReducer(initialState, actions.setSymbology('symbologyDimension'))).toMatchSnapshot());
 
-  test('AT.RESET_PIPELINE_FILTERS', () =>
-    expect(pipelineReducer(initialState, actions.resetFilters())).toMatchSnapshot());
+  test('AT.RESET_PIPELINE_FILTER', () =>
+    expect(pipelineReducer(initialState, actions.resetFilter())).toMatchSnapshot());
 
   test('AT.SET_PIPELINE_FILTER_DIMENSION', () =>
     expect(pipelineReducer(initialState, actions.setFilterDimension('dimension', 'values'))).toMatchSnapshot());

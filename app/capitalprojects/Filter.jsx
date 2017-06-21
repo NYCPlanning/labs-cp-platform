@@ -193,6 +193,6 @@ Filter.propTypes = {
 };
 
 export default connect(null, {
-  resetFilter: capitalProjectsActions.resetFilters,
+  resetFilter: capitalProjectsActions.resetFilter,
   setFilterDimension: capitalProjectsActions.setFilterDimension,
 })(Filter);

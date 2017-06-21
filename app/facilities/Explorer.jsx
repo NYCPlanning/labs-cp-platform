@@ -46,7 +46,7 @@ class FacilitiesExplorer extends React.Component {
   };
 
   clearSelectedFeatures = () => {
-    setTimeout(() => this.props.setSelectedFeatures([]), 250);
+    this.props.setSelectedFeatures([]);
   };
 
   highlightedSourceOptions = () => ({

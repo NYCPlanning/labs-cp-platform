@@ -111,7 +111,7 @@ class LayerSelector extends React.Component {
   };
 
   resetFilter = () => {
-    this.props.resetFilters();
+    this.props.resetFilter();
   };
 
   render() {
@@ -236,6 +236,6 @@ export default connect(mapStateToProps, {
   fetchTotalFacilitiesCount: facilityActions.fetchTotalCount,
   fetchSelectedFacilitiesCount: facilityActions.fetchSelectedCount,
   setFilters: facilityActions.setFilters,
-  resetFilters: facilityActions.resetFilters,
+  resetFilter: facilityActions.resetFilter,
   setFilterDimension: facilityActions.setFilterDimension,
 })(LayerSelector);

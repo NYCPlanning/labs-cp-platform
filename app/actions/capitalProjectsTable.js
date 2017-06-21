@@ -33,8 +33,8 @@ export const setFilterDimension = (filterDimension, values) => ({
   payload: { filterDimension, values },
 });
 
-export const resetFilters = () => ({
-  type: AT.RESET_CAPITAL_PROJECTS_TABLE_FILTERS,
+export const resetFilter = () => ({
+  type: AT.RESET_CAPITAL_PROJECTS_TABLE_FILTER,
 });
 
 export const setTableSort = (columnKey, sortDir) => ({

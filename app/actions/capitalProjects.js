@@ -64,8 +64,8 @@ export const setFilterDimension = (filterDimension, values) => ({
   payload: { filterDimension, values },
 });
 
-export const resetFilters = () => ({
-  type: AT.RESET_CAPITAL_PROJECTS_FILTERS,
+export const resetFilter = () => ({
+  type: AT.RESET_CAPITAL_PROJECTS_FILTER,
 });
 
 export const fetchCostGroupData = (pointsSql, polygonsSql) => {

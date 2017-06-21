@@ -39,10 +39,10 @@ const facilitiesReducer = (state = initialState, action) => {
         sql: getSql(action.payload.filterDimensions),
       });
 
-    case AT.RESET_FACILITIES_FILTERS:
+    case AT.RESET_FACILITIES_FILTER:
       return Object.assign({}, state, {
-        filterDimensions: initialState.filterDimensions,
-        sql: getSql(initialState.filterDimensions),
+        filterDimensions: getDefaultFilterDimensions({ selected: 'all' }),
+        sql: getSql(getDefaultFilterDimensions({ selected: 'all' })),
       });
 
     case AT.SET_FACILITIES_FILTER_DIMENSION:

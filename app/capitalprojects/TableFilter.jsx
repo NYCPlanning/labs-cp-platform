@@ -40,7 +40,7 @@ class Filter extends React.Component {
   };
 
   resetFilter = () => {
-    this.props.resetFilters();
+    this.props.resetFilter();
   };
 
   render() {
@@ -214,6 +214,6 @@ const mapStateToProps = ({ capitalProjectsTable }) => ({
 });
 
 export default connect(mapStateToProps, {
-  resetFilters: capitalProjectsTableActions.resetFilters,
+  resetFilter: capitalProjectsTableActions.resetFilter,
   setFilterDimension: capitalProjectsTableActions.setFilterDimension,
 })(Filter);

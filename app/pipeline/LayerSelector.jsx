@@ -217,7 +217,7 @@ const mapStateToProps = ({ pipeline }) => ({
 });
 
 export default connect(mapStateToProps, {
-  resetFilters: pipelineActions.resetFilters,
+  resetFilter: pipelineActions.resetFilter,
   setFilterDimension: pipelineActions.setFilterDimension,
   setSymbology: pipelineActions.setSymbology,
 })(LayerSelector);

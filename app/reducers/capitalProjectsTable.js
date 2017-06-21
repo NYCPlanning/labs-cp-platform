@@ -2,9 +2,11 @@ import * as AT from '../constants/actionTypes';
 import { defaultFilterDimensions } from '../capitalprojects/config';
 import { getTableSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
 
+const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
+
 const initialState = {
-  filterDimensions: defaultFilterDimensions,
-  sql: getTableSql(defaultFilterDimensions),
+  filterDimensions: getDefaultFilters(),
+  sql: getTableSql(getDefaultFilters()),
   commitmentsSql: 'SELECT * FROM cpdb_commitments',
   capitalProjectDetails: [],
   totalCount: 0,
@@ -25,11 +27,11 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
     case AT.FETCH_CAPITAL_PROJECTS_TABLE_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });
 
-    case AT.RESET_CAPITAL_PROJECTS_TABLE_FILTERS:
+    case AT.RESET_CAPITAL_PROJECTS_TABLE_FILTES:
       return Object.assign({}, state, {
-        filterDimensions: initialState.filterDimensions,
-        sql: getTableSql(initialState.filterDimensions),
-        commitmentsSql: `SELECT * FROM cpdb_commitments a WHERE a.maprojid IN (SELECT b.maprojid FROM (${getTableSql(initialState.filterDimensions)}) b)`,
+        filterDimensions: getDefaultFilters(),
+        sql: getTableSql(getDefaultFilters()),
+        commitmentsSql: `SELECT * FROM cpdb_commitments a WHERE a.maprojid IN (SELECT b.maprojid FROM (${getTableSql(getDefaultFilters())}) b)`,
       });
 
     case AT.SET_CAPITAL_PROJECTS_TABLE_FILTER_DIMENSION:

@@ -24,5 +24,5 @@ describe('actions/capitalProjects', () => {
     expect(actions.setFilterDimension('dimension', 'values')).toMatchSnapshot());
 
   test('resetFilters', () =>
-    expect(actions.resetFilters()).toMatchSnapshot());
+    expect(actions.resetFilter()).toMatchSnapshot());
 });

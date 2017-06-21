@@ -1,12 +1,14 @@
 import * as AT from '../constants/actionTypes';
-import { defaultFilterDimensions, defaultLayerConfig } from '../capitalprojects/config';
+import { defaultFilterDimensions } from '../capitalprojects/config';
 import { getSql, getPointsSql, getPolygonsSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
 
+const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
+
 const initialState = {
-  filterDimensions: defaultFilterDimensions,
-  sql: getSql(defaultFilterDimensions),
-  pointsSql: getPointsSql(defaultFilterDimensions),
-  polygonsSql: getPolygonsSql(defaultFilterDimensions),
+  filterDimensions: getDefaultFilters(),
+  sql: getSql(getDefaultFilters()),
+  pointsSql: getPointsSql(getDefaultFilters()),
+  polygonsSql: getPolygonsSql(getDefaultFilters()),
   selectedFeatures: [],
   pointsTotalCount: 0,
   polygonsTotalCount: 0,
@@ -42,12 +44,12 @@ const capitalProjectsReducer = (state = initialState, action) => {
     case AT.SET_SELECTED_CAPITAL_PROJECTS_FEATURES:
       return Object.assign({}, state, { selectedFeatures: action.payload.selectedFeatures });
 
-    case AT.RESET_CAPITAL_PROJECTS_FILTERS:
+    case AT.RESET_CAPITAL_PROJECTS_FILTER:
       return Object.assign({}, state, {
-        filterDimensions: initialState.filterDimensions,
-        sql: getSql(initialState.filterDimensions),
-        pointsSql: getPointsSql(initialState.filterDimensions),
-        polygonsSql: getPolygonsSql(initialState.filterDimensions),
+        filterDimensions: getDefaultFilters(),
+        sql: getSql(getDefaultFilters()),
+        pointsSql: getPointsSql(getDefaultFilters()),
+        polygonsSql: getPolygonsSql(getDefaultFilters()),
       });
 
     case AT.SET_CAPITAL_PROJECTS_FILTER_DIMENSION:

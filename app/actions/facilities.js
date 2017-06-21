@@ -42,8 +42,8 @@ export const setFilterDimension = (filterDimension, values) => ({
   payload: { filterDimension, values },
 });
 
-export const resetFilters = () => ({
-  type: AT.RESET_FACILITIES_FILTERS,
+export const resetFilter = () => ({
+  type: AT.RESET_FACILITIES_FILTER,
 });
 
 export const fetchNYCBounds = id => ({

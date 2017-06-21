@@ -42,6 +42,6 @@ export const setSymbology = symbologyDimension => ({
   payload: { symbologyDimension },
 });
 
-export const resetFilters = () => ({
-  type: AT.RESET_PIPELINE_FILTERS,
+export const resetFilter = () => ({
+  type: AT.RESET_PIPELINE_FILTER,
 });

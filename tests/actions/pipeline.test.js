@@ -21,5 +21,5 @@ describe('actions/pipeline', () => {
     expect(actions.setSymbology('symbologyDimension')).toMatchSnapshot());
 
   test('resetFilters', () =>
-    expect(actions.resetFilters()).toMatchSnapshot());
+    expect(actions.resetFilter()).toMatchSnapshot());
 });
