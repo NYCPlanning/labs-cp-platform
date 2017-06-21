@@ -11,12 +11,12 @@ import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
 import {
   AerialsJaneLayer,
   TransportationJaneLayer,
-  FloodHazardsJaneLayer, ZoningJaneLayer,
+  FloodHazardsJaneLayer,
+  ZoningJaneLayer,
   AdminBoundariesJaneLayer,
 } from '../janelayers';
 
 import * as facilitiesActions from '../actions/facilities';
-import { defaultFilterDimensions } from './config';
 import colors from './colors';
 
 const { mapboxGLOptions, searchConfig } = appConfig;
@@ -25,22 +25,20 @@ class FacilitiesExplorer extends React.Component {
   componentDidMount() {
     // update the layers and filterDimensions in the facilities store
     const locationState = this.props.location.state;
-    const defaultFilterDimensionsCopy = JSON.parse(JSON.stringify(defaultFilterDimensions));
 
-    const filterDimensions = locationState && locationState.filterDimensions ?
-      Object.assign(defaultFilterDimensionsCopy, locationState.filterDimensions) :
-      defaultFilterDimensionsCopy;
-
-    if (locationState && locationState.layers) {
-      filterDimensions.facsubgrp.values = this.props.location.state.layers;
+    if (locationState && locationState.adminboundaries) {
+      this.props.fetchNYCBounds(locationState.adminboundaries.value);
     }
 
-    this.props.setFilters(filterDimensions);
+    if (locationState && locationState.filterDimensions) {
+      return this.props.setFilters(locationState.filterDimensions);
+    }
 
-    // update the map bounds if adminboundaries location state was passed in
-    // if (this.props.location.state && this.props.location.state.adminboundaries) {
-    //   this.props.fetchNYCBounds(this.props.location.state.adminboundaries.value);
-    // }
+    const filterDimensions = locationState && locationState.mergeFilterDimensions
+      ? Object.assign({}, this.props.filterDimensions, locationState.mergeFilterDimensions)
+      : this.props.filterDimensions;
+
+    this.props.setFilters(filterDimensions);
   }
 
   handleMapLayerClick = (features) => {
@@ -85,6 +83,7 @@ class FacilitiesExplorer extends React.Component {
           mapboxGLOptions={mapboxGLOptions}
           search
           searchConfig={searchConfig}
+          fitBounds={this.props.mapBounds}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
         >
@@ -167,14 +166,18 @@ FacilitiesExplorer.defaultProps = {
 };
 
 FacilitiesExplorer.propTypes = {
+  mapBounds: PropTypes.array,
   sql: PropTypes.string,
   location: PropTypes.object,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
   setFilters: PropTypes.func.isRequired,
+  fetchNYCBounds: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ facilities }) => ({
+  mapBounds: facilities.mapBounds,
+  filterDimensions: facilities.filterDimensions,
   selectedFeatures: facilities.selectedFeatures,
   sql: facilities.sql,
 });
@@ -182,4 +185,5 @@ const mapStateToProps = ({ facilities }) => ({
 export default connect(mapStateToProps, {
   setSelectedFeatures: facilitiesActions.setSelectedFeatures,
   setFilters: facilitiesActions.setFilters,
+  fetchNYCBounds: facilitiesActions.fetchNYCBounds,
 })(FacilitiesExplorer);

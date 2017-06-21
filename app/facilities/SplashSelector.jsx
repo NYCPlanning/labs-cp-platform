@@ -5,7 +5,7 @@ import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
 import NestedSelect from './NestedSelect';
-import layersGenerator from './layersGenerator';
+import { getDefaultFilterDimensions } from './config';
 import ga from '../helpers/ga';
 
 
@@ -64,19 +64,16 @@ class SplashSelector extends React.Component { // eslint-disable-line react/no-m
   }
 
   componentWillMount() {
-    const layers = layersGenerator.allUnchecked();
-    this.setState({ layers });
+    this.setState({ layers: getDefaultFilterDimensions({ selected: 'none' }).facsubgrp.values });
   }
 
   handleIndexChange = (index) => {
-    this.setState({
-      selectedIndex: index,
-    });
-  }
+    this.setState({ selectedIndex: index });
+  };
 
   handleSelectUpdate = () => {
     this.processChecked();
-  }
+  };
 
   // set indeterminate states, check/uncheck children, etc
   processChecked = () => {

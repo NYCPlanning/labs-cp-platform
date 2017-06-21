@@ -45,3 +45,12 @@ export const setFilterDimension = (filterDimension, values) => ({
 export const resetFilters = () => ({
   type: AT.RESET_FACILITIES_FILTERS,
 });
+
+export const fetchNYCBounds = id => ({
+  type: AT.CARTO_REQUEST,
+  payload: {
+    sql: `SELECT ST_Extent(the_geom) FROM support_admin_ntaboundaries WHERE ntacode = '${id}'`,
+    requestFormat: 'json',
+    nextType: AT.FETCH_NYC_BOUNDS,
+  },
+});

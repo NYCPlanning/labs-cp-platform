@@ -1,6 +1,8 @@
 import * as AT from '../constants/actionTypes';
-import { defaultFilterDimensions } from '../facilities/config';
+import { getDefaultFilterDimensions } from '../facilities/config';
 import { getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
+
+const defaultFilterDimensions = getDefaultFilterDimensions({ selected: 'all' });
 
 const initialState = {
   filterDimensions: defaultFilterDimensions,
@@ -10,6 +12,7 @@ const initialState = {
   sources: [],
   totalCount: 0,
   selectedCount: 0,
+  mapBounds: null,
 };
 
 const facilitiesReducer = (state = initialState, action) => {
@@ -59,6 +62,15 @@ const facilitiesReducer = (state = initialState, action) => {
       });
 
       return Object.assign({}, state, { filterDimensions, sql: getSql(filterDimensions) });
+
+    case AT.FETCH_NYC_BOUNDS.SUCCESS:
+      return Object.assign({}, state, {
+        mapBounds: action.payload[0]
+          .st_extent
+          .match(/\(([^)]+)\)/)[1]
+          .split(',')
+          .map(pair => pair.split(' '))
+      });
 
     default:
       return state;

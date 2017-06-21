@@ -6,7 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
-import layersGenerator from './layersGenerator';
+import { getDefaultFilterDimensions } from './config';
 import ga from '../helpers/ga';
 
 import './LandingPage.scss';
@@ -39,7 +39,7 @@ class FacilitiesLandingPage extends React.Component {
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          filterDimensions: {
+                          mergeFilterDimensions: {
                             proptype: {
                               type: 'multiSelect',
                               disabled: false,
@@ -81,7 +81,7 @@ class FacilitiesLandingPage extends React.Component {
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': { 'Health Care': null },
                             'Education, Child Welfare, and Youth': {
                               'Schools (K-12)': { 'Public Schools': null },
@@ -92,7 +92,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Emergency Services': { 'Fire Services': null },
                               'Public Safety': { 'Police Services': null },
                             },
-                          }),
+                          }}),
                         },
                       }}
                       onClick={() => ga.event({
@@ -112,7 +112,7 @@ class FacilitiesLandingPage extends React.Component {
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {
                               'Human Services': { 'Senior Services': null, 'Programs for People with Disabilities': null },
                             },
@@ -123,7 +123,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Youth Services': null,
                               Camps: null,
                             },
-                          }),
+                          }}),
                         },
                       }}
                       onClick={() => ga.event({
@@ -143,12 +143,12 @@ class FacilitiesLandingPage extends React.Component {
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Parks, Gardens, and Historical Sites': {
                               'Parks and Plazas': {
                                 'Privately Owned Public Space': null },
                             },
-                          }),
+                          }}),
                         },
                       }}
                       onClick={() => ga.event({
@@ -168,7 +168,7 @@ class FacilitiesLandingPage extends React.Component {
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {
                               'Health Care': {
                                 'Hospitals and Clinics': null,
@@ -193,7 +193,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Public Safety': { 'School-Based Safety Program': null },
                             },
                             'Core Infrastructure and Transportation': { 'Solid Waste': { 'Solid Waste Transfer and Carting': null } },
-                          }),
+                          }}),
                         },
                       }}
                       onClick={() => ga.event({

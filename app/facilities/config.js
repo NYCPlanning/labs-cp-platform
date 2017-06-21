@@ -1,10 +1,47 @@
-import colors from './colors';
-import layersGenerator from './layersGenerator';
+import { defaultLayers } from './defaultLayers';
 
-const defaultFilterDimensions = {
+function checkAllLayers(layers, checked = true) {
+  return layers.map((l) => {
+    l.checked = checked;
+    if (l.children) { checkAllLayers(l.children, checked); }
+    return l;
+  });
+}
+
+function checkAllSelected(layers, context) {
+  return layers.map((l) => {
+    const keys = Object.keys(context);
+    if (keys.includes(l.name)) {
+      l.checked = true;
+      if (l.children && context[l.name] === null) {
+        checkAllLayers(l.children, true);
+      } else if (l.children) {
+        checkAllSelected(l.children, context[l.name]);
+      }
+    }
+    return l;
+  });
+}
+
+const getSelectedFacilitiesLayers = (selected) => {
+  const defaultLayersCopy = JSON.parse(JSON.stringify(defaultLayers));
+
+  switch(selected) {
+    case 'all':
+      return checkAllLayers(defaultLayersCopy, true);
+
+    case 'none':
+      return checkAllLayers(defaultLayersCopy, false);
+
+    default:
+      return selected ? checkAllSelected(defaultLayersCopy, selected) : defaultLayersCopy;
+  }
+};
+
+export const getDefaultFilterDimensions = ({ selected }) => ({
   facsubgrp: {
     type: 'facilitiesLayerSelector',
-    values: layersGenerator.allChecked(),
+    values: getSelectedFacilitiesLayers(selected),
   },
   optype: {
     type: 'multiSelect',
@@ -472,41 +509,4 @@ const defaultFilterDimensions = {
       },
     ],
   },
-};
-
-const mapLayerConfig = {
-  facilitiesPoints: {
-    id: 'facilities-points-outline',
-    source: 'facilities',
-    'source-layer': 'layer0',
-    type: 'circle',
-    paint: {
-      'circle-radius': {
-        stops: [
-          [10, 3],
-          [15, 7],
-        ],
-      },
-      'circle-color': '#012700',
-      'circle-opacity': 0.7,
-    },
-  },
-  facilitiesPointsOutline: {
-    id: 'facilities-points',
-    source: 'facilities',
-    'source-layer': 'layer0',
-    type: 'circle',
-    paint: {
-      'circle-radius': {
-        stops: [
-          [10, 2],
-          [15, 6],
-        ],
-      },
-      'circle-color': colors.getColorObject(),
-      'circle-opacity': 0.7,
-    },
-  },
-};
-
-export { defaultFilterDimensions, mapLayerConfig };
+});
