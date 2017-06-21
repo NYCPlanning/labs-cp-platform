@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
@@ -92,17 +93,25 @@ const capitalProjectsPointsOutlinePaint = {
 };
 
 class CapitalProjectsExplorer extends React.Component {
+  constructor() {
+    super();
+
+    this.selectedFeaturesCache = [];
+  }
+
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
   };
 
   handleMapLayerClick = (features) => {
-    // set selectedFeatures to [] will cause the right drawer to animate away,
-    // then setting the new data will bring it back
-    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
-    this.props.setSelectedFeatures([]);
-    setTimeout(() => this.props.setSelectedFeatures(features), 450);
+    this.selectedFeaturesCache.push(...features);
+    this.setSelectedFeatures();
   };
+
+  setSelectedFeatures = _.debounce(() => {
+    this.props.setSelectedFeatures(this.selectedFeaturesCache);
+    this.selectedFeaturesCache = [];
+  }, 50);
 
   render() {
     const { selectedFeatures } = this.props;
@@ -140,7 +149,6 @@ class CapitalProjectsExplorer extends React.Component {
             id="scaplan"
             name="SCA Capital Plan"
             icon="graduation-cap"
-            onMapLayerClick={this.handleMapLayerClick}
             component={<SCAPlanComponent />}
           >
 
@@ -150,6 +158,7 @@ class CapitalProjectsExplorer extends React.Component {
               id="sca-points-points"
               source="sca-points"
               sourceLayer="layer0"
+              onClick={this.handleMapLayerClick}
               type="circle"
               paint={SCAPointsPaint}
             />
@@ -176,7 +185,6 @@ class CapitalProjectsExplorer extends React.Component {
             id="capital-projects"
             name="Capital Projects"
             icon="usd"
-            onMapLayerClick={this.handleMapLayerClick}
             component={<CapitalProjectsComponent />}
             defaultSelected={true}
           >
@@ -187,6 +195,7 @@ class CapitalProjectsExplorer extends React.Component {
               id="capital-projects-polygons"
               source="capital-projects"
               sourceLayer="layer1"
+              onClick={this.handleMapLayerClick}
               type="fill"
               paint={capitalProjectsPolygonsPaint}
             />
@@ -195,6 +204,7 @@ class CapitalProjectsExplorer extends React.Component {
               id="capital-projects-points"
               source="capital-projects"
               sourceLayer="layer0"
+              onClick={this.handleMapLayerClick}
               type="circle"
               paint={capitalProjectsPointsPaint}
             />
