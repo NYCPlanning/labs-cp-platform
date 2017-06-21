@@ -107,7 +107,7 @@ class CapitalProjectsExplorer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetFilters();
+    this.props.resetFilter();
   }
 
   clearSelectedFeatures = () => {
