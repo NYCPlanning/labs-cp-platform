@@ -50,7 +50,7 @@ class BigMoneyInput extends React.Component {
     this.baseEl.value = getBase(nextProps.value);
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     if (e) e.preventDefault();
 
     const { onSubmit } = this.props;
@@ -60,13 +60,11 @@ class BigMoneyInput extends React.Component {
     const newValue = parseFloat(this.baseEl.value) * parseInt(multiplier);
 
     onSubmit(newValue);
-  }
+  };
 
-  handleSelect(multiplierSymbol) {
-    const multiplier = getMultiplier(multiplierSymbol);
-    // set multiplier in component state, trigger submit
-    this.setState({ multiplier }, () => { this.handleSubmit(); });
-  }
+  handleSelect = (multiplierSymbol) => {
+    this.setState({ multiplier: getMultiplier(multiplierSymbol) }, () => this.handleSubmit());
+  };
 
   render() {
     const { value, alignRight } = this.props;

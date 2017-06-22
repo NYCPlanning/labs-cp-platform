@@ -1,0 +1,546 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reducers/modalReducer CLOSE_MODAL 1`] = `null`;
+
+exports[`reducers/modalReducer CLOSE_MODAL 2`] = `null`;
+
+exports[`reducers/modalReducer OPEN_MODAL - reopen existing modal 1`] = `
+Object {
+  "modalCloseText": "New Close Text",
+  "modalContent": "New Modal Content",
+  "modalHeading": "New Modal Heading",
+}
+`;
+
+exports[`reducers/modalReducer OPEN_MODAL 1`] = `
+Object {
+  "modalCloseText": "Close Text",
+  "modalContent": "Modal Content",
+  "modalHeading": "Modal Heading",
+}
+`;
+
+exports[`reducers/pipeline AT.FETCH_PIPELINE_DETAILS.SUCCESS 1`] = `
+Object {
+  "completionDateFilterDisabled": true,
+  "filterDimensions": Object {
+    "dcp_development_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "label": "Residential",
+          "value": "Residential",
+        },
+        Object {
+          "checked": true,
+          "label": "Non-residential",
+          "value": "Non-residential",
+        },
+      ],
+    },
+    "dcp_permit_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "rgba(0, 228, 14, 0.7)",
+          "label": "New Building",
+          "value": "New Building",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(81, 99, 230, 0.77)",
+          "label": "Alteration",
+          "value": "Alteration",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(234, 62, 62, 1)",
+          "label": "Demolition",
+          "value": "Demolition",
+        },
+      ],
+    },
+    "dcp_pipeline_status": Object {
+      "type": "statusMultiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "#238b45",
+          "label": "Complete",
+          "value": "Complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#74c476",
+          "label": "Partial complete",
+          "value": "Partial complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#bae4b3",
+          "label": "Permit issued",
+          "value": "Permit issued",
+        },
+        Object {
+          "checked": true,
+          "color": "#edf8e9",
+          "label": "Application filed",
+          "value": "Application filed",
+        },
+      ],
+    },
+    "dcp_units_use_map": Object {
+      "type": "numberRange",
+      "values": Array [
+        -1445,
+        1669,
+      ],
+    },
+    "dob_cofo_date": Object {
+      "disabled": true,
+      "type": "cofoDateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+    "dob_qdate": Object {
+      "disabled": true,
+      "type": "dateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+  },
+  "issueDateFilterDisabled": true,
+  "pipelineDetails": null,
+  "selectedCount": 0,
+  "selectedFeatures": Array [],
+  "sql": "SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address FROM pipeline_projects_prod WHERE (dcp_pipeline_status = 'Complete' OR dcp_pipeline_status = 'Partial complete' OR dcp_pipeline_status = 'Permit issued' OR dcp_pipeline_status = 'Application filed' OR dcp_pipeline_status = 'Demolition (complete)') AND (dcp_permit_type = 'New Building' OR dcp_permit_type = 'Alteration' OR dcp_permit_type = 'Demolition') AND (dcp_development_type = 'Residential' OR dcp_development_type = 'Non-residential') AND (dcp_units_use_map >= '-1445' AND dcp_units_use_map <= '1669')",
+  "symbologyDimension": "dcp_permit_type",
+  "totalCount": 0,
+}
+`;
+
+exports[`reducers/pipeline AT.FETCH_PIPELINE_TOTAL_COUNT.SUCCESS 1`] = `
+Object {
+  "completionDateFilterDisabled": true,
+  "filterDimensions": Object {
+    "dcp_development_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "label": "Residential",
+          "value": "Residential",
+        },
+        Object {
+          "checked": true,
+          "label": "Non-residential",
+          "value": "Non-residential",
+        },
+      ],
+    },
+    "dcp_permit_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "rgba(0, 228, 14, 0.7)",
+          "label": "New Building",
+          "value": "New Building",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(81, 99, 230, 0.77)",
+          "label": "Alteration",
+          "value": "Alteration",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(234, 62, 62, 1)",
+          "label": "Demolition",
+          "value": "Demolition",
+        },
+      ],
+    },
+    "dcp_pipeline_status": Object {
+      "type": "statusMultiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "#238b45",
+          "label": "Complete",
+          "value": "Complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#74c476",
+          "label": "Partial complete",
+          "value": "Partial complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#bae4b3",
+          "label": "Permit issued",
+          "value": "Permit issued",
+        },
+        Object {
+          "checked": true,
+          "color": "#edf8e9",
+          "label": "Application filed",
+          "value": "Application filed",
+        },
+      ],
+    },
+    "dcp_units_use_map": Object {
+      "type": "numberRange",
+      "values": Array [
+        -1445,
+        1669,
+      ],
+    },
+    "dob_cofo_date": Object {
+      "disabled": true,
+      "type": "cofoDateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+    "dob_qdate": Object {
+      "disabled": true,
+      "type": "dateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+  },
+  "issueDateFilterDisabled": true,
+  "pipelineDetails": null,
+  "selectedCount": 0,
+  "selectedFeatures": Array [],
+  "sql": "SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address FROM pipeline_projects_prod WHERE (dcp_pipeline_status = 'Complete' OR dcp_pipeline_status = 'Partial complete' OR dcp_pipeline_status = 'Permit issued' OR dcp_pipeline_status = 'Application filed' OR dcp_pipeline_status = 'Demolition (complete)') AND (dcp_permit_type = 'New Building' OR dcp_permit_type = 'Alteration' OR dcp_permit_type = 'Demolition') AND (dcp_development_type = 'Residential' OR dcp_development_type = 'Non-residential') AND (dcp_units_use_map >= '-1445' AND dcp_units_use_map <= '1669')",
+  "symbologyDimension": "dcp_permit_type",
+  "totalCount": 0,
+}
+`;
+
+exports[`reducers/pipeline AT.RESET_PIPELINE_FILTERS 1`] = `
+Object {
+  "completionDateFilterDisabled": true,
+  "filterDimensions": Object {
+    "dcp_development_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "label": "Residential",
+          "value": "Residential",
+        },
+        Object {
+          "checked": true,
+          "label": "Non-residential",
+          "value": "Non-residential",
+        },
+      ],
+    },
+    "dcp_permit_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "rgba(0, 228, 14, 0.7)",
+          "label": "New Building",
+          "value": "New Building",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(81, 99, 230, 0.77)",
+          "label": "Alteration",
+          "value": "Alteration",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(234, 62, 62, 1)",
+          "label": "Demolition",
+          "value": "Demolition",
+        },
+      ],
+    },
+    "dcp_pipeline_status": Object {
+      "type": "statusMultiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "#238b45",
+          "label": "Complete",
+          "value": "Complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#74c476",
+          "label": "Partial complete",
+          "value": "Partial complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#bae4b3",
+          "label": "Permit issued",
+          "value": "Permit issued",
+        },
+        Object {
+          "checked": true,
+          "color": "#edf8e9",
+          "label": "Application filed",
+          "value": "Application filed",
+        },
+      ],
+    },
+    "dcp_units_use_map": Object {
+      "type": "numberRange",
+      "values": Array [
+        -1445,
+        1669,
+      ],
+    },
+    "dob_cofo_date": Object {
+      "disabled": true,
+      "type": "cofoDateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+    "dob_qdate": Object {
+      "disabled": true,
+      "type": "dateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+  },
+  "issueDateFilterDisabled": true,
+  "pipelineDetails": null,
+  "selectedCount": 0,
+  "selectedFeatures": Array [],
+  "sql": "SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address FROM pipeline_projects_prod WHERE (dcp_pipeline_status = 'Complete' OR dcp_pipeline_status = 'Partial complete' OR dcp_pipeline_status = 'Permit issued' OR dcp_pipeline_status = 'Application filed' OR dcp_pipeline_status = 'Demolition (complete)') AND (dcp_permit_type = 'New Building' OR dcp_permit_type = 'Alteration' OR dcp_permit_type = 'Demolition') AND (dcp_development_type = 'Residential' OR dcp_development_type = 'Non-residential') AND (dcp_units_use_map >= '-1445' AND dcp_units_use_map <= '1669')",
+  "symbologyDimension": "dcp_permit_type",
+  "totalCount": 0,
+}
+`;
+
+exports[`reducers/pipeline AT.SET_PIPELINE_SYMBOLOGY 1`] = `
+Object {
+  "completionDateFilterDisabled": true,
+  "filterDimensions": Object {
+    "dcp_development_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "label": "Residential",
+          "value": "Residential",
+        },
+        Object {
+          "checked": true,
+          "label": "Non-residential",
+          "value": "Non-residential",
+        },
+      ],
+    },
+    "dcp_permit_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "rgba(0, 228, 14, 0.7)",
+          "label": "New Building",
+          "value": "New Building",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(81, 99, 230, 0.77)",
+          "label": "Alteration",
+          "value": "Alteration",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(234, 62, 62, 1)",
+          "label": "Demolition",
+          "value": "Demolition",
+        },
+      ],
+    },
+    "dcp_pipeline_status": Object {
+      "type": "statusMultiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "#238b45",
+          "label": "Complete",
+          "value": "Complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#74c476",
+          "label": "Partial complete",
+          "value": "Partial complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#bae4b3",
+          "label": "Permit issued",
+          "value": "Permit issued",
+        },
+        Object {
+          "checked": true,
+          "color": "#edf8e9",
+          "label": "Application filed",
+          "value": "Application filed",
+        },
+      ],
+    },
+    "dcp_units_use_map": Object {
+      "type": "numberRange",
+      "values": Array [
+        -1445,
+        1669,
+      ],
+    },
+    "dob_cofo_date": Object {
+      "disabled": true,
+      "type": "cofoDateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+    "dob_qdate": Object {
+      "disabled": true,
+      "type": "dateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+  },
+  "issueDateFilterDisabled": true,
+  "pipelineDetails": null,
+  "selectedCount": 0,
+  "selectedFeatures": Array [],
+  "sql": "SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address FROM pipeline_projects_prod WHERE (dcp_pipeline_status = 'Complete' OR dcp_pipeline_status = 'Partial complete' OR dcp_pipeline_status = 'Permit issued' OR dcp_pipeline_status = 'Application filed' OR dcp_pipeline_status = 'Demolition (complete)') AND (dcp_permit_type = 'New Building' OR dcp_permit_type = 'Alteration' OR dcp_permit_type = 'Demolition') AND (dcp_development_type = 'Residential' OR dcp_development_type = 'Non-residential') AND (dcp_units_use_map >= '-1445' AND dcp_units_use_map <= '1669')",
+  "symbologyDimension": "symbologyDimension",
+  "totalCount": 0,
+}
+`;
+
+exports[`reducers/pipeline AT.SET_SELECTED_PIPELINE_FEATURES 1`] = `
+Object {
+  "completionDateFilterDisabled": true,
+  "filterDimensions": Object {
+    "dcp_development_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "label": "Residential",
+          "value": "Residential",
+        },
+        Object {
+          "checked": true,
+          "label": "Non-residential",
+          "value": "Non-residential",
+        },
+      ],
+    },
+    "dcp_permit_type": Object {
+      "type": "multiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "rgba(0, 228, 14, 0.7)",
+          "label": "New Building",
+          "value": "New Building",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(81, 99, 230, 0.77)",
+          "label": "Alteration",
+          "value": "Alteration",
+        },
+        Object {
+          "checked": true,
+          "color": "rgba(234, 62, 62, 1)",
+          "label": "Demolition",
+          "value": "Demolition",
+        },
+      ],
+    },
+    "dcp_pipeline_status": Object {
+      "type": "statusMultiSelect",
+      "values": Array [
+        Object {
+          "checked": true,
+          "color": "#238b45",
+          "label": "Complete",
+          "value": "Complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#74c476",
+          "label": "Partial complete",
+          "value": "Partial complete",
+        },
+        Object {
+          "checked": true,
+          "color": "#bae4b3",
+          "label": "Permit issued",
+          "value": "Permit issued",
+        },
+        Object {
+          "checked": true,
+          "color": "#edf8e9",
+          "label": "Application filed",
+          "value": "Application filed",
+        },
+      ],
+    },
+    "dcp_units_use_map": Object {
+      "type": "numberRange",
+      "values": Array [
+        -1445,
+        1669,
+      ],
+    },
+    "dob_cofo_date": Object {
+      "disabled": true,
+      "type": "cofoDateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+    "dob_qdate": Object {
+      "disabled": true,
+      "type": "dateRange",
+      "values": Array [
+        "1293840000",
+        "1497905065",
+      ],
+    },
+  },
+  "issueDateFilterDisabled": true,
+  "pipelineDetails": null,
+  "selectedCount": 0,
+  "selectedFeatures": Array [],
+  "sql": "SELECT cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address FROM pipeline_projects_prod WHERE (dcp_pipeline_status = 'Complete' OR dcp_pipeline_status = 'Partial complete' OR dcp_pipeline_status = 'Permit issued' OR dcp_pipeline_status = 'Application filed' OR dcp_pipeline_status = 'Demolition (complete)') AND (dcp_permit_type = 'New Building' OR dcp_permit_type = 'Alteration' OR dcp_permit_type = 'Demolition') AND (dcp_development_type = 'Residential' OR dcp_development_type = 'Non-residential') AND (dcp_units_use_map >= '-1445' AND dcp_units_use_map <= '1669')",
+  "symbologyDimension": "dcp_permit_type",
+  "totalCount": 0,
+}
+`;

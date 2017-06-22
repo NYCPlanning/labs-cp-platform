@@ -10,7 +10,7 @@
     "postinstall": "npm run probuild",
     "test": "jest --watch --verbose --coverage",
     "test-debugger": "node --debug-brk ./node_modules/.bin/jest --runInBand",
-    "lint": "eslint --ext .jsx app/"
+    "lint": "eslint --ext .jsx --ext .js app/"
   },
   "author": "",
   "license": "ISC",
@@ -23,9 +23,11 @@
     "express-spa": "0.0.2",
     "fixed-data-table": "^0.6.3",
     "flux": "^3.1.2",
-    "jane-maps": "0.0.12",
+    "jane-maps": "0.0.15",
+    "jest": "^20.0.4",
     "jquery": "^3.2.1",
     "jwt-decode": "^2.1.0",
+    "lodash": "^4.17.4",
     "material-ui": "^0.18.0",
     "moment": "^2.18.1",
     "numeral": "^2.0.6",
@@ -40,13 +42,15 @@
     "react-dnd-html5-backend": "^2.2.3",
     "react-dom": "^15.4.2",
     "react-ga": "^2.1.2",
+    "react-redux": "^5.0.5",
     "react-reformed": "^1.1.0",
     "react-router": "^3.0.2",
     "react-select": "^1.0.0-rc.3",
     "react-tap-event-plugin": "^2.0.0",
+    "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
     "turf-centroid": "^3.0.12",
-    "turf-extent": "^1.0.4",
-    "underscore": "^1.8.3"
+    "turf-extent": "^1.0.4"
   },
   "babel": {
     "presets": [
@@ -77,6 +81,7 @@
     "eslint-plugin-jsx-a11y": " ^5.0.3",
     "eslint-plugin-react": "^7.0.1",
     "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^2.1.2",
     "jest": "^20.0.0",
     "jest-cli": "^20.0.0",
     "mocha": "^3.1.2",

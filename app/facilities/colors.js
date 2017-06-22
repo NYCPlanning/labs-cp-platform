@@ -2,9 +2,7 @@ import { defaultLayers } from './defaultLayers';
 
 const colors = {
   getColor(value) {
-    const colorObject = this.getColorObject();
-
-    return colorObject.stops.filter(stop => stop[0] === value)[0][1];
+    return this.getColorObject().stops.filter(stop => stop[0] === value)[0][1];
   },
 
   getColorObject() {
@@ -13,7 +11,7 @@ const colors = {
     return {
       property: 'facdomain',
       type: 'categorical',
-      stops: defaultLayers().map(layer => [
+      stops: defaultLayers.map(layer => [
         layer.name,
         layer.color,
       ]),

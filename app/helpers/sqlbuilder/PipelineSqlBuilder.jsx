@@ -1,5 +1,11 @@
   /* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
+import devTables from '../devTables';
+
+export const sqlConfig = {
+  columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
+  tablename: devTables('pipeline_projects_prod'),
+};
 
 class PipelineSqlBuilder extends SqlBuilder {
 
@@ -42,4 +48,6 @@ class PipelineSqlBuilder extends SqlBuilder {
 
 Object.assign(PipelineSqlBuilder, SqlBuilder);
 
-export default PipelineSqlBuilder;
+const sqlBuilder = new PipelineSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
+
+export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);

@@ -1,121 +1,166 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Jane, JaneLayer } from 'jane-maps';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
+import { connect } from 'react-redux';
 
 import appConfig from '../helpers/appConfig';
-import carto from '../helpers/carto';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
-import FacilitiesComponent from './janelayer/Component';
-import supportingLayers from '../janelayers/supportingLayers';
-import FacilitiesActions from '../actions/FacilitiesActions';
-import FacilitiesStore from '../stores/FacilitiesStore';
-import { defaultFilterDimensions } from './config';
+import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
+
+import {
+  AerialsJaneLayer,
+  TransportationJaneLayer,
+  FloodHazardsJaneLayer,
+  ZoningJaneLayer,
+  AdminBoundariesJaneLayer,
+} from '../janelayers';
+
+import * as facilitiesActions from '../actions/facilities';
+import colors from './colors';
+
+const { mapboxGLOptions, searchConfig } = appConfig;
 
 class FacilitiesExplorer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { selectedFeatures: FacilitiesStore.selectedFeatures };
-  }
-
-  componentWillMount() {
-    this.bounds = null;
-    // update the layers and filterDimensions in the facilities store
-
-    const locationState = this.props.location.state;
-    const defaultFilterDimensionsCopy = JSON.parse(JSON.stringify(defaultFilterDimensions));
-
-    const filterDimensions = locationState && locationState.filterDimensions ?
-      Object.assign(defaultFilterDimensionsCopy, locationState.filterDimensions) :
-      defaultFilterDimensionsCopy;
-
-    if (locationState && locationState.layers) {
-      filterDimensions.facsubgrp.values = this.props.location.state.layers;
-    }
-
-    FacilitiesActions.setInitialFilters(filterDimensions);
-  }
-
   componentDidMount() {
-    const self = this;
+    // update the layers and filterDimensions in the facilities store
+    const locationState = this.props.location.state;
 
-    // update the map bounds if adminboundaries location state was passed in
-    if (this.props.location.state && this.props.location.state.adminboundaries) {
-      const value = this.props.location.state.adminboundaries.value;
-
-      carto.getNYCBounds('nta', value)
-        .then((bounds) => {
-          self.bounds = bounds;
-          self.forceUpdate();
-        });
+    if (locationState && locationState.adminboundaries) {
+      this.props.fetchNYCBounds(locationState.adminboundaries.value);
     }
 
-    FacilitiesStore.on('facilitiesUpdated', () => {
-      const selectedFeatures = FacilitiesStore.selectedFeatures;
-      this.setState({ selectedFeatures });
-    });
+    if (locationState && locationState.filterDimensions) {
+      return this.props.setFilters(locationState.filterDimensions);
+    }
+
+    const filterDimensions = locationState && locationState.mergeFilterDimensions
+      ? Object.assign({}, this.props.filterDimensions, locationState.mergeFilterDimensions)
+      : this.props.filterDimensions;
+
+    this.props.setFilters(filterDimensions);
   }
 
   handleMapLayerClick = (features) => {
-    // set selectedFeatures to [] will cause the right drawer to animate away,
-    // then setting the new data will bring it back
-    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
-    FacilitiesActions.setSelectedFeatures([]);
-    setTimeout(() => {
-      FacilitiesActions.setSelectedFeatures(features);
-    }, 450);
-  }
+    this.props.setSelectedFeatures(features);
+  };
 
   clearSelectedFeatures = () => {
-    FacilitiesActions.setSelectedFeatures([]);
+    this.props.setSelectedFeatures([]);
+  };
+
+  highlightedSourceOptions = () => ({
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: this.props.selectedFeatures[0].geometry,
+      },
+    ],
+  });
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.setSelectedFeatures([]);
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetFilter();
   }
 
   render() {
-    const mapInit = appConfig.mapInit;
-    const searchConfig = appConfig.searchConfig;
-
-    const { selectedFeatures } = this.state;
-
-    const listItems = selectedFeatures.map(feature => (
+    const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
     ));
 
-    const selectedFeaturesPane = (
-      <SelectedFeaturesPane>
-        {listItems}
-      </SelectedFeaturesPane>
-    );
+    const sourceOptions = {
+      carto_domain: appConfig.carto_domain,
+      carto_user: appConfig.carto_user,
+      sql: [this.props.sql],
+    };
 
     return (
       <div className="full-screen">
         <Jane
-          mapInit={mapInit}
-          layerContentVisible
+          mapboxGLOptions={mapboxGLOptions}
           search
           searchConfig={searchConfig}
-          initialSelectedJaneLayer={'facilities'}
-          initialDisabledJaneLayers={[
-            'transportation',
-            'adminboundaries',
-            'zoning',
-            'aerials',
-          ]}
+          fitBounds={this.props.mapBounds}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
+          onLayerToggle={this.clearSelectedFeatures}
         >
-          {supportingLayers.aerials}
-          {supportingLayers.adminboundaries}
-          {supportingLayers.zoning}
-          {supportingLayers.transportation}
+          <AerialsJaneLayer defaultDisabled />
+          <TransportationJaneLayer defaultDisabled />
+          <FloodHazardsJaneLayer defaultDisabled />
+          <AdminBoundariesJaneLayer defaultDisabled />
+          <ZoningJaneLayer defaultDisabled />
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"
             icon="university"
-            onMapLayerClick={this.handleMapLayerClick}
-            component={<FacilitiesComponent />}
-          />
+            defaultSelected
+            component={<FacilitiesSidebarComponent />}
+          >
+            <Source id="facilities" type="cartovector" options={sourceOptions} />
+
+            { !!this.props.selectedFeatures.length &&
+              <Source id="highlighted" type="geojson" data={this.highlightedSourceOptions()} nocache /> }
+
+            { !!this.props.selectedFeatures.length &&
+              <MapLayer
+                id="facilities-points-highlight"
+                source="highlighted"
+                type="circle"
+                paint={{
+                  'circle-color': 'rgba(255, 255, 255, 1)',
+                  'circle-opacity': 0,
+                  'circle-radius': 15,
+                  'circle-stroke-width': 3,
+                  'circle-pitch-scale': 'map',
+                  'circle-stroke-color': 'rgba(217, 107, 39, 1)',
+                  'circle-stroke-opacity': 0.8,
+                }}
+              /> }
+
+            <MapLayer
+              id="facilities-points-outline"
+              source="facilities"
+              sourceLayer="layer0"
+              type="circle"
+              paint={{
+                'circle-radius': { stops: [[10, 2], [15, 6]] },
+                'circle-color': colors.getColorObject(),
+                'circle-opacity': 0.7,
+              }}
+            />
+
+            <MapLayer
+              id="facilities-points"
+              source="facilities"
+              sourceLayer="layer0"
+              type="circle"
+              paint={{
+                'circle-radius': { stops: [[10, 3], [15, 7]] },
+                'circle-color': '#012700',
+                'circle-opacity': 0.7,
+              }}
+              onClick={this.handleMapLayerClick}
+            />
+
+            <Legend>
+              <div className="legendSection">
+                <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
+              </div>
+            </Legend>
+          </JaneLayer>
         </Jane>
-        { selectedFeaturesPane }
+
+        <SelectedFeaturesPane>
+          {listItems}
+        </SelectedFeaturesPane>
       </div>
     );
   }
@@ -126,7 +171,26 @@ FacilitiesExplorer.defaultProps = {
 };
 
 FacilitiesExplorer.propTypes = {
+  mapBounds: PropTypes.array,
+  sql: PropTypes.string,
   location: PropTypes.object,
+  selectedFeatures: PropTypes.array,
+  setSelectedFeatures: PropTypes.func.isRequired,
+  setFilters: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  fetchNYCBounds: PropTypes.func.isRequired,
 };
 
-module.exports = FacilitiesExplorer;
+const mapStateToProps = ({ facilities }) => ({
+  mapBounds: facilities.mapBounds,
+  filterDimensions: facilities.filterDimensions,
+  selectedFeatures: facilities.selectedFeatures,
+  sql: facilities.sql,
+});
+
+export default connect(mapStateToProps, {
+  setSelectedFeatures: facilitiesActions.setSelectedFeatures,
+  setFilters: facilitiesActions.setFilters,
+  resetFilter: facilitiesActions.resetFilter,
+  fetchNYCBounds: facilitiesActions.fetchNYCBounds,
+})(FacilitiesExplorer);
