@@ -90,6 +90,7 @@ class FacilitiesExplorer extends React.Component {
           fitBounds={this.props.mapBounds}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
+          onLayerToggle={this.clearSelectedFeatures}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />

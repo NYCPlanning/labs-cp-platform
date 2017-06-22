@@ -100,6 +100,7 @@ class PipeLineExplorer extends React.Component {
           searchConfig={searchConfig}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
+          onLayerToggle={this.clearSelectedFeatures}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
