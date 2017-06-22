@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devserve": "webpack-dev-server --config webpack.dev.config.js --hot --progress --colors --history-api-fallback --inline --content-base public/",
-    "probuild": "webpack -p --config webpack.config.js --progress --colors",
+    "probuild": "NODE_ENV=production webpack -p --config webpack.config.js --progress --colors",
     "postinstall": "npm run probuild",
     "test": "jest --watch --verbose --coverage",
     "test-debugger": "node --debug-brk ./node_modules/.bin/jest --runInBand",
@@ -23,7 +23,7 @@
     "express-spa": "0.0.2",
     "fixed-data-table": "^0.6.3",
     "flux": "^3.1.2",
-    "jane-maps": "0.0.15",
+    "jane-maps": "0.0.16",
     "jest": "^20.0.4",
     "jquery": "^3.2.1",
     "jwt-decode": "^2.1.0",
