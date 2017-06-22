@@ -1,31 +1,8 @@
 import appConfig from './appConfig';
 
-// TODO: Use request.js or another library for HTTP calls below
-const $ = require('jquery');
 const moment = require('moment');
 
 export default {
-  // gets the bounds of an nyc geometry such as a cd, nta, etc
-  getNYCBounds(type, id) {
-    return new Promise((resolve, reject) => {
-      this.SQL(`SELECT ST_Extent(the_geom) FROM support_admin_ntaboundaries WHERE ntacode = '${id}'`, 'json')
-        .then((data) => {
-          const bounds = [];
-          const pairs = data[0]
-            .st_extent
-            .match(/\(([^)]+)\)/)[1]
-            .split(',');
-
-          pairs.forEach((pair, i) => {
-            bounds[i] = pair.split(' ');
-          });
-
-          resolve(bounds);
-        })
-        .catch(err => reject(err));
-    });
-  },
-
   getFilteredSql(sql) {
     return sql.replace(/SELECT (.*?) FROM/, 'SELECT * FROM');
   },
@@ -47,24 +24,5 @@ export default {
   filteredDownloadUrlString(sql, filePrefix, fileType) {
     const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
     return this.generateUrlString(this.getFilteredSql(sql), fileType, `${filePrefix}_filtered_${date}`);
-  },
-
-  // does a carto SQL api call
-  // pass in format as a valid SQL api export format (shp, csv, geojson)
-  SQL(sql, format) {
-    format = format || 'geojson';
-    const apiCall = this.generateUrlString(sql, format);
-
-    return new Promise((resolve, reject) => {
-      $.getJSON(apiCall) // eslint-disable-line no-undef
-        .done((data) => {
-          if (format === 'geojson') {
-            resolve(data);
-          } else {
-            resolve(data.rows);
-          }
-        })
-        .fail(err => reject(err));
-    });
   },
 };
