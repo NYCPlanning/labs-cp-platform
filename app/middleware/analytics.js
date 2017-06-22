@@ -6,11 +6,14 @@ import ReactGA from 'react-ga';
 
 const analyticsMiddleware = ({ getState, dispatch }) => next => (action) => {
   if (action.type === AT.AUTHORIZE_USER) {
-    ReactGA.set({ userId: action.payload.profile.id });
+    ReactGA.set({
+      userId: action.payload.profile.email,
+      dimension1: action.payload.profile.user_metadata.agency || 'Unknown'
+    });
   }
 
   if (action.type === AT.DEAUTHORIZE_USER) {
-    ReactGA.set({ userId: null });
+    ReactGA.set({ userId: null, dimension1: null });
   }
 
   if (action.type === AT.SET_FACILITIES_FILTER_DIMENSION) {
