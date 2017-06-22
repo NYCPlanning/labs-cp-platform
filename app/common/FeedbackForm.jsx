@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
+import { connect } from 'react-redux';
+
+import * as authActions from '../actions/auth';
 
 import appConfig from '../helpers/appConfig';
-import AuthService from '../helpers/AuthService';
 
 class FeedbackForm extends React.Component {
   constructor(props) {
@@ -29,8 +31,8 @@ class FeedbackForm extends React.Component {
 
   onSubmit = () => {
     // if not logged in, prompt login and pass current model up
-    if (!AuthService.loggedIn()) {
-      AuthService.login();
+    if (!this.props.isLoggedIn) {
+      this.props.login();
     } else {
       this.postData();
     }
@@ -43,8 +45,7 @@ class FeedbackForm extends React.Component {
 
   postData = () => { // TODO move ajax to a helper class
     const data = this.props.model;
-
-    const profile = AuthService.getProfile();
+    const profile = this.props.profile;
 
     // add user details to payload
     // check if username exists, set to null if not
@@ -54,7 +55,7 @@ class FeedbackForm extends React.Component {
     data.ref_id = this.props.ref_id;
 
     // get the json web token from localstorage
-    const jwt = AuthService.getToken();
+    const jwt = this.props.token;
 
     $.ajax({ // eslint-disable-line no-undef
       url: `//${appConfig.api_domain}/feedback/`,
@@ -125,5 +126,13 @@ FeedbackForm.propTypes = {
   ref_id: PropTypes.string.isRequired,
 };
 
+const mapStateToProps = ({ currentUser }) => ({
+  isLoggedIn: currentUser.isLoggedIn,
+  profile: currentUser.profile,
+  token: currentUser.token,
+});
+
 // Wrap your form in the higher-order component
-export default reformed()(FeedbackForm);
+export default connect(mapStateToProps, {
+  login: authActions.login
+})(reformed()(FeedbackForm));

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { Provider } from 'react-redux';
-import store from './store';
+import { connect } from 'react-redux';
 
-// get styles for jane-maps, TODO figure out the best way to include this
+import * as authActions from './actions/auth';
+
+// get styles for jane-maps
 import 'jane-maps/dist/styles.css';
 
 import GlobalModal from './common/GlobalModal';
@@ -16,40 +15,27 @@ import './app.scss';
 
 injectTapEventPlugin();
 
-// set material ui default styles
-const muiTheme = getMuiTheme({
-  palette: {
-    primary1Color: '#b1b1b1',
-    accent1Color: '#D96B27',
-  },
-});
-
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { loggedIn: true };
+  componentWillMount() {
+    this.props.loadCredentials({ targetPath: location.pathname });
   }
 
   render() {
     document.title = this.props.children.props.route.title || 'NYC Capital Planning Platform';
 
     return (
-      <Provider store={store}>
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <div>
-            <Nav
-              title={this.props.children.props.route.title}
-              about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
-              mini={this.props.children.props.route.miniNav}
-            />
-            <div>
-              <GlobalModal />
+      <div>
+        <Nav
+          title={this.props.children.props.route.title}
+          about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
+          mini={this.props.children.props.route.miniNav}
+        />
+        <div>
+          <GlobalModal />
 
-              { this.props.children }
-            </div>
-          </div>
-        </MuiThemeProvider>
-      </Provider>
+          { this.props.children }
+        </div>
+      </div>
     );
   }
 }
@@ -60,4 +46,6 @@ App.propTypes = {
   route: PropTypes.shape().isRequired,
 };
 
-export default App;
+export default connect(null, {
+  loadCredentials: authActions.loadCredentials
+})(App);

@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
 
 // Reducers
+import currentUser from './reducers/currentUser';
 import modal from './reducers/modal';
 import facilities from './reducers/facilities';
 import pipeline from './reducers/pipeline';
@@ -9,11 +10,12 @@ import capitalProjects from './reducers/capitalProjects';
 import capitalProjectsTable from './reducers/capitalProjectsTable';
 
 // Middleware
+import auth from './middleware/auth';
 import carto from './middleware/carto';
 import agencyValues from './middleware/agencyValues';
 import analytics from './middleware/analytics';
 
-const middleware = [createLogger({ collapsed: true }), carto, agencyValues];
+const middleware = [createLogger({ collapsed: true }), carto, agencyValues, auth];
 
 if (process.env.NODE_ENV === 'production') {
   middleware.push(analytics);
@@ -21,6 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const store = createStore(
   combineReducers({
+    currentUser,
     modal,
     facilities,
     pipeline,

@@ -12,6 +12,15 @@ export const FETCH_NYC_BOUNDS = asyncType('FETCH_NYC_BOUNDS');
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 
+// Auth
+export const AUTH0_LOGIN = 'AUTH0_LOGIN';
+export const AUTH0_LOGOUT = 'AUTH0_LOGOUT';
+export const AUTH0_SIGNUP = 'AUTH0_SIGNUP';
+export const LOAD_CREDENTIALS = 'LOAD_CREDENTIALS';
+export const AUTHORIZE_USER = 'AUTHORIZE_USER';
+export const DEAUTHORIZE_USER = 'DEAUTHORIZE_USER';
+export const ENSURE_ACCESS = 'ENSURE_ACCESS';
+
 // Facilities
 export const FETCH_FACILITY_DETAILS = asyncType('FETCH_FACILITY_DETAILS');
 export const FETCH_FACILITY_AGENCY_VALUES = asyncType('FETCH_FACILITY_AGENCY_VALUES');

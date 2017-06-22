@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AuthService from '../helpers/AuthService';
+import { connect } from 'react-redux';
 
+import * as authActions from '../actions/auth';
 
 class Login extends React.Component {
   componentDidMount() {
     const targetPath = (this.props.location && this.props.location.state) ? this.props.location.state.targetPath : '/';
-    AuthService.login({ targetPath });
+    this.props.login({ targetPath });
   }
 
   render() {
@@ -20,4 +21,6 @@ Login.propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-export default Login;
+export default connect(null, {
+  login: authActions.login
+})(Login);

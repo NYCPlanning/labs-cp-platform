@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, IndexRoute, Redirect } from 'react-router';
+import { browserHistory, Route, IndexRoute, Redirect } from 'react-router';
 
 import App from '../app/App';
-import AuthService from './helpers/AuthService';
 import Login from '../app/pages/Login';
 
 import HomePage from '../app/pages/HomePage';
@@ -24,47 +23,52 @@ import FeedbackPage from '../app/pages/FeedbackPage';
 
 import NotFound from '../app/pages/NotFound';
 
-// const auth = new AuthService(appConfig.auth0_client_id, appConfig.auth0_domain);
-
 const rerouteLoggedIn = (nextState, replace) => {
-  if (AuthService.loggedIn()) {
+  if (store.getState().currentUser.isLoggedIn) {
     replace({ pathname: '/' });
   }
 };
-
-// checks if the passed in permission exists in the user's profile
-const rerouteNotFound = (nextState, replace) => {
-  replace({ pathname: '/notfound' });
-};
-
-// checks if the passed in permission exists in the user's profile
-const confirmPermissions = permission => ((nextState, replace) => {
-  const permissions = AuthService.getProfile().permissions;
-
-  // if user doesn't have the permissions necessary to load this route, or is not logged in, redirect to '/'
-  if ((permissions && permissions.indexOf(permission) === -1) || !AuthService.loggedIn()) {
-    // if trying to load homepage, reroute to facilities, else reroute to not found
-    if (nextState.location.pathname === '/') {
-      replace({ pathname: '/facilities' });
-    } else {
-      replace({
-        pathname: '/login',
-        state: {
-          targetPath: nextState.location.pathname,
-        },
-      });
-    }
-  }
-});
 
 // dummy component for the authsuccess route
 const AuthSuccess = () => (
   <div />
 );
 
+const ensureAccess = (permission) => (WrappedComponent) => {
+  return class EnsureAccess extends React.Component {
+    static displayName = `ensureAccess${WrappedComponent.name}`;
+
+    componentWillMount() {
+      const { profile, isLoggedIn } = store.getState().currentUser;
+
+      const permissions = profile && profile.permissions;
+
+      if ((permissions && permissions.indexOf(permission) === -1) || !isLoggedIn) {
+        // if trying to load homepage, reroute to facilities, else reroute to not found
+        if (this.props.location.pathname === '/') {
+          browserHistory.replace({ pathname: '/facilities' });
+        } else {
+          browserHistory.replace({
+            pathname: '/login',
+            state: {
+              targetPath: this.props.location.pathname,
+            },
+          });
+        }
+      }
+    }
+
+    render() {
+      return <WrappedComponent {...this.props}/>;
+    }
+  }
+};
+
+const ensureSitewideAccess = ensureAccess('sitewide_access');
+
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={HomePage} onEnter={confirmPermissions('sitewide_access')} />
+    <IndexRoute component={ensureSitewideAccess(HomePage)} />
     <Route path="about" component={About} title={'About'} />
     <Route path="about/facilities" component={AboutFacilities} title={'About'} about={'/about/facilities'} />
     <Route path="about/pipeline" component={AboutPipeline} title={'About'} about={'/about/pipeline'} />
@@ -75,20 +79,20 @@ export default (
     <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} />
 
     <Redirect from="pipeline" to="pipeline/explorer" />
-    <Route path="pipeline/explorer" component={PipelineExplorer} title={'Housing Development Pipeline'} about={'/about/pipeline'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="development/:id" component={DevelopmentPage} title={'Development Details'} about={'/about/pipeline'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development Pipeline'} about={'/about/pipeline'} />
+    <Route path="development/:id" component={ensureSitewideAccess(DevelopmentPage)} title={'Development Details'} about={'/about/pipeline'} />
 
-    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'NYC Capital Projects Explorer'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalprojects/explorer" component={CapitalProjectsExplorer} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
-    <Route path="capitalproject/:id" component={ProjectPage} title={'Capital Project Details'} about={'/about/capitalprojects'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'NYC Capital Projects Explorer'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
+    <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
 
-    <Route path="feedback/:type" component={FeedbackPage} title={'User Feedback'} onEnter={confirmPermissions('sitewide_access')} />
+    <Route path="feedback/:type" component={ensureSitewideAccess(FeedbackPage)} title={'User Feedback'} />
 
     <Route path="login" component={Login} title={'Login'} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="notfound" component={NotFound} />
-    <Route path="*" onEnter={rerouteNotFound} />
-    <Route path="about/*" onEnter={rerouteNotFound} />
+
+    <Redirect from="*" to="notfound" />
   </Route>
 );
