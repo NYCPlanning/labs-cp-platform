@@ -77,7 +77,12 @@ const pipelineReducer = (state = initialState, action) => {
         }
       }
 
-      return Object.assign({}, state, { filterDimensions: dimensions, sql: getSql(dimensions) });
+      return Object.assign({}, state, {
+        filterDimensions: dimensions,
+        issueDateFilterDisabled: isIssueDateDisabled(dimensions),
+        completionDateFilterDisabled: isCompletionDateDisabled(dimensions),
+        sql: getSql(dimensions)
+      });
 
     default:
       return state;
