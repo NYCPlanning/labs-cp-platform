@@ -27,7 +27,14 @@ const { Table, Column, Cell } = FixedDataTable;
 class CPTable extends React.Component { // eslint-disable-line
   constructor(props) {
     super(props);
-    this.state = { filteredSortedData: null };
+
+    this.state = {
+      filteredSortedData: filterAndSortData(
+        props.capitalProjectDetails,
+        props.filterBy,
+        props.colSortDirs,
+      )
+    };
   }
 
   componentDidMount() {
