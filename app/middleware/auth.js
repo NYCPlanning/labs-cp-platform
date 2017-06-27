@@ -60,8 +60,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
   }
 
   if (action.type === AT.LOAD_CREDENTIALS) {
-    const token = localStorage.getItem('id_token');
-    const profile = localStorage.getItem('profile');
+    const token = localStorage.getItem('NYCPlanning_idToken');
+    const profile = localStorage.getItem('NYCPlanning_profile');
 
     if (token) {
       dispatch(authActions.authorizeUser(JSON.parse(profile), token));
@@ -82,8 +82,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
           return;
         }
 
-        localStorage.setItem('profile', JSON.stringify(profile));
-        localStorage.setItem('id_token', idToken);
+        localStorage.setItem('NYCPlanning_profile', JSON.stringify(profile));
+        localStorage.setItem('NYCPlanning_idToken', idToken);
         dispatch(authActions.authorizeUser(profile, idToken));
 
         // redirect to the path the user was trying to get to, or the same page
@@ -98,8 +98,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
 
   if (action.type === AT.AUTH0_LOGOUT) {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('profile');
+    localStorage.removeItem('NYCPlanning_profile');
+    localStorage.removeItem('NYCPlanning_idToken');
     dispatch(authActions.deauthorizeUser());
     browserHistory.push('/');
   }
@@ -123,8 +123,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
           return;
         }
 
-        localStorage.setItem('profile', JSON.stringify(profile));
-        localStorage.setItem('id_token', idToken);
+        localStorage.setItem('NYCPlanning_profile', JSON.stringify(profile));
+        localStorage.setItem('NYCPlanning_idToken', idToken);
         dispatch(authActions.authorizeUser(profile, idToken));
 
         // redirect to the path the user was trying to get to, or the same page
