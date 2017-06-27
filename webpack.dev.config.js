@@ -1,51 +1,66 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin'); // eslint-disable-line
-const Dotenv = require('dotenv-webpack'); // eslint-disable-line
+const Dotenv = require('dotenv-webpack');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const appPath = path.join(__dirname, 'app');
+const distPath = path.join(__dirname, 'public');
+const exclude = /node_modules/;
 const extractSass = new ExtractTextPlugin('css/bundle.css');
 
 module.exports = {
-  entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8080',
-    'webpack/hot/only-dev-server',
-    'babel-polyfill',
-    './main.jsx',
-  ],
-  output: {
-    path: path.join(__dirname, './public'),
-    filename: 'js/bundle.js',
-    publicPath: '/',
+
+  context: appPath,
+
+  entry: {
+    app: 'main.js',
   },
-  devtool: 'source-map',
+
   resolve: {
-    extensions: ['.js', '.jsx'],
     modules: [
       'node_modules',
-      path.join(__dirname, 'node_modules'),
+      appPath
     ],
+
+    extensions: ['.js', '.jsx'],
   },
+
+  output: {
+    path: distPath,
+    filename: 'bundle.[hash].js',
+    publicPath: '/',
+  },
+
+  devtool: 'source-map',
+
+  plugins: [
+    extractSass,
+    new Dotenv(),
+    new HtmlWebpackPlugin({
+      inject: 'body',
+      template: 'index.html'
+    }),
+  ],
+
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         enforce: 'pre',
-        exclude: /(node_modules|capitalprojectsold|jane-maps)/,
+        exclude: exclude,
         use: [
           {
             loader: 'eslint-loader',
-            options: {
-              emitWarning: true,
-            },
+            options: { emitWarning: true },
           },
         ],
       },
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules)/,
+        exclude: exclude,
         use: [
-          {
-            loader: 'react-hot-loader',
-          },
+          { loader: 'react-hot-loader' },
           {
             loader: 'babel-loader',
             query: {
@@ -57,17 +72,16 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: exclude,
         use: ['babel-loader'],
       },
       {
         test: /\.scss$/,
         use: extractSass.extract({
-          use: [{
-            loader: 'css-loader',
-          }, {
-            loader: 'sass-loader',
-          }],
+          use: [
+            { loader: 'css-loader' },
+            { loader: 'sass-loader' },
+          ],
           // use style-loader in development
           fallback: 'style-loader',
         }),
@@ -75,17 +89,11 @@ module.exports = {
       {
         test: /\.css$/,
         use: extractSass.extract({
-          use: [{
-            loader: 'css-loader',
-          }],
+          use: [{ loader: 'css-loader' }],
           // use style-loader in development
           fallback: 'style-loader',
         }),
       },
     ],
   },
-  plugins: [
-    extractSass,
-    new Dotenv(),
-  ],
 };

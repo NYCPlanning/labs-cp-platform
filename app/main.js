@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
@@ -6,9 +7,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Provider } from 'react-redux';
 
-import store from './app/store';
-import routes from './app/routes';
-import appConfig from './app/helpers/appConfig';
+import store from './store';
+import routes from './routes';
+import appConfig from './helpers/appConfig';
 
 // initialize google analytics
 ReactGA.initialize(appConfig.ga_tracking_code);
