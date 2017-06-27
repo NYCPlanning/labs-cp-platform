@@ -1,6 +1,7 @@
 import * as AT from '../constants/actionTypes';
 import appConfig from '../helpers/appConfig';
 import ReactGA from 'react-ga';
+import _ from 'lodash';
 
 // ReactGA.initialize(appConfig.ga_tracking_code);
 
@@ -8,7 +9,7 @@ const analyticsMiddleware = ({ getState, dispatch }) => next => (action) => {
   if (action.type === AT.AUTHORIZE_USER) {
     ReactGA.set({
       userId: action.payload.profile.email,
-      dimension1: action.payload.profile.user_metadata.agency || 'Unknown'
+      dimension1: _.get(action.payload.profile, 'user_metadata.agency', 'Unknown'),
     });
   }
 
