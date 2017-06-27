@@ -223,7 +223,7 @@ class AdminBoundariesJaneLayer extends React.Component {
       <JaneLayer
         id="admin_boundaries"
         name="Admin Boundaries"
-        icon="subway"
+        icon="flag"
         defaultSelected={this.props.defaultSelected}
         defaultDisabled={this.props.defaultDisabled}
         component={<SidebarComponent selected={this.state.selected} onRadioChange={this.onRadioChange} />}
