@@ -22,5 +22,5 @@ Login.propTypes = {
 };
 
 export default connect(null, {
-  login: authActions.login
+  login: authActions.login,
 })(Login);

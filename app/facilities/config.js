@@ -26,7 +26,7 @@ function checkAllSelected(layers, context) {
 const getSelectedFacilitiesLayers = (selected) => {
   const defaultLayersCopy = JSON.parse(JSON.stringify(defaultLayers));
 
-  switch(selected) {
+  switch (selected) {
     case 'all':
       return checkAllLayers(defaultLayersCopy, true);
 

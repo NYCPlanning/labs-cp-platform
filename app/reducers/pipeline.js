@@ -81,7 +81,7 @@ const pipelineReducer = (state = initialState, action) => {
         filterDimensions: dimensions,
         issueDateFilterDisabled: isIssueDateDisabled(dimensions),
         completionDateFilterDisabled: isCompletionDateDisabled(dimensions),
-        sql: getSql(dimensions)
+        sql: getSql(dimensions),
       });
 
     default:

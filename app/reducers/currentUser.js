@@ -3,7 +3,7 @@ import * as AT from '../constants/actionTypes';
 const initialState = {
   profile: null,
   token: null,
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 const currentUserReducer = (state = initialState, action) => {

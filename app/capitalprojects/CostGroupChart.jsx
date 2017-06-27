@@ -133,9 +133,9 @@ CostGroupChart.propTypes = {
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
-  costGroupData: capitalProjects.costGroupData
+  costGroupData: capitalProjects.costGroupData,
 });
 
 export default connect(mapStateToProps, {
-  fetchCostGroupData: capitalProjectsActions.fetchCostGroupData
+  fetchCostGroupData: capitalProjectsActions.fetchCostGroupData,
 })(CostGroupChart);

@@ -134,5 +134,5 @@ const mapStateToProps = ({ currentUser }) => ({
 
 // Wrap your form in the higher-order component
 export default connect(mapStateToProps, {
-  login: authActions.login
+  login: authActions.login,
 })(reformed()(FeedbackForm));

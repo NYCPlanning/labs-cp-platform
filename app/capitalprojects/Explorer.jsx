@@ -101,7 +101,7 @@ class CapitalProjectsExplorer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.pointsSql !== nextProps.pointsSql ||
-        this.props.polygonsSql !== nextProps.polygonsSql ) {
+        this.props.polygonsSql !== nextProps.polygonsSql) {
       this.props.setSelectedFeatures([]);
     }
   }
@@ -198,7 +198,7 @@ class CapitalProjectsExplorer extends React.Component {
             name="Capital Projects"
             icon="usd"
             component={<CapitalProjectsComponent />}
-            defaultSelected={true}
+            defaultSelected
           >
 
             <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions} />

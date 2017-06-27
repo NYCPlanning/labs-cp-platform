@@ -54,7 +54,6 @@ const lockOptions = {
 };
 
 const authMiddleware = ({ getState, dispatch }) => next => (action) => {
-
   if (getState().currentUser.token && isTokenExpired(getState().currentUser.token)) {
     dispatch(authActions.deauthorizeUser());
   }

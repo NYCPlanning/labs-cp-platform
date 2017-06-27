@@ -105,6 +105,6 @@ export const fetchCostGroupData = (pointsSql, polygonsSql) => {
       sql,
       requestFormat: 'json',
       nextType: AT.FETCH_COST_GROUP_DATA,
-    }
+    },
   };
 };

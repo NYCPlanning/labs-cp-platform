@@ -70,7 +70,7 @@ FeedbackPage.propTypes = {
 };
 
 const mapStateToProps = ({ currentUser }) => ({
-  token: currentUser.token
+  token: currentUser.token,
 });
 
 export default connect(mapStateToProps)(FeedbackPage);

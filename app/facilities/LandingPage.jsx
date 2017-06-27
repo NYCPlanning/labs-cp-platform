@@ -92,7 +92,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Emergency Services': { 'Fire Services': null },
                               'Public Safety': { 'Police Services': null },
                             },
-                          }}),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -123,7 +123,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Youth Services': null,
                               Camps: null,
                             },
-                          }}),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -148,7 +148,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Parks and Plazas': {
                                 'Privately Owned Public Space': null },
                             },
-                          }}),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -193,7 +193,7 @@ class FacilitiesLandingPage extends React.Component {
                               'Public Safety': { 'School-Based Safety Program': null },
                             },
                             'Core Infrastructure and Transportation': { 'Solid Waste': { 'Solid Waste Transfer and Carting': null } },
-                          }}),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({

@@ -19,5 +19,5 @@ const SignupPrompt = ({ signUp }) => (
 );
 
 export default connect(null, {
-  signUp: authActions.signUp
+  signUp: authActions.signUp,
 })(SignupPrompt);

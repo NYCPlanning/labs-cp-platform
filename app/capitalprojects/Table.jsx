@@ -33,7 +33,7 @@ class CPTable extends React.Component { // eslint-disable-line
         props.capitalProjectDetails,
         props.filterBy,
         props.colSortDirs,
-      )
+      ),
     };
   }
 

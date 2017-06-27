@@ -27,6 +27,6 @@ export const deauthorizeUser = () => ({
   type: AT.DEAUTHORIZE_USER,
 });
 
-export const ensureAccess = (permission) => ({
+export const ensureAccess = permission => ({
   type: AT.ENSURE_ACCESS,
 });

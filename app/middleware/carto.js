@@ -27,14 +27,14 @@ const cartoMiddleware = ({ getState, dispatch }) => next => (action) => {
   requestCache.push(requestId);
 
   $.getJSON(generateUrlString(sql, requestFormat))
-    .done((data)=> {
+    .done((data) => {
       if (requestCache.indexOf(requestId) === -1) {
         return;
       }
 
       return requestFormat === 'geojson'
         ? dispatch({ type: nextType.SUCCESS, payload: data })
-        : dispatch({ type: nextType.SUCCESS, payload: data.rows })
+        : dispatch({ type: nextType.SUCCESS, payload: data.rows });
     })
     .fail(error => dispatch({ type: nextType.FAILURE, payload: error }));
 

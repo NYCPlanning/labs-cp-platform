@@ -69,7 +69,7 @@ const facilitiesReducer = (state = initialState, action) => {
           .st_extent
           .match(/\(([^)]+)\)/)[1]
           .split(',')
-          .map(pair => pair.split(' '))
+          .map(pair => pair.split(' ')),
       });
 
     default:

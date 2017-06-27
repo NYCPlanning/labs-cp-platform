@@ -72,7 +72,7 @@ class ModalMap extends React.Component {
               id="modalMapMarker"
               hidden
             >
-              <Marker feature={feature} label={label} flyTo={true}/>
+              <Marker feature={feature} label={label} flyTo />
             </JaneLayer>
           }
           { geometry.type !== 'Point' &&
@@ -83,11 +83,13 @@ class ModalMap extends React.Component {
               hidden
             >
               <Source id="feature" type="geojson" data={feature} />
-              <MapLayer id="feature" source="feature" type="fill" paint={{
-                'fill-color': 'steelblue',
-                'fill-opacity': 0.75,
-                'fill-antialias': true,
-              }}/>
+              <MapLayer
+                id="feature" source="feature" type="fill" paint={{
+                  'fill-color': 'steelblue',
+                  'fill-opacity': 0.75,
+                  'fill-antialias': true,
+                }}
+              />
             </JaneLayer>
           }
         </Jane>

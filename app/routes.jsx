@@ -34,35 +34,33 @@ const AuthSuccess = () => (
   <div />
 );
 
-const ensureAccess = (permission) => (WrappedComponent) => {
-  return class EnsureAccess extends React.Component {
-    static displayName = `ensureAccess${WrappedComponent.name}`;
+const ensureAccess = permission => WrappedComponent => class EnsureAccess extends React.Component {
+  static displayName = `ensureAccess${WrappedComponent.name}`;
 
-    componentWillMount() {
-      const { profile, isLoggedIn } = store.getState().currentUser;
+  componentWillMount() {
+    const { profile, isLoggedIn } = store.getState().currentUser;
 
-      const permissions = profile && profile.permissions;
+    const permissions = profile && profile.permissions;
 
-      if ((permissions && permissions.indexOf(permission) === -1) || !isLoggedIn) {
+    if ((permissions && permissions.indexOf(permission) === -1) || !isLoggedIn) {
         // if trying to load homepage, reroute to facilities, else reroute to not found
-        if (this.props.location.pathname === '/') {
-          browserHistory.replace({ pathname: '/facilities' });
-        } else {
-          browserHistory.replace({
-            pathname: '/login',
-            state: {
-              targetPath: this.props.location.pathname,
-            },
-          });
-        }
+      if (this.props.location.pathname === '/') {
+        browserHistory.replace({ pathname: '/facilities' });
+      } else {
+        browserHistory.replace({
+          pathname: '/login',
+          state: {
+            targetPath: this.props.location.pathname,
+          },
+        });
       }
     }
-
-    render() {
-      return <WrappedComponent {...this.props}/>;
-    }
   }
-};
+
+  render() {
+    return <WrappedComponent {...this.props} />;
+  }
+  };
 
 const ensureSitewideAccess = ensureAccess('sitewide_access');
 

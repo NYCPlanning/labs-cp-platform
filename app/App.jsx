@@ -47,5 +47,5 @@ App.propTypes = {
 };
 
 export default connect(null, {
-  loadCredentials: authActions.loadCredentials
+  loadCredentials: authActions.loadCredentials,
 })(App);
