@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reducers/modalReducer CLOSE_MODAL 1`] = `null`;
+
+exports[`reducers/modalReducer CLOSE_MODAL 2`] = `null`;
+
+exports[`reducers/modalReducer OPEN_MODAL - reopen existing modal 1`] = `
+Object {
+  "modalCloseText": "New Close Text",
+  "modalContent": "New Modal Content",
+  "modalHeading": "New Modal Heading",
+}
+`;
+
+exports[`reducers/modalReducer OPEN_MODAL 1`] = `
+Object {
+  "modalCloseText": "Close Text",
+  "modalContent": "Modal Content",
+  "modalHeading": "Modal Heading",
+}
+`;
