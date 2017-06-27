@@ -23,6 +23,7 @@ module.exports = {
       appPath
     ],
 
+    symlinks: false,
     extensions: ['.js', '.jsx'],
   },
 
