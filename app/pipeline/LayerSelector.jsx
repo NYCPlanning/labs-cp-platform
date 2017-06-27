@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../common/CountWidget';
 import Checkboxes from './Checkboxes';
-import PipelineActions from '../actions/PipelineActions';
-import PipelineStore from '../stores/PipelineStore';
+import * as pipelineActions from '../actions/pipeline';
 
 import RangeSlider from '../common/RangeSlider';
 import SimpleRangeInputs from '../common/SimpleRangeInputs';
@@ -16,25 +16,20 @@ import './LayerSelector.scss';
 
 class LayerSelector extends React.Component {
   handleFilterDimensionChange = (dimension, values) => {
-    PipelineActions.onFilterDimensionChange(dimension, values);
-  }
+    this.props.setFilterDimension(dimension, values);
+  };
 
   handleSymbologyDimensionChange = (symbologyDimension) => {
-    PipelineActions.onSymbologyDimensionChange(symbologyDimension);
-  }
+    this.props.setSymbology(symbologyDimension);
+  };
 
   handleSliderChange = (dimension, data) => {
-    PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
-  }
-
-  handleInputChange = (e) => { // handles changes to the manual inputs for total units
-    e.preventDefault();
-    PipelineActions.onFilterDimensionChange('dcp_units_use_map', [this.unitsMin.value, this.unitsMax.value]);
-  }
+    this.props.setFilterDimension(dimension, [data.from, data.to]);
+  };
 
   resetFilter = () => {
-    PipelineActions.resetFilter();
-  }
+    this.props.resetFilter();
+  };
 
   render() {
     // override material ui ListItem spacing
@@ -47,10 +42,9 @@ class LayerSelector extends React.Component {
       totalCount,
       selectedCount,
       symbologyDimension,
+      issueDateFilterDisabled,
+      completionDateFilterDisabled,
     } = this.props;
-
-    const issueDateFilterDisabled = PipelineStore.issueDateFilterDisabled();
-    const completionDateFilterDisabled = PipelineStore.completionDateFilterDisabled();
 
     const PinSelect = (props) => {
       const style = {
@@ -213,6 +207,17 @@ LayerSelector.propTypes = {
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
   symbologyDimension: PropTypes.string.isRequired,
+  issueDateFilterDisabled: PropTypes.bool,
+  completionDateFilterDisabled: PropTypes.bool,
 };
 
-module.exports = LayerSelector;
+const mapStateToProps = ({ pipeline }) => ({
+  issueDateFilterDisabled: pipeline.issueDateFilterDisabled,
+  completionDateFilterDisabled: pipeline.completionDateFilterDisabled,
+});
+
+export default connect(mapStateToProps, {
+  resetFilter: pipelineActions.resetFilter,
+  setFilterDimension: pipelineActions.setFilterDimension,
+  setSymbology: pipelineActions.setSymbology,
+})(LayerSelector);

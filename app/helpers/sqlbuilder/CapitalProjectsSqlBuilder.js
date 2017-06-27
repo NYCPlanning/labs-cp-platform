@@ -1,6 +1,28 @@
 /* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
 
+export const sqlConfig = {
+  columns: '*',
+  combinedTable: `(
+      SELECT the_geom, magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM (
+        SELECT magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype
+        FROM cpdb_projects_combined
+      ) a LEFT JOIN (
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_pts
+        UNION ALL
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_poly
+      ) b ON a.maprojid = b.projid
+    )x`,
+  tableName: 'tablenameplaceholder',
+  pointsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_pts a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+  polygonsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_poly a LEFT JOIN cpdb_projects_combined b ON a.maprojid = b.maprojid) x',
+};
+
+export const tableSqlConfig = {
+  columns: 'magency, magencyacro, sagencyacro, maprojid, description, totalcommit, totalspend, projecttype',
+  tableName: 'cpdb_projects_combined',
+};
+
 class CapitalProjectsSqlBuilder extends SqlBuilder {
   // chunker for "active years"
   capitalProjectsDateRange(dimension, filters) {
@@ -44,4 +66,22 @@ class CapitalProjectsSqlBuilder extends SqlBuilder {
 
 Object.assign(CapitalProjectsSqlBuilder, SqlBuilder);
 
-export default CapitalProjectsSqlBuilder;
+const sqlBuilder = new CapitalProjectsSqlBuilder(sqlConfig.columns, sqlConfig.tableName);
+const tableSqlBuilder = new CapitalProjectsSqlBuilder(tableSqlConfig.columns, tableSqlConfig.tableName);
+
+export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);
+export const getTableSql = filterDimensions => tableSqlBuilder.buildSql(filterDimensions);
+export const getPointsSql = filterDimensions => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
+export const getPolygonsSql = filterDimensions => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
+
+export const unionSql = (filterDimensions) => {
+  const pointsSql = getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
+  const polygonsSql = getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
+
+  return `
+    ${pointsSql}
+    UNION ALL
+    ${polygonsSql}
+  `;
+};
+

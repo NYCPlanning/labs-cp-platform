@@ -1,112 +1,272 @@
 // Explorer.jsx - Top level Component for the Facilities Explorer
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import { Jane, JaneLayer } from 'jane-maps';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
-import CapitalProjectsStore from '../stores/CapitalProjectsStore';
-import CapitalProjectsActions from '../actions/CapitalProjectsActions';
-import supportingLayers from '../janelayers/supportingLayers';
+import * as capitalProjectsActions from '../actions/capitalProjects';
+import {
+  AerialsJaneLayer,
+  TransportationJaneLayer,
+  FloodHazardsJaneLayer, ZoningJaneLayer,
+  AdminBoundariesJaneLayer,
+} from '../janelayers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import CPListItem from './CPListItem';
 import SCAListItem from './SCAListItem';
 import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
-import { mapInit, searchConfig } from '../helpers/appConfig';
+import appConfig from '../helpers/appConfig';
 
 import './styles.scss';
 
+const { mapboxGLOptions, searchConfig } = appConfig;
+
+const SCAPointsSourceOptions = {
+  carto_user: appConfig.carto_user,
+  carto_domain: appConfig.carto_domain,
+  sql: ['SELECT * FROM cpdb_sca_pts'],
+};
+
+const SCAPointsPaint = {
+  'circle-radius': {
+    stops: [
+      [10, 2],
+      [15, 6],
+    ],
+  },
+  'circle-color': '#5C99FF',
+  'circle-opacity': 0.7,
+};
+
+const SCAOutlinePaint = {
+  'circle-radius': {
+    stops: [
+      [10, 3],
+      [15, 7],
+    ],
+  },
+  'circle-color': '#012700',
+  'circle-opacity': 0.7,
+};
+
+const capitalProjectsPolygonsPaint = {
+  'fill-color': {
+    property: 'totalspend',
+    stops: [
+      [0, '#8B8C98'],
+      [1, '#d98127'],
+    ],
+  },
+  'fill-opacity': 0.75,
+  'fill-antialias': true,
+};
+
+const capitalProjectsPointsPaint = {
+  'circle-radius': {
+    stops: [
+      [10, 2],
+      [15, 6],
+    ],
+  },
+  'circle-color': {
+    property: 'totalspend',
+    stops: [
+      [0, '#8B8C98'],
+      [1, '#d98127'],
+    ],
+  },
+  'circle-opacity': 0.7,
+};
+
+const capitalProjectsPointsOutlinePaint = {
+  'circle-radius': {
+    stops: [
+      [10, 3],
+      [15, 7],
+    ],
+  },
+  'circle-color': '#012700',
+  'circle-opacity': 0.7,
+};
+
 class CapitalProjectsExplorer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedFeatures: CapitalProjectsStore.selectedFeatures,
-    };
+  constructor() {
+    super();
+
+    this.selectedFeaturesCache = [];
   }
 
-  componentWillMount() {
-    CapitalProjectsActions.resetFilter();
+  componentWillReceiveProps(nextProps) {
+    if (this.props.pointsSql !== nextProps.pointsSql ||
+        this.props.polygonsSql !== nextProps.polygonsSql ) {
+      this.props.setSelectedFeatures([]);
+    }
   }
 
-  componentDidMount() {
-    CapitalProjectsStore.on('capitalProjectsUpdated', () => {
-      const selectedFeatures = CapitalProjectsStore.selectedFeatures;
-      this.setState({ selectedFeatures });
-    });
+  componentWillUnmount() {
+    this.props.resetFilter();
   }
 
   clearSelectedFeatures = () => {
-    CapitalProjectsActions.setSelectedFeatures([]);
-  }
+    this.props.setSelectedFeatures([]);
+  };
 
   handleMapLayerClick = (features) => {
-    // set selectedFeatures to [] will cause the right drawer to animate away,
-    // then setting the new data will bring it back
-    // TODO move this to the store, or figure out how to implement it with ReactCSSTransitionGroup
-    CapitalProjectsActions.setSelectedFeatures([]);
-    setTimeout(() => {
-      CapitalProjectsActions.setSelectedFeatures(features);
-    }, 450);
-  }
+    this.selectedFeaturesCache.push(...features);
+    this.setSelectedFeatures();
+  };
+
+  setSelectedFeatures = _.debounce(() => {
+    this.props.setSelectedFeatures(this.selectedFeaturesCache);
+    this.selectedFeaturesCache = [];
+  }, 50);
 
   render() {
-    const { selectedFeatures } = this.state;
+    const { selectedFeatures } = this.props;
 
     const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
 
-    const listItems = selectedFeatures.map((feature) => {
-      if (selectedFeaturesSource === 'capital-projects') {
-        return <CPListItem feature={feature} key={feature.id} />;
-      }
-
-      return <SCAListItem feature={feature} key={feature.id} />;
-    });
-
-    const selectedFeaturesPane = (
-      <SelectedFeaturesPane>
-        {listItems}
-      </SelectedFeaturesPane>
+    const listItems = selectedFeatures.map(feature =>
+      selectedFeaturesSource === 'capital-projects'
+        ? <CPListItem feature={feature} key={feature.id} />
+        : <SCAListItem feature={feature} key={feature.id} />,
     );
+
+    const capitalProjectsSourceOptions = {
+      carto_user: appConfig.carto_user,
+      carto_domain: appConfig.carto_domain,
+      sql: [this.props.pointsSql, this.props.polygonsSql],
+    };
 
     return (
       <div className="full-screen cp-explorer">
         <Jane
-          mapInit={mapInit}
-          layerContentVisible
+          mapboxGLOptions={mapboxGLOptions}
           search
           searchConfig={searchConfig}
-          initialSelectedJaneLayer={'capital-projects'}
-          initialDisabledJaneLayers={[
-            'transportation',
-            'adminboundaries',
-            'zoning',
-            'aerials',
-          ]}
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
+          onLayerToggle={this.clearSelectedFeatures}
         >
-          {supportingLayers.aerials}
-          {supportingLayers.adminboundaries}
-          {supportingLayers.zoning}
-          {supportingLayers.transportation}
+          <AerialsJaneLayer defaultDisabled />
+          <TransportationJaneLayer defaultDisabled />
+          <FloodHazardsJaneLayer defaultDisabled />
+          <AdminBoundariesJaneLayer defaultDisabled />
+          <ZoningJaneLayer defaultDisabled />
+
           <JaneLayer
             id="scaplan"
             name="SCA Capital Plan"
             icon="graduation-cap"
-            onMapLayerClick={this.handleMapLayerClick}
             component={<SCAPlanComponent />}
-          />
+          >
+
+            <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions} />
+
+            <MapLayer
+              id="sca-points-points"
+              source="sca-points"
+              sourceLayer="layer0"
+              onClick={this.handleMapLayerClick}
+              type="circle"
+              paint={SCAPointsPaint}
+            />
+
+            <MapLayer
+              id="sca-points-outline"
+              source="sca-points"
+              sourceLayer="layer0"
+              type="circle"
+              paint={SCAOutlinePaint}
+            />
+
+            <Legend>
+              <div className="legendSection">
+                <div className="legendItem">
+                  <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
+                  <div className="legendItemText">SCA Projects</div>
+                </div>
+              </div>
+            </Legend>
+          </JaneLayer>
+
           <JaneLayer
             id="capital-projects"
             name="Capital Projects"
             icon="usd"
-            onMapLayerClick={this.handleMapLayerClick}
             component={<CapitalProjectsComponent />}
-          />
+            defaultSelected={true}
+          >
+
+            <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions} />
+
+            <MapLayer
+              id="capital-projects-polygons"
+              source="capital-projects"
+              sourceLayer="layer1"
+              onClick={this.handleMapLayerClick}
+              type="fill"
+              paint={capitalProjectsPolygonsPaint}
+            />
+
+            <MapLayer
+              id="capital-projects-points"
+              source="capital-projects"
+              sourceLayer="layer0"
+              onClick={this.handleMapLayerClick}
+              type="circle"
+              paint={capitalProjectsPointsPaint}
+            />
+
+            <MapLayer
+              id="capital-projects-points-outline"
+              source="capital-projects"
+              sourceLayer="layer0"
+              type="circle"
+              paint={capitalProjectsPointsOutlinePaint}
+            />
+
+            <Legend>
+              <div className="legendSection">
+                <div className="legendItem">
+                  <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
+                  <div className="legendItemText">Planned Projects</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorBox" style={{ backgroundColor: '#d98127' }} />
+                  <div className="legendItemText">Ongoing Projects</div>
+                </div>
+              </div>
+            </Legend>
+          </JaneLayer>
         </Jane>
-        {selectedFeaturesPane}
+
+        <SelectedFeaturesPane>
+          {listItems}
+        </SelectedFeaturesPane>
       </div>
     );
   }
 }
 
-module.exports = CapitalProjectsExplorer;
+CapitalProjectsExplorer.propTypes = {
+  pointsSql: PropTypes.string,
+  polygonsSql: PropTypes.string,
+  setSelectedFeatures: PropTypes.func.isRequired,
+  selectedFeatures: PropTypes.array.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ capitalProjects }) => ({
+  pointsSql: capitalProjects.pointsSql,
+  polygonsSql: capitalProjects.polygonsSql,
+  selectedFeatures: capitalProjects.selectedFeatures,
+});
+
+export default connect(mapStateToProps, {
+  setSelectedFeatures: capitalProjectsActions.setSelectedFeatures,
+  resetFilter: capitalProjectsActions.resetFilter,
+})(CapitalProjectsExplorer);

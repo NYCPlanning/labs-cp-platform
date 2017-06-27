@@ -5,16 +5,61 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import NestedSelect from './NestedSelect';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
 import Checkbox from '../common/Checkbox';
-import FacilitiesActions from '../actions/FacilitiesActions';
-import FacilitiesStore from '../stores/FacilitiesStore';
+import * as facilityActions from '../actions/facilities';
 
 import './LayerSelector.scss';
+
+// iterates over all facsubgrp options, sets check/indeterminate status of parents
+// updates this.checkStatus (used to know whether all, none, or some are currently selected)
+function processChecked(layers) {
+  let allChecked = 0;
+  let allIndeterminate = 0;
+  // set indeterminate states, start from the bottom and work up
+  layers.forEach((facdomain) => {
+    let facdomainChecked = 0;
+    let facdomainIndeterminate = 0;
+
+    facdomain.children.forEach((group) => {
+      let groupChecked = 0;
+
+      group.children.forEach((subgroup) => {
+        if (subgroup.checked) groupChecked += 1;
+      });
+
+      group.checked = (groupChecked === group.children.length);
+      group.indeterminate = (groupChecked < group.children.length) && groupChecked > 0;
+
+      if (group.checked) facdomainChecked += 1;
+      if (group.indeterminate) facdomainIndeterminate += 1;
+    });
+
+    facdomain.checked = (facdomainChecked === facdomain.children.length);
+    if (facdomain.checked) allChecked += 1;
+
+    facdomain.indeterminate = (facdomainIndeterminate > 0) || ((facdomainChecked < facdomain.children.length) && facdomainChecked > 0);
+    if (facdomain.indeterminate) allIndeterminate += 1;
+  });
+
+  let checkStatus;
+  // figure out whether all, none, or some are checked
+  if (allChecked === layers.length) {
+    checkStatus = 'all';
+  } else if (allChecked === 0 && allIndeterminate === 0) {
+    checkStatus = 'none';
+  } else {
+    checkStatus = null;
+  }
+
+  return { layers, checkStatus };
+}
 
 class LayerSelector extends React.Component {
   constructor(props) {
@@ -22,33 +67,52 @@ class LayerSelector extends React.Component {
     this.state = { expanded: false };
   }
 
+  componentDidMount() {
+    this.props.fetchTotalFacilitiesCount();
+    this.props.fetchSelectedFacilitiesCount(this.props.filterDimensions);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.fetchSelectedFacilitiesCount(nextProps.filterDimensions);
+    }
+  }
+
   componentDidUpdate() {
     if (this.state.expanded === true || this.state.expanded === false) this.setState({ expanded: null }); // eslint-disable-line react/no-did-update-set-state
   }
 
   updateFilterDimension = (dimension, values) => {
-    FacilitiesActions.onFilterDimensionChange(dimension, values);
-  }
+    this.props.setFilterDimension(dimension, values);
+  };
 
-  handleToggleAll = () => {
-    FacilitiesActions.onToggleAll();
-  }
+  handleToggleAll = (checkStatus) => {
+    const filterDimensions = _.cloneDeep(this.props.filterDimensions);
+    const allChecked = checkStatus === 'all';
+
+    filterDimensions.facsubgrp.values.forEach(facdomain =>
+      facdomain.children.forEach(group =>
+        group.children.forEach(subgroup =>
+          subgroup.checked = !allChecked)));
+
+    this.props.setFilters(filterDimensions);
+  };
 
   expandAll = () => {
     this.setState({ expanded: true });
-  }
+  };
 
   collapseAll = () => {
     this.setState({ expanded: false });
-  }
+  };
 
   handleLayerUpdate = (layers) => {
     this.updateFilterDimension('facsubgrp', layers);
-  }
+  };
 
   resetFilter = () => {
-    FacilitiesActions.resetFilter();
-  }
+    this.props.resetFilter();
+  };
 
   render() {
     const { totalCount, selectedCount, filterDimensions } = this.props;
@@ -60,7 +124,7 @@ class LayerSelector extends React.Component {
       fontSize: '14px',
     };
 
-    const checkStatus = FacilitiesStore.checkStatus;
+    const { layers, checkStatus } = processChecked(facsubgrp.values);
 
     return (
       <div className="sidebar-tab-content facilities-filter">
@@ -121,7 +185,7 @@ class LayerSelector extends React.Component {
               value={'allChecked'}
               checked={checkStatus === 'all'}
               indeterminate={checkStatus !== 'all' && checkStatus !== 'none'}
-              onChange={this.handleToggleAll}
+              onChange={() => { this.handleToggleAll(checkStatus); }}
             />
             All
             <div className="expand-collapse">
@@ -134,7 +198,7 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <NestedSelect
-              layers={facsubgrp.values}
+              layers={layers}
               onUpdate={this.handleLayerUpdate}
               initiallyOpen={false}
               expanded={this.state.expanded}
@@ -153,9 +217,25 @@ LayerSelector.defaultProps = {
 };
 
 LayerSelector.propTypes = {
+  sql: PropTypes.string,
   filterDimensions: PropTypes.object,
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
+  fetchTotalFacilitiesCount: PropTypes.func.isRequired,
+  fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
 };
 
-module.exports = LayerSelector;
+const mapStateToProps = ({ facilities }) => ({
+  filterDimensions: facilities.filterDimensions,
+  sql: facilities.sql,
+  totalCount: facilities.totalCount,
+  selectedCount: facilities.selectedCount,
+});
+
+export default connect(mapStateToProps, {
+  fetchTotalFacilitiesCount: facilityActions.fetchTotalCount,
+  fetchSelectedFacilitiesCount: facilityActions.fetchSelectedCount,
+  setFilters: facilityActions.setFilters,
+  resetFilter: facilityActions.resetFilter,
+  setFilterDimension: facilityActions.setFilterDimension,
+})(LayerSelector);

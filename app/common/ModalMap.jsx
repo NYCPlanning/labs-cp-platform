@@ -7,18 +7,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import { Jane, JaneLayer } from 'jane-maps';
-
-import supportingLayers from '../janelayers/supportingLayers';
-import TravelshedComponent from '../janelayers/travelshed/Component';
+import { Jane, JaneLayer, Marker, Source, MapLayer } from 'jane-maps';
+import {
+  AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer, ZoningJaneLayer,
+} from '../janelayers';
 import appConfig from '../helpers/appConfig';
-import PolygonJaneLayerComponent from './PolygonJaneLayerComponent';
 
 class ModalMap extends React.Component {
   componentDidMount() {
     // get the mapbox GL map object
-    this.map = this.janeMap.map.mapObject;
-
     if (this.props.feature.geometry.type !== 'Point') {
       const bounds = extent(this.props.feature.geometry);
       const glBounds = [[bounds[0], bounds[1]], [bounds[2], bounds[3]]];
@@ -28,17 +25,17 @@ class ModalMap extends React.Component {
   }
 
   getCenter = () => {
-    const feature = this.props.feature;
+    const { feature } = this.props;
     // single points get flyTo(), everything else gets fitBounds()
     if (feature.geometry.type === 'Point') {
       return feature.geometry.coordinates;
     }
 
     return centroid(feature).geometry.coordinates; // get the centroid
-  }
+  };
 
   render() {
-    const feature = this.props.feature;
+    const { feature, label } = this.props;
     const geometry = feature.geometry;
 
     let center;
@@ -48,7 +45,7 @@ class ModalMap extends React.Component {
       center = centroid(feature).geometry.coordinates;
     }
 
-    const mapInit = {
+    const mapboxGLOptions = {
       mapbox_accessToken: appConfig.mapbox_accessToken,
       center,
       zoom: 12,
@@ -62,38 +59,36 @@ class ModalMap extends React.Component {
     return (
       <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
-          mapInit={mapInit}
-          poiFeature={geometry.type === 'Point' ? this.props.feature : null}
-          poiLabel={geometry.type === 'Point' ? this.props.label : null}
-          initialDisabledJaneLayers={['transportation', 'aerials', 'adminboundaries', 'travelshed']}
-          ref={x => (this.janeMap = x)}
+          mapboxGLOptions={mapboxGLOptions}
+          ref={node => (this.map = node && node.GLMap.map)}
         >
+          <AerialsJaneLayer defaultDisabled />
+          <TransportationJaneLayer defaultDisabled />
+          <FloodHazardsJaneLayer defaultDisabled />
+          <ZoningJaneLayer defaultDisabled />
           {
             geometry.type === 'Point' &&
             <JaneLayer
-              id="travelshed"
-              name="Travelshed"
-              icon="road"
-              component={<TravelshedComponent
-                feature={feature}
-              />}
-            />
+              id="modalMapMarker"
+              hidden
+            >
+              <Marker feature={feature} label={label} flyTo={true}/>
+            </JaneLayer>
           }
-          {supportingLayers.aerials}
-          {supportingLayers.adminboundaries}
-          {supportingLayers.transportation}
           { geometry.type !== 'Point' &&
             <JaneLayer
               id="feature"
               name="Feature"
               icon="map-marker"
               hidden
-              component={
-                <PolygonJaneLayerComponent
-                  feature={feature}
-                />
-              }
-            />
+            >
+              <Source id="feature" type="geojson" data={feature} />
+              <MapLayer id="feature" source="feature" type="fill" paint={{
+                'fill-color': 'steelblue',
+                'fill-opacity': 0.75,
+                'fill-antialias': true,
+              }}/>
+            </JaneLayer>
           }
         </Jane>
       </div>
@@ -110,4 +105,4 @@ ModalMap.propTypes = {
   label: PropTypes.string,
 };
 
-module.exports = ModalMap;
+export default ModalMap;

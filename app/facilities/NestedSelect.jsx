@@ -119,10 +119,7 @@ class NestedSelect extends React.Component {
     const listItems = this.composeListItems(layers, []);
 
     return (
-
-      <List
-        className="nested-select"
-      >
+      <List className="nested-select">
         { listItems }
       </List>
     );

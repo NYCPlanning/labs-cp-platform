@@ -73,4 +73,4 @@ DownloadTable.defaultProps = {
   onDownload: () => {},
 };
 
-module.exports = DownloadTable;
+export default DownloadTable;

@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
-
-import AuthService from '../helpers/AuthService';
-import { api_domain } from '../helpers/appConfig';
+import { connect } from 'react-redux';
 
 import './FeedbackPage.scss';
 
@@ -15,7 +13,7 @@ class FeedbackPage extends React.Component {
   }
 
   componentDidMount() {
-    const jwt = AuthService.getToken();
+    const jwt = this.props.token;
 
     $.ajax({ // eslint-disable-line no-undef
       url: `//${api_domain}/feedback/list/${this.props.params.type}`,
@@ -71,4 +69,8 @@ FeedbackPage.propTypes = {
   params: PropTypes.object.isRequired,
 };
 
-export default FeedbackPage;
+const mapStateToProps = ({ currentUser }) => ({
+  token: currentUser.token
+});
+
+export default connect(mapStateToProps)(FeedbackPage);

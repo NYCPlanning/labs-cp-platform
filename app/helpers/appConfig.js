@@ -34,7 +34,7 @@ const appConfig = {
 
   // Using the getter syntax to access the object 'this'
   // (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)
-  get mapInit() {
+  get mapboxGLOptions() {
     return {
       mapbox_accessToken: this.mapbox_accessToken,
       center: [-74.0058, 40.7094],
@@ -60,4 +60,4 @@ const appConfig = {
   },
 };
 
-module.exports = appConfig;
+export default appConfig;
