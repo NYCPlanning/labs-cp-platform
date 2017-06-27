@@ -1,6 +1,6 @@
 import * as AT from '../constants/actionTypes';
 
-export const login = ({ params }) => ({
+export const login = ({ params } = {}) => ({
   type: AT.AUTH0_LOGIN,
   payload: { params },
 });

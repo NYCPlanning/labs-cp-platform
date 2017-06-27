@@ -31,12 +31,12 @@ class FeedbackForm extends React.Component {
 
   onSubmit = () => {
     // if not logged in, prompt login and pass current model up
-    if (!this.props.isLoggedIn) {
-      this.props.login();
-    } else {
+    if (this.props.isLoggedIn) {
       this.postData();
+    } else {
+      this.props.login();
     }
-  }
+  };
 
   onChangeInput = (e) => {
     // `setProperty` is injected by reformed
