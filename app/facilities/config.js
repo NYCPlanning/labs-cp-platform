@@ -38,10 +38,10 @@ const getSelectedFacilitiesLayers = (selected) => {
   }
 };
 
-export const getDefaultFilterDimensions = ({ selected }) => ({
+export const getDefaultFilterDimensions = ({ selected, values }) => ({
   facsubgrp: {
     type: 'facilitiesLayerSelector',
-    values: getSelectedFacilitiesLayers(selected),
+    values: values || getSelectedFacilitiesLayers(selected),
   },
   optype: {
     type: 'multiSelect',

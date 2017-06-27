@@ -96,7 +96,7 @@ class SplashSelector extends React.Component { // eslint-disable-line react/no-m
         });
 
         group.checked = (groupChecked === group.children.length);
-        group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
+        group.indeterminate = (groupChecked < group.children.length) && groupChecked > 0;
 
         if (group.checked) facdomainChecked += 1;
         if (group.indeterminate) facdomainIndeterminate += 1;
@@ -110,7 +110,7 @@ class SplashSelector extends React.Component { // eslint-disable-line react/no-m
       layers,
       noneSelected,
     });
-  }
+  };
 
   render() {
     const index = this.state.selectedIndex;
@@ -192,7 +192,7 @@ class SplashSelector extends React.Component { // eslint-disable-line react/no-m
           to={{
             pathname: '/facilities/explorer',
             state: {
-              layers: this.state.layers,
+              filterDimensions: getDefaultFilterDimensions({ values: this.state.layers }),
             },
           }}
           onClick={() => ga.event({
