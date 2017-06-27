@@ -10,10 +10,8 @@ const generateUrlString = (sql, format, filename = 'download') => encodeURI(
 let uniqueId = 0;
 let requestCache = [];
 
-browserHistory.listen((location) => {
-  if (location.pathname !== window.location.pathname) {
-    requestCache = [];
-  }
+browserHistory.listen(() => {
+  requestCache = [];
 });
 
 const cartoMiddleware = ({ getState, dispatch }) => next => (action) => {
