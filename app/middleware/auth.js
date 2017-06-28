@@ -55,7 +55,15 @@ const lockOptions = {
 
 const authMiddleware = ({ getState, dispatch }) => next => (action) => {
   if (getState().currentUser.token && isTokenExpired(getState().currentUser.token)) {
+    localStorage.removeItem('NYCPlanning_profile');
+    localStorage.removeItem('NYCPlanning_idToken');
     dispatch(authActions.deauthorizeUser());
+    browserHistory.replace({
+      pathname: '/login',
+      state: {
+        targetPath: window.location.pathname,
+      },
+    });
   }
 
   if (action.type === AT.LOAD_CREDENTIALS) {
