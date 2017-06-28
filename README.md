@@ -11,9 +11,6 @@ At the time of writing, the app is "backendless", and is using an in-house carto
 
 We are not storing carto api keys in the client-side code, so all interactions with the carto server are read-only. 
 
-### Express app
-In order to have pretty URLs, there is a minimal express.js application that serves the app when it is hosted on a server
-
 ### React-Router
 React router handles
 
