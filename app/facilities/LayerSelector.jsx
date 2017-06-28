@@ -68,8 +68,28 @@ class LayerSelector extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchTotalFacilitiesCount();
-    this.props.fetchSelectedFacilitiesCount(this.props.filterDimensions);
+    const {
+      locationState,
+      filterDimensions,
+      setFilters,
+      fetchTotalFacilitiesCount,
+      fetchSelectedFacilitiesCount
+    } = this.props;
+
+    fetchTotalFacilitiesCount();
+
+    if (locationState && locationState.filterDimensions) {
+      setFilters(locationState.filterDimensions);
+      fetchSelectedFacilitiesCount(locationState.filterDimensions);
+      return;
+    }
+
+    const updatedFilterDimensions = locationState && locationState.mergeFilterDimensions
+      ? Object.assign({}, filterDimensions, locationState.mergeFilterDimensions)
+      : filterDimensions;
+
+    setFilters(updatedFilterDimensions);
+    fetchSelectedFacilitiesCount(updatedFilterDimensions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -221,6 +241,7 @@ LayerSelector.propTypes = {
   filterDimensions: PropTypes.object,
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
+  setFilters: PropTypes.func.isRequired,
   fetchTotalFacilitiesCount: PropTypes.func.isRequired,
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
 };

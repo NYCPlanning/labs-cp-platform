@@ -31,7 +31,7 @@ class SidebarComponent extends React.Component {
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector />
+          <LayerSelector locationState={this.props.locationState}/>
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content ">

@@ -29,16 +29,6 @@ class FacilitiesExplorer extends React.Component {
     if (locationState && locationState.adminboundaries) {
       this.props.fetchNYCBounds(locationState.adminboundaries.value);
     }
-
-    if (locationState && locationState.filterDimensions) {
-      return this.props.setFilters(locationState.filterDimensions);
-    }
-
-    const filterDimensions = locationState && locationState.mergeFilterDimensions
-      ? Object.assign({}, this.props.filterDimensions, locationState.mergeFilterDimensions)
-      : this.props.filterDimensions;
-
-    this.props.setFilters(filterDimensions);
   }
 
   handleMapLayerClick = (features) => {
@@ -102,7 +92,7 @@ class FacilitiesExplorer extends React.Component {
             name="Facilities and Program Sites"
             icon="university"
             defaultSelected
-            component={<FacilitiesSidebarComponent />}
+            component={<FacilitiesSidebarComponent locationState={this.props.location.state}/>}
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
 
@@ -176,7 +166,6 @@ FacilitiesExplorer.propTypes = {
   location: PropTypes.object,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
-  setFilters: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
   fetchNYCBounds: PropTypes.func.isRequired,
 };
@@ -190,7 +179,6 @@ const mapStateToProps = ({ facilities }) => ({
 
 export default connect(mapStateToProps, {
   setSelectedFeatures: facilitiesActions.setSelectedFeatures,
-  setFilters: facilitiesActions.setFilters,
   resetFilter: facilitiesActions.resetFilter,
   fetchNYCBounds: facilitiesActions.fetchNYCBounds,
 })(FacilitiesExplorer);
