@@ -125,7 +125,7 @@ class DetailPage extends React.Component {
     const popsTooltip = () => {
       if (d.facsubgrp === 'Privately Owned Public Space') {
         return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP is only responsible for certifying the initial creation of POPs. DOB is responsible for inspecting POPs.</Tooltip>}>
+          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP issues POPS approvals, and DOB is responsible for POPS enforcement.</Tooltip>}>
             <i className="fa fa-info-circle" aria-hidden="true" />
           </OverlayTrigger>
         );
