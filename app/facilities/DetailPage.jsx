@@ -1,60 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
+import { connect } from 'react-redux';
 
 import Email from '../common/EmailButton';
 import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
-import FacilitiesActions from '../actions/FacilitiesActions';
-import FacilitiesStore from '../stores/FacilitiesStore';
+import * as facilitiesActions from '../actions/facilities';
+import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
 
 import '../app.scss';
 
-const DetailPage = createReactClass({
-  propTypes: {
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }).isRequired,
-    location: PropTypes.shape().isRequired,
-    auth: PropTypes.object,
-  },
+const CardStyles = {
+  zDepth: 1,
+  height: '100%',
+};
 
-  getDefaultProps() {
-    return ({
-      auth: null,
-    });
-  },
+class DetailPage extends React.Component {
+  componentDidMount() {
+    this.props.fetchFacilityDetails(parseInt(this.props.params.id));
+  }
 
-  getInitialState() {
-    return ({
-      data: null,
-    });
-  },
+  render() {
+    const { facilityDetails, sources } = this.props;
 
-  componentWillMount() {
-    FacilitiesStore.on('detailDataAvailable', () => {
-      this.setState({
-        data: FacilitiesStore.detailData,
-        sources: FacilitiesStore.sources,
-      });
-    });
+    if (!facilityDetails || !sources) {
+      return null;
+    }
 
-    FacilitiesActions.fetchDetailData(parseInt(this.props.params.id));
-  },
-
-  renderContent(state) {
-    const d = state.data.properties;
-    const sources = state.sources;
-
-    const CardStyles = {
-      zDepth: 1,
-      height: '100%',
-    };
+    const d = facilityDetails.properties;
 
     const wrapInPanel = (title, badge, content) => (
       <div key={title} className="panel panel-default">
@@ -75,7 +53,7 @@ const DetailPage = createReactClass({
 
     const sourceDataDetails = () => {
       const sourceDetails = sources.map((s) => {
-        const idAgency = FacilitiesStore.dbStringAgencyLookup(d.idagency, s.datasource);
+        const idAgency = dbStringAgencyLookup(d.idagency, s.datasource);
         const table = (
           <Table selectable={false}>
             <TableBody displayRowCheckbox={false}>
@@ -103,12 +81,12 @@ const DetailPage = createReactClass({
 
     const usageList = (data, type) => {
       if (data && type) {
-        const sizes = FacilitiesStore.dbStringToObject(data);
+        const sizes = dbStringToObject(data);
 
         const list = sizes.map(size =>
           (
             <li key={size.index} className="usage-list">
-              <h3>{size.value} <small>{FacilitiesStore.dbStringAgencyLookup(type, size.agency).value}</small></h3>
+              <h3>{size.value} <small>{dbStringAgencyLookup(type, size.agency).value}</small></h3>
               <h4><span className="label label-default">{size.agency}</span></h4>
             </li>
           ),
@@ -123,13 +101,12 @@ const DetailPage = createReactClass({
     };
 
     const asList = (string) => {
-      const array = FacilitiesStore.dbStringToArray(string);
-      const list = array.map(item =>
-        <li key={item}>{item}</li>,
-      );
+      const array = dbStringToArray(string);
 
       return (
-        <ul>{list}</ul>
+        <ul>
+          { array.map(item => <li key={item}>{item}</li>) }
+        </ul>
       );
     };
 
@@ -148,7 +125,7 @@ const DetailPage = createReactClass({
     const popsTooltip = () => {
       if (d.facsubgrp === 'Privately Owned Public Space') {
         return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP is only responsible for certifying the initial creation of POPs. DOB is responsible for inspecting POPs.</Tooltip>}>
+          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP issues POPS approvals, and DOB is responsible for POPS enforcement.</Tooltip>}>
             <i className="fa fa-info-circle" aria-hidden="true" />
           </OverlayTrigger>
         );
@@ -158,140 +135,153 @@ const DetailPage = createReactClass({
     };
 
     return (
-      <div className="facility-page detail-page">
-        <div className="col-md-12">
-          <div className={'row'}>
-            <div
-              className="button-container col-md-3 col-md-push-9"
-              style={{ textAlign: 'right' }}
-            >
-              <BackButton
-                location={this.props.location}
-                defaultText="Facilities Map"
-                defaultLink="/facilities/explorer"
-              />
-              <Email
-                subject={`Check out ${d.facname} on the NYC Facilities Explorer`}
-                body={`Here's the record page for ${d.facname} on the NYC Facilities Explorer: ${location.origin}${location.pathname}`}
-              />
+      <div className="fluid-content display-content">
+        <div className="facility-page detail-page">
+          <div className="col-md-12">
+            <div className={'row'}>
+              <div
+                className="button-container col-md-3 col-md-push-9"
+                style={{ textAlign: 'right' }}
+              >
+                <BackButton
+                  location={this.props.location}
+                  defaultText="Facilities Map"
+                  defaultLink="/facilities/explorer"
+                />
+                <Email
+                  subject={`Check out ${d.facname} on the NYC Facilities Explorer`}
+                  body={`Here's the record page for ${d.facname} on the NYC Facilities Explorer: ${location.origin}${location.pathname}`}
+                />
 
-            </div>
-            <div className="col-md-9 col-md-pull-3">
-              <h1>{d.facname}</h1>
-              <h2 style={{ marginBottom: '5px' }}><small>{d.address + ', ' + d.city + ', NY ' + d.zipcode}</small></h2>
-              <ol className="breadcrumb">
-                <li>{d.facdomain}</li>
-                <li>{d.facgroup}</li>
-                <li>{d.facsubgrp}</li>
-                <li>
-                  <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
-                    {d.factype}
-                  </span>
-                  <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
-                    <i className="fa fa-info-circle" aria-hidden="true" />
-                  </OverlayTrigger>
-                </li>
-              </ol>
+              </div>
+              <div className="col-md-9 col-md-pull-3">
+                <h1>{d.facname}</h1>
+                <h2 style={{ marginBottom: '5px' }}><small>{`${d.address}, ${d.city}, NY ${d.zipcode}`}</small></h2>
+                <ol className="breadcrumb">
+                  <li>{d.facdomain}</li>
+                  <li>{d.facgroup}</li>
+                  <li>{d.facsubgrp}</li>
+                  <li>
+                    <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }}>
+                      {d.factype}
+                    </span>
+                    <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> The facility&apos;s Type is derived from the most granular description provided in the source dataset. The categories and descriptions are limited by the information provided.</Tooltip>}>
+                      <i className="fa fa-info-circle" aria-hidden="true" />
+                    </OverlayTrigger>
+                  </li>
+                </ol>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={'col-md-6'}>
-          <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-            <Card style={CardStyles} className="clearfix">
-              <CardHeader title="Property Details" />
-              <CardText>
-                <div className="row equal">
-                  <div className={'col-md-6'}>
-                    <div className="panel panel-default">
-                      <div className="panel-heading">Operated By</div>
-                      <div className="panel-body">
-                        {<h3>{d.opname}</h3>}
-                      </div>
-                    </div>
-                  </div>
-                  <div className={'col-md-6'}>
-                    <div className="panel panel-default">
-                      <div className="panel-heading">Overseen By {popsTooltip()}</div>
-                      <div className="panel-body">
-                        <h3>{asList(d.overagency)}</h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
-                  (
-                    <div className="row equal">
-                      <div className={'col-md-6'}>
-                        <div className="panel panel-default">
-                          <div className="panel-heading">Facility Size {childcareTooltip()}
-                          </div>
-                          <div className="panel-body">
-                            {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
-                          </div>
-                        </div>
-                      </div>
-                      <div className={'col-md-6'}>
-                        <div className="panel panel-default">
-                          <div className="panel-heading">Utilization</div>
-                          <div className="panel-body">
-                            {usageList(d.util, d.captype)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
-
-                <div className="row property-detail-container">
-                  <div className="property-detail-blocks"><h4><small>BBL</small></h4><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4></div>
-                  <div className="property-detail-blocks"><h4><small>BIN</small></h4><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4></div>
-                  <div className="property-detail-blocks"><h4><small>&zwnj;</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
-                </div>
-              </CardText>
-            </Card>
-          </div>
-
-          <div className={'row'} style={{ marginBottom: '15px' }}>
-            <div className={'col-md-12'}>
-              <Card style={CardStyles} className="source-data-details">
-                <CardHeader title="Source Data Details" />
+          <div className={'col-md-6'}>
+            <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+              <Card style={CardStyles} className="clearfix">
+                <CardHeader title="Property Details" />
                 <CardText>
-                  {sourceDataDetails()}
+                  <div className="row equal">
+                    <div className={'col-md-6'}>
+                      <div className="panel panel-default">
+                        <div className="panel-heading">Operated By</div>
+                        <div className="panel-body">
+                          {<h3>{d.opname}</h3>}
+                        </div>
+                      </div>
+                    </div>
+                    <div className={'col-md-6'}>
+                      <div className="panel panel-default">
+                        <div className="panel-heading">Overseen By {popsTooltip()}</div>
+                        <div className="panel-body">
+                          <h3>{asList(d.overagency)}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
+                   (
+                     <div className="row equal">
+                       <div className={'col-md-6'}>
+                         <div className="panel panel-default">
+                           <div className="panel-heading">Facility Size {childcareTooltip()}
+                           </div>
+                           <div className="panel-body">
+                             {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
+                           </div>
+                         </div>
+                       </div>
+                       <div className={'col-md-6'}>
+                         <div className="panel panel-default">
+                           <div className="panel-heading">Utilization</div>
+                           <div className="panel-body">
+                             {usageList(d.util, d.captype)}
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   )
+                  }
+
+                  <div className="row property-detail-container">
+                    <div className="property-detail-blocks"><h4><small>BBL</small></h4><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4></div>
+                    <div className="property-detail-blocks"><h4><small>BIN</small></h4><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4></div>
+                    <div className="property-detail-blocks"><h4><small>&zwnj;</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
+                  </div>
                 </CardText>
               </Card>
             </div>
-          </div>
-        </div>
 
-        <div className={'col-md-6'}>
-          <div style={{ marginTop: '15px' }}>
-            {state.data && <ModalMap feature={state.data} label={state.data.properties.facname} />}
+            <div className={'row'} style={{ marginBottom: '15px' }}>
+              <div className={'col-md-12'}>
+                <Card style={CardStyles} className="source-data-details">
+                  <CardHeader title="Source Data Details" />
+                  <CardText>
+                    {sourceDataDetails()}
+                  </CardText>
+                </Card>
+              </div>
+            </div>
           </div>
-          <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
-            <FeedbackForm
-              ref_type="facility"
-              ref_id={this.props.params.id}
-              location={this.props.location}
-              auth={this.props.auth}
-            />
+
+          <div className={'col-md-6'}>
+            <div style={{ marginTop: '15px' }}>
+              {facilityDetails && <ModalMap feature={facilityDetails} label={facilityDetails.properties.facname} />}
+            </div>
+            <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
+              <FeedbackForm
+                ref_type="facility"
+                ref_id={this.props.params.id}
+                location={this.props.location}
+                auth={this.props.auth}
+              />
+            </div>
           </div>
         </div>
       </div>
     );
-  },
+  }
+}
 
-  render() {
-    const content = (this.state.data && this.state.sources) ? this.renderContent(this.state) : null;
+DetailPage.defaultProps = {
+  auth: null,
+};
 
-    return (
-      <div className="fluid-content display-content">
-        {content}
-      </div>
-    );
-  },
+DetailPage.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.string,
+  }).isRequired,
+  location: PropTypes.shape().isRequired,
+  auth: PropTypes.object,
+  fetchFacilityDetails: PropTypes.func.isRequired,
+  facilityDetails: PropTypes.object,
+  sources: PropTypes.array,
+};
 
+const mapStateToProps = ({ facilities }) => ({
+  facilityDetails: facilities.facilityDetails,
+  sources: facilities.sources,
 });
 
-module.exports = DetailPage;
+export default connect(mapStateToProps, {
+  fetchFacilityDetails: facilitiesActions.fetchFacilityDetails,
+})(DetailPage);

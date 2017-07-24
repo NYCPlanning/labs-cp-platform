@@ -10,7 +10,7 @@ const paperStyle = {
   padding: '15px',
 };
 
-const About = () => (
+export const About = () => (
   <div className="fluid-content">
     <div className="about-page container">
       <div className="row">
@@ -78,7 +78,7 @@ const About = () => (
   </div>
 );
 
-const AboutFacilities = () => (
+export const AboutFacilities = () => (
   <div className="fluid-content">
     <div className="about-page container">
       <div className="row">
@@ -210,7 +210,7 @@ const AboutFacilities = () => (
   </div>
 );
 
-const AboutPipeline = () => (
+export const AboutPipeline = () => (
   <div className="fluid-content">
     <div className="about-page container">
       <div className="row">
@@ -278,7 +278,7 @@ const AboutPipeline = () => (
   </div>
 );
 
-const AboutCapitalProjects = () => (
+export const AboutCapitalProjects = () => (
   <div className="fluid-content">
     <div className="about-page container">
       <div className="row">
@@ -384,5 +384,3 @@ const AboutCapitalProjects = () => (
     <Footer />
   </div>
 );
-
-module.exports = { About, AboutFacilities, AboutPipeline, AboutCapitalProjects };

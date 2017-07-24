@@ -6,53 +6,39 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Modal } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { closeModal } from '../actions/modal';
 
 import './GlobalModal.scss';
 
-const GlobalModal = createReactClass({
-  propTypes: {
-    closeText: PropTypes.string,
-    heading: PropTypes.string.isRequired,
-    body: PropTypes.element.isRequired,
-  },
+const GlobalModal = ({ modal, closeModal }) => {
+  const { modalCloseText, modalHeading, modalContent } = modal || {};
 
-  getDefaultProps() {
-    return {
-      closeText: 'Close',
-    };
-  },
+  return (
+    <Modal show={!!modal} onHide={closeModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>{modalHeading}</Modal.Title>
+      </Modal.Header>
 
-  getInitialState() {
-    return { showModal: false };
-  },
+      <Modal.Body>
+        {modalContent}
+      </Modal.Body>
 
-  close() {
-    this.setState({ showModal: false });
-  },
+      <Modal.Footer>
+        <div className="btn dcp-orange" onClick={closeModal}>
+          {modalCloseText || 'Close'}
+        </div>
+      </Modal.Footer>
+    </Modal>
+  );
+};
 
-  open() {
-    this.setState({ showModal: true });
-  },
+GlobalModal.propTypes = {
+  modal: PropTypes.object,
+  closeModal: PropTypes.func.isRequired,
+};
 
-  render() {
-    const closeText = this.props.closeText ? this.props.closeText : 'Close';
+const mapStateToProps = ({ modal }) => ({ modal });
 
-    return (
-      <Modal show={this.state.showModal} onHide={this.close}>
-        <Modal.Header closeButton>
-          <Modal.Title>{this.props.heading}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {this.props.body}
-        </Modal.Body>
-        <Modal.Footer>
-          <div className="btn dcp-orange" onClick={this.close}>{closeText}</div>
-        </Modal.Footer>
-      </Modal>
-    );
-  },
-});
-
-module.exports = GlobalModal;
+export default connect(mapStateToProps, { closeModal })(GlobalModal);

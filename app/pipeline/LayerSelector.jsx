@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
+import { connect } from 'react-redux';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../common/CountWidget';
 import Checkboxes from './Checkboxes';
-import PipelineActions from '../actions/PipelineActions';
-import PipelineStore from '../stores/PipelineStore';
+import * as pipelineActions from '../actions/pipeline';
 
 import RangeSlider from '../common/RangeSlider';
 import SimpleRangeInputs from '../common/SimpleRangeInputs';
@@ -15,52 +14,22 @@ import InfoIcon from '../common/InfoIcon';
 
 import './LayerSelector.scss';
 
-const LayerSelector = createReactClass({
+class LayerSelector extends React.Component {
+  handleFilterDimensionChange = (dimension, values) => {
+    this.props.setFilterDimension(dimension, values);
+  };
 
-  getInitialState() {
-    return ({
-      symbologyDimension: PipelineStore.symbologyDimension,
-      filterDimensions: PipelineStore.filterDimensions,
-    });
-  },
+  handleSymbologyDimensionChange = (symbologyDimension) => {
+    this.props.setSymbology(symbologyDimension);
+  };
 
-  componentWillMount() {
-    PipelineStore.on('pipelineUpdated', () => {
-      this.setState({
-        totalCount: PipelineStore.totalCount,
-        selectedCount: PipelineStore.selectedCount,
-        filterDimensions: PipelineStore.filterDimensions,
-        symbologyDimension: PipelineStore.symbologyDimension,
-      });
-    });
+  handleSliderChange = (dimension, data) => {
+    this.props.setFilterDimension(dimension, [data.from, data.to]);
+  };
 
-    PipelineStore.initialize();
-  },
-
-  componentWillUnmount() {
-    PipelineStore.removeAllListeners('pipelineUpdated');
-  },
-
-  handleFilterDimensionChange(dimension, values) {
-    PipelineActions.onFilterDimensionChange(dimension, values);
-  },
-
-  handleSymbologyDimensionChange(symbologyDimension) {
-    PipelineActions.onSymbologyDimensionChange(symbologyDimension);
-  },
-
-  handleSliderChange(dimension, data) {
-    PipelineActions.onFilterDimensionChange(dimension, [data.from, data.to]);
-  },
-
-  handleInputChange(e) { // handles changes to the manual inputs for total units
-    e.preventDefault();
-    PipelineActions.onFilterDimensionChange('dcp_units_use_map', [this.unitsMin.value, this.unitsMax.value]);
-  },
-
-  resetFilter() {
-    PipelineActions.resetFilter();
-  },
+  resetFilter = () => {
+    this.props.resetFilter();
+  };
 
   render() {
     // override material ui ListItem spacing
@@ -73,11 +42,9 @@ const LayerSelector = createReactClass({
       totalCount,
       selectedCount,
       symbologyDimension,
-    } = this.state;
-
-
-    const issueDateFilterDisabled = PipelineStore.issueDateFilterDisabled();
-    const completionDateFilterDisabled = PipelineStore.completionDateFilterDisabled();
+      issueDateFilterDisabled,
+      completionDateFilterDisabled,
+    } = this.props;
 
     const PinSelect = (props) => {
       const style = {
@@ -227,8 +194,30 @@ const LayerSelector = createReactClass({
         </div>
       </div>
     );
-  },
+  }
+}
+
+LayerSelector.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
+};
+
+LayerSelector.propTypes = {
+  filterDimensions: PropTypes.object.isRequired,
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  symbologyDimension: PropTypes.string.isRequired,
+  issueDateFilterDisabled: PropTypes.bool,
+  completionDateFilterDisabled: PropTypes.bool,
+};
+
+const mapStateToProps = ({ pipeline }) => ({
+  issueDateFilterDisabled: pipeline.issueDateFilterDisabled,
+  completionDateFilterDisabled: pipeline.completionDateFilterDisabled,
 });
 
-
-module.exports = LayerSelector;
+export default connect(mapStateToProps, {
+  resetFilter: pipelineActions.resetFilter,
+  setFilterDimension: pipelineActions.setFilterDimension,
+  setSymbology: pipelineActions.setSymbology,
+})(LayerSelector);

@@ -1,39 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
-import AuthService from '../helpers/AuthService';
+import * as authActions from '../actions/auth';
 
 import './Nav.scss';
 
-const Nav = createReactClass({
-  propTypes: {
-    title: PropTypes.string,
-    about: PropTypes.string,
-    children: PropTypes.array,
-  },
-
-  getDefaultProps() {
-    return {
-      title: '',
-      about: '/about',
-      children: null,
-    };
-  },
-
-  handleLogout() {
-    AuthService.logout();
-  },
-
-  handleLogin() {
-    AuthService.login();
-  },
-
+class Nav extends React.Component {
   render() {
-    const profile = AuthService.getProfile();
+    const profile = this.props.profile;
 
-    const userMenu = AuthService.loggedIn() ? (
+    const userMenu = this.props.isLoggedIn ? (
       <li className="dropdown">
         <a
           className="dropdown-toggle"
@@ -47,13 +25,13 @@ const Nav = createReactClass({
         </a>
 
         <ul className="dropdown-menu">
-          <li><a onClick={this.handleLogout}> Log Out</a></li>
+          <li><a onClick={this.props.logout}> Log Out</a></li>
         </ul>
       </li>
 
     ) :
     (
-      <li><a onClick={this.handleLogin}><i className="fa fa-user" aria-hidden="true" /> Log In</a></li>
+      <li><a onClick={this.props.login}><i className="fa fa-user" aria-hidden="true" /> Log In</a></li>
     );
 
 
@@ -92,7 +70,27 @@ const Nav = createReactClass({
         </div>
       </nav>
     );
-  },
+  }
+}
+
+Nav.defaultProps = {
+  title: '',
+  about: '/about',
+  children: null,
+};
+
+Nav.propTypes = {
+  title: PropTypes.string,
+  about: PropTypes.string,
+  children: PropTypes.array,
+};
+
+const mapStateToProps = ({ currentUser }) => ({
+  profile: currentUser.profile,
+  isLoggedIn: currentUser.isLoggedIn,
 });
 
-module.exports = Nav;
+export default connect(mapStateToProps, {
+  login: authActions.login,
+  logout: authActions.logout,
+})(Nav);

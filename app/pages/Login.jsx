@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
-import AuthService from '../helpers/AuthService';
+import { connect } from 'react-redux';
 
+import * as authActions from '../actions/auth';
 
-const Login = createReactClass({
-  propTypes: {
-    location: PropTypes.object.isRequired,
-  },
-
+class Login extends React.Component {
   componentDidMount() {
     const targetPath = (this.props.location && this.props.location.state) ? this.props.location.state.targetPath : '/';
-    AuthService.login({ targetPath });
-  },
+    this.props.login({ targetPath });
+  }
 
   render() {
     return (
       <div className="full-screen" />
     );
-  },
-});
+  }
+}
 
-module.exports = Login;
+Login.propTypes = {
+  location: PropTypes.object.isRequired,
+};
+
+export default connect(null, {
+  login: authActions.login,
+})(Login);

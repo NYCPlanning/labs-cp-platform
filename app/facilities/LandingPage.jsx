@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -7,17 +6,16 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
-import layersGenerator from './layersGenerator';
+import { getDefaultFilterDimensions } from './config';
 import ga from '../helpers/ga';
 
 import './LandingPage.scss';
 
 
-const FacilitiesLandingPage = createReactClass({
-
+class FacilitiesLandingPage extends React.Component {
   componentDidMount() {
     document.title = 'Capital Planning Platform';
-  },
+  }
 
   render() {
     return (
@@ -41,7 +39,7 @@ const FacilitiesLandingPage = createReactClass({
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          filterDimensions: {
+                          mergeFilterDimensions: {
                             proptype: {
                               type: 'multiSelect',
                               disabled: false,
@@ -83,7 +81,7 @@ const FacilitiesLandingPage = createReactClass({
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': { 'Health Care': null },
                             'Education, Child Welfare, and Youth': {
                               'Schools (K-12)': { 'Public Schools': null },
@@ -94,7 +92,7 @@ const FacilitiesLandingPage = createReactClass({
                               'Emergency Services': { 'Fire Services': null },
                               'Public Safety': { 'Police Services': null },
                             },
-                          }),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -114,7 +112,7 @@ const FacilitiesLandingPage = createReactClass({
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {
                               'Human Services': { 'Senior Services': null, 'Programs for People with Disabilities': null },
                             },
@@ -125,7 +123,7 @@ const FacilitiesLandingPage = createReactClass({
                               'Youth Services': null,
                               Camps: null,
                             },
-                          }),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -145,12 +143,12 @@ const FacilitiesLandingPage = createReactClass({
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Parks, Gardens, and Historical Sites': {
                               'Parks and Plazas': {
                                 'Privately Owned Public Space': null },
                             },
-                          }),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -170,7 +168,7 @@ const FacilitiesLandingPage = createReactClass({
                       to={{
                         pathname: '/facilities/explorer',
                         state: {
-                          layers: layersGenerator.partialChecked({
+                          filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {
                               'Health Care': {
                                 'Hospitals and Clinics': null,
@@ -195,7 +193,7 @@ const FacilitiesLandingPage = createReactClass({
                               'Public Safety': { 'School-Based Safety Program': null },
                             },
                             'Core Infrastructure and Transportation': { 'Solid Waste': { 'Solid Waste Transfer and Carting': null } },
-                          }),
+                          } }),
                         },
                       }}
                       onClick={() => ga.event({
@@ -222,8 +220,7 @@ const FacilitiesLandingPage = createReactClass({
         <Footer />
       </div>
     );
-  },
+  }
+}
 
-});
-
-module.exports = FacilitiesLandingPage;
+export default FacilitiesLandingPage;

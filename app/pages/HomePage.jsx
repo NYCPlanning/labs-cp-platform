@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { openModal } from '../actions/modal';
 
 import Footer from '../common/Footer';
 
@@ -37,36 +38,26 @@ const collaborateContent = (
   </div>
 );
 
-const HomePage = createReactClass({
-  propTypes: {
-    showModal: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      showModal: null,
-    };
-  },
-
+class HomePage extends React.Component {
   componentDidMount() {
     document.title = 'NYC Capital Planning Platform';
-  },
+  }
 
-  showAbout() {
-    this.props.showModal({
+  showAbout = () => {
+    this.props.openModal({
       modalHeading: 'About the Platform',
       modalContent: aboutContent,
       modalCloseText: 'Close',
     });
-  },
+  };
 
-  showCollaborate() {
-    this.props.showModal({
+  showCollaborate = () => {
+    this.props.openModal({
       modalHeading: 'Collaborate',
       modalContent: collaborateContent,
       modalCloseText: 'Close',
     });
-  },
+  };
 
   render() {
     return (
@@ -171,7 +162,11 @@ const HomePage = createReactClass({
         <Footer />
       </div>
     );
-  },
-});
+  }
+}
 
-module.exports = HomePage;
+HomePage.propTypes = {
+  openModal: PropTypes.func.isRequired,
+};
+
+export default connect(null, { openModal })(HomePage);

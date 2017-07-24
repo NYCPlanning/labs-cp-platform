@@ -1,6 +1,6 @@
 import React from 'react';
 
-const about = (
+export const about = (
   <div>
     <h4>Product Overview</h4>
     <p>
@@ -21,5 +21,3 @@ const about = (
     </p>
   </div>
 );
-
-export { about } // eslint-disable-line

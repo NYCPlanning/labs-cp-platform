@@ -1,11 +1,11 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
+import { connect } from 'react-redux';
 
-import CapitalProjectsActions from '../actions/CapitalProjectsActions';
-import CapitalProjectsStore from '../stores/CapitalProjectsStore';
+import * as capitalProjectsActions from '../actions/capitalProjects';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import CostGroupChart from './CostGroupChart';
@@ -13,54 +13,18 @@ import RangeSlider from '../common/RangeSlider';
 import RangeInputs from '../common/RangeInputs';
 import MultiSelect from '../common/MultiSelect';
 
-const Filter = createReactClass({
-  propTypes: {
-  },
+class Filter extends React.Component {
+  updateFilterDimension = (dimension, values) => {
+    this.props.setFilterDimension(dimension, values);
+  };
 
-  getInitialState() {
-    return ({
-      filterDimensions: CapitalProjectsStore.filterDimensions,
-      totalspendRange: [0, 9],
-      totalcommitRange: [0, 9],
-    });
-  },
-
-  componentWillMount() {
-    CapitalProjectsStore.on('capitalProjectsUpdated', () => {
-      this.setState({
-        totalCount: CapitalProjectsStore.totalCount,
-        selectedCount: CapitalProjectsStore.selectedCount,
-        pointsSql: CapitalProjectsStore.pointsSql,
-        polygonsSql: CapitalProjectsStore.polygonsSql,
-        filterDimensions: CapitalProjectsStore.filterDimensions,
-      }, () => {
-        // check for default status of sliders with mapped values
-        const totalspendRange = this.state.filterDimensions.totalspend.values;
-        if (totalspendRange[0] === 0 && totalspendRange[1] === 10000000000) this.setState({ totalspendRange: [0, 9] });
-
-        const totalcommitRange = this.state.filterDimensions.totalcommit.values;
-        if (totalcommitRange[0] === 1000 && totalcommitRange[1] === 10000000000) this.setState({ totalcommitRange: [0, 9] });
-      });
-    });
-
-    CapitalProjectsStore.initialize();
-  },
-
-  componentWillUnmount() {
-    CapitalProjectsStore.removeAllListeners('capitalProjectsUpdated');
-  },
-
-  updateFilterDimension(dimension, values) {
-    CapitalProjectsActions.onFilterDimensionChange(dimension, values);
-  },
-
-  handleSliderChange(dimension, data) {
+  handleSliderChange = (dimension, data) => {
     this.updateFilterDimension(dimension, [data.from, data.to]);
-  },
+  };
 
-  resetFilter() {
-    CapitalProjectsActions.resetFilter();
-  },
+  resetFilter = () => {
+    this.props.resetFilter();
+  };
 
   render() {
     // override material ui ListItem spacing
@@ -68,7 +32,7 @@ const Filter = createReactClass({
       paddingTop: '0px',
     };
 
-    const { totalCount, selectedCount, pointsSql, polygonsSql, filterDimensions } = this.state;
+    const { totalCount, selectedCount, pointsSql, polygonsSql, filterDimensions } = this.props;
 
     return (
       <div className="sidebar-tab-content">
@@ -210,7 +174,25 @@ const Filter = createReactClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
-export default Filter;
+Filter.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
+};
+
+Filter.propTypes = {
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  pointsSql: PropTypes.string.isRequired,
+  polygonsSql: PropTypes.string.isRequired,
+  filterDimensions: PropTypes.object.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  setFilterDimension: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  resetFilter: capitalProjectsActions.resetFilter,
+  setFilterDimension: capitalProjectsActions.setFilterDimension,
+})(Filter);

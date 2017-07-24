@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
 import NestedSelect from './NestedSelect';
-import layersGenerator from './layersGenerator';
+import { getDefaultFilterDimensions } from './config';
 import ga from '../helpers/ga';
 
 
@@ -55,30 +54,29 @@ function wrapState(ComposedComponent) {
 const SelectableList = wrapState(ThisSelectableList);
 
 
-const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-comp
-
-  getInitialState: () => ({
-    selectedIndex: 0,
-    noneSelected: true,
-  }),
+class SplashSelector extends React.Component { // eslint-disable-line react/no-multi-comp
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedIndex: 0,
+      noneSelected: true,
+    };
+  }
 
   componentWillMount() {
-    const layers = layersGenerator.allUnchecked();
-    this.setState({ layers });
-  },
+    this.setState({ layers: getDefaultFilterDimensions({ selected: 'none' }).facsubgrp.values });
+  }
 
-  handleIndexChange(index) {
-    this.setState({
-      selectedIndex: index,
-    });
-  },
+  handleIndexChange = (index) => {
+    this.setState({ selectedIndex: index });
+  };
 
-  handleSelectUpdate() {
+  handleSelectUpdate = () => {
     this.processChecked();
-  },
+  };
 
   // set indeterminate states, check/uncheck children, etc
-  processChecked() {
+  processChecked = () => {
     const layers = this.state.layers;
     let noneSelected = true;
 
@@ -98,7 +96,7 @@ const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-
         });
 
         group.checked = (groupChecked === group.children.length);
-        group.indeterminate = !!((groupChecked < group.children.length) && groupChecked > 0);
+        group.indeterminate = (groupChecked < group.children.length) && groupChecked > 0;
 
         if (group.checked) facdomainChecked += 1;
         if (group.indeterminate) facdomainIndeterminate += 1;
@@ -112,7 +110,7 @@ const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-
       layers,
       noneSelected,
     });
-  },
+  };
 
   render() {
     const index = this.state.selectedIndex;
@@ -194,7 +192,7 @@ const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-
           to={{
             pathname: '/facilities/explorer',
             state: {
-              layers: this.state.layers,
+              filterDimensions: getDefaultFilterDimensions({ values: this.state.layers }),
             },
           }}
           onClick={() => ga.event({
@@ -209,7 +207,7 @@ const SplashSelector = createReactClass({ // eslint-disable-line react/no-multi-
         </Link>
       </div>
     );
-  },
-});
+  }
+}
 
 export default SplashSelector;

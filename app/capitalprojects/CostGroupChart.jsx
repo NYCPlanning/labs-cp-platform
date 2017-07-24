@@ -1,100 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
-import ReactDOM from 'react-dom';
-
-import carto from '../helpers/carto';
+import { connect } from 'react-redux';
+import * as capitalProjectsActions from '../actions/capitalProjects';
 
 /* eslint-disable no-undef */
 
-const CostGroupChart = createReactClass({
-
-  propTypes: {
-    pointsSql: PropTypes.string.isRequired,
-  },
-
+class CostGroupChart extends React.Component {
   // on mount, set up chart and go get data
   componentDidMount() {
-    this.initializeChart();
-    this.fetchData(this.props);
-  },
+    this.props.fetchCostGroupData(this.props.pointsSql, this.props.polygonsSql);
+  }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.pointsSql !== this.props.pointsSql) this.fetchData(nextProps);
-  },
+    if (nextProps.pointsSql !== this.props.pointsSql) {
+      this.props.fetchCostGroupData(nextProps.pointsSql, nextProps.polygonsSql);
+    }
 
-  fetchData(props) {
-    const unioned = `${props.pointsSql} UNION ALL ${props.polygonsSql}`;
+    if (this.props.costGroupData !== nextProps.costGroupData) {
+      if (this.chartInitialized) {
+        this.renderBars(nextProps.costGroupData);
+      } else {
+        this.initializeChart(nextProps.costGroupData);
+      }
+    }
+  }
 
-    const sql = `
-      WITH ranges(range,i) AS (
-        VALUES
-          ('<$10K',0),
-          ('10K-100K', 1),
-          ('100K-1M',2),
-          ('1M-10M',3),
-          ('10M-100M',4),
-          ('>100M',5)
-      )
+  initializeChart = (costGroupData) => {
+    if (!this.chartContainer) {
+      return;
+    }
 
-      SELECT a.range, a.i, count(b.range)
-      FROM ranges a
-      LEFT JOIN (
-          SELECT
-          CASE
-              WHEN totalcommit < 10000 THEN '<$10K'
-              WHEN totalcommit >= 10000 AND totalcommit < 100000 THEN '10K-100K'
-              WHEN totalcommit >= 100000 AND totalcommit < 1000000 THEN '100K-1M'
-              WHEN totalcommit >= 1000000 AND totalcommit < 10000000 THEN '1M-10M'
-              WHEN totalcommit >= 10000000 AND totalcommit < 100000000 THEN '10M-100M'
-              ELSE '>100M'
-          END as range
-        FROM (${unioned}) x
-      ) b
-      ON a.range = b.range
-      GROUP BY a.range, a.i
-      ORDER BY a.i
-    `;
-
-    carto.SQL(sql, 'json')
-      .then((data) => {
-        this.renderBars(data);
-      });
-  },
-
-  initializeChart() {
     this.margin = {
       top: 20,
       bottom: 20,
     };
 
+    const width = this.chartContainer.getBoundingClientRect().width;
+
     // overall chart height defined here
     this.height = 100 - this.margin.top - this.margin.bottom;
-    this.width = ReactDOM.findDOMNode(this.chartContainer).getBoundingClientRect().width; // eslint-disable-line react/no-find-dom-node
 
     // create an svg container
     this.chart = d3.select(this.chartContainer)
       .append('svg:svg')
-      .attr('width', this.width)
+      .attr('width', width)
       .attr('height', this.height + this.margin.top + this.margin.bottom);
 
-
     this.x = d3.scaleBand()
-      .rangeRound([0, this.width])
+      .rangeRound([0, width])
       .paddingInner(0.25);
 
     this.y = d3.scaleLinear()
-      .range([this.height + this.margin.top, 0 + this.margin.top]);
+      .range([this.height + this.margin.top, this.margin.top]);
 
 
     this.chart.append('g')
       .attr('class', 'axis')
       .attr('transform', `translate(0,${(this.height + this.margin.top)})`)
       .call(d3.axisBottom(this.x));
-  },
 
-  renderBars(data) {
-    const chart = this.chart;
+    this.renderBars(costGroupData);
+    this.chartInitialized = true;
+  };
+
+  renderBars = (data) => {
     const x = this.x;
     const y = this.y;
 
@@ -104,7 +73,7 @@ const CostGroupChart = createReactClass({
     x.domain(data.map(d => d.range));
     y.domain([0, d3.max(data, d => d.count)]);
 
-    const bar = chart.selectAll('.bar-group')
+    const bar = this.chart.selectAll('.bar-group')
       .data(data);
 
     // d3 enter()
@@ -148,13 +117,25 @@ const CostGroupChart = createReactClass({
 
     this.chart.select('.axis')
       .call(d3.axisBottom(x));
-  },
+  };
 
   render() {
     return (
-      <div className="chart-container" ref={(x) => { this.chartContainer = x; }} />
+      <div className="chart-container" ref={(node) => { this.chartContainer = node; }} />
     );
-  },
+  }
+}
+
+CostGroupChart.propTypes = {
+  pointsSql: PropTypes.string.isRequired,
+  costGroupData: PropTypes.array,
+  fetchCostGroupData: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ capitalProjects }) => ({
+  costGroupData: capitalProjects.costGroupData,
 });
 
-export default CostGroupChart;
+export default connect(mapStateToProps, {
+  fetchCostGroupData: capitalProjectsActions.fetchCostGroupData,
+})(CostGroupChart);

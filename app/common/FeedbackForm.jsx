@@ -1,58 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import reformed from 'react-reformed';
+import { connect } from 'react-redux';
+
+import * as authActions from '../actions/auth';
 
 import appConfig from '../helpers/appConfig';
-import AuthService from '../helpers/AuthService';
 
-const FeedbackForm = createReactClass({
-
-  propTypes: {
-    setProperty: PropTypes.func.isRequired,
-    model: PropTypes.object.isRequired,
-    ref_type: PropTypes.string.isRequired,
-    ref_id: PropTypes.string.isRequired,
-  },
-
-  getInitialState() {
-    return ({
+class FeedbackForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       valid: false,
       submitted: false,
       error: false,
-    });
-  },
+    };
+  }
 
-  onPostSuccess(data) {
+  onPostSuccess = (data) => {
     if (data.success) {
       this.setState({ submitted: true });
     }
-  },
+  }
 
-  onPostError() {
+  onPostError = () => {
     this.setState({ error: true });
-  },
+  }
 
-  onSubmit() {
+  onSubmit = () => {
     // if not logged in, prompt login and pass current model up
-    if (!AuthService.loggedIn()) {
-      AuthService.login();
-    } else {
+    if (this.props.isLoggedIn) {
       this.postData();
+    } else {
+      this.props.login();
     }
-  },
+  };
 
-  onChangeInput(e) {
+  onChangeInput = (e) => {
     // `setProperty` is injected by reformed
     this.props.setProperty(e.target.name, e.target.value);
-  },
+  }
 
-  postData() { // TODO move ajax to a helper class
+  postData = () => { // TODO move ajax to a helper class
     const data = this.props.model;
-
-    const profile = AuthService.getProfile();
+    const profile = this.props.profile;
 
     // add user details to payload
     // check if username exists, set to null if not
@@ -62,7 +55,7 @@ const FeedbackForm = createReactClass({
     data.ref_id = this.props.ref_id;
 
     // get the json web token from localstorage
-    const jwt = AuthService.getToken();
+    const jwt = this.props.token;
 
     $.ajax({ // eslint-disable-line no-undef
       url: `//${appConfig.api_domain}/feedback/`,
@@ -74,7 +67,7 @@ const FeedbackForm = createReactClass({
       success: this.onPostSuccess,
       error: this.onPostError,
     });
-  },
+  }
 
   render() {
     // model is injected by reformed
@@ -123,8 +116,23 @@ const FeedbackForm = createReactClass({
 
       </div>
     );
-  },
+  }
+}
+
+FeedbackForm.propTypes = {
+  setProperty: PropTypes.func.isRequired,
+  model: PropTypes.object.isRequired,
+  ref_type: PropTypes.string.isRequired,
+  ref_id: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = ({ currentUser }) => ({
+  isLoggedIn: currentUser.isLoggedIn,
+  profile: currentUser.profile,
+  token: currentUser.token,
 });
 
 // Wrap your form in the higher-order component
-export default reformed()(FeedbackForm);
+export default connect(mapStateToProps, {
+  login: authActions.login,
+})(reformed()(FeedbackForm));

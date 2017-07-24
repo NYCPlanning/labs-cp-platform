@@ -1,26 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router';
-
-import AuthService from '../helpers/AuthService';
-import { api_domain } from '../helpers/appConfig';
+import { connect } from 'react-redux';
 
 import './FeedbackPage.scss';
 
-const FeedbackPage = createReactClass({
-
-  propTypes: {
-    params: PropTypes.object.isRequired,
-  },
-
-  getInitialState() {
-    return ({ data: null });
-  },
+class FeedbackPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+  }
 
   componentDidMount() {
-    const jwt = AuthService.getToken();
+    const jwt = this.props.token;
 
     $.ajax({ // eslint-disable-line no-undef
       url: `//${api_domain}/feedback/list/${this.props.params.type}`,
@@ -30,7 +23,7 @@ const FeedbackPage = createReactClass({
         this.setState({ data });
       },
     });
-  },
+  }
 
   render() {
     const style = {
@@ -69,7 +62,15 @@ const FeedbackPage = createReactClass({
         <div className="col-md-3" />
       </div>
     );
-  },
+  }
+}
+
+FeedbackPage.propTypes = {
+  params: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = ({ currentUser }) => ({
+  token: currentUser.token,
 });
 
-export default FeedbackPage;
+export default connect(mapStateToProps)(FeedbackPage);

@@ -1,9 +1,10 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import { connect } from 'react-redux';
 
-import AuthService from '../helpers/AuthService';
+import * as authActions from '../actions/auth';
 
-const SignupPrompt = () => (
+const SignupPrompt = ({ signUp }) => (
   <div>
     <h4>Like what you see?</h4>
 
@@ -12,12 +13,11 @@ const SignupPrompt = () => (
     <RaisedButton
       label="Sign Up"
       labelPosition="before"
-      onTouchTap={() => {
-        AuthService.signup();
-      }}
+      onTouchTap={signUp}
     />
   </div>
 );
 
-
-export default SignupPrompt;
+export default connect(null, {
+  signUp: authActions.signUp,
+})(SignupPrompt);

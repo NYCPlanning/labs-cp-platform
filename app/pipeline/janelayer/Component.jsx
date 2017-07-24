@@ -1,52 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import { connect } from 'react-redux';
 
 import LayerSelector from '../LayerSelector';
 
 import Download from '../../common/Download';
 import { about } from '../content';
 import SignupPrompt from '../../common/SignupPrompt';
-import PipelineStore from '../../stores/PipelineStore';
+import ga from '../../helpers/ga';
+import * as pipelineActions from '../../actions/pipeline';
 
+class Pipeline extends React.Component {
+  componentDidMount() {
+    this.props.fetchTotalCount();
+    this.props.fetchSelectedCount(this.props.filterDimensions);
+  }
 
-const Pipeline = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.fetchSelectedCount(nextProps.filterDimensions);
+    }
+  }
 
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
-  getInitialState() {
-    return ({
-      layerConfig: PipelineStore.getLayerConfig(),
+  handleDownload = (label) => {
+    ga.event({
+      category: 'pipeline-explorer',
+      action: 'download',
+      label,
     });
-  },
-
-  componentWillMount() {
-    // listen for changes to the filter UI
-    PipelineStore.on('pipelineUpdated', () => {
-      this.setState({ layerConfig: PipelineStore.getLayerConfig() }, () => { this.updateLayerConfig(); });
-    });
-
-    this.updateLayerConfig();
-  },
-
-  componentWillUnmount() {
-    PipelineStore.removeAllListeners('pipelineUpdated');
-  },
-
-  updateLayerConfig() {
-    // pass the new config up to Jane
-    this.props.onUpdate('pipeline', this.state.layerConfig);
-  },
+  };
 
   render() {
+    const {
+      totalCount,
+      selectedCount,
+      filterDimensions,
+      symbologyDimension,
+    } = this.props;
+
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
       position: 'absolute',
@@ -60,14 +52,20 @@ const Pipeline = createReactClass({
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector />
+          <LayerSelector
+            totalCount={totalCount}
+            selectedCount={selectedCount}
+            filterDimensions={filterDimensions}
+            symbologyDimension={symbologyDimension}
+          />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
               <Download
-                sql={PipelineStore.sql}
+                sql={this.props.sql}
                 filePrefix="developments"
+                onDownload={this.handleDownload}
               />
               <SignupPrompt />
             </div>
@@ -82,7 +80,23 @@ const Pipeline = createReactClass({
         </Tab>
       </Tabs>
     );
-  },
+  }
+}
+
+Pipeline.propTypes = {
+  fetchTotalCount: PropTypes.func.isRequired,
+  fetchSelectedCount: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = ({ pipeline }) => ({
+  sql: pipeline.sql,
+  totalCount: pipeline.totalCount,
+  selectedCount: pipeline.selectedCount,
+  filterDimensions: pipeline.filterDimensions,
+  symbologyDimension: pipeline.symbologyDimension,
 });
 
-export default Pipeline;
+export default connect(mapStateToProps, {
+  fetchTotalCount: pipelineActions.fetchTotalCount,
+  fetchSelectedCount: pipelineActions.fetchSelectedCount,
+})(Pipeline);

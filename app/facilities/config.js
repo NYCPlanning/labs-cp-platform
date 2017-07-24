@@ -1,12 +1,47 @@
-import colors from './colors';
-import appConfig from '../helpers/appConfig';
+import { defaultLayers } from './defaultLayers';
 
-import layersGenerator from './layersGenerator';
+function checkAllLayers(layers, checked = true) {
+  return layers.map((l) => {
+    l.checked = checked;
+    if (l.children) { checkAllLayers(l.children, checked); }
+    return l;
+  });
+}
 
-const defaultFilterDimensions = {
+function checkAllSelected(layers, context) {
+  return layers.map((l) => {
+    const keys = Object.keys(context);
+    if (keys.includes(l.name)) {
+      l.checked = true;
+      if (l.children && context[l.name] === null) {
+        checkAllLayers(l.children, true);
+      } else if (l.children) {
+        checkAllSelected(l.children, context[l.name]);
+      }
+    }
+    return l;
+  });
+}
+
+const getSelectedFacilitiesLayers = (selected) => {
+  const defaultLayersCopy = JSON.parse(JSON.stringify(defaultLayers));
+
+  switch (selected) {
+    case 'all':
+      return checkAllLayers(defaultLayersCopy, true);
+
+    case 'none':
+      return checkAllLayers(defaultLayersCopy, false);
+
+    default:
+      return selected ? checkAllSelected(defaultLayersCopy, selected) : defaultLayersCopy;
+  }
+};
+
+export const getDefaultFilterDimensions = ({ selected, values }) => ({
   facsubgrp: {
     type: 'facilitiesLayerSelector',
-    values: layersGenerator.allChecked(),
+    values: values || getSelectedFacilitiesLayers(selected),
   },
   optype: {
     type: 'multiSelect',
@@ -474,54 +509,4 @@ const defaultFilterDimensions = {
       },
     ],
   },
-};
-
-const layerConfig = {
-  sources: [
-    {
-      type: 'cartovector',
-      id: 'facilities',
-      options: {
-        carto_user: appConfig.carto_user,
-        carto_domain: appConfig.carto_domain,
-      },
-
-    },
-  ],
-  mapLayers: [
-    {
-      id: 'facilities-points-outline',
-      source: 'facilities',
-      'source-layer': 'layer0',
-      type: 'circle',
-      paint: {
-        'circle-radius': {
-          stops: [
-            [10, 3],
-            [15, 7],
-          ],
-        },
-        'circle-color': '#012700',
-        'circle-opacity': 0.7,
-      },
-    },
-    {
-      id: 'facilities-points',
-      source: 'facilities',
-      'source-layer': 'layer0',
-      type: 'circle',
-      paint: {
-        'circle-radius': {
-          stops: [
-            [10, 2],
-            [15, 6],
-          ],
-        },
-        'circle-color': colors.getColorObject(),
-        'circle-opacity': 0.7,
-      },
-    },
-  ],
-};
-
-export { defaultFilterDimensions, layerConfig };
+});

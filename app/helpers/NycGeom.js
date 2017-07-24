@@ -50,4 +50,4 @@ const NycGeom = {
   },
 };
 
-module.exports = NycGeom;
+export default NycGeom;

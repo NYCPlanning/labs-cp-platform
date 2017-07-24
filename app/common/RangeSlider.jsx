@@ -1,19 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
-const RangeSlider = createReactClass({
-  propTypes: {
-    disable: PropTypes.bool,
-    data: PropTypes.array.isRequired,
-  },
-
-  getDefaultProps() {
-    return ({
-      disable: false,
-    });
-  },
-
+class RangeSlider extends React.Component {
   componentDidMount() {
     const self = this;
     $(this.sliderEl).ionRangeSlider({ // eslint-disable-line no-undef
@@ -37,7 +25,7 @@ const RangeSlider = createReactClass({
     });
 
     this.slider = $(this.sliderEl).data('ionRangeSlider'); // eslint-disable-line no-undef
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.disable) {
@@ -58,13 +46,22 @@ const RangeSlider = createReactClass({
       from: nextProps.data[0],
       to: nextProps.data[1],
     });
-  },
+  }
 
   render() {
     return (
       <input type="text" ref={(sliderEl) => { this.sliderEl = sliderEl; }} value="" />
     );
-  },
-});
+  }
+}
+
+RangeSlider.defaultProps = {
+  disable: false,
+};
+
+RangeSlider.propTypes = {
+  disable: PropTypes.bool,
+  data: PropTypes.array.isRequired,
+};
 
 export default RangeSlider;

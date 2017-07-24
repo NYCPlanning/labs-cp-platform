@@ -2,7 +2,7 @@
 // used for range filtering
 
 import React from 'react';
-import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
 function getBase(number) {
@@ -40,17 +40,17 @@ function getMultiplier(multiplierSymbol) {
   return 1000000000;
 }
 
-const BigMoneyInput = createReactClass({
+class BigMoneyInput extends React.Component {
   componentWillMount() {
     const { value } = this.props;
     this.setState({ multiplier: getMultiplier(getAbbrev(value)) });
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.baseEl.value = getBase(nextProps.value);
-  },
+  }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     if (e) e.preventDefault();
 
     const { onSubmit } = this.props;
@@ -60,13 +60,11 @@ const BigMoneyInput = createReactClass({
     const newValue = parseFloat(this.baseEl.value) * parseInt(multiplier);
 
     onSubmit(newValue);
-  },
+  };
 
-  handleSelect(multiplierSymbol) {
-    const multiplier = getMultiplier(multiplierSymbol);
-    // set multiplier in component state, trigger submit
-    this.setState({ multiplier }, () => { this.handleSubmit(); });
-  },
+  handleSelect = (multiplierSymbol) => {
+    this.setState({ multiplier: getMultiplier(multiplierSymbol) }, () => this.handleSubmit());
+  };
 
   render() {
     const { value, alignRight } = this.props;
@@ -112,7 +110,17 @@ const BigMoneyInput = createReactClass({
         </div>
       </form>
     );
-  },
-});
+  }
+}
+
+BigMoneyInput.defaultProps = {
+  alignRight: false,
+};
+
+BigMoneyInput.propTypes = {
+  value: PropTypes.number.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  alignRight: PropTypes.bool,
+};
 
 export default BigMoneyInput;

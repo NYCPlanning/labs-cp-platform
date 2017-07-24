@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Numeral from 'numeral';
 
@@ -8,25 +7,25 @@ import BigMoneyInput from './BigMoneyInput';
 import './RangeInputs.scss';
 
 
-const RangeInputs = createReactClass({
+class RangeInputs extends React.Component {
   propTypes: {
     data: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
-  },
+  }
 
-  updateMin(value) {
+  updateMin = (value) => {
     this.props.onChange({
       from: value,
       to: this.props.data[1],
     });
-  },
+  }
 
-  updateMax(value) {
+  updateMax = (value) => {
     this.props.onChange({
       from: this.props.data[0],
       to: value,
     });
-  },
+  }
 
 
   render() {
@@ -55,7 +54,12 @@ const RangeInputs = createReactClass({
         />
       </div>
     );
-  },
-});
+  }
+}
+
+RangeInputs.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired,
+};
 
 export default RangeInputs;

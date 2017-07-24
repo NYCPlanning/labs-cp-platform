@@ -1,86 +1,7 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import appConfig from '../../helpers/appConfig';
 
-const SCAPlanComponent = createReactClass({
-  propTypes: {
-    onUpdate: PropTypes.func,
-  },
-
-  getDefaultProps() {
-    return {
-      onUpdate: () => {},
-    };
-  },
-
-  componentWillMount() {
-    this.updateLayerConfig();
-  },
-
-  updateLayerConfig() {
-    // pass the new config up to Jane
-    const layerConfig = {
-      sources: [
-        {
-          id: 'sca-points',
-          type: 'cartovector',
-          options: {
-            carto_user: appConfig.carto_user,
-            carto_domain: appConfig.carto_domain,
-            sql: ['SELECT * FROM cpdb_sca_pts'],
-          },
-        },
-      ],
-      mapLayers: [
-        {
-          id: 'sca-points-outline',
-          source: 'sca-points',
-          'source-layer': 'layer0',
-          type: 'circle',
-          paint: {
-            'circle-radius': {
-              stops: [
-                [10, 3],
-                [15, 7],
-              ],
-            },
-            'circle-color': '#012700',
-            'circle-opacity': 0.7,
-          },
-        },
-        {
-          id: 'sca-points-points',
-          source: 'sca-points',
-          'source-layer': 'layer0',
-          type: 'circle',
-          paint: {
-            'circle-radius': {
-              stops: [
-                [10, 2],
-                [15, 6],
-              ],
-            },
-            'circle-color': '#5C99FF',
-            'circle-opacity': 0.7,
-          },
-        },
-      ],
-    };
-
-    layerConfig.legend = (
-      <div className="legendSection">
-        <div className="legendItem">
-          <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
-          <div className="legendItemText">SCA Projects</div>
-        </div>
-      </div>
-
-    );
-    this.props.onUpdate('scaplan', layerConfig);
-  },
-
+class SCAPlanComponent extends React.Component {
   render() {
     // necessary for scrolling in tab Content
     const tabTemplateStyle = {
@@ -121,7 +42,7 @@ const SCAPlanComponent = createReactClass({
         </Tab>
       </Tabs>
     );
-  },
-});
+  }
+}
 
 export default SCAPlanComponent;
