@@ -37,9 +37,18 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude,
-        loaders: [
-          'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              presets: ['babel-preset-react', 'babel-preset-es2015', 'babel-preset-stage-0'].map(require.resolve),
+              plugins: ['babel-plugin-transform-object-assign', 'babel-plugin-es6-promise'].map(require.resolve),
+            },
+          },
         ],
+        // loaders: [
+        //   'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
+        // ],
       },
       {
         test: /\.js$/,
