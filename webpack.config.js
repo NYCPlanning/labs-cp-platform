@@ -20,7 +20,7 @@ module.exports = {
   resolve: {
     modules: [
       'node_modules',
-      appPath
+      appPath,
     ],
 
     extensions: ['.js', '.jsx'],
@@ -36,14 +36,14 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: exclude,
+        exclude,
         loaders: [
           'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
         ],
       },
       {
         test: /\.js$/,
-        exclude: exclude,
+        exclude,
         loaders: ['babel-loader'],
       },
       {
@@ -51,7 +51,7 @@ module.exports = {
         loader: extractSass.extract({
           use: [
             { loader: 'css-loader' },
-            { loader: 'sass-loader' }
+            { loader: 'sass-loader' },
           ],
           // use style-loader in development
           fallback: 'style-loader',
@@ -77,7 +77,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       inject: 'body',
-      template: 'index.html'
+      template: 'index.html',
     }),
   ],
 };

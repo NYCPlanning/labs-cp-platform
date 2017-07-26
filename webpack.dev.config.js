@@ -20,7 +20,7 @@ module.exports = {
   resolve: {
     modules: [
       'node_modules',
-      appPath
+      appPath,
     ],
 
     symlinks: false,
@@ -40,7 +40,7 @@ module.exports = {
     new Dotenv(),
     new HtmlWebpackPlugin({
       inject: 'body',
-      template: 'index.html'
+      template: 'index.html',
     }),
   ],
 
@@ -49,7 +49,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         enforce: 'pre',
-        exclude: exclude,
+        exclude,
         use: [
           {
             loader: 'eslint-loader',
@@ -59,7 +59,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        exclude: exclude,
+        exclude,
         use: [
           { loader: 'react-hot-loader' },
           {
@@ -73,7 +73,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: exclude,
+        exclude,
         use: ['babel-loader'],
       },
       {
