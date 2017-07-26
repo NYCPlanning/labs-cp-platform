@@ -46,9 +46,6 @@ module.exports = {
             },
           },
         ],
-        // loaders: [
-        //   'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-object-assign,plugins[]=es6-promise',
-        // ],
       },
       {
         test: /\.js$/,
