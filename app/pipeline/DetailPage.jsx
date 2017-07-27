@@ -39,23 +39,19 @@ class DevelopmentPage extends React.Component {
 
     const d = data.properties;
     const biswebJobLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
-    const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
-    const netUnits = d.units_prop - d.units_exist;
-    const netUnitsDisplay = addSign(netUnits);
-    const unitsComplete = d.units_net ? d.units_net : 0;
+    // const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
 
-    function getUnitChange() {
-      if (netUnits > 0) {
-        return `${unitsComplete} of ${netUnits}`;
-      } else if (netUnits <= 0) {
-        return `${Math.abs(unitsComplete)} of ${Math.abs(netUnits)}`;
+    function unitChange() {
+      if (d.units_net > 0) {
+        return `${d.units_net ? d.units_net : 0} of ${d.units_prop}`;
+      } else if (d.units_net <= 0) {
+        return `${Math.abs(d.units_net ? d.units_net : 0)} of ${Math.abs(d.units_prop)}`;
       }
 
       return '';
     }
 
-    const netUnitsStyle = getNetUnitsStyle(netUnits);
-    const unitChange = getUnitChange();
+    const netUnitsStyle = getNetUnitsStyle(d.units_net);
 
     /* eslint-disable */
     const permitDate = (date) => {
@@ -82,7 +78,7 @@ class DevelopmentPage extends React.Component {
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{netUnitsDisplay}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
                 <h4>Net Units</h4>
               </div>
             </div>
@@ -105,7 +101,7 @@ class DevelopmentPage extends React.Component {
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{netUnitsDisplay}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
                 <h4>Net Units</h4>
               </div>
             </div>
@@ -122,7 +118,7 @@ class DevelopmentPage extends React.Component {
             </div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{netUnitsDisplay}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
                 <h4>Net Units</h4>
               </div>
             </div>
@@ -152,11 +148,10 @@ class DevelopmentPage extends React.Component {
               <h3 className="id-top-line">
                 <small>
                   DOB Job <a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>#{d.dob_job_number}</a> |
-                  BIN: <a target="_blank" rel="noopener noreferrer" href={biswebBinLink}>{d.dob_permit_bin}</a> |
                   BBL: {d.bbl}
                 </small>
               </h3>
-              <h1>{d.address}, {NycGeom.getBoroughNameFromId(d.dob_permit_borough)}</h1>
+              <h1>{d.address}, {d.borough}</h1>
               <span className={'badge'} style={{ backgroundColor }}>{d.dcp_category_development}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_category_occupancy}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
@@ -205,7 +200,7 @@ class DevelopmentPage extends React.Component {
                       <div className={'col-md-12'}>
                         <div className="dev-status">
                           <h4>Net Units Completed</h4>
-                          <h3 style={netUnitsStyle}>{unitChange}</h3>
+                          <h3 style={netUnitsStyle}>{unitChange()}</h3>
                         </div>
                       </div>
                     )
