@@ -6,12 +6,12 @@ import _ from 'lodash';
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
 const isIssueDateDisabled = filterDimensions =>
-filterDimensions.dcp_pipeline_status.values
+filterDimensions.dcp_status.values
   .filter(value => value.checked && value.value === 'Application filed')
   .length > 0;
 
 const isCompletionDateDisabled = filterDimensions =>
-filterDimensions.dcp_pipeline_status.values
+filterDimensions.dcp_status.values
   .filter(value => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
   .length > 0;
 
@@ -21,7 +21,7 @@ export const initialState = {
   completionDateFilterDisabled: isCompletionDateDisabled(getDefaultFilters()),
   sql: getSql(getDefaultFilters()),
   selectedFeatures: [],
-  symbologyDimension: 'dcp_permit_type',
+  symbologyDimension: 'dcp_category_development',
   pipelineDetails: null,
   totalCount: 0,
   selectedCount: 0,
@@ -60,7 +60,7 @@ const pipelineReducer = (state = initialState, action) => {
       dimensions[filterDimension].values = values;
 
       // if dimension is status, check which items are included and disable/reset date dimensions accordingly
-      if (filterDimension === 'dcp_pipeline_status') {
+      if (filterDimension === 'dcp_status') {
         // Completion Slider
         if (isCompletionDateDisabled(dimensions)) {
           dimensions.dob_cofo_date = getDefaultFilters().dob_cofo_date;

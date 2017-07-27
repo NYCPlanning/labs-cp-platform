@@ -40,9 +40,9 @@ class DevelopmentPage extends React.Component {
     const d = data.properties;
     const biswebJobLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
     const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
-    const netUnits = d.dob_permit_proposed_units - d.dob_permit_exist_units;
+    const netUnits = d.units_prop - d.units_exist;
     const netUnitsDisplay = addSign(netUnits);
-    const unitsComplete = d.dcp_units_complete ? d.dcp_units_complete : 0;
+    const unitsComplete = d.units_net ? d.units_net : 0;
 
     function getUnitChange() {
       if (netUnits > 0) {
@@ -65,18 +65,18 @@ class DevelopmentPage extends React.Component {
     /* eslint-enable */
 
     const unitPipeline = () => {
-      if (d.dcp_permit_type === 'Alteration') {
+      if (d.dcp_category_development === 'Alteration') {
         return (
           <div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.dob_permit_exist_units}</h3>
+                <h3>{d.units_exist}</h3>
                 <h4>Existing Units</h4>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.dob_permit_proposed_units}</h3>
+                <h3>{d.units_prop}</h3>
                 <h4>Proposed Units</h4>
               </div>
             </div>
@@ -88,7 +88,7 @@ class DevelopmentPage extends React.Component {
             </div>
           </div>
         );
-      } else if (d.dcp_permit_type === 'New Building') {
+      } else if (d.dcp_category_development === 'New Building') {
         return (
           <div>
             <div className={'col-md-4'}>
@@ -99,7 +99,7 @@ class DevelopmentPage extends React.Component {
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.dob_permit_proposed_units}</h3>
+                <h3>{d.units_prop}</h3>
                 <h4>Proposed Units</h4>
               </div>
             </div>
@@ -111,12 +111,12 @@ class DevelopmentPage extends React.Component {
             </div>
           </div>
         );
-      } else if (d.dcp_permit_type === 'Demolition') {
+      } else if (d.dcp_category_development === 'Demolition') {
         return (
           <div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3>{d.dob_permit_exist_units}</h3>
+                <h3>{d.units_exist}</h3>
                 <h4>Existing Units</h4>
               </div>
             </div>
@@ -132,7 +132,7 @@ class DevelopmentPage extends React.Component {
       return '';
     };
 
-    const backgroundColor = getColor('dcp_permit_type', d.dcp_permit_type);
+    const backgroundColor = getColor('dcp_category_development', d.dcp_category_development);
 
     return (
       <div className="pipeline-page detail-page">
@@ -153,13 +153,13 @@ class DevelopmentPage extends React.Component {
                 <small>
                   DOB Job <a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>#{d.dob_job_number}</a> |
                   BIN: <a target="_blank" rel="noopener noreferrer" href={biswebBinLink}>{d.dob_permit_bin}</a> |
-                  BBL: {d.dob_permit_bbl}
+                  BBL: {d.bbl}
                 </small>
               </h3>
-              <h1>{d.dob_permit_address}, {NycGeom.getBoroughNameFromId(d.dob_permit_borough)}</h1>
-              <span className={'badge'} style={{ backgroundColor }}>{d.dcp_permit_type}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_development_type}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_pipeline_status}</span>
+              <h1>{d.address}, {NycGeom.getBoroughNameFromId(d.dob_permit_borough)}</h1>
+              <span className={'badge'} style={{ backgroundColor }}>{d.dcp_category_development}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_category_occupancy}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
             </div>
           </div>
         </div>
@@ -190,18 +190,18 @@ class DevelopmentPage extends React.Component {
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Initial CofO*</h4>
-                      <h3>{permitDate(d.dob_cofo_date_first)}</h3>
+                      <h3>{permitDate(d.cofo_earliest)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
-                      <h3>{permitDate(d.dob_cofo_date_last)}</h3>
-                      <p className="subtext">{d.dob_cofo_type_last}</p>
+                      <h3>{permitDate(d.cofo_latest)}</h3>
+                      <p className="subtext">{d.cofo_latesttype}</p>
                     </div>
                   </div>
                   {
-                    d.dcp_pipeline_status === 'Partial complete' && (
+                    d.dcp_status === 'Partial complete' && (
                       <div className={'col-md-12'}>
                         <div className="dev-status">
                           <h4>Net Units Completed</h4>
@@ -217,7 +217,7 @@ class DevelopmentPage extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <ModalMap feature={this.props.pipelineDetails} label={d.dob_permit_address} />
+          <ModalMap feature={this.props.pipelineDetails} label={d.address} />
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"

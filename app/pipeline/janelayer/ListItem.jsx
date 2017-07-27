@@ -6,24 +6,24 @@ import { getColor } from '../config';
 
 const Item = ({ feature }) => {
   const { cartodb_id,
-          dcp_permit_type,
-          dob_permit_address,
-          dcp_pipeline_status,
-          dcp_units_use_map } = feature.properties;
+          dcp_category_development,
+          address,
+          dcp_status,
+          units_net } = feature.properties;
 
   return (
     <Link to={{ pathname: `/development/${cartodb_id}`, state: { modal: true, returnTo: '/pipeline' } }}>
       <div
         className="facilities-list-item"
-        style={{ borderLeft: `5px solid ${getColor('dcp_permit_type', dcp_permit_type)}` }}
+        style={{ borderLeft: `5px solid ${getColor('dcp_category_development', dcp_category_development)}` }}
       >
 
         <div className="title">
-          { dob_permit_address }
+          { address }
         </div>
 
         <div className="subtitle">
-          { dcp_pipeline_status } | { dcp_units_use_map } units
+          { dcp_status } | { units_net } units
         </div>
 
         <i className="fa fa-chevron-right" />

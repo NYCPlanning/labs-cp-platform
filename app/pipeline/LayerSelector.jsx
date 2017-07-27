@@ -85,8 +85,8 @@ class LayerSelector extends React.Component {
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('dcp_pipeline_status'); }}
-              selected={symbologyDimension === 'dcp_pipeline_status'}
+              onClick={() => { this.handleSymbologyDimensionChange('dcp_status'); }}
+              selected={symbologyDimension === 'dcp_status'}
             />
           </Subheader>
           <ListItem
@@ -94,9 +94,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_pipeline_status}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_pipeline_status')}
-              legendCircleType={symbologyDimension === 'dcp_pipeline_status' ? 'fill' : 'none'}
+              dimension={filterDimensions.dcp_status}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_status')}
+              legendCircleType={symbologyDimension === 'dcp_status' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -104,8 +104,8 @@ class LayerSelector extends React.Component {
             Permit Type
             <InfoIcon text="Categorizes developments based on the permit type, determined using DOB data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('dcp_permit_type'); }}
-              selected={symbologyDimension === 'dcp_permit_type'}
+              onClick={() => { this.handleSymbologyDimensionChange('dcp_category_development'); }}
+              selected={symbologyDimension === 'dcp_category_development'}
             />
           </Subheader>
           <ListItem
@@ -113,9 +113,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_permit_type}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_permit_type')}
-              legendCircleType={symbologyDimension === 'dcp_permit_type' ? 'fill' : 'none'}
+              dimension={filterDimensions.dcp_category_development}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_category_development')}
+              legendCircleType={symbologyDimension === 'dcp_category_development' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -128,8 +128,8 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_development_type}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_development_type')}
+              dimension={filterDimensions.dcp_category_occupancy}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_category_occupancy')}
               legendCircleType={'none'}
             />
           </ListItem>
@@ -143,13 +143,13 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <SimpleRangeInputs
-              data={filterDimensions.dcp_units_use_map.values}
-              onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
+              data={filterDimensions.units_net.values}
+              onChange={this.handleSliderChange.bind(this, 'units_net')}
             />
             <RangeSlider
-              data={filterDimensions.dcp_units_use_map.values}
+              data={filterDimensions.units_net.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dcp_units_use_map')}
+              onChange={this.handleSliderChange.bind(this, 'units_net')}
               grid
               keyboard
               force_edges

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 const defaultFilterDimensions = {
-  dcp_pipeline_status: {
+  dcp_status: {
     type: 'statusMultiSelect',
     values: [
       {
@@ -31,7 +31,7 @@ const defaultFilterDimensions = {
     ],
   },
 
-  dcp_permit_type: {
+  dcp_category_development: {
     type: 'multiSelect',
     values: [
       {
@@ -55,7 +55,7 @@ const defaultFilterDimensions = {
     ],
   },
 
-  dcp_development_type: {
+  dcp_category_occupancy: {
     type: 'multiSelect',
     values: [
       {
@@ -64,16 +64,16 @@ const defaultFilterDimensions = {
         checked: true,
       },
       {
-        label: 'Non-residential',
-        value: 'Non-residential',
+        label: 'Other Accommodations',
+        value: 'Other Accommodations',
         checked: true,
       },
     ],
   },
 
-  dcp_units_use_map: {
+  units_net: {
     type: 'numberRange',
-    values: [-1445, 1669],
+    values: [-6000, 6000],
   },
 
   dob_cofo_date: {
@@ -94,23 +94,23 @@ function getColor(key, value) {
 }
 
 const circleColors = {
-  dcp_permit_type: {
-    property: 'dcp_permit_type',
+  dcp_category_development: {
+    property: 'dcp_category_development',
     type: 'categorical',
     stops: [
-      ['New Building', getColor('dcp_permit_type', 'New Building')],
-      ['Alteration', getColor('dcp_permit_type', 'Alteration')],
-      ['Demolition', getColor('dcp_permit_type', 'Demolition')],
+      ['New Building', getColor('dcp_category_development', 'New Building')],
+      ['Alteration', getColor('dcp_category_development', 'Alteration')],
+      ['Demolition', getColor('dcp_category_development', 'Demolition')],
     ],
   },
-  dcp_pipeline_status: {
-    property: 'dcp_pipeline_status',
+  dcp_status: {
+    property: 'dcp_status',
     type: 'categorical',
     stops: [
-      ['Application filed', getColor('dcp_pipeline_status', 'Application filed')],
-      ['Permit issued', getColor('dcp_pipeline_status', 'Permit issued')],
-      ['Partial complete', getColor('dcp_pipeline_status', 'Partial complete')],
-      ['Complete', getColor('dcp_pipeline_status', 'Complete')],
+      ['Application filed', getColor('dcp_status', 'Application filed')],
+      ['Permit issued', getColor('dcp_status', 'Permit issued')],
+      ['Partial complete', getColor('dcp_status', 'Partial complete')],
+      ['Complete', getColor('dcp_status', 'Complete')],
     ],
   },
 };
