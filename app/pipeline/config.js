@@ -73,7 +73,7 @@ const defaultFilterDimensions = {
 
   units_net: {
     type: 'numberRange',
-    values: [-6000, 6000],
+    values: [-1100, 1700],
   },
 
   dob_cofo_date: {
