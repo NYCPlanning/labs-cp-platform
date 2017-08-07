@@ -22,7 +22,7 @@ import * as pipelineActions from '../actions/pipeline';
 
 const pointsLayerPaint = {
   'circle-radius': {
-    property: 'dcp_units_use_map',
+    property: 'units_net',
     stops: [
       [{ zoom: 10, value: -12 }, 1],
       [{ zoom: 10, value: 1669 }, 2],
@@ -87,9 +87,9 @@ class PipeLineExplorer extends React.Component {
     };
 
     const pointsLayerPaintWithSymbology = _.assign({}, pointsLayerPaint, {
-      'circle-color': this.props.symbologyDimension === 'dcp_permit_type'
-        ? circleColors.dcp_permit_type
-        : circleColors.dcp_pipeline_status,
+      'circle-color': this.props.symbologyDimension === 'dcp_category_development'
+        ? circleColors.dcp_category_development
+        : circleColors.dcp_status,
     });
 
     return (

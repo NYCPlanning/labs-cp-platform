@@ -3,8 +3,8 @@ import SqlBuilder from './SqlBuilder';
 import devTables from '../devTables';
 
 export const sqlConfig = {
-  columns: 'cartodb_id, the_geom_webmercator, dcp_pipeline_status, dcp_permit_type, dcp_units_use_map, dob_permit_address',
-  tablename: devTables('pipeline_projects_prod'),
+  columns: 'cartodb_id, the_geom_webmercator, dcp_status, dcp_category_development, units_net, address',
+  tablename: devTables('pipeline_projects_201707'),
 };
 
 class PipelineSqlBuilder extends SqlBuilder {
@@ -17,7 +17,7 @@ class PipelineSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `NOT (dob_cofo_date_first >= '${dateRangeFormatted.to}' OR dob_cofo_date_last <= '${dateRangeFormatted.from}')`;
+    return `NOT (cofo_earliest >= '${dateRangeFormatted.to}' OR cofo_latest <= '${dateRangeFormatted.from}')`;
   }
 
   // SQL WHERE partial builder for Checkboxes
@@ -25,7 +25,7 @@ class PipelineSqlBuilder extends SqlBuilder {
     const values = filters[dimension].values;
     // inject some additional values to handle the demolition use className
     // demolitions where permit is issued should also show up under searches for complete.
-    const demolitionIsSelected = filters.dcp_permit_type.values.filter(d => (d.value === 'Demolition' && d.checked === true)).length > 0;
+    const demolitionIsSelected = filters.dcp_category_development.values.filter(d => (d.value === 'Demolition' && d.checked === true)).length > 0;
     const completeIsSelected = values.filter(d => (d.value === 'Complete' && d.checked === true)).length > 0;
     const permitIssuedIsSelected = values.filter(d => (d.value === 'Permit issued' && d.checked === true)).length > 0;
 
@@ -34,7 +34,7 @@ class PipelineSqlBuilder extends SqlBuilder {
     const subChunks = checkedValues.map(value => `${dimension} = '${value.value}'`);
 
     if (demolitionIsSelected && (completeIsSelected || permitIssuedIsSelected)) {
-      subChunks.push('dcp_pipeline_status = \'Demolition (complete)\'');
+      subChunks.push('dcp_status = \'Complete (demolition)\'');
     }
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
