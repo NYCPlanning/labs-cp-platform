@@ -51,7 +51,9 @@ const facilitiesReducer = (state = initialState, action) => {
 
       const shouldChangeDisabledValue = filterDimension === 'overabbrev' ||
                                         filterDimension === 'optype' ||
-                                        filterDimension === 'proptype';
+                                        filterDimension === 'proptype' ||
+                                        filterDimension === 'borocode' ||
+                                        filterDimension === 'commboard';
 
       const newDisabledValue = shouldChangeDisabledValue
         ? values.filter(value => value.checked === true).length <= 0

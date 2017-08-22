@@ -1,4 +1,5 @@
 import { defaultLayers } from './defaultLayers';
+import LabelHelper from '../helpers/labels/labelHelper';
 
 function checkAllLayers(layers, checked = true) {
   return layers.map((l) => {
@@ -39,6 +40,16 @@ const getSelectedFacilitiesLayers = (selected) => {
 };
 
 export const getDefaultFilterDimensions = ({ selected, values }) => ({
+  commboard: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('commboard'),
+  },
+  borocode: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('borocode'),
+  },
   facsubgrp: {
     type: 'facilitiesLayerSelector',
     values: values || getSelectedFacilitiesLayers(selected),

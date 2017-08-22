@@ -2,7 +2,7 @@ import SqlBuilder from './SqlBuilder';
 import devTables from '../devTables';
 
 export const sqlConfig = {
-  columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
+  columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname, borocode, commboard',
   tablename: devTables('facdb_facilities'),
 };
 

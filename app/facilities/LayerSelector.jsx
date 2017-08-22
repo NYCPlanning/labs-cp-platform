@@ -12,6 +12,7 @@ import NestedSelect from './NestedSelect';
 import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
+import AreaFilterSelect from '../common/AreaFilterSelect';
 import Checkbox from '../common/Checkbox';
 import * as facilityActions from '../actions/facilities';
 
@@ -136,7 +137,7 @@ class LayerSelector extends React.Component {
 
   render() {
     const { totalCount, selectedCount, filterDimensions } = this.props;
-    const { overabbrev, optype, proptype, facsubgrp } = filterDimensions;
+    const { overabbrev, optype, proptype, facsubgrp, commboard, borocode } = filterDimensions;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -155,6 +156,20 @@ class LayerSelector extends React.Component {
           resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <AreaFilterSelect
+              updateFilterDimension={this.updateFilterDimension}
+              filterDimensions={{ commboard, borocode }}
+            />
+          </ListItem>
+
+          <Subheader>
+            Operators, Oversight, and Property Types
+          </Subheader>
+
           <ListItem
             disabled
             style={listItemStyle}
