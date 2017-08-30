@@ -40,6 +40,11 @@ const getSelectedFacilitiesLayers = (selected) => {
 };
 
 export const getDefaultFilterDimensions = ({ selected, values }) => ({
+  radiusfilter: {
+    type: 'radiusFilter',
+    disabled: true,
+    values: [],
+  },
   commboard: {
     type: 'multiSelect',
     disabled: true,

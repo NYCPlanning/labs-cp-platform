@@ -22,6 +22,11 @@ import colors from './colors';
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class FacilitiesExplorer extends React.Component {
+  constructor() {
+    super();
+    this.state = { clickedPointCoordinates: [] };
+  }
+
   componentDidMount() {
     // update the layers and filterDimensions in the facilities store
     const locationState = this.props.location.state;
@@ -31,12 +36,29 @@ class FacilitiesExplorer extends React.Component {
     }
   }
 
-  handleMapLayerClick = (features) => {
-    this.props.setSelectedFeatures(features);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.setSelectedFeatures([]);
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetFilter();
+  }
+
+  setPointCoordinates = (coordinates) => {
+    this.setState({ clickedPointCoordinates: coordinates });
   };
 
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
+  };
+
+  handleMapLayerClick = (features) => {
+    if (features[0].geometry.type === 'Point') {
+      this.setState({ clickedPointCoordinates: features[0].geometry.coordinates });
+    }
+    this.props.setSelectedFeatures(features);
   };
 
   highlightedSourceOptions = () => ({
@@ -49,16 +71,6 @@ class FacilitiesExplorer extends React.Component {
       },
     ],
   });
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.sql !== nextProps.sql) {
-      this.props.setSelectedFeatures([]);
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.resetFilter();
-  }
 
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
@@ -81,6 +93,7 @@ class FacilitiesExplorer extends React.Component {
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
           onLayerToggle={this.clearSelectedFeatures}
+          onSearchTrigger={this.setPointCoordinates}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
@@ -92,7 +105,7 @@ class FacilitiesExplorer extends React.Component {
             name="Facilities and Program Sites"
             icon="university"
             defaultSelected
-            component={<FacilitiesSidebarComponent locationState={this.props.location.state}/>}
+            component={<FacilitiesSidebarComponent locationState={this.props.location.state} clickedPointCoordinates={this.state.clickedPointCoordinates} />}
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
 

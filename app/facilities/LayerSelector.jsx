@@ -13,6 +13,7 @@ import CountWidget from '../common/CountWidget';
 import InfoIcon from '../common/InfoIcon';
 import MultiSelect from '../common/MultiSelect';
 import AreaFilterSelect from '../common/AreaFilterSelect';
+import RadiusFilter from '../common/RadiusFilter';
 import Checkbox from '../common/Checkbox';
 import * as facilityActions from '../actions/facilities';
 
@@ -74,7 +75,7 @@ class LayerSelector extends React.Component {
       filterDimensions,
       setFilters,
       fetchTotalFacilitiesCount,
-      fetchSelectedFacilitiesCount
+      fetchSelectedFacilitiesCount,
     } = this.props;
 
     fetchTotalFacilitiesCount();
@@ -156,6 +157,16 @@ class LayerSelector extends React.Component {
           resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <RadiusFilter
+              clickedPointCoordinates={this.props.clickedPointCoordinates}
+              updateFilterDimension={this.updateFilterDimension}
+            />
+          </ListItem>
+
           <ListItem
             disabled
             style={listItemStyle}
@@ -249,6 +260,7 @@ LayerSelector.defaultProps = {
   filterDimensions: {},
   totalCount: 0,
   selectedCount: 0,
+  clickedPointCoordinates: [],
 };
 
 LayerSelector.propTypes = {
@@ -259,6 +271,7 @@ LayerSelector.propTypes = {
   setFilters: PropTypes.func.isRequired,
   fetchTotalFacilitiesCount: PropTypes.func.isRequired,
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
+  clickedPointCoordinates: PropTypes.array,
 };
 
 const mapStateToProps = ({ facilities }) => ({
