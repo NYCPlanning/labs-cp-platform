@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
@@ -31,7 +32,11 @@ class SidebarComponent extends React.Component {
         tabTemplateStyle={tabTemplateStyle}
       >
         <Tab label="Data">
-          <LayerSelector locationState={this.props.locationState} clickedPointCoordinates={this.props.clickedPointCoordinates}/>
+          <LayerSelector
+            locationState={this.props.locationState}
+            selectedPointType={this.props.selectedPointType}
+            selectedPointCoordinates={this.props.selectedPointCoordinates}
+          />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content ">
@@ -57,6 +62,12 @@ class SidebarComponent extends React.Component {
     );
   }
 }
+
+SidebarComponent.propTypes = {
+  sql: PropTypes.string,
+  selectedPointType: PropTypes.string,
+  selectedPointCoordinates: PropTypes.array.isRequired,
+};
 
 const mapStateToProps = ({ facilities }) => ({
   sql: facilities.sql,

@@ -1,0 +1,23 @@
+.point {
+  position: relative;
+  bottom: -2px;
+  left: 5px;
+  display: inline-block;
+  background: transparent;
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  border: 2px solid orange;
+}
+
+.address {
+  position: relative;
+  left: 5px;
+  top: 1px;
+  display: inline-block;
+  background-image: url(//capitalplanning.nyc.gov/img/orange-marker.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 14px;
+  width: 14px;
+}

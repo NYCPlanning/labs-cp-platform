@@ -162,8 +162,10 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RadiusFilter
-              clickedPointCoordinates={this.props.clickedPointCoordinates}
-              updateFilterDimension={this.updateFilterDimension}
+              selectedPointCoordinates={this.props.selectedPointCoordinates}
+              selectedPointType={this.props.selectedPointType}
+              updateFilterDimension={this.updateFilterDimension.bind(this, 'radiusfilter')}
+              filterDimensions={{ radiusfilter }}
             />
           </ListItem>
 
@@ -260,7 +262,7 @@ LayerSelector.defaultProps = {
   filterDimensions: {},
   totalCount: 0,
   selectedCount: 0,
-  clickedPointCoordinates: [],
+  selectedPointCoordinates: [],
 };
 
 LayerSelector.propTypes = {
@@ -271,7 +273,8 @@ LayerSelector.propTypes = {
   setFilters: PropTypes.func.isRequired,
   fetchTotalFacilitiesCount: PropTypes.func.isRequired,
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
-  clickedPointCoordinates: PropTypes.array,
+  selectedPointType: PropTypes.string,
+  selectedPointCoordinates: PropTypes.array,
 };
 
 const mapStateToProps = ({ facilities }) => ({

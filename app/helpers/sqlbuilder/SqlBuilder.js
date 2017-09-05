@@ -89,8 +89,10 @@ class SqlBuilder {
   }
 
   radiusFilter(dimension, filters) {
-    const coordinates = filters[dimension].values;
-    return `(ST_Distance_Sphere(the_geom, ST_MakePoint(${coordinates[0]},${coordinates[1]})) <= 1000)`;
+    const coordinates = filters[dimension].values.coordinates;
+    const radius = filters[dimension].values.radius;
+
+    return `(ST_Distance_Sphere(the_geom, ST_MakePoint(${coordinates[0]},${coordinates[1]})) <= ${radius})`;
   }
 }
 

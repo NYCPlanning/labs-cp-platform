@@ -50,7 +50,7 @@ const facilitiesReducer = (state = initialState, action) => {
       const dimension = state.filterDimensions[filterDimension];
 
       if (filterDimension === 'radiusfilter') {
-        dimension.disabled = !values.length;
+        dimension.disabled = !values.coordinates.length;
       }
 
       const shouldChangeDisabledValue = filterDimension === 'overabbrev' ||

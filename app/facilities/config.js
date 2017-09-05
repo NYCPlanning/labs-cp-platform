@@ -43,7 +43,10 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
   radiusfilter: {
     type: 'radiusFilter',
     disabled: true,
-    values: [],
+    values: {
+      coordinates: [],
+      radius: 0,
+    },
   },
   commboard: {
     type: 'multiSelect',
