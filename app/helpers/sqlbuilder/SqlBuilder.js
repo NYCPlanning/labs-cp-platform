@@ -87,6 +87,13 @@ class SqlBuilder {
     const range = filters[dimension].values;
     return `(${dimension} >= '${range[0]}' AND ${dimension} <= '${range[1]}')`;
   }
+
+  radiusFilter(dimension, filters) {
+    const coordinates = filters[dimension].values.coordinates;
+    const radius = filters[dimension].values.radius;
+
+    return `(ST_Distance_Sphere(the_geom, ST_MakePoint(${coordinates[0]},${coordinates[1]})) <= ${radius})`;
+  }
 }
 
 export default SqlBuilder;

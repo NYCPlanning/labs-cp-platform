@@ -49,9 +49,28 @@ const facilitiesReducer = (state = initialState, action) => {
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
+      if (filterDimension === 'radiusfilter') {
+        dimension.disabled = !values.coordinates.length;
+      }
+
       const shouldChangeDisabledValue = filterDimension === 'overabbrev' ||
                                         filterDimension === 'optype' ||
-                                        filterDimension === 'proptype';
+                                        filterDimension === 'proptype' ||
+                                        filterDimension === 'censtract' ||
+                                        filterDimension === 'nta' ||
+                                        filterDimension === 'taz' ||
+                                        filterDimension === 'council' ||
+                                        filterDimension === 'firediv' ||
+                                        filterDimension === 'firebn' ||
+                                        filterDimension === 'fireconum' ||
+                                        filterDimension === 'municourt' ||
+                                        filterDimension === 'policeprecinct' ||
+                                        filterDimension === 'schooldistrict' ||
+                                        filterDimension === 'stateassemblydistrict' ||
+                                        filterDimension === 'statesenatedistrict' ||
+                                        filterDimension === 'congdist' ||
+                                        filterDimension === 'borocode' ||
+                                        filterDimension === 'commboard';
 
       const newDisabledValue = shouldChangeDisabledValue
         ? values.filter(value => value.checked === true).length <= 0

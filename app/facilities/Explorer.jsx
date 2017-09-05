@@ -22,6 +22,14 @@ import colors from './colors';
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class FacilitiesExplorer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      selectedPointType: '',
+      selectedPointCoordinates: [],
+    };
+  }
+
   componentDidMount() {
     // update the layers and filterDimensions in the facilities store
     const locationState = this.props.location.state;
@@ -31,12 +39,50 @@ class FacilitiesExplorer extends React.Component {
     }
   }
 
-  handleMapLayerClick = (features) => {
-    this.props.setSelectedFeatures(features);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.setSelectedFeatures([]);
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetFilter();
+  }
+
+  setAddressSearchCoordinates = (payload) => {
+    if (payload.action === 'set') {
+      this.setState({
+        selectedPointType: 'address',
+        selectedPointCoordinates: payload.coordinates,
+      });
+    }
+
+    if (payload.action === 'clear' && this.state.selectedPointType === 'address') {
+      this.setState({
+        selectedPointType: '',
+        selectedPointCoordinates: [],
+      });
+    }
   };
 
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
+    if (this.state.selectedPointType !== 'address') {
+      this.setState({
+        selectedPointType: '',
+        selectedPointCoordinates: [],
+      });
+    }
+  };
+
+  handleMapLayerClick = (features) => {
+    if (features[0].geometry.type === 'Point') {
+      this.setState({
+        selectedPointType: 'point',
+        selectedPointCoordinates: features[0].geometry.coordinates,
+      });
+    }
+    this.props.setSelectedFeatures(features);
   };
 
   highlightedSourceOptions = () => ({
@@ -49,16 +95,6 @@ class FacilitiesExplorer extends React.Component {
       },
     ],
   });
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.sql !== nextProps.sql) {
-      this.props.setSelectedFeatures([]);
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.resetFilter();
-  }
 
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
@@ -81,6 +117,7 @@ class FacilitiesExplorer extends React.Component {
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
           onLayerToggle={this.clearSelectedFeatures}
+          onSearchTrigger={this.setAddressSearchCoordinates}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
@@ -92,7 +129,11 @@ class FacilitiesExplorer extends React.Component {
             name="Facilities and Program Sites"
             icon="university"
             defaultSelected
-            component={<FacilitiesSidebarComponent locationState={this.props.location.state}/>}
+            component={<FacilitiesSidebarComponent
+              locationState={this.props.location.state}
+              selectedPointType={this.state.selectedPointType}
+              selectedPointCoordinates={this.state.selectedPointCoordinates}
+            />}
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
 

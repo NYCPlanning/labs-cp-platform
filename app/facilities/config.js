@@ -1,4 +1,5 @@
 import { defaultLayers } from './defaultLayers';
+import LabelHelper from '../helpers/labels/labelHelper';
 
 function checkAllLayers(layers, checked = true) {
   return layers.map((l) => {
@@ -39,6 +40,34 @@ const getSelectedFacilitiesLayers = (selected) => {
 };
 
 export const getDefaultFilterDimensions = ({ selected, values }) => ({
+  radiusfilter: {
+    type: 'radiusFilter',
+    disabled: true,
+    values: {
+      coordinates: [],
+      radius: 0,
+    },
+  },
+  commboard: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('commboard'),
+  },
+  borocode: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('borocode'),
+  },
+  nta: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('nta'),
+  },
+  censtract: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('censtract'),
+  },
   facsubgrp: {
     type: 'facilitiesLayerSelector',
     values: values || getSelectedFacilitiesLayers(selected),
