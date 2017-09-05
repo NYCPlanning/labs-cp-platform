@@ -58,6 +58,16 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
   },
+  nta: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('nta'),
+  },
+  censtract: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('censtract'),
+  },
   facsubgrp: {
     type: 'facilitiesLayerSelector',
     values: values || getSelectedFacilitiesLayers(selected),

@@ -12,6 +12,19 @@ class AreaFilterSelect extends React.Component {
   options = [
     { value: 'commboard', label: 'Community Districts' },
     { value: 'borocode', label: 'Boroughs' },
+    // { value: 'taz', label: 'Traffic Analysis Zones' },
+    { value: 'censtract', label: 'Census Tract' },
+    { value: 'nta', label: 'Neighborhood Tabulation Area' },
+    // { value: 'council', label: 'City Council Districts' },
+    // { value: 'congdist', label: 'Congressional Districts' },
+    // { value: 'firediv', label: 'Fire Divisions' },
+    // { value: 'firebn', label: 'Fire Battalions' },
+    // { value: 'fireconum', label: 'Fire Companies' },
+    // { value: 'municourt', label: 'Municipal Court Districts' },
+    // { value: 'policeprecinct', label: 'Police Precincts' },
+    // { value: 'schooldistrict', label: 'School Districts' },
+    // { value: 'stateassemblydistrict', label: 'State Assembly Districts' },
+    // { value: 'statesenatedistrict', label: 'State Senate Districts' },
   ]
 
   handleSelectChange = (selectedLayer) => {

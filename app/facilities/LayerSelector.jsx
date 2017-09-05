@@ -138,7 +138,17 @@ class LayerSelector extends React.Component {
 
   render() {
     const { totalCount, selectedCount, filterDimensions } = this.props;
-    const { overabbrev, optype, proptype, facsubgrp, commboard, borocode } = filterDimensions;
+    const {
+      overabbrev,
+      optype,
+      proptype,
+      facsubgrp,
+      radiusfilter,
+      commboard,
+      borocode,
+      nta,
+      censtract,
+    } = filterDimensions;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -175,7 +185,7 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
-              filterDimensions={{ commboard, borocode }}
+              filterDimensions={{ commboard, borocode, nta, censtract }}
             />
           </ListItem>
 
