@@ -57,7 +57,7 @@ class AreaFilterSelect extends React.Component {
       <div className="area-filter-select">
         <Select
           name="area-filter-select"
-          placeholder="Filter by Area"
+          placeholder="Filter by Administrative Boundary"
           value={this.state.selectedLayer}
           options={this.options}
           onChange={this.handleSelectChange}

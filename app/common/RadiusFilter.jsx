@@ -45,6 +45,13 @@ class RadiusFilter extends React.Component {
     return !!this.props.filterDimensions.radiusfilter.values.coordinates.length;
   }
 
+  buttonText() {
+    if (this.props.selectedPointCoordinates.length) {
+      return 'Filter by Radius';
+    }
+    return 'Search or Select Point';
+  }
+
   render() {
     return (
       // NEXT: capture point when click a location on the map
@@ -86,7 +93,7 @@ class RadiusFilter extends React.Component {
               disabled={!this.props.selectedPointCoordinates.length}
               onClick={this.triggerRadiusFilter.bind(this)}
             >
-              Filter around Point<span className={this.props.selectedPointType} />
+              { this.buttonText() }<span className={this.props.selectedPointType} />
             </Button>
           </ButtonGroup>
         </FormGroup>
