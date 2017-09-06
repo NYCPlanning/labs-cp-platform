@@ -1,32 +1,20 @@
-# Facilities Database
-`facdb_facilities`
-`facdb_datasources`
-# Capital Projects
+All production databases sit on `carto.planninglabs.nyc`.
 
-`cpdb_commitments`
-`cpdb_budgets`
-`cpdb_projects`
-`cpdb_spending`
-`cpdb_dcpattributes_poly`
-`cpdb_dcpattributes_pts`
+# Facilities DB
+`facdb_YYMMDD`
 
-## Capital Projects Materialized Views
-`cpdb_project_details`
-`cpdb_map_poly`
-`cpdb_summary_pts`
-`cpdb_spending_grouped` - Checkbook NYC Transactions grouped on maprojectid, with first and last payment date, and sum of $ amounts.  See below
-`cpdb_projecttypes_grouped` - projecttypes from `cpdb_budgets` grouped by maprojectid
+# Capital Projects DB
+`cpdb_commitments_YYMMDD`
+`cpdb_budgets_YYMMDD`
+`cpdb_dcpattributes_poly_YYMMDD`
+`cpdb_dcpattributes_pts_YYMMDD`
+`cpdb_projects_YYMMDD`
 
 # Housing Pipeline
-`pipeline_projects`
-`pipeline_projets_prod` - Materialized View with only those permits that will be included in the "total count" for the pipeline explorer.  Why?  `pipeline_projects` includes two statuses that we do not have filters for.
+`housingdevdb_YYMMDD`
 
-
-CREATE MATERIALIZED VIEW pipeline_projects_prod AS (
-  SELECT * FROM pipeline_projects WHERE dcp_pipeline_status <> 'Application pre-filed' AND dcp_pipeline_status <> 'Disapproved or Suspended'
-)
-
-GRANT SELECT on pipeline_projects_prod to publicuser;
+# SCA Capital Projects
+`cpdb_sca_pts_YYMMDD`
 
 # Supporting Data
 `support_water_pfirm15` - 2015 Preliminary Flood Insurance Risk Map
@@ -40,6 +28,16 @@ GRANT SELECT on pipeline_projects_prod to publicuser;
 `support_admin_ntaboundaries` - NTA boundaries from DCP
 
 # View Definitions
+
+-- Old --
+`pipeline_projets_prod` - Materialized View with only those permits that will be included in the "total count" for the pipeline explorer.  Why?  `pipeline_projects` includes two statuses that we do not have filters for.
+
+
+CREATE MATERIALIZED VIEW pipeline_projects_prod AS (
+  SELECT * FROM pipeline_projects WHERE dcp_pipeline_status <> 'Application pre-filed' AND dcp_pipeline_status <> 'Disapproved or Suspended'
+)
+
+GRANT SELECT on pipeline_projects_prod to publicuser;
 
 ## cpdb_map_pts
 Used to generate vector tile of point data. TODO this can be trimmed down to only include the data we need in the explorer, it is no longer used on detail pages

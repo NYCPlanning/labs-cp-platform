@@ -403,12 +403,12 @@ const defaultFilterDimensions = {
 
   totalcommit: {
     type: 'numberRange',
-    values: [-20000000, 10000000000],
+    values: [-50000000, 10000000000],
   },
 
   activeyears: {
     type: 'capitalProjectsDateRange',
-    values: [2010, 2027],
+    values: [2010, 2030],
   },
 };
 

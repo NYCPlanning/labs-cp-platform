@@ -27,7 +27,7 @@ const { mapboxGLOptions, searchConfig } = appConfig;
 const SCAPointsSourceOptions = {
   carto_user: appConfig.carto_user,
   carto_domain: appConfig.carto_domain,
-  sql: ['SELECT * FROM cpdb_sca_pts'],
+  sql: ['SELECT * FROM cpdb_sca_pts_170201'],
 };
 
 const SCAPointsPaint = {

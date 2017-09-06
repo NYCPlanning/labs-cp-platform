@@ -1,10 +1,9 @@
   /* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
-import devTables from '../devTables';
 
 export const sqlConfig = {
   columns: 'cartodb_id, the_geom_webmercator, dcp_status, dcp_category_development, units_net, address',
-  tablename: devTables('pipeline_projects_201707'),
+  tablename: 'housingdevdb_170701',
 };
 
 class PipelineSqlBuilder extends SqlBuilder {
