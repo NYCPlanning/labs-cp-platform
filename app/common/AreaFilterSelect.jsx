@@ -28,6 +28,13 @@ class AreaFilterSelect extends React.Component {
   ]
 
   handleSelectChange = (selectedLayer) => {
+    // Set all options of selectedLayer being navigated away from to false
+    if (this.state.selectedLayer && selectedLayer !== this.state.selectedLayer) {
+      const options = this.props.filterDimensions[this.state.selectedLayer.value].values;
+      options.forEach((option) => { option.checked = false; });
+      this.props.updateFilterDimension(this.state.selectedLayer.value, options);
+    }
+
     this.setState({ selectedLayer });
   }
 
