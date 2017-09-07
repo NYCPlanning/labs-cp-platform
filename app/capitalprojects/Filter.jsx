@@ -32,6 +32,7 @@ class Filter extends React.Component {
     // override material ui ListItem spacing
     const listItemStyle = {
       paddingTop: '0px',
+      fontSize: '14px',
     };
 
     const {
@@ -71,7 +72,9 @@ class Filter extends React.Component {
                 polygonsSql={polygonsSql}
               />
           }
-          <Divider />
+          <Divider
+            style={{ marginBottom: '15px' }}
+          />
 
           <ListItem
             disabled
@@ -90,6 +93,7 @@ class Filter extends React.Component {
             style={listItemStyle}
           >
             <AreaFilterSelect
+
               updateFilterDimension={this.updateFilterDimension}
               filterDimensions={{ commboard, borocode, nta, censtract }}
             />

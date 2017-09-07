@@ -37,6 +37,7 @@ class LayerSelector extends React.Component {
     // override material ui ListItem spacing
     const listItemStyle = {
       padding: '0px 16px',
+      fontSize: '14px',
     };
 
     const {
@@ -91,7 +92,10 @@ class LayerSelector extends React.Component {
           units={'records'}
           resetFilter={this.resetFilter}
         />
-        <div className="scroll-container count-widget-offset">
+        <div
+          className="scroll-container count-widget-offset"
+          style={{ paddingTop: '15px' }}
+        >
           <ListItem
             disabled
             style={listItemStyle}
