@@ -3,8 +3,6 @@ import SqlBuilder from './SqlBuilder';
 export const sqlConfig = {
   columns: `uid, the_geom_webmercator, facdomain, facname, address, factype, opname,
   borocode`,
-  // commboard, censtract, nta, council, cd, congdist, firediv, firebn, fireconum,
-  // municourt, policeprecinctjo, schooldistrict, stateassemblydistrict, statesenatedistrict, taz
   tablename: 'facdb_170522',
 };
 

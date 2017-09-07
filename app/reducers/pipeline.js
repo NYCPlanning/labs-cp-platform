@@ -59,6 +59,10 @@ const pipelineReducer = (state = initialState, action) => {
 
       dimensions[filterDimension].values = values;
 
+      if (filterDimension === 'radiusfilter') {
+        dimensions.radiusfilter.disabled = !values.coordinates.length;
+      }
+
       // if dimension is status, check which items are included and disable/reset date dimensions accordingly
       if (filterDimension === 'dcp_status') {
         // Completion Slider
@@ -77,11 +81,37 @@ const pipelineReducer = (state = initialState, action) => {
         }
       }
 
+      const shouldChangeDisabledValue = [
+        'censtract',
+        'nta',
+        'taz',
+        'council',
+        'firediv',
+        'firebn',
+        'fireconum',
+        'municourt',
+        'policeprecinct',
+        'schooldistrict',
+        'stateassemblydistrict',
+        'statesenatedistrict',
+        'congdist',
+        'borocode',
+        'commboard',
+      ];
+
+      const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
+        ? values.filter(value => value.checked === true).length <= 0
+        : dimensions[filterDimension].disabled;
+
+      const filterDimensions = Object.assign({}, state.filterDimensions, {
+        [filterDimension]: Object.assign({}, dimensions[filterDimension], { values, disabled: newDisabledValue }),
+      });
+
       return Object.assign({}, state, {
-        filterDimensions: dimensions,
-        issueDateFilterDisabled: isIssueDateDisabled(dimensions),
-        completionDateFilterDisabled: isCompletionDateDisabled(dimensions),
-        sql: getSql(dimensions),
+        filterDimensions,
+        issueDateFilterDisabled: isIssueDateDisabled(filterDimensions),
+        completionDateFilterDisabled: isCompletionDateDisabled(filterDimensions),
+        sql: getSql(filterDimensions),
       });
 
     default:

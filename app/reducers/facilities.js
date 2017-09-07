@@ -53,26 +53,28 @@ const facilitiesReducer = (state = initialState, action) => {
         dimension.disabled = !values.coordinates.length;
       }
 
-      const shouldChangeDisabledValue = filterDimension === 'overabbrev' ||
-                                        filterDimension === 'optype' ||
-                                        filterDimension === 'proptype' ||
-                                        filterDimension === 'censtract' ||
-                                        filterDimension === 'nta' ||
-                                        filterDimension === 'taz' ||
-                                        filterDimension === 'council' ||
-                                        filterDimension === 'firediv' ||
-                                        filterDimension === 'firebn' ||
-                                        filterDimension === 'fireconum' ||
-                                        filterDimension === 'municourt' ||
-                                        filterDimension === 'policeprecinct' ||
-                                        filterDimension === 'schooldistrict' ||
-                                        filterDimension === 'stateassemblydistrict' ||
-                                        filterDimension === 'statesenatedistrict' ||
-                                        filterDimension === 'congdist' ||
-                                        filterDimension === 'borocode' ||
-                                        filterDimension === 'commboard';
+      const shouldChangeDisabledValue = [
+        'overabbrev',
+        'optype',
+        'proptype',
+        'censtract',
+        'nta',
+        'taz',
+        'council',
+        'firediv',
+        'firebn',
+        'fireconum',
+        'municourt',
+        'policeprecinct',
+        'schooldistrict',
+        'stateassemblydistrict',
+        'statesenatedistrict',
+        'congdist',
+        'borocode',
+        'commboard',
+      ];
 
-      const newDisabledValue = shouldChangeDisabledValue
+      const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
         ? values.filter(value => value.checked === true).length <= 0
         : dimension.disabled;
 
@@ -80,7 +82,10 @@ const facilitiesReducer = (state = initialState, action) => {
         [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue }),
       });
 
-      return Object.assign({}, state, { filterDimensions, sql: getSql(filterDimensions) });
+      return Object.assign({}, state, {
+        filterDimensions,
+        sql: getSql(filterDimensions),
+      });
 
     case AT.FETCH_NYC_BOUNDS.SUCCESS:
       return Object.assign({}, state, {

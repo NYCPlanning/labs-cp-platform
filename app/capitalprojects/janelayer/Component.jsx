@@ -57,6 +57,8 @@ class CapitalProjects extends React.Component {
             totalCount={totalCount}
             selectedCount={selectedCount}
             filterDimensions={filterDimensions}
+            selectedPointType={this.props.selectedPointType}
+            selectedPointCoordinates={this.props.selectedPointCoordinates}
           />
         </Tab>
         <Tab label="Download">
@@ -90,6 +92,8 @@ CapitalProjects.propTypes = {
   fetchTotalPointsCount: PropTypes.func.isRequired,
   fetchTotalPolygonsCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
+  selectedPointType: PropTypes.string.isRequired,
+  selectedPointCoordinates: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({

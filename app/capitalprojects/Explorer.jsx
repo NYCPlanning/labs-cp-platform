@@ -95,7 +95,10 @@ const capitalProjectsPointsOutlinePaint = {
 class CapitalProjectsExplorer extends React.Component {
   constructor() {
     super();
-
+    this.state = {
+      selectedPointType: '',
+      selectedPointCoordinates: [],
+    };
     this.selectedFeaturesCache = [];
   }
 
@@ -110,19 +113,41 @@ class CapitalProjectsExplorer extends React.Component {
     this.props.resetFilter();
   }
 
+  setSelectedFeatures = _.debounce(() => {
+    this.props.setSelectedFeatures(this.selectedFeaturesCache);
+    this.selectedFeaturesCache = [];
+  }, 50);
+
+  setAddressSearchCoordinates = (payload) => {
+    if (payload.action === 'set') {
+      this.setState({
+        selectedPointType: 'address',
+        selectedPointCoordinates: payload.coordinates,
+      });
+    }
+
+    if (payload.action === 'clear' && this.state.selectedPointType === 'address') {
+      this.setState({
+        selectedPointType: '',
+        selectedPointCoordinates: [],
+      });
+    }
+  };
+
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
   };
 
   handleMapLayerClick = (features) => {
+    if (features[0].geometry.type === 'Point') {
+      this.setState({
+        selectedPointType: 'point',
+        selectedPointCoordinates: features[0].geometry.coordinates,
+      });
+    }
     this.selectedFeaturesCache.push(...features);
     this.setSelectedFeatures();
   };
-
-  setSelectedFeatures = _.debounce(() => {
-    this.props.setSelectedFeatures(this.selectedFeaturesCache);
-    this.selectedFeaturesCache = [];
-  }, 50);
 
   render() {
     const { selectedFeatures } = this.props;
@@ -150,6 +175,7 @@ class CapitalProjectsExplorer extends React.Component {
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
           onLayerToggle={this.clearSelectedFeatures}
+          onSearchTrigger={this.setAddressSearchCoordinates}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
@@ -197,7 +223,10 @@ class CapitalProjectsExplorer extends React.Component {
             id="capital-projects"
             name="Capital Projects"
             icon="usd"
-            component={<CapitalProjectsComponent />}
+            component={<CapitalProjectsComponent
+              selectedPointType={this.state.selectedPointType}
+              selectedPointCoordinates={this.state.selectedPointCoordinates}
+            />}
             defaultSelected
           >
 
@@ -253,8 +282,8 @@ class CapitalProjectsExplorer extends React.Component {
 }
 
 CapitalProjectsExplorer.propTypes = {
-  pointsSql: PropTypes.string,
-  polygonsSql: PropTypes.string,
+  pointsSql: PropTypes.string.isRequired,
+  polygonsSql: PropTypes.string.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
   selectedFeatures: PropTypes.array.isRequired,
   resetFilter: PropTypes.func.isRequired,

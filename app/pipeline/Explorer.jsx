@@ -57,9 +57,13 @@ const highlightPointsPaint = {
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class PipeLineExplorer extends React.Component {
-  handleMapLayerClick = (features) => {
-    this.props.setSelectedFeatures(features);
-  };
+  constructor() {
+    super();
+    this.state = {
+      selectedPointType: '',
+      selectedPointCoordinates: [],
+    };
+  }
 
   clearSelectedFeatures = () => {
     this.props.setSelectedFeatures([]);
@@ -74,6 +78,42 @@ class PipeLineExplorer extends React.Component {
   componentWillUnmount() {
     this.props.resetFilter();
   }
+
+  setAddressSearchCoordinates = (payload) => {
+    if (payload.action === 'set') {
+      this.setState({
+        selectedPointType: 'address',
+        selectedPointCoordinates: payload.coordinates,
+      });
+    }
+
+    if (payload.action === 'clear' && this.state.selectedPointType === 'address') {
+      this.setState({
+        selectedPointType: '',
+        selectedPointCoordinates: [],
+      });
+    }
+  };
+
+  clearSelectedFeatures = () => {
+    this.props.setSelectedFeatures([]);
+    if (this.state.selectedPointType !== 'address') {
+      this.setState({
+        selectedPointType: '',
+        selectedPointCoordinates: [],
+      });
+    }
+  };
+
+  handleMapLayerClick = (features) => {
+    if (features[0].geometry.type === 'Point') {
+      this.setState({
+        selectedPointType: 'point',
+        selectedPointCoordinates: features[0].geometry.coordinates,
+      });
+    }
+    this.props.setSelectedFeatures(features);
+  };
 
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
@@ -101,19 +141,22 @@ class PipeLineExplorer extends React.Component {
           onDragEnd={this.clearSelectedFeatures}
           onZoomEnd={this.clearSelectedFeatures}
           onLayerToggle={this.clearSelectedFeatures}
+          onSearchTrigger={this.setAddressSearchCoordinates}
         >
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
-
           <JaneLayer
             id="pipeline"
             name="Housing Pipeline"
             icon="building"
             defaultSelected
-            component={<PipelineComponent />}
+            component={<PipelineComponent
+              selectedPointType={this.state.selectedPointType}
+              selectedPointCoordinates={this.state.selectedPointCoordinates}
+            />}
           >
 
             <Source id="pipeline-points" type="cartovector" options={sourceOptions} />
@@ -161,7 +204,7 @@ class PipeLineExplorer extends React.Component {
 }
 
 PipeLineExplorer.propTypes = {
-  sql: PropTypes.string,
+  sql: PropTypes.string.isRequired,
   symbologyDimension: PropTypes.string,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,

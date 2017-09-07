@@ -9,6 +9,8 @@ import Checkboxes from './Checkboxes';
 import * as pipelineActions from '../actions/pipeline';
 
 import RangeSlider from '../common/RangeSlider';
+import AreaFilterSelect from '../common/AreaFilterSelect';
+import RadiusFilter from '../common/RadiusFilter';
 import SimpleRangeInputs from '../common/SimpleRangeInputs';
 import InfoIcon from '../common/InfoIcon';
 
@@ -46,6 +48,15 @@ class LayerSelector extends React.Component {
       completionDateFilterDisabled,
     } = this.props;
 
+    // Geographic filtering dimensions
+    const {
+      radiusfilter,
+      commboard,
+      borocode,
+      nta,
+      censtract,
+    } = filterDimensions;
+
     const PinSelect = (props) => {
       const style = {
         selected: {
@@ -81,6 +92,28 @@ class LayerSelector extends React.Component {
           resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset">
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <RadiusFilter
+              selectedPointCoordinates={this.props.selectedPointCoordinates}
+              selectedPointType={this.props.selectedPointType}
+              updateFilterDimension={this.handleFilterDimensionChange.bind(this, 'radiusfilter')}
+              filterDimensions={{ radiusfilter }}
+            />
+          </ListItem>
+
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <AreaFilterSelect
+              updateFilterDimension={this.handleFilterDimensionChange}
+              filterDimensions={{ commboard, borocode, nta, censtract }}
+            />
+          </ListItem>
+
           <Subheader>
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
@@ -209,6 +242,8 @@ LayerSelector.propTypes = {
   symbologyDimension: PropTypes.string.isRequired,
   issueDateFilterDisabled: PropTypes.bool,
   completionDateFilterDisabled: PropTypes.bool,
+  selectedPointType: PropTypes.string,
+  selectedPointCoordinates: PropTypes.array,
 };
 
 const mapStateToProps = ({ pipeline }) => ({

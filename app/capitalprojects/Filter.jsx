@@ -12,6 +12,8 @@ import CostGroupChart from './CostGroupChart';
 import RangeSlider from '../common/RangeSlider';
 import RangeInputs from '../common/RangeInputs';
 import MultiSelect from '../common/MultiSelect';
+import AreaFilterSelect from '../common/AreaFilterSelect';
+import RadiusFilter from '../common/RadiusFilter';
 
 class Filter extends React.Component {
   updateFilterDimension = (dimension, values) => {
@@ -32,7 +34,22 @@ class Filter extends React.Component {
       paddingTop: '0px',
     };
 
-    const { totalCount, selectedCount, pointsSql, polygonsSql, filterDimensions } = this.props;
+    const {
+      totalCount,
+      selectedCount,
+      pointsSql,
+      polygonsSql,
+      filterDimensions,
+    } = this.props;
+
+    // Geographic filtering dimensions
+    const {
+      radiusfilter,
+      commboard,
+      borocode,
+      nta,
+      censtract,
+    } = filterDimensions;
 
     return (
       <div className="sidebar-tab-content">
@@ -55,6 +72,30 @@ class Filter extends React.Component {
               />
           }
           <Divider />
+
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <RadiusFilter
+              selectedPointCoordinates={this.props.selectedPointCoordinates}
+              selectedPointType={this.props.selectedPointType}
+              updateFilterDimension={this.updateFilterDimension.bind(this, 'radiusfilter')}
+              filterDimensions={{ radiusfilter }}
+            />
+          </ListItem>
+
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <AreaFilterSelect
+              updateFilterDimension={this.updateFilterDimension}
+              filterDimensions={{ commboard, borocode, nta, censtract }}
+            />
+          </ListItem>
+
+
           <Subheader>
             Managing Agency
             <InfoIcon text="The City agency associated with the project in FMS" />
@@ -190,6 +231,8 @@ Filter.propTypes = {
   filterDimensions: PropTypes.object.isRequired,
   resetFilter: PropTypes.func.isRequired,
   setFilterDimension: PropTypes.func.isRequired,
+  selectedPointType: PropTypes.string,
+  selectedPointCoordinates: PropTypes.array,
 };
 
 export default connect(null, {

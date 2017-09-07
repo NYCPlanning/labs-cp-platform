@@ -1,4 +1,34 @@
+import LabelHelper from '../helpers/labels/labelHelper';
+
 const defaultFilterDimensions = {
+  radiusfilter: {
+    type: 'radiusFilter',
+    disabled: true,
+    values: {
+      coordinates: [],
+      radius: 0,
+    },
+  },
+  commboard: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('commboard'),
+  },
+  borocode: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('borocode'),
+  },
+  nta: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('nta'),
+  },
+  censtract: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('censtract'),
+  },
   magencyacro: {
     type: 'multiSelect',
     disabled: true,
