@@ -57,7 +57,7 @@ const facilitiesReducer = (state = initialState, action) => {
         'overabbrev',
         'optype',
         'proptype',
-        'censtract',
+        'admin_censtract',
         'nta',
         'taz',
         'council',

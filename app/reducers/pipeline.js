@@ -82,21 +82,13 @@ const pipelineReducer = (state = initialState, action) => {
       }
 
       const shouldChangeDisabledValue = [
-        'censtract',
-        'nta',
-        'taz',
-        'council',
-        'firediv',
-        'firebn',
-        'fireconum',
-        'municourt',
-        'policeprecinct',
-        'schooldistrict',
-        'stateassemblydistrict',
-        'statesenatedistrict',
-        'congdist',
-        'borocode',
-        'commboard',
+        'admin_borocode',
+        'admin_nta',
+        'admin_cd',
+        'admin_censtract',
+        'admin_council',
+        'admin_policeprecinct',
+        'admin_schooldistrict',
       ];
 
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)

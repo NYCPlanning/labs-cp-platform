@@ -63,7 +63,7 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
     disabled: true,
     values: LabelHelper.get_labels('nta'),
   },
-  censtract: {
+  admin_censtract: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),

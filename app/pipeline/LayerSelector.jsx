@@ -52,10 +52,13 @@ class LayerSelector extends React.Component {
     // Geographic filtering dimensions
     const {
       radiusfilter,
-      commboard,
-      borocode,
-      nta,
-      censtract,
+      admin_cd,
+      admin_borocode,
+      admin_nta,
+      admin_censtract,
+      admin_council,
+      admin_policeprecinct,
+      admin_schooldistrict,
     } = filterDimensions;
 
     const PinSelect = (props) => {
@@ -114,7 +117,24 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.handleFilterDimensionChange}
-              filterDimensions={{ commboard, borocode, nta, censtract }}
+              filterDimensions={{
+                admin_cd,
+                admin_borocode,
+                admin_nta,
+                admin_censtract,
+                admin_council,
+                admin_policeprecinct,
+                admin_schooldistrict,
+              }}
+              options={[
+                { value: 'admin_cd', label: 'Community District' },
+                { value: 'admin_borocode', label: 'Borough' },
+                { value: 'admin_nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'admin_council', label: 'City Council District' },
+                { value: 'admin_censtract', label: 'Census Tract' },
+                { value: 'admin_policeprecinct', label: 'Police Precinct' },
+                { value: 'admin_schooldistrict', label: 'School District' },
+              ]}
             />
           </ListItem>
 

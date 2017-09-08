@@ -9,24 +9,6 @@ class AreaFilterSelect extends React.Component {
     this.state = { selectedLayer: null };
   }
 
-  options = [
-    { value: 'commboard', label: 'Community Districts' },
-    { value: 'borocode', label: 'Boroughs' },
-    // { value: 'taz', label: 'Traffic Analysis Zones' },
-    { value: 'censtract', label: 'Census Tract' },
-    { value: 'nta', label: 'Neighborhood Tabulation Area' },
-    // { value: 'council', label: 'City Council Districts' },
-    // { value: 'congdist', label: 'Congressional Districts' },
-    // { value: 'firediv', label: 'Fire Divisions' },
-    // { value: 'firebn', label: 'Fire Battalions' },
-    // { value: 'fireconum', label: 'Fire Companies' },
-    // { value: 'municourt', label: 'Municipal Court Districts' },
-    // { value: 'policeprecinct', label: 'Police Precincts' },
-    // { value: 'schooldistrict', label: 'School Districts' },
-    // { value: 'stateassemblydistrict', label: 'State Assembly Districts' },
-    // { value: 'statesenatedistrict', label: 'State Senate Districts' },
-  ]
-
   handleSelectChange = (selectedLayer) => {
     // Set all options of selectedLayer being navigated away from to false
     if (this.state.selectedLayer && selectedLayer !== this.state.selectedLayer) {
@@ -46,6 +28,7 @@ class AreaFilterSelect extends React.Component {
     const polygonSelectorComponent = () => {
       if (this.state.selectedLayer !== null) {
         const placeholderName = `Select ${this.state.selectedLayer.label}`;
+        console.log(this.props.filterDimensions);
 
         return (
           <MultiSelect
@@ -66,7 +49,7 @@ class AreaFilterSelect extends React.Component {
           name="area-filter-select"
           placeholder="Filter by Administrative Boundary"
           value={this.state.selectedLayer}
-          options={this.options}
+          options={this.props.options}
           onChange={this.handleSelectChange}
         />
         { polygonSelectorComponent() }
@@ -75,9 +58,30 @@ class AreaFilterSelect extends React.Component {
   }
 }
 
+AreaFilterSelect.defaultProps = {
+  options: [
+    { value: 'borocode', label: 'Boroughs' },
+    // { value: 'commboard', label: 'Community Districts' },
+    // { value: 'taz', label: 'Traffic Analysis Zones' },
+    // { value: 'censtract', label: 'Census Tract' },
+    // { value: 'nta', label: 'Neighborhood Tabulation Area' },
+    // { value: 'council', label: 'City Council Districts' },
+    // { value: 'congdist', label: 'Congressional Districts' },
+    // { value: 'firediv', label: 'Fire Divisions' },
+    // { value: 'firebn', label: 'Fire Battalions' },
+    // { value: 'fireconum', label: 'Fire Companies' },
+    // { value: 'municourt', label: 'Municipal Court Districts' },
+    // { value: 'policeprecinct', label: 'Police Precincts' },
+    // { value: 'schooldistrict', label: 'School Districts' },
+    // { value: 'stateassemblydistrict', label: 'State Assembly Districts' },
+    // { value: 'statesenatedistrict', label: 'State Senate Districts' },
+  ],
+};
+
 AreaFilterSelect.propTypes = {
   updateFilterDimension: PropTypes.func.isRequired,
   filterDimensions: PropTypes.object.isRequired,
+  options: PropTypes.array,
 };
 
 export default AreaFilterSelect;

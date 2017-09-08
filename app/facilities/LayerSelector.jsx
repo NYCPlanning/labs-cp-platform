@@ -147,7 +147,7 @@ class LayerSelector extends React.Component {
       commboard,
       borocode,
       nta,
-      censtract,
+      admin_censtract,
     } = filterDimensions;
 
     // override material ui ListItem spacing and react-select component font size
@@ -185,7 +185,13 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
-              filterDimensions={{ commboard, borocode, nta, censtract }}
+              filterDimensions={{ commboard, borocode, nta, admin_censtract }}
+              options={[
+                { value: 'commboard', label: 'Community Districts' },
+                { value: 'borocode', label: 'Boroughs' },
+                { value: 'admin_censtract', label: 'Census Tract' },
+                { value: 'nta', label: 'Neighborhood Tabulation Area' },
+              ]}
             />
           </ListItem>
 

@@ -10,25 +10,40 @@ const defaultFilterDimensions = {
       radius: 0,
     },
   },
-  commboard: {
+  admin_cd: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('commboard'),
   },
-  borocode: {
+  admin_borocode: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
   },
-  nta: {
+  admin_nta: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('nta'),
   },
-  censtract: {
+  admin_censtract: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),
+  },
+  admin_council: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('council'),
+  },
+  admin_policeprecinct: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('policeprecinct'),
+  },
+  admin_schooldistrict: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('schooldistrict'),
   },
   dcp_status: {
     type: 'statusMultiSelect',

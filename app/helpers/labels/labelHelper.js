@@ -3,16 +3,18 @@ import community_districts from './community_districts';
 
 import nta from './js/nta';
 import censtract from './js/censtract';
+import council from './js/council';
+import congdist from './js/congdist';
+import policeprecinct from './js/policeprecinct';
+import schooldistrict from './js/schooldistrict';
 
 // import taz from './json/taz';
-// import council from './json/council';
-// import congdist from './json/congdist';
+
 // import firediv from './json/firediv';
 // import firebn from './json/firebn';
 // import fireconum from './json/fireconum';
 // import municourt from './json/municourt';
-// import policeprecinct from './json/policeprecinct';
-// import schooldistrict from './json/schooldistrict';
+
 // import stateassemblydistrict from './json/stateassemblydistrict';
 // import statesenatedistrict from './json/statesenatedistrict';
 
@@ -29,12 +31,12 @@ class LabelHelper {
         return censtract;
       // case 'taz':
       //   return taz;
-      // case 'council':
-      //   return council;
+      case 'council':
+        return council;
       // case 'cd':
       //   return cd;
-      // case 'congdist':
-      //   return congdist;
+      case 'congdist':
+        return congdist;
       // case 'firediv':
       //   return firediv;
       // case 'firebn':
@@ -43,10 +45,10 @@ class LabelHelper {
       //   return fireconum;
       // case 'municourt':
       //   return municourt;
-      // case 'policeprecinct':
-      //   return policeprecinct;
-      // case 'schooldistrict':
-      //   return schooldistrict;
+      case 'policeprecinct':
+        return policeprecinct;
+      case 'schooldistrict':
+        return schooldistrict;
       // case 'stateassemblydistrict':
       //   return stateassemblydistrict;
       // case 'statesenatedistrict':
