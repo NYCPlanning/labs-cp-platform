@@ -53,20 +53,35 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
     disabled: true,
     values: LabelHelper.get_labels('commboard'),
   },
-  borocode: {
-    type: 'multiSelect',
-    disabled: true,
-    values: LabelHelper.get_labels('borocode'),
-  },
   nta: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('nta'),
   },
+  admin_borocode: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('borocode'),
+  },
   admin_censtract: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),
+  },
+  admin_council: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('council'),
+  },
+  admin_policeprecinct: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('policeprecinct'),
+  },
+  admin_schooldistrict: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('schooldistrict'),
   },
   facsubgrp: {
     type: 'facilitiesLayerSelector',

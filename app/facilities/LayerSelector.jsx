@@ -145,9 +145,12 @@ class LayerSelector extends React.Component {
       facsubgrp,
       radiusfilter,
       commboard,
-      borocode,
       nta,
+      admin_borocode,
       admin_censtract,
+      admin_council,
+      admin_policeprecinct,
+      admin_schooldistrict,
     } = filterDimensions;
 
     // override material ui ListItem spacing and react-select component font size
@@ -185,12 +188,23 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
-              filterDimensions={{ commboard, borocode, nta, admin_censtract }}
+              filterDimensions={{
+                commboard,
+                nta,
+                admin_borocode,
+                admin_censtract,
+                admin_council,
+                admin_policeprecinct,
+                admin_schooldistrict,
+              }}
               options={[
-                { value: 'commboard', label: 'Community Districts' },
-                { value: 'borocode', label: 'Boroughs' },
-                { value: 'admin_censtract', label: 'Census Tract' },
+                { value: 'commboard', label: 'Community District' },
+                { value: 'admin_borocode', label: 'Borough' },
                 { value: 'nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'admin_council', label: 'City Council District' },
+                { value: 'admin_censtract', label: 'Census Tract' },
+                { value: 'admin_policeprecinct', label: 'Police Precinct' },
+                { value: 'admin_schooldistrict', label: 'School District' },
               ]}
             />
           </ListItem>
