@@ -43,9 +43,9 @@ class DevelopmentPage extends React.Component {
 
     function unitChange() {
       if (d.u_net > 0) {
-        return `${d.u_net ? d.u_net : 0} of ${d.u_prop}`;
+        return `${d.u_net_complete ? d.u_net_complete : 0} of ${d.u_net}`;
       } else if (d.u_net <= 0) {
-        return `${Math.abs(d.u_net ? d.u_net : 0)} of ${Math.abs(d.u_prop)}`;
+        return `${Math.abs(d.u_net_complete ? d.u_net_complete : 0)} of ${Math.abs(d.u_net)}`;
       }
 
       return '';
@@ -66,20 +66,20 @@ class DevelopmentPage extends React.Component {
           <div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.u_init}</h3>
                 <h4>Initial Number of Units</h4>
+                <h3>{d.u_init ? d.u_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.u_prop}</h3>
                 <h4>Proposed Units</h4>
+                <h3>{d.u_prop ? d.u_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
                 <h4>Net Change in Units</h4>
+                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
               </div>
             </div>
           </div>
@@ -89,20 +89,20 @@ class DevelopmentPage extends React.Component {
           <div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>0</h3>
                 <h4>Initial Number of Units</h4>
+                <h3>0</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.u_prop}</h3>
                 <h4>Proposed Units</h4>
+                <h3>{d.u_prop ? d.u_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
                 <h4>Net Change in Units</h4>
+                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
               </div>
             </div>
           </div>
@@ -112,14 +112,14 @@ class DevelopmentPage extends React.Component {
           <div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3>{d.u_init}</h3>
                 <h4>Initial Number of Units</h4>
+                <h3>{d.u_init ? d.u_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
                 <h4>Net Change in Units</h4>
+                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@ class DevelopmentPage extends React.Component {
                   BBL: {d.bbl}
                 </small>
               </h3>
-              <h1>{d.address}, {d.borough}</h1>
+              <h1>{d.address}, {d.boro}</h1>
               <span className={'badge'} style={{ backgroundColor }}>{d.dcp_dev_category}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_occ_category}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
@@ -165,7 +165,7 @@ class DevelopmentPage extends React.Component {
               <div className="panel panel-default">
                 <div className="panel-heading">Proposed Change in Unit Counts</div>
                 <div className="panel-body">
-                  {unitPipeline()}
+                  {unitPipeline()}  
                 </div>
               </div>
             </div>
@@ -179,7 +179,7 @@ class DevelopmentPage extends React.Component {
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Permit Issued</h4>
-                      <h3>{permitDate(d.dob_qdate)}</h3>
+                      <h3>{permitDate(d.status_q)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
@@ -192,7 +192,7 @@ class DevelopmentPage extends React.Component {
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
                       <h3>{permitDate(d.c_date_latest)}</h3>
-                      <p className="subtext">{d.c_date_latesttype}</p>
+                      <p className="subtext">{d.c_type_latest}</p>
                     </div>
                   </div>
                   {
@@ -201,6 +201,16 @@ class DevelopmentPage extends React.Component {
                         <div className="dev-status">
                           <h4>Net Units Completed</h4>
                           <h3 style={netUnitsStyle}>{unitChange()}</h3>
+                        </div>
+                      </div>
+                    )
+                  }
+                  {
+                    d.dcp_status === 'Complete' && d.u_prop === null && (
+                      <div className={'col-md-12'}>
+                        <div className="dev-status">
+                          <h4>Units in Latest CofO</h4>
+                          <h3>{d.c_u_latest}</h3>
                         </div>
                       </div>
                     )
