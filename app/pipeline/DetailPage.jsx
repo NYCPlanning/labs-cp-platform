@@ -211,7 +211,7 @@ class DevelopmentPage extends React.Component {
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
                       <h3>{permitDate(d.c_date_latest)}</h3>
-                      <p className="subtext">{d.c_type_latest}</p>
+                      <p className="subtext">{d.c_type_latest != null ? d.c_type_latest + ',' : ''} {d.c_u_latest != null ? d.c_u_latest + ' units' : ''}</p>
                     </div>
                   </div>
                   {
@@ -220,16 +220,6 @@ class DevelopmentPage extends React.Component {
                         <div className="dev-status">
                           <h4>Net Units Completed</h4>
                           <h3 style={netUnitsStyle}>{unitChange()}</h3>
-                        </div>
-                      </div>
-                    )
-                  }
-                  {
-                    d.dcp_status === 'Complete' && d.u_prop === null && (
-                      <div className={'col-md-12'}>
-                        <div className="dev-status">
-                          <h4>Units in Latest CofO</h4>
-                          <h3>{d.c_u_latest}</h3>
                         </div>
                       </div>
                     )
