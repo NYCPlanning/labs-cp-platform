@@ -21,7 +21,7 @@ export const initialState = {
   completionDateFilterDisabled: isCompletionDateDisabled(getDefaultFilters()),
   sql: getSql(getDefaultFilters()),
   selectedFeatures: [],
-  symbologyDimension: 'dcp_category_development',
+  symbologyDimension: 'dcp_dev_category',
   pipelineDetails: null,
   totalCount: 0,
   selectedCount: 0,

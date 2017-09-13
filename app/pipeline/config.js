@@ -75,7 +75,7 @@ const defaultFilterDimensions = {
     ],
   },
 
-  dcp_category_development: {
+  dcp_dev_category: {
     type: 'multiSelect',
     values: [
       {
@@ -99,7 +99,7 @@ const defaultFilterDimensions = {
     ],
   },
 
-  dcp_category_occupancy: {
+  dcp_occ_category: {
     type: 'multiSelect',
     values: [
       {
@@ -115,7 +115,7 @@ const defaultFilterDimensions = {
     ],
   },
 
-  units_net: {
+  u_net: {
     type: 'numberRange',
     values: [-1100, 1700],
   },
@@ -138,13 +138,13 @@ function getColor(key, value) {
 }
 
 const circleColors = {
-  dcp_category_development: {
-    property: 'dcp_category_development',
+  dcp_dev_category: {
+    property: 'dcp_dev_category',
     type: 'categorical',
     stops: [
-      ['New Building', getColor('dcp_category_development', 'New Building')],
-      ['Alteration', getColor('dcp_category_development', 'Alteration')],
-      ['Demolition', getColor('dcp_category_development', 'Demolition')],
+      ['New Building', getColor('dcp_dev_category', 'New Building')],
+      ['Alteration', getColor('dcp_dev_category', 'Alteration')],
+      ['Demolition', getColor('dcp_dev_category', 'Demolition')],
     ],
   },
   dcp_status: {

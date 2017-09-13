@@ -2,8 +2,8 @@
 import SqlBuilder from './SqlBuilder';
 
 export const sqlConfig = {
-  columns: 'cartodb_id, the_geom_webmercator, dcp_status, dcp_category_development, units_net, address',
-  tablename: 'housingdevdb_170701',
+  columns: 'cartodb_id, the_geom_webmercator, dcp_status, dcp_dev_category, u_net, address',
+  tablename: 'housingdevdb_170906',
 };
 
 class PipelineSqlBuilder extends SqlBuilder {
@@ -16,7 +16,7 @@ class PipelineSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `NOT (cofo_earliest >= '${dateRangeFormatted.to}' OR cofo_latest <= '${dateRangeFormatted.from}')`;
+    return `NOT (c_date_earliest >= '${dateRangeFormatted.to}' OR c_date_latest <= '${dateRangeFormatted.from}')`;
   }
 
   // SQL WHERE partial builder for Checkboxes
@@ -24,7 +24,7 @@ class PipelineSqlBuilder extends SqlBuilder {
     const values = filters[dimension].values;
     // inject some additional values to handle the demolition use className
     // demolitions where permit is issued should also show up under searches for complete.
-    const demolitionIsSelected = filters.dcp_category_development.values.filter(d => (d.value === 'Demolition' && d.checked === true)).length > 0;
+    const demolitionIsSelected = filters.dcp_dev_category.values.filter(d => (d.value === 'Demolition' && d.checked === true)).length > 0;
     const completeIsSelected = values.filter(d => (d.value === 'Complete' && d.checked === true)).length > 0;
     const permitIssuedIsSelected = values.filter(d => (d.value === 'Permit issued' && d.checked === true)).length > 0;
 
