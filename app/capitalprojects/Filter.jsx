@@ -50,6 +50,9 @@ class Filter extends React.Component {
       borocode,
       nta,
       censtract,
+      council,
+      policeprecinct,
+      schooldistrict,
     } = filterDimensions;
 
     return (
@@ -93,12 +96,27 @@ class Filter extends React.Component {
             style={listItemStyle}
           >
             <AreaFilterSelect
-
               updateFilterDimension={this.updateFilterDimension}
-              filterDimensions={{ commboard, borocode, nta, censtract }}
+              filterDimensions={{
+                commboard,
+                borocode,
+                nta,
+                censtract,
+                council,
+                policeprecinct,
+                schooldistrict,
+              }}
+              options={[
+                { value: 'commboard', label: 'Community District' },
+                { value: 'borocode', label: 'Borough' },
+                { value: 'nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'council', label: 'City Council District' },
+                { value: 'censtract', label: 'Census Tract' },
+                { value: 'policeprecinct', label: 'Police Precinct' },
+                { value: 'schooldistrict', label: 'School District' },
+              ]}
             />
           </ListItem>
-
 
           <Subheader>
             Managing Agency
