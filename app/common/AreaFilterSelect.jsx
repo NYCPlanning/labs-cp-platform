@@ -28,8 +28,6 @@ class AreaFilterSelect extends React.Component {
     const polygonSelectorComponent = () => {
       if (this.state.selectedLayer !== null) {
         const placeholderName = `Select ${this.state.selectedLayer.label}`;
-        console.log(this.props.filterDimensions);
-
         return (
           <MultiSelect
             placeholder={placeholderName}

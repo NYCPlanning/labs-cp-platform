@@ -69,6 +69,23 @@ class SqlBuilder {
     return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
   }
 
+  // generic chunker for Checkboxes and Multiselects that use a join table
+  joinMultiSelect(dimension, filters) {
+    const values = filters[dimension].values;
+    const lookupTable = filters[dimension].lookupTable;
+    const idColumn = filters[dimension].idColumn;
+
+    const checkedValues = values.filter(value => value.checked === true);
+    const subChunks = checkedValues.map(value => `admin_boundary_id = '${value.value}'`);
+
+    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
+      const chunk = `(${subChunks.join(' OR ')})`;
+      return `${idColumn} IN (SELECT feature_id FROM ${lookupTable} WHERE admin_boundary_type = '${dimension}' AND ${chunk})`;
+    }
+
+    return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
+  }
+
 
   // generic chunker for Date Range Sliders
   dateRange(dimension, filters) {
