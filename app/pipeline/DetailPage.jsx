@@ -67,13 +67,13 @@ class DevelopmentPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.u_init ? d.u_init : 'Not reported'}</h3>
+                <h3>{d.u_init != null ? d.u_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.u_prop ? d.u_prop : 'Not reported'}</h3>
+                <h3>{d.u_prop != null ? d.u_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
@@ -96,7 +96,7 @@ class DevelopmentPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.u_prop ? d.u_prop : 'Not reported'}</h3>
+                <h3>{d.u_prop != null ? d.u_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
@@ -113,7 +113,7 @@ class DevelopmentPage extends React.Component {
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.u_init ? d.u_init : 'Not reported'}</h3>
+                <h3>{d.u_init != null ? d.u_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-6'}>
