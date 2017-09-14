@@ -94,7 +94,7 @@ const defaultFilterDimensions = {
         label: 'Demolition',
         value: 'Demolition',
         checked: true,
-        color: 'rgba(234, 62, 62, 1)',
+        color: 'rgba(179, 0, 0, 0.77)',
       },
     ],
   },
@@ -117,16 +117,16 @@ const defaultFilterDimensions = {
 
   u_net: {
     type: 'numberRange',
-    values: [-1100, 1700],
+    values: [-800, 1800],
   },
 
-  dob_cofo_date: {
+  c_date_earliest: {
     type: 'cofoDateRange',
     values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
-  dob_qdate: {
+  status_q: {
     type: 'dateRange',
     values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
     disabled: true,

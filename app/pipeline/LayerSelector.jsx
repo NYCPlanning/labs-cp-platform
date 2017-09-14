@@ -222,9 +222,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_qdate.values}
+              data={filterDimensions.status_q.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_qdate')}
+              onChange={this.handleSliderChange.bind(this, 'status_q')}
               disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
@@ -240,9 +240,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_cofo_date.values}
+              data={filterDimensions.c_date_earliest.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
+              onChange={this.handleSliderChange.bind(this, 'c_date_earliest')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges

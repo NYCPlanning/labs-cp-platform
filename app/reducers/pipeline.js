@@ -67,17 +67,17 @@ const pipelineReducer = (state = initialState, action) => {
       if (filterDimension === 'dcp_status') {
         // Completion Slider
         if (isCompletionDateDisabled(dimensions)) {
-          dimensions.dob_cofo_date = getDefaultFilters().dob_cofo_date;
-          dimensions.dob_cofo_date.disabled = true;
+          dimensions.c_date_earliest = getDefaultFilters().c_date_earliest;
+          dimensions.c_date_earliest.disabled = true;
         } else {
-          dimensions.dob_cofo_date.disabled = false;
+          dimensions.c_date_earliest.disabled = false;
         }
         // issued slider
         if (isIssueDateDisabled(dimensions)) {
-          dimensions.dob_qdate = getDefaultFilters().dob_qdate;
-          dimensions.dob_qdate.disabled = true;
+          dimensions.status_q = getDefaultFilters().status_q;
+          dimensions.status_q.disabled = true;
         } else {
-          dimensions.dob_qdate.disabled = false;
+          dimensions.status_q.disabled = false;
         }
       }
 

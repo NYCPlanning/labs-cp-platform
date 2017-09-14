@@ -79,7 +79,7 @@ class SqlBuilder {
       to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `(dob_qdate >= '${dateRangeFormatted.from}' AND dob_qdate <= '${dateRangeFormatted.to}')`;
+    return `(status_q >= '${dateRangeFormatted.from}' AND status_q <= '${dateRangeFormatted.to}')`;
   }
 
   // generic chunker for number range sliders

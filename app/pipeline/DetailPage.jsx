@@ -211,7 +211,7 @@ class DevelopmentPage extends React.Component {
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
                       <h3>{permitDate(d.c_date_latest)}</h3>
-                      <p className="subtext">{d.c_type_latest != null ? d.c_type_latest + ',' : ''} {d.c_u_latest != null ? d.c_u_latest + ' units' : ''}</p>
+                      <p className="subtext">{d.c_type_latest != '' ? (d.c_type_latest + ',') : ''} {d.c_u_latest != null ? (d.c_u_latest + ' units') : ''}</p>
                     </div>
                   </div>
                   {
