@@ -34,6 +34,8 @@ class SqlBuilder {
     const chunksString = chunks.length > 0 ? chunks.join(' AND ') : 'TRUE';
     const sql = sqlTemplate + chunksString;
 
+    console.log(filters);
+
     return sql;
   }
 
