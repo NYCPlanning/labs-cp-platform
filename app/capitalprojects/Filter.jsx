@@ -51,7 +51,6 @@ class Filter extends React.Component {
       nta,
       censtract,
       council,
-      policeprecinct,
       schooldistrict,
     } = filterDimensions;
 
@@ -103,7 +102,6 @@ class Filter extends React.Component {
                 nta,
                 censtract,
                 council,
-                policeprecinct,
                 schooldistrict,
               }}
               options={[
@@ -112,7 +110,6 @@ class Filter extends React.Component {
                 { value: 'nta', label: 'Neighborhood Tabulation Area' },
                 { value: 'council', label: 'City Council District' },
                 { value: 'censtract', label: 'Census Tract' },
-                { value: 'policeprecinct', label: 'Police Precinct' },
                 { value: 'schooldistrict', label: 'School District' },
               ]}
             />

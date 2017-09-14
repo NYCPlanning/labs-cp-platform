@@ -44,13 +44,6 @@ const defaultFilterDimensions = {
     lookupTable: 'cpdb_adminbounds_170911',
     idColumn: 'maprojid',
   },
-  policeprecinct: {
-    type: 'joinMultiSelect',
-    disabled: true,
-    values: LabelHelper.get_labels('policeprecinct'),
-    lookupTable: 'cpdb_adminbounds_170911',
-    idColumn: 'maprojid',
-  },
   schooldistrict: {
     type: 'joinMultiSelect',
     disabled: true,
