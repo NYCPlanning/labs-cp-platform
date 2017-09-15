@@ -95,7 +95,7 @@ const pipelineReducer = (state = initialState, action) => {
         ? values.filter(value => value.checked === true).length <= 0
         : dimensions[filterDimension].disabled;
 
-      const filterDimensions = Object.assign({}, state.filterDimensions, {
+      const filterDimensions = Object.assign({}, dimensions, {
         [filterDimension]: Object.assign({}, dimensions[filterDimension], { values, disabled: newDisabledValue }),
       });
 

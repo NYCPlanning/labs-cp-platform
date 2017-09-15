@@ -43,10 +43,15 @@ class PipelineSqlBuilder extends SqlBuilder {
 
     return 'FALSE'; // if no options are cheked, make the resulting SQL return no rows
   }
+
+  pipelineBuildSql(filterDimensions) {
+    const sql = this.buildSql(filterDimensions);
+    return `${sql} AND x_outlier <> 'true' AND x_dup_flag = '' AND the_geom IS NOT NULL`;
+  }
 }
 
 Object.assign(PipelineSqlBuilder, SqlBuilder);
 
 const sqlBuilder = new PipelineSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
 
-export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);
+export const getSql = filterDimensions => sqlBuilder.pipelineBuildSql(filterDimensions);

@@ -12,10 +12,12 @@ export const fetchDetails = cartodbId =>
 export const fetchTotalCount = () => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT COUNT(*) 
-    FROM ${sqlConfig.tablename} 
+    sql: `SELECT COUNT(*)
+    FROM ${sqlConfig.tablename}
     WHERE
       the_geom IS NOT NULL
+      AND
+      u_net IS NOT NULL
       AND
       (
         dcp_status = 'Complete'
