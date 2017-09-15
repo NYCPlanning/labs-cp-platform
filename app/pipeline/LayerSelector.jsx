@@ -161,8 +161,8 @@ class LayerSelector extends React.Component {
             Permit Type
             <InfoIcon text="Categorizes developments based on the permit type, determined using DOB data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('dcp_category_development'); }}
-              selected={symbologyDimension === 'dcp_category_development'}
+              onClick={() => { this.handleSymbologyDimensionChange('dcp_dev_category'); }}
+              selected={symbologyDimension === 'dcp_dev_category'}
             />
           </Subheader>
           <ListItem
@@ -170,9 +170,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_category_development}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_category_development')}
-              legendCircleType={symbologyDimension === 'dcp_category_development' ? 'fill' : 'none'}
+              dimension={filterDimensions.dcp_dev_category}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_dev_category')}
+              legendCircleType={symbologyDimension === 'dcp_dev_category' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -185,8 +185,8 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_category_occupancy}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_category_occupancy')}
+              dimension={filterDimensions.dcp_occ_category}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_occ_category')}
               legendCircleType={'none'}
             />
           </ListItem>
@@ -200,13 +200,13 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <SimpleRangeInputs
-              data={filterDimensions.units_net.values}
-              onChange={this.handleSliderChange.bind(this, 'units_net')}
+              data={filterDimensions.u_net.values}
+              onChange={this.handleSliderChange.bind(this, 'u_net')}
             />
             <RangeSlider
-              data={filterDimensions.units_net.values}
+              data={filterDimensions.u_net.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'units_net')}
+              onChange={this.handleSliderChange.bind(this, 'u_net')}
               grid
               keyboard
               force_edges
@@ -222,9 +222,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_qdate.values}
+              data={filterDimensions.status_q.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_qdate')}
+              onChange={this.handleSliderChange.bind(this, 'status_q')}
               disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
@@ -240,9 +240,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_cofo_date.values}
+              data={filterDimensions.c_date_earliest.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
+              onChange={this.handleSliderChange.bind(this, 'c_date_earliest')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
