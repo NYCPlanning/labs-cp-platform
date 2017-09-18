@@ -16,7 +16,11 @@ const currentUserReducer = (state = initialState, action) => {
       };
 
     case AT.DEAUTHORIZE_USER:
-      return initialState;
+      return {
+        profile: null,
+        token: null,
+        isLoggedIn: false,
+      };
 
     default:
       return state;

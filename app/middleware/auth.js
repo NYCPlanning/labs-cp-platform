@@ -1,8 +1,9 @@
+import Auth0Lock from 'auth0-lock';
+import _ from 'lodash';
+
 import { browserHistory } from 'react-router';
 import * as AT from '../constants/actionTypes';
 import * as authActions from '../actions/auth';
-import Auth0Lock from 'auth0-lock';
-import _ from 'lodash';
 import { isTokenExpired } from '../helpers/jwtHelper';
 import appConfig from '../helpers/appConfig';
 
@@ -64,6 +65,12 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
         targetPath: window.location.pathname,
       },
     });
+    browserHistory.push('/');
+  }
+
+  if (action.type === AT.DEAUTHORIZE_USER) {
+    localStorage.removeItem('NYCPlanning_profile');
+    localStorage.removeItem('NYCPlanning_idToken');
   }
 
   if (action.type === AT.LOAD_CREDENTIALS) {
