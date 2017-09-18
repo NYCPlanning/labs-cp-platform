@@ -101,8 +101,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
         dispatch(authActions.authorizeUser(profile, idToken));
 
         // redirect to the path the user was trying to get to, or the same page
-        if (action.payload.params && action.payload.params.targetPath) {
-          browserHistory.push(action.payload.params.targetPath);
+        if (action.payload && action.payload.targetPath) {
+          browserHistory.push(action.payload.targetPath);
         } else {
           browserHistory.push(location.pathname);
         }
