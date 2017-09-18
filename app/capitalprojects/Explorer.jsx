@@ -138,13 +138,21 @@ class CapitalProjectsExplorer extends React.Component {
     this.props.setSelectedFeatures([]);
   };
 
-  handleMapLayerClick = (features) => {
+  handleMapLayerClick = (features, event) => {
     if (features[0].geometry.type === 'Point') {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: features[0].geometry.coordinates,
       });
     }
+
+    if (features[0].geometry.type === 'Polygon') {
+      this.setState({
+        selectedPointType: 'point',
+        selectedPointCoordinates: [event.lngLat.lng, event.lngLat.lat],
+      });
+    }
+
     this.selectedFeaturesCache.push(...features);
     this.setSelectedFeatures();
   };
