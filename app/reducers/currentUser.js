@@ -16,6 +16,7 @@ const currentUserReducer = (state = initialState, action) => {
       };
 
     case AT.DEAUTHORIZE_USER:
+      console.log('deauth currentUser.js');
       return {
         profile: null,
         token: null,
