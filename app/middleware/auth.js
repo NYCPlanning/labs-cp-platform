@@ -68,12 +68,6 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
     });
   }
 
-  if (action.type === AT.DEAUTHORIZE_USER) {
-    console.log('deauth Middleware action type');
-    localStorage.removeItem('NYCPlanning_profile');
-    localStorage.removeItem('NYCPlanning_idToken');
-  }
-
   if (action.type === AT.LOAD_CREDENTIALS) {
     const token = localStorage.getItem('NYCPlanning_idToken');
     const profile = localStorage.getItem('NYCPlanning_profile');
