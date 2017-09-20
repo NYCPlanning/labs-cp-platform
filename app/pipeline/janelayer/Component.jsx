@@ -57,6 +57,8 @@ class Pipeline extends React.Component {
             selectedCount={selectedCount}
             filterDimensions={filterDimensions}
             symbologyDimension={symbologyDimension}
+            selectedPointType={this.props.selectedPointType}
+            selectedPointCoordinates={this.props.selectedPointCoordinates}
           />
         </Tab>
         <Tab label="Download">
@@ -86,6 +88,8 @@ class Pipeline extends React.Component {
 Pipeline.propTypes = {
   fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
+  selectedPointType: PropTypes.string.isRequired,
+  selectedPointCoordinates: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ pipeline }) => ({

@@ -12,7 +12,7 @@ export const fetchDetails = capitalProjectId =>
 export const fetchBudgets = capitalProjectId => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT * FROM cpdb_budgets WHERE maprojid = '${capitalProjectId}'`,
+    sql: `SELECT * FROM cpdb_budgets_170906 WHERE maprojid = '${capitalProjectId}'`,
     requestFormat: 'json',
     nextType: AT.FETCH_CAPITAL_PROJECT_BUDGETS,
   },
@@ -21,7 +21,7 @@ export const fetchBudgets = capitalProjectId => ({
 export const fetchCommitments = capitalProjectId => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT * FROM cpdb_commitments WHERE maprojid = '${capitalProjectId}' ORDER BY to_date(plancommdate,'MM/YY')`,
+    sql: `SELECT * FROM cpdb_commitments_170906 WHERE maprojid = '${capitalProjectId}' ORDER BY to_date(plancommdate,'MM/YY')`,
     requestFormat: 'json',
     nextType: AT.FETCH_CAPITAL_PROJECT_COMMITMENTS,
   },

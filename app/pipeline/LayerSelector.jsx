@@ -9,6 +9,8 @@ import Checkboxes from './Checkboxes';
 import * as pipelineActions from '../actions/pipeline';
 
 import RangeSlider from '../common/RangeSlider';
+import AreaFilterSelect from '../common/AreaFilterSelect';
+import RadiusFilter from '../common/RadiusFilter';
 import SimpleRangeInputs from '../common/SimpleRangeInputs';
 import InfoIcon from '../common/InfoIcon';
 
@@ -35,6 +37,7 @@ class LayerSelector extends React.Component {
     // override material ui ListItem spacing
     const listItemStyle = {
       padding: '0px 16px',
+      fontSize: '14px',
     };
 
     const {
@@ -45,6 +48,18 @@ class LayerSelector extends React.Component {
       issueDateFilterDisabled,
       completionDateFilterDisabled,
     } = this.props;
+
+    // Geographic filtering dimensions
+    const {
+      radiusfilter,
+      admin_cd,
+      admin_borocode,
+      admin_nta,
+      admin_censtract,
+      admin_council,
+      admin_policeprecinct,
+      admin_schooldistrict,
+    } = filterDimensions;
 
     const PinSelect = (props) => {
       const style = {
@@ -80,7 +95,49 @@ class LayerSelector extends React.Component {
           units={'records'}
           resetFilter={this.resetFilter}
         />
-        <div className="scroll-container count-widget-offset">
+        <div
+          className="scroll-container count-widget-offset"
+          style={{ paddingTop: '15px' }}
+        >
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <RadiusFilter
+              selectedPointCoordinates={this.props.selectedPointCoordinates}
+              selectedPointType={this.props.selectedPointType}
+              updateFilterDimension={this.handleFilterDimensionChange.bind(this, 'radiusfilter')}
+              filterDimensions={{ radiusfilter }}
+            />
+          </ListItem>
+
+          <ListItem
+            disabled
+            style={listItemStyle}
+          >
+            <AreaFilterSelect
+              updateFilterDimension={this.handleFilterDimensionChange}
+              filterDimensions={{
+                admin_cd,
+                admin_borocode,
+                admin_nta,
+                admin_censtract,
+                admin_council,
+                admin_policeprecinct,
+                admin_schooldistrict,
+              }}
+              options={[
+                { value: 'admin_cd', label: 'Community District' },
+                { value: 'admin_borocode', label: 'Borough' },
+                { value: 'admin_nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'admin_council', label: 'City Council District' },
+                { value: 'admin_censtract', label: 'Census Tract' },
+                { value: 'admin_policeprecinct', label: 'Police Precinct' },
+                { value: 'admin_schooldistrict', label: 'School District' },
+              ]}
+            />
+          </ListItem>
+
           <Subheader>
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
@@ -104,8 +161,8 @@ class LayerSelector extends React.Component {
             Permit Type
             <InfoIcon text="Categorizes developments based on the permit type, determined using DOB data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('dcp_category_development'); }}
-              selected={symbologyDimension === 'dcp_category_development'}
+              onClick={() => { this.handleSymbologyDimensionChange('dcp_dev_category'); }}
+              selected={symbologyDimension === 'dcp_dev_category'}
             />
           </Subheader>
           <ListItem
@@ -113,9 +170,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_category_development}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_category_development')}
-              legendCircleType={symbologyDimension === 'dcp_category_development' ? 'fill' : 'none'}
+              dimension={filterDimensions.dcp_dev_category}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_dev_category')}
+              legendCircleType={symbologyDimension === 'dcp_dev_category' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -128,8 +185,8 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_category_occupancy}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_category_occupancy')}
+              dimension={filterDimensions.dcp_occ_category}
+              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_occ_category')}
               legendCircleType={'none'}
             />
           </ListItem>
@@ -143,13 +200,13 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <SimpleRangeInputs
-              data={filterDimensions.units_net.values}
-              onChange={this.handleSliderChange.bind(this, 'units_net')}
+              data={filterDimensions.u_net.values}
+              onChange={this.handleSliderChange.bind(this, 'u_net')}
             />
             <RangeSlider
-              data={filterDimensions.units_net.values}
+              data={filterDimensions.u_net.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'units_net')}
+              onChange={this.handleSliderChange.bind(this, 'u_net')}
               grid
               keyboard
               force_edges
@@ -165,9 +222,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_qdate.values}
+              data={filterDimensions.status_q.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_qdate')}
+              onChange={this.handleSliderChange.bind(this, 'status_q')}
               disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
@@ -183,9 +240,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.dob_cofo_date.values}
+              data={filterDimensions.c_date_earliest.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'dob_cofo_date')}
+              onChange={this.handleSliderChange.bind(this, 'c_date_earliest')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
@@ -209,6 +266,8 @@ LayerSelector.propTypes = {
   symbologyDimension: PropTypes.string.isRequired,
   issueDateFilterDisabled: PropTypes.bool,
   completionDateFilterDisabled: PropTypes.bool,
+  selectedPointType: PropTypes.string,
+  selectedPointCoordinates: PropTypes.array,
 };
 
 const mapStateToProps = ({ pipeline }) => ({

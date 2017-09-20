@@ -1,9 +1,9 @@
 import SqlBuilder from './SqlBuilder';
-import devTables from '../devTables';
 
 export const sqlConfig = {
-  columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname',
-  tablename: devTables('facdb_facilities'),
+  columns: `uid, the_geom_webmercator, facdomain, facname, address, factype, opname,
+  borocode`,
+  tablename: 'facdb_170522',
 };
 
 class FacilitiesSqlBuilder extends SqlBuilder {

@@ -1,9 +1,10 @@
 import * as AT from '../constants/actionTypes';
 
-export const login = ({ params } = {}) => ({
+export const login = ({ targetPath } = {}) => ({
   type: AT.AUTH0_LOGIN,
-  payload: { params },
+  payload: { targetPath },
 });
+
 
 export const logout = () => ({
   type: AT.AUTH0_LOGOUT,

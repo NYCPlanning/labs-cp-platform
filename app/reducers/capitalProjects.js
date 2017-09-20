@@ -56,11 +56,32 @@ const capitalProjectsReducer = (state = initialState, action) => {
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
-      const shouldChangeDisabledValue = filterDimension === 'magencyacro' ||
-                                        filterDimension === 'sagencyacro' ||
-                                        filterDimension === 'projecttype';
+      if (filterDimension === 'radiusfilter') {
+        dimension.disabled = !values.coordinates.length;
+      }
 
-      const newDisabledValue = shouldChangeDisabledValue
+      const shouldChangeDisabledValue = [
+        'magencyacro',
+        'sagencyacro',
+        'projecttype',
+        'censtract',
+        'nta',
+        'taz',
+        'council',
+        'firediv',
+        'firebn',
+        'fireconum',
+        'municourt',
+        'policeprecinct',
+        'schooldistrict',
+        'stateassemblydistrict',
+        'statesenatedistrict',
+        'congdist',
+        'borocode',
+        'commboard',
+      ];
+
+      const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
         ? values.filter(value => value.checked === true).length <= 0
         : dimension.disabled;
 

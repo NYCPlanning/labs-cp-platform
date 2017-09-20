@@ -1,4 +1,56 @@
+import LabelHelper from '../helpers/labels/labelHelper';
+
 const defaultFilterDimensions = {
+  radiusfilter: {
+    type: 'radiusFilter',
+    disabled: true,
+    values: {
+      coordinates: [],
+      radius: 0,
+    },
+  },
+  commboard: {
+    type: 'joinMultiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('commboard'),
+    lookupTable: 'cpdb_adminbounds_170911',
+    idColumn: 'maprojid',
+  },
+  borocode: {
+    type: 'joinMultiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('borocode'),
+    lookupTable: 'cpdb_adminbounds_170911',
+    idColumn: 'maprojid',
+  },
+  nta: {
+    type: 'joinMultiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('nta'),
+    lookupTable: 'cpdb_adminbounds_170911',
+    idColumn: 'maprojid',
+  },
+  censtract: {
+    type: 'joinMultiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('censtract'),
+    lookupTable: 'cpdb_adminbounds_170911',
+    idColumn: 'maprojid',
+  },
+  council: {
+    type: 'joinMultiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('council'),
+    lookupTable: 'cpdb_adminbounds_170911',
+    idColumn: 'maprojid',
+  },
+  schooldistrict: {
+    type: 'joinMultiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('schooldistrict'),
+    lookupTable: 'cpdb_adminbounds_170911',
+    idColumn: 'maprojid',
+  },
   magencyacro: {
     type: 'multiSelect',
     disabled: true,
@@ -403,12 +455,12 @@ const defaultFilterDimensions = {
 
   totalcommit: {
     type: 'numberRange',
-    values: [-20000000, 10000000000],
+    values: [-50000000, 10000000000],
   },
 
   activeyears: {
     type: 'capitalProjectsDateRange',
-    values: [2010, 2027],
+    values: [2010, 2030],
   },
 };
 

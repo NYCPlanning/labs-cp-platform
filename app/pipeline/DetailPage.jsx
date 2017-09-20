@@ -42,16 +42,16 @@ class DevelopmentPage extends React.Component {
     // const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
 
     function unitChange() {
-      if (d.units_net > 0) {
-        return `${d.units_net ? d.units_net : 0} of ${d.units_prop}`;
-      } else if (d.units_net <= 0) {
-        return `${Math.abs(d.units_net ? d.units_net : 0)} of ${Math.abs(d.units_prop)}`;
+      if (d.u_net > 0) {
+        return `${d.u_net_complete ? d.u_net_complete : 0} of ${d.u_net}`;
+      } else if (d.u_net <= 0) {
+        return `${Math.abs(d.u_net_complete ? d.u_net_complete : 0)} of ${Math.abs(d.u_net)}`;
       }
 
       return '';
     }
 
-    const netUnitsStyle = getNetUnitsStyle(d.units_net);
+    const netUnitsStyle = getNetUnitsStyle(d.u_net);
 
     /* eslint-disable */
     const permitDate = (date) => {
@@ -61,65 +61,65 @@ class DevelopmentPage extends React.Component {
     /* eslint-enable */
 
     const unitPipeline = () => {
-      if (d.dcp_category_development === 'Alteration') {
+      if (d.dcp_dev_category === 'Alteration') {
         return (
           <div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.units_exist}</h3>
-                <h4>Existing Units</h4>
+                <h4>Initial Number of Units</h4>
+                <h3>{d.u_init != null ? d.u_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.units_prop}</h3>
                 <h4>Proposed Units</h4>
+                <h3>{d.u_prop != null ? d.u_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
-                <h4>Net Units</h4>
+                <h4>Net Change in Units</h4>
+                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
               </div>
             </div>
           </div>
         );
-      } else if (d.dcp_category_development === 'New Building') {
+      } else if (d.dcp_dev_category === 'New Building') {
         return (
           <div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
+                <h4>Initial Number of Units</h4>
                 <h3>0</h3>
-                <h4>Existing Units</h4>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3>{d.units_prop}</h3>
                 <h4>Proposed Units</h4>
+                <h3>{d.u_prop != null ? d.u_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
-                <h4>Net Units</h4>
+                <h4>Net Change in Units</h4>
+                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
               </div>
             </div>
           </div>
         );
-      } else if (d.dcp_category_development === 'Demolition') {
+      } else if (d.dcp_dev_category === 'Demolition') {
         return (
           <div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3>{d.units_exist}</h3>
-                <h4>Existing Units</h4>
+                <h4>Initial Number of Units</h4>
+                <h3>{d.u_init != null ? d.u_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
-                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
-                <h4>Net Units</h4>
+                <h4>Net Change in Units</h4>
+                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@ class DevelopmentPage extends React.Component {
       return '';
     };
 
-    const backgroundColor = getColor('dcp_category_development', d.dcp_category_development);
+    const backgroundColor = getColor('dcp_dev_category', d.dcp_dev_category);
 
     return (
       <div className="pipeline-page detail-page">
@@ -145,27 +145,46 @@ class DevelopmentPage extends React.Component {
               />
             </div>
             <div className="col-md-9 col-md-pull-3">
-              <h3 className="id-top-line">
-                <small>
-                  DOB Job <a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>#{d.dob_job_number}</a> |
-                  BBL: {d.bbl}
-                </small>
-              </h3>
-              <h1>{d.address}, {d.borough}</h1>
-              <span className={'badge'} style={{ backgroundColor }}>{d.dcp_category_development}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_category_occupancy}</span>
+              <h1>{d.address}, {d.boro}</h1>
+              <span className={'badge'} style={{ backgroundColor }}>{d.dcp_dev_category}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_occ_category}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
             </div>
           </div>
         </div>
 
         <div className="col-md-6">
+
           <div className="row">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading">Unit Counts</div>
+                <div className="panel-heading">DOB Job Number and Tax Lot</div>
                 <div className="panel-body">
-                  {unitPipeline()}
+
+                  <div className={'col-md-6'}>
+                    <div className="dev-status">
+                      <h4>DOB Job Number</h4>
+                      <h3><a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>{d.dob_job_number}</a></h3>
+                    </div>
+                  </div>
+                  <div className={'col-md-6'}>
+                    <div className="dev-status">
+                      <h4>BBL</h4>
+                      <h3>{d.bbl}</h3>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className={'col-md-12'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">Proposed Change in Units</div>
+                <div className="panel-body">
+                  {unitPipeline()}  
                 </div>
               </div>
             </div>
@@ -179,20 +198,20 @@ class DevelopmentPage extends React.Component {
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Permit Issued</h4>
-                      <h3>{permitDate(d.dob_qdate)}</h3>
+                      <h3>{permitDate(d.status_q)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Initial CofO*</h4>
-                      <h3>{permitDate(d.cofo_earliest)}</h3>
+                      <h3>{permitDate(d.c_date_earliest)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
-                      <h3>{permitDate(d.cofo_latest)}</h3>
-                      <p className="subtext">{d.cofo_latesttype}</p>
+                      <h3>{permitDate(d.c_date_latest)}</h3>
+                      <p className="subtext">{d.c_type_latest != '' ? (d.c_type_latest + ',') : ''} {d.c_u_latest != null ? (d.c_u_latest + ' units') : ''}</p>
                     </div>
                   </div>
                   {
@@ -209,6 +228,7 @@ class DevelopmentPage extends React.Component {
               </div>
             </div>
           </div>
+
         </div>
 
         <div className="col-md-6">

@@ -6,16 +6,16 @@ import { getColor } from '../config';
 
 const Item = ({ feature }) => {
   const { cartodb_id,
-          dcp_category_development,
+          dcp_dev_category,
           address,
           dcp_status,
-          units_net } = feature.properties;
+          u_net } = feature.properties;
 
   return (
     <Link to={{ pathname: `/development/${cartodb_id}`, state: { modal: true, returnTo: '/pipeline' } }}>
       <div
         className="facilities-list-item"
-        style={{ borderLeft: `5px solid ${getColor('dcp_category_development', dcp_category_development)}` }}
+        style={{ borderLeft: `5px solid ${getColor('dcp_dev_category', dcp_dev_category)}` }}
       >
 
         <div className="title">
@@ -23,7 +23,7 @@ const Item = ({ feature }) => {
         </div>
 
         <div className="subtitle">
-          { dcp_status } | { units_net } units
+          { dcp_status } | { u_net } units
         </div>
 
         <i className="fa fa-chevron-right" />

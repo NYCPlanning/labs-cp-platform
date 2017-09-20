@@ -1,6 +1,50 @@
 import moment from 'moment';
+import LabelHelper from '../helpers/labels/labelHelper';
 
 const defaultFilterDimensions = {
+  radiusfilter: {
+    type: 'radiusFilter',
+    disabled: true,
+    values: {
+      coordinates: [],
+      radius: 0,
+    },
+  },
+  admin_cd: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('commboard'),
+  },
+  admin_borocode: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('borocode'),
+  },
+  admin_nta: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('nta'),
+  },
+  admin_censtract: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('censtract'),
+  },
+  admin_council: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('council'),
+  },
+  admin_policeprecinct: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('policeprecinct'),
+  },
+  admin_schooldistrict: {
+    type: 'multiSelect',
+    disabled: true,
+    values: LabelHelper.get_labels('schooldistrict'),
+  },
   dcp_status: {
     type: 'statusMultiSelect',
     values: [
@@ -31,7 +75,7 @@ const defaultFilterDimensions = {
     ],
   },
 
-  dcp_category_development: {
+  dcp_dev_category: {
     type: 'multiSelect',
     values: [
       {
@@ -50,12 +94,12 @@ const defaultFilterDimensions = {
         label: 'Demolition',
         value: 'Demolition',
         checked: true,
-        color: 'rgba(234, 62, 62, 1)',
+        color: 'rgba(179, 0, 0, 0.77)',
       },
     ],
   },
 
-  dcp_category_occupancy: {
+  dcp_occ_category: {
     type: 'multiSelect',
     values: [
       {
@@ -71,18 +115,18 @@ const defaultFilterDimensions = {
     ],
   },
 
-  units_net: {
+  u_net: {
     type: 'numberRange',
-    values: [-1100, 1700],
+    values: [-800, 1800],
   },
 
-  dob_cofo_date: {
+  c_date_earliest: {
     type: 'cofoDateRange',
     values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
-  dob_qdate: {
+  status_q: {
     type: 'dateRange',
     values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
     disabled: true,
@@ -94,13 +138,13 @@ function getColor(key, value) {
 }
 
 const circleColors = {
-  dcp_category_development: {
-    property: 'dcp_category_development',
+  dcp_dev_category: {
+    property: 'dcp_dev_category',
     type: 'categorical',
     stops: [
-      ['New Building', getColor('dcp_category_development', 'New Building')],
-      ['Alteration', getColor('dcp_category_development', 'Alteration')],
-      ['Demolition', getColor('dcp_category_development', 'Demolition')],
+      ['New Building', getColor('dcp_dev_category', 'New Building')],
+      ['Alteration', getColor('dcp_dev_category', 'Alteration')],
+      ['Demolition', getColor('dcp_dev_category', 'Demolition')],
     ],
   },
   dcp_status: {

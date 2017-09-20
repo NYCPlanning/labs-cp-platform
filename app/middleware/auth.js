@@ -1,8 +1,9 @@
+import Auth0Lock from 'auth0-lock';
+import _ from 'lodash';
+
 import { browserHistory } from 'react-router';
 import * as AT from '../constants/actionTypes';
 import * as authActions from '../actions/auth';
-import Auth0Lock from 'auth0-lock';
-import _ from 'lodash';
 import { isTokenExpired } from '../helpers/jwtHelper';
 import appConfig from '../helpers/appConfig';
 
@@ -57,7 +58,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
   if (getState().currentUser.token && isTokenExpired(getState().currentUser.token)) {
     localStorage.removeItem('NYCPlanning_profile');
     localStorage.removeItem('NYCPlanning_idToken');
-    dispatch(authActions.deauthorizeUser());
+    console.log('deauth Middleware token expired');
+    // dispatch(authActions.deauthorizeUser());
     browserHistory.replace({
       pathname: '/login',
       state: {
@@ -94,8 +96,8 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
         dispatch(authActions.authorizeUser(profile, idToken));
 
         // redirect to the path the user was trying to get to, or the same page
-        if (action.payload.params && action.payload.params.targetPath) {
-          browserHistory.push(action.payload.params.targetPath);
+        if (action.payload && action.payload.targetPath) {
+          browserHistory.push(action.payload.targetPath);
         } else {
           browserHistory.push(location.pathname);
         }

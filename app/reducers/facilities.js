@@ -49,11 +49,24 @@ const facilitiesReducer = (state = initialState, action) => {
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
-      const shouldChangeDisabledValue = filterDimension === 'overabbrev' ||
-                                        filterDimension === 'optype' ||
-                                        filterDimension === 'proptype';
+      if (filterDimension === 'radiusfilter') {
+        dimension.disabled = !values.coordinates.length;
+      }
 
-      const newDisabledValue = shouldChangeDisabledValue
+      const shouldChangeDisabledValue = [
+        'overabbrev',
+        'optype',
+        'proptype',
+        'nta',
+        'commboard',
+        'admin_censtract',
+        'admin_council',
+        'admin_policeprecinct',
+        'admin_schooldistrict',
+        'admin_borocode',
+      ];
+
+      const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
         ? values.filter(value => value.checked === true).length <= 0
         : dimension.disabled;
 
@@ -61,7 +74,10 @@ const facilitiesReducer = (state = initialState, action) => {
         [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue }),
       });
 
-      return Object.assign({}, state, { filterDimensions, sql: getSql(filterDimensions) });
+      return Object.assign({}, state, {
+        filterDimensions,
+        sql: getSql(filterDimensions),
+      });
 
     case AT.FETCH_NYC_BOUNDS.SUCCESS:
       return Object.assign({}, state, {
