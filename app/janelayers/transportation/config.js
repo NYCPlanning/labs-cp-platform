@@ -1,5 +1,5 @@
 const appConfig = {
-  carto_user: 'cpp',
+  carto_user: 'data',
   carto_domain: 'carto.planninglabs.nyc',
 };
 
