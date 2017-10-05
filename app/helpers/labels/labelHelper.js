@@ -1,9 +1,9 @@
 import boroughs from './boroughs';
 import community_districts from './community_districts';
+import council from './council';
 
 import nta from './js/nta';
 import censtract from './js/censtract';
-import council from './js/council';
 import congdist from './js/congdist';
 import policeprecinct from './js/policeprecinct';
 import schooldistrict from './js/schooldistrict';
