@@ -75,10 +75,6 @@ class PipeLineExplorer extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.resetFilter();
-  }
-
   setAddressSearchCoordinates = (payload) => {
     if (payload.action === 'set') {
       this.setState({
@@ -208,7 +204,6 @@ PipeLineExplorer.propTypes = {
   symbologyDimension: PropTypes.string,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ pipeline }) => ({
@@ -219,5 +214,4 @@ const mapStateToProps = ({ pipeline }) => ({
 
 export default connect(mapStateToProps, {
   setSelectedFeatures: pipelineActions.setSelectedFeatures,
-  resetFilter: pipelineActions.resetFilter,
 })(PipeLineExplorer);
