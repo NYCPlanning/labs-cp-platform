@@ -45,10 +45,6 @@ class FacilitiesExplorer extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.resetFilter();
-  }
-
   setAddressSearchCoordinates = (payload) => {
     if (payload.action === 'set') {
       this.setState({
@@ -207,7 +203,6 @@ FacilitiesExplorer.propTypes = {
   location: PropTypes.object,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired,
   fetchNYCBounds: PropTypes.func.isRequired,
 };
 
@@ -220,6 +215,5 @@ const mapStateToProps = ({ facilities }) => ({
 
 export default connect(mapStateToProps, {
   setSelectedFeatures: facilitiesActions.setSelectedFeatures,
-  resetFilter: facilitiesActions.resetFilter,
   fetchNYCBounds: facilitiesActions.fetchNYCBounds,
 })(FacilitiesExplorer);

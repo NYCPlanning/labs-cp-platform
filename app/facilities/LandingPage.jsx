@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
@@ -8,11 +10,15 @@ import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
 import { getDefaultFilterDimensions } from './config';
 import ga from '../helpers/ga';
+import * as facilitiesActions from '../actions/facilities';
 
 import './LandingPage.scss';
 
-
 class FacilitiesLandingPage extends React.Component {
+  componentWillMount() {
+    this.props.resetFilter();
+  }
+
   componentDidMount() {
     document.title = 'Capital Planning Platform';
   }
@@ -223,4 +229,10 @@ class FacilitiesLandingPage extends React.Component {
   }
 }
 
-export default FacilitiesLandingPage;
+FacilitiesLandingPage.propTypes = {
+  resetFilter: PropTypes.func.isRequired,
+};
+
+export default connect(() => {}, {
+  resetFilter: facilitiesActions.resetFilter,
+})(FacilitiesLandingPage);
