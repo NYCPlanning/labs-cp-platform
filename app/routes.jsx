@@ -77,7 +77,7 @@ export default (
     <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} />
 
     <Redirect from="pipeline" to="pipeline/explorer" />
-    <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development Pipeline'} about={'/about/pipeline'} />
+    <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />
     <Route path="development/:id" component={ensureSitewideAccess(DevelopmentPage)} title={'Development Details'} about={'/about/pipeline'} />
 
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'NYC Capital Projects Explorer'} about={'/about/capitalprojects'} />

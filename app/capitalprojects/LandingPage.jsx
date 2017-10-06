@@ -1,11 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import Footer from '../common/Footer';
 
+import * as capitalProjectsActions from '../actions/capitalProjects';
+
 import './LandingPage.scss';
 
 class LandingPage extends React.Component {
+  componentWillMount() {
+    this.props.resetFilter();
+  }
+
   componentDidMount() {
     document.title = 'Capital Planning Platform';
   }
@@ -59,4 +67,10 @@ class LandingPage extends React.Component {
   }
 }
 
-export default LandingPage;
+LandingPage.propTypes = {
+  resetFilter: PropTypes.func.isRequired,
+};
+
+export default connect(() => {}, {
+  resetFilter: capitalProjectsActions.resetFilter,
+})(LandingPage);
