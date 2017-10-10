@@ -76,7 +76,7 @@ export default (
 
     <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
-    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} />
+    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
 
     <Redirect
       from="pops"
@@ -90,8 +90,7 @@ export default (
         } }),
       }}
     />
-    <Route path="pops" component={FacilitiesExplorer} title={'Facilies Explorer'} about={'/about/facilities'} />
-    <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} />
+    <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
 
     <Redirect from="pipeline" to="pipeline/explorer" />
     <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />

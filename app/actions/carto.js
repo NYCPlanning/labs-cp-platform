@@ -13,6 +13,16 @@ export const getFeature = ({ tableName, column, value }, nextType) => {
   };
 };
 
+export const getPops = ({ tableName, value }, nextType) => {
+  const requestFormat = 'geojson';
+  const sql = `SELECT * FROM ${tableName} WHERE idagency = 'NYCDCP: ${value}' AND facsubgrp = 'Privately Owned Public Space'`;
+
+  return {
+    type: AT.CARTO_REQUEST,
+    payload: { sql, requestFormat, nextType },
+  };
+};
+
 export const fetchAgencyValues = ({ properties }, nextType) => {
   // Assumes a structure to the string given by the database
   const pgTableIds = dbStringToArray(properties.pgtable);
