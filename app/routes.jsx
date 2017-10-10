@@ -23,6 +23,8 @@ import FeedbackPage from '../app/pages/FeedbackPage';
 
 import NotFound from '../app/pages/NotFound';
 
+import { getDefaultFilterDimensions } from '../app/facilities/config';
+
 const rerouteLoggedIn = (nextState, replace) => {
   if (store.getState().currentUser.isLoggedIn) {
     replace({ pathname: '/' });
@@ -60,7 +62,7 @@ const ensureAccess = permission => WrappedComponent => class EnsureAccess extend
   render() {
     return <WrappedComponent {...this.props} />;
   }
-  };
+};
 
 const ensureSitewideAccess = ensureAccess('sitewide_access');
 
@@ -74,7 +76,21 @@ export default (
 
     <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
-    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} />
+    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
+
+    <Redirect
+      from="pops"
+      to="/facilities/explorer"
+      state={{
+        filterDimensions: getDefaultFilterDimensions({ selected: {
+          'Parks, Gardens, and Historical Sites': {
+            'Parks and Plazas': {
+              'Privately Owned Public Space': null },
+          },
+        } }),
+      }}
+    />
+    <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
 
     <Redirect from="pipeline" to="pipeline/explorer" />
     <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />

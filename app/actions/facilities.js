@@ -2,12 +2,22 @@ import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 
-export const fetchFacilityDetails = facilityId =>
-  cartoActions.getFeature({
-    tableName: sqlConfig.tablename,
-    column: 'uid',
-    value: facilityId,
-  }, AT.FETCH_FACILITY_DETAILS);
+export const fetchFacilityDetails = (facilityId, facilityRoute = 'facility') => {
+  if (facilityRoute === 'facility') {
+    return cartoActions.getFeature({
+      tableName: sqlConfig.tablename,
+      column: 'uid',
+      value: facilityId,
+    }, AT.FETCH_FACILITY_DETAILS);
+  }
+
+  if (facilityRoute === 'pops') {
+    return cartoActions.getPops({
+      tableName: sqlConfig.tablename,
+      value: facilityId,
+    }, AT.FETCH_FACILITY_DETAILS);
+  }
+};
 
 export const fetchTotalCount = () => ({
   type: AT.CARTO_REQUEST,
