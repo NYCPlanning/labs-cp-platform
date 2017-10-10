@@ -59,13 +59,14 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
     localStorage.removeItem('NYCPlanning_profile');
     localStorage.removeItem('NYCPlanning_idToken');
     console.log('deauth Middleware token expired');
-    // dispatch(authActions.deauthorizeUser());
-    browserHistory.replace({
-      pathname: '/login',
-      state: {
-        targetPath: window.location.pathname,
-      },
-    });
+    dispatch(authActions.deauthorizeUser());
+
+    // browserHistory.replace({
+    //   pathname: '/login',
+    //   state: {
+    //     targetPath: window.location.pathname,
+    //   },
+    // });
   }
 
   if (action.type === AT.LOAD_CREDENTIALS) {
