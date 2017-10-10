@@ -22,7 +22,7 @@ const CardStyles = {
 
 class DetailPage extends React.Component {
   componentDidMount() {
-    this.props.fetchFacilityDetails(parseInt(this.props.params.id), this.props.route.facilityRoute);
+    this.props.fetchFacilityDetails(this.props.params.id, this.props.route.facilityRoute);
   }
 
   render() {

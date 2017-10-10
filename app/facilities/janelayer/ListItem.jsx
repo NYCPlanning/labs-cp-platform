@@ -9,10 +9,19 @@ import './ListItem.scss';
 const Item = (props) => {
   const d = props.feature.properties;
 
+  function pathname() {
+    if (d.facsubgrp === 'Privately Owned Public Space') {
+      const pops_id = d.idagency.match(/: (\w+)/)[1];
+      console.log(d.idagency.match(/: (\w+)/));
+      return `/pops/${pops_id}`;
+    }
+    return `/facility/${d.uid}`;
+  }
+
   return (
     <Link
       to={{
-        pathname: `/facility/${d.uid}`,
+        pathname: pathname(),
         state: { modal: true, returnTo: '/facilities/explorer' },
       }}
     >
