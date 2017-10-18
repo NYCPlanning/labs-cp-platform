@@ -8,7 +8,7 @@ import _ from 'lodash';
 const analyticsMiddleware = ({ getState, dispatch }) => next => (action) => {
   if (action.type === AT.AUTHORIZE_USER) {
     ReactGA.set({
-      userId: action.payload.profile.email,
+      userId: action.payload.profile.user_id,
       dimension1: _.get(action.payload.profile, 'user_metadata.agency', 'Unknown'),
     });
   }
