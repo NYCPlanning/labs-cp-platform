@@ -10,8 +10,10 @@ import * as capitalProjectsActions from '../actions/capitalProjects';
 import {
   AerialsJaneLayer,
   TransportationJaneLayer,
-  FloodHazardsJaneLayer, ZoningJaneLayer,
+  FloodHazardsJaneLayer,
+  ZoningJaneLayer,
   AdminBoundariesJaneLayer,
+  InclusionaryHousingJaneLayer,
 } from '../janelayers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import CPListItem from './CPListItem';
@@ -186,6 +188,7 @@ class CapitalProjectsExplorer extends React.Component {
           <FloodHazardsJaneLayer defaultDisabled />
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
+          <InclusionaryHousingJaneLayer defaultDisabled />
 
           <JaneLayer
             id="scaplan"
