@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
 import * as capitalProjectsActions from '../actions/capitalProjects';
 import {

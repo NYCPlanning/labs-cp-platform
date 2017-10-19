@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
 import { connect } from 'react-redux';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
 
 import appConfig from '../helpers/appConfig';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';

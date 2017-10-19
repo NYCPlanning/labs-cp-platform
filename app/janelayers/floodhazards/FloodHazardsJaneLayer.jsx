@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { JaneLayer, Source, MapLayer } from 'jane-maps';
+import { JaneLayer, Source, MapLayer } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
 import appConfig from '../../helpers/appConfig';
