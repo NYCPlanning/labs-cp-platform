@@ -61,6 +61,7 @@ class MapLayer extends React.Component {
       this.props.map.__INTERNAL__hoverLayers[this.props.id] = true;
       this.props.map.on('click', this.onClick);
     }
+  }
 
   removeLayer() {
     if (!this.layerExists()) {

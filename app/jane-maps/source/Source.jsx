@@ -18,7 +18,7 @@ class Source extends React.Component {
     const map = this.props.map;
     const isLoaded = !!this.context.loadedSources[this.props.id];
 
-    if (source.type === 'geojson') return <GeoJsonSource map={map} source={source} onLoaded={onLoaded} isLoaded={isLoaded}/>;
+    if (source.type === 'geojson') return <GeoJsonSource map={map} source={source} onLoaded={onLoaded} isLoaded={isLoaded} />;
     if (source.type === 'vector') return <VectorSource map={map} source={source} onLoaded={onLoaded} isLoaded={isLoaded} />;
     if (source.type === 'cartovector' && source.options) return <CartoVectorSource map={map} source={source} onLoaded={onLoaded} isLoaded={isLoaded} />;
     if (source.type === 'raster') return <RasterSource map={map} source={source} onLoaded={onLoaded} isLoaded={isLoaded} />;

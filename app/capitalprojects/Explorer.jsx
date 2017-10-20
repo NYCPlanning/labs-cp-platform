@@ -14,10 +14,14 @@ import {
   ZoningJaneLayer,
   AdminBoundariesJaneLayer,
   InclusionaryHousingJaneLayer,
+  FacilitiesJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
-import CPListItem from './CPListItem';
-import SCAListItem from './SCAListItem';
+
+import CPListItem from './list-items/CPListItem';
+import SCAListItem from './list-items/SCAListItem';
+import FacilitiesListItem from './list-items/FacilitiesListItem';
+
 import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
 import appConfig from '../helpers/appConfig';
@@ -158,13 +162,18 @@ class CapitalProjectsExplorer extends React.Component {
   render() {
     const { selectedFeatures } = this.props;
 
-    const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
-
-    const listItems = selectedFeatures.map(feature =>
-      selectedFeaturesSource === 'capital-projects'
-        ? <CPListItem feature={feature} key={feature.id} />
-        : <SCAListItem feature={feature} key={feature.id} />,
-    );
+    const listItems = selectedFeatures.map((feature) => {
+      switch (feature.layer.source) {
+        case 'capital-projects':
+          return <CPListItem feature={feature} key={feature.id} />;
+        case 'sca-points':
+          return <SCAListItem feature={feature} key={feature.id} />;
+        case 'facilities':
+          return <FacilitiesListItem feature={feature} key={feature.id} />;
+        default:
+          return null;
+      }
+    });
 
     const capitalProjectsSourceOptions = {
       carto_user: appConfig.carto_user,
@@ -189,6 +198,12 @@ class CapitalProjectsExplorer extends React.Component {
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
           <InclusionaryHousingJaneLayer defaultDisabled />
+          <FacilitiesJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            defaultDisabled
+          />
 
           <JaneLayer
             id="scaplan"

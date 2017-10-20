@@ -4,6 +4,7 @@ import TransportationJaneLayer from './transportation/TransportationJaneLayer';
 import FloodHazardsJaneLayer from './floodhazards/FloodHazardsJaneLayer';
 import ZoningJaneLayer from './zoning/ZoningJaneLayer';
 import InclusionaryHousingJaneLayer from './inclusionary_housing/InclusionaryHousingJaneLayer';
+import FacilitiesJaneLayer from './facilities/FacilitiesJaneLayer';
 
 export {
   AdminBoundariesJaneLayer,
@@ -12,4 +13,5 @@ export {
   FloodHazardsJaneLayer,
   ZoningJaneLayer,
   InclusionaryHousingJaneLayer,
+  FacilitiesJaneLayer,
 };
