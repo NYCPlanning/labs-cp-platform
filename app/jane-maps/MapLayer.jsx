@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Popup from './Popup';
 import _ from 'lodash';
 
 const LAYER_TYPES = ['fill', 'line', 'symbol', 'circle', 'fill-extrusion', 'raster', 'background'];
@@ -10,7 +11,7 @@ class MapLayer extends React.Component {
 
   componentWillMount() {
     if (!this.props.janeLayerId) {
-      console.error(`<MapLayer /> has to be a direct child of <JaneLayer />. Check layer with id ${this.props.id}`);
+      console.error(`<MapLayer /> has to be a direct child of <JaneLayer />. Check layer with id ${this.props.id}`); // eslint-disable-line
     }
 
     this.props.registerRedrawCallback(this.redrawLayer);
@@ -22,16 +23,12 @@ class MapLayer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props, nextProps)) {
-      this.redrawLayer(nextProps)
+      this.redrawLayer(nextProps);
     }
   }
 
   componentWillUnmount() {
     this.removeLayer();
-  }
-
-  layerExists() {
-    return !!this.props.map.getLayer(this.props.id);
   }
 
   addLayer(props) {
@@ -50,12 +47,12 @@ class MapLayer extends React.Component {
       'maxzoom',
       'filter',
       'layout',
-      'paint'
+      'paint',
     );
 
     if (config.sourceLayer) {
       config['source-layer'] = config.sourceLayer;
-      delete config.sourceLayer
+      delete config.sourceLayer;
     }
 
     this.props.map.addLayer(config, props.previousMapLayer);
@@ -64,7 +61,6 @@ class MapLayer extends React.Component {
       this.props.map.__INTERNAL__hoverLayers[this.props.id] = true;
       this.props.map.on('click', this.onClick);
     }
-  }
 
   removeLayer() {
     if (!this.layerExists()) {
@@ -97,8 +93,28 @@ class MapLayer extends React.Component {
     }
   };
 
+  layerExists() {
+    return !!this.props.map.getLayer(this.props.id);
+  }
+
+  renderPopup() {
+    const { map, id } = this.props;
+
+    return React.Children.map(this.props.children, (child) => {
+      if (!map || !child) {
+        return null;
+      }
+
+      return React.cloneElement(child, { map, mapLayerId: id });
+    });
+  }
+
   render() {
-    return null;
+    return (
+      <div>
+        { this.renderPopup() }
+      </div>
+    );
   }
 }
 
@@ -120,6 +136,8 @@ MapLayer.propTypes = {
   order: PropTypes.number,
   onClick: PropTypes.func,
   registerRedrawCallback: PropTypes.func.isRequired,
+  popup: PropTypes.bool,
+  children: PropTypes.any,
 };
 
 MapLayer.defaultProps = {
@@ -127,6 +145,8 @@ MapLayer.defaultProps = {
   registerRedrawCallback: () => null,
   previousMapLayer: null,
   janeLayerId: null,
+  popup: null,
+  children: null,
 };
 
 export default MapLayer;

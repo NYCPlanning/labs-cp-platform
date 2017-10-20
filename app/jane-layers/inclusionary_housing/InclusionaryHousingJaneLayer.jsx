@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { JaneLayer, Source, MapLayer } from '../../jane-maps';
+import { JaneLayer, Source, MapLayer, Popup } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
 import appConfig from '../../helpers/appConfig';
@@ -54,7 +54,9 @@ class InclusionaryHousingJaneLayer extends React.Component {
           'fill-antialias': true,
           'fill-outline-color': 'rgba(0, 0, 0, 1)',
         }}
-      />,
+      >
+        <Popup body="Test Popup!" />
+      </MapLayer>,
     ].map((child, index) => ({ ...child, key: index }));
   }
 

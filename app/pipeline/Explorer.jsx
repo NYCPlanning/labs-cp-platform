@@ -13,7 +13,7 @@ import {
   TransportationJaneLayer,
   FloodHazardsJaneLayer, ZoningJaneLayer,
   AdminBoundariesJaneLayer,
-} from '../janelayers';
+} from '../jane-layers';
 
 import PipelineComponent from './janelayer/Component';
 import ListItem from './janelayer/ListItem';

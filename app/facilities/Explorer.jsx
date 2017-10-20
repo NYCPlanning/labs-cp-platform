@@ -14,7 +14,7 @@ import {
   FloodHazardsJaneLayer,
   ZoningJaneLayer,
   AdminBoundariesJaneLayer,
-} from '../janelayers';
+} from '../jane-layers';
 
 import * as facilitiesActions from '../actions/facilities';
 import colors from './colors';

@@ -14,7 +14,7 @@ import {
   ZoningJaneLayer,
   AdminBoundariesJaneLayer,
   InclusionaryHousingJaneLayer,
-} from '../janelayers';
+} from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import CPListItem from './CPListItem';
 import SCAListItem from './SCAListItem';
