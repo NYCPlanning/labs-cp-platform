@@ -15,6 +15,7 @@ import {
   AdminBoundariesJaneLayer,
   InclusionaryHousingJaneLayer,
   FacilitiesJaneLayer,
+  HighlightJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -192,6 +193,10 @@ class CapitalProjectsExplorer extends React.Component {
           onLayerToggle={this.clearSelectedFeatures}
           onSearchTrigger={this.setAddressSearchCoordinates}
         >
+          <HighlightJaneLayer
+            selectedFeatures={selectedFeatures}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+          />
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
@@ -202,6 +207,7 @@ class CapitalProjectsExplorer extends React.Component {
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
+            sql={this.props.facilitiesSql}
             defaultDisabled
           />
 
@@ -210,6 +216,7 @@ class CapitalProjectsExplorer extends React.Component {
             name="SCA Capital Plan"
             icon="graduation-cap"
             component={<SCAPlanComponent />}
+            defaultDisabled
           >
 
             <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions} />
@@ -306,13 +313,16 @@ class CapitalProjectsExplorer extends React.Component {
 CapitalProjectsExplorer.propTypes = {
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
-  setSelectedFeatures: PropTypes.func.isRequired,
+  facilitiesSql: PropTypes.string.isRequired,
   selectedFeatures: PropTypes.array.isRequired,
+
+  setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects }) => ({
+const mapStateToProps = ({ capitalProjects, facilities }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
+  facilitiesSql: facilities.sql,
   selectedFeatures: capitalProjects.selectedFeatures,
 });
 

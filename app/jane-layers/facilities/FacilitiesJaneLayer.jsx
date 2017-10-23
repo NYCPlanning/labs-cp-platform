@@ -13,6 +13,8 @@ class FacilitiesJaneLayer extends React.Component {
         id="facilities"
         name="Facilities and Program Sites"
         icon="university"
+        defaultSelected={this.props.defaultSelected}
+        defaultDisabled={this.props.defaultDisabled}
         component={<FacilitiesSidebarComponent
           selectedPointType={this.props.selectedPointType}
           selectedPointCoordinates={this.props.selectedPointCoordinates}
@@ -24,30 +26,9 @@ class FacilitiesJaneLayer extends React.Component {
           options={{
             carto_domain: appConfig.carto_domain,
             carto_user: appConfig.carto_user,
-            sql: ['SELECT * FROM facdb_170522'], // this.props.sql
+            sql: [this.props.sql],
           }}
         />
-
-        {
-        // { !!this.props.selectedFeatures.length &&
-        //   <Source id="highlighted" type="geojson" data={this.highlightedSourceOptions()} nocache /> }
-        //
-        // { !!this.props.selectedFeatures.length &&
-        //   <MapLayer
-        //     id="facilities-points-highlight"
-        //     source="highlighted"
-        //     type="circle"
-        //     paint={{
-        //       'circle-color': 'rgba(255, 255, 255, 1)',
-        //       'circle-opacity': 0,
-        //       'circle-radius': 15,
-        //       'circle-stroke-width': 3,
-        //       'circle-pitch-scale': 'map',
-        //       'circle-stroke-color': 'rgba(217, 107, 39, 1)',
-        //       'circle-stroke-opacity': 0.8,
-        //     }}
-        //   /> }
-        }
 
         <MapLayer
           id="facilities-points-outline"
@@ -85,12 +66,17 @@ class FacilitiesJaneLayer extends React.Component {
 }
 
 FacilitiesJaneLayer.propTypes = {
+  defaultSelected: PropTypes.bool,
+  defaultDisabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
   handleMapLayerClick: PropTypes.func.isRequired,
+  sql: PropTypes.string.isRequired,
 };
 
 FacilitiesJaneLayer.defaultProps = {
+  defaultSelected: false,
+  defaultDisabled: false,
   selectedPointType: null,
   selectedPointCoordinates: [],
 };
