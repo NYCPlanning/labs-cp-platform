@@ -4,18 +4,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
 import CapitalProjectsComponent from './janelayer/Component';
 import * as capitalProjectsActions from '../actions/capitalProjects';
 import {
   AerialsJaneLayer,
   TransportationJaneLayer,
-  FloodHazardsJaneLayer, ZoningJaneLayer,
+  FloodHazardsJaneLayer,
+  ZoningJaneLayer,
   AdminBoundariesJaneLayer,
-} from '../janelayers';
+  InclusionaryHousingJaneLayer,
+  FacilitiesJaneLayer,
+  HighlightJaneLayer,
+} from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
-import CPListItem from './CPListItem';
-import SCAListItem from './SCAListItem';
+
+import CPListItem from './list-items/CPListItem';
+import SCAListItem from './list-items/SCAListItem';
+import FacilitiesListItem from './list-items/FacilitiesListItem';
+
 import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
 import appConfig from '../helpers/appConfig';
@@ -156,13 +163,18 @@ class CapitalProjectsExplorer extends React.Component {
   render() {
     const { selectedFeatures } = this.props;
 
-    const selectedFeaturesSource = selectedFeatures.length > 0 ? selectedFeatures[0].layer.source : null;
-
-    const listItems = selectedFeatures.map(feature =>
-      selectedFeaturesSource === 'capital-projects'
-        ? <CPListItem feature={feature} key={feature.id} />
-        : <SCAListItem feature={feature} key={feature.id} />,
-    );
+    const listItems = selectedFeatures.map((feature) => {
+      switch (feature.layer.source) {
+        case 'capital-projects':
+          return <CPListItem feature={feature} key={`cp${feature.id}`} />;
+        case 'sca-points':
+          return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
+        case 'facilities':
+          return <FacilitiesListItem feature={feature} key={`fac${feature.id}`} />;
+        default:
+          return null;
+      }
+    });
 
     const capitalProjectsSourceOptions = {
       carto_user: appConfig.carto_user,
@@ -181,17 +193,30 @@ class CapitalProjectsExplorer extends React.Component {
           onLayerToggle={this.clearSelectedFeatures}
           onSearchTrigger={this.setAddressSearchCoordinates}
         >
+          <HighlightJaneLayer
+            selectedFeatures={selectedFeatures}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+          />
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
+          <InclusionaryHousingJaneLayer defaultDisabled />
+          <FacilitiesJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            sql={this.props.facilitiesSql}
+            defaultDisabled
+          />
 
           <JaneLayer
             id="scaplan"
             name="SCA Capital Plan"
             icon="graduation-cap"
             component={<SCAPlanComponent />}
+            defaultDisabled
           >
 
             <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions} />
@@ -214,9 +239,10 @@ class CapitalProjectsExplorer extends React.Component {
             />
 
             <Legend>
-              <div className="legendSection">
+              <div>
+                <div className="legendSection">SCA Capital Plan</div>
                 <div className="legendItem">
-                  <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
+                  <div className="colorCircle" style={{ backgroundColor: '#5C99FF' }} />
                   <div className="legendItemText">SCA Projects</div>
                 </div>
               </div>
@@ -263,13 +289,14 @@ class CapitalProjectsExplorer extends React.Component {
             />
 
             <Legend>
-              <div className="legendSection">
+              <div>
+                <div className="legendSection">Capital Projects</div>
                 <div className="legendItem">
-                  <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
+                  <div className="colorCircle" style={{ backgroundColor: '#8B8C98' }} />
                   <div className="legendItemText">Planned Projects</div>
                 </div>
                 <div className="legendItem">
-                  <div className="colorBox" style={{ backgroundColor: '#d98127' }} />
+                  <div className="colorCircle" style={{ backgroundColor: '#d98127' }} />
                   <div className="legendItemText">Ongoing Projects</div>
                 </div>
               </div>
@@ -288,13 +315,16 @@ class CapitalProjectsExplorer extends React.Component {
 CapitalProjectsExplorer.propTypes = {
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
-  setSelectedFeatures: PropTypes.func.isRequired,
+  facilitiesSql: PropTypes.string.isRequired,
   selectedFeatures: PropTypes.array.isRequired,
+
+  setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects }) => ({
+const mapStateToProps = ({ capitalProjects, facilities }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
+  facilitiesSql: facilities.sql,
   selectedFeatures: capitalProjects.selectedFeatures,
 });
 

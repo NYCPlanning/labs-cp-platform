@@ -388,6 +388,10 @@ body:after {
   border-radius: 2px;
   transition: right .45s cubic-bezier(.23,1,.32,1);
   overflow: auto;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .features-leave.features-leave-active {

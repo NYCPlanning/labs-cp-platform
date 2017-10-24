@@ -7,10 +7,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
-import { Jane, JaneLayer, Marker, Source, MapLayer } from 'jane-maps';
+import { Jane, JaneLayer, Marker, Source, MapLayer } from '../jane-maps';
 import {
   AerialsJaneLayer, TransportationJaneLayer, FloodHazardsJaneLayer, ZoningJaneLayer,
-} from '../janelayers';
+} from '../jane-layers';
 import appConfig from '../helpers/appConfig';
 
 class ModalMap extends React.Component {

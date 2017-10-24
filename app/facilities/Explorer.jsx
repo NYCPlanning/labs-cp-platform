@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Jane, JaneLayer, Source, MapLayer, Legend } from 'jane-maps';
 import { connect } from 'react-redux';
+import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
 
 import appConfig from '../helpers/appConfig';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
@@ -14,7 +14,7 @@ import {
   FloodHazardsJaneLayer,
   ZoningJaneLayer,
   AdminBoundariesJaneLayer,
-} from '../janelayers';
+} from '../jane-layers';
 
 import * as facilitiesActions from '../actions/facilities';
 import colors from './colors';
@@ -178,7 +178,7 @@ class FacilitiesExplorer extends React.Component {
             />
 
             <Legend>
-              <div className="legendSection">
+              <div>
                 <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
               </div>
             </Legend>
