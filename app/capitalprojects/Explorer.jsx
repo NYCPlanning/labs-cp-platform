@@ -166,11 +166,11 @@ class CapitalProjectsExplorer extends React.Component {
     const listItems = selectedFeatures.map((feature) => {
       switch (feature.layer.source) {
         case 'capital-projects':
-          return <CPListItem feature={feature} key={feature.id} />;
+          return <CPListItem feature={feature} key={`cp${feature.id}`} />;
         case 'sca-points':
-          return <SCAListItem feature={feature} key={feature.id} />;
+          return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
         case 'facilities':
-          return <FacilitiesListItem feature={feature} key={feature.id} />;
+          return <FacilitiesListItem feature={feature} key={`fac${feature.id}`} />;
         default:
           return null;
       }
