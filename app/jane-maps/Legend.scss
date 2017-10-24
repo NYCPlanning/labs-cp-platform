@@ -1,0 +1,42 @@
+.jane-legend {
+  color: #555;
+  padding: 6px 8px;
+  background: #fff;
+  margin: 28px 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2), 0 -1px 0 rgba(0,0,0,.0196078);
+  border-radius: 2px;
+  font-family: roboto,sans-serif;
+  z-index: 10;
+  position: absolute;
+  bottom: 0;
+  max-width: 320px;
+  min-width: 90px;
+  font-size: 13px;
+
+  p {
+    margin: 10px 0;
+  }
+
+  .colorCircle {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .legendSection {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .legendItem {
+    margin: 5px;
+  }
+
+  .legendItemText {
+    display: inline;
+    vertical-align: top;
+    line-height: 20px;
+  }
+}

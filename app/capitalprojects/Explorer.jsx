@@ -239,9 +239,10 @@ class CapitalProjectsExplorer extends React.Component {
             />
 
             <Legend>
-              <div className="legendSection">
+              <div>
+                <div className="legendSection">SCA Capital Plan</div>
                 <div className="legendItem">
-                  <div className="colorBox" style={{ backgroundColor: '#5C99FF' }} />
+                  <div className="colorCircle" style={{ backgroundColor: '#5C99FF' }} />
                   <div className="legendItemText">SCA Projects</div>
                 </div>
               </div>
@@ -288,13 +289,14 @@ class CapitalProjectsExplorer extends React.Component {
             />
 
             <Legend>
-              <div className="legendSection">
+              <div>
+                <div className="legendSection">Capital Projects</div>
                 <div className="legendItem">
-                  <div className="colorBox" style={{ backgroundColor: '#8B8C98' }} />
+                  <div className="colorCircle" style={{ backgroundColor: '#8B8C98' }} />
                   <div className="legendItemText">Planned Projects</div>
                 </div>
                 <div className="legendItem">
-                  <div className="colorBox" style={{ backgroundColor: '#d98127' }} />
+                  <div className="colorCircle" style={{ backgroundColor: '#d98127' }} />
                   <div className="legendItemText">Ongoing Projects</div>
                 </div>
               </div>

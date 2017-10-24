@@ -56,8 +56,36 @@ class FacilitiesJaneLayer extends React.Component {
         />
 
         <Legend>
-          <div className="legendSection">
-            <p>Facilities Legend</p>
+          <div>
+            <div className="legendSection">Facilities and Program Sites</div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(247, 202, 0)' }} />
+              <div className="legendItemText">Education, Child Welfare, and Youth</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(76, 175, 80)' }} />
+              <div className="legendItemText">Parks, Gardens, and Historical Sites</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(115, 229, 244)' }} />
+              <div className="legendItemText">Libraries and Cultural Programs</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(41, 121, 255)' }} />
+              <div className="legendItemText">Public Safety, Emergency Serivces, and Administrative Justice</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(186, 104, 200)' }} />
+              <div className="legendItemText">Health and Human Services</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(141, 142, 170)' }} />
+              <div className="legendItemText">Core Infrastructure and Transportation</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgb(203, 203, 214)' }} />
+              <div className="legendItemText">Admintration of Government</div>
+            </div>
           </div>
         </Legend>
       </JaneLayer>

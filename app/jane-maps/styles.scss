@@ -151,26 +151,6 @@
     height: 48px;
   }
 
-  .jane-legend {
-    color: #555;
-    padding: 6px 8px;
-    background: #fff;
-    margin: 28px 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,.2), 0 -1px 0 rgba(0,0,0,.0196078);
-    border-radius: 2px;
-    font-family: roboto,sans-serif;
-    z-index: 10;
-    position: absolute;
-    bottom: 0;
-    width: 320px;
-    min-width: 90px;
-    font-size: 13px;
-
-    p {
-      margin: 10px 0;
-    }
-  }
-
   .jane-map-container {
     position: absolute;
     top: 0;

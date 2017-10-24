@@ -2,6 +2,8 @@ import React from 'react'; // eslint-disable-line
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import './Legend.scss';
+
 class Legend extends React.Component {
 
   static displayName = 'Legend';
