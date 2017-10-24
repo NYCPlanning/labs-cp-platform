@@ -55,7 +55,14 @@ class InclusionaryHousingJaneLayer extends React.Component {
           'fill-outline-color': 'rgba(0, 0, 0, 1)',
         }}
       />,
-      <Popup mapLayerId="ih" body="Test Popup!" />,
+      <Popup
+        mapLayerId="ih"
+        template={`
+          <h1>Inclusionary Housing</h1>
+          <div>{{p.projectnam}}</div>
+          <div>Status: {{p.status}}</div>
+        `}
+      />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 
@@ -86,7 +93,14 @@ class InclusionaryHousingJaneLayer extends React.Component {
           'fill-outline-color': 'rgba(0, 0, 0, 1)',
         }}
       />,
-      <Popup mapLayerId="mih" body="Test Popup!" />,
+      <Popup
+        mapLayerId="mih"
+        template={`
+          <h1>Mandatory Inclusionary Housing</h1>
+          <div>{{p.projectnam}}</div>
+          <div>Status: {{p.status}}</div>
+        `}
+      />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 

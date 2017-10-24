@@ -35,6 +35,7 @@ class GLMap extends React.Component {
       center: this.props.center,
       pitch: this.props.pitch,
       hash: this.props.hash,
+      logoPosition: 'bottom-right',
     });
 
     this.map.__INTERNAL__hoverLayers = [];

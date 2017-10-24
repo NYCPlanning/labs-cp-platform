@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
+import Mustache from 'mustache';
+
+import './Popup.scss';
 
 class Popup extends React.Component {
   static displayName = 'Popup';
@@ -11,14 +14,18 @@ class Popup extends React.Component {
     this.popup = new mapboxgl.Popup({ // eslint-disable-line
       closeButton: false,
       closeOnClick: false,
+      anchor: 'left',
+      offset: 10,
     });
 
     map.on('mousemove', mapLayerId, (e) => {
-      const f = e.features[0].properties;
+      const view = {
+        p: e.features[0].properties,
+      };
 
       this.popup.setLngLat(e.lngLat)
-          .setHTML(this.props.body)
-          .addTo(map);
+        .setHTML(Mustache.render(this.props.template, view))
+        .addTo(map);
     });
 
     map.on('mouseleave', mapLayerId, () => {
@@ -34,7 +41,7 @@ class Popup extends React.Component {
 Popup.propTypes = {
   map: PropTypes.object,
   mapLayerId: PropTypes.string,
-  body: PropTypes.string.isRequired,
+  template: PropTypes.string.isRequired,
 };
 
 Popup.defaultProps = {
