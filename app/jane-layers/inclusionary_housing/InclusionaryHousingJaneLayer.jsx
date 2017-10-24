@@ -54,9 +54,8 @@ class InclusionaryHousingJaneLayer extends React.Component {
           'fill-antialias': true,
           'fill-outline-color': 'rgba(0, 0, 0, 1)',
         }}
-      >
-        <Popup body="Test Popup!" />
-      </MapLayer>,
+      />,
+      <Popup mapLayerId="ih" body="Test Popup!" />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 
@@ -87,6 +86,7 @@ class InclusionaryHousingJaneLayer extends React.Component {
           'fill-outline-color': 'rgba(0, 0, 0, 1)',
         }}
       />,
+      <Popup mapLayerId="mih" body="Test Popup!" />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 

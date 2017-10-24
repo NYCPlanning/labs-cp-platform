@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Popup from './Popup';
 import _ from 'lodash';
 
 const LAYER_TYPES = ['fill', 'line', 'symbol', 'circle', 'fill-extrusion', 'raster', 'background'];
@@ -98,24 +97,9 @@ class MapLayer extends React.Component {
     return !!this.props.map.getLayer(this.props.id);
   }
 
-  renderPopup() {
-    const { map, id } = this.props;
-
-    return React.Children.map(this.props.children, (child) => {
-      if (!map || !child) {
-        return null;
-      }
-
-      return React.cloneElement(child, { map, mapLayerId: id });
-    });
-  }
 
   render() {
-    return (
-      <div>
-        { this.renderPopup() }
-      </div>
-    );
+    return null;
   }
 }
 
@@ -137,7 +121,6 @@ MapLayer.propTypes = {
   order: PropTypes.number,
   onClick: PropTypes.func,
   registerRedrawCallback: PropTypes.func.isRequired,
-  popup: PropTypes.bool,
   children: PropTypes.any,
 };
 
@@ -146,7 +129,6 @@ MapLayer.defaultProps = {
   registerRedrawCallback: () => null,
   previousMapLayer: null,
   janeLayerId: null,
-  popup: null,
   children: null,
 };
 

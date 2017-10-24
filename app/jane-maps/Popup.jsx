@@ -1,26 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import mapboxgl from 'mapbox-gl';
 
 class Popup extends React.Component {
+  static displayName = 'Popup';
+
   componentDidMount() {
     const { map, mapLayerId } = this.props;
-    console.log('did mount');
-    window.map = map;
 
     this.popup = new mapboxgl.Popup({ // eslint-disable-line
       closeButton: false,
       closeOnClick: false,
     });
 
-    map.on('mouseenter', mapLayerId, (e) => {
-      console.log('mouse enter');
-      this.popup.setLngLat(e.features[0].geometry.coordinates)
+    map.on('mousemove', mapLayerId, (e) => {
+      const f = e.features[0].properties;
+
+      this.popup.setLngLat(e.lngLat)
           .setHTML(this.props.body)
           .addTo(map);
     });
 
     map.on('mouseleave', mapLayerId, () => {
-      console.log('mouse leave')
       this.popup.remove();
     });
   }

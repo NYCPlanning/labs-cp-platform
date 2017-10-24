@@ -141,6 +141,9 @@ class JaneLayer extends React.Component {
         case 'Marker':
           return React.cloneElement(child, { map });
 
+        case 'Popup':
+          return React.cloneElement(child, { map });
+
         default:
           return child;
       }
