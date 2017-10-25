@@ -35,6 +35,7 @@ module.exports = {
   },
 
   module: {
+    noParse: /(mapbox-gl)\.js$/,
     loaders: [
       {
         test: /\.jsx?$/,

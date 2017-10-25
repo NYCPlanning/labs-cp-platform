@@ -25,6 +25,9 @@ module.exports = {
 
     symlinks: false,
     extensions: ['.js', '.jsx'],
+    alias: {
+      'mapbox-gl': path.resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js'),
+    },
   },
 
   output: {
@@ -45,6 +48,7 @@ module.exports = {
   ],
 
   module: {
+    noParse: /(mapbox-gl)\.js$/,
     loaders: [
       {
         test: /\.jsx?$/,
