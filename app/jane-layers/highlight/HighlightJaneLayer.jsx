@@ -5,7 +5,8 @@ import { JaneLayer, Source, MapLayer } from '../../jane-maps';
 class HighlightJaneLayer extends React.Component {
   highlightedCoordinates() {
     const point = this.props.selectedFeatures.find(f => f.geometry.type === 'Point');
-    const polygonPresent = !!this.props.selectedFeatures.find(f => f.geometry.type === 'Polygon');
+    const polygonPresent = !!this.props.selectedFeatures.find(f => f.geometry.type === 'Polygon' ||
+                                                                   f.geometry.type === 'MultiPolygon');
 
     if (point) { return point.geometry.coordinates; }
     if (polygonPresent) { return this.props.selectedPointCoordinates; }
