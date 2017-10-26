@@ -5,6 +5,7 @@ import { createLogger } from 'redux-logger';
 import currentUser from './reducers/currentUser';
 import modal from './reducers/modal';
 import facilities from './reducers/facilities';
+import facilitiesCP from './reducers/facilitiesCP';
 import pipeline from './reducers/pipeline';
 import capitalProjects from './reducers/capitalProjects';
 import capitalProjectsTable from './reducers/capitalProjectsTable';
@@ -26,6 +27,7 @@ const store = createStore(
     currentUser,
     modal,
     facilities,
+    facilitiesCP,
     pipeline,
     capitalProjects,
     capitalProjectsTable,
@@ -34,6 +36,7 @@ const store = createStore(
 );
 
 // if (process.env.NODE_ENV === 'development') {
+// Why? This should be removed
 window.store = store;
 // }
 

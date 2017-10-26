@@ -15,7 +15,7 @@ import MultiSelect from '../../../common/MultiSelect';
 import AreaFilterSelect from '../../../common/AreaFilterSelect';
 import RadiusFilter from '../../../common/RadiusFilter';
 import Checkbox from '../../../common/Checkbox';
-import * as facilityActions from '../../../actions/facilities';
+import * as facilityCPActions from '../../../actions/facilitiesCP';
 
 import './LayerSelector.scss';
 
@@ -285,7 +285,7 @@ LayerSelector.defaultProps = {
 };
 
 LayerSelector.propTypes = {
-  sql: PropTypes.string,
+  sql: PropTypes.string.isRequired,
   filterDimensions: PropTypes.object,
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
@@ -296,17 +296,17 @@ LayerSelector.propTypes = {
   selectedPointCoordinates: PropTypes.array,
 };
 
-const mapStateToProps = ({ facilities }) => ({
-  filterDimensions: facilities.filterDimensions,
-  sql: facilities.sql,
-  totalCount: facilities.totalCount,
-  selectedCount: facilities.selectedCount,
+const mapStateToProps = ({ facilitiesCP }) => ({
+  filterDimensions: facilitiesCP.filterDimensions,
+  sql: facilitiesCP.sql,
+  totalCount: facilitiesCP.totalCount,
+  selectedCount: facilitiesCP.selectedCount,
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalFacilitiesCount: facilityActions.fetchTotalCount,
-  fetchSelectedFacilitiesCount: facilityActions.fetchSelectedCount,
-  setFilters: facilityActions.setFilters,
-  resetFilter: facilityActions.resetFilter,
-  setFilterDimension: facilityActions.setFilterDimension,
+  fetchTotalFacilitiesCount: facilityCPActions.fetchTotalCount,
+  fetchSelectedFacilitiesCount: facilityCPActions.fetchSelectedCount,
+  setFilters: facilityCPActions.setFilters,
+  resetFilter: facilityCPActions.resetFilter,
+  setFilterDimension: facilityCPActions.setFilterDimension,
 })(LayerSelector);

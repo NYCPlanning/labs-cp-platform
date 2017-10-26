@@ -321,10 +321,10 @@ CapitalProjectsExplorer.propTypes = {
   setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects, facilities }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
-  facilitiesSql: facilities.sql,
+  facilitiesSql: facilitiesCP.sql,
   selectedFeatures: capitalProjects.selectedFeatures,
 });
 

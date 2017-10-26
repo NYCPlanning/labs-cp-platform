@@ -1,0 +1,96 @@
+import * as AT from '../constants/actionTypes';
+import { getDefaultFilterDimensions } from '../facilities/config';
+import { getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
+
+const defaultFilterDimensions = getDefaultFilterDimensions({ selected: 'all' });
+
+const initialState = {
+  filterDimensions: defaultFilterDimensions,
+  sql: getSql(defaultFilterDimensions),
+  selectedFeatures: [],
+  facilityDetails: null,
+  sources: [],
+  totalCount: 0,
+  selectedCount: 0,
+  mapBounds: null,
+};
+
+const facilitiesReducer = (state = initialState, action) => {
+  switch (action.type) {
+
+    case AT.FETCH_FACILITY_CP_DETAILS.SUCCESS:
+      return Object.assign({}, state, { facilityDetails: action.payload.features[0] });
+
+    case AT.FETCH_FACILITY_CP_AGENCY_VALUES.SUCCESS:
+      return Object.assign({}, state, { sources: action.payload });
+
+    case AT.FETCH_FACILITIES_CP_TOTAL_COUNT.SUCCESS:
+      return Object.assign({}, state, { totalCount: action.payload[0].count });
+
+    case AT.FETCH_FACILITIES_CP_SELECTED_COUNT.SUCCESS:
+      return Object.assign({}, state, { selectedCount: action.payload[0].count });
+
+    case AT.SET_SELECTED_FACILITIES_CP_FEATURES:
+      return Object.assign({}, state, { selectedFeatures: action.payload.selectedFeatures });
+
+    case AT.SET_FACILITIES_CP_FILTERS:
+      return Object.assign({}, state, {
+        filterDimensions: action.payload.filterDimensions,
+        sql: getSql(action.payload.filterDimensions),
+      });
+
+    case AT.RESET_FACILITIES_CP_FILTER:
+      return Object.assign({}, state, {
+        filterDimensions: getDefaultFilterDimensions({ selected: 'all' }),
+        sql: getSql(getDefaultFilterDimensions({ selected: 'all' })),
+      });
+
+    case AT.SET_FACILITIES_CP_FILTER_DIMENSION:
+      const { filterDimension, values } = action.payload;
+      const dimension = state.filterDimensions[filterDimension];
+
+      if (filterDimension === 'radiusfilter') {
+        dimension.disabled = !values.coordinates.length;
+      }
+
+      const shouldChangeDisabledValue = [
+        'overabbrev',
+        'optype',
+        'proptype',
+        'nta',
+        'commboard',
+        'admin_censtract',
+        'admin_council',
+        'admin_policeprecinct',
+        'admin_schooldistrict',
+        'admin_borocode',
+      ];
+
+      const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
+        ? values.filter(value => value.checked === true).length <= 0
+        : dimension.disabled;
+
+      const filterDimensions = Object.assign({}, state.filterDimensions, {
+        [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue }),
+      });
+
+      return Object.assign({}, state, {
+        filterDimensions,
+        sql: getSql(filterDimensions),
+      });
+
+    case AT.FETCH_NYC_BOUNDS.SUCCESS:
+      return Object.assign({}, state, {
+        mapBounds: action.payload[0]
+          .st_extent
+          .match(/\(([^)]+)\)/)[1]
+          .split(',')
+          .map(pair => pair.split(' ')),
+      });
+
+    default:
+      return state;
+  }
+};
+
+export default facilitiesReducer;

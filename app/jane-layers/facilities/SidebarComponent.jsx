@@ -94,8 +94,8 @@ SidebarComponent.defaultProps = {
   selectedPointType: null,
 };
 
-const mapStateToProps = ({ facilities }) => ({
-  sql: facilities.sql,
+const mapStateToProps = ({ facilitiesCP }) => ({
+  sql: facilitiesCP.sql,
 });
 
 export default connect(mapStateToProps)(SidebarComponent);
