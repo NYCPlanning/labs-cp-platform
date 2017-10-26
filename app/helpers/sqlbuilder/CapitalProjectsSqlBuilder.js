@@ -6,21 +6,21 @@ export const sqlConfig = {
   combinedTable: `(
       SELECT the_geom, magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM (
         SELECT magency, magencyacro, magencyname, description, totalcommit, maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype
-        FROM cpdb_projects_combined_170911
+        FROM cpdb_projects_combined_171026
       ) a LEFT JOIN (
-        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_pts_170911
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_pts_171026
         UNION ALL
-        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_poly_170911
+        SELECT the_geom, maprojid as projid FROM cpdb_dcpattributes_poly_171026
       ) b ON a.maprojid = b.projid
     )x`,
   tableName: 'tablenameplaceholder',
-  pointsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_pts_170911 a LEFT JOIN cpdb_projects_combined_170911 b ON a.maprojid = b.maprojid) x',
-  polygonsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_poly_170911 a LEFT JOIN cpdb_projects_combined_170911 b ON a.maprojid = b.maprojid) x',
+  pointsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_pts_171026 a LEFT JOIN cpdb_projects_combined_171026 b ON a.maprojid = b.maprojid) x',
+  polygonsTablename: '(SELECT a.the_geom, a.the_geom_webmercator, a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM cpdb_dcpattributes_poly_171026 a LEFT JOIN cpdb_projects_combined_171026 b ON a.maprojid = b.maprojid) x',
 };
 
 export const tableSqlConfig = {
   columns: 'magency, magencyacro, sagencyacro, maprojid, description, totalcommit, totalspend, projecttype',
-  tableName: 'cpdb_projects_combined_170911',
+  tableName: 'cpdb_projects_combined_171026',
 };
 
 class CapitalProjectsSqlBuilder extends SqlBuilder {
