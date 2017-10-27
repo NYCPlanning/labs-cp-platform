@@ -15,7 +15,7 @@ const initialState = {
   mapBounds: null,
 };
 
-const facilitiesReducer = (state = initialState, action) => {
+const facilitiesCPReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case AT.FETCH_FACILITY_CP_DETAILS.SUCCESS:
@@ -93,4 +93,4 @@ const facilitiesReducer = (state = initialState, action) => {
   }
 };
 
-export default facilitiesReducer;
+export default facilitiesCPReducer;

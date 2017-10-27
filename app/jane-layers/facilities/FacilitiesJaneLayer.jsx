@@ -10,7 +10,7 @@ class FacilitiesJaneLayer extends React.Component {
   render() {
     return (
       <JaneLayer
-        id="facilities"
+        id="facilities-cp"
         name="Facilities and Program Sites"
         icon="university"
         defaultSelected={this.props.defaultSelected}
@@ -21,7 +21,7 @@ class FacilitiesJaneLayer extends React.Component {
         />}
       >
         <Source
-          id="facilities"
+          id="facilities-cp"
           type="cartovector"
           options={{
             carto_domain: appConfig.carto_domain,
@@ -31,8 +31,8 @@ class FacilitiesJaneLayer extends React.Component {
         />
 
         <MapLayer
-          id="facilities-points-outline"
-          source="facilities"
+          id="facilities-cp-points-outline"
+          source="facilities-cp"
           sourceLayer="layer0"
           type="circle"
           paint={{
@@ -43,8 +43,8 @@ class FacilitiesJaneLayer extends React.Component {
         />
 
         <MapLayer
-          id="facilities-points"
-          source="facilities"
+          id="facilities-cp-points"
+          source="facilities-cp"
           sourceLayer="layer0"
           type="circle"
           paint={{

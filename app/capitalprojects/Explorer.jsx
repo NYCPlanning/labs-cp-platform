@@ -169,7 +169,7 @@ class CapitalProjectsExplorer extends React.Component {
           return <CPListItem feature={feature} key={`cp${feature.id}`} />;
         case 'sca-points':
           return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
-        case 'facilities':
+        case 'facilities-cp':
           return <FacilitiesListItem feature={feature} key={`fac${feature.id}`} />;
         default:
           return null;
