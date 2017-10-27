@@ -7,6 +7,7 @@ import appConfig from '../helpers/appConfig';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
+import HighlightJaneLayer from '../jane-layers/highlight/HighlightJaneLayer';
 
 import {
   AerialsJaneLayer,
@@ -81,17 +82,6 @@ class FacilitiesExplorer extends React.Component {
     this.props.setSelectedFeatures(features);
   };
 
-  highlightedSourceOptions = () => ({
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        properties: {},
-        geometry: this.props.selectedFeatures[0].geometry,
-      },
-    ],
-  });
-
   render() {
     const listItems = this.props.selectedFeatures.map(feature => (
       <ListItem feature={feature} key={feature.id} />
@@ -115,6 +105,10 @@ class FacilitiesExplorer extends React.Component {
           onLayerToggle={this.clearSelectedFeatures}
           onSearchTrigger={this.setAddressSearchCoordinates}
         >
+          <HighlightJaneLayer
+            selectedFeatures={this.props.selectedFeatures}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+          />
           <AerialsJaneLayer defaultDisabled />
           <TransportationJaneLayer defaultDisabled />
           <FloodHazardsJaneLayer defaultDisabled />
@@ -132,25 +126,6 @@ class FacilitiesExplorer extends React.Component {
             />}
           >
             <Source id="facilities" type="cartovector" options={sourceOptions} />
-
-            { !!this.props.selectedFeatures.length &&
-              <Source id="highlighted" type="geojson" data={this.highlightedSourceOptions()} nocache /> }
-
-            { !!this.props.selectedFeatures.length &&
-              <MapLayer
-                id="facilities-points-highlight"
-                source="highlighted"
-                type="circle"
-                paint={{
-                  'circle-color': 'rgba(255, 255, 255, 1)',
-                  'circle-opacity': 0,
-                  'circle-radius': 15,
-                  'circle-stroke-width': 3,
-                  'circle-pitch-scale': 'map',
-                  'circle-stroke-color': 'rgba(217, 107, 39, 1)',
-                  'circle-stroke-opacity': 0.8,
-                }}
-              /> }
 
             <MapLayer
               id="facilities-points-outline"
@@ -193,17 +168,19 @@ class FacilitiesExplorer extends React.Component {
   }
 }
 
-FacilitiesExplorer.defaultProps = {
-  location: null,
-};
-
 FacilitiesExplorer.propTypes = {
   mapBounds: PropTypes.array,
-  sql: PropTypes.string,
+  sql: PropTypes.string.isRequired,
   location: PropTypes.object,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
   fetchNYCBounds: PropTypes.func.isRequired,
+};
+
+FacilitiesExplorer.defaultProps = {
+  location: null,
+  selectedFeatures: null,
+  mapBounds: null,
 };
 
 const mapStateToProps = ({ facilities }) => ({
