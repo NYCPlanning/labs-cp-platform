@@ -1,0 +1,53 @@
+.nested-select {
+  input[type=checkbox] {
+    display: none;
+  }
+
+  input[type="checkbox"] + label {
+    left: 6px;
+    top: 9px;
+    margin:-2px 10px 0 0;
+    position: absolute
+  }
+
+  /*override mui styles for listitem*/
+  button {
+    padding: 0 !important;
+    height: 36px !important;
+    width: 36px !important;
+
+    svg {
+      height: 36px !important;
+    }
+  }
+
+  .subgroup {
+    input[type=checkbox] {
+      display: none;
+    } 
+
+    input[type="checkbox"] + label {
+      top: 3px;
+    }
+
+    .fa {
+      right: 8px;
+      top: 6px;
+    }
+  }
+
+  label {
+    font-weight: 300;
+    border-radius: 2px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .fa {
+    position: absolute;
+    right: 39px;
+    top: 11px;
+  }
+}

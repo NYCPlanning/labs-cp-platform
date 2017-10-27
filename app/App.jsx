@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { connect } from 'react-redux';
 
-import * as authActions from './actions/auth';
-
 // get styles for jane-maps
-import 'jane-maps/dist/styles.css';
+import './jane-maps/styles.scss';
+
+import * as authActions from './actions/auth';
 
 import GlobalModal from './common/GlobalModal';
 import Nav from './common/Nav';

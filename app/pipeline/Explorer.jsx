@@ -1,9 +1,9 @@
 // PipeLineExplorer.jsx - Top level Component for the Pipeline Explorer Map
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Jane, JaneLayer, Source, MapLayer } from 'jane-maps';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { Jane, JaneLayer, Source, MapLayer } from '../jane-maps';
 
 import { circleColors } from '../pipeline/config';
 import appConfig from '../helpers/appConfig';
@@ -13,7 +13,7 @@ import {
   TransportationJaneLayer,
   FloodHazardsJaneLayer, ZoningJaneLayer,
   AdminBoundariesJaneLayer,
-} from '../janelayers';
+} from '../jane-layers';
 
 import PipelineComponent from './janelayer/Component';
 import ListItem from './janelayer/ListItem';

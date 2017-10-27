@@ -34,6 +34,20 @@ class Nav extends React.Component {
       <li><a onClick={this.props.login}><i className="fa fa-user" aria-hidden="true" /> Log In</a></li>
     );
 
+    const titleOrMenu = () => {
+      if (this.props.title === 'Capital Projects Explorer' ||
+          this.props.title === 'Capital Projects Table') {
+        return (
+          <span className={'title'} style={{ marginLeft: '14px' }}> |
+            <ul className="nav navbar-nav navbar-right">
+              <li><Link to="/capitalprojects/explorer">Map</Link></li>
+              <li><Link to="/capitalprojects/table">Table</Link></li>
+            </ul>
+          </span>
+        );
+      }
+      return (<span className={'title'}> | {this.props.title}</span>);
+    };
 
     return (
       <nav className={'navbar navbar-default navbar-fixed-top'}>
@@ -56,7 +70,7 @@ class Nav extends React.Component {
             Capital Planning Platform
             {(
               this.props.title &&
-                <span className={'title'}> | {this.props.title}</span>
+                titleOrMenu()
             )}
           </div>
         </div>

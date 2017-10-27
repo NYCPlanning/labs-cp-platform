@@ -96,8 +96,8 @@ export default (
     <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />
     <Route path="development/:id" component={ensureSitewideAccess(DevelopmentPage)} title={'Development Details'} about={'/about/pipeline'} />
 
-    <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'NYC Capital Projects Explorer'} about={'/about/capitalprojects'} />
-    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
 
