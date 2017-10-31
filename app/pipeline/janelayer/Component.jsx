@@ -7,7 +7,6 @@ import LayerSelector from '../LayerSelector';
 
 import Download from '../../common/Download';
 import { about } from '../content';
-import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import * as pipelineActions from '../../actions/pipeline';
 
@@ -69,7 +68,6 @@ class Pipeline extends React.Component {
                 filePrefix="developments"
                 onDownload={this.handleDownload}
               />
-              <SignupPrompt />
             </div>
           </div>
         </Tab>
@@ -86,6 +84,7 @@ class Pipeline extends React.Component {
 }
 
 Pipeline.propTypes = {
+  sql: PropTypes.string.isRequired,
   fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,

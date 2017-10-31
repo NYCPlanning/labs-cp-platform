@@ -6,7 +6,6 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import Filter from '../Filter';
 import Download from '../Download';
 import * as content from '../content';
-import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
 
@@ -71,7 +70,6 @@ class CapitalProjects extends React.Component {
                 polygonsPrefix="projects-polygons"
                 onDownload={this.handleDownload}
               />
-              <SignupPrompt />
             </div>
           </div>
         </Tab>
