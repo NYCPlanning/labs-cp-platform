@@ -16,6 +16,7 @@ import {
   InclusionaryHousingJaneLayer,
   FacilitiesJaneLayer,
   HighlightJaneLayer,
+  HousingDevelopmentJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -203,7 +204,16 @@ class CapitalProjectsExplorer extends React.Component {
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
           <InclusionaryHousingJaneLayer defaultDisabled />
+
           <FacilitiesJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            sql={this.props.facilitiesSql}
+            defaultDisabled
+          />
+
+          <HousingDevelopmentJaneLayer
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
