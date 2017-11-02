@@ -21,9 +21,6 @@ function shouldRenderSuggestions(value) {
 }
 
 class Search extends React.Component {
-
-  static displayName = 'Search';
-
   constructor(props) {
     super(props);
 

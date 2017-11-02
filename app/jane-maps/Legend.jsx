@@ -5,9 +5,6 @@ import _ from 'lodash';
 import './Legend.scss';
 
 class Legend extends React.Component {
-
-  static displayName = 'Legend';
-
   static contextTypes = {
     addLegend: PropTypes.func,
     removeLegend: PropTypes.func,
@@ -32,11 +29,8 @@ class Legend extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props.children, nextProps.children)) {
-      this.context.removeLegend(this.legend);
-
-      this.legend = nextProps.children;
-
-      this.context.addLegend(this.legend);
+      this.context.removeLegend(this.props.children);
+      this.context.addLegend(nextProps.children);
     }
   }
 
