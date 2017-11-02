@@ -28,12 +28,10 @@ class SidebarComponent extends React.Component {
         }}
       >
         <Tab label="Data">
-          {
-          // <LayerSelector
-          //   selectedPointType={this.props.selectedPointType}
-          //   selectedPointCoordinates={this.props.selectedPointCoordinates}
-          // />
-          }
+          <LayerSelector
+            selectedPointType={this.props.selectedPointType}
+            selectedPointCoordinates={this.props.selectedPointCoordinates}
+          />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">

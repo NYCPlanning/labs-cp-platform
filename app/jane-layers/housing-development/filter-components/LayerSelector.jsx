@@ -6,7 +6,7 @@ import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../../../common/CountWidget';
 import Checkboxes from './Checkboxes';
-import * as pipelineActions from '../../../actions/pipeline';
+import * as housingDevelopmentActions from '../../../actions/housingDevelopment';
 
 import RangeSlider from '../../../common/RangeSlider';
 import AreaFilterSelect from '../../../common/AreaFilterSelect';
@@ -17,6 +17,17 @@ import InfoIcon from '../../../common/InfoIcon';
 import './LayerSelector.scss';
 
 class LayerSelector extends React.Component {
+  componentDidMount() {
+    this.props.fetchTotalCount();
+    this.props.fetchSelectedCount(this.props.filterDimensions);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.sql !== nextProps.sql) {
+      this.props.fetchSelectedCount(nextProps.filterDimensions);
+    }
+  }
+
   handleFilterDimensionChange = (dimension, values) => {
     this.props.setFilterDimension(dimension, values);
   };
@@ -254,29 +265,50 @@ class LayerSelector extends React.Component {
   }
 }
 
+LayerSelector.propTypes = {
+  // Set by defaults
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  selectedPointType: PropTypes.string,
+  selectedPointCoordinates: PropTypes.array,
+
+  // Set by mapStateToProps
+  filterDimensions: PropTypes.object.isRequired,
+  symbologyDimension: PropTypes.string.isRequired,
+  issueDateFilterDisabled: PropTypes.bool.isRequired,
+  completionDateFilterDisabled: PropTypes.bool.isRequired,
+  sql: PropTypes.string.isRequired,
+
+  // Functions set through Redux connect
+  fetchTotalCount: PropTypes.func.isRequired,
+  fetchSelectedCount: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  setFilterDimension: PropTypes.func.isRequired,
+  setSymbology: PropTypes.func.isRequired,
+};
+
 LayerSelector.defaultProps = {
   totalCount: 0,
   selectedCount: 0,
+  selectedPointType: null,
+  selectedPointCoordinates: [],
 };
 
-LayerSelector.propTypes = {
-  filterDimensions: PropTypes.object.isRequired,
-  totalCount: PropTypes.number,
-  selectedCount: PropTypes.number,
-  symbologyDimension: PropTypes.string.isRequired,
-  issueDateFilterDisabled: PropTypes.bool,
-  completionDateFilterDisabled: PropTypes.bool,
-  selectedPointType: PropTypes.string,
-  selectedPointCoordinates: PropTypes.array,
-};
+const mapStateToProps = ({ housingDevelopment }) => ({
+  filterDimensions: housingDevelopment.filterDimensions,
+  symbologyDimension: housingDevelopment.symbologyDimension,
+  issueDateFilterDisabled: housingDevelopment.issueDateFilterDisabled,
+  completionDateFilterDisabled: housingDevelopment.completionDateFilterDisabled,
+  sql: housingDevelopment.sql,
 
-const mapStateToProps = ({ pipeline }) => ({
-  issueDateFilterDisabled: pipeline.issueDateFilterDisabled,
-  completionDateFilterDisabled: pipeline.completionDateFilterDisabled,
+  totalCount: housingDevelopment.totalCount,
+  selectedCount: housingDevelopment.selectedCount,
 });
 
 export default connect(mapStateToProps, {
-  resetFilter: pipelineActions.resetFilter,
-  setFilterDimension: pipelineActions.setFilterDimension,
-  setSymbology: pipelineActions.setSymbology,
+  fetchTotalCount: housingDevelopmentActions.fetchTotalCount,
+  fetchSelectedCount: housingDevelopmentActions.fetchSelectedCount,
+  resetFilter: housingDevelopmentActions.resetFilter,
+  setFilterDimension: housingDevelopmentActions.setFilterDimension,
+  setSymbology: housingDevelopmentActions.setSymbology,
 })(LayerSelector);

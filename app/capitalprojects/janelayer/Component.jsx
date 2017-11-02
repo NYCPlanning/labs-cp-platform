@@ -18,7 +18,6 @@ class CapitalProjects extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.sql !== nextProps.sql ||
       this.props.polygonsSql !== nextProps.polygonsSql ||
       this.props.pointsSql !== nextProps.pointsSql
     ) {
@@ -86,12 +85,22 @@ class CapitalProjects extends React.Component {
 }
 
 CapitalProjects.propTypes = {
-  onUpdate: PropTypes.func,
+  pointsSql: PropTypes.string.isRequired,
+  polygonsSql: PropTypes.string.isRequired,
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  filterDimensions: PropTypes.number.isRequired,
+
   fetchTotalPointsCount: PropTypes.func.isRequired,
   fetchTotalPolygonsCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
+};
+
+CapitalProjects.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({

@@ -23,6 +23,7 @@ import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import CPListItem from './list-items/CPListItem';
 import SCAListItem from './list-items/SCAListItem';
 import FacilitiesListItem from './list-items/FacilitiesListItem';
+import HousingDevelopmentListItem from './list-items/HousingDevelopmentListItem';
 
 import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
@@ -172,6 +173,8 @@ class CapitalProjectsExplorer extends React.Component {
           return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
         case 'facilities-cp':
           return <FacilitiesListItem feature={feature} key={`fac${feature.id}`} />;
+        case 'housing-development':
+          return <HousingDevelopmentListItem feature={feature} key={`dev${feature.id}`} />;
         default:
           return null;
       }
@@ -217,7 +220,8 @@ class CapitalProjectsExplorer extends React.Component {
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
-            sql={this.props.facilitiesSql}
+            sql={this.props.housingDevelopmentSql}
+            symbologyDimension={this.props.housingDevelopmentSymbology}
             defaultDisabled
           />
 
@@ -326,15 +330,20 @@ CapitalProjectsExplorer.propTypes = {
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
   facilitiesSql: PropTypes.string.isRequired,
-  selectedFeatures: PropTypes.array.isRequired,
+  housingDevelopmentSql: PropTypes.string.isRequired,
+  housingDevelopmentSymbology: PropTypes.string.isRequired,
 
+  selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilitiesCP.sql,
+  housingDevelopmentSql: housingDevelopment.sql,
+  housingDevelopmentSymbology: housingDevelopment.symbologyDimension,
+
   selectedFeatures: capitalProjects.selectedFeatures,
 });
 
