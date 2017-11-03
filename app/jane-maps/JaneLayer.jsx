@@ -118,7 +118,6 @@ class JaneLayer extends React.Component {
         return child;
       }
 
-      // Could probably use layers[0].children[0].type.name on child instead
       switch (child.type.name) {
         case 'MapLayer': // eslint-disable-line
           const mapLayerProps = {

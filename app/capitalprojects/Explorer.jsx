@@ -172,9 +172,9 @@ class CapitalProjectsExplorer extends React.Component {
         case 'sca-points':
           return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
         case 'facilities-cp':
-          return <FacilitiesListItem feature={feature} key={`fac${feature.id}`} />;
+          return <FacilitiesListItem feature={feature} key={`fac${feature.properties.uid}`} />;
         case 'housing-development':
-          return <HousingDevelopmentListItem feature={feature} key={`dev${feature.id}`} />;
+          return <HousingDevelopmentListItem feature={feature} key={`dev${feature.properties.cartodb_id}`} />;
         default:
           return null;
       }
@@ -252,7 +252,7 @@ class CapitalProjectsExplorer extends React.Component {
               paint={SCAOutlinePaint}
             />
 
-            <Legend>
+            <Legend id="sca-legend">
               <div>
                 <div className="legendSection">SCA Capital Plan</div>
                 <div className="legendItem">
@@ -302,7 +302,7 @@ class CapitalProjectsExplorer extends React.Component {
               paint={capitalProjectsPointsOutlinePaint}
             />
 
-            <Legend>
+            <Legend id="capital-projects-legend">
               <div>
                 <div className="legendSection">Capital Projects</div>
                 <div className="legendItem">

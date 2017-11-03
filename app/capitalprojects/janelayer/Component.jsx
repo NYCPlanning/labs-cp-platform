@@ -89,7 +89,7 @@ CapitalProjects.propTypes = {
   polygonsSql: PropTypes.string.isRequired,
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
-  filterDimensions: PropTypes.number.isRequired,
+  filterDimensions: PropTypes.object.isRequired,
 
   fetchTotalPointsCount: PropTypes.func.isRequired,
   fetchTotalPolygonsCount: PropTypes.func.isRequired,

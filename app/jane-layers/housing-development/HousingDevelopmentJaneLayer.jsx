@@ -11,49 +11,45 @@ class HousingDevelopmentJaneLayer extends React.Component {
     const legend = () => {
       if (this.props.symbologyDimension === 'dcp_dev_category') {
         return (
-          <Legend>
-            <div>
-              <div className="legendSection">Housing Development</div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: 'rgba(0, 228, 14, 0.7)' }} />
-                <div className="legendItemText">New Building</div>
-              </div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: 'rgba(81, 99, 230, 0.77)' }} />
-                <div className="legendItemText">Alteration</div>
-              </div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: 'rgba(179, 0, 0, 0.77)' }} />
-                <div className="legendItemText">Demolition</div>
-              </div>
+          <div>
+            <div className="legendSection">Housing Development</div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgba(0, 228, 14, 0.7)' }} />
+              <div className="legendItemText">New Building</div>
             </div>
-          </Legend>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgba(81, 99, 230, 0.77)' }} />
+              <div className="legendItemText">Alteration</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: 'rgba(179, 0, 0, 0.77)' }} />
+              <div className="legendItemText">Demolition</div>
+            </div>
+          </div>
         );
       }
 
       if (this.props.symbologyDimension === 'dcp_status') {
         return (
-          <Legend>
-            <div>
-              <div className="legendSection">Housing Development</div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: '#edf8e9' }} />
-                <div className="legendItemText">Application filed</div>
-              </div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: '#bae4b3' }} />
-                <div className="legendItemText">Permit issued</div>
-              </div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: '#74c476' }} />
-                <div className="legendItemText">Partial complete</div>
-              </div>
-              <div className="legendItem">
-                <div className="colorCircle" style={{ backgroundColor: '#238b45' }} />
-                <div className="legendItemText">Complete</div>
-              </div>
+          <div>
+            <div className="legendSection">Housing Development</div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#edf8e9' }} />
+              <div className="legendItemText">Application filed</div>
             </div>
-          </Legend>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#bae4b3' }} />
+              <div className="legendItemText">Permit issued</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#74c476' }} />
+              <div className="legendItemText">Partial complete</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#238b45' }} />
+              <div className="legendItemText">Complete</div>
+            </div>
+          </div>
         );
       }
 
@@ -144,7 +140,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
           paint={pointsLayerPaint}
         />
 
-        { legend() }
+        <Legend id="housing-development">{ legend() }</Legend>
       </JaneLayer>
     );
   }

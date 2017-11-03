@@ -8,9 +8,11 @@ class Legend extends React.Component {
   static contextTypes = {
     addLegend: PropTypes.func,
     removeLegend: PropTypes.func,
+    updateLegend: PropTypes.func,
   };
 
   static propTypes = {
+    id: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object,
@@ -22,20 +24,23 @@ class Legend extends React.Component {
   };
 
   componentDidMount() {
-    this.legend = this.props.children;
-
-    this.context.addLegend(this.legend);
+    this.context.addLegend(React.cloneElement(this.props.children, {
+      id: this.props.id,
+      key: this.props.id,
+    }));
   }
 
   componentWillReceiveProps(nextProps) {
     if (!_.isEqual(this.props.children, nextProps.children)) {
-      this.context.removeLegend(this.props.children);
-      this.context.addLegend(nextProps.children);
+      this.context.updateLegend(this.props.id, React.cloneElement(nextProps.children, {
+        id: this.props.id,
+        key: this.props.id,
+      }));
     }
   }
 
   componentWillUnmount() {
-    this.context.removeLegend(this.legend);
+    this.context.removeLegend(this.props.id);
   }
 
   render() {
