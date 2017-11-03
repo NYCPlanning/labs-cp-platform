@@ -65,10 +65,6 @@ class PipeLineExplorer extends React.Component {
     };
   }
 
-  clearSelectedFeatures = () => {
-    this.props.setSelectedFeatures([]);
-  };
-
   componentWillReceiveProps(nextProps) {
     if (this.props.sql !== nextProps.sql) {
       this.props.setSelectedFeatures([]);
@@ -89,6 +85,10 @@ class PipeLineExplorer extends React.Component {
         selectedPointCoordinates: [],
       });
     }
+  };
+
+  clearSelectedFeatures = () => {
+    this.props.setSelectedFeatures([]);
   };
 
   clearSelectedFeatures = () => {
@@ -199,11 +199,16 @@ class PipeLineExplorer extends React.Component {
   }
 }
 
+
 PipeLineExplorer.propTypes = {
   sql: PropTypes.string.isRequired,
-  symbologyDimension: PropTypes.string,
+  symbologyDimension: PropTypes.string.isRequired,
   selectedFeatures: PropTypes.array,
   setSelectedFeatures: PropTypes.func.isRequired,
+};
+
+PipeLineExplorer.defaultProps = {
+  selectedFeatures: [],
 };
 
 const mapStateToProps = ({ pipeline }) => ({

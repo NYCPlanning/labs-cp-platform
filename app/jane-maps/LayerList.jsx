@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import IconButton from 'material-ui/IconButton';
 import _ from 'lodash';
 import cx from 'classnames';
+import ListItem from './ListItem';
 
 const style = {
   fontIcon: {
@@ -20,18 +21,13 @@ const style = {
     width: 36,
     height: 36,
     padding: 0,
-  }
+  },
 };
-
-import ListItem from './ListItem';
 
 // This component keeps track of its own state for the order of the layers to implement drag and drop functionality
 // Once an item is dropped, we then pass the new layer order up to Jane to update the main state
 
 class LayerList extends React.Component {
-
-  static displayName = 'LayerList';
-
   constructor(props) {
     super(props);
 
@@ -40,13 +36,13 @@ class LayerList extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ layers: nextProps.layers });
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return !_.isEqual(this.props, nextProps) ||
            !_.isEqual(this.state, nextState);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ layers: nextProps.layers });
   }
 
   handleDrop = () => {

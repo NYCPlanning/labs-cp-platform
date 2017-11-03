@@ -10,9 +10,6 @@ import Marker from './Marker';
 import Search from './Search';
 
 class Jane extends React.Component {
-
-  static displayName = 'Jane';
-
   static childContextTypes = {
     registerLayer: PropTypes.func,
     unregisterLayer: PropTypes.func,
@@ -24,6 +21,7 @@ class Jane extends React.Component {
     onLayerClose: PropTypes.func,
     addLegend: PropTypes.func,
     removeLegend: PropTypes.func,
+    updateLegend: PropTypes.func,
     map: PropTypes.object,
   };
 
@@ -54,6 +52,7 @@ class Jane extends React.Component {
     onLayerClose: this.deselectLayer,
     addLegend: this.addLegend,
     removeLegend: this.removeLegend,
+    updateLegend: this.updateLegend,
     map: this.state.mapLoaded ? this.GLMap.map : null,
   });
 
@@ -86,8 +85,14 @@ class Jane extends React.Component {
   onMapLoad = () =>
     this.setState({ mapLoaded: true });
 
-  removeLegend = legend =>
-    this.setState({ legend: this.state.legend.filter(item => item !== legend) });
+  removeLegend = (id) => {
+    this.setState({ legend: this.state.legend.filter(l => l.props.id !== id) });
+  }
+
+  updateLegend = (id, legend) => {
+    const legendFiltered = this.state.legend.filter(l => l.props.id !== id);
+    this.setState({ legend: legendFiltered.concat(legend) });
+  }
 
   addLegend = legend =>
     this.setState({ legend: this.state.legend.concat(legend) });
@@ -168,7 +173,6 @@ class Jane extends React.Component {
       coordinates: feature.geometry.coordinates,
     });
   };
-
 
   deselectLayer = () =>
     this.setState({ selectedLayer: null });

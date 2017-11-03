@@ -7,6 +7,7 @@ import modal from './reducers/modal';
 import facilities from './reducers/facilities';
 import facilitiesCP from './reducers/facilitiesCP';
 import pipeline from './reducers/pipeline';
+import housingDevelopment from './reducers/housingDevelopment';
 import capitalProjects from './reducers/capitalProjects';
 import capitalProjectsTable from './reducers/capitalProjectsTable';
 
@@ -29,6 +30,7 @@ const store = createStore(
     facilities,
     facilitiesCP,
     pipeline,
+    housingDevelopment,
     capitalProjects,
     capitalProjectsTable,
   }),

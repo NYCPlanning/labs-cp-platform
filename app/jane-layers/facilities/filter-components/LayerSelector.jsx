@@ -281,6 +281,7 @@ LayerSelector.defaultProps = {
   filterDimensions: {},
   totalCount: 0,
   selectedCount: 0,
+  selectedPointType: null,
   selectedPointCoordinates: [],
 };
 
@@ -294,6 +295,8 @@ LayerSelector.propTypes = {
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
+  setFilterDimension: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ facilitiesCP }) => ({

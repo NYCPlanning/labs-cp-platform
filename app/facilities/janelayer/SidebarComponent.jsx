@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
 import * as content from '../content';
-import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 
 class SidebarComponent extends React.Component {
@@ -46,7 +45,6 @@ class SidebarComponent extends React.Component {
                 filePrefix="facilities"
                 onDownload={this.handleDownload}
               />
-              <SignupPrompt />
             </div>
           </div>
         </Tab>
@@ -54,7 +52,6 @@ class SidebarComponent extends React.Component {
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
               {content.about}
-              <SignupPrompt />
             </div>
           </div>
         </Tab>
