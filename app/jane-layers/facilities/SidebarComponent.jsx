@@ -3,7 +3,6 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import LayerSelector from '../LayerSelector';
 import Download from '../../common/Download';
 import ga from '../../helpers/ga';
 import LayerSelector from './filter-components/LayerSelector';

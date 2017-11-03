@@ -16,12 +16,14 @@ import {
   InclusionaryHousingJaneLayer,
   FacilitiesJaneLayer,
   HighlightJaneLayer,
+  HousingDevelopmentJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
 import CPListItem from './list-items/CPListItem';
 import SCAListItem from './list-items/SCAListItem';
 import FacilitiesListItem from './list-items/FacilitiesListItem';
+import HousingDevelopmentListItem from './list-items/HousingDevelopmentListItem';
 
 import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
@@ -170,7 +172,9 @@ class CapitalProjectsExplorer extends React.Component {
         case 'sca-points':
           return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
         case 'facilities-cp':
-          return <FacilitiesListItem feature={feature} key={`fac${feature.id}`} />;
+          return <FacilitiesListItem feature={feature} key={`fac${feature.properties.uid}`} />;
+        case 'housing-development':
+          return <HousingDevelopmentListItem feature={feature} key={`dev${feature.properties.cartodb_id}`} />;
         default:
           return null;
       }
@@ -203,11 +207,21 @@ class CapitalProjectsExplorer extends React.Component {
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
           <InclusionaryHousingJaneLayer defaultDisabled />
+
           <FacilitiesJaneLayer
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.facilitiesSql}
+            defaultDisabled
+          />
+
+          <HousingDevelopmentJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            sql={this.props.housingDevelopmentSql}
+            symbologyDimension={this.props.housingDevelopmentSymbology}
             defaultDisabled
           />
 
@@ -238,7 +252,7 @@ class CapitalProjectsExplorer extends React.Component {
               paint={SCAOutlinePaint}
             />
 
-            <Legend>
+            <Legend id="sca-legend">
               <div>
                 <div className="legendSection">SCA Capital Plan</div>
                 <div className="legendItem">
@@ -288,7 +302,7 @@ class CapitalProjectsExplorer extends React.Component {
               paint={capitalProjectsPointsOutlinePaint}
             />
 
-            <Legend>
+            <Legend id="capital-projects-legend">
               <div>
                 <div className="legendSection">Capital Projects</div>
                 <div className="legendItem">
@@ -316,15 +330,20 @@ CapitalProjectsExplorer.propTypes = {
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
   facilitiesSql: PropTypes.string.isRequired,
-  selectedFeatures: PropTypes.array.isRequired,
+  housingDevelopmentSql: PropTypes.string.isRequired,
+  housingDevelopmentSymbology: PropTypes.string.isRequired,
 
+  selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilitiesCP.sql,
+  housingDevelopmentSql: housingDevelopment.sql,
+  housingDevelopmentSymbology: housingDevelopment.symbologyDimension,
+
   selectedFeatures: capitalProjects.selectedFeatures,
 });
 

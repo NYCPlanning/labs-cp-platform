@@ -21,9 +21,6 @@ function shouldRenderSuggestions(value) {
 }
 
 class Search extends React.Component {
-
-  static displayName = 'Search';
-
   constructor(props) {
     super(props);
 
@@ -100,7 +97,7 @@ class Search extends React.Component {
         <Toolbar
           className="mui-toolbar"
           noGutter
-          style={{ /* Must be defined here to override material-ui inline styles*/
+          style={{ // Must be defined here to override material-ui inline styles
             backgroundColor: '#fff',
             height: '48px',
             boxShadow: '0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02)',

@@ -55,7 +55,7 @@ class FacilitiesJaneLayer extends React.Component {
           onClick={this.props.handleMapLayerClick}
         />
 
-        <Legend>
+        <Legend id="facilities-cp-legend">
           <div>
             <div className="legendSection">Facilities and Program Sites</div>
             <div className="legendItem">

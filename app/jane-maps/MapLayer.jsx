@@ -5,9 +5,6 @@ import _ from 'lodash';
 const LAYER_TYPES = ['fill', 'line', 'symbol', 'circle', 'fill-extrusion', 'raster', 'background'];
 
 class MapLayer extends React.Component {
-
-  static displayName = 'MapLayer';
-
   componentWillMount() {
     if (!this.props.janeLayerId) {
       console.error(`<MapLayer /> has to be a direct child of <JaneLayer />. Check layer with id ${this.props.id}`); // eslint-disable-line

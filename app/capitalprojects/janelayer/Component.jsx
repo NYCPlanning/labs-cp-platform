@@ -6,7 +6,6 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import Filter from '../Filter';
 import Download from '../Download';
 import * as content from '../content';
-import SignupPrompt from '../../common/SignupPrompt';
 import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
 
@@ -19,7 +18,6 @@ class CapitalProjects extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.sql !== nextProps.sql ||
       this.props.polygonsSql !== nextProps.polygonsSql ||
       this.props.pointsSql !== nextProps.pointsSql
     ) {
@@ -71,7 +69,6 @@ class CapitalProjects extends React.Component {
                 polygonsPrefix="projects-polygons"
                 onDownload={this.handleDownload}
               />
-              <SignupPrompt />
             </div>
           </div>
         </Tab>
@@ -88,12 +85,22 @@ class CapitalProjects extends React.Component {
 }
 
 CapitalProjects.propTypes = {
-  onUpdate: PropTypes.func,
+  pointsSql: PropTypes.string.isRequired,
+  polygonsSql: PropTypes.string.isRequired,
+  totalCount: PropTypes.number,
+  selectedCount: PropTypes.number,
+  filterDimensions: PropTypes.object.isRequired,
+
   fetchTotalPointsCount: PropTypes.func.isRequired,
   fetchTotalPolygonsCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
+};
+
+CapitalProjects.defaultProps = {
+  totalCount: 0,
+  selectedCount: 0,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({

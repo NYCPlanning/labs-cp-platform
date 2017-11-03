@@ -16,7 +16,6 @@ import { agencies } from './config';
 import * as capitalProjectsTableActions from '../actions/capitalProjectsTable';
 import SortHeaderCell from './SortHeaderCell';
 import DownloadTable from '../common/DownloadTable';
-import SignupPrompt from '../common/SignupPrompt';
 import ga from '../helpers/ga';
 
 import './Table.scss';
@@ -143,7 +142,6 @@ class CPTable extends React.Component { // eslint-disable-line
                   commitmentsFilePrefix="commitments"
                   onDownload={this.handleDownload}
                 />
-                <SignupPrompt />
               </div>
             </Tab>
             <Tab label="About">
