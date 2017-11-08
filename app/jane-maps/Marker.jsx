@@ -4,6 +4,9 @@ import _ from 'lodash';
 import mapboxgl from 'mapbox-gl';
 
 class Marker extends React.Component {
+
+  static displayName = 'Marker';
+
   componentDidMount() {
     const el = document.createElement('div');
     el.className = 'marker';

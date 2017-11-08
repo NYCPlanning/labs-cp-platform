@@ -4,6 +4,9 @@ import _ from 'lodash';
 import mapboxgl from 'mapbox-gl';
 
 class GLMap extends React.Component {
+
+  static displayName = 'GLMap';
+
   componentDidMount() {
     this.initializeMap();
   }

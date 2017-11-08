@@ -37,6 +37,8 @@ const AuthSuccess = () => (
 );
 
 const ensureAccess = permission => WrappedComponent => class EnsureAccess extends React.Component {
+  static displayName = `ensureAccess${WrappedComponent.name}`;
+
   componentWillMount() {
     const { profile, isLoggedIn } = store.getState().currentUser;
 

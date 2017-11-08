@@ -10,6 +10,9 @@ import Marker from './Marker';
 import Search from './Search';
 
 class Jane extends React.Component {
+
+  static displayName = 'Jane';
+
   static childContextTypes = {
     registerLayer: PropTypes.func,
     unregisterLayer: PropTypes.func,
