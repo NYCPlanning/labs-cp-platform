@@ -1,6 +1,7 @@
 import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, unionSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
+import db_tables from '../db_tables';
 
 export const fetchDetails = capitalProjectId =>
   cartoActions.getFeature({
@@ -12,7 +13,7 @@ export const fetchDetails = capitalProjectId =>
 export const fetchBudgets = capitalProjectId => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT * FROM cpdb_budgets_171026 WHERE maprojid = '${capitalProjectId}'`,
+    sql: `SELECT * FROM ${db_tables.cpdb.budgets} WHERE maprojid = '${capitalProjectId}'`,
     requestFormat: 'json',
     nextType: AT.FETCH_CAPITAL_PROJECT_BUDGETS,
   },
@@ -21,7 +22,7 @@ export const fetchBudgets = capitalProjectId => ({
 export const fetchCommitments = capitalProjectId => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT * FROM cpdb_commitments_171026 WHERE maprojid = '${capitalProjectId}' ORDER BY to_date(plancommdate,'MM/YY')`,
+    sql: `SELECT * FROM ${db_tables.cpdb.commitments} WHERE maprojid = '${capitalProjectId}' ORDER BY to_date(plancommdate,'MM/YY')`,
     requestFormat: 'json',
     nextType: AT.FETCH_CAPITAL_PROJECT_COMMITMENTS,
   },
