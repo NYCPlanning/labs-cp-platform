@@ -8,6 +8,11 @@ const db_tables = {
     points: 'cpdb_dcpattributes_pts_18adoptedv1',
     polygons: 'cpdb_dcpattributes_poly_18adoptedv1',
   },
+  facdb: {
+    datasources: 'facdb_datasources_170522',
+    facilities: 'facdb_170522',
+  },
+  housingdevdb: 'housingdevdb_170906',
 };
 
 export default db_tables;
