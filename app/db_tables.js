@@ -10,7 +10,7 @@ const db_tables = {
   },
   cb_budget_requests: {
     submissions: 'cbbr_submissions_fy18v0',
-    points: 'cbbr_submissions_fy18v0',
+    points: 'cbbr_submissions_pts_fy18v0',
     polygons: 'cbbr_submissions_poly_fy18v0',
   },
   facdb: {

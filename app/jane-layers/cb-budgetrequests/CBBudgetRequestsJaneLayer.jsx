@@ -33,15 +33,16 @@ class CBBudgetRequestsJaneLayer extends React.Component {
         <MapLayer
           id="cb-budgetrequests-polygons"
           source="cb-budgetrequests"
-          sourceLayer="layer0"
+          sourceLayer="layer1"
           type="fill"
           onClick={this.props.handleMapLayerClick}
           paint={{
             'fill-color': {
-              property: 'totalspend',
+              property: 'budgetcate',
+              type: 'categorical',
               stops: [
-                [0, '#8B8C98'],
-                [1, '#d98127'],
+                ['Expense', '#a6cee3'],
+                ['Capital', '#b2df8a'],
               ],
             },
             'fill-opacity': 0.75,
@@ -62,7 +63,31 @@ class CBBudgetRequestsJaneLayer extends React.Component {
                 [15, 6],
               ],
             },
-            'circle-color': '#5C99FF',
+            'circle-color': {
+              property: 'budgetcate',
+              type: 'categorical',
+              stops: [
+                ['Expense', '#a6cee3'],
+                ['Capital', '#b2df8a'],
+              ],
+            },
+            'circle-opacity': 0.7,
+          }}
+        />
+
+        <MapLayer
+          id="cb-budgetrequests-outline"
+          source="cb-budgetrequests"
+          sourceLayer="layer0"
+          type="circle"
+          paint={{
+            'circle-radius': {
+              stops: [
+                [10, 3],
+                [15, 7],
+              ],
+            },
+            'circle-color': '#012700',
             'circle-opacity': 0.7,
           }}
         />
@@ -71,8 +96,12 @@ class CBBudgetRequestsJaneLayer extends React.Component {
           <div>
             <div className="legendSection">CB Budget Requests</div>
             <div className="legendItem">
-              <div className="colorCircle" style={{ backgroundColor: '#198409' }} />
-              <div className="legendItemText">Request</div>
+              <div className="colorCircle" style={{ backgroundColor: '#b2df8a' }} />
+              <div className="legendItemText">Capital Request</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#a6cee3' }} />
+              <div className="legendItemText">Expense Request</div>
             </div>
           </div>
         </Legend>
