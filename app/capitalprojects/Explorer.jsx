@@ -17,6 +17,7 @@ import {
   FacilitiesJaneLayer,
   HighlightJaneLayer,
   HousingDevelopmentJaneLayer,
+  CBBudgetRequestsJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -180,12 +181,6 @@ class CapitalProjectsExplorer extends React.Component {
       }
     });
 
-    const capitalProjectsSourceOptions = {
-      carto_user: appConfig.carto_user,
-      carto_domain: appConfig.carto_domain,
-      sql: [this.props.pointsSql, this.props.polygonsSql],
-    };
-
     return (
       <div className="full-screen cp-explorer">
         <Jane
@@ -207,6 +202,15 @@ class CapitalProjectsExplorer extends React.Component {
           <AdminBoundariesJaneLayer defaultDisabled />
           <ZoningJaneLayer defaultDisabled />
           <InclusionaryHousingJaneLayer defaultDisabled />
+
+          <CBBudgetRequestsJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            pointsSql={this.props.cbBudgetRequestsPointsSql}
+            polygonsSql={this.props.cbBudgetRequestsPolygonSql}
+            defaultDisabled
+          />
 
           <FacilitiesJaneLayer
             selectedPointType={this.state.selectedPointType}
@@ -274,7 +278,11 @@ class CapitalProjectsExplorer extends React.Component {
             defaultSelected
           >
 
-            <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions} />
+            <Source id="capital-projects" type="cartovector" options={{
+              carto_user: appConfig.carto_user,
+              carto_domain: appConfig.carto_domain,
+              sql: [this.props.pointsSql, this.props.polygonsSql],
+            }} />
 
             <MapLayer
               id="capital-projects-polygons"
@@ -332,17 +340,21 @@ CapitalProjectsExplorer.propTypes = {
   facilitiesSql: PropTypes.string.isRequired,
   housingDevelopmentSql: PropTypes.string.isRequired,
   housingDevelopmentSymbology: PropTypes.string.isRequired,
+  cbBudgetRequestsPointsSql: PropTypes.string.isRequired,
+  cbBudgetRequestsPolygonSql: PropTypes.string.isRequired,
 
   selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilitiesCP.sql,
   housingDevelopmentSql: housingDevelopment.sql,
   housingDevelopmentSymbology: housingDevelopment.symbologyDimension,
+  cbBudgetRequestsPointsSql: cbBudgetRequests.pointsSql,
+  cbBudgetRequestsPolygonSql: cbBudgetRequests.polygonsSql,
 
   selectedFeatures: capitalProjects.selectedFeatures,
 });

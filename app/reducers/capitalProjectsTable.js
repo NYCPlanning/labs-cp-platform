@@ -28,7 +28,7 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
     case AT.FETCH_CAPITAL_PROJECTS_TABLE_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });
 
-    case AT.RESET_CAPITAL_PROJECTS_TABLE_FILTES:
+    case AT.RESET_CAPITAL_PROJECTS_TABLE_FILTER:
       return Object.assign({}, state, {
         filterDimensions: getDefaultFilters(),
         sql: getTableSql(getDefaultFilters()),
