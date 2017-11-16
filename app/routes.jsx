@@ -19,6 +19,8 @@ import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
 import CapitalProjectsTable from '../app/capitalprojects/Table';
 import ProjectPage from '../app/capitalprojects/DetailPage';
 
+import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBBudgetRequestsDetailPage';
+
 import FeedbackPage from '../app/pages/FeedbackPage';
 
 import NotFound from '../app/pages/NotFound';
@@ -100,6 +102,8 @@ export default (
     <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
+
+    <Route path="budgetrequest/:id" component={ensureSitewideAccess(CBBudgetRequestsDetailPage)} title={'Budget Request Detail'} about={'/about/capitalprojects'} />
 
     <Route path="feedback/:type" component={ensureSitewideAccess(FeedbackPage)} title={'User Feedback'} />
 

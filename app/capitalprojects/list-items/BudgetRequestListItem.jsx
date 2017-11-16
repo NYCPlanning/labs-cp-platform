@@ -10,8 +10,8 @@ const Item = (props) => {
   return (
     <Link
       to={{
-        pathname: `/budgetrequest/${d.maprojid}`,
-        state: { modal: true, returnTo: '/capitalprojects' },
+        pathname: `/budgetrequest/${d.regid}`,
+        state: { modal: true, returnTo: '/capitalprojects/explorer' },
       }}
     >
       <div
@@ -21,8 +21,8 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.need}</div>
-        <div className={'subtitle'}>Agency: {d.agency}</div>
-        <div className={'subtitle'}>CB: {d.name}</div>
+        <div className={'subtitle'}><strong>{d.name}</strong></div>
+        <div className={'subtitle'}>{d.agency}</div>
 
         <i className="fa fa-chevron-right" />
       </div>

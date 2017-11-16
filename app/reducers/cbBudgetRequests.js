@@ -6,10 +6,14 @@ const initialState = {
   sql: getSql({}),
   pointsSql: getPointsSql({}),
   polygonsSql: getPolygonsSql({}),
+  cbDetails: null,
 };
 
 const cbBudgetRequestsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case AT.FETCH_CB_BUDGET_REQUEST_DETAILS.SUCCESS:
+      return Object.assign({}, state, { cbDetails: action.payload.features[0] });
+
     // case AT.SET_CAPITAL_PROJECTS_FILTER_DIMENSION:
     //   const { filterDimension, values } = action.payload;
     //   const dimension = state.filterDimensions[filterDimension];
