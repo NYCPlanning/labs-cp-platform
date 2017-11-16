@@ -7,12 +7,12 @@ export const about = (
       The Housing Developments Database aims to help New York City planners understand changes resulting from building activity, across both time and space. It is currently comprised of data from the Department of Buildings (DOB) and provides the most comprehensive picture of planned residential development taking place across the five boroughs.
     </p>
     <p>
-      Please consult <a href="http://docs.capitalplanning.nyc/pipeline/" target="_blank" rel="noreferrer noopener">NYC Planning’s documentation for this dataset</a> for the data dictionary and additional information about the data sources.
+      Please consult <a href="https://github.com/NYCPlanning/db-housingdev/blob/master/README.md" target="_blank" rel="noreferrer noopener">NYC Planning’s documentation for this dataset</a> for the data dictionary and additional information about the data sources.
     </p>
 
     <h4>Limitations & Disclaimers</h4>
     <p>
-      There are a number of known limitations to the database and improvements will be made on a continual basis, based on internal reviews and user feedback. Users are cautioned to review the current <a href="https://github.com/NYCPlanning/db-housingdev#caveats-and-limitations">caveats and limitations</a> before doing data aggregation analyses.
+      There are a number of known limitations to the database and improvements will be made on a continual basis, based on internal reviews and user feedback. Users are cautioned to review the current <a href="https://github.com/NYCPlanning/db-housingdev#caveats-and-limitations" target="_blank" rel="noreferrer noopener">caveats and limitations</a> before doing data aggregation analyses.
     </p>
 
     <h4>Feedback</h4>
