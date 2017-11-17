@@ -18,7 +18,7 @@ class CBBudgetRequestsDetailPage extends React.Component {
   renderContent = (data) => {
     const d = data.properties;
     const inTopTen = () => parseInt(d.priority) <= 10;
-    const budgetCategoryColor = d.budgetcate === 'Capital' ? '#b2df8a' : '#a6cee3';
+    const budgetCategoryColor = d.budgetcategory === 'Capital' ? '#b2df8a' : '#a6cee3';
 
     return (
       <div className="cb-budget-request-page detail-page">
@@ -38,7 +38,7 @@ class CBBudgetRequestsDetailPage extends React.Component {
             <div className="col-md-9 col-md-pull-3">
               <h1>{d.need}</h1>
               <h2 style={{ marginBottom: '5px' }}><small>{d.sitename} {d.addressnum} {d.streename}</small></h2>
-                <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcate}</span>
+                <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
                 { inTopTen() &&
                   <span className={'badge'} style={{ backgroundColor: 'grey' }}>Top Ten Request</span> }
             </div>
@@ -54,7 +54,7 @@ class CBBudgetRequestsDetailPage extends React.Component {
                 </div>
                 <div className="panel-body">
                   <h4 style={{ marginBottom: '5px' }}>{d.request}</h4>
-                  {d.descriptio}
+                  {d.description}
                 </div>
               </div>
             </div>
@@ -67,17 +67,17 @@ class CBBudgetRequestsDetailPage extends React.Component {
                   <div className="panel-body">Priority: <strong>{d.priority}</strong></div>
                 </div> }
 
-              { d.firstyrsub &&
+              { d.firstyrsubmitted &&
                 <div className="panel panel-default">
-                  <div className="panel-body">First Submitted: <strong>{d.firstyrsub}</strong></div>
+                  <div className="panel-body">First Submitted: <strong>{d.firstyrsubmitted}</strong></div>
                 </div> }
 
-              { (d.supporters || d.support_01) &&
+              { (d.supporters1 || d.supporters2) &&
                 <div className="panel panel-default">
                   <div className="panel-heading">Supporters</div>
                   <div className="panel-body">
-                    <div>{d.supporters}</div>
-                    <div>{d.support_01}</div>
+                    <div>{d.supporters1}</div>
+                    <div>{d.supporters2}</div>
                   </div>
                 </div> }
 

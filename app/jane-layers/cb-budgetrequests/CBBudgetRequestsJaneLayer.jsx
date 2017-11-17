@@ -38,7 +38,7 @@ class CBBudgetRequestsJaneLayer extends React.Component {
           onClick={this.props.handleMapLayerClick}
           paint={{
             'fill-color': {
-              property: 'budgetcate',
+              property: 'budgetcategory',
               type: 'categorical',
               stops: [
                 ['Expense', '#a6cee3'],
@@ -64,7 +64,7 @@ class CBBudgetRequestsJaneLayer extends React.Component {
               ],
             },
             'circle-color': {
-              property: 'budgetcate',
+              property: 'budgetcategory',
               type: 'categorical',
               stops: [
                 ['Expense', '#a6cee3'],

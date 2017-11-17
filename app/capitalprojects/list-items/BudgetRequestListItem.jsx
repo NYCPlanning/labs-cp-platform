@@ -17,7 +17,7 @@ const Item = (props) => {
       <div
         className={'budget-request-list-item'}
         style={{
-          borderLeft: `5px solid ${d.budgetcate === 'Expense' ? '#a6cee3' : '#b2df8a'}`,
+          borderLeft: `5px solid ${d.budgetcategory === 'Expense' ? '#a6cee3' : '#b2df8a'}`,
         }}
       >
         <div className={'title'}>{d.need}</div>

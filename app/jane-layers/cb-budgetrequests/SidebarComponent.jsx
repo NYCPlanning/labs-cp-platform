@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Download from '../../common/Download';
 import ga from '../../helpers/ga';
+import BudgetRequestFilter from './filter/BudgetRequestFilter';
 
 class SidebarComponent extends React.Component {
   handleDownload = (label) => {
@@ -26,7 +27,10 @@ class SidebarComponent extends React.Component {
         }}
       >
         <Tab label="Filters">
-          Filters
+          <BudgetRequestFilter
+            selectedPointType={this.props.selectedPointType}
+            selectedPointCoordinates={this.props.selectedPointCoordinates}
+        />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">

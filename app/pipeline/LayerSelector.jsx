@@ -257,6 +257,10 @@ class LayerSelector extends React.Component {
 LayerSelector.defaultProps = {
   totalCount: 0,
   selectedCount: 0,
+  selectedPointType: null,
+  selectedPointCoordinates: [],
+  issueDateFilterDisabled: true,
+  completionDateFilterDisabled: true,
 };
 
 LayerSelector.propTypes = {
@@ -268,6 +272,10 @@ LayerSelector.propTypes = {
   completionDateFilterDisabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
+
+  setFilterDimension: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  setSymbology: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ pipeline }) => ({
