@@ -2,6 +2,7 @@ import * as AT from '../constants/actionTypes';
 import { getSql, getPointsSql, getPolygonsSql } from '../helpers/sqlbuilder/CBBudgetRequestsSqlBuilder';
 
 import agency_labels from './BudgetRequests/agency_labels';
+import commdist_labels from '../helpers/labels/community_districts';
 
 const initialState = {
   filterDimensions: {
@@ -9,6 +10,16 @@ const initialState = {
       type: 'multiSelect',
       disabled: true,
       values: agency_labels,
+    },
+    commdist: {
+      type: 'multiSelect',
+      disabled: true,
+      values: commdist_labels,
+    },
+    top10: {
+      type: 'top10',
+      disabled: true,
+      values: false,
     },
   },
   sql: getSql({}),
@@ -22,7 +33,7 @@ const cbBudgetRequestsReducer = (state = initialState, action) => {
     case AT.FETCH_CB_BUDGET_REQUEST_DETAILS.SUCCESS:
       return Object.assign({}, state, { cbDetails: action.payload.features[0] });
 
-    case AT.SET_CAPITAL_PROJECTS_FILTER_DIMENSION:
+    case AT.SET_CB_BUDGET_REQUESTS_FILTER_DIMENSION:
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
@@ -30,8 +41,13 @@ const cbBudgetRequestsReducer = (state = initialState, action) => {
         dimension.disabled = !values.coordinates.length;
       }
 
+      if (filterDimension === 'top10') {
+        dimension.disabled = !values;
+      }
+
       const shouldChangeDisabledValue = [
         'agencyacro',
+        'commdist',
       ];
 
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)

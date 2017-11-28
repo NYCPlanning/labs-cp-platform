@@ -31,7 +31,7 @@ class CBBudgetRequestsDetailPage extends React.Component {
               <BackButton
                 location={this.props.location}
                 defaultText="Map"
-                defaultLink="/capitalprojects"
+                defaultLink="/capitalprojects/explorer"
               />
             </div>
 
@@ -64,7 +64,10 @@ class CBBudgetRequestsDetailPage extends React.Component {
             <div className={'col-md-6'}>
               { d.priority &&
                 <div className="panel panel-default">
-                  <div className="panel-body">Priority: <strong>{d.priority}</strong></div>
+                  <div className="panel-heading">
+                    Priority
+                  </div>
+                  <div className="panel-body"><strong>{d.priority} of {d.denominator}</strong> total requests <br />(mapped and unmapped)</div>
                 </div> }
 
               { d.firstyrsubmitted &&

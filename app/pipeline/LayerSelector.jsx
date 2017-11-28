@@ -5,7 +5,7 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../common/CountWidget';
-import Checkboxes from './Checkboxes';
+import Checkboxes from '../common/Checkboxes';
 import * as pipelineActions from '../actions/pipeline';
 
 import RangeSlider from '../common/RangeSlider';

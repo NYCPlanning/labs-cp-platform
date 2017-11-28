@@ -15,6 +15,11 @@ export const setFilterDimension = (filterDimension, values) => ({
   payload: { filterDimension, values },
 });
 
+export const setFilters = filterDimensions => ({
+  type: AT.SET_CB_BUDGET_REQUESTS_FILTERS,
+  payload: { filterDimensions },
+});
+
 export const resetFilter = () => ({
   type: AT.RESET_CB_BUDGET_REQUESTS_FILTER,
 });

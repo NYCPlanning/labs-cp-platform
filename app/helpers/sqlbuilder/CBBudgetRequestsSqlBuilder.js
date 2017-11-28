@@ -10,22 +10,13 @@ export const sqlConfig = {
 };
 
 class CBBudgetRequestsSqlBuilder extends SqlBuilder {
-  // chunker for sagency
-  sagencyMultiSelect(dimension, filters) {
-    const values = filters[dimension].values;
+  top10(dimension, filters) {
+    const checked = filters[dimension].values;
 
-    const checkedValues = values.filter(value => value.checked === true);
-    const subChunks = checkedValues.map(value => `array_to_string(sagencyacro, ', ') = '${value.value}'`);
-
-    if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
-      const chunk = `(${subChunks.join(' OR ')})`;
-
-      return chunk;
+    if (checked === true) {
+      return 'priority <= 10';
     }
-
-    return 'FALSE'; // if no options are checked, make the resulting SQL return no rows
   }
-
 }
 
 Object.assign(CBBudgetRequestsSqlBuilder, SqlBuilder);
