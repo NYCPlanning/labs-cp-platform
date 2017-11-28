@@ -4,34 +4,54 @@ import { getSql, getPointsSql, getPolygonsSql } from '../helpers/sqlbuilder/CBBu
 import agency_labels from './BudgetRequests/agency_labels';
 import commdist_labels from '../helpers/labels/community_districts';
 
-const initialState = {
-  filterDimensions: {
-    agencyacro: {
-      type: 'multiSelect',
-      disabled: true,
-      values: agency_labels,
+const initialState = () => {
+  return Object.assign({}, {
+    filterDimensions: {
+      agencyacro: {
+        type: 'multiSelect',
+        disabled: true,
+        values: agency_labels,
+      },
+      commdist: {
+        type: 'multiSelect',
+        disabled: true,
+        values: commdist_labels,
+      },
+      top10: {
+        type: 'top10',
+        disabled: true,
+        values: false,
+      },
     },
-    commdist: {
-      type: 'multiSelect',
-      disabled: true,
-      values: commdist_labels,
-    },
-    top10: {
-      type: 'top10',
-      disabled: true,
-      values: false,
-    },
-  },
-  sql: getSql({}),
-  pointsSql: getPointsSql({}),
-  polygonsSql: getPolygonsSql({}),
-  cbDetails: null,
+    sql: getSql({}),
+    pointsSql: getPointsSql({}),
+    polygonsSql: getPolygonsSql({}),
+    cbDetails: null,
+    totalCount: 0,
+    selectedCount: 0,
+  });
 };
 
-const cbBudgetRequestsReducer = (state = initialState, action) => {
+const cbBudgetRequestsReducer = (state = initialState(), action) => {
   switch (action.type) {
     case AT.FETCH_CB_BUDGET_REQUEST_DETAILS.SUCCESS:
       return Object.assign({}, state, { cbDetails: action.payload.features[0] });
+
+    case AT.FETCH_CB_BUDGET_REQUESTS_TOTAL_COUNT.SUCCESS:
+      return Object.assign({}, state, { totalCount: action.payload[0].count });
+
+    case AT.FETCH_CB_BUDGET_REQUESTS_SELECTED_COUNT.SUCCESS:
+      return Object.assign({}, state, { selectedCount: action.payload[0].count });
+
+    case AT.RESET_CB_BUDGET_REQUESTS_FILTER:
+      console.log(initialState());
+
+      return Object.assign({}, state, {
+        filterDimensions: initialState().filterDimensions,
+        sql: getSql({}),
+        pointsSql: getPointsSql({}),
+        polygonsSql: getPolygonsSql({}),
+      });
 
     case AT.SET_CB_BUDGET_REQUESTS_FILTER_DIMENSION:
       const { filterDimension, values } = action.payload;

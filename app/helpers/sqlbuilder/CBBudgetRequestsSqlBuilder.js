@@ -29,9 +29,9 @@ export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);
 export const getPointsSql = filterDimensions => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
 export const getPolygonsSql = filterDimensions => getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
 
-export const unionSql = () => {
-  const pointsSql = getSql({}).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
-  const polygonsSql = getSql({}).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
+export const unionSql = (filterDimensions = {}) => {
+  const pointsSql = getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.pointsTablename);
+  const polygonsSql = getSql(filterDimensions).replace(sqlConfig.tableName, sqlConfig.polygonsTablename);
 
   return `
     (${pointsSql}

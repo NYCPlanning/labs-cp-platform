@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { connect } from 'react-redux';
 
-import Download from '../../common/Download';
+import Download from '../../common/DownloadPolyPoint';
 import ga from '../../helpers/ga';
 import BudgetRequestFilter from './filter/BudgetRequestFilter';
 
@@ -27,17 +27,16 @@ class SidebarComponent extends React.Component {
         }}
       >
         <Tab label="Filters">
-          <BudgetRequestFilter
-            selectedPointType={this.props.selectedPointType}
-            selectedPointCoordinates={this.props.selectedPointCoordinates}
-        />
+          <BudgetRequestFilter />
         </Tab>
         <Tab label="Download">
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
               <Download
-                sql="SELECT * FROM cb_budgetrequests_20171108"
-                filePrefix="cb-budgetrequests"
+                pointsSql={this.props.pointsSql}
+                polygonsSql={this.props.polygonsSql}
+                pointsPrefix="budget-request-points"
+                polygonsPrefix="budget-request-polygons"
                 onDownload={this.handleDownload}
               />
             </div>
@@ -60,4 +59,14 @@ class SidebarComponent extends React.Component {
   }
 }
 
-export default SidebarComponent;
+SidebarComponent.propTypes = {
+  pointsSql: PropTypes.string.isRequired,
+  polygonsSql: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = ({ cbBudgetRequests }) => ({
+  pointsSql: cbBudgetRequests.pointsSql,
+  polygonsSql: cbBudgetRequests.polygonsSql,
+});
+
+export default connect(mapStateToProps)(SidebarComponent);
