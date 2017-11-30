@@ -10,12 +10,12 @@ const initialState = () => {
       agencyacro: {
         type: 'multiSelect',
         disabled: true,
-        values: agency_labels,
+        values: JSON.parse(JSON.stringify(agency_labels)),
       },
       commdist: {
         type: 'multiSelect',
         disabled: true,
-        values: commdist_labels,
+        values: JSON.parse(JSON.stringify(commdist_labels)),
       },
       top10: {
         type: 'top10',
@@ -44,8 +44,6 @@ const cbBudgetRequestsReducer = (state = initialState(), action) => {
       return Object.assign({}, state, { selectedCount: action.payload[0].count });
 
     case AT.RESET_CB_BUDGET_REQUESTS_FILTER:
-      console.log(initialState());
-
       return Object.assign({}, state, {
         filterDimensions: initialState().filterDimensions,
         sql: getSql({}),
