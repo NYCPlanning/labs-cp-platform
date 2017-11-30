@@ -90,7 +90,7 @@ class CBBudgetRequestsDetailPage extends React.Component {
               <div className="panel panel-default">
                 <div className="panel-heading">Community Board</div>
                 <div className="panel-body">
-                  {<h4>{d.borough} {d.commdist}</h4>}
+                  {<h4>{d.borough} {d.commdist.substr(1)}</h4>}
                 </div>
               </div>
 
