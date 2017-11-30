@@ -45,8 +45,9 @@ class CBBudgetRequestsJaneLayer extends React.Component {
                 ['Capital', '#b2df8a'],
               ],
             },
-            'fill-opacity': 0.75,
+            'fill-opacity': 0.7,
             'fill-antialias': true,
+            'fill-outline-color': '#012700',
           }}
         />
 
@@ -63,14 +64,34 @@ class CBBudgetRequestsJaneLayer extends React.Component {
                 [15, 6],
               ],
             },
-            'circle-color': {
-              property: 'budgetcategory',
-              type: 'categorical',
-              stops: [
-                ['Expense', '#a6cee3'],
-                ['Capital', '#b2df8a'],
-              ],
-            },
+            'circle-color': [
+              'case',
+              // Capital except Top 10
+              ['all', ['==', 'Capital', ['string', ['get', 'budgetcategory']]], [
+                'any',
+                ['!', ['has', 'priority']],
+                ['<', 10, ['number', ['get', 'priority']]],
+              ]],
+              '#b2df8a',
+
+              // Expense except Top 10
+              ['all', ['==', 'Expense', ['string', ['get', 'budgetcategory']]], [
+                'any',
+                ['!', ['has', 'priority']],
+                ['<', 10, ['number', ['get', 'priority']]],
+              ]],
+              '#a6cee3',
+
+              // Top 10 Capital
+              ['all', ['==', 'Capital', ['string', ['get', 'budgetcategory']]], ['>=', 10, ['number', ['get', 'priority']]]],
+              '#33a02c',
+              // Top 10 Expense
+              ['all', ['==', 'Expense', ['string', ['get', 'budgetcategory']]], ['>=', 10, ['number', ['get', 'priority']]]],
+              '#1f78b4',
+
+              // Default
+              '#012700',
+            ],
             'circle-opacity': 0.7,
           }}
         />
@@ -94,14 +115,22 @@ class CBBudgetRequestsJaneLayer extends React.Component {
 
         <Legend id="cb-budgetrequests-legend">
           <div>
-            <div className="legendSection">CB Budget Requests</div>
+            <div className="legendSection">Budget Request</div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#33a02c' }} />
+              <div className="legendItemText">Capital (Top 10)</div>
+            </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#b2df8a' }} />
-              <div className="legendItemText">Capital Request</div>
+              <div className="legendItemText">Capital</div>
+            </div>
+            <div className="legendItem">
+              <div className="colorCircle" style={{ backgroundColor: '#1f78b4' }} />
+              <div className="legendItemText">Expense (Top 10)</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#a6cee3' }} />
-              <div className="legendItemText">Expense Request</div>
+              <div className="legendItemText">Expense</div>
             </div>
           </div>
         </Legend>
