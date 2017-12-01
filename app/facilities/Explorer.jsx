@@ -154,7 +154,35 @@ class FacilitiesExplorer extends React.Component {
 
             <Legend id="facilities-legend">
               <div>
-                <p>Disclaimer: This map aggregates data from multiple public sources, and DCP cannot verify the accuracy of all records. Not all sites are service locations, among other limitations. <a href="http://docs.capitalplanning.nyc/facdb/#iii-limitations-and-disclaimers">Read more</a>.</p>
+                <div className="legendSection">Facilities and Program Sites</div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(247, 202, 0)' }} />
+                  <div className="legendItemText">Education, Child Welfare, and Youth</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(76, 175, 80)' }} />
+                  <div className="legendItemText">Parks, Gardens, and Historical Sites</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(115, 229, 244)' }} />
+                  <div className="legendItemText">Libraries and Cultural Programs</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(41, 121, 255)' }} />
+                  <div className="legendItemText">Public Safety, Emergency Serivces, and Administrative Justice</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(186, 104, 200)' }} />
+                  <div className="legendItemText">Health and Human Services</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(141, 142, 170)' }} />
+                  <div className="legendItemText">Core Infrastructure and Transportation</div>
+                </div>
+                <div className="legendItem">
+                  <div className="colorCircle" style={{ backgroundColor: 'rgb(203, 203, 214)' }} />
+                  <div className="legendItemText">Admintration of Government</div>
+                </div>
               </div>
             </Legend>
           </JaneLayer>

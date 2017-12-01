@@ -17,6 +17,7 @@ import {
   FacilitiesJaneLayer,
   HighlightJaneLayer,
   HousingDevelopmentJaneLayer,
+  CBBudgetRequestsJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -24,6 +25,7 @@ import CPListItem from './list-items/CPListItem';
 import SCAListItem from './list-items/SCAListItem';
 import FacilitiesListItem from './list-items/FacilitiesListItem';
 import HousingDevelopmentListItem from './list-items/HousingDevelopmentListItem';
+import BudgetRequestLineItem from './list-items/BudgetRequestListItem';
 
 import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
@@ -32,74 +34,6 @@ import appConfig from '../helpers/appConfig';
 import './styles.scss';
 
 const { mapboxGLOptions, searchConfig } = appConfig;
-
-const SCAPointsSourceOptions = {
-  carto_user: appConfig.carto_user,
-  carto_domain: appConfig.carto_domain,
-  sql: ['SELECT * FROM cpdb_sca_pts_170201'],
-};
-
-const SCAPointsPaint = {
-  'circle-radius': {
-    stops: [
-      [10, 2],
-      [15, 6],
-    ],
-  },
-  'circle-color': '#5C99FF',
-  'circle-opacity': 0.7,
-};
-
-const SCAOutlinePaint = {
-  'circle-radius': {
-    stops: [
-      [10, 3],
-      [15, 7],
-    ],
-  },
-  'circle-color': '#012700',
-  'circle-opacity': 0.7,
-};
-
-const capitalProjectsPolygonsPaint = {
-  'fill-color': {
-    property: 'totalspend',
-    stops: [
-      [0, '#8B8C98'],
-      [1, '#d98127'],
-    ],
-  },
-  'fill-opacity': 0.75,
-  'fill-antialias': true,
-};
-
-const capitalProjectsPointsPaint = {
-  'circle-radius': {
-    stops: [
-      [10, 2],
-      [15, 6],
-    ],
-  },
-  'circle-color': {
-    property: 'totalspend',
-    stops: [
-      [0, '#8B8C98'],
-      [1, '#d98127'],
-    ],
-  },
-  'circle-opacity': 0.7,
-};
-
-const capitalProjectsPointsOutlinePaint = {
-  'circle-radius': {
-    stops: [
-      [10, 3],
-      [15, 7],
-    ],
-  },
-  'circle-color': '#012700',
-  'circle-opacity': 0.7,
-};
 
 class CapitalProjectsExplorer extends React.Component {
   constructor() {
@@ -175,16 +109,12 @@ class CapitalProjectsExplorer extends React.Component {
           return <FacilitiesListItem feature={feature} key={`fac${feature.properties.uid}`} />;
         case 'housing-development':
           return <HousingDevelopmentListItem feature={feature} key={`dev${feature.properties.cartodb_id}`} />;
+        case 'cb-budgetrequests':
+          return <BudgetRequestLineItem feature={feature} key={`cbbr${feature.properties.cartodb_id}`} />;
         default:
           return null;
       }
     });
-
-    const capitalProjectsSourceOptions = {
-      carto_user: appConfig.carto_user,
-      carto_domain: appConfig.carto_domain,
-      sql: [this.props.pointsSql, this.props.polygonsSql],
-    };
 
     return (
       <div className="full-screen cp-explorer">
@@ -233,7 +163,15 @@ class CapitalProjectsExplorer extends React.Component {
             defaultDisabled
           >
 
-            <Source id="sca-points" type="cartovector" options={SCAPointsSourceOptions} />
+            <Source
+              id="sca-points"
+              type="cartovector"
+              options={{
+                carto_user: appConfig.carto_user,
+                carto_domain: appConfig.carto_domain,
+                sql: ['SELECT * FROM cpdb_sca_pts_170201'],
+              }}
+            />
 
             <MapLayer
               id="sca-points-points"
@@ -241,7 +179,16 @@ class CapitalProjectsExplorer extends React.Component {
               sourceLayer="layer0"
               onClick={this.handleMapLayerClick}
               type="circle"
-              paint={SCAPointsPaint}
+              paint={{
+                'circle-radius': {
+                  stops: [
+                    [10, 2],
+                    [15, 6],
+                  ],
+                },
+                'circle-color': '#5C99FF',
+                'circle-opacity': 0.7,
+              }}
             />
 
             <MapLayer
@@ -249,7 +196,16 @@ class CapitalProjectsExplorer extends React.Component {
               source="sca-points"
               sourceLayer="layer0"
               type="circle"
-              paint={SCAOutlinePaint}
+              paint={{
+                'circle-radius': {
+                  stops: [
+                    [10, 3],
+                    [15, 7],
+                  ],
+                },
+                'circle-color': '#012700',
+                'circle-opacity': 0.7,
+              }}
             />
 
             <Legend id="sca-legend">
@@ -263,6 +219,15 @@ class CapitalProjectsExplorer extends React.Component {
             </Legend>
           </JaneLayer>
 
+          <CBBudgetRequestsJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            pointsSql={this.props.cbBudgetRequestsPointsSql}
+            polygonsSql={this.props.cbBudgetRequestsPolygonSql}
+            defaultDisabled
+          />
+
           <JaneLayer
             id="capital-projects"
             name="Capital Projects"
@@ -274,7 +239,15 @@ class CapitalProjectsExplorer extends React.Component {
             defaultSelected
           >
 
-            <Source id="capital-projects" type="cartovector" options={capitalProjectsSourceOptions} />
+            <Source
+              id="capital-projects"
+              type="cartovector"
+              options={{
+                carto_user: appConfig.carto_user,
+                carto_domain: appConfig.carto_domain,
+                sql: [this.props.pointsSql, this.props.polygonsSql],
+              }}
+            />
 
             <MapLayer
               id="capital-projects-polygons"
@@ -282,7 +255,17 @@ class CapitalProjectsExplorer extends React.Component {
               sourceLayer="layer1"
               onClick={this.handleMapLayerClick}
               type="fill"
-              paint={capitalProjectsPolygonsPaint}
+              paint={{
+                'fill-color': {
+                  property: 'totalspend',
+                  stops: [
+                    [0, '#8B8C98'],
+                    [1, '#d98127'],
+                  ],
+                },
+                'fill-opacity': 0.75,
+                'fill-antialias': true,
+              }}
             />
 
             <MapLayer
@@ -291,7 +274,22 @@ class CapitalProjectsExplorer extends React.Component {
               sourceLayer="layer0"
               onClick={this.handleMapLayerClick}
               type="circle"
-              paint={capitalProjectsPointsPaint}
+              paint={{
+                'circle-radius': {
+                  stops: [
+                    [10, 2],
+                    [15, 6],
+                  ],
+                },
+                'circle-color': {
+                  property: 'totalspend',
+                  stops: [
+                    [0, '#8B8C98'],
+                    [1, '#d98127'],
+                  ],
+                },
+                'circle-opacity': 0.7,
+              }}
             />
 
             <MapLayer
@@ -299,7 +297,16 @@ class CapitalProjectsExplorer extends React.Component {
               source="capital-projects"
               sourceLayer="layer0"
               type="circle"
-              paint={capitalProjectsPointsOutlinePaint}
+              paint={{
+                'circle-radius': {
+                  stops: [
+                    [10, 3],
+                    [15, 7],
+                  ],
+                },
+                'circle-color': '#012700',
+                'circle-opacity': 0.7,
+              }}
             />
 
             <Legend id="capital-projects-legend">
@@ -332,17 +339,21 @@ CapitalProjectsExplorer.propTypes = {
   facilitiesSql: PropTypes.string.isRequired,
   housingDevelopmentSql: PropTypes.string.isRequired,
   housingDevelopmentSymbology: PropTypes.string.isRequired,
+  cbBudgetRequestsPointsSql: PropTypes.string.isRequired,
+  cbBudgetRequestsPolygonSql: PropTypes.string.isRequired,
 
   selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilitiesCP.sql,
   housingDevelopmentSql: housingDevelopment.sql,
   housingDevelopmentSymbology: housingDevelopment.symbologyDimension,
+  cbBudgetRequestsPointsSql: cbBudgetRequests.pointsSql,
+  cbBudgetRequestsPolygonSql: cbBudgetRequests.polygonsSql,
 
   selectedFeatures: capitalProjects.selectedFeatures,
 });

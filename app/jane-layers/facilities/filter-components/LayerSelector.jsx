@@ -1,6 +1,3 @@
-// LayerSelector.jsx - This component builds the layer selector which is used in the facilities JaneLayer
-/* eslint-disable react/no-multi-comp */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';

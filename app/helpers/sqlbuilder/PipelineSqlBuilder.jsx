@@ -1,9 +1,10 @@
   /* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
+import db_tables from '../../db_tables';
 
 export const sqlConfig = {
   columns: 'cartodb_id, the_geom_webmercator, dcp_status, dcp_dev_category, u_net, address',
-  tablename: 'housingdevdb_170906',
+  tablename: db_tables.housingdevdb,
 };
 
 class PipelineSqlBuilder extends SqlBuilder {

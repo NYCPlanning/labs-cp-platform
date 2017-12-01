@@ -1,8 +1,9 @@
 import SqlBuilder from './SqlBuilder';
+import db_tables from '../../db_tables';
 
 export const sqlConfig = {
   columns: 'uid, the_geom_webmercator, facdomain, facname, address, factype, opname, borocode, idagency, facsubgrp',
-  tablename: 'facdb_170522',
+  tablename: db_tables.facdb.facilities,
 };
 
 class FacilitiesSqlBuilder extends SqlBuilder {

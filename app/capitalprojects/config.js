@@ -1,4 +1,5 @@
 import LabelHelper from '../helpers/labels/labelHelper';
+import db_tables from '../db_tables';
 
 const defaultFilterDimensions = {
   radiusfilter: {
@@ -13,42 +14,42 @@ const defaultFilterDimensions = {
     type: 'joinMultiSelect',
     disabled: true,
     values: LabelHelper.get_labels('commboard'),
-    lookupTable: 'cpdb_adminbounds_171026',
+    lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
   borocode: {
     type: 'joinMultiSelect',
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
-    lookupTable: 'cpdb_adminbounds_171026',
+    lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
   nta: {
     type: 'joinMultiSelect',
     disabled: true,
     values: LabelHelper.get_labels('nta'),
-    lookupTable: 'cpdb_adminbounds_171026',
+    lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
   censtract: {
     type: 'joinMultiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),
-    lookupTable: 'cpdb_adminbounds_171026',
+    lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
   council: {
     type: 'joinMultiSelect',
     disabled: true,
     values: LabelHelper.get_labels('council'),
-    lookupTable: 'cpdb_adminbounds_171026',
+    lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
   schooldistrict: {
     type: 'joinMultiSelect',
     disabled: true,
     values: LabelHelper.get_labels('schooldistrict'),
-    lookupTable: 'cpdb_adminbounds_171026',
+    lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
   magencyacro: {

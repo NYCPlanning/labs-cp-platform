@@ -5,6 +5,9 @@ import _ from 'lodash';
 import './Legend.scss';
 
 class Legend extends React.Component {
+
+  static displayName = 'Legend';
+
   static contextTypes = {
     addLegend: PropTypes.func,
     removeLegend: PropTypes.func,

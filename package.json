@@ -33,7 +33,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^3.5.0",
     "chroma-js": "^1.2.2",
-    "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "convert-units": "^2.3.1",
     "css-loader": "^0.28.0",

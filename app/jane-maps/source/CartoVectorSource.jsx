@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Carto from '../Carto';
 
 class CartoVectorSource extends React.Component {
+
+  static displayName = 'CartoVectorSource';
+
   componentWillMount() {
     this.map = this.props.map;
 

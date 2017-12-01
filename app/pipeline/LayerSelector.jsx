@@ -5,7 +5,7 @@ import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 
 import CountWidget from '../common/CountWidget';
-import Checkboxes from './Checkboxes';
+import Checkboxes from '../common/Checkboxes';
 import * as pipelineActions from '../actions/pipeline';
 
 import RangeSlider from '../common/RangeSlider';
@@ -257,6 +257,10 @@ class LayerSelector extends React.Component {
 LayerSelector.defaultProps = {
   totalCount: 0,
   selectedCount: 0,
+  selectedPointType: null,
+  selectedPointCoordinates: [],
+  issueDateFilterDisabled: true,
+  completionDateFilterDisabled: true,
 };
 
 LayerSelector.propTypes = {
@@ -268,6 +272,10 @@ LayerSelector.propTypes = {
   completionDateFilterDisabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
+
+  setFilterDimension: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  setSymbology: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ pipeline }) => ({

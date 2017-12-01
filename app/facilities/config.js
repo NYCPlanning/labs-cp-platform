@@ -372,10 +372,6 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
         label: 'NYC Law Department',
       },
       {
-        value: 'NYCSBS',
-        label: 'NYC NYC Department of Small Business Services',
-      },
-      {
         value: 'NYCOATH',
         label: 'NYC Office of Administrative Trials and Hearings',
       },

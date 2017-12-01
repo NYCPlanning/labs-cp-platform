@@ -1,5 +1,6 @@
 import * as AT from '../constants/actionTypes';
 import { dbStringToArray } from '../helpers/dbStrings';
+import db_tables from '../db_tables';
 
 export const getFeature = ({ tableName, column, value }, nextType) => {
   const requestFormat = 'geojson';
@@ -29,7 +30,7 @@ export const fetchAgencyValues = ({ properties }, nextType) => {
   const pgTableSQL = pgTableIds.map(pg => `'${pg}'`).join(',');
 
   const requestFormat = 'json';
-  const sql = `SELECT * FROM facdb_datasources_170522 WHERE pgtable IN (${pgTableSQL})`;
+  const sql = `SELECT * FROM ${db_tables.facdb.datasources} WHERE pgtable IN (${pgTableSQL})`;
 
   return {
     type: AT.CARTO_REQUEST,

@@ -7,6 +7,7 @@ import InclusionaryHousingJaneLayer from './inclusionary-housing/InclusionaryHou
 import FacilitiesJaneLayer from './facilities/FacilitiesJaneLayer';
 import HighlightJaneLayer from './highlight/HighlightJaneLayer';
 import HousingDevelopmentJaneLayer from './housing-development/HousingDevelopmentJaneLayer';
+import CBBudgetRequestsJaneLayer from './cb-budgetrequests/CBBudgetRequestsJaneLayer';
 
 export {
   AdminBoundariesJaneLayer,
@@ -18,4 +19,5 @@ export {
   FacilitiesJaneLayer,
   HighlightJaneLayer,
   HousingDevelopmentJaneLayer,
+  CBBudgetRequestsJaneLayer,
 };

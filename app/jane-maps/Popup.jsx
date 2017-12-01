@@ -6,6 +6,8 @@ import Mustache from 'mustache';
 import './Popup.scss';
 
 class Popup extends React.Component {
+  static displayName = 'Popup';
+
   componentDidMount() {
     const { map, mapLayerId } = this.props;
 
