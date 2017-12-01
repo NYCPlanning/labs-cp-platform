@@ -12,7 +12,7 @@ const clientId = appConfig.auth0_client_id;
 const domain = appConfig.auth0_domain;
 
 const lockOptions = {
-  allowSignUp: false,
+  allowSignUp: true,
   allowLogin: true,
   autoclose: true,
   auth: {
