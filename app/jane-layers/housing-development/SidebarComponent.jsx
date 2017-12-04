@@ -27,7 +27,7 @@ class SidebarComponent extends React.Component {
           bottom: 0,
         }}
       >
-        <Tab label="Data">
+        <Tab label="Filters">
           <LayerSelector
             selectedPointType={this.props.selectedPointType}
             selectedPointCoordinates={this.props.selectedPointCoordinates}

@@ -30,7 +30,7 @@ class SidebarComponent extends React.Component {
         className="sidebar-tabs"
         tabTemplateStyle={tabTemplateStyle}
       >
-        <Tab label="Data">
+        <Tab label="Filters">
           <LayerSelector
             locationState={this.props.locationState}
             selectedPointType={this.props.selectedPointType}
@@ -61,9 +61,14 @@ class SidebarComponent extends React.Component {
 }
 
 SidebarComponent.propTypes = {
-  sql: PropTypes.string,
-  selectedPointType: PropTypes.string,
+  sql: PropTypes.string.isRequired,
+  selectedPointType: PropTypes.string.isRequired,
+  locationState: PropTypes.string,
   selectedPointCoordinates: PropTypes.array.isRequired,
+};
+
+SidebarComponent.defaultProps = {
+  locationState: '',
 };
 
 const mapStateToProps = ({ facilities }) => ({
