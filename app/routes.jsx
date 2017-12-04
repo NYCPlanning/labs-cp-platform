@@ -24,6 +24,7 @@ import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBB
 import FeedbackPage from '../app/pages/FeedbackPage';
 
 import NotFound from '../app/pages/NotFound';
+import EmailVerification from '../app/pages/EmailVerification';
 
 import { getDefaultFilterDimensions } from '../app/facilities/config';
 
@@ -109,6 +110,7 @@ export default (
 
     <Route path="login" component={Login} title={'Login'} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
+    <Route path="email_verification" component={EmailVerification} title={'Email Verification'} />
     <Route path="notfound" component={NotFound} />
 
     <Redirect from="*" to="notfound" />
