@@ -13,7 +13,7 @@ const domain = appConfig.auth0_domain;
 
 const lockOptions = {
   allowSignUp: true,
-  loginAfterSignUp: false,
+  loginAfterSignUp: true,
   allowLogin: true,
   autoclose: true,
   auth: {
@@ -70,6 +70,10 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
         localStorage.setItem('NYCPlanning_idToken', idToken);
         dispatch(authActions.authorizeUser(profile, idToken));
 
+        if (!profile.email_verified) {
+          browserHistory.push('/email_verification');
+        }
+
         // redirect to the path the user was trying to get to, or the same page
         if (action.payload && action.payload.targetPath) {
           browserHistory.push(action.payload.targetPath);
@@ -110,6 +114,10 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
         localStorage.setItem('NYCPlanning_profile', JSON.stringify(profile));
         localStorage.setItem('NYCPlanning_idToken', idToken);
         dispatch(authActions.authorizeUser(profile, idToken));
+
+        if (!profile.email_verified) {
+          browserHistory.push('/email_verification');
+        }
 
         // redirect to the path the user was trying to get to, or the same page
         if (action.payload.params && action.payload.params.targetPath) {
