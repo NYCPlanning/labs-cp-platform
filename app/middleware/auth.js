@@ -13,6 +13,7 @@ const domain = appConfig.auth0_domain;
 
 const lockOptions = {
   allowSignUp: true,
+  loginAfterSignUp: false,
   allowLogin: true,
   autoclose: true,
   auth: {
