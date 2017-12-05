@@ -50,7 +50,7 @@ class Pipeline extends React.Component {
         className="sidebar-tabs"
         tabTemplateStyle={tabTemplateStyle}
       >
-        <Tab label="Data">
+        <Tab label="Filters">
           <LayerSelector
             totalCount={totalCount}
             selectedCount={selectedCount}
@@ -89,6 +89,11 @@ Pipeline.propTypes = {
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
+
+  totalCount: PropTypes.number.isRequired,
+  selectedCount: PropTypes.number.isRequired,
+  filterDimensions: PropTypes.object.isRequired,
+  symbologyDimension: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = ({ pipeline }) => ({

@@ -48,7 +48,7 @@ class CapitalProjects extends React.Component {
         className="sidebar-tabs"
         tabTemplateStyle={tabTemplateStyle}
       >
-        <Tab label="Data">
+        <Tab label="Filters">
           <Filter
             pointsSql={pointsSql}
             polygonsSql={polygonsSql}

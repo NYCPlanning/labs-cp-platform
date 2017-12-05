@@ -264,6 +264,8 @@ class DetailPage extends React.Component {
 
 DetailPage.defaultProps = {
   auth: null,
+  sources: [],
+  facilityDetails: {},
 };
 
 DetailPage.propTypes = {
