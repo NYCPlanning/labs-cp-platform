@@ -21,8 +21,6 @@ import ProjectPage from '../app/capitalprojects/DetailPage';
 
 import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBBudgetRequestsDetailPage';
 
-import FeedbackPage from '../app/pages/FeedbackPage';
-
 import NotFound from '../app/pages/NotFound';
 import EmailVerification from '../app/pages/EmailVerification';
 
@@ -99,14 +97,15 @@ export default (
     <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />
     <Route path="development/:id" component={ensureSitewideAccess(DevelopmentPage)} title={'Development Details'} about={'/about/pipeline'} />
 
+    <Route path="/map" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
+    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} about={'/about/capitalprojects'} />
+
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
 
     <Route path="budgetrequest/:id" component={ensureSitewideAccess(CBBudgetRequestsDetailPage)} title={'Budget Request Detail'} about={'/about/capitalprojects'} />
-
-    <Route path="feedback/:type" component={ensureSitewideAccess(FeedbackPage)} title={'User Feedback'} />
 
     <Route path="login" component={Login} title={'Login'} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
