@@ -18,6 +18,7 @@ import {
   HighlightJaneLayer,
   HousingDevelopmentJaneLayer,
   CBBudgetRequestsJaneLayer,
+  SCAJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -26,8 +27,6 @@ import SCAListItem from './list-items/SCAListItem';
 import FacilitiesListItem from './list-items/FacilitiesListItem';
 import HousingDevelopmentListItem from './list-items/HousingDevelopmentListItem';
 import BudgetRequestLineItem from './list-items/BudgetRequestListItem';
-
-import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
 import appConfig from '../helpers/appConfig';
 
@@ -43,6 +42,10 @@ class CapitalProjectsExplorer extends React.Component {
       selectedPointCoordinates: [],
     };
     this.selectedFeaturesCache = [];
+  }
+
+  componentWillMount() {
+    console.log(this.props.params.layer);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -155,69 +158,10 @@ class CapitalProjectsExplorer extends React.Component {
             defaultDisabled
           />
 
-          <JaneLayer
-            id="scaplan"
-            name="SCA Capital Plan"
-            icon="graduation-cap"
-            component={<SCAPlanComponent />}
+          <SCAJaneLayer
+            handleMapLayerClick={this.handleMapLayerClick}
             defaultDisabled
-          >
-
-            <Source
-              id="sca-points"
-              type="cartovector"
-              options={{
-                carto_user: appConfig.carto_user,
-                carto_domain: appConfig.carto_domain,
-                sql: ['SELECT * FROM cpdb_sca_pts_170201'],
-              }}
-            />
-
-            <MapLayer
-              id="sca-points-points"
-              source="sca-points"
-              sourceLayer="layer0"
-              onClick={this.handleMapLayerClick}
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 2],
-                    [15, 6],
-                  ],
-                },
-                'circle-color': '#5C99FF',
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <MapLayer
-              id="sca-points-outline"
-              source="sca-points"
-              sourceLayer="layer0"
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 3],
-                    [15, 7],
-                  ],
-                },
-                'circle-color': '#012700',
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <Legend id="sca-legend">
-              <div>
-                <div className="legendSection">SCA Capital Plan</div>
-                <div className="legendItem">
-                  <div className="colorCircle" style={{ backgroundColor: '#5C99FF' }} />
-                  <div className="legendItemText">SCA Projects</div>
-                </div>
-              </div>
-            </Legend>
-          </JaneLayer>
+          />
 
           <CBBudgetRequestsJaneLayer
             selectedPointType={this.state.selectedPointType}
@@ -344,6 +288,16 @@ CapitalProjectsExplorer.propTypes = {
 
   selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
+
+  params: PropTypes.shape({
+    layer: PropTypes.string,
+  }),
+};
+
+CapitalProjectsExplorer.defaultProps = {
+  params: {
+    layer: null,
+  },
 };
 
 const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests }) => ({
