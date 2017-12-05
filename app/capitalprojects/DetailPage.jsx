@@ -209,15 +209,16 @@ class DetailPage extends React.Component {
   }
 }
 
+
 DetailPage.propTypes = {
   params: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchBudgets: PropTypes.func.isRequired,
   fetchCommitments: PropTypes.func.isRequired,
-  details: PropTypes.object,
-  budgets: PropTypes.array,
-  commitments: PropTypes.array,
+  details: PropTypes.object.isRequired,
+  budgets: PropTypes.array.isRequired,
+  commitments: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
