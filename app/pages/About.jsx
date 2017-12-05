@@ -2,6 +2,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 
 import Footer from '../common/Footer';
+import MailchimpForm from './MailchimpForm';
 
 import './About.scss';
 
@@ -34,6 +35,7 @@ export const About = () => (
               <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
             </ul>
 
+            <MailchimpForm />
           </Paper>
         </div>
       </div>
@@ -102,6 +104,7 @@ export const AboutFacilities = () => (
               <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
             </ul>
 
+            <MailchimpForm />
           </Paper>
         </div>
       </div>
@@ -234,6 +237,7 @@ export const AboutPipeline = () => (
               <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
             </ul>
 
+            <MailchimpForm />
           </Paper>
         </div>
       </div>
@@ -302,6 +306,7 @@ export const AboutCapitalProjects = () => (
               <li><b><a href="http://www1.nyc.gov/site/planning/community/community-portal.page">Community Portal</a></b> - The DCP Community Portal offers resources on a variety of topics related to land use, community planning, and demographic trends for each of New York City’s 59 Community Boards</li>
             </ul>
 
+            <MailchimpForm />
           </Paper>
         </div>
       </div>
