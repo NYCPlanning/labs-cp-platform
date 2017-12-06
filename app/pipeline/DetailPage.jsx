@@ -169,7 +169,7 @@ class DevelopmentPage extends React.Component {
                   <div className={'col-md-6'}>
                     <div className="dev-status">
                       <h4>BBL</h4>
-                      <h3><a href={`https://zola.planninglabs.nyc/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
+                      <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
                     </div>
                   </div>
 

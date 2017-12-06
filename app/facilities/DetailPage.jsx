@@ -115,7 +115,7 @@ class DetailPage extends React.Component {
 
       return (
         <ul>
-          { array.map(item => <li key={item}><a href={`https://zola.planninglabs.nyc/bbl/${item}`} target="_blank">{item}</a></li>) }
+          { array.map(item => <li key={item}><a href={`https://zola.planning.nyc.gov/bbl/${item}`} target="_blank">{item}</a></li>) }
         </ul>
       );
     };
