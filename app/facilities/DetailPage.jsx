@@ -110,6 +110,16 @@ class DetailPage extends React.Component {
       );
     };
 
+    const bblList = (string) => {
+      const array = dbStringToArray(string);
+
+      return (
+        <ul>
+          { array.map(item => <li key={item}><a href={`https://zola.planninglabs.nyc/bbl/${item}`} target="_blank">{item}</a></li>) }
+        </ul>
+      );
+    };
+
     const childcareTooltip = () => {
       if (d.facgroup === 'Child Care and Pre-Kindergarten') {
         return (
@@ -223,7 +233,7 @@ class DetailPage extends React.Component {
                   }
 
                   <div className="row property-detail-container">
-                    <div className="property-detail-blocks"><h4><small>BBL</small></h4><h4>{d.bbl ? asList(d.bbl) : 'Not Available'}</h4></div>
+                    <div className="property-detail-blocks"><h4><small>BBL</small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>BIN</small></h4><h4>{d.bin ? asList(d.bin) : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>&zwnj;</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                   </div>

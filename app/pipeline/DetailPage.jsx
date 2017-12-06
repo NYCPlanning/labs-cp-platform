@@ -7,7 +7,6 @@ import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import { getColor } from './config';
-import NycGeom from '../helpers/NycGeom';
 
 import * as pipelineActions from '../actions/pipeline';
 
@@ -170,7 +169,7 @@ class DevelopmentPage extends React.Component {
                   <div className={'col-md-6'}>
                     <div className="dev-status">
                       <h4>BBL</h4>
-                      <h3>{d.bbl}</h3>
+                      <h3><a href={`https://zola.planninglabs.nyc/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
                     </div>
                   </div>
 
@@ -184,7 +183,7 @@ class DevelopmentPage extends React.Component {
               <div className="panel panel-default">
                 <div className="panel-heading">Proposed Change in Units</div>
                 <div className="panel-body">
-                  {unitPipeline()}  
+                  {unitPipeline()}
                 </div>
               </div>
             </div>
@@ -211,7 +210,7 @@ class DevelopmentPage extends React.Component {
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
                       <h3>{permitDate(d.c_date_latest)}</h3>
-                      <p className="subtext">{d.c_type_latest != '' ? (d.c_type_latest + ',') : ''} {d.c_u_latest != null ? (d.c_u_latest + ' units') : ''}</p>
+                      <p className="subtext">{d.c_type_latest !== '' ? (d.c_type_latest + ',') : ''} {d.c_u_latest != null ? (d.c_u_latest + ' units') : ''}</p>
                     </div>
                   </div>
                   {
