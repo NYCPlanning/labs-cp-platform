@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-import Filter from '../Filter';
-import Download from '../Download';
+import Filter from './filter/CapitalProjectsFilter';
+import Download from '../../common/DownloadPolyPoint';
 import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
 
-class CapitalProjects extends React.Component {
+class CapitalProjectsSidebar extends React.Component {
   componentDidMount() {
     this.props.fetchTotalPointsCount();
     this.props.fetchTotalPolygonsCount();
@@ -104,7 +104,7 @@ class CapitalProjects extends React.Component {
   }
 }
 
-CapitalProjects.propTypes = {
+CapitalProjectsSidebar.propTypes = {
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
   totalCount: PropTypes.number,
@@ -118,7 +118,7 @@ CapitalProjects.propTypes = {
   selectedPointCoordinates: PropTypes.array.isRequired,
 };
 
-CapitalProjects.defaultProps = {
+CapitalProjectsSidebar.defaultProps = {
   totalCount: 0,
   selectedCount: 0,
 };
@@ -135,4 +135,4 @@ export default connect(mapStateToProps, {
   fetchTotalPointsCount: capitalProjectsActions.fetchTotalPointsCount,
   fetchTotalPolygonsCount: capitalProjectsActions.fetchTotalPolygonsCount,
   fetchSelectedCount: capitalProjectsActions.fetchSelectedCount,
-})(CapitalProjects);
+})(CapitalProjectsSidebar);

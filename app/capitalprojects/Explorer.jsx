@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
-import CapitalProjectsComponent from './janelayer/Component';
+import { Jane } from '../jane-maps';
+
 import * as capitalProjectsActions from '../actions/capitalProjects';
 import {
   AerialsJaneLayer,
@@ -19,6 +19,7 @@ import {
   HousingDevelopmentJaneLayer,
   CBBudgetRequestsJaneLayer,
   SCAJaneLayer,
+  CapitalProjectsJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -46,6 +47,7 @@ class CapitalProjectsExplorer extends React.Component {
 
   componentWillMount() {
     console.log(this.props.params.layer);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -172,101 +174,14 @@ class CapitalProjectsExplorer extends React.Component {
             defaultDisabled
           />
 
-          <JaneLayer
-            id="capital-projects"
-            name="Capital Projects"
-            icon="usd"
-            component={<CapitalProjectsComponent
-              selectedPointType={this.state.selectedPointType}
-              selectedPointCoordinates={this.state.selectedPointCoordinates}
-            />}
+          <CapitalProjectsJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            pointsSql={this.props.pointsSql}
+            polygonsSql={this.props.polygonsSql}
             defaultSelected
-          >
-
-            <Source
-              id="capital-projects"
-              type="cartovector"
-              options={{
-                carto_user: appConfig.carto_user,
-                carto_domain: appConfig.carto_domain,
-                sql: [this.props.pointsSql, this.props.polygonsSql],
-              }}
-            />
-
-            <MapLayer
-              id="capital-projects-polygons"
-              source="capital-projects"
-              sourceLayer="layer1"
-              onClick={this.handleMapLayerClick}
-              type="fill"
-              paint={{
-                'fill-color': {
-                  property: 'totalspend',
-                  stops: [
-                    [0, '#8B8C98'],
-                    [1, '#d98127'],
-                  ],
-                },
-                'fill-opacity': 0.75,
-                'fill-antialias': true,
-              }}
-            />
-
-            <MapLayer
-              id="capital-projects-points"
-              source="capital-projects"
-              sourceLayer="layer0"
-              onClick={this.handleMapLayerClick}
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 2],
-                    [15, 6],
-                  ],
-                },
-                'circle-color': {
-                  property: 'totalspend',
-                  stops: [
-                    [0, '#8B8C98'],
-                    [1, '#d98127'],
-                  ],
-                },
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <MapLayer
-              id="capital-projects-points-outline"
-              source="capital-projects"
-              sourceLayer="layer0"
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 3],
-                    [15, 7],
-                  ],
-                },
-                'circle-color': '#012700',
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <Legend id="capital-projects-legend">
-              <div>
-                <div className="legendSection">Capital Projects</div>
-                <div className="legendItem">
-                  <div className="colorCircle" style={{ backgroundColor: '#8B8C98' }} />
-                  <div className="legendItemText">Planned Projects</div>
-                </div>
-                <div className="legendItem">
-                  <div className="colorCircle" style={{ backgroundColor: '#d98127' }} />
-                  <div className="legendItemText">Ongoing Projects</div>
-                </div>
-              </div>
-            </Legend>
-          </JaneLayer>
+          />
         </Jane>
 
         <SelectedFeaturesPane>

@@ -5,15 +5,15 @@ import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import { connect } from 'react-redux';
 
-import * as capitalProjectsActions from '../actions/capitalProjects';
-import CountWidget from '../common/CountWidget';
-import InfoIcon from '../common/InfoIcon';
-import CostGroupChart from './CostGroupChart';
-import RangeSlider from '../common/RangeSlider';
-import RangeInputs from '../common/RangeInputs';
-import MultiSelect from '../common/MultiSelect';
-import AreaFilterSelect from '../common/AreaFilterSelect';
-import RadiusFilter from '../common/RadiusFilter';
+import * as capitalProjectsActions from '../../../actions/capitalProjects';
+import CountWidget from '../../../common/CountWidget';
+import InfoIcon from '../../../common/InfoIcon';
+import CostGroupChart from '../../../common/CostGroupChart';
+import RangeSlider from '../../../common/RangeSlider';
+import RangeInputs from '../../../common/RangeInputs';
+import MultiSelect from '../../../common/MultiSelect';
+import AreaFilterSelect from '../../../common/AreaFilterSelect';
+import RadiusFilter from '../../../common/RadiusFilter';
 
 class Filter extends React.Component {
   updateFilterDimension = (dimension, values) => {
@@ -252,6 +252,11 @@ Filter.propTypes = {
   setFilterDimension: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
+};
+
+Filter.defaultProps = {
+  selectedPointType: '',
+  selectedPointCoordinates: [],
 };
 
 export default connect(null, {

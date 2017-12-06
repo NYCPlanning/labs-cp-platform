@@ -128,7 +128,8 @@ class CostGroupChart extends React.Component {
 
 CostGroupChart.propTypes = {
   pointsSql: PropTypes.string.isRequired,
-  costGroupData: PropTypes.array,
+  polygonsSql: PropTypes.string.isRequired,
+  costGroupData: PropTypes.array.isRequired,
   fetchCostGroupData: PropTypes.func.isRequired,
 };
 
