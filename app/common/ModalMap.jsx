@@ -62,10 +62,10 @@ class ModalMap extends React.Component {
           mapboxGLOptions={mapboxGLOptions}
           ref={node => (this.map = node && node.GLMap.map)}
         >
-          <AerialsJaneLayer defaultDisabled />
-          <TransportationJaneLayer defaultDisabled />
-          <FloodHazardsJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultDisabled />
+          <AerialsJaneLayer enabled />
+          <TransportationJaneLayer enabled />
+          <FloodHazardsJaneLayer enabled />
+          <ZoningJaneLayer enabled />
           {
             geometry.type === 'Point' &&
             <JaneLayer

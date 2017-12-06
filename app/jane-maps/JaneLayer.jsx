@@ -96,7 +96,7 @@ class JaneLayer extends React.Component {
   redrawChildren = () => {
     const janeLayer = this.context.getJaneLayer(this.props.id);
 
-    if (janeLayer && !janeLayer.disabled) {
+    if (janeLayer && janeLayer.enabled) {
       this.redrawCallbacks.forEach(cb => cb());
     }
   };
@@ -105,7 +105,7 @@ class JaneLayer extends React.Component {
     const { map, loadedSources, onSourceLoaded, getJaneLayer } = this.context;
     const janeLayer = getJaneLayer(this.props.id);
 
-    if (!map || (janeLayer && janeLayer.disabled)) {
+    if (!map || (janeLayer && !janeLayer.enabled)) {
       return null;
     }
 
@@ -165,7 +165,7 @@ class JaneLayer extends React.Component {
             trackStyle={style.track}
             thumbSwitchedStyle={style.thumbSwitched}
             trackSwitchedStyle={style.trackSwitched}
-            toggled={janeLayer && !janeLayer.disabled}
+            toggled={janeLayer && janeLayer.enabled}
             onToggle={this.toggleLayer.bind(this)}
             style={style.toggle}
           />
@@ -180,7 +180,7 @@ class JaneLayer extends React.Component {
         </div>
 
         <div style={{ position: 'relative', height: '100%' }}>
-          { janeLayer && janeLayer.disabled && <div style={style.blockerStyle} /> }
+          { janeLayer && !janeLayer.enabled && <div style={style.blockerStyle} /> }
           { SidebarComponent }
         </div>
 
@@ -200,7 +200,7 @@ JaneLayer.propTypes = {
 };
 
 JaneLayer.defaultProps = {
-  defaultDisabled: false,
+  enabled: false,
   hidden: false,
   name: null,
   icon: null,

@@ -8,12 +8,12 @@ import mapLayers from './config';
 class AdminBoundariesJaneLayer extends React.Component {
   static propTypes = {
     defaultSelected: PropTypes.bool,
-    defaultDisabled: PropTypes.bool,
+    enabled: PropTypes.bool,
   };
 
   static defaultProps = {
     defaultSelected: false,
-    defaultDisabled: false,
+    enabled: false,
   };
 
   constructor() {
@@ -225,7 +225,7 @@ class AdminBoundariesJaneLayer extends React.Component {
         name="Admin Boundaries"
         icon="flag"
         defaultSelected={this.props.defaultSelected}
-        defaultDisabled={this.props.defaultDisabled}
+        enabled={this.props.enabled}
         component={<SidebarComponent selected={this.state.selected} onRadioChange={this.onRadioChange} />}
       >
         { this.renderNTA() }

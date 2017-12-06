@@ -98,7 +98,7 @@ class ListItemClass extends React.Component {
   }
 
   render() {
-    const { connectDragSource, connectDropTarget, layer, disabled } = this.props;
+    const { connectDragSource, connectDropTarget, layer, enabled } = this.props;
 
     return connectDragSource(connectDropTarget(
       <div className={this.props.className} onClick={this.handleClick.bind(this, layer)}>
@@ -108,7 +108,7 @@ class ListItemClass extends React.Component {
             trackStyle={style.track}
             thumbSwitchedStyle={style.thumbSwitched}
             trackSwitchedStyle={style.trackSwitched}
-            toggled={!disabled}
+            toggled={enabled}
             onToggle={this.handleToggle.bind(this, layer.id)}
           />
         </div>
@@ -142,11 +142,11 @@ ListItemClass.propTypes = {
   className: PropTypes.string.isRequired,
   expanded: PropTypes.bool.isRequired,
   toggleLayer: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
+  enabled: PropTypes.bool,
 };
 
 ListItemClass.defaultProps = {
-  disabled: false,
+  enabled: true,
 };
 
 let ListItem = ListItemClass;

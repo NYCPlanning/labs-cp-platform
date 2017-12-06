@@ -45,11 +45,6 @@ class CapitalProjectsExplorer extends React.Component {
     this.selectedFeaturesCache = [];
   }
 
-  componentWillMount() {
-    console.log(this.props.params.layer);
-
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.pointsSql !== nextProps.pointsSql ||
         this.props.polygonsSql !== nextProps.polygonsSql) {
@@ -103,6 +98,7 @@ class CapitalProjectsExplorer extends React.Component {
 
   render() {
     const { selectedFeatures } = this.props;
+    const startingLayer = this.props.params.layer || 'capitalprojects';
 
     const listItems = selectedFeatures.map((feature) => {
       switch (feature.layer.source) {
@@ -136,19 +132,19 @@ class CapitalProjectsExplorer extends React.Component {
             selectedFeatures={selectedFeatures}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
           />
-          <AerialsJaneLayer defaultDisabled />
-          <TransportationJaneLayer defaultDisabled />
-          <FloodHazardsJaneLayer defaultDisabled />
-          <AdminBoundariesJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultDisabled />
-          <InclusionaryHousingJaneLayer defaultDisabled />
+          <AerialsJaneLayer />
+          <TransportationJaneLayer />
+          <FloodHazardsJaneLayer />
+          <AdminBoundariesJaneLayer />
+          <ZoningJaneLayer />
+          <InclusionaryHousingJaneLayer />
 
           <FacilitiesJaneLayer
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.facilitiesSql}
-            defaultDisabled
+            enabled={startingLayer === 'facilities'}
           />
 
           <HousingDevelopmentJaneLayer
@@ -157,12 +153,12 @@ class CapitalProjectsExplorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.housingDevelopmentSql}
             symbologyDimension={this.props.housingDevelopmentSymbology}
-            defaultDisabled
+            enabled={startingLayer === 'housing'}
           />
 
           <SCAJaneLayer
             handleMapLayerClick={this.handleMapLayerClick}
-            defaultDisabled
+            enabled={startingLayer === 'sca'}
           />
 
           <CBBudgetRequestsJaneLayer
@@ -171,7 +167,7 @@ class CapitalProjectsExplorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             pointsSql={this.props.cbBudgetRequestsPointsSql}
             polygonsSql={this.props.cbBudgetRequestsPolygonSql}
-            defaultDisabled
+            enabled={startingLayer === 'budgetrequests'}
           />
 
           <CapitalProjectsJaneLayer
@@ -180,7 +176,7 @@ class CapitalProjectsExplorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             pointsSql={this.props.pointsSql}
             polygonsSql={this.props.polygonsSql}
-            defaultSelected
+            enabled={startingLayer === 'capitalprojects'}
           />
         </Jane>
 

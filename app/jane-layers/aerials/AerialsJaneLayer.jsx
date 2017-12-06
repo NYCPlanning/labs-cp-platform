@@ -10,12 +10,12 @@ class AerialsJaneLayer extends React.Component {
 
   static propTypes = {
     defaultSelected: PropTypes.bool,
-    defaultDisabled: PropTypes.bool,
+    enabled: PropTypes.bool,
   };
 
   static defaultProps = {
     defaultSelected: false,
-    defaultDisabled: false,
+    enabled: false,
   }
 
   render() {
@@ -25,7 +25,7 @@ class AerialsJaneLayer extends React.Component {
         name="Aerial Imagery"
         icon="camera"
         defaultSelected={this.props.defaultSelected}
-        defaultDisabled={this.props.defaultDisabled}
+        enabled={this.props.enabled}
         component={<SidebarComponent />}
       >
         <Source

@@ -139,11 +139,11 @@ class PipeLineExplorer extends React.Component {
           onLayerToggle={this.clearSelectedFeatures}
           onSearchTrigger={this.setAddressSearchCoordinates}
         >
-          <AerialsJaneLayer defaultDisabled />
-          <TransportationJaneLayer defaultDisabled />
-          <FloodHazardsJaneLayer defaultDisabled />
-          <AdminBoundariesJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultDisabled />
+          <AerialsJaneLayer enabled />
+          <TransportationJaneLayer enabled />
+          <FloodHazardsJaneLayer enabled />
+          <AdminBoundariesJaneLayer enabled />
+          <ZoningJaneLayer enabled />
           <JaneLayer
             id="pipeline"
             name="Housing Pipeline"

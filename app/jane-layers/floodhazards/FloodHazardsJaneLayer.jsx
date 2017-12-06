@@ -9,12 +9,12 @@ import appConfig from '../../helpers/appConfig';
 class FloodHazardsJaneLayer extends React.Component {
   static propTypes = {
     defaultSelected: PropTypes.bool,
-    defaultDisabled: PropTypes.bool,
+    enabled: PropTypes.bool,
   };
 
   static defaultProps = {
     defaultSelected: false,
-    defaultDisabled: false,
+    enabled: false,
   }
 
   constructor() {
@@ -81,7 +81,7 @@ class FloodHazardsJaneLayer extends React.Component {
         name="Flood Hazards"
         icon="tint"
         defaultSelected={this.props.defaultSelected}
-        defaultDisabled={this.props.defaultDisabled}
+        enabled={this.props.enabled}
         component={<SidebarComponent checkboxes={this.state.checkboxes} onCheckboxChange={this.onCheckboxChange} />}
       >
         { this.renderPfirm15() }

@@ -109,11 +109,11 @@ class FacilitiesExplorer extends React.Component {
             selectedFeatures={this.props.selectedFeatures}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
           />
-          <AerialsJaneLayer defaultDisabled />
-          <TransportationJaneLayer defaultDisabled />
-          <FloodHazardsJaneLayer defaultDisabled />
-          <AdminBoundariesJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultDisabled />
+          <AerialsJaneLayer enabled />
+          <TransportationJaneLayer enabled />
+          <FloodHazardsJaneLayer enabled />
+          <AdminBoundariesJaneLayer enabled />
+          <ZoningJaneLayer enabled />
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"

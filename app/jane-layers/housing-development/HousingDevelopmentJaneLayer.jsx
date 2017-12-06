@@ -115,7 +115,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
         name="Housing Development"
         icon="cubes"
         defaultSelected={this.props.defaultSelected}
-        defaultDisabled={this.props.defaultDisabled}
+        enabled={this.props.enabled}
         component={<HousingDevelopmentSidebarComponent
           selectedPointType={this.props.selectedPointType}
           selectedPointCoordinates={this.props.selectedPointCoordinates}
@@ -148,7 +148,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
 
 HousingDevelopmentJaneLayer.propTypes = {
   defaultSelected: PropTypes.bool,
-  defaultDisabled: PropTypes.bool,
+  enabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
   handleMapLayerClick: PropTypes.func.isRequired,
@@ -159,7 +159,7 @@ HousingDevelopmentJaneLayer.propTypes = {
 
 HousingDevelopmentJaneLayer.defaultProps = {
   defaultSelected: false,
-  defaultDisabled: false,
+  enabled: false,
   selectedPointType: null,
   selectedPointCoordinates: [],
 };

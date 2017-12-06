@@ -62,8 +62,8 @@ class CapitalProjectsSidebar extends React.Component {
           <div className="sidebar-tab-content">
             <div className="scroll-container padded">
               <Download
-                pointsSql={this.props.pointsSql}
-                polygonsSql={this.props.polygonsSql}
+                pointsSql={pointsSql}
+                polygonsSql={polygonsSql}
                 pointsPrefix="projects-points"
                 polygonsPrefix="projects-polygons"
                 onDownload={this.handleDownload}

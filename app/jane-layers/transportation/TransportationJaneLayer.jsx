@@ -9,12 +9,12 @@ class TransportationJaneLayer extends React.Component {
 
   static propTypes = {
     defaultSelected: PropTypes.bool,
-    defaultDisabled: PropTypes.bool,
+    enabled: PropTypes.bool,
   };
 
   static defaultProps = {
     defaultSelected: false,
-    defaultDisabled: false,
+    enabled: false,
   }
 
   constructor() {
@@ -108,7 +108,7 @@ class TransportationJaneLayer extends React.Component {
         name="Transportation"
         icon="subway"
         defaultSelected={this.props.defaultSelected}
-        defaultDisabled={this.props.defaultDisabled}
+        enabled={this.props.enabled}
         component={<SidebarComponent checkboxes={this.state.checkboxes} onCheckboxChange={this.onCheckboxChange} />}
       >
         { this.renderSubways() }
