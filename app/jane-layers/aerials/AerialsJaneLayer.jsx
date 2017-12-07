@@ -9,12 +9,12 @@ import appConfig from '../../helpers/appConfig';
 class AerialsJaneLayer extends React.Component {
 
   static propTypes = {
-    defaultSelected: PropTypes.bool,
+    selected: PropTypes.bool,
     enabled: PropTypes.bool,
   };
 
   static defaultProps = {
-    defaultSelected: false,
+    selected: false,
     enabled: false,
   }
 
@@ -24,7 +24,7 @@ class AerialsJaneLayer extends React.Component {
         id="aerials"
         name="Aerial Imagery"
         icon="camera"
-        defaultSelected={this.props.defaultSelected}
+        selected={this.props.selected}
         enabled={this.props.enabled}
         component={<SidebarComponent />}
       >

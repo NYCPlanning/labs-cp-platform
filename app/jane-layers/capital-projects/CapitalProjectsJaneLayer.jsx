@@ -14,7 +14,7 @@ const CapitalProjectsJaneLayer = props => (
       selectedPointType={props.selectedPointType}
       selectedPointCoordinates={props.selectedPointCoordinates}
     />}
-    defaultSelected={props.defaultSelected}
+    selected={props.selected}
     enabled={props.enabled}
   >
 
@@ -105,7 +105,7 @@ const CapitalProjectsJaneLayer = props => (
 );
 
 CapitalProjectsJaneLayer.propTypes = {
-  defaultSelected: PropTypes.bool,
+  selected: PropTypes.bool,
   enabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
@@ -116,7 +116,7 @@ CapitalProjectsJaneLayer.propTypes = {
 };
 
 CapitalProjectsJaneLayer.defaultProps = {
-  defaultSelected: false,
+  selected: false,
   enabled: false,
   selectedPointType: null,
   selectedPointCoordinates: [],

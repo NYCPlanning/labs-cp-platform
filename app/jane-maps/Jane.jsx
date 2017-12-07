@@ -111,7 +111,7 @@ class Jane extends React.Component {
 
     const layer = {
       ...layerConfig,
-      selected: layerConfig.defaultSelected || false,
+      selected: layerConfig.selected || false,
       enabled: layerConfig.enabled || false,
       redrawChildren,
     };

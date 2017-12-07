@@ -145,6 +145,7 @@ class CapitalProjectsExplorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.facilitiesSql}
             enabled={startingLayer === 'facilities'}
+            selected={startingLayer === 'facilities'}
           />
 
           <HousingDevelopmentJaneLayer
@@ -154,11 +155,13 @@ class CapitalProjectsExplorer extends React.Component {
             sql={this.props.housingDevelopmentSql}
             symbologyDimension={this.props.housingDevelopmentSymbology}
             enabled={startingLayer === 'housing'}
+            selected={startingLayer === 'housing'}
           />
 
           <SCAJaneLayer
             handleMapLayerClick={this.handleMapLayerClick}
             enabled={startingLayer === 'sca'}
+            selected={startingLayer === 'sca'}
           />
 
           <CBBudgetRequestsJaneLayer
@@ -168,6 +171,7 @@ class CapitalProjectsExplorer extends React.Component {
             pointsSql={this.props.cbBudgetRequestsPointsSql}
             polygonsSql={this.props.cbBudgetRequestsPolygonSql}
             enabled={startingLayer === 'budgetrequests'}
+            selected={startingLayer === 'budgetrequests'}
           />
 
           <CapitalProjectsJaneLayer
@@ -177,6 +181,7 @@ class CapitalProjectsExplorer extends React.Component {
             pointsSql={this.props.pointsSql}
             polygonsSql={this.props.polygonsSql}
             enabled={startingLayer === 'capitalprojects'}
+            selected={startingLayer === 'capitalprojects'}
           />
         </Jane>
 

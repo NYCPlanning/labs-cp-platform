@@ -7,12 +7,12 @@ import mapLayers from './config';
 
 class AdminBoundariesJaneLayer extends React.Component {
   static propTypes = {
-    defaultSelected: PropTypes.bool,
+    selected: PropTypes.bool,
     enabled: PropTypes.bool,
   };
 
   static defaultProps = {
-    defaultSelected: false,
+    selected: false,
     enabled: false,
   };
 
@@ -224,7 +224,7 @@ class AdminBoundariesJaneLayer extends React.Component {
         id="admin_boundaries"
         name="Admin Boundaries"
         icon="flag"
-        defaultSelected={this.props.defaultSelected}
+        selected={this.props.selected}
         enabled={this.props.enabled}
         component={<SidebarComponent selected={this.state.selected} onRadioChange={this.onRadioChange} />}
       >

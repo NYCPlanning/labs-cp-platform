@@ -13,7 +13,7 @@ class CBBudgetRequestsJaneLayer extends React.Component {
         id="cb-budgetrequests"
         name="Community Board Budget Requests"
         icon="book"
-        defaultSelected={this.props.defaultSelected}
+        selected={this.props.selected}
         enabled={this.props.enabled}
         component={<CBBudgetRequestsSidebarComponent
           selectedPointType={this.props.selectedPointType}
@@ -140,7 +140,7 @@ class CBBudgetRequestsJaneLayer extends React.Component {
 }
 
 CBBudgetRequestsJaneLayer.propTypes = {
-  defaultSelected: PropTypes.bool,
+  selected: PropTypes.bool,
   enabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
@@ -151,7 +151,7 @@ CBBudgetRequestsJaneLayer.propTypes = {
 };
 
 CBBudgetRequestsJaneLayer.defaultProps = {
-  defaultSelected: false,
+  selected: false,
   enabled: false,
   selectedPointType: null,
   selectedPointCoordinates: [],

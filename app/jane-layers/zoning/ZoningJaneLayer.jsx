@@ -24,12 +24,12 @@ const paint = {
 class ZoningJaneLayer extends React.Component {
 
   static propTypes = {
-    defaultSelected: PropTypes.bool,
+    selected: PropTypes.bool,
     enabled: PropTypes.bool,
   };
 
   static defaultProps = {
-    defaultSelected: false,
+    selected: false,
     enabled: false,
   }
 
@@ -178,7 +178,7 @@ class ZoningJaneLayer extends React.Component {
         id="zoning"
         name="Zoning"
         icon="building"
-        defaultSelected={this.props.defaultSelected}
+        selected={this.props.selected}
         enabled={this.props.enabled}
         component={<SidebarComponent checkboxes={this.state.checkboxes} onCheckboxChange={this.onCheckboxChange} />}
       >

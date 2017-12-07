@@ -11,7 +11,7 @@ const FacilitiesJaneLayer = props => (
     id="facilities-cp"
     name="Facilities and Program Sites"
     icon="university"
-    defaultSelected={props.defaultSelected}
+    selected={props.selected}
     enabled={props.enabled}
     component={<FacilitiesSidebarComponent
       selectedPointType={props.selectedPointType}
@@ -90,7 +90,7 @@ const FacilitiesJaneLayer = props => (
 );
 
 FacilitiesJaneLayer.propTypes = {
-  defaultSelected: PropTypes.bool,
+  selected: PropTypes.bool,
   enabled: PropTypes.bool,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
@@ -99,7 +99,7 @@ FacilitiesJaneLayer.propTypes = {
 };
 
 FacilitiesJaneLayer.defaultProps = {
-  defaultSelected: false,
+  selected: false,
   enabled: false,
   selectedPointType: null,
   selectedPointCoordinates: [],
