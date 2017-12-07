@@ -109,16 +109,17 @@ class FacilitiesExplorer extends React.Component {
             selectedFeatures={this.props.selectedFeatures}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
           />
-          <AerialsJaneLayer enabled />
-          <TransportationJaneLayer enabled />
-          <FloodHazardsJaneLayer enabled />
-          <AdminBoundariesJaneLayer enabled />
-          <ZoningJaneLayer enabled />
+          <AerialsJaneLayer />
+          <TransportationJaneLayer />
+          <FloodHazardsJaneLayer />
+          <AdminBoundariesJaneLayer />
+          <ZoningJaneLayer />
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"
             icon="university"
-            defaultSelected
+            selected
+            enabled
             component={<FacilitiesSidebarComponent
               locationState={this.props.location.state}
               selectedPointType={this.state.selectedPointType}

@@ -60,12 +60,12 @@ class ModalMap extends React.Component {
       <div id="modalmap" style={{ position: 'relative', height: 450, marginBottom: '20px' }}>
         <Jane
           mapboxGLOptions={mapboxGLOptions}
-          ref={node => (this.map = node && node.GLMap.map)}
+          ref={(node) => { this.map = node && node.GLMap.map; }}
         >
-          <AerialsJaneLayer enabled />
-          <TransportationJaneLayer enabled />
-          <FloodHazardsJaneLayer enabled />
-          <ZoningJaneLayer enabled />
+          <AerialsJaneLayer />
+          <TransportationJaneLayer />
+          <FloodHazardsJaneLayer />
+          <ZoningJaneLayer />
           {
             geometry.type === 'Point' &&
             <JaneLayer
@@ -84,7 +84,10 @@ class ModalMap extends React.Component {
             >
               <Source id="feature" type="geojson" data={feature} />
               <MapLayer
-                id="feature" source="feature" type="fill" paint={{
+                id="feature"
+                source="feature"
+                type="fill"
+                paint={{
                   'fill-color': 'steelblue',
                   'fill-opacity': 0.75,
                   'fill-antialias': true,
