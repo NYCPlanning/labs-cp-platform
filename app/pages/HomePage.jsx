@@ -94,7 +94,7 @@ class HomePage extends React.Component {
                 </div>
               </div>
             </Link>
-            <Link to="pipeline">
+            <Link to="/maps/housing">
               <div className="col-md-4 portfolio-item" >
                 <div className="portfolio-image" style={{ backgroundImage: 'url(img/buildings.png)' }} />
                 <div className="title"><h3>New Housing Developments</h3></div>

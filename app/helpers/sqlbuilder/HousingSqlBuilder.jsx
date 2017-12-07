@@ -7,7 +7,7 @@ export const sqlConfig = {
   tablename: db_tables.housingdevdb,
 };
 
-class PipelineSqlBuilder extends SqlBuilder {
+class HousingSqlBuilder extends SqlBuilder {
 
   cofoDateRange(dimension, filters) {
     const range = filters[dimension].values;
@@ -45,14 +45,14 @@ class PipelineSqlBuilder extends SqlBuilder {
     return 'FALSE'; // if no options are cheked, make the resulting SQL return no rows
   }
 
-  pipelineBuildSql(filterDimensions) {
+  housingBuildSql(filterDimensions) {
     const sql = this.buildSql(filterDimensions);
     return `${sql} AND x_outlier <> 'true' AND x_dup_flag = '' AND the_geom IS NOT NULL`;
   }
 }
 
-Object.assign(PipelineSqlBuilder, SqlBuilder);
+Object.assign(HousingSqlBuilder, SqlBuilder);
 
-const sqlBuilder = new PipelineSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
+const sqlBuilder = new HousingSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
 
-export const getSql = filterDimensions => sqlBuilder.pipelineBuildSql(filterDimensions);
+export const getSql = filterDimensions => sqlBuilder.housingBuildSql(filterDimensions);

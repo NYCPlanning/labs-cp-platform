@@ -11,8 +11,7 @@ import FacilitiesLanding from '../app/facilities/LandingPage';
 import FacilitiesExplorer from '../app/facilities/Explorer';
 import FacilityPage from '../app/facilities/DetailPage';
 
-import PipelineExplorer from '../app/pipeline/Explorer';
-import DevelopmentPage from '../app/pipeline/DetailPage';
+import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
 
 import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
@@ -95,8 +94,8 @@ export default (
     />
 
     { /* Pipeline */ }
-    <Redirect from="pipeline" to="pipeline/explorer" />
-    <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />
+    <Redirect from="pipeline" to="map/housing" />
+    <Redirect from="pipeline/explorer" to="map/housing" />
 
     { /* Capital Projects */ }
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
@@ -112,7 +111,7 @@ export default (
     { /* Detail Pages */ }
     <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
     <Route path="budgetrequest/:id" component={ensureSitewideAccess(CBBudgetRequestsDetailPage)} title={'Budget Request Detail'} about={'/about/capitalprojects'} />
-    <Route path="development/:id" component={ensureSitewideAccess(DevelopmentPage)} title={'Development Details'} about={'/about/pipeline'} />
+    <Route path="development/:id" component={ensureSitewideAccess(HousingDetailPage)} title={'Development Details'} about={'/about/pipeline'} />
     <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
     <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
 

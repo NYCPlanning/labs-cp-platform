@@ -1,6 +1,6 @@
 import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
-import { sqlConfig, getSql } from '../helpers/sqlbuilder/PipelineSqlBuilder';
+import { sqlConfig, getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
 
 export const fetchDetails = cartodbId =>
   cartoActions.getFeature({

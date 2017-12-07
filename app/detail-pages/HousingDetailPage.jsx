@@ -6,13 +6,13 @@ import BackButton from '../common/BackButton';
 import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
-import { getColor } from './config';
+import { getColor } from '../filter-configs/housing-config';
 
-import * as pipelineActions from '../actions/pipeline';
+import * as housingActions from '../actions/housingDevelopment';
 
-import './DetailPage.scss';
+import './HousingDetailPage.scss';
 
-class DevelopmentPage extends React.Component {
+class HousingDetailPage extends React.Component {
   componentWillMount() {
     this.props.fetchDetails(parseInt(this.props.params.id));
   }
@@ -210,7 +210,7 @@ class DevelopmentPage extends React.Component {
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
                       <h3>{permitDate(d.c_date_latest)}</h3>
-                      <p className="subtext">{d.c_type_latest !== '' ? (d.c_type_latest + ',') : ''} {d.c_u_latest != null ? (d.c_u_latest + ' units') : ''}</p>
+                      <p className="subtext">{d.c_type_latest !== '' ? (`${d.c_type_latest},`) : ''} {d.c_u_latest != null ? (`${d.c_u_latest} units`) : ''}</p>
                     </div>
                   </div>
                   {
@@ -231,7 +231,7 @@ class DevelopmentPage extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <ModalMap feature={this.props.pipelineDetails} label={d.address} />
+          <ModalMap feature={this.props.housingDetails} label={d.address} />
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"
@@ -243,30 +243,30 @@ class DevelopmentPage extends React.Component {
   }
 
   render() {
-    if (!this.props.pipelineDetails) {
+    if (!this.props.housingDetails) {
       return null;
     }
     return (
       <div className="fluid-content display-content">
-        {this.renderContent(this.props.pipelineDetails)}
+        {this.renderContent(this.props.housingDetails)}
       </div>
     );
   }
 }
 
-DevelopmentPage.propTypes = {
+HousingDetailPage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
-  pipelineDetails: PropTypes.object.isRequired,
+  housingDetails: PropTypes.object.isRequired,
   location: PropTypes.shape().isRequired,
   fetchDetails: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ pipeline }) => ({
-  pipelineDetails: pipeline.pipelineDetails,
+const mapStateToProps = ({ housingDevelopment }) => ({
+  housingDetails: housingDevelopment.housingDetails,
 });
 
 export default connect(mapStateToProps, {
-  fetchDetails: pipelineActions.fetchDetails,
-})(DevelopmentPage);
+  fetchDetails: housingActions.fetchDetails,
+})(HousingDetailPage);
