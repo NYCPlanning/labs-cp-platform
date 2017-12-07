@@ -100,8 +100,9 @@ class LayerSelector extends React.Component {
 
     filterDimensions.facsubgrp.values.forEach(facdomain =>
       facdomain.children.forEach(group =>
-        group.children.forEach(subgroup =>
-          subgroup.checked = !allChecked)));
+        group.children.forEach((subgroup) => {
+          subgroup.checked = !allChecked;
+        })));
 
     this.props.setFilters(filterDimensions);
   };
