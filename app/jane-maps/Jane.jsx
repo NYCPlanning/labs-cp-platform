@@ -148,7 +148,7 @@ class Jane extends React.Component {
     const { layers } = this.state;
     const wasEnabled = layers.find(layer => layer.id === layerId).enabled;
 
-    this.layers = layers.map(layer => layer.id === layerId ? ({ ...layer, enabled: !layer.enabled }) : layer);
+    this.layers = layers.map(layer => (layer.id === layerId ? ({ ...layer, enabled: !layer.enabled }) : layer));
 
     this.setState({
       layers: this.layers,

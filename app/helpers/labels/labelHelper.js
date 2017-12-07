@@ -2,21 +2,10 @@ import boroughs from './boroughs';
 import community_districts from './community_districts';
 import council from './council';
 import nta from './nta';
-
-import censtract from './js/censtract';
-import congdist from './js/congdist';
-import policeprecinct from './js/policeprecinct';
-import schooldistrict from './js/schooldistrict';
-
-// import taz from './json/taz';
-
-// import firediv from './json/firediv';
-// import firebn from './json/firebn';
-// import fireconum from './json/fireconum';
-// import municourt from './json/municourt';
-
-// import stateassemblydistrict from './json/stateassemblydistrict';
-// import statesenatedistrict from './json/statesenatedistrict';
+import censtract from './censtract';
+import congdist from './congdist';
+import policeprecinct from './policeprecinct';
+import schooldistrict from './schooldistrict';
 
 class LabelHelper {
   static get_labels(label_category) {

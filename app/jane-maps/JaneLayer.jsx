@@ -101,6 +101,10 @@ class JaneLayer extends React.Component {
     }
   };
 
+  toggleLayer() {
+    this.context.toggleLayer(this.props.id);
+  }
+
   renderChildren() {
     const { map, loadedSources, onSourceLoaded, getJaneLayer } = this.context;
     const janeLayer = getJaneLayer(this.props.id);
@@ -110,7 +114,7 @@ class JaneLayer extends React.Component {
     }
 
     let previousMapLayer = null;
-    let order = 0;
+    const order = 0;
 
     return React.Children.map(this.props.children, (child) => {
       if (!child || !child.type) {
@@ -124,7 +128,7 @@ class JaneLayer extends React.Component {
             registerRedrawCallback: this.registerRedrawCallback,
             map,
             previousMapLayer,
-            order: order++,
+            order: order + 1,
           };
 
           const modifiedLayer = loadedSources[child.props.source]
@@ -148,10 +152,6 @@ class JaneLayer extends React.Component {
           return child;
       }
     });
-  }
-
-  toggleLayer() {
-    this.context.toggleLayer(this.props.id);
   }
 
   render() {
