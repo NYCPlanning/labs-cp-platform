@@ -5,13 +5,14 @@ import SCAPlanComponent from './SCAPlanComponent';
 
 import appConfig from '../../helpers/appConfig';
 
-const SCAJaneLayer = ({ handleMapLayerClick, enabled }) => (
+const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
   <JaneLayer
     id="scaplan"
     name="SCA Capital Plan"
     icon="graduation-cap"
     component={<SCAPlanComponent />}
     enabled={enabled}
+    selected={selected}
   >
 
     <Source
@@ -74,10 +75,12 @@ const SCAJaneLayer = ({ handleMapLayerClick, enabled }) => (
 SCAJaneLayer.propTypes = {
   handleMapLayerClick: PropTypes.func.isRequired,
   enabled: PropTypes.bool,
+  selected: PropTypes.bool,
 };
 
 SCAJaneLayer.defaultProps = {
   enabled: false,
+  selected: false,
 };
 
 export default SCAJaneLayer;
