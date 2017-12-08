@@ -1,30 +1,28 @@
 import React from 'react';
 import { browserHistory, Route, IndexRoute, Redirect } from 'react-router';
 
+// Pages
 import App from '../app/App';
 import Login from '../app/pages/Login';
-
 import HomePage from '../app/pages/HomePage';
+import NotFound from '../app/pages/NotFound';
+import EmailVerification from '../app/pages/EmailVerification';
 import { About, AboutFacilities, AboutPipeline, AboutCapitalProjects } from '../app/pages/About';
 
+// Explorers
 import FacilitiesLanding from '../app/facilities/LandingPage';
 import FacilitiesExplorer from '../app/facilities/Explorer';
-import FacilityPage from '../app/facilities/DetailPage';
-
-import PipelineExplorer from '../app/pipeline/Explorer';
-import DevelopmentPage from '../app/pipeline/DetailPage';
 
 import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
-import CapitalProjectsTable from '../app/capitalprojects/Table';
+
+import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
+
+// Detail Pages
 import ProjectPage from '../app/capitalprojects/DetailPage';
-
+import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
+import FacilityPage from '../app/facilities/DetailPage';
 import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBBudgetRequestsDetailPage';
-
-import FeedbackPage from '../app/pages/FeedbackPage';
-
-import NotFound from '../app/pages/NotFound';
-import EmailVerification from '../app/pages/EmailVerification';
 
 import { getDefaultFilterDimensions } from '../app/facilities/config';
 
@@ -72,14 +70,16 @@ const ensureSitewideAccess = ensureAccess('sitewide_access');
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={ensureSitewideAccess(HomePage)} />
+
+    { /* About Pages */ }
     <Route path="about" component={About} title={'About'} />
     <Route path="about/facilities" component={AboutFacilities} title={'About'} about={'/about/facilities'} />
     <Route path="about/pipeline" component={AboutPipeline} title={'About'} about={'/about/pipeline'} />
     <Route path="about/capitalprojects" component={AboutCapitalProjects} title={'About'} about={'/about/capitalprojects'} />
 
+    { /* Facilities */ }
     <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
     <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
-    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
 
     <Redirect
       from="pops"
@@ -93,21 +93,30 @@ export default (
         } }),
       }}
     />
-    <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
 
-    <Redirect from="pipeline" to="pipeline/explorer" />
-    <Route path="pipeline/explorer" component={ensureSitewideAccess(PipelineExplorer)} title={'Housing Development'} about={'/about/pipeline'} />
-    <Route path="development/:id" component={ensureSitewideAccess(DevelopmentPage)} title={'Development Details'} about={'/about/pipeline'} />
+    { /* Pipeline */ }
+    <Redirect from="pipeline" to="map/housing" />
+    <Redirect from="pipeline/explorer" to="map/housing" />
 
+    { /* Capital Projects */ }
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
+
+
+    { /* Consolidated Map */ }
+    <Route path="/map" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
+    <Route path="/map/:layer" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
+    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} about={'/about/capitalprojects'} />
+
+    { /* Detail Pages */ }
     <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
-
     <Route path="budgetrequest/:id" component={ensureSitewideAccess(CBBudgetRequestsDetailPage)} title={'Budget Request Detail'} about={'/about/capitalprojects'} />
+    <Route path="development/:id" component={ensureSitewideAccess(HousingDetailPage)} title={'Development Details'} about={'/about/pipeline'} />
+    <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
+    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
 
-    <Route path="feedback/:type" component={ensureSitewideAccess(FeedbackPage)} title={'User Feedback'} />
-
+    { /* Auth and Sitewide */ }
     <Route path="login" component={Login} title={'Login'} />
     <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
     <Route path="email_verification" component={EmailVerification} title={'Email Verification'} />

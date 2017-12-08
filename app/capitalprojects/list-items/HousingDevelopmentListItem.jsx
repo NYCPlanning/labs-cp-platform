@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-import { getColor } from '../../pipeline/config';
+import { getColor } from '../../filter-configs/housing-config';
 
 const Item = ({ feature }) => {
   const { cartodb_id,
@@ -12,7 +12,7 @@ const Item = ({ feature }) => {
           u_net } = feature.properties;
 
   return (
-    <Link to={{ pathname: `/development/${cartodb_id}`, state: { modal: true, returnTo: '/pipeline' } }}>
+    <Link to={{ pathname: `/development/${cartodb_id}`, state: { modal: true, returnTo: '/maps/housing' } }}>
       <div
         className="facilities-list-item"
         style={{ borderLeft: `5px solid ${getColor('dcp_dev_category', dcp_dev_category)}` }}

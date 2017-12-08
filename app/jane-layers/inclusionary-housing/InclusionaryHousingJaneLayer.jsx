@@ -110,8 +110,8 @@ class InclusionaryHousingJaneLayer extends React.Component {
         id="inclusionary_housing"
         name="Inclusionary Housing"
         icon="home"
-        defaultSelected={this.props.defaultSelected}
-        defaultDisabled={this.props.defaultDisabled}
+        selected={this.props.selected}
+        enabled={this.props.enabled}
         component={<SidebarComponent checkboxes={this.state.checkboxes} onCheckboxChange={this.onCheckboxChange} />}
       >
         { this.renderIh() }
@@ -122,13 +122,13 @@ class InclusionaryHousingJaneLayer extends React.Component {
 }
 
 InclusionaryHousingJaneLayer.propTypes = {
-  defaultSelected: PropTypes.bool,
-  defaultDisabled: PropTypes.bool,
+  selected: PropTypes.bool,
+  enabled: PropTypes.bool,
 };
 
 InclusionaryHousingJaneLayer.defaultProps = {
-  defaultSelected: false,
-  defaultDisabled: false,
+  selected: false,
+  enabled: false,
 };
 
 export default InclusionaryHousingJaneLayer;

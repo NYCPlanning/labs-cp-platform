@@ -88,10 +88,16 @@ CartoVectorSource.propTypes = {
     options: PropTypes.object,
     tiles: PropTypes.array,
     id: PropTypes.string,
+    nocache: PropTypes.bool,
   }).isRequired,
   onLoaded: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool,
   nocache: PropTypes.bool,
+};
+
+CartoVectorSource.defaultProps = {
+  isLoaded: false,
+  nocache: false,
 };
 
 export default CartoVectorSource;

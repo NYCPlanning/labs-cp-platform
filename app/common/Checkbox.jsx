@@ -9,7 +9,11 @@ const Checkbox = props => (
       value={props.value}
       checked={props.checked}
       onChange={props.onChange}
-      ref={elem => elem && (elem.indeterminate = props.indeterminate)}
+      ref={(elem) => {
+        if (elem) {
+          elem.indeterminate = props.indeterminate;
+        }
+      }}
     />
     <label
       htmlFor={props.value}

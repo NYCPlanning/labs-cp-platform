@@ -96,21 +96,25 @@ class JaneLayer extends React.Component {
   redrawChildren = () => {
     const janeLayer = this.context.getJaneLayer(this.props.id);
 
-    if (janeLayer && !janeLayer.disabled) {
+    if (janeLayer && janeLayer.enabled) {
       this.redrawCallbacks.forEach(cb => cb());
     }
   };
+
+  toggleLayer() {
+    this.context.toggleLayer(this.props.id);
+  }
 
   renderChildren() {
     const { map, loadedSources, onSourceLoaded, getJaneLayer } = this.context;
     const janeLayer = getJaneLayer(this.props.id);
 
-    if (!map || (janeLayer && janeLayer.disabled)) {
+    if (!map || (janeLayer && !janeLayer.enabled)) {
       return null;
     }
 
     let previousMapLayer = null;
-    let order = 0;
+    const order = 0;
 
     return React.Children.map(this.props.children, (child) => {
       if (!child || !child.type) {
@@ -124,7 +128,7 @@ class JaneLayer extends React.Component {
             registerRedrawCallback: this.registerRedrawCallback,
             map,
             previousMapLayer,
-            order: order++,
+            order: order + 1,
           };
 
           const modifiedLayer = loadedSources[child.props.source]
@@ -150,10 +154,6 @@ class JaneLayer extends React.Component {
     });
   }
 
-  toggleLayer() {
-    this.context.toggleLayer(this.props.id);
-  }
-
   render() {
     const SidebarComponent = this.props.component;
     const janeLayer = this.context.getJaneLayer(this.props.id);
@@ -165,7 +165,7 @@ class JaneLayer extends React.Component {
             trackStyle={style.track}
             thumbSwitchedStyle={style.thumbSwitched}
             trackSwitchedStyle={style.trackSwitched}
-            toggled={janeLayer && !janeLayer.disabled}
+            toggled={janeLayer && janeLayer.enabled}
             onToggle={this.toggleLayer.bind(this)}
             style={style.toggle}
           />
@@ -180,7 +180,7 @@ class JaneLayer extends React.Component {
         </div>
 
         <div style={{ position: 'relative', height: '100%' }}>
-          { janeLayer && janeLayer.disabled && <div style={style.blockerStyle} /> }
+          { janeLayer && !janeLayer.enabled && <div style={style.blockerStyle} /> }
           { SidebarComponent }
         </div>
 
@@ -200,7 +200,7 @@ JaneLayer.propTypes = {
 };
 
 JaneLayer.defaultProps = {
-  defaultDisabled: false,
+  enabled: false,
   hidden: false,
   name: null,
   icon: null,

@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
 import * as AT from '../constants/actionTypes';
-import { defaultFilterDimensions } from '../pipeline/config';
-import { getSql } from '../helpers/sqlbuilder/PipelineSqlBuilder';
+import { defaultFilterDimensions } from '../filter-configs/housing-config';
+import { getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
 
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
@@ -23,16 +23,16 @@ export const initialState = {
   sql: getSql(getDefaultFilters()),
   selectedFeatures: [],
   symbologyDimension: 'dcp_dev_category',
-  pipelineDetails: null,
+  housingDetails: null,
   totalCount: 0,
   selectedCount: 0,
 };
 
-const pipelineReducer = (state = initialState, action) => {
+const housingReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case AT.FETCH_HOUSING_DEVELOPMENT_DETAILS.SUCCESS:
-      return Object.assign({}, state, { pipelineDetails: action.payload.features[0] });
+      return Object.assign({}, state, { housingDetails: action.payload.features[0] });
 
     case AT.FETCH_HOUSING_DEVELOPMENT_TOTAL_COUNT.SUCCESS:
       return Object.assign({}, state, { totalCount: action.payload[0].count });
@@ -54,7 +54,7 @@ const pipelineReducer = (state = initialState, action) => {
         sql: getSql(getDefaultFilters()),
       });
 
-    case AT.SET_HOUSING_DEVELOPMENT_FILTER_DIMENSION:
+    case AT.SET_HOUSING_DEVELOPMENT_FILTER_DIMENSION: {
       const { filterDimension, values } = action.payload;
       const dimensions = _.cloneDeep(state.filterDimensions);
 
@@ -106,10 +106,11 @@ const pipelineReducer = (state = initialState, action) => {
         completionDateFilterDisabled: isCompletionDateDisabled(filterDimensions),
         sql: getSql(filterDimensions),
       });
+    }
 
     default:
       return state;
   }
 };
 
-export default pipelineReducer;
+export default housingReducer;

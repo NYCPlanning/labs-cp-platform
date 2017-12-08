@@ -103,7 +103,7 @@ class RadiusFilter extends React.Component {
 }
 
 RadiusFilter.propTypes = {
-  selectedPointType: PropTypes.string,
+  selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
   updateFilterDimension: PropTypes.func.isRequired,
   filterDimensions: PropTypes.object.isRequired,

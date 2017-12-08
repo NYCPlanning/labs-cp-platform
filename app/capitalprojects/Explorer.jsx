@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
-import CapitalProjectsComponent from './janelayer/Component';
+import { Jane } from '../jane-maps';
+
 import * as capitalProjectsActions from '../actions/capitalProjects';
 import {
   AerialsJaneLayer,
@@ -18,6 +18,8 @@ import {
   HighlightJaneLayer,
   HousingDevelopmentJaneLayer,
   CBBudgetRequestsJaneLayer,
+  SCAJaneLayer,
+  CapitalProjectsJaneLayer,
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
@@ -26,8 +28,6 @@ import SCAListItem from './list-items/SCAListItem';
 import FacilitiesListItem from './list-items/FacilitiesListItem';
 import HousingDevelopmentListItem from './list-items/HousingDevelopmentListItem';
 import BudgetRequestLineItem from './list-items/BudgetRequestListItem';
-
-import SCAPlanComponent from './janelayer/SCAPlanComponent';
 
 import appConfig from '../helpers/appConfig';
 
@@ -98,6 +98,7 @@ class CapitalProjectsExplorer extends React.Component {
 
   render() {
     const { selectedFeatures } = this.props;
+    const startingLayer = this.props.params.layer || 'capitalprojects';
 
     const listItems = selectedFeatures.map((feature) => {
       switch (feature.layer.source) {
@@ -131,19 +132,20 @@ class CapitalProjectsExplorer extends React.Component {
             selectedFeatures={selectedFeatures}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
           />
-          <AerialsJaneLayer defaultDisabled />
-          <TransportationJaneLayer defaultDisabled />
-          <FloodHazardsJaneLayer defaultDisabled />
-          <AdminBoundariesJaneLayer defaultDisabled />
-          <ZoningJaneLayer defaultDisabled />
-          <InclusionaryHousingJaneLayer defaultDisabled />
+          <AerialsJaneLayer />
+          <TransportationJaneLayer />
+          <FloodHazardsJaneLayer />
+          <AdminBoundariesJaneLayer />
+          <ZoningJaneLayer />
+          <InclusionaryHousingJaneLayer />
 
           <FacilitiesJaneLayer
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.facilitiesSql}
-            defaultDisabled
+            enabled={startingLayer === 'facilities'}
+            selected={startingLayer === 'facilities'}
           />
 
           <HousingDevelopmentJaneLayer
@@ -152,72 +154,15 @@ class CapitalProjectsExplorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.housingDevelopmentSql}
             symbologyDimension={this.props.housingDevelopmentSymbology}
-            defaultDisabled
+            enabled={startingLayer === 'housing'}
+            selected={startingLayer === 'housing'}
           />
 
-          <JaneLayer
-            id="scaplan"
-            name="SCA Capital Plan"
-            icon="graduation-cap"
-            component={<SCAPlanComponent />}
-            defaultDisabled
-          >
-
-            <Source
-              id="sca-points"
-              type="cartovector"
-              options={{
-                carto_user: appConfig.carto_user,
-                carto_domain: appConfig.carto_domain,
-                sql: ['SELECT * FROM cpdb_sca_pts_170201'],
-              }}
-            />
-
-            <MapLayer
-              id="sca-points-points"
-              source="sca-points"
-              sourceLayer="layer0"
-              onClick={this.handleMapLayerClick}
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 2],
-                    [15, 6],
-                  ],
-                },
-                'circle-color': '#5C99FF',
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <MapLayer
-              id="sca-points-outline"
-              source="sca-points"
-              sourceLayer="layer0"
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 3],
-                    [15, 7],
-                  ],
-                },
-                'circle-color': '#012700',
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <Legend id="sca-legend">
-              <div>
-                <div className="legendSection">SCA Capital Plan</div>
-                <div className="legendItem">
-                  <div className="colorCircle" style={{ backgroundColor: '#5C99FF' }} />
-                  <div className="legendItemText">SCA Projects</div>
-                </div>
-              </div>
-            </Legend>
-          </JaneLayer>
+          <SCAJaneLayer
+            handleMapLayerClick={this.handleMapLayerClick}
+            enabled={startingLayer === 'sca'}
+            selected={startingLayer === 'sca'}
+          />
 
           <CBBudgetRequestsJaneLayer
             selectedPointType={this.state.selectedPointType}
@@ -225,104 +170,19 @@ class CapitalProjectsExplorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             pointsSql={this.props.cbBudgetRequestsPointsSql}
             polygonsSql={this.props.cbBudgetRequestsPolygonSql}
-            defaultDisabled
+            enabled={startingLayer === 'budgetrequests'}
+            selected={startingLayer === 'budgetrequests'}
           />
 
-          <JaneLayer
-            id="capital-projects"
-            name="Capital Projects"
-            icon="usd"
-            component={<CapitalProjectsComponent
-              selectedPointType={this.state.selectedPointType}
-              selectedPointCoordinates={this.state.selectedPointCoordinates}
-            />}
-            defaultSelected
-          >
-
-            <Source
-              id="capital-projects"
-              type="cartovector"
-              options={{
-                carto_user: appConfig.carto_user,
-                carto_domain: appConfig.carto_domain,
-                sql: [this.props.pointsSql, this.props.polygonsSql],
-              }}
-            />
-
-            <MapLayer
-              id="capital-projects-polygons"
-              source="capital-projects"
-              sourceLayer="layer1"
-              onClick={this.handleMapLayerClick}
-              type="fill"
-              paint={{
-                'fill-color': {
-                  property: 'totalspend',
-                  stops: [
-                    [0, '#8B8C98'],
-                    [1, '#d98127'],
-                  ],
-                },
-                'fill-opacity': 0.75,
-                'fill-antialias': true,
-              }}
-            />
-
-            <MapLayer
-              id="capital-projects-points"
-              source="capital-projects"
-              sourceLayer="layer0"
-              onClick={this.handleMapLayerClick}
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 2],
-                    [15, 6],
-                  ],
-                },
-                'circle-color': {
-                  property: 'totalspend',
-                  stops: [
-                    [0, '#8B8C98'],
-                    [1, '#d98127'],
-                  ],
-                },
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <MapLayer
-              id="capital-projects-points-outline"
-              source="capital-projects"
-              sourceLayer="layer0"
-              type="circle"
-              paint={{
-                'circle-radius': {
-                  stops: [
-                    [10, 3],
-                    [15, 7],
-                  ],
-                },
-                'circle-color': '#012700',
-                'circle-opacity': 0.7,
-              }}
-            />
-
-            <Legend id="capital-projects-legend">
-              <div>
-                <div className="legendSection">Capital Projects</div>
-                <div className="legendItem">
-                  <div className="colorCircle" style={{ backgroundColor: '#8B8C98' }} />
-                  <div className="legendItemText">Planned Projects</div>
-                </div>
-                <div className="legendItem">
-                  <div className="colorCircle" style={{ backgroundColor: '#d98127' }} />
-                  <div className="legendItemText">Ongoing Projects</div>
-                </div>
-              </div>
-            </Legend>
-          </JaneLayer>
+          <CapitalProjectsJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            pointsSql={this.props.pointsSql}
+            polygonsSql={this.props.polygonsSql}
+            enabled={startingLayer === 'capitalprojects'}
+            selected={startingLayer === 'capitalprojects'}
+          />
         </Jane>
 
         <SelectedFeaturesPane>
@@ -344,6 +204,16 @@ CapitalProjectsExplorer.propTypes = {
 
   selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
+
+  params: PropTypes.shape({
+    layer: PropTypes.string,
+  }),
+};
+
+CapitalProjectsExplorer.defaultProps = {
+  params: {
+    layer: null,
+  },
 };
 
 const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests }) => ({

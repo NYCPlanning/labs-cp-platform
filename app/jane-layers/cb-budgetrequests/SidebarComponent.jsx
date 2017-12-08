@@ -10,7 +10,7 @@ import BudgetRequestFilter from './filter/BudgetRequestFilter';
 class SidebarComponent extends React.Component {
   handleDownload = (label) => {
     ga.event({
-      category: 'pipeline-explorer',
+      category: 'housing-explorer',
       action: 'download',
       label,
     });

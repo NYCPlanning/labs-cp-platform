@@ -111,8 +111,8 @@ class Jane extends React.Component {
 
     const layer = {
       ...layerConfig,
-      selected: layerConfig.defaultSelected || false,
-      disabled: layerConfig.defaultDisabled || false,
+      selected: layerConfig.selected || false,
+      enabled: layerConfig.enabled || false,
       redrawChildren,
     };
 
@@ -146,9 +146,9 @@ class Jane extends React.Component {
 
   toggleLayer = (layerId) => {
     const { layers } = this.state;
-    const wasDisabled = layers.find(layer => layer.id === layerId).disabled;
+    const wasEnabled = layers.find(layer => layer.id === layerId).enabled;
 
-    this.layers = layers.map(layer => layer.id === layerId ? ({ ...layer, disabled: !layer.disabled }) : layer);
+    this.layers = layers.map(layer => (layer.id === layerId ? ({ ...layer, enabled: !layer.enabled }) : layer));
 
     this.setState({
       layers: this.layers,
@@ -157,7 +157,7 @@ class Jane extends React.Component {
     this.GLMap.map.once('render', () => this.layers.forEach(layer => layer.redrawChildren()));
 
     if (this.props.onLayerToggle) {
-      this.props.onLayerToggle(layerId, !wasDisabled);
+      this.props.onLayerToggle(layerId, wasEnabled);
     }
   };
 
@@ -275,6 +275,7 @@ Jane.defaultProps = {
   onZoomEnd: () => {},
   onDragEnd: () => {},
   onLayerToggle: () => {},
+  onSearchTrigger: () => {},
 };
 
 export default Jane;

@@ -51,7 +51,7 @@ const cbBudgetRequestsReducer = (state = initialState(), action) => {
         polygonsSql: getPolygonsSql({}),
       });
 
-    case AT.SET_CB_BUDGET_REQUESTS_FILTER_DIMENSION:
+    case AT.SET_CB_BUDGET_REQUESTS_FILTER_DIMENSION: {
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
@@ -82,6 +82,7 @@ const cbBudgetRequestsReducer = (state = initialState(), action) => {
         pointsSql: getPointsSql(filterDimensions),
         polygonsSql: getPolygonsSql(filterDimensions),
       });
+    }
 
     default:
       return state;
