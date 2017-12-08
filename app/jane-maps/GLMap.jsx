@@ -24,6 +24,17 @@ class GLMap extends React.Component {
     this.map.off('mousemove', this.onMouseMove);
   }
 
+  onMouseMove = (event) => {
+    const layers = Object.keys(this.map.__INTERNAL__hoverLayers); // eslint-disable-line
+
+    if (!layers.length) {
+      return;
+    }
+
+    const layerFeatures = this.map.queryRenderedFeatures(event.point, { layers });
+    this.map.getCanvas().style.cursor = (layerFeatures && layerFeatures.length > 0) ? 'pointer' : '';
+  };
+
   initializeMap() {
     mapboxgl.accessToken = this.props.mapbox_accessToken;
 
@@ -38,7 +49,7 @@ class GLMap extends React.Component {
       logoPosition: 'bottom-right',
     });
 
-    this.map.__INTERNAL__hoverLayers = [];
+    this.map.__INTERNAL__hoverLayers = []; // eslint-disable-line
 
     this.map.once('load', () => this.props.onLoad(this.map.getStyle()));
     this.map.on('mousemove', this.onMouseMove);
@@ -46,20 +57,9 @@ class GLMap extends React.Component {
     if (this.props.navigationControl) this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   }
 
-  onMouseMove = (event) => {
-    const layers = Object.keys(this.map.__INTERNAL__hoverLayers);
-
-    if (!layers.length) {
-      return;
-    }
-
-    const layerFeatures = this.map.queryRenderedFeatures(event.point, { layers });
-    this.map.getCanvas().style.cursor = (layerFeatures && layerFeatures.length > 0) ? 'pointer' : '';
-  };
-
   render() {
     return (
-      <div className="gl-map" ref={(node) => { this.container = node; }}/>
+      <div className="gl-map" ref={(node) => { this.container = node; }} />
     );
   }
 }
@@ -73,6 +73,7 @@ GLMap.propTypes = {
   pitch: PropTypes.number,
   hash: PropTypes.bool,
   navigationControl: PropTypes.bool.isRequired,
+  onLoad: PropTypes.func.isRequired,
 };
 
 GLMap.defaultProps = {

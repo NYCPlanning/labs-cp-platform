@@ -69,4 +69,9 @@ GeoJsonSource.propTypes = {
   nocache: PropTypes.bool,
 };
 
+GeoJsonSource.defaultProps = {
+  isLoaded: false,
+  nocache: false,
+};
+
 export default GeoJsonSource;

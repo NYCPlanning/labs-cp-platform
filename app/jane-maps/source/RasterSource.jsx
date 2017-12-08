@@ -49,4 +49,9 @@ RasterSource.propTypes = {
   nocache: PropTypes.bool,
 };
 
+RasterSource.defaultProps = {
+  isLoaded: false,
+  nocache: false,
+};
+
 export default RasterSource;
