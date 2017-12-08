@@ -52,7 +52,7 @@ const capitalProjectsReducer = (state = initialState, action) => {
         polygonsSql: getPolygonsSql(getDefaultFilters()),
       });
 
-    case AT.SET_CAPITAL_PROJECTS_FILTER_DIMENSION:
+    case AT.SET_CAPITAL_PROJECTS_FILTER_DIMENSION: {
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
@@ -95,6 +95,7 @@ const capitalProjectsReducer = (state = initialState, action) => {
         pointsSql: getPointsSql(filterDimensions),
         polygonsSql: getPolygonsSql(filterDimensions),
       });
+    }
 
     case AT.SET_CAPITAL_PROJECTS_TABLE_FILTER_BY:
       return Object.assign({}, state, { filterBy: action.payload.filterBy });

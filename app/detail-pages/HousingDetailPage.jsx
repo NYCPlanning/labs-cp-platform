@@ -54,7 +54,7 @@ class HousingDetailPage extends React.Component {
 
     /* eslint-disable */
     const permitDate = (date) => {
-      if (date) return moment(date).format('MM/DD/YYYY');
+      if (date) return moment(date).utc().format('MM/DD/YYYY');
       return 'Not Issued';
     };
     /* eslint-enable */
@@ -140,7 +140,7 @@ class HousingDetailPage extends React.Component {
               <BackButton
                 location={this.props.location}
                 defaultText="Development Map"
-                defaultLink="/pipeline"
+                defaultLink="/map/housing"
               />
             </div>
             <div className="col-md-9 col-md-pull-3">

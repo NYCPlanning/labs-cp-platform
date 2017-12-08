@@ -35,7 +35,7 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
         commitmentsSql: `SELECT * FROM ${db_tables.cpdb.commitments} a WHERE a.maprojid IN (SELECT b.maprojid FROM (${getTableSql(getDefaultFilters())}) b)`,
       });
 
-    case AT.SET_CAPITAL_PROJECTS_TABLE_FILTER_DIMENSION:
+    case AT.SET_CAPITAL_PROJECTS_TABLE_FILTER_DIMENSION: {
       const { filterDimension, values } = action.payload;
       const dimension = state.filterDimensions[filterDimension];
 
@@ -56,16 +56,27 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
         sql: getTableSql(filterDimensions),
         commitmentsSql: `SELECT * FROM ${db_tables.cpdb.commitments} a WHERE a.maprojid IN (SELECT b.maprojid FROM (${getTableSql(filterDimensions)}) b)`,
       });
+    }
 
     case AT.SET_CAPITAL_PROJECTS_TABLE_FILTER_BY:
       return Object.assign({}, state, { filterBy: action.payload.filterBy });
 
-    case AT.SET_CAPITAL_PROJECTS_TABLE_SORT:
+    case AT.SET_CAPITAL_PROJECTS_TABLE_SORT: {
+      if (state.colSortDirs[action.payload.columnKey] === 'ASC') {
+        const sortState = state.colSortDirs;
+        delete sortState[action.payload.columnKey];
+
+        return Object.assign({}, state, {
+          colSortDirs: Object.assign({}, sortState),
+        });
+      }
+
       return Object.assign({}, state, {
         colSortDirs: Object.assign({}, state.colSortDirs, {
           [action.payload.columnKey]: action.payload.sortDir,
         }),
       });
+    }
 
     default:
       return state;

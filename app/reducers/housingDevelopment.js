@@ -54,7 +54,7 @@ const housingReducer = (state = initialState, action) => {
         sql: getSql(getDefaultFilters()),
       });
 
-    case AT.SET_HOUSING_DEVELOPMENT_FILTER_DIMENSION:
+    case AT.SET_HOUSING_DEVELOPMENT_FILTER_DIMENSION: {
       const { filterDimension, values } = action.payload;
       const dimensions = _.cloneDeep(state.filterDimensions);
 
@@ -106,6 +106,7 @@ const housingReducer = (state = initialState, action) => {
         completionDateFilterDisabled: isCompletionDateDisabled(filterDimensions),
         sql: getSql(filterDimensions),
       });
+    }
 
     default:
       return state;

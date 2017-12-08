@@ -1,27 +1,28 @@
 import React from 'react';
 import { browserHistory, Route, IndexRoute, Redirect } from 'react-router';
 
+// Pages
 import App from '../app/App';
 import Login from '../app/pages/Login';
-
 import HomePage from '../app/pages/HomePage';
+import NotFound from '../app/pages/NotFound';
+import EmailVerification from '../app/pages/EmailVerification';
 import { About, AboutFacilities, AboutPipeline, AboutCapitalProjects } from '../app/pages/About';
 
+// Explorers
 import FacilitiesLanding from '../app/facilities/LandingPage';
 import FacilitiesExplorer from '../app/facilities/Explorer';
-import FacilityPage from '../app/facilities/DetailPage';
-
-import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
 
 import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
-import CapitalProjectsTable from '../app/capitalprojects/Table';
+
+import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
+
+// Detail Pages
 import ProjectPage from '../app/capitalprojects/DetailPage';
-
+import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
+import FacilityPage from '../app/facilities/DetailPage';
 import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBBudgetRequestsDetailPage';
-
-import NotFound from '../app/pages/NotFound';
-import EmailVerification from '../app/pages/EmailVerification';
 
 import { getDefaultFilterDimensions } from '../app/facilities/config';
 

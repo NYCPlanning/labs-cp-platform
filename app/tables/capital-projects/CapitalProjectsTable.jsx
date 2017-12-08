@@ -3,24 +3,61 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import FixedDataTable from 'fixed-data-table';
+import { Table, Column, Cell } from 'fixed-data-table';
 import Dimensions from 'react-dimensions';
 import Numeral from 'numeral';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import 'fixed-data-table/dist/fixed-data-table.css';
 import _ from 'lodash';
 
-import InfoIcon from '../common/InfoIcon';
-import TableFilter from './TableFilter';
-import { agencies } from './config';
-import * as capitalProjectsTableActions from '../actions/capitalProjectsTable';
+import InfoIcon from '../../common/InfoIcon';
+import TableFilter from './CapitalProjectsTableFilter';
+import * as capitalProjectsTableActions from '../../actions/capitalProjectsTable';
 import SortHeaderCell from './SortHeaderCell';
-import DownloadTable from '../common/DownloadTable';
-import ga from '../helpers/ga';
+import DownloadTable from '../../common/DownloadTable';
+import ga from '../../helpers/ga';
 
-import './Table.scss';
+import './CapitalProjectsTable.scss';
 
-const { Table, Column, Cell } = FixedDataTable;
+const filterAndSortData = (data, filterBy, colSortDirs) => {
+  const filteredSortedData = [];
+
+  // filter
+  if (filterBy) {
+    for (let i = 0; i < data.length; i += 1) {
+      const { maprojid, description } = data[i];
+      if (
+        maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
+        description.toLowerCase().indexOf(filterBy) !== -1
+      ) {
+        filteredSortedData.push(data[i]);
+      }
+    }
+  } else {
+    for (let i = 0; i < data.length; i += 1) {
+      filteredSortedData.push(data[i]);
+    }
+  }
+
+  // sort
+  Object.keys(colSortDirs).forEach((columnKey) => {
+    const sortDir = colSortDirs[columnKey];
+
+    filteredSortedData.sort((a, b) => {
+      let sortVal = 0;
+      if (a[columnKey] > b[columnKey]) sortVal = 1;
+      if (a[columnKey] < b[columnKey]) sortVal = -1;
+
+      if (sortVal !== 0 && sortDir === 'ASC') {
+        sortVal *= -1;
+      }
+
+      return sortVal;
+    });
+  });
+
+  return filteredSortedData;
+};
 
 
 class CPTable extends React.Component { // eslint-disable-line
@@ -282,55 +319,16 @@ CPTable.propTypes = {
   containerHeight: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
   resetFilter: PropTypes.func.isRequired,
-  filterDimensions: PropTypes.object,
-  colSortDirs: PropTypes.object,
-  sql: PropTypes.string,
-  commitmentsSql: PropTypes.string,
+  filterDimensions: PropTypes.object.isRequired,
+  colSortDirs: PropTypes.object.isRequired,
+  sql: PropTypes.string.isRequired,
+  commitmentsSql: PropTypes.string.isRequired,
   setFilterBy: PropTypes.func.isRequired,
   setSort: PropTypes.func.isRequired,
-  filterBy: PropTypes.string,
-  capitalProjectDetails: PropTypes.array,
+  filterBy: PropTypes.string.isRequired,
+  capitalProjectDetails: PropTypes.array.isRequired,
   fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
-};
-
-const filterAndSortData = (data, filterBy, colSortDirs) => {
-  const filteredSortedData = [];
-
-  // filter
-  if (filterBy) {
-    for (let i = 0; i < data.length; i += 1) {
-      const { maprojid, description } = data[i];
-      if (
-        maprojid.toLowerCase().indexOf(filterBy) !== -1 ||
-        description.toLowerCase().indexOf(filterBy) !== -1
-      ) {
-        filteredSortedData.push(data[i]);
-      }
-    }
-  } else {
-    for (let i = 0; i < data.length; i += 1) {
-      filteredSortedData.push(data[i]);
-    }
-  }
-
-  // sort
-  const columnKey = Object.keys(colSortDirs)[0];
-  const sortDir = colSortDirs[columnKey];
-
-  filteredSortedData.sort((a, b) => {
-    let sortVal = 0;
-    if (a[columnKey] > b[columnKey]) sortVal = 1;
-    if (a[columnKey] < b[columnKey]) sortVal = -1;
-
-    if (sortVal !== 0 && sortDir === 'ASC') {
-      sortVal *= -1;
-    }
-
-    return sortVal;
-  });
-
-  return filteredSortedData;
 };
 
 const mapStateToProps = ({ capitalProjectsTable }) => ({

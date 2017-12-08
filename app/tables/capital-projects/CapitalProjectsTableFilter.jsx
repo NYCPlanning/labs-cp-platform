@@ -4,12 +4,12 @@ import { ListItem } from 'material-ui/List';
 import { connect } from 'react-redux';
 import Subheader from 'material-ui/Subheader';
 
-import InfoIcon from '../common/InfoIcon';
-import MultiSelect from '../common/MultiSelect';
-import RangeInputs from '../common/RangeInputs';
-import RangeSlider from '../common/RangeSlider';
-import CountWidget from '../common/CountWidget';
-import * as capitalProjectsTableActions from '../actions/capitalProjectsTable';
+import InfoIcon from '../../common/InfoIcon';
+import MultiSelect from '../../common/MultiSelect';
+import RangeInputs from '../../common/RangeInputs';
+import RangeSlider from '../../common/RangeSlider';
+import CountWidget from '../../common/CountWidget';
+import * as capitalProjectsTableActions from '../../actions/capitalProjectsTable';
 
 class Filter extends React.Component {
   constructor() {
@@ -201,9 +201,14 @@ class Filter extends React.Component {
 }
 
 Filter.propTypes = {
+  totalCount: PropTypes.number.isRequired,
+  selectedCount: PropTypes.number.isRequired,
   onFilterBy: PropTypes.func.isRequired,
-  filterDimensions: PropTypes.object,
-  sql: PropTypes.string,
+  filterDimensions: PropTypes.object.isRequired,
+  sql: PropTypes.string.isRequired,
+
+  setFilterDimension: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ capitalProjectsTable }) => ({
