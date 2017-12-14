@@ -19,7 +19,7 @@ const appConfig = {
   otp_domain: 'otp.capitalplanning.nyc',
   carto_domain: 'carto.planninglabs.nyc',
   carto_user: 'data',
-  mapzen_api_key: 'mapzen-ZyMEp5H',
+  mapzen_api_key: 'mapzen-ec5DaFV',
   ga_tracking_code: 'UA-84250233-2',
   api_domain,
 
