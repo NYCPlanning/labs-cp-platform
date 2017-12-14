@@ -1,27 +1,28 @@
 import $ from 'jquery';
+import { browserHistory } from 'react-router';
+
 import * as AT from '../constants/actionTypes';
 import appConfig from '../helpers/appConfig';
-import { browserHistory } from 'react-router';
 
 const generateUrlString = (sql, format, filename = 'download') => encodeURI(
   `https://${appConfig.carto_domain}/api/v2/sql?skipfields=cartodb_id&q=${sql}&format=${format}&filename=${filename}`,
 );
 
-let uniqueId = 0;
+const uniqueId = 0;
 let requestCache = [];
 
 browserHistory.listen(() => {
   requestCache = [];
 });
 
-const cartoMiddleware = ({ getState, dispatch }) => next => (action) => {
+const cartoMiddleware = ({ dispatch }) => next => (action) => {
   if (action.type !== AT.CARTO_REQUEST) {
     return next(action);
   }
 
   const { sql, requestFormat, nextType } = action.payload;
 
-  const requestId = uniqueId++;
+  const requestId = uniqueId + 1;
   requestCache.push(requestId);
 
   $.getJSON(generateUrlString(sql, requestFormat))

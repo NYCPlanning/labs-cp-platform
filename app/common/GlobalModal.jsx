@@ -12,11 +12,11 @@ import { closeModal } from '../actions/modal';
 
 import './GlobalModal.scss';
 
-const GlobalModal = ({ modal, closeModal }) => {
-  const { modalCloseText, modalHeading, modalContent } = modal || {};
+const GlobalModal = (props) => {
+  const { modalCloseText, modalHeading, modalContent } = props.modal || {};
 
   return (
-    <Modal show={!!modal} onHide={closeModal}>
+    <Modal show={!!props.modal} onHide={props.closeModal}>
       <Modal.Header closeButton>
         <Modal.Title>{modalHeading}</Modal.Title>
       </Modal.Header>
@@ -26,7 +26,7 @@ const GlobalModal = ({ modal, closeModal }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <div className="btn dcp-orange" onClick={closeModal}>
+        <div className="btn dcp-orange" onClick={props.closeModal}>
           {modalCloseText || 'Close'}
         </div>
       </Modal.Footer>
@@ -37,6 +37,10 @@ const GlobalModal = ({ modal, closeModal }) => {
 GlobalModal.propTypes = {
   modal: PropTypes.object,
   closeModal: PropTypes.func.isRequired,
+};
+
+GlobalModal.defaultProps = {
+  modal: null,
 };
 
 const mapStateToProps = ({ modal }) => ({ modal });

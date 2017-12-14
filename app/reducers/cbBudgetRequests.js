@@ -4,8 +4,8 @@ import { getSql, getPointsSql, getPolygonsSql } from '../helpers/sqlbuilder/CBBu
 import agency_labels from './BudgetRequests/agency_labels';
 import commdist_labels from '../helpers/labels/community_districts';
 
-const initialState = () => {
-  return Object.assign({}, {
+const initialState = () => (
+  Object.assign({}, {
     filterDimensions: {
       agencyacro: {
         type: 'multiSelect',
@@ -29,8 +29,8 @@ const initialState = () => {
     cbDetails: null,
     totalCount: 0,
     selectedCount: 0,
-  });
-};
+  })
+);
 
 const cbBudgetRequestsReducer = (state = initialState(), action) => {
   switch (action.type) {

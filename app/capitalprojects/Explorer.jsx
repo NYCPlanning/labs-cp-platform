@@ -21,13 +21,6 @@ import {
   SCAJaneLayer,
   CapitalProjectsJaneLayer,
 } from '../jane-layers';
-import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
-
-import CPListItem from '../list-items/CPListItem';
-import SCAListItem from '../list-items/SCAListItem';
-import FacilitiesListItem from '../list-items/FacilitiesListItem';
-import HousingDevelopmentListItem from '../list-items/HousingDevelopmentListItem';
-import BudgetRequestLineItem from '../list-items/BudgetRequestListItem';
 
 import appConfig from '../helpers/appConfig';
 
@@ -100,23 +93,6 @@ class CapitalProjectsExplorer extends React.Component {
     const { selectedFeatures } = this.props;
     const startingLayer = this.props.params.layer || 'capitalprojects';
 
-    const listItems = selectedFeatures.map((feature) => {
-      switch (feature.layer.source) {
-        case 'capital-projects':
-          return <CPListItem feature={feature} key={`cp${feature.id}`} />;
-        case 'sca-points':
-          return <SCAListItem feature={feature} key={`sca${feature.id}`} />;
-        case 'facilities-cp':
-          return <FacilitiesListItem feature={feature} key={`fac${feature.properties.uid}`} />;
-        case 'housing-development':
-          return <HousingDevelopmentListItem feature={feature} key={`dev${feature.properties.cartodb_id}`} />;
-        case 'cb-budgetrequests':
-          return <BudgetRequestLineItem feature={feature} key={`cbbr${feature.properties.cartodb_id}`} />;
-        default:
-          return null;
-      }
-    });
-
     return (
       <div className="full-screen cp-explorer">
         <Jane
@@ -184,12 +160,6 @@ class CapitalProjectsExplorer extends React.Component {
             selected={startingLayer === 'capitalprojects'}
           />
         </Jane>
-
-        { /*
-        <SelectedFeaturesPane>
-          {listItems}
-        </SelectedFeaturesPane>
-        */ }
       </div>
     );
   }

@@ -30,4 +30,5 @@ export const deauthorizeUser = () => ({
 
 export const ensureAccess = permission => ({
   type: AT.ENSURE_ACCESS,
+  payload: { permission },
 });

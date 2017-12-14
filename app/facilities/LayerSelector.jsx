@@ -114,8 +114,9 @@ class LayerSelector extends React.Component {
 
     filterDimensions.facsubgrp.values.forEach(facdomain =>
       facdomain.children.forEach(group =>
-        group.children.forEach(subgroup =>
-          subgroup.checked = !allChecked)));
+        group.children.forEach((subgroup) => {
+          subgroup.checked = !allChecked;
+        })));
 
     this.props.setFilters(filterDimensions);
   };
@@ -296,14 +297,18 @@ LayerSelector.defaultProps = {
 };
 
 LayerSelector.propTypes = {
-  sql: PropTypes.string,
+  locationState: PropTypes.string.isRequired,
+  setFilterDimension: PropTypes.func.isRequired,
+
+  sql: PropTypes.string.isRequired,
   filterDimensions: PropTypes.object,
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
   setFilters: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
   fetchTotalFacilitiesCount: PropTypes.func.isRequired,
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
-  selectedPointType: PropTypes.string,
+  selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array,
 };
 

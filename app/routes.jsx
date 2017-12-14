@@ -24,7 +24,7 @@ import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
 import FacilityPage from '../app/facilities/DetailPage';
 import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBBudgetRequestsDetailPage';
 
-import { getDefaultFilterDimensions } from '../app/facilities/config';
+import getDefaultFilterDimensions from '../app/facilities/config';
 
 const rerouteLoggedIn = (nextState, replace) => {
   if (store.getState().currentUser.isLoggedIn) {

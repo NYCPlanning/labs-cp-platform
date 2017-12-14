@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import BackButton from '../../common/BackButton';
@@ -38,9 +37,9 @@ class CBBudgetRequestsDetailPage extends React.Component {
             <div className="col-md-9 col-md-pull-3">
               <h1>{d.need}</h1>
               <h2 style={{ marginBottom: '5px' }}><small>{d.sitename} {d.addressnum} {d.streename}</small></h2>
-                <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
-                { inTopTen() &&
-                  <span className={'badge'} style={{ backgroundColor: 'grey' }}>Top Ten Request</span> }
+              <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
+              { inTopTen() &&
+                <span className={'badge'} style={{ backgroundColor: 'grey' }}>Top Ten Request</span> }
             </div>
           </div>
         </div>

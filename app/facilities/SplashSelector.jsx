@@ -5,7 +5,7 @@ import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
 import NestedSelect from './NestedSelect';
-import { getDefaultFilterDimensions } from './config';
+import getDefaultFilterDimensions from './config';
 import ga from '../helpers/ga';
 
 

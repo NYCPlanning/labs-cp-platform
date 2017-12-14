@@ -1,5 +1,5 @@
 import * as AT from '../constants/actionTypes';
-import { getDefaultFilterDimensions } from '../facilities/config';
+import getDefaultFilterDimensions from '../facilities/config';
 import { getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 
 const defaultFilterDimensions = getDefaultFilterDimensions({ selected: 'all' });

@@ -8,7 +8,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
-import { getDefaultFilterDimensions } from './config';
+import getDefaultFilterDimensions from './config';
 import ga from '../helpers/ga';
 import * as facilitiesActions from '../actions/facilities';
 

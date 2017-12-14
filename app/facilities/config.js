@@ -1,4 +1,4 @@
-import { defaultLayers } from './defaultLayers';
+import defaultLayers from './defaultLayers';
 import LabelHelper from '../helpers/labels/labelHelper';
 
 function checkAllLayers(layers, checked = true) {
@@ -39,7 +39,7 @@ const getSelectedFacilitiesLayers = (selected) => {
   }
 };
 
-export const getDefaultFilterDimensions = ({ selected, values }) => ({
+const getDefaultFilterDimensions = ({ selected, values }) => ({
   radiusfilter: {
     type: 'radiusFilter',
     disabled: true,
@@ -550,3 +550,5 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
     ],
   },
 });
+
+export default getDefaultFilterDimensions;

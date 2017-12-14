@@ -1,7 +1,7 @@
 // From: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
 
 // Closure
-(function() {
+(() => {
   /**
    * Decimal adjustment of a number.
    *
@@ -35,20 +35,14 @@
 
   // Decimal round
   if (!Math.round10) {
-    Math.round10 = function(value, exp) {
-      return decimalAdjust('round', value, exp);
-    };
+    Math.round10 = (value, exp) => decimalAdjust('round', value, exp);
   }
   // Decimal floor
   if (!Math.floor10) {
-    Math.floor10 = function(value, exp) {
-      return decimalAdjust('floor', value, exp);
-    };
+    Math.floor10 = (value, exp) => decimalAdjust('floor', value, exp);
   }
   // Decimal ceil
   if (!Math.ceil10) {
-    Math.ceil10 = function(value, exp) {
-      return decimalAdjust('ceil', value, exp);
-    };
+    Math.ceil10 = (value, exp) => decimalAdjust('ceil', value, exp);
   }
 })();
