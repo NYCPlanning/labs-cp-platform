@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
 import { connect } from 'react-redux';
 
 import * as capitalProjectsActions from '../../../actions/capitalProjects';
 import CountWidget from '../../../common/CountWidget';
 import InfoIcon from '../../../common/InfoIcon';
-import CostGroupChart from '../../../common/CostGroupChart';
 import RangeSlider from '../../../common/RangeSlider';
 import RangeInputs from '../../../common/RangeInputs';
 import MultiSelect from '../../../common/MultiSelect';
@@ -38,8 +36,6 @@ class Filter extends React.Component {
     const {
       totalCount,
       selectedCount,
-      pointsSql,
-      polygonsSql,
       filterDimensions,
     } = this.props;
 
@@ -63,21 +59,6 @@ class Filter extends React.Component {
           resetFilter={this.resetFilter}
         />
         <div className="scroll-container count-widget-offset" style={{ paddingTop: '15px' }}>
-          <Subheader>
-            Number of Projects by Planned Commitment
-            <InfoIcon text="Sum of commitments in the latest Capital Commitment Plan" />
-          </Subheader>
-          {
-            pointsSql && polygonsSql &&
-              <CostGroupChart
-                pointsSql={pointsSql}
-                polygonsSql={polygonsSql}
-              />
-          }
-          <Divider
-            style={{ marginBottom: '15px' }}
-          />
-
           <ListItem
             disabled
             style={listItemStyle}
@@ -245,8 +226,6 @@ Filter.defaultProps = {
 Filter.propTypes = {
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
-  pointsSql: PropTypes.string.isRequired,
-  polygonsSql: PropTypes.string.isRequired,
   filterDimensions: PropTypes.object.isRequired,
   resetFilter: PropTypes.func.isRequired,
   setFilterDimension: PropTypes.func.isRequired,

@@ -23,11 +23,11 @@ import {
 } from '../jane-layers';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 
-import CPListItem from './list-items/CPListItem';
-import SCAListItem from './list-items/SCAListItem';
-import FacilitiesListItem from './list-items/FacilitiesListItem';
-import HousingDevelopmentListItem from './list-items/HousingDevelopmentListItem';
-import BudgetRequestLineItem from './list-items/BudgetRequestListItem';
+import CPListItem from '../list-items/CPListItem';
+import SCAListItem from '../list-items/SCAListItem';
+import FacilitiesListItem from '../list-items/FacilitiesListItem';
+import HousingDevelopmentListItem from '../list-items/HousingDevelopmentListItem';
+import BudgetRequestLineItem from '../list-items/BudgetRequestListItem';
 
 import appConfig from '../helpers/appConfig';
 
@@ -185,9 +185,11 @@ class CapitalProjectsExplorer extends React.Component {
           />
         </Jane>
 
+        { /*
         <SelectedFeaturesPane>
           {listItems}
         </SelectedFeaturesPane>
+        */ }
       </div>
     );
   }

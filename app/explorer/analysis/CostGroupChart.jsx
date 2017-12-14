@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as capitalProjectsActions from '../actions/capitalProjects';
+
+import InfoIcon from '../../common/InfoIcon';
+import * as capitalProjectsActions from '../../actions/capitalProjects';
 
 /* eslint-disable no-undef */
 
@@ -121,7 +123,12 @@ class CostGroupChart extends React.Component {
 
   render() {
     return (
-      <div className="chart-container" ref={(node) => { this.chartContainer = node; }} />
+      <div>
+        Number of Projects by Planned Commitment
+        <InfoIcon text="Sum of commitments in the latest Capital Commitment Plan" />
+
+        <div className="chart-container" ref={(node) => { this.chartContainer = node; }} />
+      </div>
     );
   }
 }
@@ -135,6 +142,8 @@ CostGroupChart.propTypes = {
 
 const mapStateToProps = ({ capitalProjects }) => ({
   costGroupData: capitalProjects.costGroupData,
+  pointsSql: capitalProjects.pointsSql,
+  polygonsSql: capitalProjects.polygonsSql,
 });
 
 export default connect(mapStateToProps, {

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-import { getColor } from '../../filter-configs/housing-config';
+import { getColor } from '../filter-configs/housing-config';
 
 const Item = ({ feature }) => {
   const { cartodb_id,

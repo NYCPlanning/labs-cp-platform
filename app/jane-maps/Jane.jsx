@@ -7,7 +7,9 @@ import GLMap from './GLMap';
 import LayerList from './LayerList';
 import JaneLayer from './JaneLayer';
 import Marker from './Marker';
-import Search from './Search';
+
+import Search from '../explorer/Search';
+import TopBar from '../explorer/TopBar';
 
 class Jane extends React.Component {
 
@@ -188,24 +190,21 @@ class Jane extends React.Component {
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.selectedLayer) leftOffset += 320;
 
-    const drawerClassName = cx('second-drawer', { offset: this.state.layerListExpanded });
-    const drawerStyle = {
-      transform: this.state.selectedLayer ? 'translate(0px, 0px)' : 'translate(-320px, 0px)',
-    };
-
     return (
       <div className="jane-container" style={this.props.style}>
+
         <div className="jane-map-container">
-          {
-            this.props.search &&
+          <TopBar
+            leftOffset={leftOffset}
+            layers={this.state.layers}
+          >
             <Search
               {...this.props.searchConfig}
               onGeocoderSelection={this.addSearchResultMarker}
               onClear={this.removeSearchResultMarker}
               selectionActive={!!this.state.searchResultMarker}
-              leftOffset={leftOffset}
             />
-          }
+          </TopBar>
 
           {
             this.state.legend.length > 0 &&
@@ -231,7 +230,12 @@ class Jane extends React.Component {
           toggleLayer={this.toggleLayer}
         />
 
-        <div className={drawerClassName} style={drawerStyle}>
+        <div
+          className={cx('second-drawer', { offset: this.state.layerListExpanded })}
+          style={{
+            transform: this.state.selectedLayer ? 'translate(0px, 0px)' : 'translate(-320px, 0px)',
+          }}
+        >
           { this.props.children }
 
           {
@@ -242,7 +246,6 @@ class Jane extends React.Component {
           }
         </div>
       </div>
-
     );
   }
 }

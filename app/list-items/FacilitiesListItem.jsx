@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-import colors from '../../facilities/colors';
+import colors from '../facilities/colors';
 
 import './FacilitiesListItem.scss';
 
