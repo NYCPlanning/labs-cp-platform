@@ -4,9 +4,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 
-// get styles for jane-maps
-import './jane-maps/styles.scss';
-
 import * as authActions from './actions/auth';
 
 import GlobalModal from './common/GlobalModal';
