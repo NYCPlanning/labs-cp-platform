@@ -5,7 +5,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       $.ajax({ // eslint-disable-line no-undef
         type: 'POST',
-        url: `https://${options.carto_domain}/user/${options.carto_user}/api/v1/map`,
+        url: `https://${options.carto_domain}/api/v1/map`,
         data: JSON.stringify(mapConfig),
         dataType: 'text',
         contentType: 'application/json',
@@ -13,7 +13,7 @@ module.exports = {
           data = JSON.parse(data);
           const layergroupid = data.layergroupid;
 
-          const template = `https://${options.carto_domain}/user/${options.carto_user}/api/v1/map/${layergroupid}/{z}/{x}/{y}.mvt`;
+          const template = `https://${options.carto_domain}/api/v1/map/${layergroupid}/{z}/{x}/{y}.mvt`;
 
           resolve(template);
         },

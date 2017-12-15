@@ -23,7 +23,6 @@ const FacilitiesJaneLayer = props => (
       type="cartovector"
       options={{
         carto_domain: appConfig.carto_domain,
-        carto_user: appConfig.carto_user,
         sql: [props.sql],
       }}
     />

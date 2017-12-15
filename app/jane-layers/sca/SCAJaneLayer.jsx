@@ -19,7 +19,6 @@ const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
       id="sca-points"
       type="cartovector"
       options={{
-        carto_user: appConfig.carto_user,
         carto_domain: appConfig.carto_domain,
         sql: ['SELECT * FROM cpdb_sca_pts_170201'],
       }}

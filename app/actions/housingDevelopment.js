@@ -47,7 +47,7 @@ export const fetchTotalCount = () => ({
 export const fetchSelectedCount = filterDimensions => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT count(*) FROM (${getSql(filterDimensions)}) a`,
+    sql: `SELECT COUNT(*) FROM (${getSql(filterDimensions)}) a`,
     requestFormat: 'json',
     nextType: AT.FETCH_HOUSING_DEVELOPMENT_SELECTED_COUNT,
   },

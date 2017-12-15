@@ -33,7 +33,7 @@ class CartoRasterSource extends React.Component {
   }
 
   fetchData() {
-    const { carto_domain, carto_user } = this.props.source.options;
+    const { carto_domain } = this.props.source.options;
 
     const mapConfig = {
       version: '1.3.0',
@@ -50,13 +50,13 @@ class CartoRasterSource extends React.Component {
     $.ajax({ // eslint-disable-line no-undef
       type: 'POST',
       data: JSON.stringify(mapConfig),
-      url: `https://${carto_domain}/user/${carto_user}/api/v1/map`,
+      url: `https://${carto_domain}/api/v1/map`,
       dataType: 'text',
       contentType: 'application/json',
       success: (data) => {
         data = JSON.parse(data);
         const layergroupid = data.layergroupid;
-        const template = `https://${carto_domain}/user/${carto_user}/api/v1/map/${layergroupid}/{z}/{x}/{y}.png`;
+        const template = `https://${carto_domain}/api/v1/map/${layergroupid}/{z}/{x}/{y}.png`;
         this.addSource(template);
       },
     });

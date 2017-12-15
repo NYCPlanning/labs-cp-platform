@@ -44,7 +44,6 @@ class FloodHazardsJaneLayer extends React.Component {
     }
 
     const sourceOptions = {
-      carto_user: appConfig.carto_user,
       carto_domain: appConfig.carto_domain,
       sql: ['SELECT the_geom_webmercator, fld_zone FROM support_waterfront_pfirm15 WHERE fld_zone = \'AE\' OR fld_zone = \'0.2 PCT ANNUAL CHANCE FLOOD HAZARD\' OR fld_zone = \'VE\''],
     };

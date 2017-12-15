@@ -89,7 +89,6 @@ class FacilitiesExplorer extends React.Component {
 
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
-      carto_user: appConfig.carto_user,
       sql: [this.props.sql],
     };
 

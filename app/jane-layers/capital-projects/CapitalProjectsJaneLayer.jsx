@@ -22,7 +22,6 @@ const CapitalProjectsJaneLayer = props => (
       id="capital-projects"
       type="cartovector"
       options={{
-        carto_user: appConfig.carto_user,
         carto_domain: appConfig.carto_domain,
         sql: [props.pointsSql, props.polygonsSql],
       }}

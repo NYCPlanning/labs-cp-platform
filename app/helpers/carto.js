@@ -12,7 +12,7 @@ export default {
   },
 
   generateUrlString(sql, fileType, filename = 'download') {
-    const apiString = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?skipfields=cartodb_id&q=${sql}&format=${fileType}&filename=${filename}`;
+    const apiString = `https://${appConfig.carto_domain}/api/v2/sql?skipfields=cartodb_id&q=${sql}&format=${fileType}&filename=${filename}`;
     return encodeURI(apiString);
   },
 

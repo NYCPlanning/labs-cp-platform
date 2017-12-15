@@ -4,7 +4,7 @@ import appConfig from '../helpers/appConfig';
 import { browserHistory } from 'react-router';
 
 const generateUrlString = (sql, format, filename = 'download') => encodeURI(
-  `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?skipfields=cartodb_id&q=${sql}&format=${format}&filename=${filename}`,
+  `https://${appConfig.carto_domain}/api/v2/sql?skipfields=cartodb_id&q=${sql}&format=${format}&filename=${filename}`,
 );
 
 let uniqueId = 0;
