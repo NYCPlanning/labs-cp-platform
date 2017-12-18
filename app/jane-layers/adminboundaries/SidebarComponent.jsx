@@ -91,12 +91,6 @@ const SidebarComponent = props => (
               onChange={(v) => { props.onRadioChange(v.target.value); }}
               valueSelected={props.selected}
             >
-
-              <RadioButton
-                value="schooldistricts"
-                label="School Districts"
-              />
-
               <RadioButton
                 value="firedivisions"
                 label="Fire Divisions"
@@ -116,7 +110,33 @@ const SidebarComponent = props => (
                 value="policeprecincts"
                 label="Police Precincts"
               />
+            </RadioButtonGroup>
 
+            <h4>Schools</h4>
+            <RadioButtonGroup
+              name="adminboundary"
+              onChange={(v) => { props.onRadioChange(v.target.value); }}
+              valueSelected={props.selected}
+            >
+              <RadioButton
+                value="schooldistricts"
+                label="School Districts"
+              />
+
+              <RadioButton
+                value="schoolzones-es"
+                label="School Zones (Elementary)"
+              />
+
+              <RadioButton
+                value="schoolzones-ms"
+                label="School Zones (Middle School)"
+              />
+
+              <RadioButton
+                value="schoolzones-hs"
+                label="School Zones (High School)"
+              />
             </RadioButtonGroup>
           </div>
         </div>

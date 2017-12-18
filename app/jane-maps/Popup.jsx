@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 import Mustache from 'mustache';
+import _ from 'lodash';
 
 import './Popup.scss';
 
@@ -22,6 +23,12 @@ class Popup extends React.Component {
       const view = {
         p: e.features[0].properties,
       };
+
+      _.each(view.p, (value, key) => {
+        if (value === 'null' || value === null) {
+          delete view.p[key];
+        }
+      });
 
       this.popup.setLngLat(e.lngLat)
         .setHTML(Mustache.render(this.props.template, view))

@@ -145,6 +145,21 @@ const mapLayers = {
       },
     },
   },
+  schoolzones_es: {
+    type: 'line',
+    paint: paint.lines,
+    layout: layout.lines,
+  },
+  schoolzones_ms: {
+    type: 'line',
+    paint: paint.lines,
+    layout: layout.lines,
+  },
+  schoolzones_hs: {
+    type: 'line',
+    paint: paint.lines,
+    layout: layout.lines,
+  },
   boroughboundaries: {
     type: 'line',
     paint: paint.lines,
