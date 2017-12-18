@@ -412,6 +412,17 @@ export const mapLayers = {
       },
     },
   },
+  citibike_stations: {
+    type: 'circle',
+    minzoom: 12,
+    paint: {
+      'circle-color': '#052b6c',
+      'circle-opacity': 0.7,
+      'circle-radius': 5,
+      'circle-stroke-width': 0,
+      'circle-pitch-scale': 'map',
+    },
+  },
 };
 
 export const sources = {
@@ -435,5 +446,8 @@ export const sources = {
   },
   bike_routes: {
     tiles: ['https://api.capitalplanning.nyc/static_tiles/bike_routes/{z}/{x}/{y}.mvt'],
+  },
+  citibike_stations: {
+    data: '/data/citibike-stations.geojson',
   },
 };
