@@ -104,8 +104,8 @@ class Search extends React.Component {
           onSuggestionSelected={this.onSuggestionSelected}
         />
         {this.props.selectionActive ?
-          <span className={'fa fa-times'} onClick={this.clearInput} /> :
-          <span className={'fa fa-search'} />
+          <span className={'fa fa-times'} style={{ cursor: 'pointer' }} onClick={this.clearInput} /> :
+          <span className={'fa fa-search'} style={{ cursor: 'pointer' }} />
         }
       </div>
     );

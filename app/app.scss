@@ -589,7 +589,7 @@ body:after {
       }
 
       .react-autosuggest__input {
-        margin: 6px 10px 0;
+        margin: 6px 10px;
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 14px;
@@ -601,22 +601,19 @@ body:after {
       }
 
       .react-autosuggest__container, .react-autosuggest__input {
-        width: 300px;
+        width: 280px;
         display: inline-block;
       }
 
       .react-autosuggest__container--open .react-autosuggest__suggestions-container {
         display: block;
-        position: relative;
+        position: absolute;
+        width: 310px;
         font-weight: 300;
         font-size: 13px;
         z-index: 2;
         cursor: pointer;
         background: rgb(95, 95, 95);
-      }
-
-      .react-autosuggest__suggestion--focused {
-        background: #eaeaea;
       }
 
       ul {
@@ -626,7 +623,7 @@ body:after {
       }
 
       li {
-        padding: 4px 8px;
+        padding: 4px 2px;
       }
 
       li .fa {
