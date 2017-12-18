@@ -7,7 +7,6 @@ import appConfig from '../helpers/appConfig';
 import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
 import ListItem from './janelayer/ListItem';
 import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
-import HighlightJaneLayer from '../jane-layers/highlight/HighlightJaneLayer';
 
 import {
   AerialsJaneLayer,
@@ -15,6 +14,8 @@ import {
   FloodHazardsJaneLayer,
   ZoningJaneLayer,
   AdminBoundariesJaneLayer,
+  InclusionaryHousingJaneLayer,
+  HighlightJaneLayer,
 } from '../jane-layers';
 
 import * as facilitiesActions from '../actions/facilities';
@@ -113,6 +114,7 @@ class FacilitiesExplorer extends React.Component {
           <FloodHazardsJaneLayer />
           <AdminBoundariesJaneLayer />
           <ZoningJaneLayer />
+          <InclusionaryHousingJaneLayer />
           <JaneLayer
             id="facilities"
             name="Facilities and Program Sites"
