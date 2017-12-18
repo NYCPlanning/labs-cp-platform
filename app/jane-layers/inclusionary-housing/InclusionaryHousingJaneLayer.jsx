@@ -38,7 +38,6 @@ class InclusionaryHousingJaneLayer extends React.Component {
         id="ih"
         type="cartovector"
         options={{
-          carto_user: appConfig.carto_user,
           carto_domain: appConfig.carto_domain,
           sql: ['SELECT * FROM support_ih'],
         }}
@@ -76,7 +75,6 @@ class InclusionaryHousingJaneLayer extends React.Component {
         id="mih"
         type="cartovector"
         options={{
-          carto_user: appConfig.carto_user,
           carto_domain: appConfig.carto_domain,
           sql: ['SELECT * FROM support_mih'],
         }}

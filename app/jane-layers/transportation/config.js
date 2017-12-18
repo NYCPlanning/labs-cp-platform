@@ -1,7 +1,4 @@
-const appConfig = {
-  carto_user: 'data',
-  carto_domain: 'carto.planninglabs.nyc',
-};
+import appConfig from '../../helpers/appConfig';
 
 export const mapLayers = {
   bus_stops: {
@@ -415,29 +412,42 @@ export const mapLayers = {
       },
     },
   },
+  citibike_stations: {
+    type: 'circle',
+    minzoom: 12,
+    paint: {
+      'circle-color': '#052b6c',
+      'circle-opacity': 0.7,
+      'circle-radius': 5,
+      'circle-stroke-width': 0,
+      'circle-pitch-scale': 'map',
+    },
+  },
 };
 
 export const sources = {
   subway_lines: {
-    data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_mta_subway_routes&format=geojson`,
+    data: `https://${appConfig.carto_domain}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_mta_subway_routes&format=geojson`,
   },
   subway_stations: {
-    data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_mta_subway_stops&format=geojson`,
+    data: `https://${appConfig.carto_domain}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_mta_subway_stops&format=geojson`,
   },
   bus_stops: {
     options: {
-      carto_user: appConfig.carto_user,
       carto_domain: appConfig.carto_domain,
       sql: ['SELECT * FROM support_trans_mta_bus_stops'],
     },
   },
   path_routes: {
-    data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_path_rail_routes&format=geojson`,
+    data: `https://${appConfig.carto_domain}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_path_rail_routes&format=geojson`,
   },
   path_stops: {
-    data: `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_path_rail_stops&format=geojson`,
+    data: `https://${appConfig.carto_domain}/api/v2/sql?q=SELECT%20*%20FROM%20support_trans_path_rail_stops&format=geojson`,
   },
   bike_routes: {
     tiles: ['https://api.capitalplanning.nyc/static_tiles/bike_routes/{z}/{x}/{y}.mvt'],
+  },
+  citibike_stations: {
+    data: '/data/citibike-stations.geojson',
   },
 };

@@ -101,6 +101,17 @@ class TransportationJaneLayer extends React.Component {
     ].map((child, index) => ({ ...child, key: index }));
   }
 
+  renderCitibikeStations() {
+    if (!this.state.checkboxes.citibike) {
+      return null;
+    }
+
+    return [
+      <Source id="citibike_stations" type="geojson" data={sources.citibike_stations.data} />,
+      <MapLayer id="citibike_stations" source="citibike_stations" {...mapLayers.citibike_stations} />,
+    ].map((child, index) => ({ ...child, key: index }));
+  }
+
   render() {
     return (
       <JaneLayer
@@ -115,6 +126,7 @@ class TransportationJaneLayer extends React.Component {
         { this.renderBusStops() }
         { this.renderPath() }
         { this.renderBikeRoutes() }
+        { this.renderCitibikeStations() }
       </JaneLayer>
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { JaneLayer, Source, MapLayer } from '../../jane-maps';
+import { JaneLayer, Source, MapLayer, Popup } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
 import mapLayers from './config';
@@ -95,6 +95,66 @@ class AdminBoundariesJaneLayer extends React.Component {
       <Source id="schooldistricts" type="geojson" data="/data/schooldistricts.geojson" />,
       <MapLayer id="schooldistricts" source="schooldistricts" {...mapLayers.schooldistricts} />,
       <MapLayer id="schooldistricts_labels" source="schooldistricts" {...mapLayers.schooldistricts_labels} />,
+    ].map((child, index) => ({ ...child, key: index }));
+  }
+
+  renderSchoolZonesES() {
+    if (this.state.selected !== 'schoolzones-es') {
+      return null;
+    }
+
+    return [
+      <Source id="schoolzones_es" type="geojson" data="/data/schoolzones-es.geojson" />,
+      <MapLayer id="schoolzones_es" source="schoolzones_es" {...mapLayers.schoolzones_es} />,
+      <MapLayer id="schoolzones_es_fill" source="schoolzones_es" type="fill" paint={{ 'fill-opacity': 0 }} />,
+      <Popup
+        mapLayerId="schoolzones_es_fill"
+        template={`
+          <h1>School Zone (Elementary)</h1>
+          <div>{{p.DBN}}</div>
+          <div>{{p.REMARKS}}</div>
+        `}
+      />,
+    ].map((child, index) => ({ ...child, key: index }));
+  }
+
+  renderSchoolZonesMS() {
+    if (this.state.selected !== 'schoolzones-ms') {
+      return null;
+    }
+
+    return [
+      <Source id="schoolzones_ms" type="geojson" data="/data/schoolzones-ms.geojson" />,
+      <MapLayer id="schoolzones_ms" source="schoolzones_ms" {...mapLayers.schoolzones_ms} />,
+      <MapLayer id="schoolzones_ms_fill" source="schoolzones_ms" type="fill" paint={{ 'fill-opacity': 0 }} />,
+      <Popup
+        mapLayerId="schoolzones_ms_fill"
+        template={`
+          <h1>School Zone (Middle School)</h1>
+          <div>{{p.DBN}}</div>
+          <div>{{p.REMARKS}}</div>
+        `}
+      />,
+    ].map((child, index) => ({ ...child, key: index }));
+  }
+
+  renderSchoolZonesHS() {
+    if (this.state.selected !== 'schoolzones-hs') {
+      return null;
+    }
+
+    return [
+      <Source id="schoolzones_hs" type="geojson" data="/data/schoolzones-hs.geojson" />,
+      <MapLayer id="schoolzones_hs" source="schoolzones_hs" {...mapLayers.schoolzones_hs} />,
+      <MapLayer id="schoolzones_hs_fill" source="schoolzones_hs" type="fill" paint={{ 'fill-opacity': 0 }} />,
+      <Popup
+        mapLayerId="schoolzones_hs_fill"
+        template={`
+          <h1>School Zone (High School)</h1>
+          <div>{{p.DBN}}</div>
+          <div>{{p.Remarks}}</div>
+        `}
+      />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 
@@ -241,11 +301,15 @@ class AdminBoundariesJaneLayer extends React.Component {
         { this.renderStateSenateDistricts() }
         { this.renderUSCongressionalDistricts() }
 
-        { this.renderSchoolDistricts() }
         { this.renderFireDivisions() }
         { this.renderFireBattalions() }
         { this.renderFireCompanies() }
         { this.renderPolicePrecincts() }
+
+        { this.renderSchoolDistricts() }
+        { this.renderSchoolZonesES() }
+        { this.renderSchoolZonesMS() }
+        { this.renderSchoolZonesHS() }
       </JaneLayer>
     );
   }

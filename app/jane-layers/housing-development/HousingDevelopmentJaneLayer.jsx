@@ -126,7 +126,6 @@ class HousingDevelopmentJaneLayer extends React.Component {
           type="cartovector"
           options={{
             carto_domain: appConfig.carto_domain,
-            carto_user: appConfig.carto_user,
             sql: [this.props.sql],
           }}
         />

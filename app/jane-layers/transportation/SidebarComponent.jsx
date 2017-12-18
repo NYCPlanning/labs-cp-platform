@@ -39,6 +39,11 @@ const SidebarComponent = props => (
               checked={props.checkboxes.bike_routes}
               onCheck={() => props.onCheckboxChange('bike_routes')}
             />
+            <Checkbox
+              label="Citibike Stations"
+              checked={props.checkboxes.citibike}
+              onCheck={() => props.onCheckboxChange('citibike')}
+            />
           </div>
         </div>
       </Tab>
@@ -59,6 +64,10 @@ const SidebarComponent = props => (
               <li style={listItemStyle}>
                 <h6 style={listHeaderStyle}>Bike Routes</h6>
                 <p>Via <a href="https://data.cityofnewyork.us/Transportation/Bike-Routes/umu5-zyd3">NYC Open Data</a></p>
+              </li>
+              <li style={listItemStyle}>
+                <h6 style={listHeaderStyle}>Citibike Stations</h6>
+                <p>Via <a href="https://gbfs.citibikenyc.com/gbfs/en/station_information.json">Citibike GBFS Feed</a></p>
               </li>
             </ul>
             <p />

@@ -61,7 +61,6 @@ class ZoningJaneLayer extends React.Component {
     }
 
     const sourceOptions = {
-      carto_user: appConfig.carto_user,
       carto_domain: appConfig.carto_domain,
       sql: ['SELECT *, LEFT(zonedist, 2) as primaryzone FROM support_zoning_zd'],
     };
@@ -133,7 +132,6 @@ class ZoningJaneLayer extends React.Component {
     }
 
     const sourceOptions = {
-      carto_user: appConfig.carto_user,
       carto_domain: appConfig.carto_domain,
       sql: ['SELECT * FROM support_zoning_co'],
     };

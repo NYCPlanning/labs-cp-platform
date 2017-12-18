@@ -15,10 +15,8 @@ switch (process.env.NODE_ENV) {
 const appConfig = {
   auth0_client_id: '3bulG9YPLTsoujIHvFg91w04HNIODCu1',
   auth0_domain: 'cpmanage.auth0.com',
-  mapbox_accessToken: 'pk.eyJ1IjoiY2FwaXRhbHBsYW5uaW5nbnljIiwiYSI6ImNqODUwYmxyYzBnY3AycW9hOXA5NDE2eDQifQ.HYuWjTiwSoTu-QLWo0D76w',
-  otp_domain: 'otp.capitalplanning.nyc',
-  carto_domain: 'carto.planninglabs.nyc',
-  carto_user: 'data',
+  mapbox_accessToken: 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q',
+  carto_domain: 'planninglabs.carto.com',
   mapzen_api_key: 'mapzen-ec5DaFV',
   ga_tracking_code: 'UA-84250233-2',
   api_domain,

@@ -49,7 +49,7 @@ export const fetchTotalPolygonsCount = () => ({
 export const fetchSelectedCount = filterDimensions => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT count(*) FROM (${unionSql(filterDimensions)}) a`,
+    sql: `SELECT COUNT(*) FROM (${unionSql(filterDimensions)}) a`,
     requestFormat: 'json',
     nextType: AT.FETCH_CAPITAL_PROJECTS_SELECTED_COUNT,
   },
