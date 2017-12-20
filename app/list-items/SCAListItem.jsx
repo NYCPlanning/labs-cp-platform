@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './ListItem.scss';
-
 const Item = (props) => {
   const d = props.feature.properties;
 

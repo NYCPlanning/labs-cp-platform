@@ -25,8 +25,6 @@ const Item = ({ feature }) => {
         <div className="subtitle">
           { dcp_status } | { u_net } units
         </div>
-
-        <i className="fa fa-chevron-right" />
       </div>
     </Link>
   );

@@ -4,8 +4,6 @@ import { Link } from 'react-router';
 
 import colors from '../facilities/colors';
 
-import './FacilitiesListItem.scss';
-
 const Item = (props) => {
   const d = props.feature.properties;
 
@@ -34,7 +32,6 @@ const Item = (props) => {
         <div className={'subtitle'}>{d.factype}</div>
         <div className={'subtitle'}>{d.address}</div>
         <div className={'subtitle'}><span className={'operated-by'}>Operated by:</span> {d.opname}</div>
-        <i className="fa fa-chevron-right" />
       </div>
     </Link>
   );

@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-import './ListItem.scss';
-
 const Item = (props) => {
   const d = props.feature.properties;
 
@@ -23,8 +21,6 @@ const Item = (props) => {
         <div className={'title'}>{d.need}</div>
         <div className={'subtitle'}><strong>{d.name}</strong></div>
         <div className={'subtitle'}>{d.agency}</div>
-
-        <i className="fa fa-chevron-right" />
       </div>
     </Link>
   );

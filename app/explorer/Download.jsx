@@ -1,28 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import DownloadButton from './download/DownloadButton';
 
 class Download extends React.Component {
   activeLayers = () => this.props.layers.filter(layer => layer.enabled);
   activeLayerIDs = () => this.activeLayers().map(layer => layer.id);
 
-  buttonTitleMap = {
-    'capital-projects': 'Capital Projects',
-    scaplan: 'SCA Capital Projects',
-    'housing-development': 'Housing Development',
-    'cb-budgetrequests': 'Budget Requests',
-    'facilities-cp': 'Facilities',
+  layerMap = {
+    'capital-projects': {
+      title: 'Capital Projects',
+      noun: 'projects',
+      icon: 'usd',
+    },
+    scaplan: {
+      title: 'SCA Capital Projects',
+      noun: 'projects',
+      icon: 'graduation-cap',
+    },
+    'housing-development': {
+      title: 'Housing Development',
+      noun: 'developments',
+      icon: 'cubes',
+    },
+    'cb-budgetrequests': {
+      title: 'Budget Requests',
+      noun: 'requests',
+      icon: 'book',
+    },
+    'facilities-cp': {
+      title: 'Facilities',
+      noun: 'facilities',
+      icon: 'university',
+    },
   }
 
+  layers = [
+    'capital-projects',
+    // 'scaplan',
+    'housing-development',
+    'cb-budgetrequests',
+    'facilities-cp',
+  ];
+
   render() {
+    const { counts, sql } = this.props;
+
     return (<div>
       {
-        this.activeLayerIDs().map(layerID => (
-          <DownloadButton
-            layerID={layerID}
-            title={this.buttonTitleMap[layerID]}
-            sql=""
-          />
+        this.layers.map(layerID => (
+          <div className="download-row">
+            <h5><span className={`fa fa-${this.layerMap[layerID].icon}`} /> {this.layerMap[layerID].title}</h5>
+            <DownloadButton
+              layerID={layerID}
+              noun={this.layerMap[layerID].noun}
+              sql={sql[layerID]}
+              counts={{
+                total: counts.total[layerID],
+                filtered: counts.filtered[layerID],
+              }}
+              filtered={counts.total[layerID] !== counts.filtered[layerID]}
+            />
+          </div>
         ))
       }
     </div>);
@@ -31,10 +70,32 @@ class Download extends React.Component {
 
 Download.propTypes = {
   layers: PropTypes.array.isRequired,
+  counts: PropTypes.object.isRequired,
+  sql: PropTypes.object.isRequired,
 };
 
-Download.defaultProps = {
 
-};
+const mapStateToProps = ({ facilitiesCP, capitalProjects, cbBudgetRequests, housingDevelopment }) => ({
+  counts: {
+    total: {
+      'capital-projects': capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,
+      'facilities-cp': facilitiesCP.totalCount,
+      'cb-budgetrequests': cbBudgetRequests.totalCount,
+      'housing-development': housingDevelopment.totalCount,
+    },
+    filtered: {
+      'capital-projects': capitalProjects.selectedCount,
+      'facilities-cp': facilitiesCP.selectedCount,
+      'cb-budgetrequests': cbBudgetRequests.selectedCount,
+      'housing-development': housingDevelopment.selectedCount,
+    },
+  },
+  sql: {
+    'capital-projects': capitalProjects.sql,
+    'facilities-cp': facilitiesCP.sql,
+    'cb-budgetrequests': cbBudgetRequests.sql,
+    'housing-development': housingDevelopment.sql,
+  },
+});
 
-export default Download;
+export default connect(mapStateToProps)(Download);

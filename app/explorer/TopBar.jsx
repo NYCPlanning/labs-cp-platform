@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import Analysis from './Analysis';
 import Results from './Results';
@@ -10,7 +11,7 @@ class TopBar extends React.Component {
     super(props);
 
     this.state = {
-      dropdown: null,
+      dropdown: 'results',
     };
   }
 
@@ -23,20 +24,30 @@ class TopBar extends React.Component {
   }
 
   render() {
+    const isResult = this.state.dropdown === 'results';
+    const isAnalysis = this.state.dropdown === 'analysis';
+    const isDownload = this.state.dropdown === 'download';
+
     return (
       <div className="top-bar" style={{ left: this.props.leftOffset }}>
         {this.props.children}
 
         <div className="dropdown-buttons" style={{ right: this.props.leftOffset }}>
-          <button onClick={() => this.selectDropdown('results')}><span className={'fa fa-list'} />Results</button>
-          <button onClick={() => this.selectDropdown('analysis')}><span className={'fa fa-bar-chart'} />Analysis</button>
-          <button onClick={() => this.selectDropdown('download')}><span className={'fa fa-download'} />Download</button>
+          <button onClick={() => this.selectDropdown('results')} className={cx({ active: isResult })}>
+            <span className={'fa fa-list'} />Selection
+          </button>
+          <button onClick={() => this.selectDropdown('analysis')} className={cx({ active: isAnalysis })}>
+            <span className={'fa fa-bar-chart'} />Analysis
+          </button>
+          <button onClick={() => this.selectDropdown('download')} className={cx({ active: isDownload })}>
+            <span className={'fa fa-download'} />Download
+          </button>
         </div>
 
         <div className="top-bar-dropdown" display={!!this.state.dropdown} style={{ right: this.props.leftOffset }}>
-          { this.state.dropdown === 'results' && <Results /> }
-          { this.state.dropdown === 'analysis' && <Analysis /> }
-          { this.state.dropdown === 'download' && <Download layers={this.props.layers} /> }
+          { isResult && <Results /> }
+          { isAnalysis && <Analysis /> }
+          { isDownload && <Download layers={this.props.layers} /> }
         </div>
       </div>
     );

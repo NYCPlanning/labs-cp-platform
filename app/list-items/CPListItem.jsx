@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import numeral from 'numeral';
 
-// import agencies from '../agencies';
-
-import './ListItem.scss';
-
 const Item = (props) => {
   const d = props.feature.properties;
 
@@ -25,8 +21,6 @@ const Item = (props) => {
       >
         <div className={'title'}>{d.description}</div>
         <div className={'subtitle'}>Planned Commitments: ${numeral(d.totalcommit).format('0,0')}</div>
-
-        <i className="fa fa-chevron-right" />
       </div>
     </Link>
   );

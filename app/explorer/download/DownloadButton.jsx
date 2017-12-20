@@ -1,50 +1,82 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { ButtonGroup, DropdownButton, MenuItem, Badge } from 'react-bootstrap';
 
 import carto from '../../helpers/carto';
 import ga from '../../helpers/ga';
 
 class DownloadButton extends React.Component {
-  logDownloadStat = (label) => {
+  logDownloadStat = (label, action) => {
     ga.event({
       category: 'download',
-      action: 'csv',
+      action,
       label,
     });
   };
 
   render() {
-    const { sql, layerID, title } = this.props;
+    const { sql, layerID, counts, noun, filtered } = this.props;
 
     return (
-      <DropdownButton title={title} pullRight id="dropdown-size-medium">
-        <MenuItem
-          href={carto.completeDownloadUrlString(sql, layerID, 'csv')}
-          onClick={this.logDownloadStat(layerID)}
-          eventKey="1"
-        >CSV</MenuItem>
+      <div>
+        <ButtonGroup vertical>
+          <DropdownButton title={<span>{`Download all ${noun} `}<Badge>{counts.total}</Badge></span>}>
+            <MenuItem
+              href={carto.completeDownloadUrlString(sql, layerID, 'csv')}
+              onClick={this.logDownloadStat(layerID, 'csv')}
+              eventKey="1"
+            >CSV</MenuItem>
 
-        <MenuItem
-          href={carto.completeDownloadUrlString(sql, layerID, 'shapefile')}
-          onClick={this.logDownloadStat(layerID)}
-          eventKey="2"
-        >Shapefile</MenuItem>
+            <MenuItem
+              href={carto.completeDownloadUrlString(sql, layerID, 'shapefile')}
+              onClick={this.logDownloadStat(layerID, 'shapefile')}
+              eventKey="2"
+            >Shapefile</MenuItem>
 
-        <MenuItem
-          href={carto.completeDownloadUrlString(sql, layerID, 'geojson')}
-          onClick={this.logDownloadStat(layerID)}
-          eventKey="3"
-        >GeoJSON</MenuItem>
-      </DropdownButton>
+            <MenuItem
+              href={carto.completeDownloadUrlString(sql, layerID, 'geojson')}
+              onClick={this.logDownloadStat(layerID, 'geojson')}
+              eventKey="3"
+            >GeoJSON</MenuItem>
+          </DropdownButton>
+
+          { filtered &&
+            <DropdownButton title={<span>{`Download filtered ${noun} `}<Badge>{counts.filtered}</Badge></span>}>
+              <MenuItem
+                href={carto.filteredDownloadUrlString(sql, layerID, 'csv')}
+                onClick={this.logDownloadStat(layerID, 'csv')}
+                eventKey="1"
+              >CSV</MenuItem>
+
+              <MenuItem
+                href={carto.filteredDownloadUrlString(sql, layerID, 'shapefile')}
+                onClick={this.logDownloadStat(layerID, 'shapefile')}
+                eventKey="2"
+              >Shapefile</MenuItem>
+
+              <MenuItem
+                href={carto.filteredDownloadUrlString(sql, layerID, 'geojson')}
+                onClick={this.logDownloadStat(layerID, 'geojson')}
+                eventKey="3"
+              >GeoJSON</MenuItem>
+            </DropdownButton>
+          }
+        </ButtonGroup>
+      </div>
     );
   }
 }
 
 DownloadButton.propTypes = {
   sql: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  counts: PropTypes.object.isRequired,
   layerID: PropTypes.string.isRequired,
+  noun: PropTypes.string.isRequired,
+  filtered: PropTypes.bool,
+};
+
+DownloadButton.defaultProps = {
+  filtered: false,
 };
 
 export default DownloadButton;
