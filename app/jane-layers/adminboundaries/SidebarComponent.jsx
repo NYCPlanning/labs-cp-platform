@@ -15,7 +15,7 @@ const SidebarComponent = props => (
       className="sidebar-tabs"
       tabTemplateStyle={tabTemplateStyle}
     >
-      <Tab label="Data">
+      <Tab label="Filters">
         <div className="sidebar-tab-content">
           <div className="padded scroll-container">
 

@@ -20,7 +20,7 @@ class DownloadButton extends React.Component {
     return (
       <div>
         <ButtonGroup vertical>
-          <DropdownButton title={<span>{`Download all ${noun} `}<Badge>{counts.total}</Badge></span>}>
+          <DropdownButton title={<span>{`Download all ${noun} `}<Badge>{counts.total}</Badge></span>} id={`${layerID}-complete`}>
             <MenuItem
               href={carto.completeDownloadUrlString(sql, layerID, 'csv')}
               onClick={this.logDownloadStat(layerID, 'csv')}
@@ -41,7 +41,7 @@ class DownloadButton extends React.Component {
           </DropdownButton>
 
           { filtered &&
-            <DropdownButton title={<span>{`Download filtered ${noun} `}<Badge>{counts.filtered}</Badge></span>}>
+            <DropdownButton title={<span>{`Download filtered ${noun} `}<Badge>{counts.filtered}</Badge></span>} id={`${layerID}-filtered`}>
               <MenuItem
                 href={carto.filteredDownloadUrlString(sql, layerID, 'csv')}
                 onClick={this.logDownloadStat(layerID, 'csv')}

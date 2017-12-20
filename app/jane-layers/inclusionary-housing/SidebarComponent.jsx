@@ -6,7 +6,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 const SidebarComponent = props => (
   <div>
     <Tabs className="sidebar-tabs">
-      <Tab label="Data">
+      <Tab label="Filters">
         <div className="sidebar-tab-content">
           <div className="padded">
             <h4>Inclusionary Housing</h4>

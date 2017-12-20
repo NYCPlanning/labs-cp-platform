@@ -49,7 +49,7 @@ class Download extends React.Component {
     return (<div>
       {
         this.layers.map(layerID => (
-          <div className="download-row">
+          <div className="download-row" key={layerID}>
             <h5><span className={`fa fa-${this.layerMap[layerID].icon}`} /> {this.layerMap[layerID].title}</h5>
             <DownloadButton
               layerID={layerID}

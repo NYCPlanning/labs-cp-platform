@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import Filter from './filter/CapitalProjectsFilter';
-import Download from '../../common/DownloadPolyPoint';
 import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
 
@@ -23,14 +22,6 @@ class CapitalProjectsSidebar extends React.Component {
       this.props.fetchSelectedCount(nextProps.filterDimensions);
     }
   }
-
-  handleDownload = (label) => {
-    ga.event({
-      category: 'capitalprojects-explorer',
-      action: 'download',
-      label,
-    });
-  };
 
   render() {
     const { pointsSql, polygonsSql, totalCount, selectedCount, filterDimensions } = this.props;
@@ -57,19 +48,6 @@ class CapitalProjectsSidebar extends React.Component {
             selectedPointType={this.props.selectedPointType}
             selectedPointCoordinates={this.props.selectedPointCoordinates}
           />
-        </Tab>
-        <Tab label="Download">
-          <div className="sidebar-tab-content">
-            <div className="scroll-container padded">
-              <Download
-                pointsSql={pointsSql}
-                polygonsSql={polygonsSql}
-                pointsPrefix="projects-points"
-                polygonsPrefix="projects-polygons"
-                onDownload={this.handleDownload}
-              />
-            </div>
-          </div>
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">
