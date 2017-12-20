@@ -258,9 +258,13 @@ HousingDetailPage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
-  housingDetails: PropTypes.object.isRequired,
+  housingDetails: PropTypes.object,
   location: PropTypes.shape().isRequired,
   fetchDetails: PropTypes.func.isRequired,
+};
+
+HousingDetailPage.defaultProps = {
+  housingDetails: {},
 };
 
 const mapStateToProps = ({ housingDevelopment }) => ({

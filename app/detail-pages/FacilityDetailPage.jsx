@@ -20,7 +20,7 @@ const CardStyles = {
   height: '100%',
 };
 
-class DetailPage extends React.Component {
+class FacilityDetailPage extends React.Component {
   componentDidMount() {
     this.props.fetchFacilityDetails(this.props.params.id, this.props.route.facilityRoute);
   }
@@ -288,13 +288,13 @@ class DetailPage extends React.Component {
   }
 }
 
-DetailPage.defaultProps = {
+FacilityDetailPage.defaultProps = {
   auth: null,
   sources: [],
   facilityDetails: {},
 };
 
-DetailPage.propTypes = {
+FacilityDetailPage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
@@ -313,4 +313,4 @@ const mapStateToProps = ({ facilities }) => ({
 
 export default connect(mapStateToProps, {
   fetchFacilityDetails: facilitiesActions.fetchFacilityDetails,
-})(DetailPage);
+})(FacilityDetailPage);

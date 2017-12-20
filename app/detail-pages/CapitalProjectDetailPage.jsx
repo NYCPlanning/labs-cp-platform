@@ -13,9 +13,9 @@ import FeedbackForm from '../common/FeedbackForm';
 import * as capitalProjectsActions from '../actions/capitalProjects';
 
 import '../app.scss';
-import './styles.scss';
+import './CapitalProjectDetailPage.scss';
 
-class DetailPage extends React.Component {
+class CapitalProjectsDetailPage extends React.Component {
   componentDidMount() {
     this.props.fetchDetails(this.props.params.id);
     this.props.fetchBudgets(this.props.params.id);
@@ -210,7 +210,7 @@ class DetailPage extends React.Component {
 }
 
 
-DetailPage.propTypes = {
+CapitalProjectsDetailPage.propTypes = {
   params: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
@@ -231,4 +231,4 @@ export default connect(mapStateToProps, {
   fetchDetails: capitalProjectsActions.fetchDetails,
   fetchBudgets: capitalProjectsActions.fetchBudgets,
   fetchCommitments: capitalProjectsActions.fetchCommitments,
-})(DetailPage);
+})(CapitalProjectsDetailPage);

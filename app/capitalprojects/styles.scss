@@ -1,24 +1,3 @@
-.project-page {
-  h1, h2, h3, h4, h5 {
-    margin-top: 0;
-  }
-
-  .subtext {
-    color: #b3b3b3;
-    font-weight: 200;
-  }
-}
-
-@media (min-width: 992px) {
-  .project-page {
-    .equal, .equal > div[class*='col-'] {
-      display: -webkit-flex;
-      display: flex;
-      flex:1 1 auto;
-    }
-  }
-}
-
 /* Capital Expenditures Chart */
 
   .month-bar:hover {

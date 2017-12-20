@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import BackButton from '../../common/BackButton';
-import ModalMap from '../../common/ModalMap';
+import BackButton from '../common/BackButton';
+import ModalMap from '../common/ModalMap';
 
-import * as cbBudgetRequestActions from '../../actions/cbBudgetRequests';
+import * as cbBudgetRequestActions from '../actions/cbBudgetRequests';
 
-import './CBBudgetRequestsDetailPage.scss';
+import './BudgetRequestDetailPage.scss';
 
-class CBBudgetRequestsDetailPage extends React.Component {
+class BudgetRequestDetailPage extends React.Component {
   componentWillMount() {
     this.props.fetchDetails(this.props.params.id);
   }
@@ -132,11 +132,11 @@ class CBBudgetRequestsDetailPage extends React.Component {
   }
 }
 
-CBBudgetRequestsDetailPage.defaultProps = {
+BudgetRequestDetailPage.defaultProps = {
   cbDetails: {},
 };
 
-CBBudgetRequestsDetailPage.propTypes = {
+BudgetRequestDetailPage.propTypes = {
   params: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
@@ -151,4 +151,4 @@ const mapStateToProps = ({ cbBudgetRequests }) => ({
 
 export default connect(mapStateToProps, {
   fetchDetails: cbBudgetRequestActions.fetchDetails,
-})(CBBudgetRequestsDetailPage);
+})(BudgetRequestDetailPage);
