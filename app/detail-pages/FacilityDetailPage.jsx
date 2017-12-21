@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 
 import Email from '../common/EmailButton';
 import BackButton from '../common/BackButton';
-import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
 import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
@@ -192,9 +191,7 @@ class FacilityDetailPage extends React.Component {
                 </ol>
               </div>
             </div>
-          </div>
 
-          <div className={'col-md-6'}>
             <div style={{ marginBottom: '15px', marginTop: '15px' }}>
               <Card style={CardStyles} className="clearfix">
                 <CardHeader title="Property Details" />
@@ -267,20 +264,13 @@ class FacilityDetailPage extends React.Component {
                 </Card>
               </div>
             </div>
-          </div>
 
-          <div className={'col-md-6'}>
-            <div style={{ marginTop: '15px' }}>
-              {facilityDetails && <ModalMap feature={facilityDetails} label={facilityDetails.properties.facname} />}
-            </div>
-            <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
-              <FeedbackForm
-                ref_type="facility"
-                ref_id={this.props.params.id}
-                location={this.props.location}
-                auth={this.props.auth}
-              />
-            </div>
+            <FeedbackForm
+              ref_type="facility"
+              ref_id={this.props.params.id}
+              location={this.props.location}
+              auth={this.props.auth}
+            />
           </div>
         </div>
       </div>

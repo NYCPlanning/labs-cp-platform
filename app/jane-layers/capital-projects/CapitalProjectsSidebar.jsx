@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import Filter from './filter/CapitalProjectsFilter';
-import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
 
 class CapitalProjectsSidebar extends React.Component {

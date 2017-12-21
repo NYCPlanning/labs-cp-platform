@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import BackButton from '../common/BackButton';
-import ModalMap from '../common/ModalMap';
 
 import * as cbBudgetRequestActions from '../actions/cbBudgetRequests';
 
@@ -42,9 +41,7 @@ class BudgetRequestDetailPage extends React.Component {
                 <span className={'badge'} style={{ backgroundColor: 'grey' }}>Top Ten Request</span> }
             </div>
           </div>
-        </div>
 
-        <div className="col-md-6">
           <div className="row equal">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
@@ -111,10 +108,6 @@ class BudgetRequestDetailPage extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="col-md-6">
-          <ModalMap feature={this.props.cbDetails} label={d.address} />
         </div>
       </div>
     );

@@ -8,7 +8,6 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import BackButton from '../common/BackButton';
-import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 import * as capitalProjectsActions from '../actions/capitalProjects';
 
@@ -64,9 +63,6 @@ class CapitalProjectsDetailPage extends React.Component {
       </TableRow>
     ));
 
-
-    const geometryExists = this.props.details.geometry !== null;
-
     return (
       <div className="project-page">
         <div className="col-md-12">
@@ -93,9 +89,7 @@ class CapitalProjectsDetailPage extends React.Component {
               }
             </div>
           </div>
-        </div>
 
-        <div className={'col-md-6'}>
           <div className={'row equal'} style={{ marginBottom: '15px', marginTop: '15px' }}>
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
@@ -177,14 +171,7 @@ class CapitalProjectsDetailPage extends React.Component {
               </Card>
             </div>
           </div>
-        </div>
 
-        <div className={'col-md-6'}>
-          <div style={{ marginTop: '15px' }}>
-            {
-              geometryExists && <ModalMap feature={this.props.details} label={d.description} />
-            }
-          </div>
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
             <FeedbackForm
               ref_type="capitalproject"

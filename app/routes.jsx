@@ -15,8 +15,8 @@ import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 
 // Explorers
 import FacilitiesExplorer from '../app/facilities/Explorer';
-import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
 import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
+import Explorer from '../app/explorer/Explorer';
 
 // Detail Pages
 import CapitalProjectDetailPage from '../app/detail-pages/CapitalProjectDetailPage';
@@ -94,19 +94,18 @@ export default (
       }}
     />
 
-    { /* Pipeline */ }
+    { /* Redirects from deprecated explorers */ }
     <Redirect from="pipeline" to="map/housing" />
     <Redirect from="pipeline/explorer" to="map/housing" />
+    <Redirect from="capitalprojects/explorer" to="map/capitalprojects" />
 
     { /* Capital Projects */ }
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
-    <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
-
 
     { /* Consolidated Map */ }
-    <Route path="/map" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
-    <Route path="/map/:layer" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
+    <Route path="/map" component={ensureSitewideAccess(Explorer)} about={'/about/capitalprojects'} />
+    <Route path="/map/:layer" component={ensureSitewideAccess(Explorer)} about={'/about/capitalprojects'} />
     <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} about={'/about/capitalprojects'} />
 
     { /* Detail Pages */ }

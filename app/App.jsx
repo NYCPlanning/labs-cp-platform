@@ -68,6 +68,8 @@ class App extends React.Component {
 
     return (
       <div>
+        <a className="beta-notice" href="http://www1.nyc.gov/site/planning/index.page">A beta project of NYC City Planning - Capital Planning Division</a>
+
         <Nav
           title={this.props.children.props.route.title}
           about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
@@ -99,12 +101,12 @@ class App extends React.Component {
             {isModal && (
               <div
                 style={{
-                  zIndex: 1000,
+                  zIndex: 99,
                   position: 'absolute',
-                  right: 0,
-                  left: 0,
+                  right: '305px',
+                  left: '356px',
                   bottom: 0,
-                  top: 0,
+                  top: '350px',
                 }}
               >
                 {children}

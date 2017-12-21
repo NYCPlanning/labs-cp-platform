@@ -23,8 +23,6 @@ import {
 
 import appConfig from '../helpers/appConfig';
 
-import './styles.scss';
-
 const { mapboxGLOptions, searchConfig } = appConfig;
 
 class CapitalProjectsExplorer extends React.Component {
@@ -98,8 +96,6 @@ class CapitalProjectsExplorer extends React.Component {
           mapboxGLOptions={mapboxGLOptions}
           search
           searchConfig={searchConfig}
-          onDragEnd={this.clearSelectedFeatures}
-          onZoomEnd={this.clearSelectedFeatures}
           onLayerToggle={this.clearSelectedFeatures}
           onSearchTrigger={this.setAddressSearchCoordinates}
         >

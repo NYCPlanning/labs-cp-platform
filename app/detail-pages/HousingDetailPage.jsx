@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import BackButton from '../common/BackButton';
-import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import { getColor } from '../filter-configs/housing-config';
@@ -150,9 +149,6 @@ class HousingDetailPage extends React.Component {
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
             </div>
           </div>
-        </div>
-
-        <div className="col-md-6">
 
           <div className="row">
             <div className={'col-md-12'}>
@@ -228,10 +224,6 @@ class HousingDetailPage extends React.Component {
             </div>
           </div>
 
-        </div>
-
-        <div className="col-md-6">
-          <ModalMap feature={this.props.housingDetails} label={d.address} />
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"

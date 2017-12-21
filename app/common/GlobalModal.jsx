@@ -1,9 +1,3 @@
-// GlobalModal.jsx - A react-bootstrap modal that can be quickly composed
-// Props:
-//  heading - A string to be used in the header
-//  body - JSX to be inserted into the body of the modal
-//  closeText - A string to be used in the close button
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
