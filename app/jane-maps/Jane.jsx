@@ -10,6 +10,7 @@ import Marker from './Marker';
 
 import Search from '../explorer/Search';
 import TopBar from '../explorer/TopBar';
+import LowerPane from '../explorer/LowerPane';
 
 class Jane extends React.Component {
 
@@ -213,6 +214,14 @@ class Jane extends React.Component {
             </div>
           }
 
+          {
+            !_.isEmpty(this.props.selectedFeatures) &&
+            <LowerPane
+              detailPage={this.props.detailPage}
+              selectedFeatures={this.props.selectedFeatures}
+            />
+          }
+
           <GLMap
             {...this.props.mapboxGLOptions}
             ref={(map) => { this.GLMap = map; }}
@@ -251,6 +260,9 @@ class Jane extends React.Component {
 }
 
 Jane.propTypes = {
+  detailPage: PropTypes.object,
+  selectedFeatures: PropTypes.array,
+
   mapboxGLOptions: PropTypes.object.isRequired,
   style: PropTypes.object,
   search: PropTypes.bool,
@@ -264,6 +276,9 @@ Jane.propTypes = {
 };
 
 Jane.defaultProps = {
+  detailPage: {},
+  selectedFeatures: [],
+
   style: {
     position: 'absolute',
     top: 0,

@@ -118,7 +118,7 @@ class BudgetRequestDetailPage extends React.Component {
       return null;
     }
     return (
-      <div className="fluid-content display-content">
+      <div>
         {this.renderContent(this.props.cbDetails)}
       </div>
     );

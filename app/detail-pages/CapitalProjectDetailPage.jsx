@@ -16,6 +16,14 @@ import './CapitalProjectDetailPage.scss';
 
 class CapitalProjectsDetailPage extends React.Component {
   componentDidMount() {
+    this.fetchPageData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) this.fetchPageData();
+  }
+
+  fetchPageData() {
     this.props.fetchDetails(this.props.params.id);
     this.props.fetchBudgets(this.props.params.id);
     this.props.fetchCommitments(this.props.params.id);
@@ -73,8 +81,8 @@ class CapitalProjectsDetailPage extends React.Component {
             >
               <BackButton
                 location={this.props.location}
-                defaultText="Capital Projects Map"
-                defaultLink="/capitalprojects"
+                defaultText="Map"
+                defaultLink="/map"
               />
             </div>
             <div className="col-md-9 col-md-pull-3">
@@ -189,7 +197,7 @@ class CapitalProjectsDetailPage extends React.Component {
     }
 
     return (
-      <div className="fluid-content display-content">
+      <div>
         { this.renderContent() }
       </div>
     );

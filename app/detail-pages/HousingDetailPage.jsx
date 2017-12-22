@@ -239,7 +239,7 @@ class HousingDetailPage extends React.Component {
       return null;
     }
     return (
-      <div className="fluid-content display-content">
+      <div>
         {this.renderContent(this.props.housingDetails)}
       </div>
     );

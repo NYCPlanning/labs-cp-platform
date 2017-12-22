@@ -104,16 +104,18 @@ export default (
     <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
 
     { /* Consolidated Map */ }
-    <Route path="/map" component={ensureSitewideAccess(Explorer)} about={'/about/capitalprojects'} />
-    <Route path="/map/:layer" component={ensureSitewideAccess(Explorer)} about={'/about/capitalprojects'} />
+    <Route path="/map" component={Explorer} about={'/about/capitalprojects'} />
+    <Route path="/map/:layer" component={Explorer} about={'/about/capitalprojects'} />
     <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} about={'/about/capitalprojects'} />
 
     { /* Detail Pages */ }
-    <Route path="capitalproject/:id" component={ensureSitewideAccess(CapitalProjectDetailPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
-    <Route path="budgetrequest/:id" component={ensureSitewideAccess(BudgetRequestDetailPage)} title={'Budget Request Detail'} about={'/about/capitalprojects'} />
-    <Route path="development/:id" component={ensureSitewideAccess(HousingDetailPage)} title={'Development Details'} about={'/about/pipeline'} />
-    <Route path="pops/:id" component={FacilityDetailPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
-    <Route path="facility/:id" component={FacilityDetailPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
+    <Route component={Explorer}>
+      <Route path="capitalproject/:id" component={ensureSitewideAccess(CapitalProjectDetailPage)} about={'/about/capitalprojects'} />
+      <Route path="budgetrequest/:id" component={ensureSitewideAccess(BudgetRequestDetailPage)} about={'/about/capitalprojects'} />
+      <Route path="development/:id" component={ensureSitewideAccess(HousingDetailPage)} about={'/about/pipeline'} />
+      <Route path="pops/:id" component={FacilityDetailPage} about={'/about/facilities'} facilityRoute="pops" />
+      <Route path="facility/:id" component={FacilityDetailPage} about={'/about/facilities'} facilityRoute="facility" />
+    </Route>
 
     { /* Auth and Sitewide */ }
     <Route path="login" component={Login} title={'Login'} />

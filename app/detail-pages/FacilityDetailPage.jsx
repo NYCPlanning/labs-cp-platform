@@ -154,7 +154,7 @@ class FacilityDetailPage extends React.Component {
     };
 
     return (
-      <div className="fluid-content display-content">
+      <div>
         <div className="facility-page detail-page">
           <div className="col-md-12">
             <div className={'row'}>

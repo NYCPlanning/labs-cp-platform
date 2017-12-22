@@ -28,7 +28,7 @@ class Results extends React.Component {
     });
 
     return (
-      <div className="results-pane">
+      <div>
         {selectedItems}
       </div>
     );
@@ -36,11 +36,17 @@ class Results extends React.Component {
 }
 
 Results.propTypes = {
-  selectedFeatures: PropTypes.array.isRequired,
+  selectedFeatures: PropTypes.array,
 };
 
-const mapStateToProps = ({ capitalProjects }) => ({
-  selectedFeatures: capitalProjects.selectedFeatures,
-});
+Results.defaultProps = {
+  selectedFeatures: [],
+};
 
-export default connect(mapStateToProps)(Results);
+export default Results;
+
+// const mapStateToProps = ({ capitalProjects }) => ({
+//   selectedFeatures: capitalProjects.selectedFeatures,
+// });
+//
+// export default connect(mapStateToProps)(Results);

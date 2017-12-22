@@ -98,6 +98,8 @@ class CapitalProjectsExplorer extends React.Component {
           searchConfig={searchConfig}
           onLayerToggle={this.clearSelectedFeatures}
           onSearchTrigger={this.setAddressSearchCoordinates}
+          detailPage={this.props.children}
+          selectedFeatures={selectedFeatures}
         >
           <HighlightJaneLayer
             selectedFeatures={selectedFeatures}
@@ -161,6 +163,8 @@ class CapitalProjectsExplorer extends React.Component {
 }
 
 CapitalProjectsExplorer.propTypes = {
+  children: PropTypes.object,
+
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,
   facilitiesSql: PropTypes.string.isRequired,
@@ -178,6 +182,7 @@ CapitalProjectsExplorer.propTypes = {
 };
 
 CapitalProjectsExplorer.defaultProps = {
+  children: null,
   params: {
     layer: null,
   },

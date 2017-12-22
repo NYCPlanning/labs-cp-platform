@@ -64,7 +64,7 @@ const Nav = (props) => {
           <span className="icon-bar" />
           <span className="icon-bar" />
         </button>
-        <Link className="navbar-brand" to="/">&#8291;</Link>
+        <Link className="navbar-brand" to="/map">&#8291;</Link>
         <div className="navbar-title">
           Capital Planning Platform
           {(

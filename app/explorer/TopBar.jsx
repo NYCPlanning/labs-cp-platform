@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import Analysis from './Analysis';
-import Results from './Results';
+// import Results from './Results';
 import Download from './Download';
 
 class TopBar extends React.Component {
@@ -45,7 +45,7 @@ class TopBar extends React.Component {
         </div>
 
         <div className="top-bar-dropdown" display={!!this.state.dropdown} style={{ right: this.props.leftOffset }}>
-          { isResult && <Results /> }
+          { /* isResult && <Results /> */ }
           { isAnalysis && <Analysis /> }
           { isDownload && <Download layers={this.props.layers} /> }
         </div>
