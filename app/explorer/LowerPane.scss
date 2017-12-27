@@ -1,8 +1,14 @@
 .results-pane {
+  display: inline-block;
+  overflow: scroll;
   position: absolute;
   right: 0;
+  height: 100%;
 }
 
 .detail-page {
   margin-right: 300px;
+  display: inline-block;
+  overflow: scroll;
+  height: 100%;
 }

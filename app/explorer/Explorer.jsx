@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import { Jane } from '../jane-maps';
 
-import * as capitalProjectsActions from '../actions/capitalProjects';
+import * as selectedActions from '../actions/selected';
+
 import {
   AerialsJaneLayer,
   TransportationJaneLayer,
@@ -57,7 +58,7 @@ class CapitalProjectsExplorer extends React.Component {
   };
 
   clearSelectedFeatures = () => {
-    this.props.setSelectedFeatures([]);
+    this.props.resetSelectedFeatures();
   };
 
   featureRoute = (feature) => {
@@ -92,7 +93,9 @@ class CapitalProjectsExplorer extends React.Component {
 
     this.props.setSelectedFeatures(features);
     // This is ridiculous
-    this.Jane.GLMap.map.panTo([event.lngLat.lng, event.lngLat.lat]);
+    this.Jane.GLMap.map.panTo([event.lngLat.lng, event.lngLat.lat], {
+      offset: [0, 600],
+    });
     this.props.router.push(this.featureRoute(features[0]));
   };
 
@@ -186,6 +189,7 @@ CapitalProjectsExplorer.propTypes = {
 
   selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
+  resetSelectedFeatures: PropTypes.func.isRequired,
 
   router: PropTypes.object.isRequired,
   params: PropTypes.shape({
@@ -200,7 +204,7 @@ CapitalProjectsExplorer.defaultProps = {
   },
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests, selected }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilitiesCP.sql,
@@ -209,9 +213,10 @@ const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cb
   cbBudgetRequestsPointsSql: cbBudgetRequests.pointsSql,
   cbBudgetRequestsPolygonSql: cbBudgetRequests.polygonsSql,
 
-  selectedFeatures: capitalProjects.selectedFeatures,
+  selectedFeatures: selected.features,
 });
 
 export default connect(mapStateToProps, {
-  setSelectedFeatures: capitalProjectsActions.setSelectedFeatures,
+  setSelectedFeatures: selectedActions.setSelectedFeatures,
+  resetSelectedFeatures: selectedActions.resetSelectedFeatures,
 })(CapitalProjectsExplorer);

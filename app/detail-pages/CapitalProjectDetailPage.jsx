@@ -7,7 +7,6 @@ import _ from 'lodash';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import BackButton from '../common/BackButton';
 import FeedbackForm from '../common/FeedbackForm';
 import * as capitalProjectsActions from '../actions/capitalProjects';
 
@@ -75,17 +74,7 @@ class CapitalProjectsDetailPage extends React.Component {
       <div className="project-page">
         <div className="col-md-12">
           <div className={'row'}>
-            <div
-              className="button-container col-md-3 col-md-push-9"
-              style={{ textAlign: 'right' }}
-            >
-              <BackButton
-                location={this.props.location}
-                defaultText="Map"
-                defaultLink="/map"
-              />
-            </div>
-            <div className="col-md-9 col-md-pull-3">
+            <div className="col-md-12">
               <h4><small>{d.maprojid}</small></h4>
               <h1>{d.description}</h1>
               Project Type(s): {
@@ -207,7 +196,6 @@ class CapitalProjectsDetailPage extends React.Component {
 
 CapitalProjectsDetailPage.propTypes = {
   params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchBudgets: PropTypes.func.isRequired,
   fetchCommitments: PropTypes.func.isRequired,

@@ -537,6 +537,7 @@ section {
       background: white;
       top: 34px;
       color: rgb(95, 95, 95);
+      transition: right 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
     }
 
     .dropdown-buttons {
@@ -544,6 +545,7 @@ section {
       position: absolute;
       width: 300px;
       text-align: right;
+      transition: right 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
       button {
         width: 100px;
@@ -649,13 +651,7 @@ section {
 }
 
 .results-pane {
-  display: block;
-  overflow: scroll;
-  position: absolute;
-  right: 0;
-  height: 100%;
-
-  a:hover {
+  a:hover, a:active, a {
     text-decoration: none;
   }
 }

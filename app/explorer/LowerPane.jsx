@@ -21,10 +21,11 @@ class LowerPane extends React.Component {
             zIndex: 99,
             position: 'absolute',
             right: 0,
-            left: '320px',
+            left: this.props.leftOffset,
             bottom: 0,
             top: '300px',
             background: 'white',
+            transition: 'left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
           }}
         >
           <div className="detail-page">
@@ -42,6 +43,12 @@ class LowerPane extends React.Component {
 LowerPane.propTypes = {
   detailPage: PropTypes.object,
   selectedFeatures: PropTypes.array.isRequired,
+  leftOffset: PropTypes.number,
+};
+
+LowerPane.defaultProps = {
+  detailPage: {},
+  leftOffset: 0,
 };
 
 export default LowerPane;

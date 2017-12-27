@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import BackButton from '../common/BackButton';
 import FeedbackForm from '../common/FeedbackForm';
 
 import { getColor } from '../filter-configs/housing-config';
@@ -13,7 +12,15 @@ import './HousingDetailPage.scss';
 
 class HousingDetailPage extends React.Component {
   componentWillMount() {
-    this.props.fetchDetails(parseInt(this.props.params.id));
+    this.fetchPageData(parseInt(this.props.params.id));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
+  }
+
+  fetchPageData(id) {
+    this.props.fetchDetails(id);
   }
 
   renderContent = (data) => {
@@ -132,17 +139,7 @@ class HousingDetailPage extends React.Component {
       <div className="pipeline-page">
         <div className="col-md-12">
           <div className={'row'}>
-            <div
-              className="button-container col-md-3 col-md-push-9"
-              style={{ textAlign: 'right' }}
-            >
-              <BackButton
-                location={this.props.location}
-                defaultText="Development Map"
-                defaultLink="/map/housing"
-              />
-            </div>
-            <div className="col-md-9 col-md-pull-3">
+            <div className="col-md-12">
               <h1>{d.address}, {d.boro}</h1>
               <span className={'badge'} style={{ backgroundColor }}>{d.dcp_dev_category}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_occ_category}</span>

@@ -10,6 +10,7 @@ import housingDevelopment from './reducers/housingDevelopment';
 import capitalProjects from './reducers/capitalProjects';
 import capitalProjectsTable from './reducers/capitalProjectsTable';
 import cbBudgetRequests from './reducers/cbBudgetRequests';
+import selected from './reducers/selected';
 
 // Middleware
 import auth from './middleware/auth';
@@ -33,6 +34,7 @@ const store = createStore(
     capitalProjects,
     capitalProjectsTable,
     cbBudgetRequests,
+    selected,
   }),
   applyMiddleware(...middleware),
 );

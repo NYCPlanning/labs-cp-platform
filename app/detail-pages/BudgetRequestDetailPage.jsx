@@ -2,15 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import BackButton from '../common/BackButton';
-
 import * as cbBudgetRequestActions from '../actions/cbBudgetRequests';
 
 import './BudgetRequestDetailPage.scss';
 
 class BudgetRequestDetailPage extends React.Component {
   componentWillMount() {
-    this.props.fetchDetails(this.props.params.id);
+    this.fetchPageData(this.props.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
+  }
+
+  fetchPageData(id) {
+    this.props.fetchDetails(id);
   }
 
   renderContent = (data) => {
@@ -21,28 +27,15 @@ class BudgetRequestDetailPage extends React.Component {
     return (
       <div className="cb-budget-request-page">
         <div className="col-md-12">
-          <div className={'row'}>
-            <div
-              className="button-container col-md-3 col-md-push-9"
-              style={{ textAlign: 'right' }}
-            >
-              <BackButton
-                location={this.props.location}
-                defaultText="Map"
-                defaultLink="/capitalprojects/explorer"
-              />
-            </div>
-
-            <div className="col-md-9 col-md-pull-3">
+          <div className="row equal">
+            <div className="col-md-12">
               <h1>{d.need}</h1>
               <h2 style={{ marginBottom: '5px' }}><small>{d.sitename} {d.addressnum} {d.streename}</small></h2>
               <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
               { inTopTen() &&
                 <span className={'badge'} style={{ backgroundColor: 'grey' }}>Top Ten Request</span> }
             </div>
-          </div>
 
-          <div className="row equal">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
                 <div className="panel-heading">
@@ -134,7 +127,6 @@ BudgetRequestDetailPage.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   cbDetails: PropTypes.object,
-  location: PropTypes.shape().isRequired,
   fetchDetails: PropTypes.func.isRequired,
 };
 

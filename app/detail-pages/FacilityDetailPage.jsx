@@ -6,7 +6,6 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { connect } from 'react-redux';
 
-import BackButton from '../common/BackButton';
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
 import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
@@ -20,15 +19,15 @@ const CardStyles = {
 
 class FacilityDetailPage extends React.Component {
   componentDidMount() {
-    this.fetchPageData();
+    this.fetchPageData(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) this.fetchPageData();
+    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
   }
 
-  fetchPageData() {
-    this.props.fetchFacilityDetails(this.props.params.id, this.props.route.facilityRoute);
+  fetchPageData(id) {
+    this.props.fetchFacilityDetails(id, this.props.route.facilityRoute);
   }
 
   render() {
@@ -165,18 +164,7 @@ class FacilityDetailPage extends React.Component {
         <div className="facility-page">
           <div className="col-md-12">
             <div className={'row'}>
-              <div
-                className="button-container col-md-3 col-md-push-9"
-                style={{ textAlign: 'right' }}
-              >
-                <BackButton
-                  location={this.props.location}
-                  defaultText="Facilities Map"
-                  defaultLink="/facilities/explorer"
-                />
-
-              </div>
-              <div className="col-md-9 col-md-pull-3">
+              <div className="col-md-12">
                 <h1>{d.facname}</h1>
                 <h2 style={{ marginBottom: '5px' }}><small>{`${d.address}, ${d.city}, NY ${d.zipcode}`}</small></h2>
                 <ol className="breadcrumb">
