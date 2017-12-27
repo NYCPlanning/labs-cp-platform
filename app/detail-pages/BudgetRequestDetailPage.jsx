@@ -19,7 +19,7 @@ class BudgetRequestDetailPage extends React.Component {
     const budgetCategoryColor = d.budgetcategory === 'Capital' ? '#b2df8a' : '#a6cee3';
 
     return (
-      <div className="cb-budget-request-page detail-page">
+      <div className="cb-budget-request-page">
         <div className="col-md-12">
           <div className={'row'}>
             <div

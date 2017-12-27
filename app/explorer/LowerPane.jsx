@@ -40,7 +40,7 @@ class LowerPane extends React.Component {
 }
 
 LowerPane.propTypes = {
-  detailPage: PropTypes.object.isRequired,
+  detailPage: PropTypes.object,
   selectedFeatures: PropTypes.array.isRequired,
 };
 

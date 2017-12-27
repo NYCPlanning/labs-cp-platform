@@ -215,7 +215,7 @@ class Jane extends React.Component {
           }
 
           {
-            !_.isEmpty(this.props.selectedFeatures) &&
+            (!_.isEmpty(this.props.selectedFeatures) || !_.isEmpty(this.props.detailPage)) &&
             <LowerPane
               detailPage={this.props.detailPage}
               selectedFeatures={this.props.selectedFeatures}

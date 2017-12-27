@@ -129,7 +129,7 @@ class HousingDetailPage extends React.Component {
     const backgroundColor = getColor('dcp_dev_category', d.dcp_dev_category);
 
     return (
-      <div className="pipeline-page detail-page">
+      <div className="pipeline-page">
         <div className="col-md-12">
           <div className={'row'}>
             <div

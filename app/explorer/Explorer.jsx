@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import { Jane } from '../jane-maps';
 
@@ -32,7 +31,6 @@ class CapitalProjectsExplorer extends React.Component {
       selectedPointType: '',
       selectedPointCoordinates: [],
     };
-    this.selectedFeaturesCache = [];
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,11 +39,6 @@ class CapitalProjectsExplorer extends React.Component {
       this.props.setSelectedFeatures([]);
     }
   }
-
-  setSelectedFeatures = _.debounce(() => {
-    this.props.setSelectedFeatures(this.selectedFeaturesCache);
-    this.selectedFeaturesCache = [];
-  }, 50);
 
   setAddressSearchCoordinates = (payload) => {
     if (payload.action === 'set') {
@@ -67,6 +60,21 @@ class CapitalProjectsExplorer extends React.Component {
     this.props.setSelectedFeatures([]);
   };
 
+  featureRoute = (feature) => {
+    switch (feature.layer.source) {
+      case 'capital-projects':
+        return `/capitalproject/${feature.properties.maprojid}`;
+      case 'cb-budgetrequests':
+        return `/budgetrequest/${feature.properties.regid}`;
+      case 'housing-development':
+        return `/development/${feature.properties.cartodb_id}`;
+      case 'facilities-cp':
+        return `/facility/${feature.properties.uid}`;
+      default:
+        return null;
+    }
+  }
+
   handleMapLayerClick = (features, event) => {
     if (features[0].geometry.type === 'Point') {
       this.setState({
@@ -82,8 +90,10 @@ class CapitalProjectsExplorer extends React.Component {
       });
     }
 
-    this.selectedFeaturesCache.push(...features);
-    this.setSelectedFeatures();
+    this.props.setSelectedFeatures(features);
+    // This is ridiculous
+    this.Jane.GLMap.map.panTo([event.lngLat.lng, event.lngLat.lat]);
+    this.props.router.push(this.featureRoute(features[0]));
   };
 
   render() {
@@ -100,6 +110,7 @@ class CapitalProjectsExplorer extends React.Component {
           onSearchTrigger={this.setAddressSearchCoordinates}
           detailPage={this.props.children}
           selectedFeatures={selectedFeatures}
+          ref={(jane) => { this.Jane = jane; }}
         >
           <HighlightJaneLayer
             selectedFeatures={selectedFeatures}
@@ -176,6 +187,7 @@ CapitalProjectsExplorer.propTypes = {
   selectedFeatures: PropTypes.array.isRequired,
   setSelectedFeatures: PropTypes.func.isRequired,
 
+  router: PropTypes.object.isRequired,
   params: PropTypes.shape({
     layer: PropTypes.string,
   }),

@@ -16,17 +16,17 @@ import './CapitalProjectDetailPage.scss';
 
 class CapitalProjectsDetailPage extends React.Component {
   componentDidMount() {
-    this.fetchPageData();
+    this.fetchPageData(this.props.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) this.fetchPageData();
+    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
   }
 
-  fetchPageData() {
-    this.props.fetchDetails(this.props.params.id);
-    this.props.fetchBudgets(this.props.params.id);
-    this.props.fetchCommitments(this.props.params.id);
+  fetchPageData(id) {
+    this.props.fetchDetails(id);
+    this.props.fetchBudgets(id);
+    this.props.fetchCommitments(id);
   }
 
   renderContent() {

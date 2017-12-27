@@ -28,7 +28,7 @@ class Results extends React.Component {
     });
 
     return (
-      <div>
+      <div className="scroll-container">
         {selectedItems}
       </div>
     );
@@ -44,9 +44,3 @@ Results.defaultProps = {
 };
 
 export default Results;
-
-// const mapStateToProps = ({ capitalProjects }) => ({
-//   selectedFeatures: capitalProjects.selectedFeatures,
-// });
-//
-// export default connect(mapStateToProps)(Results);

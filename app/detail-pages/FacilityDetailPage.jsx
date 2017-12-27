@@ -6,7 +6,6 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { connect } from 'react-redux';
 
-import Email from '../common/EmailButton';
 import BackButton from '../common/BackButton';
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
@@ -21,6 +20,14 @@ const CardStyles = {
 
 class FacilityDetailPage extends React.Component {
   componentDidMount() {
+    this.fetchPageData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) this.fetchPageData();
+  }
+
+  fetchPageData() {
     this.props.fetchFacilityDetails(this.props.params.id, this.props.route.facilityRoute);
   }
 
@@ -155,7 +162,7 @@ class FacilityDetailPage extends React.Component {
 
     return (
       <div>
-        <div className="facility-page detail-page">
+        <div className="facility-page">
           <div className="col-md-12">
             <div className={'row'}>
               <div
@@ -166,10 +173,6 @@ class FacilityDetailPage extends React.Component {
                   location={this.props.location}
                   defaultText="Facilities Map"
                   defaultLink="/facilities/explorer"
-                />
-                <Email
-                  subject={`Check out ${d.facname} on the NYC Facilities Explorer`}
-                  body={`Here's the record page for ${d.facname} on the NYC Facilities Explorer: ${location.origin}${location.pathname}`}
                 />
 
               </div>

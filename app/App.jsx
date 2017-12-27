@@ -67,8 +67,6 @@ class App extends React.Component {
 
     return (
       <div>
-        <a className="beta-notice" href="http://www1.nyc.gov/site/planning/index.page">A beta project of NYC City Planning - Capital Planning Division</a>
-
         <Nav
           title={this.props.children.props.route.title}
           about={this.props.children.props.route.about ? this.props.children.props.route.about : '/about'}
