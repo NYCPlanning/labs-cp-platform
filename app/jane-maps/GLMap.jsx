@@ -59,7 +59,11 @@ class GLMap extends React.Component {
 
   render() {
     return (
-      <div className="gl-map" ref={(node) => { this.container = node; }} />
+      <div
+        className="gl-map"
+        style={{ height: `calc(100% - ${this.props.bottomOffset}px)` }}
+        ref={(node) => { this.container = node; }}
+      />
     );
   }
 }
@@ -74,6 +78,8 @@ GLMap.propTypes = {
   hash: PropTypes.bool,
   navigationControl: PropTypes.bool.isRequired,
   onLoad: PropTypes.func.isRequired,
+
+  bottomOffset: PropTypes.number,
 };
 
 GLMap.defaultProps = {
@@ -86,6 +92,8 @@ GLMap.defaultProps = {
   hash: false,
   navigationControl: true,
   navigationControlPosition: 'top-right',
+
+  bottomOffset: 0,
 };
 
 export default GLMap;

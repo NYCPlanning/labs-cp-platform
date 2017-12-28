@@ -42,6 +42,7 @@ class Jane extends React.Component {
       loadedSources: {},
       legend: [],
       layers: [],
+      bottomOffset: 0,
     };
 
     this.layers = [];
@@ -186,6 +187,9 @@ class Jane extends React.Component {
   toggleList = () =>
     this.setState({ layerListExpanded: !this.state.layerListExpanded });
 
+  setBottomOffset = bottomOffset =>
+    this.setState({ bottomOffset })
+
   render() {
     let leftOffset = 0;
     if (this.state.layerListExpanded) leftOffset += 164;
@@ -220,6 +224,7 @@ class Jane extends React.Component {
               leftOffset={leftOffset}
               detailPage={this.props.detailPage}
               selectedFeatures={this.props.selectedFeatures}
+              setBottomOffset={this.setBottomOffset}
             />
           }
 
@@ -227,6 +232,7 @@ class Jane extends React.Component {
             {...this.props.mapboxGLOptions}
             ref={(map) => { this.GLMap = map; }}
             onLoad={this.onMapLoad}
+            bottomOffset={this.state.bottomOffset}
           />
         </div>
 

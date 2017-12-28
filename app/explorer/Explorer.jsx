@@ -77,6 +77,12 @@ class CapitalProjectsExplorer extends React.Component {
   }
 
   handleMapLayerClick = (features, event) => {
+    this.Jane.GLMap.map.easeTo({
+      center: [event.lngLat.lng, event.lngLat.lat],
+      offset: [21, 0],
+      duration: 1,
+    });
+
     if (features[0].geometry.type === 'Point') {
       this.setState({
         selectedPointType: 'point',
@@ -92,10 +98,6 @@ class CapitalProjectsExplorer extends React.Component {
     }
 
     this.props.setSelectedFeatures(features);
-    // This is ridiculous
-    this.Jane.GLMap.map.panTo([event.lngLat.lng, event.lngLat.lat], {
-      offset: [0, 600],
-    });
     this.props.router.push(this.featureRoute(features[0]));
   };
 
