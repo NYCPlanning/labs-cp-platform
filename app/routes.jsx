@@ -14,7 +14,6 @@ import FacilitiesLanding from '../app/facilities/LandingPage';
 import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 
 // Explorers
-import FacilitiesExplorer from '../app/facilities/Explorer';
 import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
 import Explorer from '../app/explorer/Explorer';
 
@@ -77,10 +76,7 @@ export default (
     <Route path="about/pipeline" component={AboutPipeline} title={'About'} about={'/about/pipeline'} />
     <Route path="about/capitalprojects" component={AboutCapitalProjects} title={'About'} about={'/about/capitalprojects'} />
 
-    { /* Facilities */ }
-    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
-    <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
-
+    { /* POPs Redirect */ }
     <Redirect
       from="pops"
       to="/map/facilities"
@@ -97,16 +93,20 @@ export default (
     { /* Redirects from deprecated explorers */ }
     <Redirect from="pipeline" to="map/housing" />
     <Redirect from="pipeline/explorer" to="map/housing" />
+    <Redirect from="facilities/explorer" to="map/facilities" />
     <Redirect from="capitalprojects/explorer" to="map/capitalprojects" />
 
-    { /* Capital Projects */ }
+    { /* Landing Pages */ }
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
-    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
+    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
 
-    { /* Consolidated Map */ }
+    { /* Table */ }
+    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+
+    { /* Map */ }
     <Route path="/map" component={Explorer} about={'/about/capitalprojects'} />
     <Route path="/map/:layer" component={Explorer} about={'/about/capitalprojects'} />
-    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} about={'/about/capitalprojects'} />
 
     { /* Detail Pages */ }
     <Route component={Explorer}>
