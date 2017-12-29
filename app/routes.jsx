@@ -83,7 +83,7 @@ export default (
 
     <Redirect
       from="pops"
-      to="/facilities/explorer"
+      to="/map/facilities"
       state={{
         filterDimensions: getDefaultFilterDimensions({ selected: {
           'Parks, Gardens, and Historical Sites': {

@@ -15,6 +15,7 @@ const SidebarComponent = props => (
   >
     <Tab label="Filters">
       <LayerSelector
+        locationState={props.locationState}
         selectedPointType={props.selectedPointType}
         selectedPointCoordinates={props.selectedPointCoordinates}
       />
@@ -58,11 +59,13 @@ const SidebarComponent = props => (
 );
 
 SidebarComponent.propTypes = {
+  locationState: PropTypes.object,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array.isRequired,
 };
 
 SidebarComponent.defaultProps = {
+  locationState: null,
   selectedPointType: null,
 };
 

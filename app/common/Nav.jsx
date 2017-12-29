@@ -91,10 +91,11 @@ Nav.defaultProps = {
   title: '',
   about: '/about',
   children: null,
+  profile: {},
 };
 
 Nav.propTypes = {
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.object,
   isLoggedIn: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,

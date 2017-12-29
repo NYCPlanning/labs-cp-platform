@@ -43,7 +43,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           mergeFilterDimensions: {
                             proptype: {
@@ -85,7 +85,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': { 'Health Care': null },
@@ -116,7 +116,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {
@@ -147,7 +147,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Parks, Gardens, and Historical Sites': {
@@ -172,7 +172,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {

@@ -190,7 +190,7 @@ class SplashSelector extends React.Component { // eslint-disable-line react/no-m
 
         <Link
           to={{
-            pathname: '/facilities/explorer',
+            pathname: '/map/facilities',
             state: {
               filterDimensions: getDefaultFilterDimensions({ values: this.state.layers }),
             },

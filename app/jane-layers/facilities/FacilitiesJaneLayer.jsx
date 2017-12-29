@@ -14,6 +14,7 @@ const FacilitiesJaneLayer = props => (
     selected={props.selected}
     enabled={props.enabled}
     component={<FacilitiesSidebarComponent
+      locationState={props.locationState}
       selectedPointType={props.selectedPointType}
       selectedPointCoordinates={props.selectedPointCoordinates}
     />}
@@ -95,9 +96,11 @@ FacilitiesJaneLayer.propTypes = {
   selectedPointCoordinates: PropTypes.array,
   handleMapLayerClick: PropTypes.func.isRequired,
   sql: PropTypes.string.isRequired,
+  locationState: PropTypes.object,
 };
 
 FacilitiesJaneLayer.defaultProps = {
+  locationState: null,
   selected: false,
   enabled: false,
   selectedPointType: null,

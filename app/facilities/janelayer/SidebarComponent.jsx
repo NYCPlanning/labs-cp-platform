@@ -38,12 +38,12 @@ const SidebarComponent = (props) => {
 
 SidebarComponent.propTypes = {
   selectedPointType: PropTypes.string.isRequired,
-  locationState: PropTypes.string,
+  locationState: PropTypes.object,
   selectedPointCoordinates: PropTypes.array.isRequired,
 };
 
 SidebarComponent.defaultProps = {
-  locationState: '',
+  locationState: null,
 };
 
 export default SidebarComponent;

@@ -45,10 +45,11 @@ class Download extends React.Component {
 
   render() {
     const { counts, sql } = this.props;
+    const layers = this.props.isLoggedIn ? this.layers : ['facilities-cp'];
 
     return (<div>
       {
-        this.layers.map(layerID => (
+        layers.map(layerID => (
           <div className="download-row" key={layerID}>
             <h5><span className={`fa fa-${this.layerMap[layerID].icon}`} /> {this.layerMap[layerID].title}</h5>
             <DownloadButton
@@ -72,10 +73,11 @@ Download.propTypes = {
   layers: PropTypes.array.isRequired,
   counts: PropTypes.object.isRequired,
   sql: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 
-const mapStateToProps = ({ facilitiesCP, capitalProjects, cbBudgetRequests, housingDevelopment }) => ({
+const mapStateToProps = ({ facilitiesCP, capitalProjects, cbBudgetRequests, housingDevelopment, currentUser }) => ({
   counts: {
     total: {
       'capital-projects': capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,
@@ -96,6 +98,7 @@ const mapStateToProps = ({ facilitiesCP, capitalProjects, cbBudgetRequests, hous
     'cb-budgetrequests': cbBudgetRequests.sql,
     'housing-development': housingDevelopment.sql,
   },
+  isLoggedIn: currentUser.isLoggedIn,
 });
 
 export default connect(mapStateToProps)(Download);

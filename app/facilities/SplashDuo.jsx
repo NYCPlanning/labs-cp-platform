@@ -22,7 +22,7 @@ class SplashDuo extends React.Component {
 
   handleGeographySelection = (selected) => {
     browserHistory.push({
-      pathname: '/facilities/explorer',
+      pathname: '/map/facilities',
       state: {
         adminboundaries: {
           type: 'nta',
@@ -49,7 +49,7 @@ class SplashDuo extends React.Component {
       <div className="splash-button-section">
         <div className="box all-link">
           <Link
-            to="/facilities/explorer"
+            to="/map/facilities"
             className="btn btn-default"
             onClick={() => ga.event({
               category: 'facilities-entry',

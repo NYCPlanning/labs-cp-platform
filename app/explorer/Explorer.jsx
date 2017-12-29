@@ -102,8 +102,13 @@ class CapitalProjectsExplorer extends React.Component {
   };
 
   render() {
+    const setStartingLayer = () => {
+      if (!this.props.isLoggedIn) { return 'facilities'; }
+      return this.props.params.layer || 'capitalprojects';
+    };
+
     const { selectedFeatures } = this.props;
-    const startingLayer = this.props.params.layer || 'capitalprojects';
+    const startingLayer = setStartingLayer();
 
     return (
       <div className="full-screen cp-explorer">
@@ -135,43 +140,52 @@ class CapitalProjectsExplorer extends React.Component {
             sql={this.props.facilitiesSql}
             enabled={startingLayer === 'facilities'}
             selected={startingLayer === 'facilities'}
+            locationState={this.props.location.state}
           />
 
-          <HousingDevelopmentJaneLayer
-            selectedPointType={this.state.selectedPointType}
-            selectedPointCoordinates={this.state.selectedPointCoordinates}
-            handleMapLayerClick={this.handleMapLayerClick}
-            sql={this.props.housingDevelopmentSql}
-            symbologyDimension={this.props.housingDevelopmentSymbology}
-            enabled={startingLayer === 'housing'}
-            selected={startingLayer === 'housing'}
-          />
+          { this.props.isLoggedIn &&
+            <HousingDevelopmentJaneLayer
+              selectedPointType={this.state.selectedPointType}
+              selectedPointCoordinates={this.state.selectedPointCoordinates}
+              handleMapLayerClick={this.handleMapLayerClick}
+              sql={this.props.housingDevelopmentSql}
+              symbologyDimension={this.props.housingDevelopmentSymbology}
+              enabled={startingLayer === 'housing'}
+              selected={startingLayer === 'housing'}
+            />
+          }
 
-          <SCAJaneLayer
-            handleMapLayerClick={this.handleMapLayerClick}
-            enabled={startingLayer === 'sca'}
-            selected={startingLayer === 'sca'}
-          />
+          { this.props.isLoggedIn &&
+            <SCAJaneLayer
+              handleMapLayerClick={this.handleMapLayerClick}
+              enabled={startingLayer === 'sca'}
+              selected={startingLayer === 'sca'}
+            />
+          }
 
-          <CBBudgetRequestsJaneLayer
-            selectedPointType={this.state.selectedPointType}
-            selectedPointCoordinates={this.state.selectedPointCoordinates}
-            handleMapLayerClick={this.handleMapLayerClick}
-            pointsSql={this.props.cbBudgetRequestsPointsSql}
-            polygonsSql={this.props.cbBudgetRequestsPolygonSql}
-            enabled={startingLayer === 'budgetrequests'}
-            selected={startingLayer === 'budgetrequests'}
-          />
+          { this.props.isLoggedIn &&
+            <CBBudgetRequestsJaneLayer
+              selectedPointType={this.state.selectedPointType}
+              selectedPointCoordinates={this.state.selectedPointCoordinates}
+              handleMapLayerClick={this.handleMapLayerClick}
+              pointsSql={this.props.cbBudgetRequestsPointsSql}
+              polygonsSql={this.props.cbBudgetRequestsPolygonSql}
+              enabled={startingLayer === 'budgetrequests'}
+              selected={startingLayer === 'budgetrequests'}
+            />
+          }
 
-          <CapitalProjectsJaneLayer
-            selectedPointType={this.state.selectedPointType}
-            selectedPointCoordinates={this.state.selectedPointCoordinates}
-            handleMapLayerClick={this.handleMapLayerClick}
-            pointsSql={this.props.pointsSql}
-            polygonsSql={this.props.polygonsSql}
-            enabled={startingLayer === 'capitalprojects'}
-            selected={startingLayer === 'capitalprojects'}
-          />
+          { this.props.isLoggedIn &&
+            <CapitalProjectsJaneLayer
+              selectedPointType={this.state.selectedPointType}
+              selectedPointCoordinates={this.state.selectedPointCoordinates}
+              handleMapLayerClick={this.handleMapLayerClick}
+              pointsSql={this.props.pointsSql}
+              polygonsSql={this.props.polygonsSql}
+              enabled={startingLayer === 'capitalprojects'}
+              selected={startingLayer === 'capitalprojects'}
+            />
+          }
         </Jane>
       </div>
     );
@@ -193,6 +207,9 @@ CapitalProjectsExplorer.propTypes = {
   setSelectedFeatures: PropTypes.func.isRequired,
   resetSelectedFeatures: PropTypes.func.isRequired,
 
+  isLoggedIn: PropTypes.bool.isRequired,
+  location: PropTypes.object,
+
   router: PropTypes.object.isRequired,
   params: PropTypes.shape({
     layer: PropTypes.string,
@@ -200,13 +217,14 @@ CapitalProjectsExplorer.propTypes = {
 };
 
 CapitalProjectsExplorer.defaultProps = {
+  location: null,
   children: null,
   params: {
     layer: null,
   },
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests, selected }) => ({
+const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests, selected, currentUser }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilitiesCP.sql,
@@ -216,6 +234,8 @@ const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cb
   cbBudgetRequestsPolygonSql: cbBudgetRequests.polygonsSql,
 
   selectedFeatures: selected.features,
+
+  isLoggedIn: currentUser.isLoggedIn,
 });
 
 export default connect(mapStateToProps, {
