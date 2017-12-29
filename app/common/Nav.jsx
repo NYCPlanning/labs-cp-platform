@@ -79,6 +79,7 @@ const Nav = (props) => {
         <ul className="nav navbar-nav navbar-right ">
           <li><Link to="/"> Home</Link></li>
           {props.children}
+          <li><a href="http://docs.capitalplanning.nyc/" target="_blank" rel="noopener noreferrer">Docs</a></li>
           <li><Link to={props.about}>About</Link></li>
           {userMenu}
         </ul>
