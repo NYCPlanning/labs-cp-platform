@@ -61,6 +61,11 @@ class CapitalProjectsExplorer extends React.Component {
     this.props.resetSelectedFeatures();
   };
 
+  closeLowerPane = () => {
+    this.props.resetSelectedFeatures();
+    this.props.router.push('/map');
+  }
+
   featureRoute = (feature) => {
     switch (feature.layer.source) {
       case 'capital-projects':
@@ -117,6 +122,7 @@ class CapitalProjectsExplorer extends React.Component {
           search
           searchConfig={searchConfig}
           onLayerToggle={this.clearSelectedFeatures}
+          closeLowerPane={this.closeLowerPane}
           onSearchTrigger={this.setAddressSearchCoordinates}
           detailPage={this.props.children}
           selectedFeatures={selectedFeatures}

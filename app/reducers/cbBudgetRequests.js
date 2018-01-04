@@ -37,6 +37,9 @@ const cbBudgetRequestsReducer = (state = initialState(), action) => {
     case AT.FETCH_CB_BUDGET_REQUEST_DETAILS.SUCCESS:
       return Object.assign({}, state, { cbDetails: action.payload.features[0] });
 
+    case AT.RESET_SELECTED_FEATURES:
+      return Object.assign({}, state, { cbDetails: null });
+
     case AT.FETCH_CB_BUDGET_REQUESTS_TOTAL_COUNT.SUCCESS:
       return Object.assign({}, state, { totalCount: action.payload[0].count });
 

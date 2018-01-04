@@ -34,6 +34,9 @@ const housingReducer = (state = initialState, action) => {
     case AT.FETCH_HOUSING_DEVELOPMENT_DETAILS.SUCCESS:
       return Object.assign({}, state, { housingDetails: action.payload.features[0] });
 
+    case AT.RESET_SELECTED_FEATURES:
+      return Object.assign({}, state, { housingDetails: null });
+
     case AT.FETCH_HOUSING_DEVELOPMENT_TOTAL_COUNT.SUCCESS:
       return Object.assign({}, state, { totalCount: action.payload[0].count });
 

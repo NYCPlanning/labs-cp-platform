@@ -92,10 +92,6 @@ class Jane extends React.Component {
   onMapLoad = () =>
     this.setState({ mapLoaded: true });
 
-  removeLegend = (id) => {
-    this.setState({ legend: this.state.legend.filter(l => l.props.id !== id) });
-  }
-
   updateLegend = (id, legend) => {
     const legendFiltered = this.state.legend.filter(l => l.props.id !== id);
     this.setState({ legend: legendFiltered.concat(legend) });
@@ -190,6 +186,10 @@ class Jane extends React.Component {
   setBottomOffset = bottomOffset =>
     this.setState({ bottomOffset })
 
+  removeLegend = (id) => {
+    this.setState({ legend: this.state.legend.filter(l => l.props.id !== id) });
+  }
+
   render() {
     let leftOffset = 0;
     if (this.state.layerListExpanded) leftOffset += 164;
@@ -225,6 +225,7 @@ class Jane extends React.Component {
               detailPage={this.props.detailPage}
               selectedFeatures={this.props.selectedFeatures}
               setBottomOffset={this.setBottomOffset}
+              closeLowerPane={this.props.closeLowerPane}
             />
           }
 
@@ -278,6 +279,8 @@ Jane.propTypes = {
   onZoomEnd: PropTypes.func,
   onDragEnd: PropTypes.func,
   onLayerToggle: PropTypes.func,
+  closeLowerPane: PropTypes.func,
+
   onSearchTrigger: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
@@ -300,6 +303,7 @@ Jane.defaultProps = {
   onZoomEnd: () => {},
   onDragEnd: () => {},
   onLayerToggle: () => {},
+  closeLowerPane: () => {},
   onSearchTrigger: () => {},
 };
 

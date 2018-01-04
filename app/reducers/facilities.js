@@ -21,6 +21,9 @@ const facilitiesReducer = (state = initialState, action) => {
     case AT.FETCH_FACILITY_DETAILS.SUCCESS:
       return Object.assign({}, state, { facilityDetails: action.payload.features[0] });
 
+    case AT.RESET_SELECTED_FEATURES:
+      return Object.assign({}, state, { facilityDetails: null });
+
     case AT.FETCH_FACILITY_AGENCY_VALUES.SUCCESS:
       return Object.assign({}, state, { sources: action.payload });
 

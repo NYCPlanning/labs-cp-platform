@@ -1,19 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import cx from 'classnames';
+import _ from 'lodash';
 
 import Results from './Results';
 
 import './LowerPane.scss';
 
 class LowerPane extends React.Component {
-  componentDidUpdate() {
-    this.props.setBottomOffset(this.divElement.clientHeight);
+  componentDidMount() {
+    this.setBottomOffset();
   }
 
-  height = 0;
+  componentDidUpdate() {
+    this.setBottomOffset();
+  }
+
+  setBottomOffset(offset = this.divElement.clientHeight) {
+    this.props.setBottomOffset(offset);
+  }
 
   render() {
+    const closeLowerPane = () => {
+      this.setBottomOffset(0);
+      this.props.closeLowerPane();
+    };
+
     return (
       <ReactCSSTransitionGroup
         transitionName="background"
@@ -35,7 +48,13 @@ class LowerPane extends React.Component {
           }}
           ref={(divElement) => { this.divElement = divElement; }}
         >
-          <div className="detail-page">
+          <div className="detail-page--bar">
+            Colors
+            <button
+              onClick={closeLowerPane}
+            ><span className="fa fa-times" /></button>
+          </div>
+          <div className={cx('detail-page', { 'with-selected': !_.isEmpty(this.props.selectedFeatures) })}>
             { this.props.detailPage }
           </div>
           <div className="results-pane">
@@ -49,14 +68,17 @@ class LowerPane extends React.Component {
 
 LowerPane.propTypes = {
   detailPage: PropTypes.object,
-  selectedFeatures: PropTypes.array.isRequired,
-  leftOffset: PropTypes.number,
+  selectedFeatures: PropTypes.array,
+  closeLowerPane: PropTypes.func,
 
+  leftOffset: PropTypes.number,
   setBottomOffset: PropTypes.func,
 };
 
 LowerPane.defaultProps = {
+  selectedFeatures: [],
   detailPage: {},
+  closeLowerPane: () => {},
   leftOffset: 0,
   setBottomOffset: () => {},
 };

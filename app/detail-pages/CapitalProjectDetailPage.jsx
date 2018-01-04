@@ -193,15 +193,20 @@ class CapitalProjectsDetailPage extends React.Component {
   }
 }
 
-
 CapitalProjectsDetailPage.propTypes = {
   params: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchBudgets: PropTypes.func.isRequired,
   fetchCommitments: PropTypes.func.isRequired,
-  details: PropTypes.object.isRequired,
-  budgets: PropTypes.array.isRequired,
-  commitments: PropTypes.array.isRequired,
+  details: PropTypes.object,
+  budgets: PropTypes.array,
+  commitments: PropTypes.array,
+};
+
+CapitalProjectsDetailPage.defaultProps = {
+  details: {},
+  budgets: [],
+  commitments: [],
 };
 
 const mapStateToProps = ({ capitalProjects }) => ({
