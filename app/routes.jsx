@@ -22,6 +22,7 @@ import CapitalProjectDetailPage from '../app/detail-pages/CapitalProjectDetailPa
 import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
 import FacilityDetailPage from '../app/detail-pages/FacilityDetailPage';
 import BudgetRequestDetailPage from '../app/detail-pages/BudgetRequestDetailPage';
+import DetailPage from '../app/detail-pages/DetailPage';
 
 import getDefaultFilterDimensions from '../app/facilities/config';
 
@@ -110,11 +111,33 @@ export default (
 
     { /* Detail Pages */ }
     <Route component={Explorer}>
-      <Route path="capitalproject/:id" component={ensureSitewideAccess(CapitalProjectDetailPage)} about={'/about/capitalprojects'} />
-      <Route path="budgetrequest/:id" component={ensureSitewideAccess(BudgetRequestDetailPage)} about={'/about/capitalprojects'} />
-      <Route path="development/:id" component={ensureSitewideAccess(HousingDetailPage)} about={'/about/pipeline'} />
-      <Route path="pops/:id" component={FacilityDetailPage} about={'/about/facilities'} facilityRoute="pops" />
-      <Route path="facility/:id" component={FacilityDetailPage} about={'/about/facilities'} facilityRoute="facility" />
+      <Route
+        path="capitalproject/:id"
+        type="capitalproject"
+        component={ensureSitewideAccess(DetailPage)}
+      />
+      <Route
+        path="budgetrequest/:id"
+        type="budgetrequest"
+        component={ensureSitewideAccess(DetailPage)}
+      />
+      <Route
+        path="development/:id"
+        type="development"
+        component={ensureSitewideAccess(DetailPage)}
+      />
+      <Route
+        path="pops/:id"
+        type="pops"
+        component={DetailPage}
+        facilityRoute="pops"
+      />
+      <Route
+        path="facility/:id"
+        type="facility"
+        component={DetailPage}
+        facilityRoute="facility"
+      />
     </Route>
 
     { /* Auth and Sitewide */ }
