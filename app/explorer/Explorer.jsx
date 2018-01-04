@@ -224,10 +224,10 @@ CapitalProjectsExplorer.defaultProps = {
   },
 };
 
-const mapStateToProps = ({ capitalProjects, facilitiesCP, housingDevelopment, cbBudgetRequests, selected, currentUser }) => ({
+const mapStateToProps = ({ capitalProjects, facilities, housingDevelopment, cbBudgetRequests, selected, currentUser }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
-  facilitiesSql: facilitiesCP.sql,
+  facilitiesSql: facilities.sql,
   housingDevelopmentSql: housingDevelopment.sql,
   housingDevelopmentSymbology: housingDevelopment.symbologyDimension,
   cbBudgetRequestsPointsSql: cbBudgetRequests.pointsSql,

@@ -12,7 +12,7 @@ import MultiSelect from '../../../common/MultiSelect';
 import AreaFilterSelect from '../../../common/AreaFilterSelect';
 import RadiusFilter from '../../../common/RadiusFilter';
 import Checkbox from '../../../common/Checkbox';
-import * as facilityCPActions from '../../../actions/facilitiesCP';
+import * as facilityCPActions from '../../../actions/facilities';
 
 import './LayerSelector.scss';
 
@@ -292,6 +292,7 @@ LayerSelector.defaultProps = {
   selectedCount: 0,
   selectedPointType: null,
   selectedPointCoordinates: [],
+  locationState: {},
 };
 
 LayerSelector.propTypes = {
@@ -307,14 +308,14 @@ LayerSelector.propTypes = {
   setFilterDimension: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
 
-  locationState: PropTypes.object.isRequired,
+  locationState: PropTypes.object,
 };
 
-const mapStateToProps = ({ facilitiesCP }) => ({
-  filterDimensions: facilitiesCP.filterDimensions,
-  sql: facilitiesCP.sql,
-  totalCount: facilitiesCP.totalCount,
-  selectedCount: facilitiesCP.selectedCount,
+const mapStateToProps = ({ facilities }) => ({
+  filterDimensions: facilities.filterDimensions,
+  sql: facilities.sql,
+  totalCount: facilities.totalCount,
+  selectedCount: facilities.selectedCount,
 });
 
 export default connect(mapStateToProps, {

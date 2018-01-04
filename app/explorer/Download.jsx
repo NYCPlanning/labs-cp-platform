@@ -77,24 +77,24 @@ Download.propTypes = {
 };
 
 
-const mapStateToProps = ({ facilitiesCP, capitalProjects, cbBudgetRequests, housingDevelopment, currentUser }) => ({
+const mapStateToProps = ({ facilities, capitalProjects, cbBudgetRequests, housingDevelopment, currentUser }) => ({
   counts: {
     total: {
       'capital-projects': capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,
-      'facilities-cp': facilitiesCP.totalCount,
+      'facilities-cp': facilities.totalCount,
       'cb-budgetrequests': cbBudgetRequests.totalCount,
       'housing-development': housingDevelopment.totalCount,
     },
     filtered: {
       'capital-projects': capitalProjects.selectedCount,
-      'facilities-cp': facilitiesCP.selectedCount,
+      'facilities-cp': facilities.selectedCount,
       'cb-budgetrequests': cbBudgetRequests.selectedCount,
       'housing-development': housingDevelopment.selectedCount,
     },
   },
   sql: {
     'capital-projects': capitalProjects.sql,
-    'facilities-cp': facilitiesCP.sql,
+    'facilities-cp': facilities.sql,
     'cb-budgetrequests': cbBudgetRequests.sql,
     'housing-development': housingDevelopment.sql,
   },

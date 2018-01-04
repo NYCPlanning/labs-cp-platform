@@ -5,7 +5,6 @@ import { createLogger } from 'redux-logger';
 import currentUser from './reducers/currentUser';
 import modal from './reducers/modal';
 import facilities from './reducers/facilities';
-import facilitiesCP from './reducers/facilitiesCP';
 import housingDevelopment from './reducers/housingDevelopment';
 import capitalProjects from './reducers/capitalProjects';
 import capitalProjectsTable from './reducers/capitalProjectsTable';
@@ -29,7 +28,6 @@ const store = createStore(
     currentUser,
     modal,
     facilities,
-    facilitiesCP,
     housingDevelopment,
     capitalProjects,
     capitalProjectsTable,
