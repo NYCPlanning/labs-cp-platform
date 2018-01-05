@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { Jane } from '../jane-maps';
 
@@ -32,6 +33,7 @@ class CapitalProjectsExplorer extends React.Component {
       selectedPointType: '',
       selectedPointCoordinates: [],
     };
+    this.selectedFeaturesCache = [];
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,14 +59,11 @@ class CapitalProjectsExplorer extends React.Component {
     }
   };
 
-  clearSelectedFeatures = () => {
-    this.props.resetSelectedFeatures();
-  };
-
-  closeLowerPane = () => {
-    this.props.resetSelectedFeatures();
-    this.props.router.push('/map');
-  }
+  setSelectedFeatures = _.debounce(() => {
+    this.props.setSelectedFeatures(this.selectedFeaturesCache);
+    this.props.router.push(this.featureRoute(this.selectedFeaturesCache[0]));
+    this.selectedFeaturesCache = [];
+  }, 50);
 
   featureRoute = (feature) => {
     switch (feature.layer.source) {
@@ -80,6 +79,15 @@ class CapitalProjectsExplorer extends React.Component {
         return null;
     }
   }
+
+  closeLowerPane = () => {
+    this.props.resetSelectedFeatures();
+    this.props.router.push('/map');
+  }
+
+  clearSelectedFeatures = () => {
+    this.props.resetSelectedFeatures();
+  };
 
   handleMapLayerClick = (features, event) => {
     this.Jane.GLMap.map.easeTo({
@@ -102,8 +110,8 @@ class CapitalProjectsExplorer extends React.Component {
       });
     }
 
-    this.props.setSelectedFeatures(features);
-    this.props.router.push(this.featureRoute(features[0]));
+    this.selectedFeaturesCache.push(...features);
+    this.setSelectedFeatures();
   };
 
   render() {
@@ -125,6 +133,7 @@ class CapitalProjectsExplorer extends React.Component {
           closeLowerPane={this.closeLowerPane}
           onSearchTrigger={this.setAddressSearchCoordinates}
           detailPage={this.props.children}
+          detailPageType={this.props.location.type}
           selectedFeatures={selectedFeatures}
           ref={(jane) => { this.Jane = jane; }}
         >

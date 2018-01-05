@@ -113,29 +113,34 @@ export default (
     <Route component={Explorer}>
       <Route
         path="capitalproject/:id"
+        component={ensureSitewideAccess(CapitalProjectDetailPage)}
+        about={'/about/capitalprojects'}
         type="capitalproject"
-        component={ensureSitewideAccess(DetailPage)}
       />
       <Route
         path="budgetrequest/:id"
+        component={ensureSitewideAccess(BudgetRequestDetailPage)}
+        about={'/about/capitalprojects'}
         type="budgetrequest"
-        component={ensureSitewideAccess(DetailPage)}
       />
       <Route
         path="development/:id"
+        component={ensureSitewideAccess(HousingDetailPage)}
+        about={'/about/pipeline'}
         type="development"
-        component={ensureSitewideAccess(DetailPage)}
       />
       <Route
         path="pops/:id"
+        component={FacilityDetailPage}
+        about={'/about/facilities'}
         type="pops"
-        component={DetailPage}
         facilityRoute="pops"
       />
       <Route
         path="facility/:id"
+        component={FacilityDetailPage}
+        about={'/about/facilities'}
         type="facility"
-        component={DetailPage}
         facilityRoute="facility"
       />
     </Route>

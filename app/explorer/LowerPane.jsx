@@ -49,7 +49,7 @@ class LowerPane extends React.Component {
           ref={(divElement) => { this.divElement = divElement; }}
         >
           <div className="detail-page--bar">
-            Colors
+            { this.props.detailPageType }
             <button
               onClick={closeLowerPane}
             ><span className="fa fa-times" /></button>
@@ -68,6 +68,7 @@ class LowerPane extends React.Component {
 
 LowerPane.propTypes = {
   detailPage: PropTypes.object,
+  detailPageType: PropTypes.string,
   selectedFeatures: PropTypes.array,
   closeLowerPane: PropTypes.func,
 
@@ -78,6 +79,7 @@ LowerPane.propTypes = {
 LowerPane.defaultProps = {
   selectedFeatures: [],
   detailPage: {},
+  detailPageType: null,
   closeLowerPane: () => {},
   leftOffset: 0,
   setBottomOffset: () => {},

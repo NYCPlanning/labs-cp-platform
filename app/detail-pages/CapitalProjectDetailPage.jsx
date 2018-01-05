@@ -58,7 +58,6 @@ class CapitalProjectsDetailPage extends React.Component {
     };
 
     const tableRows = this.props.commitments.map(c => (
-
       <TableRow key={c.cartodb_id}>
         <TableRowColumn style={commitmentDescriptionWidth}>{(c.commitmentdescription === '' ? '--' : c.commitmentdescription)}</TableRowColumn>
         <TableRowColumn style={phaseWidth}>{c.commitmentcode}</TableRowColumn>
@@ -152,7 +151,7 @@ class CapitalProjectsDetailPage extends React.Component {
                       displaySelectAll={false}
                       adjustForCheckbox={false}
                     >
-                      <TableRow>
+                      <TableRow key="header">
                         <TableHeaderColumn style={commitmentDescriptionWidth}>Description</TableHeaderColumn>
                         <TableHeaderColumn style={phaseWidth}>Phase</TableHeaderColumn>
                         <TableHeaderColumn>Budget Line</TableHeaderColumn>
