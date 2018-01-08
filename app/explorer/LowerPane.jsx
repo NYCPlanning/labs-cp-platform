@@ -29,13 +29,17 @@ const detailPageTypeMap = {
     title: 'Housing Development',
     icon: 'cubes',
   },
+  feature: {
+    title: 'Feature',
+    icon: 'usd',
+  },
 };
 
 class LowerPane extends React.Component {
   constructor() {
     super();
     this.state = {
-      detailPageType: '',
+      detailPageType: 'feature',
     };
   }
 
