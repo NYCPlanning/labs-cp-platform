@@ -42,7 +42,7 @@ class Jane extends React.Component {
       loadedSources: {},
       legend: [],
       layers: [],
-      bottomOffset: 0,
+      displayLowerPane: !_.isEmpty(this.props.detailPage),
     };
 
     this.layers = [];
@@ -68,6 +68,10 @@ class Jane extends React.Component {
     // // this.GLMap is the GLMap Component, not the map object itself
     this.GLMap.map.on('zoomend', this.props.onZoomEnd);
     this.GLMap.map.on('dragend', this.props.onDragEnd);
+  }
+
+  componentWillReceiveProps() {
+    if (!_.isEmpty(this.props.detailPage)) this.setState({ displayLowerPane: true });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -152,6 +156,7 @@ class Jane extends React.Component {
 
     this.setState({
       layers: this.layers,
+      displayLowerPane: !wasEnabled,
     });
 
     this.GLMap.map.once('render', () => this.layers.forEach(layer => layer.redrawChildren()));
@@ -183,11 +188,13 @@ class Jane extends React.Component {
   toggleList = () =>
     this.setState({ layerListExpanded: !this.state.layerListExpanded });
 
-  setBottomOffset = bottomOffset =>
-    this.setState({ bottomOffset })
-
   removeLegend = (id) => {
     this.setState({ legend: this.state.legend.filter(l => l.props.id !== id) });
+  }
+
+  closeLowerPane = () => {
+    this.setState({ displayLowerPane: false });
+    this.props.closeLowerPane();
   }
 
   render() {
@@ -219,13 +226,13 @@ class Jane extends React.Component {
           }
 
           {
-            !_.isEmpty(this.props.detailPage) &&
+            this.state.displayLowerPane &&
             <LowerPane
               leftOffset={leftOffset}
               detailPage={this.props.detailPage}
               selectedFeatures={this.props.selectedFeatures}
-              setBottomOffset={this.setBottomOffset}
-              closeLowerPane={this.props.closeLowerPane}
+              setBottomOffset={this.props.setBottomOffset}
+              closeLowerPane={this.closeLowerPane}
             />
           }
 
@@ -233,7 +240,6 @@ class Jane extends React.Component {
             {...this.props.mapboxGLOptions}
             ref={(map) => { this.GLMap = map; }}
             onLoad={this.onMapLoad}
-            bottomOffset={this.state.bottomOffset}
           />
         </div>
 
@@ -280,6 +286,7 @@ Jane.propTypes = {
   onDragEnd: PropTypes.func,
   onLayerToggle: PropTypes.func,
   closeLowerPane: PropTypes.func,
+  setBottomOffset: PropTypes.func,
 
   onSearchTrigger: PropTypes.func,
   children: PropTypes.node.isRequired,
@@ -305,6 +312,7 @@ Jane.defaultProps = {
   onLayerToggle: () => {},
   closeLowerPane: () => {},
   onSearchTrigger: () => {},
+  setBottomOffset: () => {},
 };
 
 export default Jane;

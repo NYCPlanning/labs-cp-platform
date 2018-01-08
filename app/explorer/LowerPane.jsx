@@ -99,7 +99,9 @@ class LowerPane extends React.Component {
             { detailPage }
           </div>
           <div className="results-pane">
-            <Results selectedFeatures={this.props.selectedFeatures} />
+            <Results
+              selectedFeatures={this.props.selectedFeatures}
+            />
           </div>
         </div>
       </ReactCSSTransitionGroup>

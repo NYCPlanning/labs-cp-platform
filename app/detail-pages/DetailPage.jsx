@@ -59,7 +59,11 @@ DetailPage.propTypes = {
   params: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  setDetailPageType: PropTypes.func.isRequired,
+  setDetailPageType: PropTypes.func,
+};
+
+DetailPage.defaultProps = {
+  setDetailPageType: () => {},
 };
 
 export default DetailPage;

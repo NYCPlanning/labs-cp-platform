@@ -5,14 +5,14 @@ import { Link } from 'react-router';
 import { getColor } from '../filter-configs/housing-config';
 
 const Item = ({ feature }) => {
-  const { cartodb_id,
+  const { dob_job_number,
           dcp_dev_category,
           address,
           dcp_status,
           u_net } = feature.properties;
 
   return (
-    <Link to={{ pathname: `/development/${cartodb_id}`, state: { modal: true, returnTo: '/maps/housing' } }}>
+    <Link to={{ pathname: `/development/${dob_job_number}`, state: { modal: true, returnTo: '/maps/housing' } }}>
       <div
         className="facilities-list-item"
         style={{ borderLeft: `5px solid ${getColor('dcp_dev_category', dcp_dev_category)}` }}

@@ -32,6 +32,7 @@ class Explorer extends React.Component {
     this.state = {
       selectedPointType: '',
       selectedPointCoordinates: [],
+      bottomOffset: 0,
     };
     this.selectedFeaturesCache = [];
   }
@@ -59,45 +60,16 @@ class Explorer extends React.Component {
     }
   };
 
+  // Nasty debounces cause I suck at async
   setSelectedFeatures = _.debounce(() => {
     this.props.setSelectedFeatures(this.selectedFeaturesCache);
     this.props.router.push(this.featureRoute(this.selectedFeaturesCache[0]));
     this.selectedFeaturesCache = [];
   }, 50);
 
-  featureRoute = (feature) => {
-    switch (feature.layer.source) {
-      case 'capital-projects':
-        return `/capitalproject/${feature.properties.maprojid}`;
-      case 'cb-budgetrequests':
-        return `/budgetrequest/${feature.properties.regid}`;
-      case 'housing-development':
-        return `/development/${feature.properties.cartodb_id}`;
-      case 'facilities-cp':
-        return `/facility/${feature.properties.uid}`;
-      case 'sca-points':
-        return `/sca/${feature.properties.cartodb_id}`;
-      default:
-        return null;
-    }
-  }
-
-  closeLowerPane = () => {
-    this.props.resetSelectedFeatures();
-    this.props.router.push('/map');
-  }
-
-  clearSelectedFeatures = () => {
-    this.props.resetSelectedFeatures();
-  };
+  setBottomOffset = bottomOffset => this.setState({ bottomOffset });
 
   handleMapLayerClick = (features, event) => {
-    this.Jane.GLMap.map.easeTo({
-      center: [event.lngLat.lng, event.lngLat.lat],
-      offset: [21, 0],
-      duration: 1,
-    });
-
     if (features[0].geometry.type === 'Point') {
       this.setState({
         selectedPointType: 'point',
@@ -114,11 +86,59 @@ class Explorer extends React.Component {
 
     this.selectedFeaturesCache.push(...features);
     this.setSelectedFeatures();
+    this.centerMap(event);
   };
+
+  clearSelectedFeatures = () => {
+    this.props.resetSelectedFeatures();
+  };
+
+  closeLowerPane = () => {
+    this.props.resetSelectedFeatures();
+    this.props.router.push('/map');
+  }
+
+  featureRoute = (feature) => {
+    switch (feature.layer.source) {
+      case 'capital-projects':
+        return `/capitalproject/${feature.properties.maprojid}`;
+      case 'cb-budgetrequests':
+        return `/budgetrequest/${feature.properties.regid}`;
+      case 'housing-development':
+        return `/development/${feature.properties.dob_job_number}`;
+      case 'facilities-cp':
+        return `/facility/${feature.properties.uid}`;
+      case 'sca-points':
+        return `/sca/${feature.properties.cartodb_id}`;
+      default:
+        return null;
+    }
+  }
+
+  centerMap = _.debounce((event) => {
+    this.Jane.GLMap.map.easeTo({
+      center: [event.lngLat.lng, event.lngLat.lat],
+      offset: [160, -(this.state.bottomOffset / 2)],
+      duration: 1,
+    });
+  }, 50);
 
   render() {
     const setStartingLayer = () => {
       if (!this.props.isLoggedIn) { return 'facilities'; }
+
+      if (this.props.children) {
+        switch (this.props.children.props.route.type) {
+          case 'capitalproject': return 'capitalprojects';
+          case 'facility': return 'facilities';
+          case 'pops': return 'pops';
+          case 'development': return 'housing';
+          case 'sca': return 'sca';
+          case 'budgetrequest': return 'budgetrequests';
+          default:
+            return this.props.params.layer || 'capitalprojects';
+        }
+      }
       return this.props.params.layer || 'capitalprojects';
     };
 
@@ -137,6 +157,7 @@ class Explorer extends React.Component {
           detailPage={this.props.children}
           detailPageType={this.props.location.type}
           selectedFeatures={selectedFeatures}
+          setBottomOffset={this.setBottomOffset}
           ref={(jane) => { this.Jane = jane; }}
         >
           <HighlightJaneLayer

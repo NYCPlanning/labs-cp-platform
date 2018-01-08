@@ -5,7 +5,7 @@ import { sqlConfig, getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
 export const fetchDetails = cartodbId =>
   cartoActions.getFeature({
     tableName: sqlConfig.tablename,
-    column: 'cartodb_id',
+    column: 'dob_job_number',
     value: cartodbId,
   }, AT.FETCH_HOUSING_DEVELOPMENT_DETAILS);
 
