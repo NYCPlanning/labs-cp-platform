@@ -17,11 +17,6 @@ import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
 import Explorer from '../app/explorer/Explorer';
 
-// Detail Pages
-import CapitalProjectDetailPage from '../app/detail-pages/CapitalProjectDetailPage';
-import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
-import FacilityDetailPage from '../app/detail-pages/FacilityDetailPage';
-import BudgetRequestDetailPage from '../app/detail-pages/BudgetRequestDetailPage';
 import DetailPage from '../app/detail-pages/DetailPage';
 
 import getDefaultFilterDimensions from '../app/facilities/config';
@@ -113,35 +108,33 @@ export default (
     <Route component={Explorer}>
       <Route
         path="capitalproject/:id"
-        component={ensureSitewideAccess(CapitalProjectDetailPage)}
+        component={ensureSitewideAccess(DetailPage)}
         about={'/about/capitalprojects'}
         type="capitalproject"
       />
       <Route
         path="budgetrequest/:id"
-        component={ensureSitewideAccess(BudgetRequestDetailPage)}
+        component={ensureSitewideAccess(DetailPage)}
         about={'/about/capitalprojects'}
         type="budgetrequest"
       />
       <Route
         path="development/:id"
-        component={ensureSitewideAccess(HousingDetailPage)}
+        component={ensureSitewideAccess(DetailPage)}
         about={'/about/pipeline'}
         type="development"
       />
       <Route
         path="pops/:id"
-        component={FacilityDetailPage}
+        component={DetailPage}
         about={'/about/facilities'}
         type="pops"
-        facilityRoute="pops"
       />
       <Route
         path="facility/:id"
-        component={FacilityDetailPage}
+        component={DetailPage}
         about={'/about/facilities'}
         type="facility"
-        facilityRoute="facility"
       />
     </Route>
 

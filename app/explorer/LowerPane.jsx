@@ -9,6 +9,13 @@ import Results from './Results';
 import './LowerPane.scss';
 
 class LowerPane extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      detailPageType: '',
+    };
+  }
+
   componentDidMount() {
     this.setBottomOffset();
   }
@@ -21,11 +28,18 @@ class LowerPane extends React.Component {
     this.props.setBottomOffset(offset);
   }
 
+  setDetailPageType = (detailPageType) => {
+    this.setState({ detailPageType });
+  }
+
   render() {
     const closeLowerPane = () => {
       this.setBottomOffset(0);
       this.props.closeLowerPane();
     };
+
+    const detailPage = React.Children.map(this.props.detailPage, child =>
+      React.cloneElement(child, { setDetailPageType: this.setDetailPageType }));
 
     return (
       <ReactCSSTransitionGroup
@@ -49,13 +63,13 @@ class LowerPane extends React.Component {
           ref={(divElement) => { this.divElement = divElement; }}
         >
           <div className="detail-page--bar">
-            { this.props.detailPageType }
+            { this.state.detailPageType }
             <button
               onClick={closeLowerPane}
             ><span className="fa fa-times" /></button>
           </div>
           <div className={cx('detail-page', { 'with-selected': !_.isEmpty(this.props.selectedFeatures) })}>
-            { this.props.detailPage }
+            { detailPage }
           </div>
           <div className="results-pane">
             <Results selectedFeatures={this.props.selectedFeatures} />
@@ -68,7 +82,6 @@ class LowerPane extends React.Component {
 
 LowerPane.propTypes = {
   detailPage: PropTypes.object,
-  detailPageType: PropTypes.string,
   selectedFeatures: PropTypes.array,
   closeLowerPane: PropTypes.func,
 
@@ -79,7 +92,6 @@ LowerPane.propTypes = {
 LowerPane.defaultProps = {
   selectedFeatures: [],
   detailPage: {},
-  detailPageType: null,
   closeLowerPane: () => {},
   leftOffset: 0,
   setBottomOffset: () => {},

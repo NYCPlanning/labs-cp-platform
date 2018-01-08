@@ -15,11 +15,11 @@ import './CapitalProjectDetailPage.scss';
 
 class CapitalProjectsDetailPage extends React.Component {
   componentDidMount() {
-    this.fetchPageData(this.props.params.id);
+    this.fetchPageData(this.props.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
+    if (nextProps.id !== this.props.id) this.fetchPageData(nextProps.id);
   }
 
   fetchPageData(id) {
@@ -171,7 +171,7 @@ class CapitalProjectsDetailPage extends React.Component {
           <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
             <FeedbackForm
               ref_type="capitalproject"
-              ref_id={this.props.params.id}
+              ref_id={this.props.id}
             />
           </div>
         </div>
@@ -193,7 +193,7 @@ class CapitalProjectsDetailPage extends React.Component {
 }
 
 CapitalProjectsDetailPage.propTypes = {
-  params: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchBudgets: PropTypes.func.isRequired,
   fetchCommitments: PropTypes.func.isRequired,

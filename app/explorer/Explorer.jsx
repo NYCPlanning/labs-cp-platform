@@ -26,7 +26,7 @@ import appConfig from '../helpers/appConfig';
 
 const { mapboxGLOptions, searchConfig } = appConfig;
 
-class CapitalProjectsExplorer extends React.Component {
+class Explorer extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -75,6 +75,8 @@ class CapitalProjectsExplorer extends React.Component {
         return `/development/${feature.properties.cartodb_id}`;
       case 'facilities-cp':
         return `/facility/${feature.properties.uid}`;
+      case 'sca-points':
+        return `/sca/${feature.properties.cartodb_id}`;
       default:
         return null;
     }
@@ -207,7 +209,7 @@ class CapitalProjectsExplorer extends React.Component {
   }
 }
 
-CapitalProjectsExplorer.propTypes = {
+Explorer.propTypes = {
   children: PropTypes.object,
 
   pointsSql: PropTypes.string.isRequired,
@@ -231,7 +233,7 @@ CapitalProjectsExplorer.propTypes = {
   }),
 };
 
-CapitalProjectsExplorer.defaultProps = {
+Explorer.defaultProps = {
   location: null,
   children: null,
   params: {
@@ -256,4 +258,4 @@ const mapStateToProps = ({ capitalProjects, facilities, housingDevelopment, cbBu
 export default connect(mapStateToProps, {
   setSelectedFeatures: selectedActions.setSelectedFeatures,
   resetSelectedFeatures: selectedActions.resetSelectedFeatures,
-})(CapitalProjectsExplorer);
+})(Explorer);

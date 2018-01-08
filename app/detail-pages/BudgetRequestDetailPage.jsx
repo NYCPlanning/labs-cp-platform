@@ -8,11 +8,11 @@ import './BudgetRequestDetailPage.scss';
 
 class BudgetRequestDetailPage extends React.Component {
   componentWillMount() {
-    this.fetchPageData(this.props.params.id);
+    this.fetchPageData(this.props.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
+    if (nextProps.id !== this.props.id) this.fetchPageData(nextProps.id);
   }
 
   fetchPageData(id) {
@@ -123,9 +123,7 @@ BudgetRequestDetailPage.defaultProps = {
 };
 
 BudgetRequestDetailPage.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
   cbDetails: PropTypes.object,
   fetchDetails: PropTypes.func.isRequired,
 };

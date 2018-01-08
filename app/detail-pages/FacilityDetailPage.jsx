@@ -19,15 +19,19 @@ const CardStyles = {
 
 class FacilityDetailPage extends React.Component {
   componentDidMount() {
-    this.fetchPageData(this.props.params.id);
+    this.fetchPageData(this.props.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
+    if (nextProps.id !== this.props.id) this.fetchPageData(nextProps.id);
   }
 
   fetchPageData(id) {
-    this.props.fetchFacilityDetails(id, this.props.route.facilityRoute);
+    if (this.props.pops) {
+      this.props.fetchFacilityDetails(id, 'pops');
+    } else {
+      this.props.fetchFacilityDetails(id, 'facility');
+    }
   }
 
   render() {
@@ -258,7 +262,7 @@ class FacilityDetailPage extends React.Component {
 
             <FeedbackForm
               ref_type="facility"
-              ref_id={this.props.params.id}
+              ref_id={this.props.id}
               location={this.props.location}
               auth={this.props.auth}
             />
@@ -273,18 +277,17 @@ FacilityDetailPage.defaultProps = {
   auth: null,
   sources: [],
   facilityDetails: {},
+  pops: false,
 };
 
 FacilityDetailPage.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
   location: PropTypes.shape().isRequired,
   auth: PropTypes.object,
   fetchFacilityDetails: PropTypes.func.isRequired,
   facilityDetails: PropTypes.object,
   sources: PropTypes.array,
-  route: PropTypes.object.isRequired,
+  pops: PropTypes.bool,
 };
 
 const mapStateToProps = ({ facilities }) => ({

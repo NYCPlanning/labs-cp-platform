@@ -12,11 +12,11 @@ import './HousingDetailPage.scss';
 
 class HousingDetailPage extends React.Component {
   componentWillMount() {
-    this.fetchPageData(parseInt(this.props.params.id));
+    this.fetchPageData(parseInt(this.props.id));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) this.fetchPageData(nextProps.params.id);
+    if (nextProps.id !== this.props.id) this.fetchPageData(nextProps.id);
   }
 
   fetchPageData(id) {
@@ -224,7 +224,7 @@ class HousingDetailPage extends React.Component {
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"
-            ref_id={this.props.params.id}
+            ref_id={this.props.id}
           />
         </div>
       </div>
@@ -244,11 +244,8 @@ class HousingDetailPage extends React.Component {
 }
 
 HousingDetailPage.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string,
-  }).isRequired,
+  id: PropTypes.string.isRequired,
   housingDetails: PropTypes.object,
-  location: PropTypes.shape().isRequired,
   fetchDetails: PropTypes.func.isRequired,
 };
 
