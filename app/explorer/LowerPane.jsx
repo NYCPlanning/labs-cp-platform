@@ -8,6 +8,29 @@ import Results from './Results';
 
 import './LowerPane.scss';
 
+const detailPageTypeMap = {
+  facility: {
+    title: 'Facility',
+    icon: 'university',
+  },
+  capitalproject: {
+    title: 'Capital Project',
+    icon: 'usd',
+  },
+  sca: {
+    title: 'School Construction Authority Capital Project',
+    icon: 'graduation-cap',
+  },
+  budgetrequest: {
+    title: 'Community Board Budget Request',
+    icon: 'book',
+  },
+  development: {
+    title: 'Housing Development',
+    icon: 'cubes',
+  },
+};
+
 class LowerPane extends React.Component {
   constructor() {
     super();
@@ -63,7 +86,7 @@ class LowerPane extends React.Component {
           ref={(divElement) => { this.divElement = divElement; }}
         >
           <div className="detail-page--bar">
-            { this.state.detailPageType }
+            <span className={`fa fa-${detailPageTypeMap[this.state.detailPageType].icon}`} /> { detailPageTypeMap[this.state.detailPageType].title }
             <button
               onClick={closeLowerPane}
             ><span className="fa fa-times" /></button>
