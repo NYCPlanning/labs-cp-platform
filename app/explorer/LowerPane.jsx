@@ -40,6 +40,7 @@ class LowerPane extends React.Component {
     super();
     this.state = {
       detailPageType: 'feature',
+      detailPageId: null,
     };
   }
 
@@ -55,8 +56,11 @@ class LowerPane extends React.Component {
     this.props.setBottomOffset(offset);
   }
 
-  setDetailPageType = (detailPageType) => {
-    this.setState({ detailPageType });
+  setDetailPageData = (payload) => {
+    this.setState({
+      detailPageType: payload.type,
+      detailPageId: payload.id,
+    });
   }
 
   render() {
@@ -66,7 +70,7 @@ class LowerPane extends React.Component {
     };
 
     const detailPage = React.Children.map(this.props.detailPage, child =>
-      React.cloneElement(child, { setDetailPageType: this.setDetailPageType }));
+      React.cloneElement(child, { setDetailPageData: this.setDetailPageData }));
 
     return (
       <ReactCSSTransitionGroup
@@ -101,6 +105,7 @@ class LowerPane extends React.Component {
           <div className="results-pane">
             <Results
               selectedFeatures={this.props.selectedFeatures}
+              detailPageId={this.state.detailPageId}
             />
           </div>
         </div>
