@@ -5,7 +5,7 @@ const labels = [
   },
   {
     value: '2',
-    label: '2 - Rosie Mendez',
+    label: '2 - Carlina Rivera',
   },
   {
     value: '3',
@@ -13,7 +13,7 @@ const labels = [
   },
   {
     value: '4',
-    label: '4 - Daniel R. Garodnick',
+    label: '4 - Keith Powers',
   },
   {
     value: '5',
@@ -29,7 +29,7 @@ const labels = [
   },
   {
     value: '8',
-    label: '8 - Melissa Mark-Viverito',
+    label: '8 - Diana Ayala',
   },
   {
     value: '9',
@@ -49,7 +49,7 @@ const labels = [
   },
   {
     value: '13',
-    label: '13 - James Vacca',
+    label: '13 - Mark Gjonaj',
   },
   {
     value: '14',
@@ -69,7 +69,7 @@ const labels = [
   },
   {
     value: '18',
-    label: '18 - Annabel Palma',
+    label: '18 - Ruben Diaz, Sr.',
   },
   {
     value: '19',
@@ -81,7 +81,7 @@ const labels = [
   },
   {
     value: '21',
-    label: '21 - Julissa Ferreras-Copeland',
+    label: '21 - Francisco Moya',
   },
   {
     value: '22',
@@ -109,7 +109,7 @@ const labels = [
   },
   {
     value: '28',
-    label: '28 - Vacant',
+    label: '28 - Adrienne E. Adams',
   },
   {
     value: '29',
@@ -117,7 +117,7 @@ const labels = [
   },
   {
     value: '30',
-    label: '30 - Elizabeth S. Crowley',
+    label: '30 - Robert Holden',
   },
   {
     value: '31',
@@ -161,7 +161,7 @@ const labels = [
   },
   {
     value: '41',
-    label: '41 - Darlene Mealy',
+    label: '41 - Alicka Ampry-Samuel',
   },
   {
     value: '42',
@@ -169,11 +169,11 @@ const labels = [
   },
   {
     value: '43',
-    label: '43 - Vincent Gentile',
+    label: '43 - Justin Brannan',
   },
   {
     value: '44',
-    label: '44 - David G. Greenfield',
+    label: '44 - Kalman Yeger',
   },
   {
     value: '45',
