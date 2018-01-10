@@ -13,7 +13,8 @@ class InclusionaryHousingJaneLayer extends React.Component {
     this.state = {
       checkboxes: {
         ih: true,
-        mih: false,
+        mih: true,
+        studyareas: true,
       },
     };
 
@@ -29,20 +30,142 @@ class InclusionaryHousingJaneLayer extends React.Component {
     this.setState({ checkboxes });
   }
 
+  studyareas = [
+    <Source
+      id="studyareas"
+      type="cartovector"
+      options={{
+        carto_domain: appConfig.carto_domain,
+        sql: ['SELECT * FROM support_dcp_studyareas'],
+      }}
+    />,
+    <MapLayer
+      id="studyareas"
+      source="studyareas"
+      sourceLayer="layer0"
+      type="fill"
+      paint={{
+        'fill-color': '#43a2ca',
+        'fill-opacity': 0.6,
+        'fill-antialias': true,
+        'fill-outline-color': 'rgba(0, 0, 0, 1)',
+      }}
+    />,
+    <Popup
+      mapLayerId="studyareas"
+      template={`
+        <h1>{{p.maplabel}} ({{p.yearadopt}})</h1>
+        <div>Status: {{p.status}}</div>
+      `}
+    />,
+  ];
+
+  ih = [
+    <Source
+      id="ih"
+      type="cartovector"
+      options={{
+        carto_domain: appConfig.carto_domain,
+        sql: ['SELECT * FROM support_ih'],
+      }}
+    />,
+    <MapLayer
+      id="ih"
+      source="ih"
+      sourceLayer="layer0"
+      type="fill"
+      paint={{
+        'fill-color': '#E57300',
+        'fill-opacity': 0.6,
+        'fill-antialias': true,
+        'fill-outline-color': 'rgba(0, 0, 0, 1)',
+      }}
+    />,
+    <Popup
+      mapLayerId="ih"
+      template={`
+        <h1>Inclusionary Housing</h1>
+        <div>{{p.projectnam}}</div>
+        <div>Status: {{p.status}}</div>
+      `}
+    />,
+  ];
+
+  mih = [
+    <Source
+      id="mih"
+      type="cartovector"
+      options={{
+        carto_domain: appConfig.carto_domain,
+        sql: ['SELECT * FROM support_mih'],
+      }}
+    />,
+    <MapLayer
+      id="mih"
+      source="mih"
+      sourceLayer="layer0"
+      type="fill"
+      paint={{
+        'fill-color': '#CC3D5D',
+        'fill-opacity': 0.6,
+        'fill-antialias': true,
+        'fill-outline-color': 'rgba(0, 0, 0, 1)',
+      }}
+    />,
+    <Popup
+      mapLayerId="mih"
+      template={`
+        <h1>Mandatory Inclusionary Housing</h1>
+        <div>{{p.projectnam}}</div>
+        <div>Status: {{p.status}}</div>
+      `}
+    />,
+  ];
+
+  renderLayers() {
+    let layerArray = [];
+
+    if (this.state.checkboxes.ih) layerArray = layerArray.concat(this.ih);
+    if (this.state.checkboxes.mih) layerArray = layerArray.concat(this.mih);
+    if (this.state.checkboxes.studyareas) layerArray = layerArray.concat(this.studyareas);
+
+    return layerArray.map((child, index) => ({ ...child, key: index }));
+  }
+
+  renderStudyAreas() {
+    if (!this.state.checkboxes.studyareas) {
+      return null;
+    }
+
+    return [
+      <MapLayer
+        id="studyareas"
+        source="studyareas"
+        sourceLayer="layer0"
+        type="fill"
+        paint={{
+          'fill-color': '#43a2ca',
+          'fill-opacity': 0.6,
+          'fill-antialias': true,
+          'fill-outline-color': 'rgba(0, 0, 0, 1)',
+        }}
+      />,
+      <Popup
+        mapLayerId="studyareas"
+        template={`
+          <h1>{{p.maplabel}} ({{p.yearadopt}})</h1>
+          <div>Status: {{p.status}}</div>
+        `}
+      />,
+    ].map((child, index) => ({ ...child, key: index }));
+  }
+
   renderIh() {
     if (!this.state.checkboxes.ih) {
       return null;
     }
 
     return [
-      <Source
-        id="ih"
-        type="cartovector"
-        options={{
-          carto_domain: appConfig.carto_domain,
-          sql: [`SELECT * FROM ${db_tables.support.ih}`],
-        }}
-      />,
       <MapLayer
         id="ih"
         source="ih"
@@ -72,14 +195,6 @@ class InclusionaryHousingJaneLayer extends React.Component {
     }
 
     return [
-      <Source
-        id="mih"
-        type="cartovector"
-        options={{
-          carto_domain: appConfig.carto_domain,
-          sql: [`SELECT * FROM ${db_tables.support.mih}`],
-        }}
-      />,
       <MapLayer
         id="mih"
         source="mih"
@@ -107,14 +222,98 @@ class InclusionaryHousingJaneLayer extends React.Component {
     return (
       <JaneLayer
         id="inclusionary_housing"
-        name="Inclusionary Housing"
-        icon="home"
+        name="Planning Areas"
+        icon="map"
         selected={this.props.selected}
         enabled={this.props.enabled}
         component={<SidebarComponent checkboxes={this.state.checkboxes} onCheckboxChange={this.onCheckboxChange} />}
       >
-        { this.renderIh() }
-        { this.renderMih() }
+        <Source
+          id="studyareas"
+          type="cartovector"
+          options={{
+            carto_domain: appConfig.carto_domain,
+            sql: ['SELECT * FROM support_dcp_studyareas'],
+          }}
+        />
+        <MapLayer
+          id="studyareas"
+          source="studyareas"
+          sourceLayer="layer0"
+          type="fill"
+          visibility="none"
+          paint={{
+            'fill-color': '#43a2ca',
+            'fill-opacity': 0.6,
+            'fill-antialias': true,
+            'fill-outline-color': 'rgba(0, 0, 0, 1)',
+          }}
+        />
+        <Popup
+          mapLayerId="studyareas"
+          template={`
+            <h1>{{p.maplabel}} ({{p.yearadopt}})</h1>
+            <div>Status: {{p.status}}</div>
+          `}
+        />
+
+        <Source
+          id="ih"
+          type="cartovector"
+          options={{
+            carto_domain: appConfig.carto_domain,
+            sql: ['SELECT * FROM support_ih'],
+          }}
+        />
+        <MapLayer
+          id="ih"
+          source="ih"
+          sourceLayer="layer0"
+          type="fill"
+          paint={{
+            'fill-color': '#E57300',
+            'fill-opacity': 0.6,
+            'fill-antialias': true,
+            'fill-outline-color': 'rgba(0, 0, 0, 1)',
+          }}
+        />
+        <Popup
+          mapLayerId="ih"
+          template={`
+            <h1>Inclusionary Housing</h1>
+            <div>{{p.projectnam}}</div>
+            <div>Status: {{p.status}}</div>
+          `}
+        />
+
+        <Source
+          id="mih"
+          type="cartovector"
+          options={{
+            carto_domain: appConfig.carto_domain,
+            sql: ['SELECT * FROM support_mih'],
+          }}
+        />
+        <MapLayer
+          id="mih"
+          source="mih"
+          sourceLayer="layer0"
+          type="fill"
+          paint={{
+            'fill-color': '#CC3D5D',
+            'fill-opacity': 0.6,
+            'fill-antialias': true,
+            'fill-outline-color': 'rgba(0, 0, 0, 1)',
+          }}
+        />
+        <Popup
+          mapLayerId="mih"
+          template={`
+            <h1>Mandatory Inclusionary Housing</h1>
+            <div>{{p.projectnam}}</div>
+            <div>Status: {{p.status}}</div>
+          `}
+        />
       </JaneLayer>
     );
   }

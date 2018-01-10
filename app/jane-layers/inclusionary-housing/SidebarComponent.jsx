@@ -10,7 +10,6 @@ const SidebarComponent = props => (
         <div className="sidebar-tab-content">
           <div className="padded">
             <h4>Inclusionary Housing</h4>
-            <p>Zoom in to show labels</p>
             <Checkbox
               label="Inclusionary Housing"
               checked={props.checkboxes.ih}
@@ -20,6 +19,13 @@ const SidebarComponent = props => (
               label="Mandatory Inclusionary Housing"
               checked={props.checkboxes.mih}
               onCheck={() => props.onCheckboxChange('mih')}
+            />
+
+            <h4>Study Areas</h4>
+            <Checkbox
+              label="Study Areas"
+              checked={props.checkboxes.studyareas}
+              onCheck={() => props.onCheckboxChange('studyareas')}
             />
           </div>
         </div>
