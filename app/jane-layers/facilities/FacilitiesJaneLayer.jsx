@@ -81,7 +81,7 @@ const FacilitiesJaneLayer = props => (
         </div>
         <div className="legendItem">
           <div className="colorCircle" style={{ backgroundColor: 'rgb(203, 203, 214)' }} />
-          <div className="legendItemText">Admintration of Government</div>
+          <div className="legendItemText">Administration of Government</div>
         </div>
       </div>
     </Legend>
