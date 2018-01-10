@@ -63,7 +63,6 @@ class Explorer extends React.Component {
   // Nasty debounces cause I suck at async
   setSelectedFeatures = _.debounce(() => {
     this.props.setSelectedFeatures(this.selectedFeaturesCache);
-    this.props.router.push(this.featureRoute(this.selectedFeaturesCache[0]));
     this.selectedFeaturesCache = [];
   }, 50);
 
@@ -85,8 +84,9 @@ class Explorer extends React.Component {
     }
 
     this.selectedFeaturesCache.push(...features);
+    this.props.router.push(this.featureRoute(this.selectedFeaturesCache[0]));
     this.setSelectedFeatures();
-    this.centerMap(event);
+    // this.centerMap(event);
   };
 
   clearSelectedFeatures = () => {
