@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import cx from 'classnames';
 
 import colors from '../facilities/colors';
 
@@ -23,7 +24,7 @@ const Item = (props) => {
       }}
     >
       <div
-        className={'facilities-list-item'}
+        className={cx('facilities-list-item', { selected: props.selected })}
         style={{
           borderLeft: `5px solid ${colors.getColor(d.facdomain)}`,
         }}
@@ -41,6 +42,11 @@ Item.propTypes = {
   feature: PropTypes.shape({
     properties: PropTypes.object.isRequired,
   }).isRequired,
+  selected: PropTypes.bool,
+};
+
+Item.defaultProps = {
+  selected: false,
 };
 
 export default Item;

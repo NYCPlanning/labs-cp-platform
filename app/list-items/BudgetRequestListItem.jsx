@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import cx from 'classnames';
 
 const Item = (props) => {
   const d = props.feature.properties;
@@ -13,7 +14,7 @@ const Item = (props) => {
       }}
     >
       <div
-        className={'budget-request-list-item'}
+        className={cx('budget-request-list-item', { selected: props.selected })}
         style={{
           borderLeft: `5px solid ${d.budgetcategory === 'Expense' ? '#a6cee3' : '#b2df8a'}`,
         }}
@@ -30,6 +31,11 @@ Item.propTypes = {
   feature: PropTypes.shape({
     properties: PropTypes.object.isRequired,
   }).isRequired,
+  selected: PropTypes.bool,
+};
+
+Item.defaultProps = {
+  selected: false,
 };
 
 export default Item;

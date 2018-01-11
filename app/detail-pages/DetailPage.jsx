@@ -8,21 +8,15 @@ import BudgetRequestDetailPage from './BudgetRequestDetailPage';
 
 class DetailPage extends React.Component {
   componentWillMount() {
-    this.setDetailPageData();
+    this.setDetailPageData(this.props.params.id, this.props.route.type);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.route.type !== this.props.route.type ||
-        nextProps.route.id !== this.props.route.id) {
-      this.setDetailPageData();
-    }
+    if (nextProps.params.id !== this.props.params.id) this.setDetailPageData(nextProps.params.id, nextProps.route.type);
   }
 
-  setDetailPageData() {
-    this.props.setDetailPageData({
-      type: this.props.route.type,
-      id: this.props.route.id,
-    });
+  setDetailPageData(id, type) {
+    this.props.setDetailPageData({ type, id });
   }
 
   render() {

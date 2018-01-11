@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 const Item = (props) => {
   const d = props.feature.properties;
 
   return (
     <div
-      className={'sca-list-item'}
+      className={cx('sca-list-item', { selected: props.selected })}
       style={{
         borderLeft: `5px solid${'#5C99FF'}`,
       }}
@@ -21,6 +22,11 @@ Item.propTypes = {
   feature: PropTypes.shape({
     properties: PropTypes.object.isRequired,
   }).isRequired,
+  selected: PropTypes.bool,
+};
+
+Item.defaultProps = {
+  selected: false,
 };
 
 export default Item;
