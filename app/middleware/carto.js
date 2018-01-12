@@ -5,7 +5,7 @@ import * as AT from '../constants/actionTypes';
 import appConfig from '../helpers/appConfig';
 
 const generateUrlString = (sql, format, filename = 'download') => encodeURI(
-  `https://${appConfig.carto_domain}/api/v2/sql?skipfields=cartodb_id&q=${sql}&format=${format}&filename=${filename}`,
+  `https://${appConfig.carto_domain}/api/v2/sql?q=${sql}&format=${format}&filename=${filename}`,
 );
 
 const uniqueId = 0;

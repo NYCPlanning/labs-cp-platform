@@ -76,7 +76,8 @@ class Explorer extends React.Component {
       });
     }
 
-    if (features[0].geometry.type === 'Polygon') {
+    if (features[0].geometry.type === 'Polygon' ||
+        features[0].geometry.type === 'MultiPolygon') {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: [event.lngLat.lng, event.lngLat.lat],
