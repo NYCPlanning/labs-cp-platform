@@ -151,7 +151,6 @@ class Explorer extends React.Component {
           mapboxGLOptions={mapboxGLOptions}
           search
           searchConfig={searchConfig}
-          onLayerToggle={this.clearSelectedFeatures}
           closeLowerPane={this.closeLowerPane}
           onSearchTrigger={this.setAddressSearchCoordinates}
           detailPage={this.props.children}

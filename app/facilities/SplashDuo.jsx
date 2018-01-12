@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 import ga from '../helpers/ga';
 

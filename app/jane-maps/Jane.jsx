@@ -226,7 +226,7 @@ class Jane extends React.Component {
           }
 
           {
-            this.state.displayLowerPane &&
+            !_.isEmpty(this.props.detailPage) &&
             <LowerPane
               leftOffset={leftOffset}
               detailPage={this.props.detailPage}
