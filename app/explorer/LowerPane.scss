@@ -13,7 +13,7 @@
   width: 100%;
 
   &.with-selected {
-    width: inherit;
+    width: calc(100% - 300px);
     margin-right: 300px;
   }
 }

@@ -136,6 +136,12 @@ export default (
         about={'/about/facilities'}
         type="facility"
       />
+      <Route
+        path="sca/:id"
+        component={DetailPage}
+        about={'/about/capitalprojects'}
+        type="sca"
+      />
     </Route>
 
     { /* Auth and Sitewide */ }

@@ -17,6 +17,7 @@ const db_tables = {
     facilities: 'facdb_170522',
   },
   housingdevdb: 'housingdevdb_170906',
+  sca: 'cpdb_sca_pts_170201',
 };
 
 export default db_tables;

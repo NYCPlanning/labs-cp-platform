@@ -5,6 +5,7 @@ import CapitalProjectDetailPage from './CapitalProjectDetailPage';
 import HousingDetailPage from './HousingDetailPage';
 import FacilityDetailPage from './FacilityDetailPage';
 import BudgetRequestDetailPage from './BudgetRequestDetailPage';
+import SCADetailPage from './SCADetailPage';
 
 class DetailPage extends React.Component {
   componentWillMount() {
@@ -51,6 +52,13 @@ class DetailPage extends React.Component {
 
         { this.props.route.type === 'budgetrequest' &&
           <BudgetRequestDetailPage
+            id={this.props.params.id}
+          />
+        }
+
+        {
+          this.props.route.type === 'sca' &&
+          <SCADetailPage
             id={this.props.params.id}
           />
         }
