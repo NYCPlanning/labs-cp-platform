@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import BackButton from '../../common/BackButton';
+import BackButton from './BackButton';
 import ModalMap from './ModalMap';
 import FeedbackForm from '../../common/FeedbackForm';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
@@ -77,8 +77,8 @@ class DetailPage extends React.Component {
             >
               <BackButton
                 location={this.props.location}
-                defaultText="Capital Projects Map"
-                defaultLink="/capitalprojects"
+                defaultText="Table"
+                defaultLink="/table"
               />
             </div>
             <div className="col-md-9 col-md-pull-3">

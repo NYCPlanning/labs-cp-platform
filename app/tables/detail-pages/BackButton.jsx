@@ -36,8 +36,8 @@ const BackButton = (props) => {
   if (props.location.state) {
     return (
       <Button
-        label={'Back'}
-        iconClass={'fa-chevron-left'}
+        label={'Close'}
+        iconClass={'fa-chevron-down'}
         onClick={browserHistory.goBack}
       />
     );
@@ -47,7 +47,7 @@ const BackButton = (props) => {
     <Link to={props.defaultLink}>
       <Button
         label={props.defaultText}
-        iconClass={'fa-map'}
+        iconClass={'fa-table'}
       />
     </Link>
   );

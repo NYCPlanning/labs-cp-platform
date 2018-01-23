@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 
 import * as authActions from './actions/auth';
@@ -73,7 +74,33 @@ class App extends React.Component {
           mini={this.props.children.props.route.miniNav}
         />
         <div>
-          { this.props.children }
+          {isModal ?
+            this.previousChildren :
+            children
+          }
+          <ReactCSSTransitionGroup
+            transitionName="background"
+            transitionAppear
+            transitionAppearTimeout={250}
+            transitionEnterTimeout={250}
+            transitionLeaveTimeout={250}
+          >
+
+            {isModal && (
+              <div
+                style={{
+                  zIndex: 1000,
+                  position: 'absolute',
+                  right: 0,
+                  left: 0,
+                  bottom: 0,
+                  top: 0,
+                }}
+              >
+                {children}
+              </div>
+            )}
+          </ReactCSSTransitionGroup>
 
           {
             this.state.modalHeading &&
