@@ -122,7 +122,7 @@ class CPTable extends React.Component { // eslint-disable-line
   linkToProject = rowData => content => (
     <Link
       to={{
-        pathname: `/capitalproject/${rowData.maprojid}`,
+        pathname: `/table/capitalproject/${rowData.maprojid}`,
         state: { modal: true, returnTo: '/capitalprojects' },
       }}
     >

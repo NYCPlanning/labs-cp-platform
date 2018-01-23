@@ -15,6 +15,8 @@ import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
 
 // Explorers
 import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
+import TableDetailPage from '../app/tables/detail-pages/DetailPage';
+
 import Explorer from '../app/explorer/Explorer';
 
 import DetailPage from '../app/detail-pages/DetailPage';
@@ -99,6 +101,7 @@ export default (
     { /* Table */ }
     <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
     <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="/table/capitalproject/:id" component={ensureSitewideAccess(TableDetailPage)} title={'Capital Project'} about={'/about/capitalprojects'} />
 
     { /* Map */ }
     <Route path="/map" component={Explorer} about={'/about/capitalprojects'} />
