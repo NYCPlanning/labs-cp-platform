@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import centroid from 'turf-centroid';
 
 import { Jane } from '../jane-maps';
 
@@ -35,12 +36,17 @@ class Explorer extends React.Component {
       bottomOffset: 0,
     };
     this.selectedFeaturesCache = [];
+    this.mapClicked = false;
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.pointsSql !== nextProps.pointsSql ||
         this.props.polygonsSql !== nextProps.polygonsSql) {
       this.props.setSelectedFeatures([]);
+    }
+
+    if (this.props.map.centerOnGeometry !== nextProps.map.centerOnGeometry) {
+      this.centerFromGeometry(nextProps.map.centerOnGeometry);
     }
   }
 
@@ -68,7 +74,25 @@ class Explorer extends React.Component {
 
   setBottomOffset = bottomOffset => this.setState({ bottomOffset });
 
+  hasSelectedFeatures() {
+    return !_.isEmpty(this.props.selectedFeatures);
+  }
+
+  centerFromGeometry(geometry) {
+    if (this.mapClicked || this.hasSelectedFeatures()) return;
+
+    if (geometry.type === 'MultiPolygon' || geometry.type === 'Polygon') {
+      this.centerMap(centroid(geometry).geometry.coordinates);
+    }
+
+    if (geometry.type === 'Point') {
+      this.centerMap(geometry.coordinates);
+    }
+  }
+
   handleMapLayerClick = (features, event) => {
+    this.mapClicked = true;
+
     if (features[0].geometry.type === 'Point') {
       this.setState({
         selectedPointType: 'point',
@@ -87,7 +111,8 @@ class Explorer extends React.Component {
     this.selectedFeaturesCache.push(...features);
     this.props.router.push(this.featureRoute(this.selectedFeaturesCache[0]));
     this.setSelectedFeatures();
-    // this.centerMap(event);
+
+    this.centerMap([event.lngLat.lng, event.lngLat.lat]);
   };
 
   clearSelectedFeatures = () => {
@@ -116,12 +141,13 @@ class Explorer extends React.Component {
     }
   }
 
-  centerMap = _.debounce((event) => {
+  centerMap = _.debounce((lnglat) => {
     this.Jane.GLMap.map.easeTo({
-      center: [event.lngLat.lng, event.lngLat.lat],
+      center: lnglat,
       offset: [160, -(this.state.bottomOffset / 2)],
-      duration: 1,
+      duration: 3,
     });
+    this.mapClicked = false;
   }, 50);
 
   render() {
@@ -248,6 +274,8 @@ Explorer.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   location: PropTypes.object,
 
+  map: PropTypes.object.isRequired,
+
   router: PropTypes.object.isRequired,
   params: PropTypes.shape({
     layer: PropTypes.string,
@@ -262,7 +290,15 @@ Explorer.defaultProps = {
   },
 };
 
-const mapStateToProps = ({ capitalProjects, facilities, housingDevelopment, cbBudgetRequests, selected, currentUser }) => ({
+const mapStateToProps = ({
+  capitalProjects,
+  facilities,
+  housingDevelopment,
+  cbBudgetRequests,
+  selected,
+  currentUser,
+  map,
+}) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
   facilitiesSql: facilities.sql,
@@ -272,6 +308,7 @@ const mapStateToProps = ({ capitalProjects, facilities, housingDevelopment, cbBu
   cbBudgetRequestsPolygonSql: cbBudgetRequests.polygonsSql,
 
   selectedFeatures: selected.features,
+  map,
 
   isLoggedIn: currentUser.isLoggedIn,
 });

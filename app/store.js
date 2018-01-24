@@ -11,6 +11,7 @@ import capitalProjectsTable from './reducers/capitalProjectsTable';
 import cbBudgetRequests from './reducers/cbBudgetRequests';
 import selected from './reducers/selected';
 import sca from './reducers/sca';
+import map from './reducers/map';
 
 // Middleware
 import auth from './middleware/auth';
@@ -35,6 +36,7 @@ const store = createStore(
     cbBudgetRequests,
     selected,
     sca,
+    map,
   }),
   applyMiddleware(...middleware),
 );
