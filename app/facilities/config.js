@@ -120,7 +120,7 @@ export const getDefaultFilterDimensions = ({ selected, values }) => ({
     ],
   },
   overabbrev: {
-    type: 'fuzzyMultiSelect',
+    type: 'multiSelect',
     disabled: true,
     values: [
       {
