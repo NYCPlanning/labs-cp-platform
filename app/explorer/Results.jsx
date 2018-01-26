@@ -10,6 +10,8 @@ import BudgetRequestLineItem from '../list-items/BudgetRequestListItem';
 class Results extends React.Component {
   render() {
     const selectedItems = this.props.selectedFeatures.map((feature) => {
+      if (!this.props.detailPageId) return null;
+
       switch (feature.layer.source) {
         case 'capital-projects': {
           return (<CPListItem
@@ -25,10 +27,10 @@ class Results extends React.Component {
             key={`sca${feature.properties.cartodb_id}`}
           />);
         }
-        case 'facilities-cp': {
+        case 'facilities-cp': {          
           return (<FacilitiesListItem
             feature={feature}
-            selected={feature.properties.uid.toString() === this.props.detailPageId.toString()}
+            selected={feature.properties.uid === this.props.detailPageId.toString()}
             key={`fac${feature.properties.uid}`}
           />);
         }

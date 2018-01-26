@@ -45,8 +45,12 @@ class Explorer extends React.Component {
       this.props.setSelectedFeatures([]);
     }
 
-    if (this.props.map.centerOnGeometry !== nextProps.map.centerOnGeometry) {
+    if (!this.mapClicked && (this.props.map.centerOnGeometry !== nextProps.map.centerOnGeometry)) {
       this.centerFromGeometry(nextProps.map.centerOnGeometry);
+      this.setState({
+        selectedPointType: 'point',
+        selectedPointCoordinates: this.centroidFromGeometry(nextProps.map.centerOnGeometry),
+      });
     }
   }
 
@@ -80,13 +84,16 @@ class Explorer extends React.Component {
 
   centerFromGeometry(geometry) {
     if (this.mapClicked || this.hasSelectedFeatures()) return;
+    this.centerMap(this.centroidFromGeometry(geometry));
+  }
 
+  centroidFromGeometry(geometry) {
     if (geometry.type === 'MultiPolygon' || geometry.type === 'Polygon') {
-      this.centerMap(centroid(geometry).geometry.coordinates);
+      return centroid(geometry).geometry.coordinates;
     }
 
     if (geometry.type === 'Point') {
-      this.centerMap(geometry.coordinates);
+      return geometry.coordinates;
     }
   }
 
@@ -100,8 +107,7 @@ class Explorer extends React.Component {
       });
     }
 
-    if (features[0].geometry.type === 'Polygon' ||
-        features[0].geometry.type === 'MultiPolygon') {
+    if (features[0].geometry.type === 'Polygon' || features[0].geometry.type === 'MultiPolygon') {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: [event.lngLat.lng, event.lngLat.lat],
@@ -120,6 +126,13 @@ class Explorer extends React.Component {
   };
 
   closeLowerPane = () => {
+    this.mapClicked = false;
+
+    this.setState({
+      selectedPointType: '',
+      selectedPointCoordinates: [],
+    });
+
     this.props.resetSelectedFeatures();
     this.props.router.push('/map');
   }
@@ -147,7 +160,6 @@ class Explorer extends React.Component {
       offset: [160, -(this.state.bottomOffset / 2)],
       duration: 3,
     });
-    this.mapClicked = false;
   }, 50);
 
   render() {
@@ -187,8 +199,7 @@ class Explorer extends React.Component {
           ref={(jane) => { this.Jane = jane; }}
         >
           <HighlightJaneLayer
-            selectedFeatures={selectedFeatures}
-            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            coordinates={this.state.selectedPointCoordinates}
           />
           <AerialsJaneLayer />
           <TransportationJaneLayer />
