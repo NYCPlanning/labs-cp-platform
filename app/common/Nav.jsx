@@ -33,21 +33,6 @@ const Nav = (props) => {
     <li><a onClick={props.login}><i className="fa fa-user" aria-hidden="true" /> Log In</a></li>
   );
 
-  const titleOrMenu = () => {
-    if (props.title === 'Capital Projects Explorer' ||
-        props.title === 'Capital Projects Table') {
-      return (
-        <span className={'title'} style={{ marginLeft: '14px' }}> |
-          <ul className="nav navbar-nav navbar-right">
-            <li><Link to="/capitalprojects/explorer">Map</Link></li>
-            <li><Link to="/capitalprojects/table">Table</Link></li>
-          </ul>
-        </span>
-      );
-    }
-    return (<span className={'title'}> | {props.title}</span>);
-  };
-
   return (
     <nav className={'navbar navbar-default navbar-fixed-top'}>
       <a className="beta-notice" href="http://www1.nyc.gov/site/planning/index.page">A beta project of NYC City Planning - Capital Planning Division</a>
@@ -69,10 +54,6 @@ const Nav = (props) => {
         <Link className="navbar-brand" to="/map">&#8291;</Link>
         <div className="navbar-title">
           Capital Planning Platform
-          {(
-            props.title &&
-              titleOrMenu()
-          )}
         </div>
       </div>
       <div id="navbar" className="navbar-collapse collapse">

@@ -22,43 +22,55 @@ class DownloadButton extends React.Component {
         <ButtonGroup vertical>
           <DropdownButton title={<span>{`All ${noun} `}<Badge>{counts.total}</Badge></span>} id={`${layerID}-complete`}>
             <MenuItem
-              href={carto.completeDownloadUrlString(sql, layerID, 'csv')}
+              href={carto.completeDownloadUrlStringPtsPoly(sql, layerID, 'csv')}
               onClick={this.logDownloadStat(layerID, 'csv')}
               eventKey="1"
             >CSV</MenuItem>
 
             <MenuItem
-              href={carto.completeDownloadUrlString(sql, layerID, 'geojson')}
+              href={carto.completeDownloadUrlStringPtsPoly(sql, layerID, 'geojson')}
               onClick={this.logDownloadStat(layerID, 'geojson')}
               eventKey="2"
             >GeoJSON</MenuItem>
 
             <MenuItem
-              href={carto.completeDownloadUrlString(sql, layerID, 'shp')}
-              onClick={this.logDownloadStat(layerID, 'shapefile')}
+              href={carto.completeDownloadUrlString(sql.points, layerID, 'shp')}
+              onClick={this.logDownloadStat(layerID, 'shapefile-points')}
               eventKey="3"
-            >Shapefile</MenuItem>
+            >Shapefile (points)</MenuItem>
+
+            <MenuItem
+              href={carto.completeDownloadUrlString(sql.polygons, layerID, 'shp')}
+              onClick={this.logDownloadStat(layerID, 'shapefile-polygons')}
+              eventKey="4"
+            >Shapefile (polygons)</MenuItem>
           </DropdownButton>
 
           { filtered &&
             <DropdownButton title={<span>{`Filtered ${noun} `}<Badge>{counts.filtered}</Badge></span>} id={`${layerID}-filtered`}>
               <MenuItem
-                href={carto.filteredDownloadUrlString(sql, layerID, 'csv')}
+                href={carto.filteredDownloadUrlStringPtsPoly(sql, layerID, 'csv')}
                 onClick={this.logDownloadStat(layerID, 'csv')}
                 eventKey="1"
               >CSV</MenuItem>
 
               <MenuItem
-                href={carto.filteredDownloadUrlString(sql, layerID, 'geojson')}
+                href={carto.filteredDownloadUrlStringPtsPoly(sql, layerID, 'geojson')}
                 onClick={this.logDownloadStat(layerID, 'geojson')}
                 eventKey="2"
               >GeoJSON</MenuItem>
 
               <MenuItem
-                href={carto.filteredDownloadUrlString(sql, layerID, 'shp')}
-                onClick={this.logDownloadStat(layerID, 'shapefile')}
+                href={carto.filteredDownloadUrlString(sql.points, layerID, 'shp')}
+                onClick={this.logDownloadStat(layerID, 'shapefile-points')}
                 eventKey="3"
-              >Shapefile</MenuItem>
+              >Shapefile (points)</MenuItem>
+
+              <MenuItem
+                href={carto.filteredDownloadUrlString(sql.polygons, layerID, 'shp')}
+                onClick={this.logDownloadStat(layerID, 'shapefile-polygons')}
+                eventKey="4"
+              >Shapefile (polygons)</MenuItem>
             </DropdownButton>
           }
         </ButtonGroup>
@@ -68,7 +80,7 @@ class DownloadButton extends React.Component {
 }
 
 DownloadButton.propTypes = {
-  sql: PropTypes.string.isRequired,
+  sql: PropTypes.object.isRequired,
   counts: PropTypes.object.isRequired,
   layerID: PropTypes.string.isRequired,
   noun: PropTypes.string.isRequired,
