@@ -41,7 +41,7 @@ const cbBudgetRequestsReducer = (state = initialState(), action) => {
       return Object.assign({}, state, { cbDetails: null });
 
     case AT.FETCH_CB_BUDGET_REQUESTS_TOTAL_COUNT.SUCCESS:
-      return Object.assign({}, state, { totalCount: action.payload[0].count });
+      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
 
     case AT.FETCH_CB_BUDGET_REQUESTS_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

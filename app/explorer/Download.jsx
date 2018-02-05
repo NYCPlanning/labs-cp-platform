@@ -115,7 +115,7 @@ Download.propTypes = {
 const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cbBudgetRequests, housingDevelopment, currentUser }) => ({
   counts: {
     total: {
-      'capital-projects': capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,
+      'capital-projects': capitalProjects.totalCount,
       'capital-projects-table': capitalProjectsTable.totalCount,
       'facilities-cp': facilities.totalCount,
       'cb-budgetrequests': cbBudgetRequests.totalCount,

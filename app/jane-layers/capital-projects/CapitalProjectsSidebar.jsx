@@ -9,8 +9,6 @@ import * as capitalProjectsActions from '../../actions/capitalProjects';
 
 class CapitalProjectsSidebar extends React.Component {
   componentDidMount() {
-    this.props.fetchTotalPointsCount();
-    this.props.fetchTotalPolygonsCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
   }
 
@@ -93,8 +91,6 @@ CapitalProjectsSidebar.propTypes = {
   selectedCount: PropTypes.number,
   filterDimensions: PropTypes.object.isRequired,
 
-  fetchTotalPointsCount: PropTypes.func.isRequired,
-  fetchTotalPolygonsCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
@@ -108,13 +104,11 @@ CapitalProjectsSidebar.defaultProps = {
 const mapStateToProps = ({ capitalProjects }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
-  totalCount: capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,
+  totalCount: capitalProjects.totalCount,
   selectedCount: capitalProjects.selectedCount,
   filterDimensions: capitalProjects.filterDimensions,
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalPointsCount: capitalProjectsActions.fetchTotalPointsCount,
-  fetchTotalPolygonsCount: capitalProjectsActions.fetchTotalPolygonsCount,
   fetchSelectedCount: capitalProjectsActions.fetchSelectedCount,
 })(CapitalProjectsSidebar);

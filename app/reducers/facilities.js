@@ -28,7 +28,7 @@ const facilitiesReducer = (state = initialState, action) => {
       return Object.assign({}, state, { sources: action.payload });
 
     case AT.FETCH_FACILITIES_TOTAL_COUNT.SUCCESS:
-      return Object.assign({}, state, { totalCount: action.payload[0].count });
+      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
 
     case AT.FETCH_FACILITIES_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

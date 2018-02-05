@@ -6,6 +6,12 @@ import { connect } from 'react-redux';
 
 import * as authActions from './actions/auth';
 
+import * as cpActions from './actions/capitalProjects';
+import * as cpTableActions from './actions/capitalProjectsTable';
+import * as cbbrActions from './actions/cbBudgetRequests';
+import * as facilitiesActions from './actions/facilities';
+import * as housingActions from './actions/housingDevelopment';
+
 import GlobalModal from './common/GlobalModal';
 import Nav from './common/Nav';
 
@@ -21,6 +27,12 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.loadCredentials({ targetPath: location.pathname });
+
+    this.props.fetchCPtableCount();
+    this.props.fetchCbbrCount();
+    this.props.fetchFacilitiesCount();
+    this.props.fetchHousingCount();
+    this.props.fetchCPcount();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -124,8 +136,20 @@ App.propTypes = {
   route: PropTypes.shape().isRequired,
 
   loadCredentials: PropTypes.func.isRequired,
+
+  fetchCPcount: PropTypes.func.isRequired,
+  fetchCPtableCount: PropTypes.func.isRequired,
+  fetchCbbrCount: PropTypes.func.isRequired,
+  fetchFacilitiesCount: PropTypes.func.isRequired,
+  fetchHousingCount: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   loadCredentials: authActions.loadCredentials,
+
+  fetchCPcount: cpActions.fetchTotalCount,
+  fetchCPtableCount: cpTableActions.fetchTotalCount,
+  fetchCbbrCount: cbbrActions.fetchTotalCount,
+  fetchFacilitiesCount: facilitiesActions.fetchTotalCount,
+  fetchHousingCount: housingActions.fetchTotalCount,
 })(App);

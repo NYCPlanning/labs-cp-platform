@@ -71,11 +71,8 @@ class LayerSelector extends React.Component {
       locationState,
       filterDimensions,
       setFilters,
-      fetchTotalFacilitiesCount,
       fetchSelectedFacilitiesCount,
     } = this.props;
-
-    fetchTotalFacilitiesCount();
 
     if (locationState && locationState.filterDimensions) {
       setFilters(locationState.filterDimensions);
@@ -301,7 +298,6 @@ LayerSelector.propTypes = {
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
   setFilters: PropTypes.func.isRequired,
-  fetchTotalFacilitiesCount: PropTypes.func.isRequired,
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
@@ -319,7 +315,6 @@ const mapStateToProps = ({ facilities }) => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalFacilitiesCount: facilityCPActions.fetchTotalCount,
   fetchSelectedFacilitiesCount: facilityCPActions.fetchSelectedCount,
   setFilters: facilityCPActions.setFilters,
   resetFilter: facilityCPActions.resetFilter,

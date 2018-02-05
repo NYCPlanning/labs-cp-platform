@@ -76,7 +76,6 @@ class CPTable extends React.Component { // eslint-disable-line
   }
 
   componentDidMount() {
-    this.props.fetchTotalCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
     this.props.fetchDetails(this.props.filterDimensions);
     this.props.resetFilter();
@@ -338,7 +337,6 @@ CPTable.propTypes = {
   setSort: PropTypes.func.isRequired,
   filterBy: PropTypes.string.isRequired,
   capitalProjectDetails: PropTypes.array.isRequired,
-  fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
 };
 
@@ -356,7 +354,6 @@ const ConnectedTable = connect(mapStateToProps, {
   resetFilter: capitalProjectsTableActions.resetFilter,
   setFilterBy: capitalProjectsTableActions.setTableFilterBy,
   setSort: capitalProjectsTableActions.setTableSort,
-  fetchTotalCount: capitalProjectsTableActions.fetchTotalCount,
   fetchSelectedCount: capitalProjectsTableActions.fetchSelectedCount,
 })(CPTable);
 

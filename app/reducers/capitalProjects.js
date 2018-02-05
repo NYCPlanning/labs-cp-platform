@@ -45,6 +45,9 @@ const capitalProjectsReducer = (state = initialState, action) => {
     case AT.FETCH_CAPITAL_PROJECTS_TOTAL_POLYGONS_COUNT.SUCCESS:
       return Object.assign({}, state, { polygonsTotalCount: action.payload[0].count });
 
+    case AT.FETCH_CAPITAL_PROJECTS_TOTAL_COUNT.SUCCESS:
+      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
+
     case AT.FETCH_CAPITAL_PROJECTS_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });
 

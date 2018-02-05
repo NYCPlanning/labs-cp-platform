@@ -18,7 +18,6 @@ import './LayerSelector.scss';
 
 class LayerSelector extends React.Component {
   componentDidMount() {
-    this.props.fetchTotalCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
   }
 
@@ -280,7 +279,6 @@ LayerSelector.propTypes = {
   sql: PropTypes.string.isRequired,
 
   // Functions set through Redux connect
-  fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
   setFilterDimension: PropTypes.func.isRequired,
@@ -306,7 +304,6 @@ const mapStateToProps = ({ housingDevelopment }) => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalCount: housingDevelopmentActions.fetchTotalCount,
   fetchSelectedCount: housingDevelopmentActions.fetchSelectedCount,
   resetFilter: housingDevelopmentActions.resetFilter,
   setFilterDimension: housingDevelopmentActions.setFilterDimension,
