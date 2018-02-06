@@ -87,7 +87,7 @@ class LowerPane extends React.Component {
             right: 0,
             left: this.props.leftOffset,
             bottom: 0,
-            top: '300px',
+            top: 'calc(50%)',
             background: 'white',
             transition: 'left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms',
           }}
