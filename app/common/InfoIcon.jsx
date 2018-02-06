@@ -4,7 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const InfoIcon = props => (
   <OverlayTrigger
-    placement="right"
+    placement={props.placement}
     overlay={<Tooltip id="tooltip">{props.text}</Tooltip>}
   >
     <i
@@ -17,10 +17,12 @@ const InfoIcon = props => (
 
 InfoIcon.propTypes = {
   text: PropTypes.string,
+  placement: PropTypes.string.isRequired,
 };
 
 InfoIcon.defaultProps = {
   text: null,
+  placement: 'right',
 };
 
 export default InfoIcon;

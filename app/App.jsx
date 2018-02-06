@@ -32,6 +32,7 @@ class App extends React.Component {
     this.props.fetchCbbrCount();
     this.props.fetchFacilitiesCount();
     this.props.fetchHousingCount();
+    this.props.fetchHousingRawCount();
     this.props.fetchCPcount();
   }
 
@@ -142,6 +143,7 @@ App.propTypes = {
   fetchCbbrCount: PropTypes.func.isRequired,
   fetchFacilitiesCount: PropTypes.func.isRequired,
   fetchHousingCount: PropTypes.func.isRequired,
+  fetchHousingRawCount: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
@@ -152,4 +154,5 @@ export default connect(null, {
   fetchCbbrCount: cbbrActions.fetchTotalCount,
   fetchFacilitiesCount: facilitiesActions.fetchTotalCount,
   fetchHousingCount: housingActions.fetchTotalCount,
+  fetchHousingRawCount: housingActions.fetchTotalCountRaw,
 })(App);

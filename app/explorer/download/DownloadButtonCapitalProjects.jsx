@@ -21,93 +21,99 @@ class DownloadButton extends React.Component {
     return (
       <div>
         <ButtonGroup vertical>
-          <DropdownButton title={<span>{'All capital projects '}<Badge>{counts.table}</Badge></span>} id={`${layerID}-complete`}>
+          <DropdownButton title={<span>{'Capital Projects (all) '}<Badge>{counts.table}</Badge></span>} id={`${layerID}-complete`}>
             <MenuItem
               href={carto.completeDownloadUrlString(tableSql, 'projects', 'csv')}
-              onClick={this.logDownloadStat(layerID, 'projects')}
+              onClick={this.logDownloadStat('capital-project_all', 'projects')}
               eventKey="1"
             >Project Level (csv)</MenuItem>
 
             <MenuItem
               href={carto.completeDownloadUrlString(commitmentsSql, 'commitments', 'csv')}
-              onClick={this.logDownloadStat(layerID, 'commitments')}
+              onClick={this.logDownloadStat('capital-project_all', 'commitments')}
               eventKey="2"
             >
               Commitment Level (csv)
-              <InfoIcon text="Commitment level data represents capital commitments before aggregating to the project level" />
+              <InfoIcon
+                placement="left"
+                text="Commitment level data represents capital commitments before aggregating to the project level"
+              />
             </MenuItem>
           </DropdownButton>
 
           { tableFiltered &&
-            <DropdownButton title={<span>{'Filtered capital projects table '}<Badge>{counts.tableFiltered}</Badge></span>} id={`${layerID}-filtered`}>
+            <DropdownButton title={<span>{'Filtered: Capital Projects (all) '}<Badge>{counts.tableFiltered}</Badge></span>} id={`${layerID}-filtered`}>
               <MenuItem
                 href={carto.filteredDownloadUrlString(tableSql, 'projects', 'csv')}
-                onClick={this.logDownloadStat(layerID, 'projects')}
+                onClick={this.logDownloadStat('capital-project_all_filterd', 'projects')}
                 eventKey="1"
               >Project Level (csv)</MenuItem>
 
               <MenuItem
                 href={carto.filteredDownloadUrlString(commitmentsSql, 'commitments', 'csv')}
-                onClick={this.logDownloadStat(layerID, 'commitments')}
+                onClick={this.logDownloadStat('capital-project_all_filterd', 'commitments')}
                 eventKey="2"
               >
                 Commitment Level (csv)
-                <InfoIcon text="Commitment level data represents capital commitments before aggregating to the project level" />
+                <InfoIcon
+                  placement="left"
+                  text="Commitment level data represents capital commitments before aggregating to the project level"
+                />
               </MenuItem>
             </DropdownButton>
           }
         </ButtonGroup>
 
         <ButtonGroup vertical style={{ marginTop: '10px' }}>
-          <DropdownButton title={<span>{'Mapped capital projects '}<Badge>{counts.map}</Badge></span>} id={`${layerID}-complete`}>
+          <DropdownButton title={<span>{'Capital Projects (mapped) '}<Badge>{counts.map}</Badge></span>} id={`${layerID}-complete`}>
             <MenuItem
               href={carto.completeDownloadUrlStringPtsPoly(mapSql, layerID, 'csv')}
-              onClick={this.logDownloadStat(layerID, 'csv')}
+              onClick={this.logDownloadStat('capital-project_mapped', 'csv')}
               eventKey="1"
             >CSV</MenuItem>
 
             <MenuItem
               href={carto.completeDownloadUrlStringPtsPoly(mapSql, layerID, 'geojson')}
-              onClick={this.logDownloadStat(layerID, 'geojson')}
+              onClick={this.logDownloadStat('capital-project_mapped', 'geojson')}
               eventKey="2"
             >GeoJSON</MenuItem>
 
             <MenuItem
               href={carto.completeDownloadUrlString(mapSql.points, layerID, 'shp')}
-              onClick={this.logDownloadStat(layerID, 'shapefile-points')}
+              onClick={this.logDownloadStat('capital-project_mapped', 'shapefile-points')}
               eventKey="3"
             >Shapefile (points)</MenuItem>
 
             <MenuItem
               href={carto.completeDownloadUrlString(mapSql.polygons, layerID, 'shp')}
-              onClick={this.logDownloadStat(layerID, 'shapefile-polygons')}
+              onClick={this.logDownloadStat('capital-project_mapped', 'shapefile-polygons')}
               eventKey="4"
             >Shapefile (polygons)</MenuItem>
           </DropdownButton>
 
           { mapFiltered &&
-            <DropdownButton title={<span>{'Filtered capital projects map '}<Badge>{counts.mapFiltered}</Badge></span>} id={`${layerID}-filtered`}>
+            <DropdownButton title={<span>{'Capital Projects (mapped, filtered) '}<Badge>{counts.mapFiltered}</Badge></span>} id={`${layerID}-filtered`}>
               <MenuItem
                 href={carto.filteredDownloadUrlStringPtsPoly(mapSql, layerID, 'csv')}
-                onClick={this.logDownloadStat(layerID, 'csv')}
+                onClick={this.logDownloadStat('capital-project_mapped_filtered', 'csv')}
                 eventKey="1"
               >CSV</MenuItem>
 
               <MenuItem
                 href={carto.filteredDownloadUrlStringPtsPoly(mapSql, layerID, 'geojson')}
-                onClick={this.logDownloadStat(layerID, 'geojson')}
+                onClick={this.logDownloadStat('capital-project_mapped_filtered', 'geojson')}
                 eventKey="2"
               >GeoJSON</MenuItem>
 
               <MenuItem
                 href={carto.filteredDownloadUrlString(mapSql.points, layerID, 'shp')}
-                onClick={this.logDownloadStat(layerID, 'shapefile-points')}
+                onClick={this.logDownloadStat('capital-project_mapped_filtered', 'shapefile-points')}
                 eventKey="3"
               >Shapefile (points)</MenuItem>
 
               <MenuItem
                 href={carto.filteredDownloadUrlString(mapSql.polygons, layerID, 'shp')}
-                onClick={this.logDownloadStat(layerID, 'shapefile-polygons')}
+                onClick={this.logDownloadStat('capital-project_mapped_filtered', 'shapefile-polygons')}
                 eventKey="4"
               >Shapefile (polygons)</MenuItem>
             </DropdownButton>

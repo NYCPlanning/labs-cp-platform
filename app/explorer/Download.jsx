@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DownloadButton from './download/DownloadButton';
 import DownloadButtonCapitalProjects from './download/DownloadButtonCapitalProjects';
 import DownloadButtonBudgetRequests from './download/DownloadButtonBudgetRequests';
+import DownloadButtonHousing from './download/DownloadButtonHousing';
 
 class Download extends React.Component {
   activeLayers = () => this.props.layers.filter(layer => layer.enabled);
@@ -85,7 +86,21 @@ class Download extends React.Component {
               />
             }
 
-            { layerID !== 'capital-projects' && layerID !== 'cb-budgetrequests' &&
+            { layerID === 'housing-development' &&
+              <DownloadButtonHousing
+                layerID={'housing-development'}
+                noun={this.layerMap['housing-development'].noun}
+                sql={sql['housing-development']}
+                counts={{
+                  total: counts.total['housing-development'],
+                  filtered: counts.filtered['housing-development'],
+                  raw: counts.total['housing-development-raw'],
+                }}
+                filtered={counts.total['housing-development'] !== counts.filtered['housing-development']}
+              />
+            }
+
+            { layerID === 'facilities-cp' &&
               <DownloadButton
                 layerID={layerID}
                 noun={this.layerMap[layerID].noun}
@@ -120,6 +135,7 @@ const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cb
       'facilities-cp': facilities.totalCount,
       'cb-budgetrequests': cbBudgetRequests.totalCount,
       'housing-development': housingDevelopment.totalCount,
+      'housing-development-raw': housingDevelopment.totalCountRaw,
     },
     filtered: {
       'capital-projects': capitalProjects.selectedCount,
