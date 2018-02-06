@@ -15,6 +15,7 @@ const db_tables = {
   facdb: {
     datasources: 'facdb_datasources_170522',
     facilities: 'facdb_170522',
+    pops: 'pops_170920',
   },
   housingdevdb: 'housingdevdb_170906',
   sca: 'cpdb_sca_pts_170201',

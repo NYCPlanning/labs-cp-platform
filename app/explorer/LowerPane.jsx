@@ -13,6 +13,10 @@ const detailPageTypeMap = {
     title: 'Facility',
     icon: 'university',
   },
+  pops: {
+    title: 'Privately Owned Public Space',
+    icon: 'tree',
+  },
   capitalproject: {
     title: 'Capital Project',
     icon: 'usd',

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CapitalProjectDetailPage from './CapitalProjectDetailPage';
 import HousingDetailPage from './HousingDetailPage';
 import FacilityDetailPage from './FacilityDetailPage';
+import PopsDetailPage from './PopsDetailPage';
 import BudgetRequestDetailPage from './BudgetRequestDetailPage';
 import SCADetailPage from './SCADetailPage';
 
@@ -37,10 +38,9 @@ class DetailPage extends React.Component {
         }
 
         { this.props.route.type === 'pops' &&
-          <FacilityDetailPage
+          <PopsDetailPage
             id={this.props.params.id}
             location={this.props.location}
-            pops
           />
         }
 
