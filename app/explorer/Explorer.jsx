@@ -41,11 +41,6 @@ class Explorer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.pointsSql !== nextProps.pointsSql ||
-        this.props.polygonsSql !== nextProps.polygonsSql) {
-      this.props.setSelectedFeatures([]);
-    }
-
     if (!this.mapClicked && (this.props.map.centerOnGeometry !== nextProps.map.centerOnGeometry)) {
       this.centerFromGeometry(nextProps.map.centerOnGeometry);
       this.setState({

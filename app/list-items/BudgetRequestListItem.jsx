@@ -7,12 +7,7 @@ const Item = (props) => {
   const d = props.feature.properties;
 
   return (
-    <Link
-      to={{
-        pathname: `/budgetrequest/${d.regid}`,
-        state: { modal: true, returnTo: '/capitalprojects/explorer' },
-      }}
-    >
+    <Link to={{ pathname: `/budgetrequest/${d.regid}` }} >
       <div
         className={cx('budget-request-list-item', { selected: props.selected })}
         style={{

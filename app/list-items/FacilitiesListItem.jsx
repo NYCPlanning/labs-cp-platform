@@ -17,12 +17,7 @@ const Item = (props) => {
   }
 
   return (
-    <Link
-      to={{
-        pathname: pathname(),
-        state: { modal: true, returnTo: '/facilities/explorer' },
-      }}
-    >
+    <Link to={{ pathname: pathname() }} >
       <div
         className={cx('facilities-list-item', { selected: props.selected })}
         style={{

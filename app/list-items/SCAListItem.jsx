@@ -7,7 +7,7 @@ const Item = (props) => {
   const d = props.feature.properties;
 
   return (
-    <Link to={{ pathname: `/sca/${d.cartodb_id}`, state: { modal: true, returnTo: '/maps/sca' } }}>
+    <Link to={{ pathname: `/sca/${d.cartodb_id}` }}>
       <div
         className={cx('sca-list-item', { selected: props.selected })}
         style={{

@@ -60,6 +60,7 @@ class DetailPage extends React.Component {
           this.props.route.type === 'sca' &&
           <SCADetailPage
             id={this.props.params.id}
+            location={this.props.location}
           />
         }
       </div>

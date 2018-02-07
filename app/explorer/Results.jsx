@@ -30,7 +30,7 @@ class Results extends React.Component {
         case 'facilities-cp': {          
           return (<FacilitiesListItem
             feature={feature}
-            selected={feature.properties.uid === this.props.detailPageId.toString()}
+            selected={feature.properties.uid.toString() === this.props.detailPageId.toString()}
             key={`fac${feature.properties.uid}`}
           />);
         }

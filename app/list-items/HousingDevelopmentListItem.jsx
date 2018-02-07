@@ -13,7 +13,7 @@ const Item = ({ feature, selected }) => {
           u_net } = feature.properties;
 
   return (
-    <Link to={{ pathname: `/development/${dob_job_number}`, state: { modal: true, returnTo: '/maps/housing' } }}>
+    <Link to={{ pathname: `/development/${dob_job_number}` }}>
       <div
         className={cx('facilities-list-item', { selected })}
         style={{ borderLeft: `5px solid ${getColor('dcp_dev_category', dcp_dev_category)}` }}
