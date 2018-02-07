@@ -236,11 +236,15 @@ class PopsDetailPage extends React.Component {
                   }
 
                   <div className="row property-detail-container">
-                    <div className="property-detail-blocks"><h4><small>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
+                    <div className="property-detail-blocks"><h4>
+                      <small>BBL (Tax Lot ID)
+                        <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
                           <i className="fa fa-info-circle" aria-hidden="true" />
                         </OverlayTrigger>
                       </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
-                    <div className="property-detail-blocks"><h4><small>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
+                    <div className="property-detail-blocks"><h4>
+                      <small>BIN (Building ID)
+                        <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
                           <i className="fa fa-info-circle" aria-hidden="true" />
                         </OverlayTrigger>
                       </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
@@ -319,7 +323,7 @@ class PopsDetailPage extends React.Component {
             <div className={'row'} style={{ marginBottom: '15px' }}>
               <div className={'col-md-12'}>
                 <Card style={CardStyles} className="source-data-details">
-                  <CardHeader title="Site Image Gallery"/>
+                  <CardHeader title="Site Image Gallery" />
                   <CardText>
                     <ImageGallery items={[
                       {
@@ -328,13 +332,14 @@ class PopsDetailPage extends React.Component {
                       },
                       {
                         original: 'http://lorempixel.com/1000/600/nature/2/',
-                        thumbnail: 'http://lorempixel.com/250/150/nature/2/'
+                        thumbnail: 'http://lorempixel.com/250/150/nature/2/',
                       },
                       {
                         original: 'http://lorempixel.com/1000/600/nature/3/',
-                        thumbnail: 'http://lorempixel.com/250/150/nature/3/'
-                      }
-                    ]} />
+                        thumbnail: 'http://lorempixel.com/250/150/nature/3/',
+                      },
+                    ]}
+                    />
                   </CardText>
                 </Card>
               </div>

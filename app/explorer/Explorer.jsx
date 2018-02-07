@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import centroid from 'turf-centroid';
 
+import getDefaultFilterDimensions from '../facilities/config';
 import { Jane } from '../jane-maps';
 
 import * as selectedActions from '../actions/selected';
@@ -145,8 +146,12 @@ class Explorer extends React.Component {
         return `/budgetrequest/${feature.properties.regid}`;
       case 'housing-development':
         return `/development/${feature.properties.dob_job_number}`;
-      case 'facilities-cp':
+      case 'facilities-cp': {
+        if (feature.properties.factype === 'Privately Owned Public Space') {
+          return `/pops/${feature.properties.uid}`;
+        }
         return `/facility/${feature.properties.uid}`;
+      }
       case 'sca-points':
         return `/sca/${feature.properties.cartodb_id}`;
       default:
@@ -184,6 +189,15 @@ class Explorer extends React.Component {
     const { selectedFeatures } = this.props;
     const startingLayer = setStartingLayer();
 
+    const popsLocationState = {
+      filterDimensions: getDefaultFilterDimensions({ selected: {
+        'Parks, Gardens, and Historical Sites': {
+          'Parks and Plazas': {
+            'Privately Owned Public Space': null },
+        },
+      } }),
+    };
+
     return (
       <div className="full-screen cp-explorer">
         <Jane
@@ -213,9 +227,9 @@ class Explorer extends React.Component {
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
             sql={this.props.facilitiesSql}
-            enabled={startingLayer === 'facilities'}
-            selected={startingLayer === 'facilities'}
-            locationState={this.props.location.state}
+            enabled={startingLayer === 'facilities' || startingLayer === 'pops'}
+            selected={startingLayer === 'facilities' || startingLayer === 'pops'}
+            locationState={startingLayer === 'pops' ? popsLocationState : this.props.location.state}
           />
 
           { this.props.isLoggedIn &&
