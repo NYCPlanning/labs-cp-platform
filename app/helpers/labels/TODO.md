@@ -5,4 +5,3 @@ Directory of label data and helper files
 Consolidate other labeling files into this one:
 - `config.js`
 - `nta.js`
-- `NycGeom.js`

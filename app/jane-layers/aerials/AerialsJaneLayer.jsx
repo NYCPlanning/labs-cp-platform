@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
-import appConfig from '../../helpers/appConfig';
 
 
 const AerialsJaneLayer = props => (
@@ -19,7 +18,7 @@ const AerialsJaneLayer = props => (
       id="doitt_aerials"
       type="raster"
       tileSize={256}
-      tiles={`//${appConfig.api_domain}/tiles/doitt/tms/1.0.0/photo/2016/{z}/{x}/{y}.png`}
+      tiles={'https://maps.nyc.gov/xyz/1.0.0/photo/2016/{z}/{x}/{y}.png8'}
     />
     <MapLayer
       id="doitt_aerials"
