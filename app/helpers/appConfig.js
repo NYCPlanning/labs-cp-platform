@@ -17,7 +17,6 @@ const appConfig = {
   auth0_domain: 'cpmanage.auth0.com',
   mapbox_accessToken: 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q',
   carto_domain: 'planninglabs.carto.com',
-  mapzen_api_key: 'mapzen-ec5DaFV',
   ga_tracking_code: 'UA-84250233-2',
   api_domain,
 
@@ -33,18 +32,6 @@ const appConfig = {
       pitch: 0,
       hash: true,
       navigationControlPosition: 'bottom-right',
-    };
-  },
-
-  get searchConfig() {
-    return {
-      mapzen_api_key: this.mapzen_api_key,
-      bounds: {
-        minLon: -74.292297,
-        maxLon: -73.618011,
-        minLat: 40.477248,
-        maxLat: 40.958123,
-      },
     };
   },
 };

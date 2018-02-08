@@ -27,7 +27,7 @@ class Results extends React.Component {
             key={`sca${feature.properties.cartodb_id}`}
           />);
         }
-        case 'facilities-cp': {          
+        case 'facilities-cp': {
           return (<FacilitiesListItem
             feature={feature}
             selected={feature.properties.uid.toString() === this.props.detailPageId.toString()}

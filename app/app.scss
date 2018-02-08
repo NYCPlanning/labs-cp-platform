@@ -689,24 +689,6 @@ section {
   }
 }
 
-/*Hide Mapbox Popup*/
-.mapboxgl-popup-content {
-
-   background: none;
-   border-radius: none;
-   box-shadow: none;
-
-  p {
-    font-weight: 800;
-    text-shadow: 1px 1px #ffffff;
-  }
-}
-
-.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-  display: none;
-}
-/*Hide Mapbox Popup*/
-
 /* Capital Expenditures Chart */
 
   .month-bar:hover {

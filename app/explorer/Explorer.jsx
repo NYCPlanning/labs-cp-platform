@@ -34,6 +34,7 @@ class Explorer extends React.Component {
     this.state = {
       selectedPointType: '',
       selectedPointCoordinates: [],
+      highlightPointCoordinates: [],
       bottomOffset: 0,
     };
     this.selectedFeaturesCache = [];
@@ -46,6 +47,7 @@ class Explorer extends React.Component {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: this.centroidFromGeometry(nextProps.map.centerOnGeometry),
+        highlightPointCoordinates: this.centroidFromGeometry(nextProps.map.centerOnGeometry),
       });
     }
   }
@@ -100,6 +102,7 @@ class Explorer extends React.Component {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: features[0].geometry.coordinates,
+        highlightPointCoordinates: features[0].geometry.coordinates,
       });
     }
 
@@ -107,6 +110,7 @@ class Explorer extends React.Component {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: [event.lngLat.lng, event.lngLat.lat],
+        highlightPointCoordinates: [event.lngLat.lng, event.lngLat.lat],
       });
     }
 
@@ -127,6 +131,7 @@ class Explorer extends React.Component {
     this.setState({
       selectedPointType: '',
       selectedPointCoordinates: [],
+      highlightPointCoordinates: [],
     });
 
     this.props.resetSelectedFeatures();
@@ -208,7 +213,7 @@ class Explorer extends React.Component {
           ref={(jane) => { this.Jane = jane; }}
         >
           <HighlightJaneLayer
-            coordinates={this.state.selectedPointCoordinates}
+            coordinates={this.state.highlightPointCoordinates}
           />
           <AerialsJaneLayer />
           <TransportationJaneLayer />

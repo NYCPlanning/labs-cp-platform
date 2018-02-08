@@ -45,6 +45,7 @@ class Jane extends React.Component {
       displayLowerPane: !_.isEmpty(this.props.detailPage),
     };
 
+    this.bottomOffset = 0;
     this.layers = [];
   }
 
@@ -197,6 +198,11 @@ class Jane extends React.Component {
     this.props.closeLowerPane();
   }
 
+  setBottomOffset = (offset) => {
+    this.bottomOffset = offset;
+    this.props.setBottomOffset(offset);
+  }
+
   render() {
     let leftOffset = 0;
     if (this.state.layerListExpanded) leftOffset += 164;
@@ -231,7 +237,7 @@ class Jane extends React.Component {
               leftOffset={leftOffset}
               detailPage={this.props.detailPage}
               selectedFeatures={this.props.selectedFeatures}
-              setBottomOffset={this.props.setBottomOffset}
+              setBottomOffset={this.setBottomOffset}
               closeLowerPane={this.closeLowerPane}
             />
           }
@@ -264,7 +270,7 @@ class Jane extends React.Component {
           {
             this.state.searchResultMarker &&
             <JaneLayer id="searchResult" hidden>
-              <Marker {...this.state.searchResultMarker} flyTo />
+              <Marker {...this.state.searchResultMarker} flyTo bottomOffset={this.bottomOffset} />
             </JaneLayer>
           }
         </div>

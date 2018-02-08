@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import _ from 'lodash';
 
-function getSuggestionValue(suggestion) {
-  return suggestion.properties.label;
-}
+const streetName = (street) => {
+  if (street.match(/^(.*[a-z]{3})[a-z0-9]+$/i)) return street.toLowerCase().replace(/[^']\b\w/g, l => l.toUpperCase());
+  return street;
+};
 
-function renderSuggestion(suggestion) {
+const addressString = s => `${streetName(s.properties.name)}, ${s.properties.borough}`;
+
+function renderSuggestion(s) {
   return (
-    <div><i className="fa fa-map-marker" aria-hidden="true" /><span>{suggestion.properties.label}</span></div>
+    <div><i className="fa fa-map-marker" aria-hidden="true" /><span>{addressString(s)}</span></div>
   );
 }
 
@@ -36,13 +39,7 @@ class Search extends React.Component {
   }
 
   onSuggestionsFetchRequested = ({ value }) => {
-    let apiCall = `https://search.mapzen.com/v1/autocomplete?text=${value}`;
-
-    if (this.props.bounds) {
-      apiCall += `&boundary.rect.min_lon=${this.props.bounds.minLon}&boundary.rect.max_lon=${this.props.bounds.maxLon}&boundary.rect.min_lat=${this.props.bounds.minLat}&boundary.rect.max_lat=${this.props.bounds.maxLat}`;
-    }
-
-    apiCall += `&api_key=${this.props.mapzen_api_key}`;
+    const apiCall = `https://geosearch.planninglabs.nyc/v1/autocomplete?text=${value}`;
 
     $.getJSON(apiCall, (data) => { // eslint-disable-line no-undef
       this.setState({
@@ -97,7 +94,7 @@ class Search extends React.Component {
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
+          getSuggestionValue={addressString}
           renderSuggestion={renderSuggestion}
           shouldRenderSuggestions={shouldRenderSuggestions}
           inputProps={inputProps}
@@ -113,11 +110,9 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  bounds: PropTypes.object,
-  mapzen_api_key: PropTypes.string,
-  onGeocoderSelection: PropTypes.func,
-  onClear: PropTypes.func,
-  selectionActive: PropTypes.bool,
+  onGeocoderSelection: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+  selectionActive: PropTypes.bool.isRequired,
 };
 
 module.exports = Search;
