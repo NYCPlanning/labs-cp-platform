@@ -81,6 +81,10 @@ ul.navbar-right {
   color: #db691b;
   font-size: 16px;
   font-weight: 300;
+
+  &:hover {
+    background: #eeeeee;
+  }
 }
 
 .dropdown-menu>li>a {
@@ -89,10 +93,6 @@ ul.navbar-right {
 
 .dropdown-menu>li>a:hover {
   cursor: pointer;
-}
-
-.navbar-default .navbar-nav>li:hover{
-  background: #eeeeee;
 }
 
 .navbar-default .navbar-brand {

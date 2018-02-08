@@ -77,8 +77,6 @@ class App extends React.Component {
       });
     }
 
-    document.title = this.props.children.props.route.title || 'NYC Capital Planning Platform';
-
     return (
       <div>
         <Nav

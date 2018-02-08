@@ -19,10 +19,6 @@ class FacilitiesLandingPage extends React.Component {
     this.props.resetFilter();
   }
 
-  componentDidMount() {
-    document.title = 'Capital Planning Platform';
-  }
-
   render() {
     return (
       <div className="facilities-landing">

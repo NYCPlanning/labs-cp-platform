@@ -1,64 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { openModal } from '../actions/modal';
 
 import Footer from '../common/Footer';
 
 import './HomePage.scss';
 
-const aboutContent = (
-  <div>
-    <h3 className="modal-opener">The Capital Planning Platform, currently in beta, is a place for capital planners across city agencies to access interactive maps, data, and analytical tools to inform capital investment planning and priorities.</h3>
-    <p>Since we started the Capital Planning team at DCP in 2014, we’ve heard consistently that access to better data and mapping technologies can help improve interagency coordination and neighborhood-based planning. This platform is a work-in-progress that aims to meet these needs.</p>
-    <p>We’ve started by mapping capital projects, facilities that impact neighborhoods, and new residential developments. We believe these resources can have a significant impact on strategic planning and investment priorities across city agencies.They complement other data and maps that DCP produces, including <a href="http://maps.nyc.gov/census/">NYC Census FactFinder</a>, <a href="https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page">PLUTO and MapPLUTO</a>, the <a href="http://maps.nyc.gov/doitt/nycitymap/template?applicationName=ZOLA">Zoning and Land use Application (ZoLA)</a>, and the <a href="http://www1.nyc.gov/site/planning/data-maps/waterfront-access-map.page">Waterfront Access Map</a>, among others. </p>
-    <p>Now we’re working on more analytical tools that will help integrate data from multiple sources and make it more readily available for mapping and analysis.</p>
-    <p>We hope you find this effort useful, and let us know how we can improve this resource here.</p>
-    <div className="modal-logo" />
-  </div>
-);
-
-const collaborateContent = (
-  <div>
-    <h3 className="modal-opener">The Capital Planning Platform is about more than fostering interagency collaboration in capital investment planning - it’s about creating a digital platform for collaboration on the technologies that planners seek to do their jobs more effectively.</h3>
-    <p>
-        The data on this platform is not perfect; it is only as accurate and complete as existing data sources allow. The features of this platform are still in development, and we have a long list of improvements that we plan to make in the weeks and months to come. We are releasing this work-in-progress to our partners in City agencies because we believe that collaboration in platform development is just as important as the collaboration that the platform can engender in planning for a better NYC.
-    </p>
-    <p>
-        We hope you will consider helping out in this effort. If you find data errors or know of better sources or have questions or suggestions about our <a href="http://docs.capitalplanning.nyc/facdb/" target="_blank" rel="noreferrer noopener">metadata</a>, please let us know. If you have ideas about new features that would support your agency’s planning work, we’d be happy to work to build them into the platform. If you can code, we’re building open source and encourage you to join us on <a href="https://github.com/nycplanning">GitHub</a>.
-    </p>
-    <p>
-        We’re just at the beginning of this journey. Together, we can build a better platform, informing the decisions that build a better city.
-    </p>
-    <p>
-        Email the team at <a href="mailto:capital@planning.nyc.gov">capital@planning.nyc.gov</a>.
-    </p>
-    <div className="modal-logo" />
-  </div>
-);
-
 class HomePage extends React.Component {
-  componentDidMount() {
-    document.title = 'NYC Capital Planning Platform';
-  }
-
-  showAbout = () => {
-    this.props.openModal({
-      modalHeading: 'About the Platform',
-      modalContent: aboutContent,
-      modalCloseText: 'Close',
-    });
-  };
-
-  showCollaborate = () => {
-    this.props.openModal({
-      modalHeading: 'Collaborate',
-      modalContent: collaborateContent,
-      modalCloseText: 'Close',
-    });
-  };
-
   render() {
     return (
       <div className="col-md-12 fluid-content">
@@ -66,8 +13,8 @@ class HomePage extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-lg-offset-2 ">
-                <h2 className="section-heading">A new resource for better, more collaborative planning through data and technology.</h2>
-                <h3>We&apos;re just getting started - <a onClick={this.showAbout}>read more here</a> or <a onClick={this.showCollaborate}>collaborate with us</a></h3>
+                <h2 className="section-heading">An online resource for better, more collaborative planning through data and technology.</h2>
+                <h3><Link to="/about">Read more here</Link> or <a href="mailto:capital@planning.nyc.gov">collaborate with us</a>.</h3>
               </div>
             </div>
           </div>
@@ -106,67 +53,11 @@ class HomePage extends React.Component {
             </Link>
           </div>
         </section>
-        <section className="bg-primary">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 col-lg-offset-2 text-center">
-                <h2 className="section-heading">See what else we&apos;re building</h2>
-                <hr className="light" />
-                <p className="text-faded">We&apos;re always testing out new technologies that can help meet planners&apos; needs. See our works in progress below and tell us how new planning technologies and data could help with your workflow.</p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12 text-center">
-                <div className="building">
-                  <div className="col-md-4">
-                    <a href="https://nycplanning.github.io/travelsheds">
-                      <div className="col-md-12 building-item text-left">
-                        <h3>
-                          Travelshed Generator
-                        </h3>
-                        <div className="building-image" style={{ backgroundImage: "url('img/travelsheds.png')" }} />
-                        <p>Use OpenTripPlanner&apos;s routing technology to view graduated travel-time areas (isochrones) from any spot in the city.</p>
-                      </div>
-                    </a>
-                  </div>
-
-                  <div className="col-md-4">
-                    <a href="https://github.com/nycplanning/postgis-preview">
-                      <div className="col-md-12 building-item text-left">
-                        <h3>
-                          PostGIS Preview
-                        </h3>
-                        <div className="building-image" style={{ backgroundImage: "url('https://pbs.twimg.com/media/ChefMyAWgAEIDu1.jpg')" }} />
-                        <p>A simple web-map preview tool for your local postGIS database.</p>
-                      </div>
-                    </a>
-                  </div>
-
-                  <div className="col-md-4">
-                    <div className="col-md-12 building-item text-left">
-                      <h3>
-                        Neighborhood Profiles
-                      </h3>
-                      <div className="coming-soon">
-                        <p>Coming Soon</p>
-                      </div>
-                      <div className="building-image" style={{ backgroundImage: "url('https://www1.nyc.gov/assets/planning/images/content/pages/data-maps/maps-geography/city-neighborhoods/mapview.jpg')" }} />
-                      <p>We&apos;re working on a tool to allow planners to quickly view metrics about any place in the city.  Let us know how you might use it here.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         <Footer />
       </div>
     );
   }
 }
 
-HomePage.propTypes = {
-  openModal: PropTypes.func.isRequired,
-};
 
-export default connect(null, { openModal })(HomePage);
+export default HomePage;

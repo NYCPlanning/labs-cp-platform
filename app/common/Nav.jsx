@@ -10,6 +10,8 @@ import './Nav.scss';
 const Nav = (props) => {
   const profile = props.profile;
 
+  const displayTable = () => profile && !!profile.permissions.includes('sitewide_access');
+
   const userMenu = props.isLoggedIn ? (
     <li className="dropdown">
       <a
@@ -51,17 +53,19 @@ const Nav = (props) => {
           <span className="icon-bar" />
           <span className="icon-bar" />
         </button>
-        <Link className="navbar-brand" to="/map">&#8291;</Link>
+        <Link className="navbar-brand" to="/">&#8291;</Link>
         <div className="navbar-title">
           Capital Planning Platform
         </div>
       </div>
       <div id="navbar" className="navbar-collapse collapse">
         <ul className="nav navbar-nav navbar-right ">
-          <li><Link to="/"> Home</Link></li>
-          {props.children}
-          <li><a href="http://docs.capitalplanning.nyc/" target="_blank" rel="noopener noreferrer">Docs</a></li>
+          <li><Link to="/map"> Map</Link></li>
+          { displayTable() && <li><Link to="/table"> Table</Link></li> }
+          <li style={{ padding: '13px 0', fontSize: '17px' }}> | </li>
           <li><Link to={props.about}>About</Link></li>
+          <li><a href="http://docs.capitalplanning.nyc/" target="_blank" rel="noopener noreferrer">Docs <span className="fa fa-external-link" /></a></li>
+          <li><a href="https://blog.capitalplanning.nyc/" target="_blank" rel="noopener noreferrer">Blog <span className="fa fa-external-link" /></a></li>
           {userMenu}
         </ul>
       </div>
@@ -83,7 +87,6 @@ Nav.propTypes = {
   login: PropTypes.func.isRequired,
 
   about: PropTypes.string,
-  children: PropTypes.array,
 };
 
 const mapStateToProps = ({ currentUser }) => ({
