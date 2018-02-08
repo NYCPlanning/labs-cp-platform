@@ -82,7 +82,6 @@ Nav.propTypes = {
   logout: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
 
-  title: PropTypes.string,
   about: PropTypes.string,
   children: PropTypes.array,
 };

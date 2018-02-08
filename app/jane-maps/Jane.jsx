@@ -97,13 +97,10 @@ class Jane extends React.Component {
   onMapLoad = () =>
     this.setState({ mapLoaded: true });
 
-  updateLegend = (id, legend) => {
-    const legendFiltered = this.state.legend.filter(l => l.props.id !== id);
-    this.setState({ legend: legendFiltered.concat(legend) });
+  setBottomOffset = (offset) => {
+    this.bottomOffset = offset;
+    this.props.setBottomOffset(offset);
   }
-
-  addLegend = legend =>
-    this.setState({ legend: this.state.legend.concat(legend) });
 
   unregisterLayer = (layerId) => {
     this.layers = this.layers.filter(layer => layer !== layerId);
@@ -198,10 +195,13 @@ class Jane extends React.Component {
     this.props.closeLowerPane();
   }
 
-  setBottomOffset = (offset) => {
-    this.bottomOffset = offset;
-    this.props.setBottomOffset(offset);
+  updateLegend = (id, legend) => {
+    const legendFiltered = this.state.legend.filter(l => l.props.id !== id);
+    this.setState({ legend: legendFiltered.concat(legend) });
   }
+
+  addLegend = legend =>
+    this.setState({ legend: this.state.legend.concat(legend) });
 
   render() {
     let leftOffset = 0;

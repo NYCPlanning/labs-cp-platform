@@ -25,8 +25,8 @@ const appConfig = {
   get mapboxGLOptions() {
     return {
       mapbox_accessToken: this.mapbox_accessToken,
-      center: [-74.0058, 40.7094],
-      zoom: 13.62,
+      center: [-74.0807, 40.7128],
+      zoom: 10,
       minZoom: 9,
       maxZoom: null,
       pitch: 0,

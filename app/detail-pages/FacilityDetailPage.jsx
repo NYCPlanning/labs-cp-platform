@@ -236,13 +236,13 @@ class FacilityDetailPage extends React.Component {
 
                   <div className="row property-detail-container">
                     <div className="property-detail-blocks"><h4><small>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
-                          <i className="fa fa-info-circle" aria-hidden="true" />
-                        </OverlayTrigger>
-                      </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
+                      <i className="fa fa-info-circle" aria-hidden="true" />
+                    </OverlayTrigger>
+                    </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
-                          <i className="fa fa-info-circle" aria-hidden="true" />
-                        </OverlayTrigger>
-                      </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
+                      <i className="fa fa-info-circle" aria-hidden="true" />
+                    </OverlayTrigger>
+                    </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>Property Type</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                   </div>
                 </CardText>

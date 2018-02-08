@@ -59,7 +59,7 @@ class LowerPane extends React.Component {
     this.props.setBottomOffset(offset);
   }
 
-  setDetailPageData = (payload) => {    
+  setDetailPageData = (payload) => {
     this.setState({
       detailPageType: payload.type,
       detailPageId: payload.id,

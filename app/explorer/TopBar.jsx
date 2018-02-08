@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import Analysis from './Analysis';
+// import Analysis from './Analysis';
 import Download from './Download';
 
 class TopBar extends React.Component {

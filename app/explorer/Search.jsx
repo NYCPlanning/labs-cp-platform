@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import _ from 'lodash';
+import ga from '../helpers/ga';
 
 const streetName = (street) => {
   if (street.match(/^(.*[a-z]{3})[a-z0-9]+$/i)) return street.toLowerCase().replace(/[^']\b\w/g, l => l.toUpperCase());
@@ -63,6 +64,12 @@ class Search extends React.Component {
   onSuggestionSelected = (e, o) => {
     this.setState({
       value: o.suggestionValue,
+    });
+
+    ga.event({
+      category: 'search',
+      action: 'search-term-selected',
+      label: o.suggestion.properties.name,
     });
 
     // pass up to Jane to create/update Marker
