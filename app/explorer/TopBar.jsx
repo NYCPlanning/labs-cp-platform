@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-// import Analysis from './Analysis';
 import Download from './Download';
+import DataCaveats from '../explorer/DataCaveats';
 
 class TopBar extends React.Component {
   constructor(props) {
@@ -31,16 +31,16 @@ class TopBar extends React.Component {
         {this.props.children}
 
         <div className="dropdown-buttons" style={{ right: this.props.leftOffset }}>
-          { /* <button onClick={() => this.selectDropdown('analysis')} className={cx({ active: isAnalysis })}>
-            <span className={'fa fa-bar-chart'} />Analysis
-          </button> */ }
+          <DataCaveats
+            layers={this.props.layers}
+          />
+
           <button onClick={() => this.selectDropdown('download')} className={cx({ active: isDownload })}>
             <span className={'fa fa-download'} />Download
           </button>
         </div>
 
-        <div className="top-bar-dropdown" display={!!this.state.dropdown} style={{ right: this.props.leftOffset }}>
-          { /* isAnalysis && <Analysis /> */ }
+        <div className="top-bar-dropdown" display={!!this.state.dropdown} style={{ right: this.props.leftOffset }}>        
           { isDownload && <Download layers={this.props.layers} /> }
         </div>
       </div>
