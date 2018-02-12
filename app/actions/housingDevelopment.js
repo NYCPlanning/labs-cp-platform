@@ -1,11 +1,12 @@
 import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
+import db_tables from '../db_tables';
 
 export const fetchDetails = cartodbId =>
   cartoActions.getFeature({
     tableName: sqlConfig.tablename,
-    column: 'cartodb_id',
+    column: 'dob_job_number',
     value: cartodbId,
   }, AT.FETCH_HOUSING_DEVELOPMENT_DETAILS);
 
@@ -41,6 +42,15 @@ export const fetchTotalCount = () => ({
       AND x_dup_flag = ''`,
     requestFormat: 'json',
     nextType: AT.FETCH_HOUSING_DEVELOPMENT_TOTAL_COUNT,
+  },
+});
+
+export const fetchTotalCountRaw = () => ({
+  type: AT.CARTO_REQUEST,
+  payload: {
+    sql: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
+    requestFormat: 'json',
+    nextType: AT.FETCH_HOUSING_DEVELOPMENT_TOTAL_RAW_COUNT,
   },
 });
 

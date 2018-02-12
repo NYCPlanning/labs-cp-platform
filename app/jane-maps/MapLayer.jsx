@@ -44,12 +44,13 @@ class MapLayer extends React.Component {
       return;
     }
 
-    this.props.map.removeLayer(this.props.id);
-
     if (this.props.onClick) {
       delete this.props.map.__INTERNAL__hoverLayers[this.props.id]; // eslint-disable-line
-      this.props.map.off('click', this.onClick);
+      this.props.map.off('click', this.props.id, this.onClick);
     }
+
+    this.props.unregisterRedrawCallback(this.redrawLayer);
+    this.props.map.removeLayer(this.props.id);
   }
 
   redrawLayer = (props) => {
@@ -89,7 +90,7 @@ class MapLayer extends React.Component {
 
     if (this.props.onClick) {
       this.props.map.__INTERNAL__hoverLayers[this.props.id] = true; // eslint-disable-line
-      this.props.map.on('click', this.onClick);
+      this.props.map.on('click', this.props.id, this.onClick);
     }
   }
 
@@ -121,12 +122,14 @@ MapLayer.propTypes = {
   order: PropTypes.number,
   onClick: PropTypes.func,
   registerRedrawCallback: PropTypes.func.isRequired,
+  unregisterRedrawCallback: PropTypes.func.isRequired,
   children: PropTypes.any,
 };
 
 MapLayer.defaultProps = {
   map: {},
   registerRedrawCallback: () => null,
+  unregisterRedrawCallback: () => null,
   previousMapLayer: null,
   janeLayerId: null,
   children: null,

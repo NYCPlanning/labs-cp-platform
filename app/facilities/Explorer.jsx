@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
 
 import appConfig from '../helpers/appConfig';
-import SelectedFeaturesPane from '../common/SelectedFeaturesPane';
-import ListItem from './janelayer/ListItem';
 import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
 
 import {
@@ -84,10 +82,6 @@ class FacilitiesExplorer extends React.Component {
   };
 
   render() {
-    const listItems = this.props.selectedFeatures.map(feature => (
-      <ListItem feature={feature} key={feature.id} />
-    ));
-
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
       sql: [this.props.sql],
@@ -171,7 +165,7 @@ class FacilitiesExplorer extends React.Component {
                 </div>
                 <div className="legendItem">
                   <div className="colorCircle" style={{ backgroundColor: 'rgb(41, 121, 255)' }} />
-                  <div className="legendItemText">Public Safety, Emergency Serivces, and Administrative Justice</div>
+                  <div className="legendItemText">Public Safety, Emergency Services, and Administrative Justice</div>
                 </div>
                 <div className="legendItem">
                   <div className="colorCircle" style={{ backgroundColor: 'rgb(186, 104, 200)' }} />
@@ -189,10 +183,6 @@ class FacilitiesExplorer extends React.Component {
             </Legend>
           </JaneLayer>
         </Jane>
-
-        <SelectedFeaturesPane>
-          {listItems}
-        </SelectedFeaturesPane>
       </div>
     );
   }

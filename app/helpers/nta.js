@@ -36,7 +36,7 @@ const ntas = [
   },
   {
     ntacode: 'SI12',
-    ntaname: "Mariner's Harbor-Arlington-Port Ivory-Graniteville",
+    ntaname: 'Mariner\'s Harbor-Arlington-Port Ivory-Graniteville',
   },
   {
     ntacode: 'BK90',
@@ -100,7 +100,7 @@ const ntas = [
   },
   {
     ntacode: 'SI01',
-    ntaname: "Annadale-Huguenot-Prince's Bay-Eltingville",
+    ntaname: 'Annadale-Huguenot-Prince\'s Bay-Eltingville',
   },
   {
     ntacode: 'SI11',

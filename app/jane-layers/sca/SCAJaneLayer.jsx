@@ -4,6 +4,7 @@ import { JaneLayer, Source, MapLayer, Legend } from '../../jane-maps';
 import SCAPlanComponent from './SCAPlanComponent';
 
 import appConfig from '../../helpers/appConfig';
+import tables from '../../db_tables';
 
 const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
   <JaneLayer
@@ -20,7 +21,7 @@ const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
       type="cartovector"
       options={{
         carto_domain: appConfig.carto_domain,
-        sql: ['SELECT * FROM cpdb_sca_pts_170201'],
+        sql: [`SELECT * FROM ${tables.sca}`],
       }}
     />
 

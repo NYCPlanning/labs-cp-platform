@@ -4,11 +4,11 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const InfoIcon = props => (
   <OverlayTrigger
-    placement="right"
+    placement={props.placement}
     overlay={<Tooltip id="tooltip">{props.text}</Tooltip>}
   >
     <i
-      className="fa fa-info-circle"
+      className={`fa ${props.icon}`}
       style={{ paddingLeft: '5px' }}
       aria-hidden="true"
     />
@@ -17,10 +17,14 @@ const InfoIcon = props => (
 
 InfoIcon.propTypes = {
   text: PropTypes.string,
+  icon: PropTypes.string,
+  placement: PropTypes.string.isRequired,
 };
 
 InfoIcon.defaultProps = {
   text: null,
+  icon: 'fa-info-circle',
+  placement: 'right',
 };
 
 export default InfoIcon;

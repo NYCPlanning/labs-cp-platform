@@ -9,7 +9,7 @@ const listHeaderStyle = { marginBottom: '4px' };
 const SidebarComponent = props => (
   <div>
     <Tabs className="sidebar-tabs">
-      <Tab label="Data">
+      <Tab label="Filters">
         <div className="sidebar-tab-content">
           <div className="padded">
             <h4>Transportation Layers</h4>

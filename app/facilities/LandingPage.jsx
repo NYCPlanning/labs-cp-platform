@@ -8,7 +8,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import SplashSelector from './SplashSelector';
 import SplashDuo from './SplashDuo';
 import Footer from '../common/Footer';
-import { getDefaultFilterDimensions } from './config';
+import getDefaultFilterDimensions from './config';
 import ga from '../helpers/ga';
 import * as facilitiesActions from '../actions/facilities';
 
@@ -17,10 +17,6 @@ import './LandingPage.scss';
 class FacilitiesLandingPage extends React.Component {
   componentWillMount() {
     this.props.resetFilter();
-  }
-
-  componentDidMount() {
-    document.title = 'Capital Planning Platform';
   }
 
   render() {
@@ -43,7 +39,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           mergeFilterDimensions: {
                             proptype: {
@@ -85,7 +81,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': { 'Health Care': null },
@@ -116,7 +112,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {
@@ -147,7 +143,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Parks, Gardens, and Historical Sites': {
@@ -172,7 +168,7 @@ class FacilitiesLandingPage extends React.Component {
                     <Link
                       className="btn btn-default"
                       to={{
-                        pathname: '/facilities/explorer',
+                        pathname: '/map/facilities',
                         state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': {

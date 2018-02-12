@@ -1,4 +1,4 @@
-import { defaultLayers } from './defaultLayers';
+import defaultLayers from './defaultLayers';
 
 const colors = {
   getColor(value) {

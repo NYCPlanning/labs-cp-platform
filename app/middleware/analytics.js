@@ -1,11 +1,11 @@
-import * as AT from '../constants/actionTypes';
-import appConfig from '../helpers/appConfig';
 import ReactGA from 'react-ga';
 import _ from 'lodash';
 
+import * as AT from '../constants/actionTypes';
+
 // ReactGA.initialize(appConfig.ga_tracking_code);
 
-const analyticsMiddleware = ({ getState, dispatch }) => next => (action) => {
+const analyticsMiddleware = () => next => (action) => {
   if (action.type === AT.AUTHORIZE_USER) {
     ReactGA.set({
       userId: action.payload.profile.user_id,

@@ -19,6 +19,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   location: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export default connect(null, {

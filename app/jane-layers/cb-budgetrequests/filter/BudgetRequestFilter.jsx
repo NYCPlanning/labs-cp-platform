@@ -18,7 +18,6 @@ class BudgetRequestFilter extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchTotalCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
   }
 
@@ -124,7 +123,6 @@ BudgetRequestFilter.propTypes = {
 
   resetFilter: PropTypes.func.isRequired,
   setFilterDimension: PropTypes.func.isRequired,
-  fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
 };
 
@@ -143,7 +141,6 @@ const mapStateToProps = ({ cbBudgetRequests }) => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalCount: BudgetRequestActions.fetchTotalCount,
   fetchSelectedCount: BudgetRequestActions.fetchSelectedCount,
   resetFilter: BudgetRequestActions.resetFilter,
   setFilterDimension: BudgetRequestActions.setFilterDimension,

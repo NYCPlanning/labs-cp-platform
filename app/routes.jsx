@@ -9,22 +9,19 @@ import NotFound from '../app/pages/NotFound';
 import EmailVerification from '../app/pages/EmailVerification';
 import { About, AboutFacilities, AboutPipeline, AboutCapitalProjects } from '../app/pages/About';
 
-// Explorers
+// Landing Pages
 import FacilitiesLanding from '../app/facilities/LandingPage';
-import FacilitiesExplorer from '../app/facilities/Explorer';
-
 import CapitalProjectsLanding from '../app/capitalprojects/LandingPage';
-import CapitalProjectsExplorer from '../app/capitalprojects/Explorer';
 
+// Explorers
 import CapitalProjectsTable from '../app/tables/capital-projects/CapitalProjectsTable';
+import TableDetailPage from '../app/tables/detail-pages/DetailPage';
 
-// Detail Pages
-import ProjectPage from '../app/capitalprojects/DetailPage';
-import HousingDetailPage from '../app/detail-pages/HousingDetailPage';
-import FacilityPage from '../app/facilities/DetailPage';
-import CBBudgetRequestsDetailPage from '../app/jane-layers/cb-budgetrequests/CBBudgetRequestsDetailPage';
+import Explorer from '../app/explorer/Explorer';
 
-import { getDefaultFilterDimensions } from '../app/facilities/config';
+import DetailPage from '../app/detail-pages/DetailPage';
+
+import getDefaultFilterDimensions from '../app/facilities/config';
 
 const rerouteLoggedIn = (nextState, replace) => {
   if (store.getState().currentUser.isLoggedIn) {
@@ -77,13 +74,10 @@ export default (
     <Route path="about/pipeline" component={AboutPipeline} title={'About'} about={'/about/pipeline'} />
     <Route path="about/capitalprojects" component={AboutCapitalProjects} title={'About'} about={'/about/capitalprojects'} />
 
-    { /* Facilities */ }
-    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
-    <Route path="facilities/explorer" component={FacilitiesExplorer} title={'Facilities Explorer'} about={'/about/facilities'} />
-
+    { /* POPs Redirect */ }
     <Redirect
       from="pops"
-      to="/facilities/explorer"
+      to="/map/facilities"
       state={{
         filterDimensions: getDefaultFilterDimensions({ selected: {
           'Parks, Gardens, and Historical Sites': {
@@ -94,27 +88,64 @@ export default (
       }}
     />
 
-    { /* Pipeline */ }
+    { /* Redirects from deprecated explorers */ }
     <Redirect from="pipeline" to="map/housing" />
     <Redirect from="pipeline/explorer" to="map/housing" />
+    <Redirect from="facilities/explorer" to="map/facilities" />
+    <Redirect from="capitalprojects/explorer" to="map/capitalprojects" />
 
-    { /* Capital Projects */ }
+    { /* Landing Pages */ }
     <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
-    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
-    <Route path="capitalprojects/explorer" component={ensureSitewideAccess(CapitalProjectsExplorer)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
+    <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
 
+    { /* Table */ }
+    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="/table/capitalproject/:id" component={ensureSitewideAccess(TableDetailPage)} title={'Capital Project'} about={'/about/capitalprojects'} />
 
-    { /* Consolidated Map */ }
-    <Route path="/map" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
-    <Route path="/map/:layer" component={ensureSitewideAccess(CapitalProjectsExplorer)} about={'/about/capitalprojects'} />
-    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} about={'/about/capitalprojects'} />
+    { /* Map */ }
+    <Route path="/map" component={Explorer} about={'/about/capitalprojects'} />
+    <Route path="/map/:layer" component={Explorer} about={'/about/capitalprojects'} />
 
     { /* Detail Pages */ }
-    <Route path="capitalproject/:id" component={ensureSitewideAccess(ProjectPage)} title={'Capital Project Details'} about={'/about/capitalprojects'} />
-    <Route path="budgetrequest/:id" component={ensureSitewideAccess(CBBudgetRequestsDetailPage)} title={'Budget Request Detail'} about={'/about/capitalprojects'} />
-    <Route path="development/:id" component={ensureSitewideAccess(HousingDetailPage)} title={'Development Details'} about={'/about/pipeline'} />
-    <Route path="pops/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="pops" />
-    <Route path="facility/:id" component={FacilityPage} title={'Facility Details'} about={'/about/facilities'} facilityRoute="facility" />
+    <Route component={Explorer}>
+      <Route
+        path="capitalproject/:id"
+        component={ensureSitewideAccess(DetailPage)}
+        about={'/about/capitalprojects'}
+        type="capitalproject"
+      />
+      <Route
+        path="budgetrequest/:id"
+        component={ensureSitewideAccess(DetailPage)}
+        about={'/about/capitalprojects'}
+        type="budgetrequest"
+      />
+      <Route
+        path="development/:id"
+        component={ensureSitewideAccess(DetailPage)}
+        about={'/about/pipeline'}
+        type="development"
+      />
+      <Route
+        path="pops/:id"
+        component={DetailPage}
+        about={'/about/facilities'}
+        type="pops"
+      />
+      <Route
+        path="facility/:id"
+        component={DetailPage}
+        about={'/about/facilities'}
+        type="facility"
+      />
+      <Route
+        path="sca/:id"
+        component={DetailPage}
+        about={'/about/capitalprojects'}
+        type="sca"
+      />
+    </Route>
 
     { /* Auth and Sitewide */ }
     <Route path="login" component={Login} title={'Login'} />

@@ -9,13 +9,14 @@ import Numeral from 'numeral';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import 'fixed-data-table/dist/fixed-data-table.css';
 import _ from 'lodash';
+import cx from 'classnames';
 
 import InfoIcon from '../../common/InfoIcon';
 import TableFilter from './CapitalProjectsTableFilter';
 import * as capitalProjectsTableActions from '../../actions/capitalProjectsTable';
 import SortHeaderCell from './SortHeaderCell';
-import DownloadTable from '../../common/DownloadTable';
 import ga from '../../helpers/ga';
+import Download from '../../explorer/Download';
 
 import './CapitalProjectsTable.scss';
 
@@ -70,11 +71,11 @@ class CPTable extends React.Component { // eslint-disable-line
         props.filterBy,
         props.colSortDirs,
       ),
+      downloadOpen: false,
     };
   }
 
   componentDidMount() {
-    this.props.fetchTotalCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
     this.props.fetchDetails(this.props.filterDimensions);
     this.props.resetFilter();
@@ -122,7 +123,7 @@ class CPTable extends React.Component { // eslint-disable-line
   linkToProject = rowData => content => (
     <Link
       to={{
-        pathname: `/capitalproject/${rowData.maprojid}`,
+        pathname: `/table/capitalproject/${rowData.maprojid}`,
         state: { modal: true, returnTo: '/capitalprojects' },
       }}
     >
@@ -165,21 +166,10 @@ class CPTable extends React.Component { // eslint-disable-line
             className="sidebar-tabs"
             tabTemplateStyle={tabTemplateStyle}
           >
-            <Tab label="Data">
+            <Tab label="Filters">
               <TableFilter
                 onFilterBy={this.handleFilterBy}
               />
-            </Tab>
-            <Tab label="Download">
-              <div className="sidebar-tab-content padded">
-                <DownloadTable
-                  sql={this.props.sql}
-                  commitmentsSql={this.props.commitmentsSql}
-                  filePrefix="projects"
-                  commitmentsFilePrefix="commitments"
-                  onDownload={this.handleDownload}
-                />
-              </div>
             </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content">
@@ -204,13 +194,33 @@ class CPTable extends React.Component { // eslint-disable-line
                 </div>
               </div>
             </Tab>
+
+            <Tab
+              label={<span>Map <span className={'fa fa-external-link'} /></span>}
+              onActive={() => this.props.router.push('/map/capitalprojects')}
+            />
           </Tabs>
         </div>
+
+        <div className="top-bar">
+          <button onClick={() => this.setState({ downloadOpen: !this.state.downloadOpen })} className={cx({ active: this.state.downloadOpen })}>
+            <span className={'fa fa-download'} /> Download
+          </button>
+        </div>
+
+        <div className="top-bar-dropdown">
+          { this.state.downloadOpen &&
+            <Download
+              layers={['capitalprojects']}
+            />
+          }
+        </div>
+
         {filteredSortedData && (
           <Table
             rowHeight={50}
             rowsCount={filteredSortedData.length}
-            headerHeight={50}
+            headerHeight={42}
             width={containerWidth}
             height={containerHeight}
             {...this.props}
@@ -327,7 +337,6 @@ CPTable.propTypes = {
   setSort: PropTypes.func.isRequired,
   filterBy: PropTypes.string.isRequired,
   capitalProjectDetails: PropTypes.array.isRequired,
-  fetchTotalCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
 };
 
@@ -345,7 +354,6 @@ const ConnectedTable = connect(mapStateToProps, {
   resetFilter: capitalProjectsTableActions.resetFilter,
   setFilterBy: capitalProjectsTableActions.setTableFilterBy,
   setSort: capitalProjectsTableActions.setTableSort,
-  fetchTotalCount: capitalProjectsTableActions.fetchTotalCount,
   fetchSelectedCount: capitalProjectsTableActions.fetchSelectedCount,
 })(CPTable);
 

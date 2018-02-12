@@ -2,16 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import { browserHistory } from 'react-router';
 
 import Filter from './filter/CapitalProjectsFilter';
-import Download from '../../common/DownloadPolyPoint';
-import ga from '../../helpers/ga';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
 
 class CapitalProjectsSidebar extends React.Component {
   componentDidMount() {
-    this.props.fetchTotalPointsCount();
-    this.props.fetchTotalPolygonsCount();
     this.props.fetchSelectedCount(this.props.filterDimensions);
   }
 
@@ -23,14 +20,6 @@ class CapitalProjectsSidebar extends React.Component {
       this.props.fetchSelectedCount(nextProps.filterDimensions);
     }
   }
-
-  handleDownload = (label) => {
-    ga.event({
-      category: 'capitalprojects-explorer',
-      action: 'download',
-      label,
-    });
-  };
 
   render() {
     const { pointsSql, polygonsSql, totalCount, selectedCount, filterDimensions } = this.props;
@@ -57,19 +46,6 @@ class CapitalProjectsSidebar extends React.Component {
             selectedPointType={this.props.selectedPointType}
             selectedPointCoordinates={this.props.selectedPointCoordinates}
           />
-        </Tab>
-        <Tab label="Download">
-          <div className="sidebar-tab-content">
-            <div className="scroll-container padded">
-              <Download
-                pointsSql={pointsSql}
-                polygonsSql={polygonsSql}
-                pointsPrefix="projects-points"
-                polygonsPrefix="projects-polygons"
-                onDownload={this.handleDownload}
-              />
-            </div>
-          </div>
         </Tab>
         <Tab label="About">
           <div className="sidebar-tab-content">
@@ -99,6 +75,10 @@ class CapitalProjectsSidebar extends React.Component {
             </div>
           </div>
         </Tab>
+        <Tab
+          label={<span>Table <span className={'fa fa-external-link'} /></span>}
+          onActive={() => browserHistory.push('/table')}
+        />
       </Tabs>
     );
   }
@@ -111,8 +91,6 @@ CapitalProjectsSidebar.propTypes = {
   selectedCount: PropTypes.number,
   filterDimensions: PropTypes.object.isRequired,
 
-  fetchTotalPointsCount: PropTypes.func.isRequired,
-  fetchTotalPolygonsCount: PropTypes.func.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
@@ -126,13 +104,11 @@ CapitalProjectsSidebar.defaultProps = {
 const mapStateToProps = ({ capitalProjects }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
-  totalCount: capitalProjects.pointsTotalCount + capitalProjects.polygonsTotalCount,
+  totalCount: capitalProjects.totalCount,
   selectedCount: capitalProjects.selectedCount,
   filterDimensions: capitalProjects.filterDimensions,
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalPointsCount: capitalProjectsActions.fetchTotalPointsCount,
-  fetchTotalPolygonsCount: capitalProjectsActions.fetchTotalPolygonsCount,
   fetchSelectedCount: capitalProjectsActions.fetchSelectedCount,
 })(CapitalProjectsSidebar);

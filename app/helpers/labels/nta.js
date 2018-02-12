@@ -76,7 +76,7 @@ const labels = [{
 },
 {
   value: 'SI12',
-  label: `SI12 - Mariner's Harbor-Arlington-Port Ivory-Graniteville`,
+  label: 'SI12 - Mariner\'s Harbor-Arlington-Port Ivory-Graniteville',
 },
 {
   value: 'QN26',
@@ -84,7 +84,7 @@ const labels = [{
 },
 {
   value: 'SI01',
-  label: `SI01 - Annadale-Huguenot-Prince's Bay-Eltingville`,
+  label: 'SI01 - Annadale-Huguenot-Prince\'s Bay-Eltingville',
 },
 {
   value: 'SI11',

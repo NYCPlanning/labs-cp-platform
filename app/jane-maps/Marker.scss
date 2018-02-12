@@ -1,0 +1,13 @@
+.mapboxgl-popup-content {
+  padding: 5px 20px 5px 5px;
+  
+  p {
+    font-weight: 800;
+    text-shadow: 1px 1px #ffffff;
+    margin: 0;
+  }
+
+  .mapboxgl-popup-close-button {
+    padding: 5px;
+  }
+}

@@ -5,7 +5,7 @@ import { List, ListItem, makeSelectable } from 'material-ui/List';
 import FontIcon from 'material-ui/FontIcon';
 
 import NestedSelect from './NestedSelect';
-import { getDefaultFilterDimensions } from './config';
+import getDefaultFilterDimensions from './config';
 import ga from '../helpers/ga';
 
 
@@ -190,7 +190,7 @@ class SplashSelector extends React.Component { // eslint-disable-line react/no-m
 
         <Link
           to={{
-            pathname: '/facilities/explorer',
+            pathname: '/map/facilities',
             state: {
               filterDimensions: getDefaultFilterDimensions({ values: this.state.layers }),
             },

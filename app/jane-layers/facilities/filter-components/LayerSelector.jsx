@@ -12,7 +12,7 @@ import MultiSelect from '../../../common/MultiSelect';
 import AreaFilterSelect from '../../../common/AreaFilterSelect';
 import RadiusFilter from '../../../common/RadiusFilter';
 import Checkbox from '../../../common/Checkbox';
-import * as facilityCPActions from '../../../actions/facilitiesCP';
+import * as facilityCPActions from '../../../actions/facilities';
 
 import './LayerSelector.scss';
 
@@ -68,16 +68,24 @@ class LayerSelector extends React.Component {
 
   componentDidMount() {
     const {
+      locationState,
       filterDimensions,
       setFilters,
-      fetchTotalFacilitiesCount,
       fetchSelectedFacilitiesCount,
     } = this.props;
 
-    fetchTotalFacilitiesCount();
+    if (locationState && locationState.filterDimensions) {
+      setFilters(locationState.filterDimensions);
+      fetchSelectedFacilitiesCount(locationState.filterDimensions);
+      return;
+    }
 
-    setFilters(filterDimensions);
-    fetchSelectedFacilitiesCount(filterDimensions);
+    const updatedFilterDimensions = locationState && locationState.mergeFilterDimensions
+      ? Object.assign({}, filterDimensions, locationState.mergeFilterDimensions)
+      : filterDimensions;
+
+    setFilters(updatedFilterDimensions);
+    fetchSelectedFacilitiesCount(updatedFilterDimensions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -281,6 +289,7 @@ LayerSelector.defaultProps = {
   selectedCount: 0,
   selectedPointType: null,
   selectedPointCoordinates: [],
+  locationState: {},
 };
 
 LayerSelector.propTypes = {
@@ -289,23 +298,23 @@ LayerSelector.propTypes = {
   totalCount: PropTypes.number,
   selectedCount: PropTypes.number,
   setFilters: PropTypes.func.isRequired,
-  fetchTotalFacilitiesCount: PropTypes.func.isRequired,
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
   setFilterDimension: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
+
+  locationState: PropTypes.object,
 };
 
-const mapStateToProps = ({ facilitiesCP }) => ({
-  filterDimensions: facilitiesCP.filterDimensions,
-  sql: facilitiesCP.sql,
-  totalCount: facilitiesCP.totalCount,
-  selectedCount: facilitiesCP.selectedCount,
+const mapStateToProps = ({ facilities }) => ({
+  filterDimensions: facilities.filterDimensions,
+  sql: facilities.sql,
+  totalCount: facilities.totalCount,
+  selectedCount: facilities.selectedCount,
 });
 
 export default connect(mapStateToProps, {
-  fetchTotalFacilitiesCount: facilityCPActions.fetchTotalCount,
   fetchSelectedFacilitiesCount: facilityCPActions.fetchSelectedCount,
   setFilters: facilityCPActions.setFilters,
   resetFilter: facilityCPActions.resetFilter,

@@ -4,10 +4,13 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 
-// get styles for jane-maps
-import './jane-maps/styles.scss';
-
 import * as authActions from './actions/auth';
+
+import * as cpActions from './actions/capitalProjects';
+import * as cpTableActions from './actions/capitalProjectsTable';
+import * as cbbrActions from './actions/cbBudgetRequests';
+import * as facilitiesActions from './actions/facilities';
+import * as housingActions from './actions/housingDevelopment';
 
 import GlobalModal from './common/GlobalModal';
 import Nav from './common/Nav';
@@ -24,6 +27,13 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.loadCredentials({ targetPath: location.pathname });
+
+    this.props.fetchCPtableCount();
+    this.props.fetchCbbrCount();
+    this.props.fetchFacilitiesCount();
+    this.props.fetchHousingCount();
+    this.props.fetchHousingRawCount();
+    this.props.fetchCPcount();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,8 +77,6 @@ class App extends React.Component {
       });
     }
 
-    document.title = this.props.children.props.route.title || 'NYC Capital Planning Platform';
-
     return (
       <div>
         <Nav
@@ -77,16 +85,6 @@ class App extends React.Component {
           mini={this.props.children.props.route.miniNav}
         />
         <div>
-          {
-            this.state.modalHeading &&
-            this.state.modalContent &&
-            <GlobalModal
-              heading={this.state.modalHeading}
-              body={this.state.modalContent}
-              closeText={this.state.modalCloseText}
-              ref={(modal) => { this.modal = modal; }}
-            />
-          }
           {isModal ?
             this.previousChildren :
             children
@@ -114,6 +112,17 @@ class App extends React.Component {
               </div>
             )}
           </ReactCSSTransitionGroup>
+
+          {
+            this.state.modalHeading &&
+            this.state.modalContent &&
+            <GlobalModal
+              heading={this.state.modalHeading}
+              body={this.state.modalContent}
+              closeText={this.state.modalCloseText}
+              ref={(modal) => { this.modal = modal; }}
+            />
+          }
         </div>
       </div>
     );
@@ -126,8 +135,22 @@ App.propTypes = {
   route: PropTypes.shape().isRequired,
 
   loadCredentials: PropTypes.func.isRequired,
+
+  fetchCPcount: PropTypes.func.isRequired,
+  fetchCPtableCount: PropTypes.func.isRequired,
+  fetchCbbrCount: PropTypes.func.isRequired,
+  fetchFacilitiesCount: PropTypes.func.isRequired,
+  fetchHousingCount: PropTypes.func.isRequired,
+  fetchHousingRawCount: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   loadCredentials: authActions.loadCredentials,
+
+  fetchCPcount: cpActions.fetchTotalCount,
+  fetchCPtableCount: cpTableActions.fetchTotalCount,
+  fetchCbbrCount: cbbrActions.fetchTotalCount,
+  fetchFacilitiesCount: facilitiesActions.fetchTotalCount,
+  fetchHousingCount: housingActions.fetchTotalCount,
+  fetchHousingRawCount: housingActions.fetchTotalCountRaw,
 })(App);

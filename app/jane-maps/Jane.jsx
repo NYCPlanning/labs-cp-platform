@@ -7,7 +7,10 @@ import GLMap from './GLMap';
 import LayerList from './LayerList';
 import JaneLayer from './JaneLayer';
 import Marker from './Marker';
-import Search from './Search';
+
+import Search from '../explorer/Search';
+import TopBar from '../explorer/TopBar';
+import LowerPane from '../explorer/LowerPane';
 
 class Jane extends React.Component {
 
@@ -39,8 +42,10 @@ class Jane extends React.Component {
       loadedSources: {},
       legend: [],
       layers: [],
+      displayLowerPane: !_.isEmpty(this.props.detailPage),
     };
 
+    this.bottomOffset = 0;
     this.layers = [];
   }
 
@@ -66,6 +71,10 @@ class Jane extends React.Component {
     this.GLMap.map.on('dragend', this.props.onDragEnd);
   }
 
+  componentWillReceiveProps() {
+    if (!_.isEmpty(this.props.detailPage)) this.setState({ displayLowerPane: true });
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const propsChanged = !_.isEqual(this.props, nextProps);
     const stateChanged = !_.isEqual(this.state, nextState);
@@ -88,17 +97,10 @@ class Jane extends React.Component {
   onMapLoad = () =>
     this.setState({ mapLoaded: true });
 
-  removeLegend = (id) => {
-    this.setState({ legend: this.state.legend.filter(l => l.props.id !== id) });
+  setBottomOffset = (offset) => {
+    this.bottomOffset = offset;
+    this.props.setBottomOffset(offset);
   }
-
-  updateLegend = (id, legend) => {
-    const legendFiltered = this.state.legend.filter(l => l.props.id !== id);
-    this.setState({ legend: legendFiltered.concat(legend) });
-  }
-
-  addLegend = legend =>
-    this.setState({ legend: this.state.legend.concat(legend) });
 
   unregisterLayer = (layerId) => {
     this.layers = this.layers.filter(layer => layer !== layerId);
@@ -152,6 +154,7 @@ class Jane extends React.Component {
 
     this.setState({
       layers: this.layers,
+      displayLowerPane: !wasEnabled,
     });
 
     this.GLMap.map.once('render', () => this.layers.forEach(layer => layer.redrawChildren()));
@@ -183,35 +186,60 @@ class Jane extends React.Component {
   toggleList = () =>
     this.setState({ layerListExpanded: !this.state.layerListExpanded });
 
+  removeLegend = (id) => {
+    this.setState({ legend: this.state.legend.filter(l => l.props.id !== id) });
+  }
+
+  closeLowerPane = () => {
+    this.setState({ displayLowerPane: false });
+    this.props.closeLowerPane();
+  }
+
+  updateLegend = (id, legend) => {
+    const legendFiltered = this.state.legend.filter(l => l.props.id !== id);
+    this.setState({ legend: legendFiltered.concat(legend) });
+  }
+
+  addLegend = legend =>
+    this.setState({ legend: this.state.legend.concat(legend) });
+
   render() {
     let leftOffset = 0;
     if (this.state.layerListExpanded) leftOffset += 164;
     if (this.state.selectedLayer) leftOffset += 320;
 
-    const drawerClassName = cx('second-drawer', { offset: this.state.layerListExpanded });
-    const drawerStyle = {
-      transform: this.state.selectedLayer ? 'translate(0px, 0px)' : 'translate(-320px, 0px)',
-    };
-
     return (
       <div className="jane-container" style={this.props.style}>
+
         <div className="jane-map-container">
-          {
-            this.props.search &&
+          <TopBar
+            leftOffset={leftOffset}
+            layers={this.state.layers}
+          >
             <Search
               {...this.props.searchConfig}
               onGeocoderSelection={this.addSearchResultMarker}
               onClear={this.removeSearchResultMarker}
               selectionActive={!!this.state.searchResultMarker}
-              leftOffset={leftOffset}
             />
-          }
+          </TopBar>
 
           {
             this.state.legend.length > 0 &&
             <div className="jane-legend" style={{ left: leftOffset }}>
               { this.state.legend }
             </div>
+          }
+
+          {
+            !_.isEmpty(this.props.detailPage) &&
+            <LowerPane
+              leftOffset={leftOffset}
+              detailPage={this.props.detailPage}
+              selectedFeatures={this.props.selectedFeatures}
+              setBottomOffset={this.setBottomOffset}
+              closeLowerPane={this.closeLowerPane}
+            />
           }
 
           <GLMap
@@ -231,23 +259,30 @@ class Jane extends React.Component {
           toggleLayer={this.toggleLayer}
         />
 
-        <div className={drawerClassName} style={drawerStyle}>
+        <div
+          className={cx('second-drawer', { offset: this.state.layerListExpanded })}
+          style={{
+            transform: this.state.selectedLayer ? 'translate(0px, 0px)' : 'translate(-320px, 0px)',
+          }}
+        >
           { this.props.children }
 
           {
             this.state.searchResultMarker &&
             <JaneLayer id="searchResult" hidden>
-              <Marker {...this.state.searchResultMarker} flyTo />
+              <Marker {...this.state.searchResultMarker} flyTo bottomOffset={this.bottomOffset} />
             </JaneLayer>
           }
         </div>
       </div>
-
     );
   }
 }
 
 Jane.propTypes = {
+  detailPage: PropTypes.object,
+  selectedFeatures: PropTypes.array,
+
   mapboxGLOptions: PropTypes.object.isRequired,
   style: PropTypes.object,
   search: PropTypes.bool,
@@ -256,11 +291,17 @@ Jane.propTypes = {
   onZoomEnd: PropTypes.func,
   onDragEnd: PropTypes.func,
   onLayerToggle: PropTypes.func,
+  closeLowerPane: PropTypes.func,
+  setBottomOffset: PropTypes.func,
+
   onSearchTrigger: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
 
 Jane.defaultProps = {
+  detailPage: {},
+  selectedFeatures: [],
+
   style: {
     position: 'absolute',
     top: 0,
@@ -275,7 +316,9 @@ Jane.defaultProps = {
   onZoomEnd: () => {},
   onDragEnd: () => {},
   onLayerToggle: () => {},
+  closeLowerPane: () => {},
   onSearchTrigger: () => {},
+  setBottomOffset: () => {},
 };
 
 export default Jane;

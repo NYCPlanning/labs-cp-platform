@@ -19,6 +19,9 @@ export const fetchFacilityDetails = (facilityId, facilityRoute = 'facility') => 
   }
 };
 
+export const fetchPopsDetails = popsId =>
+  cartoActions.getPopsDetails(popsId, AT.FETCH_POPS_DETAILS);
+
 export const fetchTotalCount = () => ({
   type: AT.CARTO_REQUEST,
   payload: {

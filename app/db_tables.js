@@ -9,14 +9,16 @@ const db_tables = {
     polygons: 'cpdb_dcpattributes_poly_18adoptedv2',
   },
   cb_budget_requests: {
-    points: 'cbbr_submissions_pts_fy18v4',
-    polygons: 'cbbr_submissions_poly_fy18v4',
+    points: 'cbbr_submissions_pts_fy18v5',
+    polygons: 'cbbr_submissions_poly_fy18v5',
   },
   facdb: {
     datasources: 'facdb_datasources_170522',
     facilities: 'facdb_170522',
+    pops: 'pops_170920',
   },
   housingdevdb: 'housingdevdb_170906',
+  sca: 'cpdb_sca_pts_170201',
 };
 
 export default db_tables;

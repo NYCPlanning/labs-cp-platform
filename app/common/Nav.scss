@@ -1,6 +1,24 @@
 // Overrides Bootstrap media query to collapse the nav bar
 // avoids the conflict between the menu and the title
 
+.beta-notice {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #fff;
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 21px;
+  text-align: center;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.1);
+  background-color: #D96B27;
+
+  &:hover {
+    color: #fff;
+    background-color: #b95b21;
+    text-decoration: none;
+  }
+}
+
 @media (max-width: 1010px) {
   .navbar-header {
       float: none;
@@ -46,7 +64,7 @@
 }
 
 nav {
-  height: 50px;
+  height: 71px;
   font-family: 'Oswald', sans-serif;
 }
 
@@ -63,6 +81,10 @@ ul.navbar-right {
   color: #db691b;
   font-size: 16px;
   font-weight: 300;
+
+  &:hover {
+    background: #eeeeee;
+  }
 }
 
 .dropdown-menu>li>a {
@@ -71,10 +93,6 @@ ul.navbar-right {
 
 .dropdown-menu>li>a:hover {
   cursor: pointer;
-}
-
-.navbar-default .navbar-nav>li:hover{
-  background: #eeeeee;
 }
 
 .navbar-default .navbar-brand {

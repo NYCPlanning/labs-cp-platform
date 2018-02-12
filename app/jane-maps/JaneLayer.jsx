@@ -93,6 +93,10 @@ class JaneLayer extends React.Component {
   registerRedrawCallback = redrawMapLayerCallback =>
     this.redrawCallbacks.push(redrawMapLayerCallback);
 
+  unregisterRedrawCallback = (redrawMapLayerCallback) => {
+    this.redrawCallbacks = this.redrawCallbacks.filter(cb => !Object.is(cb, redrawMapLayerCallback));
+  }
+
   redrawChildren = () => {
     const janeLayer = this.context.getJaneLayer(this.props.id);
 
@@ -126,6 +130,7 @@ class JaneLayer extends React.Component {
           const mapLayerProps = {
             janeLayerId: this.props.id,
             registerRedrawCallback: this.registerRedrawCallback,
+            unregisterRedrawCallback: this.unregisterRedrawCallback,
             map,
             previousMapLayer,
             order: order + 1,

@@ -1,5 +1,5 @@
 import * as AT from '../constants/actionTypes';
-import { getDefaultFilterDimensions } from '../facilities/config';
+import getDefaultFilterDimensions from '../facilities/config';
 import { getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 
 const defaultFilterDimensions = getDefaultFilterDimensions({ selected: 'all' });
@@ -21,11 +21,16 @@ const facilitiesReducer = (state = initialState, action) => {
     case AT.FETCH_FACILITY_DETAILS.SUCCESS:
       return Object.assign({}, state, { facilityDetails: action.payload.features[0] });
 
+    case AT.RESET_SELECTED_FEATURES:
+      return Object.assign({}, state, { facilityDetails: null });
+    case AT.FETCH_POPS_DETAILS.SUCCESS:
+      return Object.assign({}, state, { popsDetails: action.payload.features[0] });
+
     case AT.FETCH_FACILITY_AGENCY_VALUES.SUCCESS:
       return Object.assign({}, state, { sources: action.payload });
 
     case AT.FETCH_FACILITIES_TOTAL_COUNT.SUCCESS:
-      return Object.assign({}, state, { totalCount: action.payload[0].count });
+      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
 
     case AT.FETCH_FACILITIES_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

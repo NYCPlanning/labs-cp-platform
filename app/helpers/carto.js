@@ -25,4 +25,16 @@ export default {
     const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
     return this.generateUrlString(this.getFilteredSql(sql), fileType, `${filePrefix}_filtered_${date}`);
   },
+
+  completeDownloadUrlStringPtsPoly(sqls, filePrefix, fileType) {
+    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
+    const sql = `${this.getCompleteSql(sqls.points)} UNION ${this.getCompleteSql(sqls.polygons)}`;
+    return this.generateUrlString(sql, fileType, `${filePrefix}_complete_${date}`);
+  },
+
+  filteredDownloadUrlStringPtsPoly(sqls, filePrefix, fileType) {
+    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
+    const sql = `${this.getFilteredSql(sqls.points)} UNION ${this.getFilteredSql(sqls.polygons)}`;
+    return this.generateUrlString(sql, fileType, `${filePrefix}_complete_${date}`);
+  },
 };

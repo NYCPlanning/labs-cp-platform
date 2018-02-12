@@ -1,4 +1,4 @@
-export const defaultLayers = [
+const defaultLayers = [
   {
     name: 'Education, Child Welfare, and Youth',
     description: 'Providers of children and youth services and all schools, including higher education facilities',
@@ -534,3 +534,5 @@ export const defaultLayers = [
     ],
   },
 ];
+
+export default defaultLayers;

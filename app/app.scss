@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
   left: 0;
   background: #fff;
-  margin-top: 50px;
+  margin-top: 71px;
   overflow: hidden;
 }
 
@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
   left: 0;
   background: #fff;
-  margin-top: 50px;
+  margin-top: 60px;
   overflow: visible;
   padding: 0;
 }
@@ -125,34 +125,6 @@ section {
   margin-right: 10px;
 }
 
-/*Beta Banner*/
-
-body:after {
-    content: "beta";
-    position: fixed;
-    width: 80px;
-    height: 25px;
-    background: #e7ff1e;
-    top: 7px;
-    left: -20px;
-    text-align: center;
-    font-size: 13px;
-    font-family: sans-serif;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #818181;
-    line-height: 27px;
-    -ms-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    z-index: 10000;
-    border-bottom: 1px solid #b4b4b4;
-    border-top: 1px solid #b4b4b4;
-}
-
-/*End Beta Banner*/
-
-
 /*Jquery UI Range Slider Customization*/
 
 .ui-rangeSlider-bar {
@@ -163,17 +135,17 @@ body:after {
 
 
 .background-enter {
-  transform: translate(100%);
+  transform: translate(0, 100%);
 }
 .background-enter.background-enter-active {
-  transform: translate(0%);
+  transform: translate(0, 0%);
   transition: transform 250ms ease-in-out;
 }
 .background-leave {
-  transform: translate(0%);
+  transform: translate(0, 0%);
 }
 .background-leave.background-leave-active {
-  transform: translate(100%);
+  transform: translate(0, 100%);
   transition: transform 250ms ease-in-out;
 }
 
@@ -360,12 +332,6 @@ body:after {
 
 
 @media screen and (max-width: 400px) {
-  .jane-selected-features {
-    width: 100% !important;
-    top: 0 !important;
-    z-index: 10;
-  }
-
   .facilities-list-item {
     width: 100% !important;
   }
@@ -399,3 +365,442 @@ body:after {
   transition: opacity 500ms ease-in;
 }
 /* End Implement right-side drawer outside of Jane */
+
+.jane-container {
+  border: 1px solid #efefef;
+  font-family: 'Roboto', sans-serif;
+
+  .gl-map {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .mui-toolbar-container {
+    padding: 6px 6px;
+    position: absolute;
+    z-index: 1;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+
+  .jane-drawer-inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    background: #c1c1c1;
+  }
+
+  .jane-drawer {
+    position: absolute;
+    z-index: 102;
+    top: 0;
+    bottom: 0;
+    left: -165px;
+    width: 200px;
+    background: #fff;
+    overflow: hidden;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+  }
+
+  .jane-drawer.expanded {
+    left: 0;
+  }
+
+  .list-item {
+    color: #5f5f5f !important;
+    position: relative;
+    cursor: -webkit-grab;
+    cursor: grab;
+    height: 30px;
+    font-size: 13px;
+    margin-bottom: 2px;
+    text-align: right;
+    background-color: #C1C1C1;
+    border-right: 2px solid #C1C1C1;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+    .name {
+      white-space: nowrap;
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      line-height: 11px;
+    }
+
+    &:hover {
+      border-right: 2px solid #9f9f9f;
+    }
+
+    &:hover, &:hover .fa {
+      color: #9f9f9f !important;
+
+    }
+
+    &.enabled .fa {
+      color: #d96b27 !important;
+    }
+
+    &.enabled {
+      background-color: #FFF;
+      border-right: 2px solid #FFF;
+    }
+
+    &.selected, .enabled.selected {
+      background-color: #FFF;
+      border-right: 2px solid #d96b27;
+    }
+
+    .toggle-container {
+      width: 50px;
+      position: absolute;
+      left: 0;
+      top: 4px;
+    }
+  }
+
+
+  .second-drawer.offset {
+    left: 200px;
+  }
+
+  .second-drawer {
+    z-index: 101;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 35px;
+    width: 320px;
+    background: #fff;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+
+    .drawer-header {
+      text-align: left;
+    }
+
+    .second-drawer-content {
+      padding: 0 16px;
+
+      h4 {
+        font-family: 'roboto', sans-serif;
+        color: rgba(0, 0, 0, 0.541176);
+        font-size: 14px;
+        font-weight: 500;
+        margin: 16px 0;
+      }
+    }
+  }
+
+  .drawer-header {
+    position: relative;
+    border-bottom: 1px solid #a9a9a9;
+    height: 35px;
+    text-align: right;
+  }
+
+  .drawer-subheader {
+    height: 48px;
+  }
+
+  .jane-map-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 35px;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+
+  .top-bar {
+    display: inline-flex;
+    position: absolute;
+    background: rgb(95, 95, 95);
+    color: white;
+    z-index: 101;
+    transition: left 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    height: 34px;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+
+    a {
+      text-decoration: none;
+    }
+
+    .top-bar-dropdown {
+      position: absolute;
+      background: white;
+      top: 34px;
+      color: rgb(95, 95, 95);
+      transition: right 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      box-shadow: rgba(0, 0, 0, 0.156863) 0px 8px 10px, rgba(0, 0, 0, 0.227451) 0px 8px 10px;
+    }
+
+    .dropdown-buttons {
+      display: block;
+      position: absolute;
+      width: 300px;
+      text-align: right;
+      transition: right 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+      button {
+        width: 100px;
+        background: none;
+        border: none;
+        padding: 7px 0;
+
+        &.active {
+          background: white;
+          color: rgb(95, 95, 95);
+        }
+
+        &:hover:not(.active) {
+          background: rgb(177, 177, 177);
+          color: white;
+        }
+      }
+
+      span {
+        margin: 0 5px;
+      }
+    }
+
+    .download-row {
+      width: 300px;
+      padding: 10px;
+
+      h5 {
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        margin-top: 0;
+      }
+
+      button {
+        width: 280px;
+        text-align: left;
+
+        .caret {
+          display: none;
+        }
+
+        .badge {
+          position: absolute;
+          right: 7px;
+          top: 7px;
+        }
+      }
+    }
+
+    .search {
+      input::placeholder {
+        color: white;
+      }
+
+      .fa {
+        left: 10px;
+        position: relative;
+      }
+
+      .react-autosuggest__input {
+        margin: 6px 10px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: white;
+        background: rgb(95, 95, 95);
+        border: 0;
+        outline: none;
+        -webkit-appearance: none;
+      }
+
+      .react-autosuggest__container, .react-autosuggest__input {
+        width: 280px;
+        display: inline-block;
+      }
+
+      .react-autosuggest__container--open .react-autosuggest__suggestions-container {
+        display: block;
+        position: absolute;
+        width: 310px;
+        font-weight: 300;
+        font-size: 13px;
+        z-index: 2;
+        cursor: pointer;
+        background: rgb(95, 95, 95);
+      }
+
+      ul {
+        padding: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+      }
+
+      li {
+        padding: 4px 2px;
+      }
+
+      li .fa {
+        padding-right: 12px;
+      }
+    }
+  }
+}
+
+.results-pane {
+  a:hover, a:active, a {
+    text-decoration: none;
+  }
+}
+
+// List Items
+.capital-projects-list-item, .sca-list-item, .budget-request-list-item, .facilities-list-item {
+  width: 305px;
+  background: #fff;
+  font-size: 18px;
+  padding: 10px;
+  border-left: 4px solid orange;
+  border-bottom: 1px solid #eaeaea;
+  position: relative;
+  box-sizing: border-box;
+
+  .title {
+    line-height: 17px;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    color: gray;
+    font-size:13px;
+  }
+
+  &.selected {
+    background: #E6E6E6;
+  }
+
+  &:hover {
+    background: #b3b3b333;
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+}
+
+/* Capital Expenditures Chart */
+
+  .month-bar:hover {
+    cursor: pointer;
+  }
+
+/* Capital Expenditures Chart Spinner */
+
+.chart-container {
+
+  height: 120px;
+  position: relative;
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .spinner > div {
+    width: 18px;
+    height: 18px;
+    opacity: 0.75;
+    background-color: #D96B27;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  }
+
+  .spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+  }
+
+  .spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+  }
+
+  @-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
+  }
+
+  @keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 40% {
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+    }
+  }
+}
+
+/* End Capital Expenditures Chart Spinner */
+
+/* Capital Expenditures Chart Callout */
+/* from http://www.cssarrowplease.com/ */
+.arrow_box {
+  position: absolute;
+  border-radius: 6px;
+  transition: opacity .1s ease-in-out;
+  width: 100px;
+}
+
+.arrow_box:after, .arrow_box:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:before {
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.popup-top {
+  padding: 3px 10px;
+  color: #FFF;
+  border-radius: 2px 2px 0 0;
+}
+
+.expenditures .popup-top {
+  background: steelblue;
+}
+
+.arrow_box.expenditures:before {
+  border-bottom-color: steelblue;
+}
+
+.commitments .popup-top {
+  background: #D96B27;
+}
+
+.arrow_box.commitments:before {
+  border-bottom-color: #D96B27;
+}
+
+.popup-bottom {
+  padding: 10px;
+  background: #cdcdcd;
+  text-align: center;
+  color: #585858;
+  font-weight: 800;
+  font-size: 20px;
+  border-radius: 0 0 2px 2px;
+}

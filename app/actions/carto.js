@@ -24,6 +24,16 @@ export const getPops = ({ tableName, value }, nextType) => {
   };
 };
 
+export const getPopsDetails = (popsId, nextType) => {
+  const requestFormat = 'geojson';
+  const sql = `SELECT * FROM ${db_tables.facdb.pops} WHERE popsnumber = '${popsId}'`;
+
+  return {
+    type: AT.CARTO_REQUEST,
+    payload: { sql, requestFormat, nextType },
+  };
+};
+
 export const fetchAgencyValues = ({ properties }, nextType) => {
   // Assumes a structure to the string given by the database
   const pgTableIds = dbStringToArray(properties.pgtable);

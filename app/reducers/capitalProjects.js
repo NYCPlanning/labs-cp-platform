@@ -32,11 +32,21 @@ const capitalProjectsReducer = (state = initialState, action) => {
     case AT.FETCH_CAPITAL_PROJECT_COMMITMENTS.SUCCESS:
       return Object.assign({}, state, { capitalProjectCommitments: action.payload });
 
+    case AT.RESET_SELECTED_FEATURES:
+      return Object.assign({}, state, {
+        capitalProjectDetails: null,
+        capitalProjectBudgets: null,
+        capitalProjectCommitments: null,
+      });
+
     case AT.FETCH_CAPITAL_PROJECTS_TOTAL_POINTS_COUNT.SUCCESS:
       return Object.assign({}, state, { pointsTotalCount: action.payload[0].count });
 
     case AT.FETCH_CAPITAL_PROJECTS_TOTAL_POLYGONS_COUNT.SUCCESS:
       return Object.assign({}, state, { polygonsTotalCount: action.payload[0].count });
+
+    case AT.FETCH_CAPITAL_PROJECTS_TOTAL_COUNT.SUCCESS:
+      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
 
     case AT.FETCH_CAPITAL_PROJECTS_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

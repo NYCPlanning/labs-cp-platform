@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import BackButton from '../common/BackButton';
-import ModalMap from '../common/ModalMap';
 import FeedbackForm from '../common/FeedbackForm';
 
 import { getColor } from '../filter-configs/housing-config';
@@ -14,7 +12,15 @@ import './HousingDetailPage.scss';
 
 class HousingDetailPage extends React.Component {
   componentWillMount() {
-    this.props.fetchDetails(parseInt(this.props.params.id));
+    this.fetchPageData(parseInt(this.props.id));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.id !== this.props.id) this.fetchPageData(nextProps.id);
+  }
+
+  fetchPageData(id) {
+    this.props.fetchDetails(id);
   }
 
   renderContent = (data) => {
@@ -130,29 +136,16 @@ class HousingDetailPage extends React.Component {
     const backgroundColor = getColor('dcp_dev_category', d.dcp_dev_category);
 
     return (
-      <div className="pipeline-page detail-page">
+      <div className="pipeline-page">
         <div className="col-md-12">
           <div className={'row'}>
-            <div
-              className="button-container col-md-3 col-md-push-9"
-              style={{ textAlign: 'right' }}
-            >
-              <BackButton
-                location={this.props.location}
-                defaultText="Development Map"
-                defaultLink="/map/housing"
-              />
-            </div>
-            <div className="col-md-9 col-md-pull-3">
+            <div className="col-md-12">
               <h1>{d.address}, {d.boro}</h1>
               <span className={'badge'} style={{ backgroundColor }}>{d.dcp_dev_category}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_occ_category}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
             </div>
           </div>
-        </div>
-
-        <div className="col-md-6">
 
           <div className="row">
             <div className={'col-md-12'}>
@@ -228,14 +221,10 @@ class HousingDetailPage extends React.Component {
             </div>
           </div>
 
-        </div>
-
-        <div className="col-md-6">
-          <ModalMap feature={this.props.housingDetails} label={d.address} />
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"
-            ref_id={this.props.params.id}
+            ref_id={this.props.id}
           />
         </div>
       </div>
@@ -247,7 +236,7 @@ class HousingDetailPage extends React.Component {
       return null;
     }
     return (
-      <div className="fluid-content display-content">
+      <div>
         {this.renderContent(this.props.housingDetails)}
       </div>
     );
@@ -255,12 +244,13 @@ class HousingDetailPage extends React.Component {
 }
 
 HousingDetailPage.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string,
-  }).isRequired,
-  housingDetails: PropTypes.object.isRequired,
-  location: PropTypes.shape().isRequired,
+  id: PropTypes.string.isRequired,
+  housingDetails: PropTypes.object,
   fetchDetails: PropTypes.func.isRequired,
+};
+
+HousingDetailPage.defaultProps = {
+  housingDetails: {},
 };
 
 const mapStateToProps = ({ housingDevelopment }) => ({

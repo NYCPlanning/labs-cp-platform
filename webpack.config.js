@@ -14,7 +14,7 @@ module.exports = {
   context: appPath,
 
   entry: {
-    app: 'main.js',
+    app: 'main.jsx',
   },
 
   resolve: {

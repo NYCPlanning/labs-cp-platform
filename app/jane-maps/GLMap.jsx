@@ -59,7 +59,10 @@ class GLMap extends React.Component {
 
   render() {
     return (
-      <div className="gl-map" ref={(node) => { this.container = node; }} />
+      <div
+        className="gl-map"
+        ref={(node) => { this.container = node; }}
+      />
     );
   }
 }
