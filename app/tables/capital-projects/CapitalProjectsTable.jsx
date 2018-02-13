@@ -194,11 +194,6 @@ class CPTable extends React.Component { // eslint-disable-line
                 </div>
               </div>
             </Tab>
-
-            <Tab
-              label={<span>Map <span className={'fa fa-external-link'} /></span>}
-              onActive={() => this.props.router.push('/map/capitalprojects')}
-            />
           </Tabs>
         </div>
 

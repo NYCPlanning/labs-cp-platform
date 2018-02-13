@@ -28,33 +28,6 @@ export const fetchCommitments = capitalProjectId => ({
   },
 });
 
-export const fetchTotalPointsCount = () => ({
-  type: AT.CARTO_REQUEST,
-  payload: {
-    sql: `SELECT COUNT(*) FROM ${sqlConfig.pointsTablename}`,
-    requestFormat: 'json',
-    nextType: AT.FETCH_CAPITAL_PROJECTS_TOTAL_POINTS_COUNT,
-  },
-});
-
-export const fetchTotalPolygonsCount = () => ({
-  type: AT.CARTO_REQUEST,
-  payload: {
-    sql: `SELECT COUNT(*) FROM ${sqlConfig.polygonsTablename}`,
-    requestFormat: 'json',
-    nextType: AT.FETCH_CAPITAL_PROJECTS_TOTAL_POLYGONS_COUNT,
-  },
-});
-
-export const fetchTotalCount = () => ({
-  type: AT.CARTO_REQUEST,
-  payload: {
-    sql: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cpdb.points} UNION SELECT * FROM ${db_tables.cpdb.polygons}) a`,
-    requestFormat: 'json',
-    nextType: AT.FETCH_CAPITAL_PROJECTS_TOTAL_COUNT,
-  },
-});
-
 export const fetchSelectedCount = filterDimensions => ({
   type: AT.CARTO_REQUEST,
   payload: {

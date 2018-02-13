@@ -4,6 +4,7 @@ import * as AT from '../constants/actionTypes';
 import { defaultFilterDimensions } from '../filter-configs/housing-config';
 import { getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
 
+const totalcounts = require('../totalcounts.json');
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
 const isIssueDateDisabled = filterDimensions =>
@@ -24,8 +25,9 @@ export const initialState = {
   selectedFeatures: [],
   symbologyDimension: 'dcp_dev_category',
   housingDetails: null,
-  totalCount: 0,
-  selectedCount: 0,
+  totalCount: totalcounts.housing,
+  totalCountRaw: totalcounts.housingRaw,
+  selectedCount: totalcounts.housing,
 };
 
 const housingReducer = (state = initialState, action) => {
@@ -36,12 +38,6 @@ const housingReducer = (state = initialState, action) => {
 
     case AT.RESET_SELECTED_FEATURES:
       return Object.assign({}, state, { housingDetails: null });
-
-    case AT.FETCH_HOUSING_DEVELOPMENT_TOTAL_COUNT.SUCCESS:
-      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
-
-    case AT.FETCH_HOUSING_DEVELOPMENT_TOTAL_RAW_COUNT.SUCCESS:
-      return Object.assign({}, state, { totalCountRaw: action.payload[0].count });
 
     case AT.FETCH_HOUSING_DEVELOPMENT_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

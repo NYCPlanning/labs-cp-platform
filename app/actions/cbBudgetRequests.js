@@ -10,16 +10,6 @@ export const fetchDetails = requestId =>
     value: requestId,
   }, AT.FETCH_CB_BUDGET_REQUEST_DETAILS);
 
-
-export const fetchTotalCount = () => ({
-  type: AT.CARTO_REQUEST,
-  payload: {
-    sql: `SELECT COUNT(*) FROM ${unionSql()}`,
-    requestFormat: 'json',
-    nextType: AT.FETCH_CB_BUDGET_REQUESTS_TOTAL_COUNT,
-  },
-});
-
 export const fetchSelectedCount = filterDimensions => ({
   type: AT.CARTO_REQUEST,
   payload: {
