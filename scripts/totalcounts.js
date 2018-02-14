@@ -46,6 +46,9 @@ const sql = {
     AND x_dup_flag = ''`,
   housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
   cbbr: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cb_budget_requests.points} UNION SELECT * FROM ${db_tables.cb_budget_requests.polygons}) a`,
+  cpdbTotalCommitMin: `SELECT min(totalcommit) FROM ${db_tables.cpdb.projects_combined}`,
+  cpdbTotalCommitMax: `SELECT max(totalcommit) FROM ${db_tables.cpdb.projects_combined}`,
+  cpdbSpentToDateMax: `SELECT max(totalspend) FROM ${db_tables.cpdb.projects_combined}`,
 };
 
 const urlString = (s) => {
@@ -53,23 +56,54 @@ const urlString = (s) => {
   return encodeURI(apiString);
 };
 
-const keys = ['cpMapped', 'cpAll', 'facilities', 'housing', 'housingRaw', 'cbbr'];
-const exportObject = {};
+const keys = [
+  'cpMapped',
+  'cpAll',
+  'facilities',
+  'housing',
+  'housingRaw',
+  'cbbr',
+  'cpdbTotalCommitMin',
+  'cpdbTotalCommitMax',
+  'cpdbSpentToDateMax',
+];
+const results = {};
 
 const requests = keys.map((key) => {
   return new Promise((resolve) => {
     request(urlString(sql[key]), (error, response, body) => {
-      // console.log('error:', error); // Print the error if one occurred
-      // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log(key, JSON.parse(body).rows[0].count); // Print the HTML for the Google homepage.
-      exportObject[key] = JSON.parse(body).rows[0].count;
+      results[key] = JSON.parse(body).rows[0];
       resolve();
     });
   });
 });
 
+const roundUp = (number) => {
+  const precision = -(parseInt(number).toString().length - 2);
+  const factor = 10 ** precision;
+  return Math.ceil(number * factor) / factor;
+};
+
+const roundDown = (number) => {
+  const precision = -(parseInt(number).toString().length - 2);
+  const factor = 10 ** precision;
+  return Math.floor(number * factor) / factor;
+};
+
 Promise.all(requests).then(() => {
-  fs.writeFile('./app/totalcounts.json', JSON.stringify(exportObject), () => {
+  const jsonfile = {
+    cpMapped: results.cpMapped.count,
+    cpAll: results.cpAll.count,
+    facilities: results.facilities.count,
+    housing: results.housing.count,
+    housingRaw: results.housingRaw.count,
+    cbbr: results.cbbr.count,
+    cpdbTotalCommitMin: roundDown(results.cpdbTotalCommitMin.min),
+    cpdbTotalCommitMax: roundUp(results.cpdbTotalCommitMax.max),
+    cpdbSpentToDateMax: roundUp(results.cpdbSpentToDateMax.max),
+  };
+
+  fs.writeFile('./app/totalcounts.json', JSON.stringify(jsonfile), () => {
     console.log('Total Counts JSON file successfully created');
   });
 });

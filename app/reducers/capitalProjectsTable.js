@@ -1,9 +1,10 @@
 import * as AT from '../constants/actionTypes';
-import { defaultFilterDimensions } from '../capitalprojects/config';
+import { defaultFilterDimensions } from './capitalprojects/config';
 import { getTableSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
 import db_tables from '../db_tables';
 
 const totalcounts = require('../totalcounts.json');
+
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
 const initialState = {
