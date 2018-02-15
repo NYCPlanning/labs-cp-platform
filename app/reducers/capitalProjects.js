@@ -11,7 +11,6 @@ const initialState = {
   sql: getSql(getDefaultFilters()),
   pointsSql: getPointsSql(getDefaultFilters()),
   polygonsSql: getPolygonsSql(getDefaultFilters()),
-  selectedFeatures: [],
   totalCount: totalcounts.cpMapped,
   selectedCount: totalcounts.cpMapped,
   capitalProjectDetails: null,
@@ -42,9 +41,6 @@ const capitalProjectsReducer = (state = initialState, action) => {
 
     case AT.FETCH_CAPITAL_PROJECTS_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });
-
-    case AT.SET_SELECTED_CAPITAL_PROJECTS_FEATURES:
-      return Object.assign({}, state, { selectedFeatures: action.payload.selectedFeatures });
 
     case AT.RESET_CAPITAL_PROJECTS_FILTER:
       return Object.assign({}, state, {
