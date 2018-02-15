@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import { browserHistory } from 'react-router';
 
 import Filter from './filter/CapitalProjectsFilter';
 import * as capitalProjectsActions from '../../actions/capitalProjects';
@@ -75,10 +74,6 @@ class CapitalProjectsSidebar extends React.Component {
             </div>
           </div>
         </Tab>
-        <Tab
-          label={<span>Table <span className={'fa fa-external-link'} /></span>}
-          onActive={() => browserHistory.push('/table')}
-        />
       </Tabs>
     );
   }

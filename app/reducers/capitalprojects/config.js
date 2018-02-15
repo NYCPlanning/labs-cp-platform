@@ -1,5 +1,7 @@
-import LabelHelper from '../helpers/labels/labelHelper';
-import db_tables from '../db_tables';
+import LabelHelper from '../../helpers/labels/labelHelper';
+import db_tables from '../../db_tables';
+
+const totalcounts = require('../../totalcounts.json');
 
 const defaultFilterDimensions = {
   radiusfilter: {
@@ -451,12 +453,12 @@ const defaultFilterDimensions = {
 
   totalspend: {
     type: 'numberRange',
-    values: [0, 10000000000],
+    values: [0, totalcounts.cpdbSpentToDateMax],
   },
 
   totalcommit: {
     type: 'numberRange',
-    values: [-50000000, 10000000000],
+    values: [totalcounts.cpdbTotalCommitMin, totalcounts.cpdbTotalCommitMax],
   },
 
   activeyears: {

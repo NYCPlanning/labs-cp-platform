@@ -1,7 +1,9 @@
 import * as AT from '../constants/actionTypes';
-import { defaultFilterDimensions } from '../capitalprojects/config';
+import { defaultFilterDimensions } from './capitalprojects/config';
 import { getTableSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
 import db_tables from '../db_tables';
+
+const totalcounts = require('../totalcounts.json');
 
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
@@ -10,8 +12,8 @@ const initialState = {
   sql: getTableSql(getDefaultFilters()),
   commitmentsSql: db_tables.cpdb.commitments,
   capitalProjectDetails: [],
-  totalCount: 0,
-  selectedCount: 0,
+  totalCount: totalcounts.cpAll,
+  selectedCount: totalcounts.cpAll,
   filterBy: null,
   colSortDirs: { maprojid: 'DESC' },
 };
@@ -21,9 +23,6 @@ const capitalProjectsTableReducer = (state = initialState, action) => {
 
     case AT.FETCH_CAPITAL_PROJECT_TABLE_DETAILS.SUCCESS:
       return Object.assign({}, state, { capitalProjectDetails: action.payload });
-
-    case AT.FETCH_CAPITAL_PROJECTS_TABLE_TOTAL_COUNT.SUCCESS:
-      return Object.assign({}, state, { totalCount: action.payload[0].count, selectedCount: action.payload[0].count });
 
     case AT.FETCH_CAPITAL_PROJECTS_TABLE_SELECTED_COUNT.SUCCESS:
       return Object.assign({}, state, { selectedCount: action.payload[0].count });

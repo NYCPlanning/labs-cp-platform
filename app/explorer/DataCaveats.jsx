@@ -23,7 +23,7 @@ class DataCaveats extends React.Component {
               marginRight: '10px',
             }}
           >
-            Data Caveats
+            Draft Data
             <i
               className="fa fa-exclamation-triangle"
               style={{ paddingLeft: '5px' }}

@@ -1,5 +1,5 @@
 import * as AT from '../constants/actionTypes';
-import { tableSqlConfig, getTableSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
+import { getTableSql } from '../helpers/sqlbuilder/CapitalProjectsSqlBuilder';
 
 export const fetchDetails = filterDimensions => ({
   type: AT.CARTO_REQUEST,
@@ -7,15 +7,6 @@ export const fetchDetails = filterDimensions => ({
     sql: getTableSql(filterDimensions),
     requestFormat: 'json',
     nextType: AT.FETCH_CAPITAL_PROJECT_TABLE_DETAILS,
-  },
-});
-
-export const fetchTotalCount = () => ({
-  type: AT.CARTO_REQUEST,
-  payload: {
-    sql: `SELECT COUNT(*) FROM ${tableSqlConfig.tableName}`,
-    requestFormat: 'json',
-    nextType: AT.FETCH_CAPITAL_PROJECTS_TABLE_TOTAL_COUNT,
   },
 });
 
