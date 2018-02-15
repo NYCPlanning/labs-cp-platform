@@ -225,7 +225,7 @@ class Jane extends React.Component {
           </TopBar>
 
           {
-            this.state.legend.length > 0 &&
+            this.state.legend.length > 0 && _.isEmpty(this.props.detailPage) &&
             <div className="jane-legend" style={{ left: leftOffset }}>
               { this.state.legend }
             </div>
