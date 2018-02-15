@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 import routes from './routes';
-import appConfig from './helpers/appConfig';
+import appConfig from './config/appConfig';
 
 // initialize google analytics
 ReactGA.initialize(appConfig.ga_tracking_code);

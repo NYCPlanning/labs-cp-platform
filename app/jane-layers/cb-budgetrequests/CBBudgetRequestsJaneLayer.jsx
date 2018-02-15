@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer, Legend } from '../../jane-maps';
 
 import CBBudgetRequestsSidebarComponent from './SidebarComponent';
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 
 const CBBudgetRequestsJaneLayer = props => (
   <JaneLayer

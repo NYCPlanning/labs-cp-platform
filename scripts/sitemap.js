@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const request = require('request');
-const appConfig = require('../app/helpers/appConfig');
+const appConfig = require('../app/config/appConfig');
 
 const sql = 'SELECT uid FROM facdb_facilities';
 const apiCall = `https://${appConfig.carto_domain}/user/${appConfig.carto_user}/api/v2/sql?q=${sql}&format=json`;

@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import SqlBuilder from './SqlBuilder';
-import db_tables from '../../db_tables';
+import db_tables from '../../config/db_tables';
 
 export const sqlConfig = {
   columns: '*',

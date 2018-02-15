@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer, Legend } from '../../jane-maps';
 
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 import CapitalProjectsSidebar from './CapitalProjectsSidebar';
 
 const CapitalProjectsJaneLayer = props => (

@@ -4,7 +4,7 @@ import { getSql, getPointsSql, getPolygonsSql } from '../helpers/sqlbuilder/CBBu
 import agency_labels from './BudgetRequests/agency_labels';
 import commdist_labels from '../helpers/labels/community_districts';
 
-const totalcounts = require('../totalcounts.json');
+const totalcounts = require('../config/totalcounts.json');
 
 const initialState = () => (
   Object.assign({}, {

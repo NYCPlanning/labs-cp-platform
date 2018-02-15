@@ -1,4 +1,4 @@
-import appConfig from './appConfig';
+import appConfig from '../config/appConfig';
 
 const moment = require('moment');
 

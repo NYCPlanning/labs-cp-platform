@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer, Legend } from '../../jane-maps';
 import SCAPlanComponent from './SCAPlanComponent';
 
-import appConfig from '../../helpers/appConfig';
-import tables from '../../db_tables';
+import appConfig from '../../config/appConfig';
+import tables from '../../config/db_tables';
 
 const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
   <JaneLayer
