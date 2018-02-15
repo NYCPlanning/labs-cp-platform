@@ -28,7 +28,7 @@ const SidebarComponent = props => (
         <div className="sidebar-tab-content">
           <div className="padded">
             <h4>Inclusionary Housing Layers</h4>
-            <p>The Inclusionary Housing data are provided by NYC City Planning&#39;s Bytes of the Big Apple Open Data site.</p>
+            <p>The Inclusionary Housing data are provided by NYC Planning&#39;s Bytes of the Big Apple Open Data site.</p>
           </div>
         </div>
       </Tab>
