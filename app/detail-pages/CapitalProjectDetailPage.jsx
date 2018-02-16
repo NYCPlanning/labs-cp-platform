@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import Numeral from 'numeral';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import cx from 'classnames';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import FeedbackForm from '../common/FeedbackForm';
 import * as capitalProjectsActions from '../actions/capitalProjects';
@@ -17,6 +16,14 @@ import '../app.scss';
 import './CapitalProjectDetailPage.scss';
 
 class CapitalProjectsDetailPage extends React.Component {
+  constructor() {
+    super();
+    
+    this.state = {
+      showCommitmentsTable: false,
+    };
+  }
+  
   componentDidMount() {
     this.fetchPageData(this.props.id);
   }
@@ -61,15 +68,13 @@ class CapitalProjectsDetailPage extends React.Component {
     };
 
     const tableRows = this.props.commitments.map(c => (
-      <TableRow key={c.cartodb_id}>
-        <TableRowColumn style={commitmentDescriptionWidth}>{(c.commitmentdescription === '' ? '--' : c.commitmentdescription)}</TableRowColumn>
-        <TableRowColumn style={phaseWidth}>{c.commitmentcode}</TableRowColumn>
-        <TableRowColumn>{c.budgetline}</TableRowColumn>
-        <TableRowColumn>{formatCost(c.totalcost)}</TableRowColumn>
-        {/* eslint-disable no-undef */}
-        <TableRowColumn>{moment(c.plancommdate, 'MM/YY').format('MMM YYYY')}</TableRowColumn>
-        {/* eslint-enable no-undef */}
-      </TableRow>
+      <tr>
+        <td>{(c.commitmentdescription === '' ? '--' : c.commitmentdescription)}</td>
+        <td>{c.commitmentcode}</td>
+        <td>{c.budgetline}</td>
+        <td>{formatCost(c.totalcost)}</td>
+        <td>{moment(c.plancommdate, 'MM/YY').format('MMM YYYY')}</td>
+      </tr>
     ));
 
     return (
@@ -77,14 +82,9 @@ class CapitalProjectsDetailPage extends React.Component {
         <div className="col-md-12">
           <div className={'row'}>
             <div className="col-md-12">
-              <h1>{d.description}</h1>
-              
-              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Project ID</Tooltip>}>
-                <span className="detail-page-id">{d.maprojid}</span>
-              </OverlayTrigger>
-              
+              <h1>{d.description}</h1>        
               <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Project Type</Tooltip>}>
-                <span>
+                <span style={{ cursor: 'default' }}>
                 {
                   project_types.map(project_type => (
                     <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }} key={project_type}>
@@ -115,66 +115,84 @@ class CapitalProjectsDetailPage extends React.Component {
 
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-6'}>
-              <div>
-                <div>Spent to Date</div>
-                <h2>{formatCost(d.totalspend)}</h2>
-              </div>
+              <OverlayTrigger placement="bottom" overlay={
+                <Tooltip id="tooltip">
+                  {moment(d.mindate).format('MMM YYYY')} thru {moment(d.maxdate).format('MMM YYYY')}
+                </Tooltip>
+              }>
+                <div>
+                  <div>Years Active</div>
+                  <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
+                </div>
+              </OverlayTrigger>
             </div>
 
             <div className={'col-md-6'}>
-              <div>
-                <div>Planned Future Commitments as of {db_info.cpdb.date}</div>
-                <h2>{formatCost(d.totalcommit)}</h2>
-              </div>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Project ID in FMS, the City's financial management software.</Tooltip>}>
+                <div>
+                  <div>Project ID</div>
+                  <h2>{d.maprojid}</h2>
+                </div>
+              </OverlayTrigger>
             </div>
           </div>
 
-          <div className={'row'} style={{ marginBottom: '15px' }}>
+          <div className={'row'}>            
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading">Years Active</div>
+                <div className="panel-heading">As of {db_info.cpdb.date}</div>
                 <div className="panel-body">
-                  <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
-                  {/* eslint-disable no-undef */}
-                  <p className="subtext">{moment(d.mindate).format('MMM YYYY')} thru {moment(d.maxdate).format('MMM YYYY')}</p>
-                  {/* eslint-enable no-undef */}
+                  <div className={'row'}>
+                    <div className={'col-lg-6'}>
+                      <div style={{ padding: '7px 0' }}>
+                        <div>Spent to Date</div>
+                        <h2>{formatCost(d.totalspend)}</h2>
+                      </div>
+                    </div>
+
+                    <div className={'col-lg-6'}>
+                      <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">See itemized commitments</Tooltip>}>
+                        <div
+                          type="button"
+                          className={cx('btn', 'btn-default', 'btn-block', { active: this.state.showCommitmentsTable })}
+                          style={{ textAlign: 'left' }}
+                          onClick={() => this.setState({ showCommitmentsTable: !this.state.showCommitmentsTable })}
+                        >
+                          <div>Total Future Commitments</div>
+                          <h2>{formatCost(d.totalcommit)}</h2>
+                        </div>
+                      </OverlayTrigger>
+                    </div>
+                  </div>
+
+                  { this.state.showCommitmentsTable &&
+                    <div className="table-responsive">
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Description</th>
+                            <th>Phase</th>
+                            <th>Budget Line</th>
+                            <th>Planned Commitment</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>{tableRows}</tbody>
+                      </table>
+                    </div>
+                  }
                 </div>
               </div>
             </div>
           </div>
 
-          <div className={'row'} style={{ marginBottom: '15px' }}>
+          <div className={'row'}>
             <div className={'col-md-12'}>
-              <Card style={CardStyles}>
-                <CardHeader title="Commitment Details" actAsExpander showExpandableButton />
-                <CardText expandable>
-                  <Table selectable={false}>
-                    <TableHeader
-                      displaySelectAll={false}
-                      adjustForCheckbox={false}
-                    >
-                      <TableRow key="header">
-                        <TableHeaderColumn style={commitmentDescriptionWidth}>Description</TableHeaderColumn>
-                        <TableHeaderColumn style={phaseWidth}>Phase</TableHeaderColumn>
-                        <TableHeaderColumn>Budget Line</TableHeaderColumn>
-                        <TableHeaderColumn>Planned <br /> Commitment</TableHeaderColumn>
-                        <TableHeaderColumn>Date</TableHeaderColumn>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody displayRowCheckbox={false}>
-                      {tableRows}
-                    </TableBody>
-                  </Table>
-                </CardText>
-              </Card>
+              <FeedbackForm
+                ref_type="capitalproject"
+                ref_id={this.props.id}
+              />
             </div>
-          </div>
-
-          <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
-            <FeedbackForm
-              ref_type="capitalproject"
-              ref_id={this.props.id}
-            />
           </div>
         </div>
       </div>
