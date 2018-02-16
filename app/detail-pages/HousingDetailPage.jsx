@@ -149,23 +149,16 @@ class HousingDetailPage extends React.Component {
 
           <div className="row">
             <div className={'col-md-12'}>
-              <div className="panel panel-default">
-                <div className="panel-heading">DOB Job Number and Tax Lot</div>
-                <div className="panel-body">
-
-                  <div className={'col-md-6'}>
-                    <div className="dev-status">
-                      <h4>DOB Job Number</h4>
-                      <h3><a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>{d.dob_job_number}</a></h3>
-                    </div>
-                  </div>
-                  <div className={'col-md-6'}>
-                    <div className="dev-status">
-                      <h4>BBL</h4>
-                      <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
-                    </div>
-                  </div>
-
+              <div className={'col-md-6'}>
+                <div className="dev-status">
+                  <h4>DOB Job Number</h4>
+                  <h3><a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>{d.dob_job_number}</a></h3>
+                </div>
+              </div>
+              <div className={'col-md-6'}>
+                <div className="dev-status">
+                  <h4>BBL</h4>
+                  <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
                 </div>
               </div>
             </div>
