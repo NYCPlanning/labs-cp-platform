@@ -11,7 +11,7 @@
 const fs = require('fs');
 const request = require('request');
 const db_tables = require('../app/db_tables').default;
-const appConfig = require('../app/helpers/appConfig').default;
+const appConfig = require('../app/config/appConfig').default;
 
 const sql = {
   cpMapped: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cpdb.points} UNION SELECT * FROM ${db_tables.cpdb.polygons}) a`,
@@ -103,7 +103,7 @@ Promise.all(requests).then(() => {
     cpdbSpentToDateMax: roundUp(results.cpdbSpentToDateMax.max),
   };
 
-  fs.writeFile('./app/totalcounts.json', JSON.stringify(jsonfile), () => {
+  fs.writeFile('./app/config/totalcounts.json', JSON.stringify(jsonfile), () => {
     console.log('Total Counts JSON file successfully created');
   });
 });

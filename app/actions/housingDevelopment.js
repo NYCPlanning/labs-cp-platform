@@ -1,7 +1,7 @@
 import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
-import db_tables from '../db_tables';
+import db_tables from '../config/db_tables';
 
 export const fetchDetails = cartodbId =>
   cartoActions.getFeature({

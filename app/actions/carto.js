@@ -1,6 +1,6 @@
 import * as AT from '../constants/actionTypes';
 import { dbStringToArray } from '../helpers/dbStrings';
-import db_tables from '../db_tables';
+import db_tables from '../config/db_tables';
 
 export const getFeature = ({ tableName, column, value }, nextType) => {
   const requestFormat = 'geojson';

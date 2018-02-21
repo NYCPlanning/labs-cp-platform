@@ -1,7 +1,6 @@
 import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { unionSql } from '../helpers/sqlbuilder/CBBudgetRequestsSqlBuilder';
-// import db_tables from '../db_tables';
 
 export const fetchDetails = requestId =>
   cartoActions.getFeature({

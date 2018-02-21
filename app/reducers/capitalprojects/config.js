@@ -1,7 +1,7 @@
 import LabelHelper from '../../helpers/labels/labelHelper';
-import db_tables from '../../db_tables';
+import db_tables from '../../config/db_tables';
 
-const totalcounts = require('../../totalcounts.json');
+const totalcounts = require('../../config/totalcounts.json');
 
 const defaultFilterDimensions = {
   radiusfilter: {

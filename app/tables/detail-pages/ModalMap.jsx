@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import centroid from 'turf-centroid';
 import extent from 'turf-extent';
 import { Jane, JaneLayer, Marker, Source, MapLayer } from '../../jane-maps';
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 
 class ModalMap extends React.Component {
   componentDidMount() {

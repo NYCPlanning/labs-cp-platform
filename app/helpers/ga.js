@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga';
-import appConfig from './appConfig';
+import appConfig from '../config/appConfig';
 
 ReactGA.initialize(appConfig.ga_tracking_code);
 

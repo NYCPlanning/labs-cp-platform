@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer, Legend } from '../../jane-maps';
 
 import FacilitiesSidebarComponent from './SidebarComponent';
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 import colors from '../../facilities/colors';
 
 const FacilitiesJaneLayer = props => (

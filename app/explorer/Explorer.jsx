@@ -24,9 +24,20 @@ import {
   CapitalProjectsJaneLayer,
 } from '../jane-layers';
 
-import appConfig from '../helpers/appConfig';
+import appConfig from '../config/appConfig';
 
-const { mapboxGLOptions, searchConfig } = appConfig;
+const { mapbox_accessToken, searchConfig } = appConfig;
+
+const mapboxGLOptions = {
+  mapbox_accessToken: mapbox_accessToken,
+  center: [-74.0807, 40.7128],
+  zoom: 10,
+  minZoom: 9,
+  maxZoom: null,
+  pitch: 0,
+  hash: true,
+  navigationControlPosition: 'bottom-right',
+}
 
 class Explorer extends React.Component {
   constructor() {

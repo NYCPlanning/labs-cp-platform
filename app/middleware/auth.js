@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import * as AT from '../constants/actionTypes';
 import * as authActions from '../actions/auth';
 import { isTokenExpired } from '../helpers/jwtHelper';
-import appConfig from '../helpers/appConfig';
+import appConfig from '../config/appConfig';
 
 
 const clientId = appConfig.auth0_client_id;

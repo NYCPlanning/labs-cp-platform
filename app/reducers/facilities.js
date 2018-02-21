@@ -2,7 +2,7 @@ import * as AT from '../constants/actionTypes';
 import getDefaultFilterDimensions from '../facilities/config';
 import { getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 
-const totalcounts = require('../totalcounts.json');
+const totalcounts = require('../config/totalcounts.json');
 const defaultFilterDimensions = getDefaultFilterDimensions({ selected: 'all' });
 
 const initialState = {

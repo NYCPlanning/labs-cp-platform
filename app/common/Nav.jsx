@@ -37,7 +37,7 @@ const Nav = (props) => {
 
   return (
     <nav className={'navbar navbar-default navbar-fixed-top'}>
-      <a className="beta-notice" href="http://www1.nyc.gov/site/planning/index.page">A beta project of NYC City Planning - Capital Planning Division</a>
+      <a className="beta-notice" href="http://www1.nyc.gov/site/planning/index.page">A beta project of NYC Planning - Capital Planning Division</a>
 
       <div className="navbar-header">
         <button

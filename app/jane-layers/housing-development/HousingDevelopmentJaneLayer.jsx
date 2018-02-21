@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer, Legend } from '../../jane-maps';
 
 import HousingDevelopmentSidebarComponent from './SidebarComponent';
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 
 class HousingDevelopmentJaneLayer extends React.Component {
   render() {

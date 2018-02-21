@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Jane, JaneLayer, Source, MapLayer, Legend } from '../jane-maps';
 
-import appConfig from '../helpers/appConfig';
+import appConfig from '../config/appConfig';
 import FacilitiesSidebarComponent from './janelayer/SidebarComponent';
 
 import {

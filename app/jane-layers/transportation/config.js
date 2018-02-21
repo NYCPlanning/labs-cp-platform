@@ -1,4 +1,4 @@
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 
 export const mapLayers = {
   bus_stops: {

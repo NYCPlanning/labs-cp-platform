@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { JaneLayer, Source, MapLayer, Popup } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
-import appConfig from '../../helpers/appConfig';
+import appConfig from '../../config/appConfig';
 
 class InclusionaryHousingJaneLayer extends React.Component {
   constructor() {

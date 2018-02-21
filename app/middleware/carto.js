@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { browserHistory } from 'react-router';
 
 import * as AT from '../constants/actionTypes';
-import appConfig from '../helpers/appConfig';
+import appConfig from '../config/appConfig';
 
 const generateUrlString = (sql, format, filename = 'download') => encodeURI(
   `https://${appConfig.carto_domain}/api/v2/sql?q=${sql}&format=${format}&filename=${filename}`,
