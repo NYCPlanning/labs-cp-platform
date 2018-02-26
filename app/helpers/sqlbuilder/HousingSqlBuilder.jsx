@@ -3,7 +3,7 @@ import SqlBuilder from './SqlBuilder';
 import db_tables from '../../config/db_tables';
 
 export const sqlConfig = {
-  columns: 'cartodb_id, the_geom_webmercator, dcp_status, dcp_dev_category, u_net, address, dob_job_number',
+  columns: '*',
   tablename: db_tables.housingdevdb,
 };
 
