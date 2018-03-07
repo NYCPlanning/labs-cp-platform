@@ -51,6 +51,16 @@ class CapitalProjectsDetailPage extends React.Component {
       return month <= 6 ? year : year + 1;
     });
 
+    const displayFY = () => {
+      if (d.mindate === d.maxdate) return `FY${getFY(d.mindate)}`;
+      return `FY${getFY(d.mindate)} - FY${getFY(d.maxdate)}`;
+    };
+
+    const tooltipFY = () => {
+      if (d.mindate === d.maxdate) return moment(d.mindate).format('MMM YYYY');
+      return `${moment(d.mindate).format('MMM YYYY')} thru ${moment(d.maxdate).format('MMM YYYY')}`;
+    };
+
     const project_types = _.uniq(budgets.map(b => b.projecttype));
     const sponsorAgencies = _.uniq(budgets.map(b => b.sagencyname)).join(', ');
 
@@ -85,13 +95,13 @@ class CapitalProjectsDetailPage extends React.Component {
               <h1>{d.description}</h1>        
               <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Project Type</Tooltip>}>
                 <span style={{ cursor: 'default' }}>
-                {
+                  {
                   project_types.map(project_type => (
                     <span className={'badge'} style={{ backgroundColor: 'grey', marginRight: '5px', fontSize: '13px' }} key={project_type}>
                       {project_type}
                     </span>
                   ))
-                }
+                  }
                 </span>
               </OverlayTrigger>
             </div>
@@ -115,14 +125,17 @@ class CapitalProjectsDetailPage extends React.Component {
 
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-6'}>
-              <OverlayTrigger placement="bottom" overlay={
-                <Tooltip id="tooltip">
-                  {moment(d.mindate).format('MMM YYYY')} thru {moment(d.maxdate).format('MMM YYYY')}
-                </Tooltip>
-              }>
+              <OverlayTrigger
+                placement="bottom"
+                overlay={
+                  <Tooltip id="tooltip">
+                    {tooltipFY()}
+                  </Tooltip>
+                }
+              >
                 <div>
                   <div>Years Active</div>
-                  <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
+                  <h2>{displayFY()}</h2>
                 </div>
               </OverlayTrigger>
             </div>
