@@ -4,6 +4,7 @@ import { JaneLayer, Source, MapLayer, Popup } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
 import appConfig from '../../config/appConfig';
+import db_tables from '../../config/db_tables';
 
 class InclusionaryHousingJaneLayer extends React.Component {
   constructor() {
@@ -39,7 +40,7 @@ class InclusionaryHousingJaneLayer extends React.Component {
         type="cartovector"
         options={{
           carto_domain: appConfig.carto_domain,
-          sql: ['SELECT * FROM support_ih'],
+          sql: [`SELECT * FROM ${db_tables.support.ih}`],
         }}
       />,
       <MapLayer
@@ -76,7 +77,7 @@ class InclusionaryHousingJaneLayer extends React.Component {
         type="cartovector"
         options={{
           carto_domain: appConfig.carto_domain,
-          sql: ['SELECT * FROM support_mih'],
+          sql: [`SELECT * FROM ${db_tables.support.mih}`],
         }}
       />,
       <MapLayer

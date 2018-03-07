@@ -19,6 +19,19 @@ const db_tables = {
   },
   housingdevdb: 'housingdev_v201709',
   sca: 'sca_pts_201702_v1',
+  support: {
+    nta: 'nta_boundaries_v0',
+    ih: 'inclusionary_housing_v201709',
+    mih: 'mandatory_inclusionary_housing_v0',
+    waterfront_pfirm15: 'floodplain_pfirm2015_v0',
+    mta_subway_stops: 'mta_subway_stops_v0',
+    mta_subway_routes: 'mta_subway_routes_v0',
+    path_rail_stops: 'path_rail_stops_v0',
+    path_rail_routes: 'path_rail_routes_v0',
+    mta_bus_stops: 'mta_bus_stops_v0',
+    commerical_overlays: 'commercial_overlays_v201710',
+    zoning_districts: 'zoning_districts_v201710',
+  },
 };
 
 export default db_tables;

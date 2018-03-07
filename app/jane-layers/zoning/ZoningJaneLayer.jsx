@@ -4,6 +4,7 @@ import { JaneLayer, Source, MapLayer } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
 import appConfig from '../../config/appConfig';
+import db_tables from '../../config/db_tables';
 
 
 const paint = {
@@ -62,7 +63,7 @@ class ZoningJaneLayer extends React.Component {
 
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
-      sql: ['SELECT *, LEFT(zonedist, 2) as primaryzone FROM support_zoning_zd'],
+      sql: [`SELECT *, LEFT(zonedist, 2) as primaryzone FROM ${db_tables.support.zoning_districts}`],
     };
 
     const zdConfig = {
@@ -133,7 +134,7 @@ class ZoningJaneLayer extends React.Component {
 
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
-      sql: ['SELECT * FROM support_zoning_co'],
+      sql: [`SELECT * FROM ${db_tables.support.commerical_overlays}`],
     };
 
     const coConfig = {

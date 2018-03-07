@@ -1,6 +1,7 @@
 import * as AT from '../constants/actionTypes';
 import * as cartoActions from './carto';
 import { sqlConfig, getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
+import db_tables from '../config/db_tables';
 
 export const fetchFacilityDetails = (facilityId, facilityRoute = 'facility') => {
   if (facilityRoute === 'facility') {
@@ -53,7 +54,7 @@ export const resetFilter = () => ({
 export const fetchNYCBounds = id => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT ST_Extent(the_geom) FROM support_admin_ntaboundaries WHERE ntacode = '${id}'`,
+    sql: `SELECT ST_Extent(the_geom) FROM ${db_tables.support.nta} WHERE ntacode = '${id}'`,
     requestFormat: 'json',
     nextType: AT.FETCH_NYC_BOUNDS,
   },
