@@ -1,27 +1,11 @@
 .cb-budget-request-page {
-  h1 {
+  h1, h2, h3, h4 {
     margin: 0;
-  }
-
-  h2 {
-    margin: 0;
-  }
-
-  h3.id-top-line {
-    margin: 0;
-
   }
 
   .badge {
-    margin-bottom: 10px;
-    margin-right: 5px;
     font-size: 14px;
-  }
-
-  .panel-body {
-    h4 {
-      margin: 0;
-    }
+    margin-right: 5px;
   }
 
   .panel-heading {
@@ -30,12 +14,6 @@
       font-size: 14px;
       color: white;
       margin-left: 5px;
-    }
-  }
-
-  .panel-body {
-    h3 {
-      margin: 0;
     }
   }
 }
