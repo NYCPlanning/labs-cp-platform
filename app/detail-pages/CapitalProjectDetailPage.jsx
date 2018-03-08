@@ -18,12 +18,12 @@ import './CapitalProjectDetailPage.scss';
 class CapitalProjectsDetailPage extends React.Component {
   constructor() {
     super();
-    
+
     this.state = {
       showCommitmentsTable: false,
     };
   }
-  
+
   componentDidMount() {
     this.fetchPageData(this.props.id);
   }
@@ -64,19 +64,6 @@ class CapitalProjectsDetailPage extends React.Component {
     const project_types = _.uniq(budgets.map(b => b.projecttype));
     const sponsorAgencies = _.uniq(budgets.map(b => b.sagencyname)).join(', ');
 
-    const CardStyles = {
-      zDepth: 1,
-      height: '100%',
-      width: '100%',
-    };
-
-    const phaseWidth = {
-      width: '15%',
-    };
-    const commitmentDescriptionWidth = {
-      width: '25%',
-    };
-
     const tableRows = this.props.commitments.map(c => (
       <tr>
         <td>{(c.commitmentdescription === '' ? '--' : c.commitmentdescription)}</td>
@@ -92,7 +79,7 @@ class CapitalProjectsDetailPage extends React.Component {
         <div className="col-md-12">
           <div className={'row'}>
             <div className="col-md-12">
-              <h1>{d.description}</h1>        
+              <h1>{d.description}</h1>
               <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Project Type</Tooltip>}>
                 <span style={{ cursor: 'default' }}>
                   {
@@ -150,7 +137,7 @@ class CapitalProjectsDetailPage extends React.Component {
             </div>
           </div>
 
-          <div className={'row'}>            
+          <div className={'row'}>
             <div className={'col-md-12'}>
               <div className="panel panel-default">
                 <div className="panel-heading">As of {db_info.cpdb.date}</div>
