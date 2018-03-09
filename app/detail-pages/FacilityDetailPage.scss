@@ -1,0 +1,102 @@
+.facility-page {
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+  }
+
+  .equal, .equal > div[class*='col-'] {
+    display: -webkit-flex;
+    display: flex;
+    flex:1 1 auto;
+  }
+
+  .row {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .panel {
+    margin: 0;
+    width: 100%;
+  }
+
+  .subtext {
+    color: #b3b3b3;
+    font-weight: 200;
+    text-align: center;
+  }
+
+  .property-detail-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .property-detail-blocks {
+    text-align: center;
+    display: inline-block;
+    padding: 0 30px;
+  }
+
+  .datasource-table {
+    margin-bottom: 15px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  span.label {
+    position: relative;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style: none;
+    margin-bottom: 10px;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  li.usage-list {
+    position: relative;
+    text-align: left;
+  }
+
+  .usage-list {
+    h3 {
+      display: inline-block;
+    }
+
+    h4 {
+      display: inline-block;
+      margin-left: 15px;
+    }
+
+    span.label {
+      right: 10px;
+      bottom: 3px;
+    }
+  }
+
+  .source-data-details {
+    span.label {
+      bottom: 3px;
+    }
+  }
+
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+
+    li {
+      margin: 0;
+    }
+  }
+}
