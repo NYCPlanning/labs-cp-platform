@@ -13,12 +13,12 @@ import './FacilityDetailPage.scss';
 
 class FacilityDetailPage extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       dataSourcesOpen: false,
     };
   }
-  
+
   componentDidMount() {
     this.fetchPageData(this.props.id);
   }
@@ -158,6 +158,14 @@ class FacilityDetailPage extends React.Component {
       return null;
     };
 
+    const facilityAddress = () => {
+      if (d.address && d.zipcode) return `${d.address}, ${d.city}, NY ${d.zipcode}`;
+      if (d.address) return `${d.address}, ${d.city}, NY`;
+      if (d.zipcode) return `${d.city}, NY ${d.zipcode}`;
+      if (d.city) return `${d.city}, NY`;
+      return 'NY';
+    };
+
     return (
       <div>
         <div className="facility-page">
@@ -165,7 +173,7 @@ class FacilityDetailPage extends React.Component {
             <div className="row" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">
                 <h1>{d.facname}</h1>
-                <h2 style={{ marginBottom: '5px' }}><small>{`${d.address}, ${d.city}, NY ${d.zipcode}`}</small></h2>
+                <h2 style={{ marginBottom: '5px' }}><small>{facilityAddress()}</small></h2>
                 <ol className="breadcrumb">
                   <li>{d.facdomain}</li>
                   <li>{d.facgroup}</li>
