@@ -23,6 +23,7 @@ const db_tables = {
     nta: 'nta_boundaries_v0',
     ih: 'inclusionary_housing_v201709',
     mih: 'mandatory_inclusionary_housing_v0',
+    dcp_studyareas: 'support_dcp_studyareas',
     waterfront_pfirm15: 'floodplain_pfirm2015_v0',
     mta_subway_stops: 'mta_subway_stops_v0',
     mta_subway_routes: 'mta_subway_routes_v0',

@@ -29,7 +29,7 @@ import appConfig from '../config/appConfig';
 const { mapbox_accessToken, searchConfig } = appConfig;
 
 const mapboxGLOptions = {
-  mapbox_accessToken: mapbox_accessToken,
+  mapbox_accessToken,
   center: [-74.0807, 40.7128],
   zoom: 10,
   minZoom: 9,
@@ -37,7 +37,7 @@ const mapboxGLOptions = {
   pitch: 0,
   hash: true,
   navigationControlPosition: 'bottom-right',
-}
+};
 
 class Explorer extends React.Component {
   constructor() {
