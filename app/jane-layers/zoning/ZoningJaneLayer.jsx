@@ -57,10 +57,6 @@ class ZoningJaneLayer extends React.Component {
   }
 
   renderZd() {
-    if (!this.state.checkboxes.zd) {
-      return null;
-    }
-
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
       sql: [`SELECT *, LEFT(zonedist, 2) as primaryzone FROM ${db_tables.support.zoning_districts}`],
@@ -71,6 +67,7 @@ class ZoningJaneLayer extends React.Component {
       type: 'fill',
       source: 'zd',
       sourceLayer: 'layer0',
+      layout: { visibility: this.state.checkboxes.zd ? 'visible' : 'none' },
       paint: {
         'fill-color': {
           property: 'primaryzone',
@@ -115,6 +112,7 @@ class ZoningJaneLayer extends React.Component {
       layout: {
         'symbol-placement': 'point',
         'text-field': '{zonedist}',
+        visibility: this.state.checkboxes.zd ? 'visible' : 'none',
       },
       minzoom: 14,
     };
@@ -142,6 +140,7 @@ class ZoningJaneLayer extends React.Component {
       type: 'fill',
       source: 'co',
       sourceLayer: 'layer0',
+      layout: { visibility: this.state.checkboxes.co ? 'visible' : 'none' },
       paint: {
         'fill-opacity': 1,
         'fill-color': 'rgba(158, 0, 0, 0)',
@@ -159,6 +158,7 @@ class ZoningJaneLayer extends React.Component {
       layout: {
         'symbol-placement': 'point',
         'text-field': '{overlay}',
+        visibility: this.state.checkboxes.co ? 'visible' : 'none',
       },
       minzoom: 14,
     };
