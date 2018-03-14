@@ -6,7 +6,7 @@ import SidebarComponent from './SidebarComponent';
 import appConfig from '../../config/appConfig';
 import db_tables from '../../config/db_tables';
 
-class InclusionaryHousingJaneLayer extends React.Component {
+class PlanningAreas extends React.Component {
   constructor() {
     super();
 
@@ -133,14 +133,14 @@ class InclusionaryHousingJaneLayer extends React.Component {
   }
 }
 
-InclusionaryHousingJaneLayer.propTypes = {
+PlanningAreas.propTypes = {
   selected: PropTypes.bool,
   enabled: PropTypes.bool,
 };
 
-InclusionaryHousingJaneLayer.defaultProps = {
+PlanningAreas.defaultProps = {
   selected: false,
   enabled: false,
 };
 
-export default InclusionaryHousingJaneLayer;
+export default PlanningAreas;

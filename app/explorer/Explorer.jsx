@@ -15,7 +15,7 @@ import {
   FloodHazardsJaneLayer,
   ZoningJaneLayer,
   AdminBoundariesJaneLayer,
-  InclusionaryHousingJaneLayer,
+  PlanningAreasJaneLayer,
   FacilitiesJaneLayer,
   HighlightJaneLayer,
   HousingDevelopmentJaneLayer,
@@ -231,7 +231,7 @@ class Explorer extends React.Component {
           <FloodHazardsJaneLayer />
           <AdminBoundariesJaneLayer />
           <ZoningJaneLayer />
-          <InclusionaryHousingJaneLayer />
+          <PlanningAreasJaneLayer />
 
           <FacilitiesJaneLayer
             selectedPointType={this.state.selectedPointType}
