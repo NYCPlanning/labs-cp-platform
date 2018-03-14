@@ -14,7 +14,7 @@ class PlanningAreas extends React.Component {
       checkboxes: {
         ih: true,
         mih: true,
-        studyareas: true,
+        studyareas: false,
       },
     };
 
@@ -33,7 +33,7 @@ class PlanningAreas extends React.Component {
   render() {
     return (
       <JaneLayer
-        id="inclusionary_housing"
+        id="planning_areas"
         name="Planning Areas"
         icon="map"
         selected={this.props.selected}
