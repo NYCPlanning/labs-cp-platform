@@ -26,7 +26,7 @@ const SidebarComponent = props => (
               <div>
                 <h4>Study Areas</h4>
                 <Checkbox
-                  label="Study Areas"
+                  label="Study Context Areas"
                   checked={props.checkboxes.studyareas}
                   onCheck={() => props.onCheckboxChange('studyareas')}
                 />
