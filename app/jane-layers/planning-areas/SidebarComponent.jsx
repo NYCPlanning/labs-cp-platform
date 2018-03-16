@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'material-ui/Checkbox';
+import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 const SidebarComponent = props => (
@@ -10,7 +11,6 @@ const SidebarComponent = props => (
         <div className="sidebar-tab-content">
           <div className="padded">
             <h4>Inclusionary Housing</h4>
-            <p>Zoom in to show labels</p>
             <Checkbox
               label="Inclusionary Housing"
               checked={props.checkboxes.ih}
@@ -21,6 +21,17 @@ const SidebarComponent = props => (
               checked={props.checkboxes.mih}
               onCheck={() => props.onCheckboxChange('mih')}
             />
+
+            { props.currentUser.isLoggedIn &&
+              <div>
+                <h4>Study Areas</h4>
+                <Checkbox
+                  label="Study Context Areas"
+                  checked={props.checkboxes.studyareas}
+                  onCheck={() => props.onCheckboxChange('studyareas')}
+                />
+              </div>
+            }
           </div>
         </div>
       </Tab>
@@ -39,6 +50,9 @@ const SidebarComponent = props => (
 SidebarComponent.propTypes = {
   checkboxes: PropTypes.object.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired,
 };
 
-export default SidebarComponent;
+const mapStateToProps = ({ currentUser }) => ({ currentUser });
+
+export default connect(mapStateToProps)(SidebarComponent);

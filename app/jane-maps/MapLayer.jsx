@@ -79,6 +79,7 @@ class MapLayer extends React.Component {
       'filter',
       'layout',
       'paint',
+      'visibility',
     );
 
     if (config.sourceLayer) {

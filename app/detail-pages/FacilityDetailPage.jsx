@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
 import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
 
-import '../app.scss';
-
-const CardStyles = {
-  zDepth: 1,
-  height: '100%',
-};
+import './FacilityDetailPage.scss';
 
 class FacilityDetailPage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      dataSourcesOpen: false,
+    };
+  }
+
   componentDidMount() {
     this.fetchPageData(this.props.id);
   }
@@ -43,15 +44,6 @@ class FacilityDetailPage extends React.Component {
 
     const d = facilityDetails.properties;
 
-    const wrapInPanel = (title, badge, content) => (
-      <div key={title} className="panel panel-default">
-        <div className="panel-heading"><h4>{title}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{badge}</span></h4></div>
-        <div className="panel-body">
-          {content}
-        </div>
-      </div>
-    );
-
     const wrapInLink = (link, text) => {
       // The database stores 'NA' for links that do not exist
       if (link && link !== 'NA') {
@@ -63,26 +55,29 @@ class FacilityDetailPage extends React.Component {
     const sourceDataDetails = () => {
       const sourceDetails = sources.map((s) => {
         const idAgency = dbStringAgencyLookup(d.idagency, s.datasource);
-        const table = (
-          <Table selectable={false}>
-            <TableBody displayRowCheckbox={false}>
-              <TableRow>
-                <TableRowColumn>Source Dataset</TableRowColumn>
-                <TableRowColumn style={{ whiteSpace: 'initial' }}><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></TableRowColumn>
-              </TableRow>
-              <TableRow>
-                <TableRowColumn>Facility ID in Source Data</TableRowColumn>
-                <TableRowColumn><h5>{idAgency ? idAgency.value : 'None Provided'}</h5></TableRowColumn>
-              </TableRow>
-              <TableRow>
-                <TableRowColumn>Last Updated</TableRowColumn>
-                <TableRowColumn><h5>{s.datadate}</h5></TableRowColumn>
-              </TableRow>
-            </TableBody>
-          </Table>
+        return (
+          <table className="table datasource-table" key={s.datasourcefull}>
+            <thead>
+              <tr>
+                <td colSpan="2"><h4>{s.datasourcefull}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{s.datasource}</span></h4></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Source Dataset</td>
+                <td><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></td>
+              </tr>
+              <tr>
+                <td>Facility ID in Source Data</td>
+                <td><h5>{idAgency ? idAgency.value : 'None Provided'}</h5></td>
+              </tr>
+              <tr>
+                <td>Last Updated</td>
+                <td><h5>{s.datadate}</h5></td>
+              </tr>
+            </tbody>
+          </table>
         );
-
-        return wrapInPanel(s.datasourcefull, s.datasource, table);
       });
 
       return sourceDetails;
@@ -163,14 +158,22 @@ class FacilityDetailPage extends React.Component {
       return null;
     };
 
+    const facilityAddress = () => {
+      if (d.address && d.zipcode) return `${d.address}, ${d.city}, NY ${d.zipcode}`;
+      if (d.address) return `${d.address}, ${d.city}, NY`;
+      if (d.zipcode) return `${d.city}, NY ${d.zipcode}`;
+      if (d.city) return `${d.city}, NY`;
+      return 'NY';
+    };
+
     return (
       <div>
         <div className="facility-page">
           <div className="col-md-12">
-            <div className={'row'}>
+            <div className="row" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">
                 <h1>{d.facname}</h1>
-                <h2 style={{ marginBottom: '5px' }}><small>{`${d.address}, ${d.city}, NY ${d.zipcode}`}</small></h2>
+                <h2 style={{ marginBottom: '5px' }}><small>{facilityAddress()}</small></h2>
                 <ol className="breadcrumb">
                   <li>{d.facdomain}</li>
                   <li>{d.facgroup}</li>
@@ -187,54 +190,44 @@ class FacilityDetailPage extends React.Component {
               </div>
             </div>
 
-            <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-              <Card style={CardStyles} className="clearfix">
-                <CardHeader title="Property Details" />
-                <CardText>
-                  <div className="row equal">
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Operated By</div>
-                        <div className="panel-body">
-                          {<h3>{d.opname}</h3>}
-                        </div>
-                      </div>
-                    </div>
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Overseen By {popsTooltip()}</div>
-                        <div className="panel-body">
-                          <h3>{asList(d.overagency)}</h3>
-                        </div>
-                      </div>
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className={'col-md-6'}>
+                <div>
+                  Operated By
+                  <h3>{d.opname}</h3>
+                </div>
+              </div>
+              <div className={'col-md-6'}>
+                <div>
+                Overseen By {popsTooltip()}
+                  <h3>{asList(d.overagency)}</h3>
+                </div>
+              </div>
+            </div>
+
+            {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
+              (
+                <div className="row equal" style={{ marginBottom: '15px' }}>
+                  <div className={'col-md-6'}>
+                    <div>
+                      Facility Size {childcareTooltip()}
+                      {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
                     </div>
                   </div>
+                  <div className={'col-md-6'}>
+                    <div>
+                      Utilization
+                      {usageList(d.util, d.captype)}
+                    </div>
+                  </div>
+                </div>
+              )
+            }
 
-                  {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
-                   (
-                     <div className="row equal">
-                       <div className={'col-md-6'}>
-                         <div className="panel panel-default">
-                           <div className="panel-heading">Facility Size {childcareTooltip()}
-                           </div>
-                           <div className="panel-body">
-                             {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
-                           </div>
-                         </div>
-                       </div>
-                       <div className={'col-md-6'}>
-                         <div className="panel panel-default">
-                           <div className="panel-heading">Utilization</div>
-                           <div className="panel-body">
-                             {usageList(d.util, d.captype)}
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   )
-                  }
-
-                  <div className="row property-detail-container">
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className="col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-body" style={{ textAlign: 'center' }}>
                     <div className="property-detail-blocks"><h4><small>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
                       <i className="fa fa-info-circle" aria-hidden="true" />
                     </OverlayTrigger>
@@ -245,18 +238,25 @@ class FacilityDetailPage extends React.Component {
                     </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>Property Type</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                   </div>
-                </CardText>
-              </Card>
+                </div>
+              </div>
             </div>
 
             <div className={'row'} style={{ marginBottom: '15px' }}>
               <div className={'col-md-12'}>
-                <Card style={CardStyles} className="source-data-details">
-                  <CardHeader title="Source Data Details" />
-                  <CardText>
-                    {sourceDataDetails()}
-                  </CardText>
-                </Card>
+                <button
+                  type="button"
+                  className={cx('btn btn-default', { active: this.state.dataSourcesOpen })}
+                  onClick={() => this.setState({ dataSourcesOpen: !this.state.dataSourcesOpen })}
+                >Data Sources</button>
+
+                { this.state.dataSourcesOpen &&
+                  <div className="panel panel-default" style={{ marginTop: '15px' }}>
+                    <div className="panel-body">
+                      {sourceDataDetails()}
+                    </div>
+                  </div>
+                }
               </div>
             </div>
 

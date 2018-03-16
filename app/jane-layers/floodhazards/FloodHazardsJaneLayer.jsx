@@ -4,6 +4,7 @@ import { JaneLayer, Source, MapLayer } from '../../jane-maps';
 
 import SidebarComponent from './SidebarComponent';
 import appConfig from '../../config/appConfig';
+import db_tables from '../../config/db_tables';
 
 
 class FloodHazardsJaneLayer extends React.Component {
@@ -45,7 +46,7 @@ class FloodHazardsJaneLayer extends React.Component {
 
     const sourceOptions = {
       carto_domain: appConfig.carto_domain,
-      sql: ['SELECT the_geom_webmercator, fld_zone FROM support_waterfront_pfirm15 WHERE fld_zone = \'AE\' OR fld_zone = \'0.2 PCT ANNUAL CHANCE FLOOD HAZARD\' OR fld_zone = \'VE\''],
+      sql: [`SELECT the_geom_webmercator, fld_zone FROM ${db_tables.support.waterfront_pfirm15} WHERE fld_zone = 'AE' OR fld_zone = '0.2 PCT ANNUAL CHANCE FLOOD HAZARD' OR fld_zone = 'VE'`],
     };
 
     const mapLayerConfig = {

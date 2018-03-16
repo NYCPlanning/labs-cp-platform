@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 
 class FeedbackForm extends React.Component {
@@ -12,15 +11,15 @@ class FeedbackForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>See something wrong with this data point?</p>
-        <RaisedButton
-          label="Suggest an Edit"
-          style={{ marginTop: 12 }}
-          target="_blank"
-          href={this.link()}
-        />
-      </div>
+      <a 
+        href={this.link()}
+        style={{ marginBottom: '30px', textAlign: 'center' }}
+        target="_blank"
+        type="button"
+        className="btn btn-warning btn-sm btn-block"
+      >
+        Something wrong with this data? Suggest an Edit
+      </a>
     );
   }
 }
