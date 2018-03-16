@@ -64,7 +64,7 @@ class PlanningAreas extends React.Component {
         <Popup
           mapLayerId="studyareas"
           template={`
-            <h1>{{p.maplabel}} ({{p.yearadopt}})</h1>
+            <h1>{{p.maplabel}}</h1>
             <div>Status: {{p.status}}</div>
           `}
         />
