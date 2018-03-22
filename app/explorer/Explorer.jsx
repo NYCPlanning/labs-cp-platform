@@ -162,13 +162,15 @@ class Explorer extends React.Component {
     this.centerMap([event.lngLat.lng, event.lngLat.lat]);
   };
 
-  handleRadiusFilter = radiusFilterInKilometers =>
+  handleRadiusFilter = (radiusFilterInKilometers) => {
+    this.centerMap(this.state.selectedPointCoordinates);
     this.setState({
       radiusFilter: {
         inKilometers: radiusFilterInKilometers,
         centerPointCoordinates: this.state.selectedPointCoordinates,
       },
     });
+  }
 
   clearSelectedFeatures = () => {
     this.props.resetSelectedFeatures();
