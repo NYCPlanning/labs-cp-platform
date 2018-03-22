@@ -128,6 +128,7 @@ class LayerSelector extends React.Component {
   };
 
   resetFilter = () => {
+    this.props.handleRadiusFilter(0);
     this.props.resetFilter();
   };
 
@@ -174,6 +175,7 @@ class LayerSelector extends React.Component {
               selectedPointType={this.props.selectedPointType}
               updateFilterDimension={this.updateFilterDimension.bind(this, 'radiusfilter')}
               filterDimensions={{ radiusfilter }}
+              handleRadiusFilter={this.props.handleRadiusFilter}
             />
           </ListItem>
 
@@ -301,6 +303,7 @@ LayerSelector.propTypes = {
   fetchSelectedFacilitiesCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
+  handleRadiusFilter: PropTypes.func.isRequired,
   setFilterDimension: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
 

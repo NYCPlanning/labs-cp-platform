@@ -26,7 +26,7 @@ const Results = (props) => {
           key={`sca${feature.properties.cartodb_id}`}
         />);
       }
-      case 'facilities-cp': {
+      case 'facilities': {
         return (<FacilitiesListItem
           feature={feature}
           selected={feature.properties.uid.toString() === props.detailPageId.toString()}

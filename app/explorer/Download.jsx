@@ -31,7 +31,7 @@ class Download extends React.Component {
       noun: 'Budget Requests',
       icon: 'book',
     },
-    'facilities-cp': {
+    'facilities': {
       title: 'Facilities',
       noun: 'Facilities',
       icon: 'university',
@@ -43,12 +43,12 @@ class Download extends React.Component {
     // 'scaplan',
     'housing-development',
     'cb-budgetrequests',
-    'facilities-cp',
+    'facilities',
   ];
 
   render() {
     const { counts, sql } = this.props;
-    const layers = this.props.isLoggedIn ? this.layers : ['facilities-cp'];
+    const layers = this.props.isLoggedIn ? this.layers : ['facilities'];
 
     return (<div>
       {
@@ -100,7 +100,7 @@ class Download extends React.Component {
               />
             }
 
-            { layerID === 'facilities-cp' &&
+            { layerID === 'facilities' &&
               <DownloadButton
                 layerID={layerID}
                 noun={this.layerMap[layerID].noun}
@@ -132,7 +132,7 @@ const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cb
     total: {
       'capital-projects': capitalProjects.totalCount,
       'capital-projects-table': capitalProjectsTable.totalCount,
-      'facilities-cp': facilities.totalCount,
+      'facilities': facilities.totalCount,
       'cb-budgetrequests': cbBudgetRequests.totalCount,
       'housing-development': housingDevelopment.totalCount,
       'housing-development-raw': housingDevelopment.totalCountRaw,
@@ -140,7 +140,7 @@ const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cb
     filtered: {
       'capital-projects': capitalProjects.selectedCount,
       'capital-projects-table': capitalProjectsTable.selectedCount,
-      'facilities-cp': facilities.selectedCount,
+      'facilities': facilities.selectedCount,
       'cb-budgetrequests': cbBudgetRequests.selectedCount,
       'housing-development': housingDevelopment.selectedCount,
     },
@@ -152,7 +152,7 @@ const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cb
     },
     'capital-projects-table': capitalProjectsTable.sql,
     'capital-projects-commitments': capitalProjectsTable.commitmentsSql,
-    'facilities-cp': facilities.sql,
+    facilities: facilities.sql,
     'cb-budgetrequests': {
       points: cbBudgetRequests.pointsSql,
       polygons: cbBudgetRequests.polygonsSql,

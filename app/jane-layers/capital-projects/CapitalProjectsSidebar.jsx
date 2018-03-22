@@ -44,6 +44,7 @@ class CapitalProjectsSidebar extends React.Component {
             filterDimensions={filterDimensions}
             selectedPointType={this.props.selectedPointType}
             selectedPointCoordinates={this.props.selectedPointCoordinates}
+            handleRadiusFilter={this.props.handleRadiusFilter}
           />
         </Tab>
         <Tab label="About">
@@ -89,6 +90,7 @@ CapitalProjectsSidebar.propTypes = {
   fetchSelectedCount: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string.isRequired,
   selectedPointCoordinates: PropTypes.array.isRequired,
+  handleRadiusFilter: PropTypes.func.isRequired,
 };
 
 CapitalProjectsSidebar.defaultProps = {
