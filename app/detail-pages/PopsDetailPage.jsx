@@ -140,18 +140,6 @@ class PopsDetailPage extends React.Component {
       );
     };
 
-    const childcareTooltip = () => {
-      if (d.facgroup === 'Child Care and Pre-Kindergarten') {
-        return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DOE, ACS, and DOHMH capacity numbers for DOE Universal Pre-K and Child Care sites do not match up, because they are all calculated and tracked for different purposes. DOE and ACS each track the number of program seats their agency oversees or funds at a facility based on their respective contracts. DOHMH determines capacity as the maximum capacity the space will allow based on square footage.</Tooltip>}>
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
-        );
-      }
-
-      return null;
-    };
-
     const popsTooltip = () => {
       if (d.facsubgrp === 'Privately Owned Public Space') {
         return (
@@ -297,6 +285,99 @@ class PopsDetailPage extends React.Component {
                 </CardText>
               </Card>
             </div>
+
+                        {(d.facsubgrp === 'Privately Owned Public Space') && 
+              (
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                  <Card style={CardStyles} className="clearfix">
+                    <CardHeader title="Space Details" />
+                    <CardText>
+                      <h4>Space Type: {p.public_space_type}</h4>
+                      <h4>Required Size: {p.size_required}</h4>
+                      {(p.public_space_location != '') && (<h4>Space Location: p.public_space_location</h4>)}
+                    </CardText>
+                  </Card>
+                </div>
+              )
+            }
+
+            {(d.facsubgrp === 'Privately Owned Public Space') &&
+              (
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                  <Card style={CardStyles} className="clearfix">
+                    <CardHeader title="Hours of Access" actAsExpander showExpandableButton/>
+                    <CardText expandable>
+                      <h4>{p.hour_of_access_required}</h4>
+                    </CardText>
+                  </Card>
+                </div>
+              )
+            }
+
+            {(d.facsubgrp === 'Privately Owned Public Space') &&
+              (
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                  <Card style={CardStyles} className="clearfix">
+                    <CardHeader title="ADA Accessibility" actAsExpander showExpandableButton/>
+                    <CardText expandable>
+                      <h4>{p.physically_disabled} Access</h4>
+                    </CardText>
+                  </Card>
+                </div>
+              )
+            }
+
+            {(d.facsubgrp === 'Privately Owned Public Space') &&
+              (
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                  <Card style={CardStyles} className="clearfix">
+                    <CardHeader title="Required Amenities" actAsExpander showExpandableButton/>
+                    <CardText expandable>
+                      {(p.bicycle_parking != '') && (<h4>Bicycle Parking: {p.bicycle_parking}</h4>)}
+                      {(p.lighting != '') && (<h4>Lighting: {p.lighting}</h4>)}
+                      {(p.litter_recepticles != '') && (<h4>Litter Recepticles: {p.litter_recepticles}</h4>)}
+                      {(p.other_required != '') && (<h4>Other Amenity: {p.other_required}</h4>)}
+                      {(p.planting != '') && (<h4>Planting: {p.planting}</h4>)}
+                      {(p.plaque_sign != '') && (<h4>Plaque/Sign: {p.plaque_sign}</h4>)}
+                      {(p.seating != '') && (<h4>Seating: {p.seating}</h4>)}
+                      {(p.subway != '') && (<h4>Subway: {p.subway}</h4>)}
+                      {(p.tables != '') && (<h4>Tables: {p.tables}</h4>)}
+                      {(p.trees_on_street != '') && (<h4>Trees on Street: {p.trees_on_street}</h4>)}
+                      {(p.trees_within_space != '') && (<h4>Trees within Space: {p.trees_within_space}</h4>)}
+                      {(p.water_feature != '') && (<h4>Water Feature: {p.water_feature}</h4>)}
+                    </CardText>
+                  </Card>
+                </div>
+              )
+            }
+
+            {(d.facsubgrp === 'Privately Owned Public Space') && (p.permitted_amenities != '') &&
+              (
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                  <Card style={CardStyles} className="clearfix">
+                    <CardHeader title="Permitted Amenities" actAsExpander showExpandableButton/>
+                    <CardText expandable>
+                      <h4>{p.permitted_amenities}</h4>
+                    </CardText>
+                  </Card>
+                </div>
+              )
+            }
+
+            {(d.facsubgrp === 'Privately Owned Public Space') &&
+              (
+                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
+                  <Card style={CardStyles} className="clearfix">
+                    <CardHeader title="Additional Resources" />
+                    <CardText>
+                      <h4><a href="https://www1.nyc.gov/site/planning/plans/pops/pops.page" target="_blank">NYC Planning POPS Website</a></h4>
+                      <h4><a href="https://apops.mas.org/" target="_blank">Advocates for Privately Owned Open Space Website</a></h4>
+                      <h4><a href="https://www1.nyc.gov/apps/311universalintake/form.htm?serviceName=DOB+Privately+Owned+Public+Space" target="_blank">311 Complaint Form for POPS</a></h4>
+                    </CardText>
+                  </Card>
+                </div>
+              )
+            }
 
             <div className={'row'} style={{ marginBottom: '15px' }}>
               <div className={'col-md-12'}>
