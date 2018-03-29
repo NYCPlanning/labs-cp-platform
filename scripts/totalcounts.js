@@ -10,7 +10,7 @@
 
 const fs = require('fs');
 const request = require('request');
-const db_tables = require('../app/db_tables').default;
+const db_tables = require('../app/config/db_tables').default;
 const appConfig = require('../app/config/appConfig').default;
 
 const sql = {
