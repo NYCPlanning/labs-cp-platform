@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import cx from 'classnames';
+import _ from 'lodash';
 
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
@@ -38,7 +39,7 @@ class FacilityDetailPage extends React.Component {
   render() {
     const { facilityDetails, sources } = this.props;
 
-    if (!facilityDetails || !sources) {
+    if (_.isEmpty(facilityDetails) || !sources) {
       return null;
     }
 

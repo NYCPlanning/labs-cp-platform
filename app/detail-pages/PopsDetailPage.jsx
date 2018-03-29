@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 import { connect } from 'react-redux';
-import ImageGallery from 'react-image-gallery';
+import cx from 'classnames';
+import _ from 'lodash';
 
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
 import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
 
 import './PopsDetailPage.scss';
-import '../app.scss';
 
-const CardStyles = {
-  zDepth: 1,
-  height: '100%',
-};
+class FacilityDetailPage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      dataSourcesOpen: false,
+    };
+  }
 
-class PopsDetailPage extends React.Component {
   componentDidMount() {
     this.fetchPageData(this.props.id);
   }
@@ -37,21 +37,12 @@ class PopsDetailPage extends React.Component {
   render() {
     const { facilityDetails, popsDetails, sources } = this.props;
 
-    if (!popsDetails || !facilityDetails || !sources) {
+    if (_.isEmpty(facilityDetails) || !sources) {
       return null;
     }
 
     const d = facilityDetails.properties;
     const p = popsDetails.properties;
-
-    const wrapInPanel = (title, badge, content) => (
-      <div key={title} className="panel panel-default">
-        <div className="panel-heading"><h4>{title}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{badge}</span></h4></div>
-        <div className="panel-body">
-          {content}
-        </div>
-      </div>
-    );
 
     const wrapInLink = (link, text) => {
       // The database stores 'NA' for links that do not exist
@@ -64,26 +55,29 @@ class PopsDetailPage extends React.Component {
     const sourceDataDetails = () => {
       const sourceDetails = sources.map((s) => {
         const idAgency = dbStringAgencyLookup(d.idagency, s.datasource);
-        const table = (
-          <Table selectable={false}>
-            <TableBody displayRowCheckbox={false}>
-              <TableRow>
-                <TableRowColumn>Source Dataset</TableRowColumn>
-                <TableRowColumn style={{ whiteSpace: 'initial' }}><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></TableRowColumn>
-              </TableRow>
-              <TableRow>
-                <TableRowColumn>Facility ID in Source Data</TableRowColumn>
-                <TableRowColumn><h5>{idAgency ? idAgency.value : 'None Provided'}</h5></TableRowColumn>
-              </TableRow>
-              <TableRow>
-                <TableRowColumn>Last Updated</TableRowColumn>
-                <TableRowColumn><h5>{s.datadate}</h5></TableRowColumn>
-              </TableRow>
-            </TableBody>
-          </Table>
+        return (
+          <table className="table datasource-table" key={s.datasourcefull}>
+            <thead>
+              <tr>
+                <td colSpan="2"><h4>{s.datasourcefull}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{s.datasource}</span></h4></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Source Dataset</td>
+                <td><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></td>
+              </tr>
+              <tr>
+                <td>Facility ID in Source Data</td>
+                <td><h5>{idAgency ? idAgency.value : 'None Provided'}</h5></td>
+              </tr>
+              <tr>
+                <td>Last Updated</td>
+                <td><h5>{s.datadate}</h5></td>
+              </tr>
+            </tbody>
+          </table>
         );
-
-        return wrapInPanel(s.datasourcefull, s.datasource, table);
       });
 
       return sourceDetails;
@@ -152,14 +146,22 @@ class PopsDetailPage extends React.Component {
       return null;
     };
 
+    const facilityAddress = () => {
+      if (d.address && d.zipcode) return `${d.address}, ${d.city}, NY ${d.zipcode}`;
+      if (d.address) return `${d.address}, ${d.city}, NY`;
+      if (d.zipcode) return `${d.city}, NY ${d.zipcode}`;
+      if (d.city) return `${d.city}, NY`;
+      return 'NY';
+    };
+
     return (
       <div>
         <div className="facility-page">
           <div className="col-md-12">
-            <div className={'row'}>
+            <div className="row" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">
                 <h1>{d.facname}</h1>
-                <h2 style={{ marginBottom: '5px' }}><small>{`${d.address}, ${d.city}, NY ${d.zipcode}`}</small></h2>
+                <h2 style={{ marginBottom: '5px' }}><small>{facilityAddress()}</small></h2>
                 <ol className="breadcrumb">
                   <li>{d.facdomain}</li>
                   <li>{d.facgroup}</li>
@@ -176,255 +178,175 @@ class PopsDetailPage extends React.Component {
               </div>
             </div>
 
-            <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-              <Card style={CardStyles} className="clearfix">
-                <CardHeader title="Property Details" />
-                <CardText>
-                  <div className="row equal">
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Operated By</div>
-                        <div className="panel-body">
-                          {<h3>{d.opname}</h3>}
-                        </div>
-                      </div>
-                    </div>
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Overseen By {popsTooltip()}</div>
-                        <div className="panel-body">
-                          <h3>{asList(d.overagency)}</h3>
-                        </div>
-                      </div>
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className={'col-md-12'}>
+                <div>
+                Overseen By {popsTooltip()}
+                  <h3>{asList(d.overagency)}</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className={'col-md-4'}>
+                <div>
+                  Building Name
+                  <h4>{p.building_name}</h4>
+                </div>
+              </div>
+              <div className={'col-md-4'}>
+                <div>
+                  Building Architect
+                  <h4>{p.building_architect}</h4>
+                </div>
+              </div>
+              <div className={'col-md-4'}>
+                <div>
+                  Year Built
+                  <h4>{p.year_completed}</h4>
+                </div>
+              </div>
+            </div>
+
+            {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
+              (
+                <div className="row equal" style={{ marginBottom: '15px' }}>
+                  <div className={'col-md-6'}>
+                    <div>
+                      Facility Size {childcareTooltip()}
+                      {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
                     </div>
                   </div>
+                  <div className={'col-md-6'}>
+                    <div>
+                      Utilization
+                      {usageList(d.util, d.captype)}
+                    </div>
+                  </div>
+                </div>
+              )
+            }
 
-                  {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
-                   (
-                     <div className="row equal">
-                       <div className={'col-md-6'}>
-                         <div className="panel panel-default">
-                           <div className="panel-heading">Facility Size {childcareTooltip()}
-                           </div>
-                           <div className="panel-body">
-                             {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
-                           </div>
-                         </div>
-                       </div>
-                       <div className={'col-md-6'}>
-                         <div className="panel panel-default">
-                           <div className="panel-heading">Utilization</div>
-                           <div className="panel-body">
-                             {usageList(d.util, d.captype)}
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   )
-                  }
-
-                  <div className="row property-detail-container">
-                    <div className="property-detail-blocks"><h4>
-                      <small>BBL (Tax Lot ID)
-                        <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
-                          <i className="fa fa-info-circle" aria-hidden="true" />
-                        </OverlayTrigger>
-                      </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
-                    <div className="property-detail-blocks"><h4>
-                      <small>BIN (Building ID)
-                        <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
-                          <i className="fa fa-info-circle" aria-hidden="true" />
-                        </OverlayTrigger>
-                      </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className="col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-body" style={{ textAlign: 'center' }}>
+                    <div className="property-detail-blocks"><h4><small>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
+                      <i className="fa fa-info-circle" aria-hidden="true" />
+                    </OverlayTrigger>
+                    </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
+                    <div className="property-detail-blocks"><h4><small>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
+                      <i className="fa fa-info-circle" aria-hidden="true" />
+                    </OverlayTrigger>
+                    </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>Property Type</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                   </div>
-                </CardText>
-              </Card>
+                </div>
+              </div>
             </div>
 
-            <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-              <Card style={CardStyles} className="clearfix">
-                <CardHeader title="Privately Owned Public Space (POPS) Details" />
-                <CardText>
-                  <div className="row equal">
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">General Info</div>
-                        <div className="panel-body">
-                          <h4>Space Type: </h4>
-                          <h4>Size Required: </h4>
-                          <h4>Space Location: </h4>
-                          <h4>Year Completed: </h4>
-                          <h4>Principal Public Space Designer: </h4>
-                          <h4>Building Architect: </h4>
-                        </div>
-                      </div>
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className={'col-md-6'}>
+                <div>
+                  Hours of Access
+                  <h4>{p.hour_of_access_required}</h4>
+                </div>
+              </div>
+              <div className={'col-md-6'}>
+                <div>
+                  ADA Accessibility
+                  <h4>{p.physically_disabled}</h4>
+                </div>
+              </div>
+            </div>
+
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className="col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-body" style={{ textAlign: 'center' }}>
+                    <div className="property-detail-blocks">
+                      <h4><small>Space Type</small></h4>
+                      <h4>{p.public_space_type}</h4>
                     </div>
-                    <div className={'col-md-6'}>
-                      <div className="panel panel-default">
-                        <div className="panel-heading">Required Access and Amenities</div>
-                        <div className="panel-body">
-                          <h4><i className="fa fa-clock-o" aria-hidden="true" /> Hours of Access: </h4>
-                          <h4><i className="fa fa-wheelchair" aria-hidden="true" /> Access for the Physically Disabled: </h4>
-                          <h4><i className="fa fa-bicycle" aria-hidden="true" /> Bicycle Parking: </h4>
-                          <h4>Lighting: </h4>
-                          <h4>Litter Recepticles: </h4>
-                          <h4>Other Amenity: </h4>
-                          <h4>Planting: </h4>
-                          <h4>Plaque/Sign: </h4>
-                          <h4>Seating: </h4>
-                          <h4>Subway: </h4>
-                          <h4>Tables: </h4>
-                          <h4>Trees on Street: </h4>
-                          <h4>Trees within Space: </h4>
-                          <h4>Water Feature: </h4>
-                        </div>
+
+                    <div className="property-detail-blocks">
+                      <h4><small>Required Size</small></h4>
+                      <h4>{p.size_required}</h4>
+                    </div>
+
+                    { p.public_space_location &&
+                      <div className="property-detail-blocks">
+                        <h4><small>Space Location</small></h4>
+                        <h4>{p.public_space_location}</h4>
                       </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className="col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-heading">Required Amenities</div>
+                  <div className="panel-body">
+                    {p.bicycle_parking && <div>Bicycle Parking: <strong>{p.bicycle_parking}</strong></div>}
+                    {p.lighting && <div>Lighting: <strong>{p.lighting}</strong></div>}
+                    {p.litter_recepticles && <div>Litter Recepticles: <strong>{p.litter_recepticles}</strong></div>}
+                    {p.other_required && <div>Other Amenity: <strong>{p.other_required}</strong></div>}
+                    {p.planting && <div>Planting: <strong>{p.planting}</strong></div>}
+                    {p.plaque_sign && <div>Plaque/Sign: <strong>{p.plaque_sign}</strong></div>}
+                    {p.seating && <div>Seating: <strong>{p.seating}</strong></div>}
+                    {p.subway && <div>Subway: <strong>{p.subway}</strong></div>}
+                    {p.tables && <div>Tables: <strong>{p.tables}</strong></div>}
+                    {p.trees_on_street && <div>Trees on Street: <strong>{p.trees_on_street}</strong></div>}
+                    {p.trees_within_space && <div>Trees within Space: <strong>{p.trees_within_space}</strong></div>}
+                    {p.water_feature && <div>Water Feature: <strong>{p.water_feature}</strong></div>}
+                    {p.permitted_amenities && <div>Permitted Amenities: <strong>{p.permitted_amenities}</strong></div>}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className="col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-heading">Additional Resources</div>
+                  <div className="panel-body">
+                    <ul>
+                      <li><a href="https://www1.nyc.gov/site/planning/plans/pops/pops.page" target="_blank" rel="noopener noreferrer">NYC Planning POPS Website</a></li>
+                      <li><a href="https://apops.mas.org/" target="_blank" rel="noopener noreferrer">Advocates for Privately Owned Open Space Website</a></li>
+                      <li><a href="https://www1.nyc.gov/apps/311universalintake/form.htm?serviceName=DOB+Privately+Owned+Public+Space" target="_blank" rel="noopener noreferrer">311 Complaint Form for POPS</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={'row'} style={{ marginBottom: '15px' }}>
+              <div className={'col-md-12'}>
+                <button
+                  type="button"
+                  className={cx('btn btn-default', { active: this.state.dataSourcesOpen })}
+                  onClick={() => this.setState({ dataSourcesOpen: !this.state.dataSourcesOpen })}
+                >Data Sources</button>
+
+                { this.state.dataSourcesOpen &&
+                  <div className="panel panel-default" style={{ marginTop: '15px' }}>
+                    <div className="panel-body">
+                      {sourceDataDetails()}
                     </div>
                   </div>
-                </CardText>
-              </Card>
-            </div>
-
-                        {(d.facsubgrp === 'Privately Owned Public Space') && 
-              (
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                  <Card style={CardStyles} className="clearfix">
-                    <CardHeader title="Space Details" />
-                    <CardText>
-                      <h4>Space Type: {p.public_space_type}</h4>
-                      <h4>Required Size: {p.size_required}</h4>
-                      {(p.public_space_location != '') && (<h4>Space Location: p.public_space_location</h4>)}
-                    </CardText>
-                  </Card>
-                </div>
-              )
-            }
-
-            {(d.facsubgrp === 'Privately Owned Public Space') &&
-              (
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                  <Card style={CardStyles} className="clearfix">
-                    <CardHeader title="Hours of Access" actAsExpander showExpandableButton/>
-                    <CardText expandable>
-                      <h4>{p.hour_of_access_required}</h4>
-                    </CardText>
-                  </Card>
-                </div>
-              )
-            }
-
-            {(d.facsubgrp === 'Privately Owned Public Space') &&
-              (
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                  <Card style={CardStyles} className="clearfix">
-                    <CardHeader title="ADA Accessibility" actAsExpander showExpandableButton/>
-                    <CardText expandable>
-                      <h4>{p.physically_disabled} Access</h4>
-                    </CardText>
-                  </Card>
-                </div>
-              )
-            }
-
-            {(d.facsubgrp === 'Privately Owned Public Space') &&
-              (
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                  <Card style={CardStyles} className="clearfix">
-                    <CardHeader title="Required Amenities" actAsExpander showExpandableButton/>
-                    <CardText expandable>
-                      {(p.bicycle_parking != '') && (<h4>Bicycle Parking: {p.bicycle_parking}</h4>)}
-                      {(p.lighting != '') && (<h4>Lighting: {p.lighting}</h4>)}
-                      {(p.litter_recepticles != '') && (<h4>Litter Recepticles: {p.litter_recepticles}</h4>)}
-                      {(p.other_required != '') && (<h4>Other Amenity: {p.other_required}</h4>)}
-                      {(p.planting != '') && (<h4>Planting: {p.planting}</h4>)}
-                      {(p.plaque_sign != '') && (<h4>Plaque/Sign: {p.plaque_sign}</h4>)}
-                      {(p.seating != '') && (<h4>Seating: {p.seating}</h4>)}
-                      {(p.subway != '') && (<h4>Subway: {p.subway}</h4>)}
-                      {(p.tables != '') && (<h4>Tables: {p.tables}</h4>)}
-                      {(p.trees_on_street != '') && (<h4>Trees on Street: {p.trees_on_street}</h4>)}
-                      {(p.trees_within_space != '') && (<h4>Trees within Space: {p.trees_within_space}</h4>)}
-                      {(p.water_feature != '') && (<h4>Water Feature: {p.water_feature}</h4>)}
-                    </CardText>
-                  </Card>
-                </div>
-              )
-            }
-
-            {(d.facsubgrp === 'Privately Owned Public Space') && (p.permitted_amenities != '') &&
-              (
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                  <Card style={CardStyles} className="clearfix">
-                    <CardHeader title="Permitted Amenities" actAsExpander showExpandableButton/>
-                    <CardText expandable>
-                      <h4>{p.permitted_amenities}</h4>
-                    </CardText>
-                  </Card>
-                </div>
-              )
-            }
-
-            {(d.facsubgrp === 'Privately Owned Public Space') &&
-              (
-                <div style={{ marginBottom: '15px', marginTop: '15px' }}>
-                  <Card style={CardStyles} className="clearfix">
-                    <CardHeader title="Additional Resources" />
-                    <CardText>
-                      <h4><a href="https://www1.nyc.gov/site/planning/plans/pops/pops.page" target="_blank">NYC Planning POPS Website</a></h4>
-                      <h4><a href="https://apops.mas.org/" target="_blank">Advocates for Privately Owned Open Space Website</a></h4>
-                      <h4><a href="https://www1.nyc.gov/apps/311universalintake/form.htm?serviceName=DOB+Privately+Owned+Public+Space" target="_blank">311 Complaint Form for POPS</a></h4>
-                    </CardText>
-                  </Card>
-                </div>
-              )
-            }
-
-            <div className={'row'} style={{ marginBottom: '15px' }}>
-              <div className={'col-md-12'}>
-                <Card style={CardStyles} className="source-data-details">
-                  <CardHeader title="Source Data Details" />
-                  <CardText>
-                    {sourceDataDetails()}
-                  </CardText>
-                </Card>
+                }
               </div>
             </div>
-          </div>
 
-          <div className={'col-md-6'}>
-            <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
-              <FeedbackForm
-                ref_type="facility"
-                ref_id={this.props.id}
-                location={this.props.location}
-                auth={this.props.auth}
-              />
-            </div>
-
-            <div className={'row'} style={{ marginBottom: '15px' }}>
-              <div className={'col-md-12'}>
-                <Card style={CardStyles} className="source-data-details">
-                  <CardHeader title="Site Image Gallery" />
-                  <CardText>
-                    <ImageGallery items={[
-                      {
-                        original: 'http://lorempixel.com/1000/600/nature/1/',
-                        thumbnail: 'http://lorempixel.com/250/150/nature/1/',
-                      },
-                      {
-                        original: 'http://lorempixel.com/1000/600/nature/2/',
-                        thumbnail: 'http://lorempixel.com/250/150/nature/2/',
-                      },
-                      {
-                        original: 'http://lorempixel.com/1000/600/nature/3/',
-                        thumbnail: 'http://lorempixel.com/250/150/nature/3/',
-                      },
-                    ]}
-                    />
-                  </CardText>
-                </Card>
-              </div>
-            </div>
+            <FeedbackForm
+              ref_type="facility"
+              ref_id={this.props.id}
+              location={this.props.location}
+              auth={this.props.auth}
+            />
           </div>
         </div>
       </div>
@@ -432,14 +354,14 @@ class PopsDetailPage extends React.Component {
   }
 }
 
-PopsDetailPage.defaultProps = {
+FacilityDetailPage.defaultProps = {
   auth: null,
   sources: [],
   popsDetails: {},
   facilityDetails: {},
 };
 
-PopsDetailPage.propTypes = {
+FacilityDetailPage.propTypes = {
   id: PropTypes.string.isRequired,
   location: PropTypes.shape().isRequired,
   auth: PropTypes.object,
@@ -459,4 +381,4 @@ const mapStateToProps = ({ facilities }) => ({
 export default connect(mapStateToProps, {
   fetchPopsDetails: facilitiesActions.fetchPopsDetails,
   fetchFacilityDetails: facilitiesActions.fetchFacilityDetails,
-})(PopsDetailPage);
+})(FacilityDetailPage);
