@@ -28,6 +28,8 @@ class RadiusFilter extends React.Component {
   }
 
   triggerRadiusFilter() {
+    this.props.handleRadiusFilter(convert(this.state.value).from(this.state.unit).to('km'));
+
     this.props.updateFilterDimension({
       coordinates: this.props.selectedPointCoordinates,
       radius: convert(this.state.value).from(this.state.unit).to('m'),
@@ -35,6 +37,8 @@ class RadiusFilter extends React.Component {
   }
 
   resetRadiusFilter() {
+    this.props.handleRadiusFilter(0);
+
     this.props.updateFilterDimension({
       coordinates: [],
       radius: 0,
@@ -107,6 +111,7 @@ RadiusFilter.propTypes = {
   selectedPointCoordinates: PropTypes.array.isRequired,
   updateFilterDimension: PropTypes.func.isRequired,
   filterDimensions: PropTypes.object.isRequired,
+  handleRadiusFilter: PropTypes.func.isRequired,
 };
 
 export default RadiusFilter;

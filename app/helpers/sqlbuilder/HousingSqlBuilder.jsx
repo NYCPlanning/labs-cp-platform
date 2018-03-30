@@ -47,7 +47,14 @@ class HousingSqlBuilder extends SqlBuilder {
 
   housingBuildSql(filterDimensions) {
     const sql = this.buildSql(filterDimensions);
-    return `${sql} AND x_outlier <> 'true' AND x_dup_flag = '' AND the_geom IS NOT NULL`;
+    return `${sql} AND (dcp_occ_category = 'Residential' OR dcp_occ_category = 'Other Accommodations')
+                  AND dcp_status <> 'Withdrawn'
+                  AND dcp_status <> 'Disapproved'
+                  AND dcp_status <> 'Suspended'
+                  AND (x_dup_flag = '' OR x_dup_flag IS NULL)
+                  AND (x_outlier = '' OR x_outlier IS NULL)
+                  AND u_net IS NOT NULL
+                  AND the_geom IS NOT NULL`;
   }
 }
 

@@ -25,7 +25,7 @@ const defaultLayers = [
             description: 'Private elementary, middle, and high schools',
           },
           {
-            name: 'Special Ed and Schools for Students with Disabilities',
+            name: 'Public and Private Special Education Schools',
             description: 'Specialized schools and educational services for students with disabilities',
           },
           {
@@ -35,7 +35,7 @@ const defaultLayers = [
         ],
       },
       {
-        name: 'Child Care and Pre-Kindergarten',
+        name: 'Day Care and Pre-Kindergarten',
         description: 'Childcare centers overseen by NYC Administration for Childrens Services and NYC Dept. of Mental Health and Hygiene',
         color: '#b0dae8',
         children: [
@@ -48,7 +48,7 @@ const defaultLayers = [
             description: 'Center that offers both a NYC DOE desgiated Universal Pre-K services and other child care services',
           },
           {
-            name: 'Child Care',
+            name: 'Day Care',
             description: 'Group and school-based child care centers for infants, toddlers, and preschoolers',
           },
           {
@@ -81,10 +81,6 @@ const defaultLayers = [
         description: 'Services overseen by NYC Dept. of Youth and Community Development',
         color: '#b67eb7',
         children: [
-          {
-            name: 'Comprehensive After School System (COMPASS) Sites',
-            description: 'Comprehensive After School System (COMPASS) Sites',
-          },
           {
             name: 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
             description: 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
@@ -259,10 +255,6 @@ const defaultLayers = [
             description: 'NYPD and NYCHA police stations',
           },
           {
-            name: 'School-Based Safety Program',
-            description: 'Public safety program on a school campus',
-          },
-          {
             name: 'Other Public Safety',
             description: 'Other public safety related support centers',
           },
@@ -356,10 +348,6 @@ const defaultLayers = [
           {
             name: 'Permanent Supportive SRO Housing',
             description: 'Permanent supportive SRO housing contracted by DHS',
-          },
-          {
-            name: 'Shelters and Transitional Housing',
-            description: 'NOTE: These records will be incorporated soon, once the data is finished being assembled for inclusion in the database.',
           },
           {
             name: 'Non-residential Housing and Homeless Services',
@@ -484,7 +472,7 @@ const defaultLayers = [
         color: '#da664f',
         children: [
           {
-            name: 'Offices',
+            name: 'City Government Offices',
             description: 'Offices used by City agencies',
           },
           {

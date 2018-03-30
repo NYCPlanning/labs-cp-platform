@@ -18,6 +18,7 @@ import {
   PlanningAreasJaneLayer,
   FacilitiesJaneLayer,
   HighlightJaneLayer,
+  RadiusHighlightJaneLayer,
   HousingDevelopmentJaneLayer,
   CBBudgetRequestsJaneLayer,
   SCAJaneLayer,
@@ -47,6 +48,10 @@ class Explorer extends React.Component {
       selectedPointCoordinates: [],
       highlightPointCoordinates: [],
       bottomOffset: 0,
+      radiusFilter: {
+        inKilometers: 0,
+        centerPointCoordinates: [],
+      },
     };
     this.selectedFeaturesCache = [];
     this.mapClicked = false;
@@ -63,6 +68,39 @@ class Explorer extends React.Component {
     }
   }
 
+  onLayerToggle = (layerId, wasEnabled) => {
+    const janeLayerIdsMap = {
+      'housing-development': ['housing-development-points'],
+      'capital-projects': [
+        'capital-projects-polygons',
+        'capital-projects-points',
+      ],
+      'cb-budgetrequests': [
+        'cb-budgetrequests-polygons',
+        'cb-budgetrequests-points',
+      ],
+      scaplan: ['sca-points-points'],
+      facilities: ['facilities-points'],
+    };
+
+    if (wasEnabled) {
+      janeLayerIdsMap[layerId].forEach((id) => {
+        if (this.layerIdsInSelectedFeatures().includes(id)) {
+          this.closeLowerPane();
+          this.handleRadiusFilter(0);
+        }
+      });
+    }
+  }
+
+  // Nasty debounces cause I suck at async
+  setSelectedFeatures = _.debounce(() => {
+    this.props.setSelectedFeatures(this.selectedFeaturesCache);
+    this.selectedFeaturesCache = [];
+  }, 50);
+
+  setBottomOffset = bottomOffset => this.setState({ bottomOffset });
+
   setAddressSearchCoordinates = (payload) => {
     if (payload.action === 'set') {
       this.setState({
@@ -78,14 +116,6 @@ class Explorer extends React.Component {
       });
     }
   };
-
-  // Nasty debounces cause I suck at async
-  setSelectedFeatures = _.debounce(() => {
-    this.props.setSelectedFeatures(this.selectedFeaturesCache);
-    this.selectedFeaturesCache = [];
-  }, 50);
-
-  setBottomOffset = bottomOffset => this.setState({ bottomOffset });
 
   hasSelectedFeatures() {
     return !_.isEmpty(this.props.selectedFeatures);
@@ -132,6 +162,16 @@ class Explorer extends React.Component {
     this.centerMap([event.lngLat.lng, event.lngLat.lat]);
   };
 
+  handleRadiusFilter = (radiusFilterInKilometers) => {
+    this.centerMap(this.state.selectedPointCoordinates);
+    this.setState({
+      radiusFilter: {
+        inKilometers: radiusFilterInKilometers,
+        centerPointCoordinates: this.state.selectedPointCoordinates,
+      },
+    });
+  }
+
   clearSelectedFeatures = () => {
     this.props.resetSelectedFeatures();
   };
@@ -149,6 +189,8 @@ class Explorer extends React.Component {
     this.props.router.push('/map');
   }
 
+  layerIdsInSelectedFeatures = () => _.uniq(this.props.selectedFeatures.map(f => f.layer.id));
+
   featureRoute = (feature) => {
     switch (feature.layer.source) {
       case 'capital-projects':
@@ -157,7 +199,7 @@ class Explorer extends React.Component {
         return `/budgetrequest/${feature.properties.regid}`;
       case 'housing-development':
         return `/development/${feature.properties.dob_job_number}`;
-      case 'facilities-cp': {
+      case 'facilities': {
         if (feature.properties.factype === 'Privately Owned Public Space') {
           return `/pops/${feature.properties.uid}`;
         }
@@ -221,10 +263,15 @@ class Explorer extends React.Component {
           detailPageType={this.props.location.type}
           selectedFeatures={selectedFeatures}
           setBottomOffset={this.setBottomOffset}
+          onLayerToggle={this.onLayerToggle}
           ref={(jane) => { this.Jane = jane; }}
         >
           <HighlightJaneLayer
             coordinates={this.state.highlightPointCoordinates}
+          />
+          <RadiusHighlightJaneLayer
+            coordinates={this.state.radiusFilter.centerPointCoordinates}
+            radius={this.state.radiusFilter.inKilometers}
           />
           <AerialsJaneLayer />
           <TransportationJaneLayer />
@@ -237,6 +284,7 @@ class Explorer extends React.Component {
             selectedPointType={this.state.selectedPointType}
             selectedPointCoordinates={this.state.selectedPointCoordinates}
             handleMapLayerClick={this.handleMapLayerClick}
+            handleRadiusFilter={this.handleRadiusFilter}
             sql={this.props.facilitiesSql}
             enabled={startingLayer === 'facilities' || startingLayer === 'pops'}
             selected={startingLayer === 'facilities' || startingLayer === 'pops'}
@@ -248,6 +296,7 @@ class Explorer extends React.Component {
               selectedPointType={this.state.selectedPointType}
               selectedPointCoordinates={this.state.selectedPointCoordinates}
               handleMapLayerClick={this.handleMapLayerClick}
+              handleRadiusFilter={this.handleRadiusFilter}
               sql={this.props.housingDevelopmentSql}
               symbologyDimension={this.props.housingDevelopmentSymbology}
               enabled={startingLayer === 'housing'}
@@ -280,6 +329,7 @@ class Explorer extends React.Component {
               selectedPointType={this.state.selectedPointType}
               selectedPointCoordinates={this.state.selectedPointCoordinates}
               handleMapLayerClick={this.handleMapLayerClick}
+              handleRadiusFilter={this.handleRadiusFilter}
               pointsSql={this.props.pointsSql}
               polygonsSql={this.props.polygonsSql}
               enabled={startingLayer === 'capitalprojects'}
