@@ -82,37 +82,6 @@ class FacilityDetailPage extends React.Component {
       return sourceDetails;
     };
 
-    const usageList = (data, type) => {
-      if (data && type) {
-        const sizes = dbStringToObject(data);
-
-        const list = sizes.map(size =>
-          (
-            <li key={size.index} className="usage-list">
-              <h3>{size.value} <small>{dbStringAgencyLookup(type, size.agency).value}</small></h3>
-              <h4><span className="label label-default">{size.agency}</span></h4>
-            </li>
-          ),
-        );
-
-        return (
-          <ul>{list}</ul>
-        );
-      }
-
-      return (<div><h3>Not Available</h3></div>);
-    };
-
-    const asList = (string) => {
-      const array = dbStringToArray(string);
-
-      return (
-        <ul>
-          { array.map(item => <li key={item}>{item}</li>) }
-        </ul>
-      );
-    };
-
     const bblList = (string) => {
       const array = dbStringToArray(string);
 
@@ -159,8 +128,12 @@ class FacilityDetailPage extends React.Component {
           <div className="col-md-12">
             <div className="row" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">
-                <h1>{d.facname}</h1>
-                <h2 style={{ marginBottom: '5px' }}><small>{facilityAddress()}</small></h2>
+                <h1>{p.building_name ? p.building_name : d.facname}</h1>
+                <h2 style={{ margin: '5px 0', lineHeight: '1px' }}><small>
+                  {facilityAddress()}
+                  { p.public_space_location && <em><br />{p.public_space_location}</em> }
+                </small></h2>
+
                 <ol className="breadcrumb">
                   <li>{d.facdomain}</li>
                   <li>{d.facgroup}</li>
@@ -178,108 +151,63 @@ class FacilityDetailPage extends React.Component {
             </div>
 
             <div className="row equal" style={{ marginBottom: '15px' }}>
-              <div className={'col-md-12'}>
-                <div>
-                Overseen By {popsTooltip()}
-                  <h3>{asList(d.overagency)}</h3>
-                </div>
-              </div>
-            </div>
-
-            <div className="row equal" style={{ marginBottom: '15px' }}>
-              <div className={'col-md-4'}>
-                <div>
-                  Building Name
-                  <h4>{p.building_name}</h4>
-                </div>
-              </div>
-              <div className={'col-md-4'}>
-                <div>
-                  Building Architect
-                  <h4>{p.building_architect}</h4>
-                </div>
-              </div>
-              <div className={'col-md-4'}>
-                <div>
-                  Year Built
-                  <h4>{p.year_completed}</h4>
-                </div>
-              </div>
-            </div>
-
-            {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
-              (
-                <div className="row equal" style={{ marginBottom: '15px' }}>
-                  <div className={'col-md-6'}>
-                    <div>
-                      Facility Size {childcareTooltip()}
-                      {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
-                    </div>
-                  </div>
-                  <div className={'col-md-6'}>
-                    <div>
-                      Utilization
-                      {usageList(d.util, d.captype)}
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-
-            <div className="row equal" style={{ marginBottom: '15px' }}>
-              <div className="col-md-12">
+              <div className="col-lg-6">
                 <div className="panel panel-default">
-                  <div className="panel-body" style={{ textAlign: 'center' }}>
-                    <div className="property-detail-blocks"><h4><small>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
-                      <i className="fa fa-info-circle" aria-hidden="true" />
-                    </OverlayTrigger>
-                    </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
-                    <div className="property-detail-blocks"><h4><small>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
-                      <i className="fa fa-info-circle" aria-hidden="true" />
-                    </OverlayTrigger>
-                    </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
-                    <div className="property-detail-blocks"><h4><small>Property Type</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
-                  </div>
+                  <div className="panel-heading"><strong>Building Details</strong></div>
+                  <table className="table datasource-table" key={d.cartodb_id}>
+                    <tbody>
+                      <tr>
+                        <td>Architect</td>
+                        <td><strong>{p.building_architect}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Year Built</td>
+                        <td><strong>{p.year_completed}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
+                          <i className="fa fa-info-circle" aria-hidden="true" />
+                        </OverlayTrigger></td>
+                        <td><strong>{d.bbl ? bblList(d.bbl) : 'Not Available'}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
+                          <i className="fa fa-info-circle" aria-hidden="true" />
+                        </OverlayTrigger></td>
+                        <td><strong>{d.bin ? binList(d.bin) : 'Not Available'}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Property Type</td>
+                        <td><strong>{d.proptype ? d.proptype : 'Privately Owned'}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            </div>
 
-            <div className="row equal" style={{ marginBottom: '15px' }}>
-              <div className={'col-md-6'}>
-                <div>
-                  Hours of Access
-                  <h4>{p.hour_of_access_required}</h4>
-                </div>
-              </div>
-              <div className={'col-md-6'}>
-                <div>
-                  ADA Accessibility
-                  <h4>{p.physically_disabled}</h4>
-                </div>
-              </div>
-            </div>
-
-            <div className="row equal" style={{ marginBottom: '15px' }}>
-              <div className="col-md-12">
+              <div className="col-lg-6">
                 <div className="panel panel-default">
-                  <div className="panel-body" style={{ textAlign: 'center' }}>
-                    <div className="property-detail-blocks">
-                      <h4><small>Space Type</small></h4>
-                      <h4>{p.public_space_type}</h4>
-                    </div>
-
-                    <div className="property-detail-blocks">
-                      <h4><small>Required Size</small></h4>
-                      <h4>{p.size_required}</h4>
-                    </div>
-
-                    { p.public_space_location &&
-                      <div className="property-detail-blocks">
-                        <h4><small>Space Location</small></h4>
-                        <h4>{p.public_space_location}</h4>
-                      </div>
-                    }
-                  </div>
+                  <div className="panel-heading"><strong>Space Details</strong></div>
+                  <table className="table datasource-table" key={d.cartodb_id}>
+                    <tbody>
+                      <tr>
+                        <td>Hours of Access</td>
+                        <td><strong>{p.hour_of_access_required}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>ADA Accessibility</td>
+                        <td><strong>{p.physically_disabled}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Space Type</td>
+                        <td><strong>{p.public_space_type}</strong></td>
+                      </tr>
+                      <tr>
+                        <td>Required Size</td>
+                        <td><strong>{p.size_required}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -288,21 +216,100 @@ class FacilityDetailPage extends React.Component {
               <div className="col-md-12">
                 <div className="panel panel-default">
                   <div className="panel-heading">Required Amenities</div>
-                  <div className="panel-body">
-                    {p.bicycle_parking && <div>Bicycle Parking: <strong>{p.bicycle_parking}</strong></div>}
-                    {p.lighting && <div>Lighting: <strong>{p.lighting}</strong></div>}
-                    {p.litter_recepticles && <div>Litter Recepticles: <strong>{p.litter_recepticles}</strong></div>}
-                    {p.other_required && <div>Other Amenity: <strong>{p.other_required}</strong></div>}
-                    {p.planting && <div>Planting: <strong>{p.planting}</strong></div>}
-                    {p.plaque_sign && <div>Plaque/Sign: <strong>{p.plaque_sign}</strong></div>}
-                    {p.seating && <div>Seating: <strong>{p.seating}</strong></div>}
-                    {p.subway && <div>Subway: <strong>{p.subway}</strong></div>}
-                    {p.tables && <div>Tables: <strong>{p.tables}</strong></div>}
-                    {p.trees_on_street && <div>Trees on Street: <strong>{p.trees_on_street}</strong></div>}
-                    {p.trees_within_space && <div>Trees within Space: <strong>{p.trees_within_space}</strong></div>}
-                    {p.water_feature && <div>Water Feature: <strong>{p.water_feature}</strong></div>}
-                    {p.permitted_amenities && <div>Permitted Amenities: <strong>{p.permitted_amenities}</strong></div>}
-                  </div>
+                  <table className="table datasource-table" key={d.cartodb_id}>
+                    <tbody>
+                      { p.bicycle_parking &&
+                        <tr>
+                          <td>Bicycle Parking</td>
+                          <td><strong>{p.bicycle_parking}</strong></td>
+                        </tr>
+                      }
+
+                      { p.lighting &&
+                        <tr>
+                          <td>Lighting</td>
+                          <td><strong>{p.lighting}</strong></td>
+                        </tr>
+                      }
+
+                      { p.litter_recepticles &&
+                        <tr>
+                          <td>Litter Recepticles</td>
+                          <td><strong>{p.litter_recepticles}</strong></td>
+                        </tr>
+                      }
+
+                      { p.planting &&
+                        <tr>
+                          <td>Planting</td>
+                          <td><strong>{p.planting}</strong></td>
+                        </tr>
+                      }
+
+                      { p.plaque_sign &&
+                        <tr>
+                          <td>Plaque Sign</td>
+                          <td><strong>{p.plaque_sign}</strong></td>
+                        </tr>
+                      }
+
+                      { p.seating &&
+                        <tr>
+                          <td>Seating</td>
+                          <td><strong>{p.seating}</strong></td>
+                        </tr>
+                      }
+
+                      { p.subway &&
+                        <tr>
+                          <td>Subway</td>
+                          <td><strong>{p.subway}</strong></td>
+                        </tr>
+                      }
+
+                      { p.tables &&
+                        <tr>
+                          <td>Tables</td>
+                          <td><strong>{p.tables}</strong></td>
+                        </tr>
+                      }
+
+                      { p.trees_on_street &&
+                        <tr>
+                          <td>Trees on the Street</td>
+                          <td><strong>{p.trees_on_street}</strong></td>
+                        </tr>
+                      }
+
+                      { p.trees_within_space &&
+                        <tr>
+                          <td>Trees within the Space</td>
+                          <td><strong>{p.trees_within_space}</strong></td>
+                        </tr>
+                      }
+
+                      { p.water_feature &&
+                        <tr>
+                          <td>Water Feature</td>
+                          <td><strong>{p.water_feature}</strong></td>
+                        </tr>
+                      }
+
+                      { p.permitted_amenities &&
+                        <tr>
+                          <td>Permitted Amenities</td>
+                          <td><strong>{p.permitted_amenities}</strong></td>
+                        </tr>
+                      }
+
+                      { p.other_required &&
+                        <tr>
+                          <td>Other Amenities</td>
+                          <td><strong>{p.other_required}</strong></td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
