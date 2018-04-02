@@ -201,7 +201,8 @@ class Explorer extends React.Component {
         return `/development/${feature.properties.dob_job_number}`;
       case 'facilities': {
         if (feature.properties.factype === 'Privately Owned Public Space') {
-          return `/pops/${feature.properties.uid}`;
+          const pops_id = feature.properties.idagency.match(/: (\w+)/)[1];
+          return `/pops/${pops_id}`;
         }
         return `/facility/${feature.properties.uid}`;
       }

@@ -29,9 +29,8 @@ class FacilityDetailPage extends React.Component {
   }
 
   fetchPageData(id) {
-    this.props.fetchPopsDetails('K020001');
-    // this.props.fetchFacilityDetails(id, 'pops');
-    this.props.fetchFacilityDetails(id, 'facility');
+    this.props.fetchPopsDetails(id);
+    this.props.fetchFacilityDetails(id, 'pops');
   }
 
   render() {
