@@ -18,6 +18,7 @@ const SidebarComponent = props => (
         locationState={props.locationState}
         selectedPointType={props.selectedPointType}
         selectedPointCoordinates={props.selectedPointCoordinates}
+        handleRadiusFilter={props.handleRadiusFilter}
       />
     </Tab>
     <Tab label="About">
@@ -62,6 +63,7 @@ SidebarComponent.propTypes = {
   locationState: PropTypes.object,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array.isRequired,
+  handleRadiusFilter: PropTypes.func.isRequired,
 };
 
 SidebarComponent.defaultProps = {

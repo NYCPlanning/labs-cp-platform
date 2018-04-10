@@ -10,7 +10,7 @@
 
 const fs = require('fs');
 const request = require('request');
-const db_tables = require('../app/db_tables').default;
+const db_tables = require('../app/config/db_tables').default;
 const appConfig = require('../app/config/appConfig').default;
 
 const sql = {
@@ -20,10 +20,6 @@ const sql = {
   housing: `SELECT COUNT(*)
   FROM ${db_tables.housingdevdb}
   WHERE
-    the_geom IS NOT NULL
-    AND
-    u_net IS NOT NULL
-    AND
     (
       dcp_status = 'Complete'
       OR dcp_status = 'Partial complete'
@@ -31,19 +27,14 @@ const sql = {
       OR dcp_status = 'Application filed'
       OR dcp_status = 'Complete (demolition)'
     )
-    AND
-    (
-      dcp_dev_category = 'New Building'
-      OR dcp_dev_category = 'Alteration'
-      OR dcp_dev_category = 'Demolition'
-    )
-    AND
-    (
-      dcp_occ_category = 'Residential'
-      OR dcp_occ_category = 'Other Accommodations'
-    )
-    AND x_outlier <> 'true'
-    AND x_dup_flag = ''`,
+    AND (dcp_occ_category = 'Residential' OR dcp_occ_category = 'Other Accommodations')
+    AND dcp_status <> 'Withdrawn'
+    AND dcp_status <> 'Disapproved'
+    AND dcp_status <> 'Suspended'
+    AND (x_dup_flag = '' OR x_dup_flag IS NULL)
+    AND (x_outlier = '' OR x_outlier IS NULL)
+    AND u_net IS NOT NULL
+    AND the_geom IS NOT NULL`,
   housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
   cbbr: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cb_budget_requests.points} UNION SELECT * FROM ${db_tables.cb_budget_requests.polygons}) a`,
   cpdbTotalCommitMin: `SELECT min(totalcommit) FROM ${db_tables.cpdb.projects_combined}`,

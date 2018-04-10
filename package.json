@@ -2,7 +2,7 @@
   "name": "capital-planning-platform",
   "version": "1.0.0",
   "engines": {
-    "node": "9.3.0",
+    "node": "9.10.0",
     "npm": "4.1.x"
   },
   "description": "A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team",
@@ -20,9 +20,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@turf/circle": "^6.0.0",
     "auth0-lock": "^10.15.1",
-    "babel-core": "^6.26.0",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.1",
     "babel-jest": "^20.0.0",
     "babel-loader": "^7.1.2",

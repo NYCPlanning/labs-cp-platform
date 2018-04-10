@@ -23,6 +23,7 @@ class Filter extends React.Component {
   };
 
   resetFilter = () => {
+    this.props.handleRadiusFilter(0);
     this.props.resetFilter();
   };
 
@@ -67,6 +68,7 @@ class Filter extends React.Component {
               selectedPointCoordinates={this.props.selectedPointCoordinates}
               selectedPointType={this.props.selectedPointType}
               updateFilterDimension={this.updateFilterDimension.bind(this, 'radiusfilter')}
+              handleRadiusFilter={this.props.handleRadiusFilter}
               filterDimensions={{ radiusfilter }}
             />
           </ListItem>
@@ -231,6 +233,7 @@ Filter.propTypes = {
   setFilterDimension: PropTypes.func.isRequired,
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
+  handleRadiusFilter: PropTypes.func.isRequired,
 };
 
 Filter.defaultProps = {

@@ -13,6 +13,7 @@ const CapitalProjectsJaneLayer = props => (
     component={<CapitalProjectsSidebar
       selectedPointType={props.selectedPointType}
       selectedPointCoordinates={props.selectedPointCoordinates}
+      handleRadiusFilter={props.handleRadiusFilter}
     />}
     selected={props.selected}
     enabled={props.enabled}
@@ -109,6 +110,7 @@ CapitalProjectsJaneLayer.propTypes = {
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
   handleMapLayerClick: PropTypes.func.isRequired,
+  handleRadiusFilter: PropTypes.func.isRequired,
 
   pointsSql: PropTypes.string.isRequired,
   polygonsSql: PropTypes.string.isRequired,

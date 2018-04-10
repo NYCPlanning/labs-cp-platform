@@ -6,6 +6,7 @@ import ZoningJaneLayer from './zoning/ZoningJaneLayer';
 import PlanningAreasJaneLayer from './planning-areas/PlanningAreasJaneLayer';
 import FacilitiesJaneLayer from './facilities/FacilitiesJaneLayer';
 import HighlightJaneLayer from './highlight/HighlightJaneLayer';
+import RadiusHighlightJaneLayer from './highlight/RadiusHighlightJaneLayer';
 import HousingDevelopmentJaneLayer from './housing-development/HousingDevelopmentJaneLayer';
 import CBBudgetRequestsJaneLayer from './cb-budgetrequests/CBBudgetRequestsJaneLayer';
 import SCAJaneLayer from './sca/SCAJaneLayer';
@@ -20,6 +21,7 @@ export {
   PlanningAreasJaneLayer,
   FacilitiesJaneLayer,
   HighlightJaneLayer,
+  RadiusHighlightJaneLayer,
   HousingDevelopmentJaneLayer,
   CBBudgetRequestsJaneLayer,
   SCAJaneLayer,

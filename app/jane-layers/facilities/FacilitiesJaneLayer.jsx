@@ -8,7 +8,7 @@ import colors from '../../facilities/colors';
 
 const FacilitiesJaneLayer = props => (
   <JaneLayer
-    id="facilities-cp"
+    id="facilities"
     name="Facilities and Program Sites"
     icon="university"
     selected={props.selected}
@@ -17,10 +17,11 @@ const FacilitiesJaneLayer = props => (
       locationState={props.locationState}
       selectedPointType={props.selectedPointType}
       selectedPointCoordinates={props.selectedPointCoordinates}
+      handleRadiusFilter={props.handleRadiusFilter}
     />}
   >
     <Source
-      id="facilities-cp"
+      id="facilities"
       type="cartovector"
       options={{
         carto_domain: appConfig.carto_domain,
@@ -29,8 +30,8 @@ const FacilitiesJaneLayer = props => (
     />
 
     <MapLayer
-      id="facilities-cp-points-outline"
-      source="facilities-cp"
+      id="facilities-points-outline"
+      source="facilities"
       sourceLayer="layer0"
       type="circle"
       paint={{
@@ -41,8 +42,8 @@ const FacilitiesJaneLayer = props => (
     />
 
     <MapLayer
-      id="facilities-cp-points"
-      source="facilities-cp"
+      id="facilities-points"
+      source="facilities"
       sourceLayer="layer0"
       type="circle"
       paint={{
@@ -53,7 +54,7 @@ const FacilitiesJaneLayer = props => (
       onClick={props.handleMapLayerClick}
     />
 
-    <Legend id="facilities-cp-legend">
+    <Legend id="facilities-legend">
       <div>
         <div className="legendSection">Facilities and Program Sites</div>
         <div className="legendItem">
@@ -95,6 +96,7 @@ FacilitiesJaneLayer.propTypes = {
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
   handleMapLayerClick: PropTypes.func.isRequired,
+  handleRadiusFilter: PropTypes.func.isRequired,
   sql: PropTypes.string.isRequired,
   locationState: PropTypes.object,
 };

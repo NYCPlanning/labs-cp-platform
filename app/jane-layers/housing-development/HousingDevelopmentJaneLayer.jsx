@@ -119,6 +119,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
         component={<HousingDevelopmentSidebarComponent
           selectedPointType={this.props.selectedPointType}
           selectedPointCoordinates={this.props.selectedPointCoordinates}
+          handleRadiusFilter={this.props.handleRadiusFilter}
         />}
       >
         <Source
@@ -151,6 +152,7 @@ HousingDevelopmentJaneLayer.propTypes = {
   selectedPointType: PropTypes.string,
   selectedPointCoordinates: PropTypes.array,
   handleMapLayerClick: PropTypes.func.isRequired,
+  handleRadiusFilter: PropTypes.func.isRequired,
   sql: PropTypes.string.isRequired,
 
   symbologyDimension: PropTypes.string.isRequired,
