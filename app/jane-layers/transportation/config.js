@@ -371,8 +371,6 @@ export const mapLayers = {
   },
   bike_routes: {
     type: 'line',
-    sourceLayer: 'layer0',
-    minzoom: 11,
     paint: {
       'line-color': {
         property: 'ft_facilit',
@@ -446,7 +444,7 @@ export const sources = {
     data: `https://${appConfig.carto_domain}/api/v2/sql?q=SELECT%20*%20FROM%20${db_tables.support.path_rail_stops}&format=geojson`,
   },
   bike_routes: {
-    tiles: ['https://api.capitalplanning.nyc/static_tiles/bike_routes/{z}/{x}/{y}.mvt'],
+    data: `https://${appConfig.carto_domain}/api/v2/sql?q=SELECT%20*%20FROM%20${db_tables.support.bike_routes}&format=geojson`,
   },
   citibike_stations: {
     data: '/data/citibike-stations.geojson',
