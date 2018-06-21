@@ -1,5 +1,6 @@
 import React from 'react';
 import { browserHistory, Route, IndexRoute, Redirect } from 'react-router';
+import Auth from './helpers/Auth';
 
 // Pages
 import App from '../app/App';
@@ -29,10 +30,21 @@ const rerouteLoggedIn = (nextState, replace) => {
   }
 };
 
+const auth = new Auth();
+
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication();
+  }
+};
+
 // dummy component for the authsuccess route
-const AuthSuccess = () => (
-  <div />
-);
+const AuthSuccess = (props) => {
+  handleAuthentication(props);
+  return (
+    <div />
+  );
+};
 
 const ensureAccess = permission => WrappedComponent => class EnsureAccess extends React.Component {
   static displayName = `ensureAccess${WrappedComponent.name}`;
@@ -149,7 +161,7 @@ export default (
 
     { /* Auth and Sitewide */ }
     <Route path="login" component={Login} title={'Login'} />
-    <Route path="authsuccess" component={AuthSuccess} onEnter={rerouteLoggedIn} />
+    <Route path="authsuccess" component={AuthSuccess} />
     <Route path="email_verification" component={EmailVerification} title={'Email Verification'} />
     <Route path="notfound" component={NotFound} />
 
