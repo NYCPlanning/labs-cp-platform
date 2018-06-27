@@ -5,13 +5,8 @@ export const login = ({ targetPath } = {}) => ({
   payload: { targetPath },
 });
 
-
 export const logout = () => ({
   type: AT.AUTH0_LOGOUT,
-});
-
-export const signUp = () => ({
-  type: AT.AUTH0_SIGNUP,
 });
 
 export const loadCredentials = ({ targetPath }) => ({

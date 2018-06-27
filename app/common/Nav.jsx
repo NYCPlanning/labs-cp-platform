@@ -10,7 +10,7 @@ import './Nav.scss';
 const Nav = (props) => {
   const profile = props.profile;
 
-  const displayTable = () => profile && !!profile.permissions.includes('sitewide_access');
+  const displayTable = () => profile && profile.permissions && !!profile.permissions.includes('sitewide_access');
 
   const userMenu = props.isLoggedIn ? (
     <li className="dropdown">

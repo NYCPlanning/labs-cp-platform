@@ -24,15 +24,9 @@ import DetailPage from '../app/detail-pages/DetailPage';
 
 import getDefaultFilterDimensions from '../app/facilities/config';
 
-const rerouteLoggedIn = (nextState, replace) => {
-  if (store.getState().currentUser.isLoggedIn) {
-    replace({ pathname: '/' });
-  }
-};
-
 const auth = new Auth();
 
-const handleAuthentication = (nextState, replace) => {
+const handleAuthentication = (nextState) => {
   if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.handleAuthentication();
   }

@@ -1,5 +1,8 @@
+import $ from 'jquery';
 import auth0 from 'auth0-js';
 import { browserHistory } from 'react-router';
+
+import * as authActions from '../actions/auth';
 
 import appConfig from '../config/appConfig';
 
@@ -10,7 +13,7 @@ export default class Auth {
     redirectUri: 'http://localhost:8080/authsuccess',
     audience: 'https://cpmanage.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid email',
+    scope: 'openid email profile',
   });
 
   constructor() {
@@ -22,21 +25,33 @@ export default class Auth {
     this.getToken = this.getToken.bind(this);
   }
 
-  login() {
+  login({ redirectUri }) {
+    if (redirectUri) localStorage.setItem('redirectUri', redirectUri);
     this.auth0.authorize();
   }
 
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log(authResult);
-        
+        if (!authResult.idTokenPayload.email_verified) {
+          browserHistory.push('/email_verification');
+        }
+
         this.setProfile(authResult);
         this.setSession(authResult);
 
-        // history.replace('/home');
+        store.dispatch(authActions.authorizeUser(authResult, authResult.accessToken));
+
+        // redirect to the path the user was trying to get to, or the same page
+        const redirectUri = localStorage.getItem('redirectUri');
+        localStorage.removeItem('redirectUri');
+
+        if (redirectUri) {
+          browserHistory.push(redirectUri);
+        } else {
+          browserHistory.push('/');
+        }
       } else if (err) {
-        // history.replace('/home');
         console.log(err);
       }
     });
@@ -51,9 +66,10 @@ export default class Auth {
   }
 
   setProfile(authResult) {
-    this.auth0.client.userInfo(authResult.accessToken, (err, user) => {
-      localStorage.setItem('profile', JSON.stringify(user));
-    });
+    const profile = authResult.idTokenPayload;
+    profile.permissions = authResult.idTokenPayload['https://capitalplanning.nyc/permissions'];
+
+    localStorage.setItem('profile', JSON.stringify(profile));
   }
 
   setSession(authResult) {
@@ -62,9 +78,6 @@ export default class Auth {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-
-    // navigate to the home route
-    // history.replace('/home');
   }
 
   logout() {
