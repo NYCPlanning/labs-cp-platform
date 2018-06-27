@@ -9,7 +9,7 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: appConfig.auth0_domain,
     clientID: appConfig.auth0_client_id,
-    redirectUri: 'http://localhost:8080/authsuccess',
+    redirectUri: `${location.protocol}//${location.host}/authsuccess`,
     audience: 'https://cpmanage.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid email profile',
