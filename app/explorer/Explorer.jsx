@@ -223,7 +223,7 @@ class Explorer extends React.Component {
 
   render() {
     const setStartingLayer = () => {
-      if (!this.props.isLoggedIn) { return 'facilities'; }
+      if (!this.props.currentUser.sitewideAccess) { return 'facilities'; }
 
       if (this.props.children) {
         switch (this.props.children.props.route.type) {
@@ -292,7 +292,7 @@ class Explorer extends React.Component {
             locationState={startingLayer === 'pops' ? popsLocationState : this.props.location.state}
           />
 
-          { this.props.isLoggedIn &&
+          { this.props.currentUser.sitewideAccess &&
             <HousingDevelopmentJaneLayer
               selectedPointType={this.state.selectedPointType}
               selectedPointCoordinates={this.state.selectedPointCoordinates}
@@ -305,7 +305,7 @@ class Explorer extends React.Component {
             />
           }
 
-          { this.props.isLoggedIn &&
+          { this.props.currentUser.sitewideAccess &&
             <SCAJaneLayer
               handleMapLayerClick={this.handleMapLayerClick}
               enabled={startingLayer === 'sca'}
@@ -313,7 +313,7 @@ class Explorer extends React.Component {
             />
           }
 
-          { this.props.isLoggedIn &&
+          { this.props.currentUser.sitewideAccess &&
             <CBBudgetRequestsJaneLayer
               selectedPointType={this.state.selectedPointType}
               selectedPointCoordinates={this.state.selectedPointCoordinates}
@@ -325,7 +325,7 @@ class Explorer extends React.Component {
             />
           }
 
-          { this.props.isLoggedIn &&
+          { this.props.currentUser.sitewideAccess &&
             <CapitalProjectsJaneLayer
               selectedPointType={this.state.selectedPointType}
               selectedPointCoordinates={this.state.selectedPointCoordinates}
@@ -358,7 +358,7 @@ Explorer.propTypes = {
   setSelectedFeatures: PropTypes.func.isRequired,
   resetSelectedFeatures: PropTypes.func.isRequired,
 
-  isLoggedIn: PropTypes.bool.isRequired,
+  currentUser: PropTypes.object.isRequired,
   location: PropTypes.object,
 
   map: PropTypes.object.isRequired,
@@ -397,7 +397,7 @@ const mapStateToProps = ({
   selectedFeatures: selected.features,
   map,
 
-  isLoggedIn: currentUser.isLoggedIn,
+  currentUser,
 });
 
 export default connect(mapStateToProps, {

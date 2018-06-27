@@ -35,7 +35,7 @@ const sql = {
     AND (x_outlier = '' OR x_outlier IS NULL)
     AND u_net IS NOT NULL
     AND the_geom IS NOT NULL`,
-  housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
+  housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb} WHERE dcp_occ_category = 'Residential' OR dcp_occ_category = 'Other Accommodations'`,
   cbbr: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cb_budget_requests.points} UNION SELECT * FROM ${db_tables.cb_budget_requests.polygons}) a`,
   cpdbTotalCommitMin: `SELECT min(totalcommit) FROM ${db_tables.cpdb.projects_combined}`,
   cpdbTotalCommitMax: `SELECT max(totalcommit) FROM ${db_tables.cpdb.projects_combined}`,

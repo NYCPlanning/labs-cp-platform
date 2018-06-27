@@ -38,7 +38,13 @@ const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
             [15, 6],
           ],
         },
-        'circle-color': '#5C99FF',
+        'circle-color': [
+          'case',
+            ['==', ['to-string', ['get', 'type']], 'Capacity Projects'], '#0571b0',
+            ['==', ['to-string', ['get', 'type']], 'PreK Capacity Projects'], '#0571b0',
+            ['==', ['to-string', ['get', 'type']], 'Replacement Projects'], '#0571b0',
+          '#ef8a62',
+        ],
         'circle-opacity': 0.7,
       }}
     />
@@ -64,8 +70,12 @@ const SCAJaneLayer = ({ handleMapLayerClick, enabled, selected }) => (
       <div>
         <div className="legendSection">SCA Capital Plan</div>
         <div className="legendItem">
-          <div className="colorCircle" style={{ backgroundColor: '#5C99FF' }} />
-          <div className="legendItemText">SCA Projects</div>
+          <div className="colorCircle" style={{ backgroundColor: '#0571b0' }} />
+          <div className="legendItemText">SCA Capacity Projects</div>
+        </div>
+        <div className="legendItem">
+          <div className="colorCircle" style={{ backgroundColor: '#ef8a62' }} />
+          <div className="legendItemText">SCA Non-Capacity Projects</div>
         </div>
       </div>
     </Legend>

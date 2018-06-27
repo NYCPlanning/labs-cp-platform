@@ -1,4 +1,5 @@
 import * as AT from '../constants/actionTypes';
+import Auth from '../helpers/Auth';
 
 const initialState = {
   profile: null,
@@ -7,12 +8,15 @@ const initialState = {
 };
 
 const currentUserReducer = (state = initialState, action) => {
+  const auth = new Auth();
+
   switch (action.type) {
     case AT.AUTHORIZE_USER:
       return {
-        profile: action.payload.profile,
-        token: action.payload.token,
-        isLoggedIn: true,
+        profile: auth.getProfile(),
+        token: auth.getToken(),
+        isLoggedIn: auth.isAuthenticated(),
+        sitewideAccess: auth.isAuthenticated() && auth.getProfile().permissions.includes('sitewide_access'),
       };
 
     case AT.DEAUTHORIZE_USER:
@@ -20,6 +24,7 @@ const currentUserReducer = (state = initialState, action) => {
         profile: null,
         token: null,
         isLoggedIn: false,
+        sitewideAccess: false,
       };
 
     default:

@@ -44,6 +44,7 @@ class FacilityDetailPage extends React.Component {
     }
 
     const d = facilityDetails.properties;
+    const isPublicSchool = d.facsubgrp === 'Public K-12 Schools';
 
     const wrapInLink = (link, text) => {
       // The database stores 'NA' for links that do not exist
@@ -84,14 +85,32 @@ class FacilityDetailPage extends React.Component {
       return sourceDetails;
     };
 
-    const usageList = (data, type) => {
+    const targetCapacity = (data) => {
+      const capacity = dbStringToObject(data)[0].value.split(',');
+
+      return (
+        <ul>
+          <li key={0} className="usage-list">
+            <h3>{capacity[0]} <small>PS Seats</small></h3>
+          </li>
+          <li key={1} className="usage-list">
+            <h3>{capacity[1]} <small>IS Seats</small></h3>
+          </li>
+          <li key={2} className="usage-list">
+            <h3>{capacity[2]} <small>HS Seats</small></h3>
+          </li>
+        </ul>
+      );
+    };
+
+    const usageList = (data, type, subtext = null) => {
       if (data && type) {
         const sizes = dbStringToObject(data);
 
         const list = sizes.map(size =>
           (
             <li key={size.index} className="usage-list">
-              <h3>{size.value} <small>{dbStringAgencyLookup(type, size.agency).value}</small></h3>
+              <h3>{size.value} <small>{subtext ? subtext : dbStringAgencyLookup(type, size.agency).value}</small></h3>
               <h4><span className="label label-default">{size.agency}</span></h4>
             </li>
           ),
@@ -211,14 +230,17 @@ class FacilityDetailPage extends React.Component {
                 <div className="row equal" style={{ marginBottom: '15px' }}>
                   <div className={'col-md-6'}>
                     <div>
-                      Facility Size {childcareTooltip()}
-                      {d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype) }
+                      { isPublicSchool ? 'Target Capacity' : 'Facility Size' } {childcareTooltip()}
+                      { isPublicSchool ?
+                        targetCapacity(d.capacity) :
+                        (d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype))
+                      }
                     </div>
                   </div>
                   <div className={'col-md-6'}>
                     <div>
-                      Utilization
-                      {usageList(d.util, d.captype)}
+                      { isPublicSchool ? 'Enrollment' : 'Utilization' }
+                      {usageList(d.util, d.captype, 'Total Students (PS, MS, HS)')}
                     </div>
                   </div>
                 </div>

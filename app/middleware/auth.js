@@ -1,132 +1,28 @@
-import Auth0Lock from 'auth0-lock';
-import _ from 'lodash';
-
 import { browserHistory } from 'react-router';
 import * as AT from '../constants/actionTypes';
 import * as authActions from '../actions/auth';
-import { isTokenExpired } from '../helpers/jwtHelper';
-import appConfig from '../config/appConfig';
-
-
-const clientId = appConfig.auth0_client_id;
-const domain = appConfig.auth0_domain;
-
-const lockOptions = {
-  allowSignUp: true,
-  loginAfterSignUp: true,
-  allowLogin: true,
-  autoclose: true,
-  auth: {
-    redirect: false,
-  },
-  theme: {
-    logo: '/img/logo_80.png',
-    primaryColor: '#EA6200',
-  },
-  languageDictionary: {
-    title: 'Please log in',
-  },
-};
+import Auth from '../helpers/Auth';
 
 const authMiddleware = ({ getState, dispatch }) => next => (action) => {
-  if (getState().currentUser.token && isTokenExpired(getState().currentUser.token)) {
-    localStorage.removeItem('NYCPlanning_profile');
-    localStorage.removeItem('NYCPlanning_idToken');
-    // console.log('deauth Middleware token expired');
-    // dispatch(authActions.logout());
-
-    browserHistory.replace({
-      pathname: '/login',
-      state: {
-        targetPath: window.location.pathname,
-      },
-    });
-  }
+  const auth = new Auth();
 
   if (action.type === AT.LOAD_CREDENTIALS) {
-    const token = localStorage.getItem('NYCPlanning_idToken');
-    const profile = localStorage.getItem('NYCPlanning_profile');
-
-    if (token) {
-      dispatch(authActions.authorizeUser(JSON.parse(profile), token));
+    if (auth.isAuthenticated()) {
+      dispatch(authActions.authorizeUser(auth.getProfile(), auth.getToken()));
       browserHistory.push(action.payload.targetPath);
     }
   }
 
   if (action.type === AT.AUTH0_LOGIN) {
-    const options = _.extend({}, lockOptions);
-    const lock = new Auth0Lock(clientId, domain, options);
-
-    lock.show();
-
-    lock.on('authenticated', ({ idToken }) => {
-      lock.getProfile(idToken, (error, profile) => {
-        if (error) {
-          // Handle error
-          return;
-        }
-
-        localStorage.setItem('NYCPlanning_profile', JSON.stringify(profile));
-        localStorage.setItem('NYCPlanning_idToken', idToken);
-        dispatch(authActions.authorizeUser(profile, idToken));
-
-        if (!profile.email_verified) {
-          browserHistory.push('/email_verification');
-        }
-
-        // redirect to the path the user was trying to get to, or the same page
-        if (action.payload && action.payload.targetPath) {
-          browserHistory.push(action.payload.targetPath);
-        } else {
-          browserHistory.push(location.pathname);
-        }
-      });
+    auth.login({
+      redirectUri: action.payload.targetPath ? action.payload.targetPath : location.pathname,
     });
   }
 
   if (action.type === AT.AUTH0_LOGOUT) {
-    // Clear user token and profile data from localStorage
-    localStorage.removeItem('NYCPlanning_profile');
-    localStorage.removeItem('NYCPlanning_idToken');
+    auth.logout();
     dispatch(authActions.deauthorizeUser());
-    browserHistory.push('/');
-  }
-
-  if (action.type === AT.AUTH0_SIGNUP) {
-    const options = _.extend({}, lockOptions, {
-      initialScreen: 'signUp',
-      allowLogin: false,
-      languageDictionary: {
-        title: 'Create your account',
-      },
-    });
-
-    const lock = new Auth0Lock(clientId, domain, options);
-
-    lock.show();
-    lock.on('authenticated', ({ idToken }) => {
-      lock.getProfile(idToken, (error, profile) => {
-        if (error) {
-          // Handle error
-          return;
-        }
-
-        localStorage.setItem('NYCPlanning_profile', JSON.stringify(profile));
-        localStorage.setItem('NYCPlanning_idToken', idToken);
-        dispatch(authActions.authorizeUser(profile, idToken));
-
-        if (!profile.email_verified) {
-          browserHistory.push('/email_verification');
-        }
-
-        // redirect to the path the user was trying to get to, or the same page
-        if (action.payload.params && action.payload.params.targetPath) {
-          browserHistory.push(action.payload.params.targetPath);
-        } else {
-          browserHistory.push(location.pathname);
-        }
-      });
-    });
+    browserHistory.push('/facilities');
   }
 
   return next(action);

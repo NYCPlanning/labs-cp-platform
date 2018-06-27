@@ -122,13 +122,13 @@ const defaultFilterDimensions = {
 
   c_date_earliest: {
     type: 'cofoDateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2018-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
   status_q: {
     type: 'dateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment().format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2018-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 };

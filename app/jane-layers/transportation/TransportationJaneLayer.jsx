@@ -96,7 +96,7 @@ class TransportationJaneLayer extends React.Component {
     }
 
     return [
-      <Source id="bike_routes" type="vector" tiles={sources.bike_routes.tiles} />,
+      <Source id="bike_routes" type="geojson" data={sources.bike_routes.data} />,
       <MapLayer id="bike_routes" source="bike_routes" {...mapLayers.bike_routes} />,
     ].map((child, index) => ({ ...child, key: index }));
   }

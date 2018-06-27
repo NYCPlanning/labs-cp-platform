@@ -13,7 +13,7 @@ const db_tables = {
     polygons: 'cbbr_fy18_poly_v5',
   },
   facdb: {
-    datasources: 'facdb_datasources_v201705',
+    datasources: 'facdb_datasources_v201803',
     facilities: 'facdb_v201803',
     pops: 'pops_v201801',
   },
@@ -32,6 +32,7 @@ const db_tables = {
     mta_bus_stops: 'mta_bus_stops_v0',
     commerical_overlays: 'commercial_overlays_v201710',
     zoning_districts: 'zoning_districts_v201710',
+    bike_routes: 'support_trans_dot_bike_routes',
   },
 };
 
