@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import auth0 from 'auth0-js';
 import { browserHistory } from 'react-router';
 
@@ -33,10 +32,6 @@ export default class Auth {
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        if (!authResult.idTokenPayload.email_verified) {
-          browserHistory.push('/email_verification');
-        }
-
         this.setProfile(authResult);
         this.setSession(authResult);
 
@@ -46,7 +41,9 @@ export default class Auth {
         const redirectUri = localStorage.getItem('redirectUri');
         localStorage.removeItem('redirectUri');
 
-        if (redirectUri) {
+        if (!authResult.idTokenPayload.email_verified) {
+          browserHistory.push('/email_verification');
+        } else if (redirectUri) {
           browserHistory.push(redirectUri);
         } else {
           browserHistory.push('/');

@@ -16,6 +16,7 @@ const currentUserReducer = (state = initialState, action) => {
         profile: auth.getProfile(),
         token: auth.getToken(),
         isLoggedIn: auth.isAuthenticated(),
+        sitewideAccess: auth.isAuthenticated() && auth.getProfile().permissions.includes('sitewide_access'),
       };
 
     case AT.DEAUTHORIZE_USER:
@@ -23,6 +24,7 @@ const currentUserReducer = (state = initialState, action) => {
         profile: null,
         token: null,
         isLoggedIn: false,
+        sitewideAccess: false,
       };
 
     default:
