@@ -1,6 +1,7 @@
 npm-debug.log
 .DS_Store
 .env
+yarn-error.log
 
 /node_modules
 /public/js/bundle.js
