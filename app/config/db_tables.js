@@ -18,7 +18,7 @@ const db_tables = {
     pops: 'pops_v201807',
   },
   housingdevdb: 'dobdev_jobs_20180316',
-  sca: 'sca_pts_201702_v1',
+  sca: 'sca_pts_201807_v1',
   support: {
     nta: 'nta_boundaries_v0',
     ih: 'inclusionary_housing_v201709',
