@@ -329,6 +329,19 @@ class FacilityDetailPage extends React.Component {
               </div>
             </div>
 
+            <div className="row equal" style={{ marginBottom: '15px' }}>
+              <div className="col-md-12">
+                <div className="panel panel-default">
+                  <div className="panel-heading"><strong>POPS Data Source</strong></div>
+                  <div className="panel-body">
+                    <p>Privately Owned Public Space Database (2018), owned and maintained by the New York City Department of
+                      City Planning and created in collaboration with Jerold S. Kayden and The Municipal Art Society of New York.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
             <div className={'row'} style={{ marginBottom: '15px' }}>
               <div className={'col-md-12'}>
                 <button
