@@ -166,18 +166,6 @@ class FacilityDetailPage extends React.Component {
       return null;
     };
 
-    const popsTooltip = () => {
-      if (d.facsubgrp === 'Privately Owned Public Space') {
-        return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP issues POPS approvals, and DOB is responsible for POPS enforcement.</Tooltip>}>
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
-        );
-      }
-
-      return null;
-    };
-
     const facilityAddress = () => {
       if (d.address && d.zipcode) return `${d.address}, ${d.city}, NY ${d.zipcode}`;
       if (d.address) return `${d.address}, ${d.city}, NY`;
@@ -219,7 +207,7 @@ class FacilityDetailPage extends React.Component {
               </div>
               <div className={'col-md-6'}>
                 <div>
-                Overseen By {popsTooltip()}
+                Overseen By
                   <h3>{asList(d.overagency)}</h3>
                 </div>
               </div>
