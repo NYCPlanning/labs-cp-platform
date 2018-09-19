@@ -38,11 +38,6 @@ class DetailPage extends React.Component {
         }
 
         { this.props.route.type === 'pops' &&
-          // <FacilityDetailPage
-          //   id={this.props.params.id}
-          //   location={this.props.location}
-          //   pops
-          // />
           <PopsDetailPage
             id={this.props.params.id}
             location={this.props.location}
