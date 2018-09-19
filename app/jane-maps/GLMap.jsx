@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import mapboxgl from 'mapbox-gl';
 
+import mapboxStyle from './mapbox-style';
+
 class GLMap extends React.Component {
 
   static displayName = 'GLMap';
@@ -69,7 +71,7 @@ class GLMap extends React.Component {
 
 GLMap.propTypes = {
   mapbox_accessToken: PropTypes.string.isRequired,
-  mapStyle: PropTypes.string.isRequired,
+  mapStyle: PropTypes.object.isRequired,
   zoom: PropTypes.number.isRequired,
   minZoom: PropTypes.number,
   center: PropTypes.array.isRequired,
@@ -80,7 +82,7 @@ GLMap.propTypes = {
 };
 
 GLMap.defaultProps = {
-  mapStyle: 'mapbox://styles/mapbox/light-v9',
+  mapStyle: mapboxStyle,
   center: [0, 0],
   zoom: 2,
   minZoom: null,
