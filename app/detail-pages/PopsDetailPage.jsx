@@ -161,6 +161,10 @@ class FacilityDetailPage extends React.Component {
                         <td><strong>{p.building_architect}</strong></td>
                       </tr>
                       <tr>
+                        <td>Public Space Designer</td>
+                        <td><strong>{p.principal_public_space_designer}</strong></td>
+                      </tr>
+                      <tr>
                         <td>Year Built</td>
                         <td><strong>{p.year_completed}</strong></td>
                       </tr>
