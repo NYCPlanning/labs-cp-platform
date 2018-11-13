@@ -13,8 +13,8 @@ const db_tables = {
     polygons: 'cbbr_fy18_poly_v5',
   },
   facdb: {
-    datasources: 'facdb_datasources_v201803',
-    facilities: 'facdb_v201803',
+    datasources: 'facdb_datasources_v201811',
+    facilities: 'facdb_v201811',
     pops: 'pops_v201808',
   },
   housingdevdb: 'dobdev_jobs_20180316',
