@@ -9,8 +9,8 @@ const db_tables = {
     polygons: 'cpdb_dcpattributes_poly_201805_v1',
   },
   cb_budget_requests: {
-    points: 'cbbr_fy18_pts_v5',
-    polygons: 'cbbr_fy18_poly_v5',
+    points: 'cbbr_fy19_pts_v1',
+    polygons: 'cbbr_fy19_poly_v1',
   },
   facdb: {
     datasources: 'facdb_datasources_v201811',
