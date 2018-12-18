@@ -2,7 +2,7 @@
   "name": "capital-planning-platform",
   "version": "1.0.0",
   "engines": {
-    "node": "8.11.x",
+    "node": "8.x.x",
     "npm": "5.6.x"
   },
   "description": "A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team",
