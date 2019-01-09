@@ -1,0 +1,11 @@
+[Settings]
+# Added automatically by the Netlify CLI. It has no effect during normal 
+# Git-backed deploys.
+ID = "cp-platform"
+
+# The following redirect is intended for use with most SPAs that handle
+# routing internally.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
