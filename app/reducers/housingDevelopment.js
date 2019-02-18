@@ -8,12 +8,12 @@ const totalcounts = require('../config/totalcounts.json');
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
 const isIssueDateDisabled = filterDimensions =>
-filterDimensions.dcp_status.values
+filterDimensions.status.values
   .filter(value => value.checked && value.value === 'Application filed')
   .length > 0;
 
 const isCompletionDateDisabled = filterDimensions =>
-filterDimensions.dcp_status.values
+filterDimensions.status.values
   .filter(value => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
   .length > 0;
 
@@ -23,7 +23,7 @@ export const initialState = {
   completionDateFilterDisabled: isCompletionDateDisabled(getDefaultFilters()),
   sql: getSql(getDefaultFilters()),
   selectedFeatures: [],
-  symbologyDimension: 'dcp_dev_category',
+  symbologyDimension: 'job_type',
   housingDetails: null,
   totalCount: totalcounts.housing,
   totalCountRaw: totalcounts.housingRaw,
@@ -67,13 +67,13 @@ const housingReducer = (state = initialState, action) => {
       }
 
       // if dimension is status, check which items are included and disable/reset date dimensions accordingly
-      if (filterDimension === 'dcp_status') {
+      if (filterDimension === 'status') {
         // Completion Slider
         if (isCompletionDateDisabled(dimensions)) {
-          dimensions.c_date_earliest = getDefaultFilters().c_date_earliest;
-          dimensions.c_date_earliest.disabled = true;
+          dimensions.co_earliest_effectivedate = getDefaultFilters().co_earliest_effectivedate;
+          dimensions.co_earliest_effectivedate.disabled = true;
         } else {
-          dimensions.c_date_earliest.disabled = false;
+          dimensions.co_earliest_effectivedate.disabled = false;
         }
         // issued slider
         if (isIssueDateDisabled(dimensions)) {
@@ -85,13 +85,12 @@ const housingReducer = (state = initialState, action) => {
       }
 
       const shouldChangeDisabledValue = [
-        'admin_borocode',
-        'admin_nta',
-        'admin_cd',
-        'admin_censtract',
-        'admin_council',
-        'admin_policeprecinct',
-        'admin_schooldistrict',
+        'geo_boro',
+        'geo_ntacode2010',
+        'geo_cd',
+        'geo_censustract2010',
+        'geo_council',
+        'geo_csd',
       ];
 
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)

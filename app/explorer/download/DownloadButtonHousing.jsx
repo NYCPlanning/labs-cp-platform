@@ -88,19 +88,19 @@ class DownloadButton extends React.Component {
             id={`${layerID}-raw`}
           >
             <MenuItem
-              href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb} WHERE dcp_occ_category = 'Residential' OR dcp_occ_category = 'Other Accommodations'`, layerID, 'csv')}
+              href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb} WHERE occ_category = 'Residential' OR occ_category = 'Other Accommodations'`, layerID, 'csv')}
               onClick={this.logDownloadStat('housing-development_raw', 'csv')}
               eventKey="1"
             >CSV</MenuItem>
 
             <MenuItem
-              href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb} WHERE dcp_occ_category = 'Residential' OR dcp_occ_category = 'Other Accommodations'`, layerID, 'geojson')}
+              href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb} WHERE occ_category = 'Residential' OR occ_category = 'Other Accommodations'`, layerID, 'geojson')}
               onClick={this.logDownloadStat('housing-development_raw', 'geojson')}
               eventKey="2"
             >GeoJSON</MenuItem>
 
             <MenuItem
-              href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb} WHERE dcp_occ_category = 'Residential' OR dcp_occ_category = 'Other Accommodations'`, layerID, 'shp')}
+              href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb} WHERE occ_category = 'Residential' OR occ_category = 'Other Accommodations'`, layerID, 'shp')}
               onClick={this.logDownloadStat('housing-development_raw', 'shapefile')}
               eventKey="3"
             >Shapefile</MenuItem>

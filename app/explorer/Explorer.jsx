@@ -198,7 +198,7 @@ class Explorer extends React.Component {
       case 'cb-budgetrequests':
         return `/budgetrequest/${feature.properties.regid}`;
       case 'housing-development':
-        return `/development/${feature.properties.dob_job_number}`;
+        return `/development/${feature.properties.job_number}`;
       case 'facilities': {
         if (feature.properties.factype === 'Privately Owned Public Space') {
           const pops_id = feature.properties.idagency.match(/: (\w+)/)[1];

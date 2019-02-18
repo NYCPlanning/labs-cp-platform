@@ -43,20 +43,20 @@ class HousingDetailPage extends React.Component {
     }
 
     const d = data.properties;
-    const biswebJobLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.dob_job_number}&passdocnumber=&go10=+GO+&requestid=0`;
+    const biswebJobLink = `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${d.job_number}&passdocnumber=&go10=+GO+&requestid=0`;
     // const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
 
     function unitChange() {
-      if (d.u_net > 0) {
-        return `${d.u_net_complete ? d.u_net_complete : 0} of ${d.u_net}`;
-      } else if (d.u_net <= 0) {
-        return `${Math.abs(d.u_net_complete ? d.u_net_complete : 0)} of ${Math.abs(d.u_net)}`;
+      if (d.units_net > 0) {
+        return `${d.units_complete ? d.units_complete : 0} of ${d.units_net}`;
+      } else if (d.units_net <= 0) {
+        return `${Math.abs(d.units_complete ? d.units_complete : 0)} of ${Math.abs(d.units_net)}`;
       }
 
       return '';
     }
 
-    const netUnitsStyle = getNetUnitsStyle(d.u_net);
+    const netUnitsStyle = getNetUnitsStyle(d.units_net);
 
     /* eslint-disable */
     const permitDate = (date) => {
@@ -66,30 +66,30 @@ class HousingDetailPage extends React.Component {
     /* eslint-enable */
 
     const unitPipeline = () => {
-      if (d.dcp_dev_category === 'Alteration') {
+      if (d.job_type === 'Alteration') {
         return (
           <div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.u_init != null ? d.u_init : 'Not reported'}</h3>
+                <h3>{d.units_init != null ? d.units_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.u_prop != null ? d.u_prop : 'Not reported'}</h3>
+                <h3>{d.units_prop != null ? d.units_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
               </div>
             </div>
           </div>
         );
-      } else if (d.dcp_dev_category === 'New Building') {
+      } else if (d.job_type === 'New Building') {
         return (
           <div>
             <div className={'col-md-4'}>
@@ -101,30 +101,30 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.u_prop != null ? d.u_prop : 'Not reported'}</h3>
+                <h3>{d.units_prop != null ? d.units_prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
               </div>
             </div>
           </div>
         );
-      } else if (d.dcp_dev_category === 'Demolition') {
+      } else if (d.job_type === 'Demolition') {
         return (
           <div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.u_init != null ? d.u_init : 'Not reported'}</h3>
+                <h3>{d.units_init != null ? d.units_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.u_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@ class HousingDetailPage extends React.Component {
       return '';
     };
 
-    const backgroundColor = getColor('dcp_dev_category', d.dcp_dev_category);
+    const backgroundColor = getColor('job_type', d.job_type);
 
     return (
       <div className="pipeline-page">
@@ -141,9 +141,9 @@ class HousingDetailPage extends React.Component {
           <div className={'row'}>
             <div className="col-md-12">
               <h1>{d.address}, {d.boro}</h1>
-              <span className={'badge'} style={{ backgroundColor }}>{d.dcp_dev_category}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_occ_category}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.dcp_status}</span>
+              <span className={'badge'} style={{ backgroundColor }}>{d.job_type}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.occ_category}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.status}</span>
             </div>
           </div>
 
@@ -152,13 +152,13 @@ class HousingDetailPage extends React.Component {
               <div className={'col-md-6'}>
                 <div className="dev-status">
                   <h4>DOB Job Number</h4>
-                  <h3><a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>{d.dob_job_number}</a></h3>
+                  <h3><a target="_blank" rel="noopener noreferrer" href={biswebJobLink}>{d.job_number}</a></h3>
                 </div>
               </div>
               <div className={'col-md-6'}>
                 <div className="dev-status">
                   <h4>BBL</h4>
-                  <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
+                  <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.geo_bbl}`} target="_blank">{d.geo_bbl}</a></h3>
                 </div>
               </div>
             </div>
@@ -189,18 +189,18 @@ class HousingDetailPage extends React.Component {
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Initial CofO*</h4>
-                      <h3>{permitDate(d.c_date_earliest)}</h3>
+                      <h3>{permitDate(d.co_earliest_effectivedate)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Latest CofO</h4>
-                      <h3>{permitDate(d.c_date_latest)}</h3>
-                      <p className="subtext">{d.c_type_latest !== '' ? (`${d.c_type_latest},`) : ''} {d.c_u_latest != null ? (`${d.c_u_latest} units`) : ''}</p>
+                      <h3>{permitDate(d.co_latest_effectivedate)}</h3>
+                      <p className="subtext">{d.co_latest_certtype !== '' ? (`${d.co_latest_certtype},`) : ''} {d.co_latest_units != null ? (`${d.co_latest_units} units`) : ''}</p>
                     </div>
                   </div>
                   {
-                    d.dcp_status === 'Partial complete' && (
+                    d.status === 'Partial complete' && (
                       <div className={'col-md-12'}>
                         <div className="dev-status">
                           <h4>Net Units Completed</h4>
