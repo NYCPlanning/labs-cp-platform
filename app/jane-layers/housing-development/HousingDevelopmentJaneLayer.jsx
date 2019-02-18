@@ -35,7 +35,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
             <div className="legendSection">Housing Development</div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#edf8e9' }} />
-              <div className="legendItemText">Application filed</div>
+              <div className="legendItemText">Filed</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#bae4b3' }} />
@@ -74,7 +74,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
           property: 'status',
           type: 'categorical',
           stops: [
-            ['Application filed', '#edf8e9'],
+            ['Filed', '#edf8e9'],
             ['Permit issued', '#bae4b3'],
             ['Partial complete', '#74c476'],
             ['Complete', '#238b45'],

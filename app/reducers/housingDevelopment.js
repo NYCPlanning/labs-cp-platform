@@ -9,12 +9,12 @@ const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimension
 
 const isIssueDateDisabled = filterDimensions =>
 filterDimensions.status.values
-  .filter(value => value.checked && value.value === 'Application filed')
+  .filter(value => value.checked && value.value === 'Filed')
   .length > 0;
 
 const isCompletionDateDisabled = filterDimensions =>
 filterDimensions.status.values
-  .filter(value => value.checked && (value.value === 'Permit issued' || value.value === 'Application filed'))
+  .filter(value => value.checked && (value.value === 'Permit issued' || value.value === 'Filed'))
   .length > 0;
 
 export const initialState = {

@@ -185,21 +185,6 @@ class LayerSelector extends React.Component {
             />
           </ListItem>
 
-          {/* <Subheader>
-            Development Type
-            <InfoIcon text="Categorizes developments based on the construction and housing types, determined using DOB Permit data" />
-          </Subheader>
-          <ListItem
-            disabled
-            style={listItemStyle}
-          >
-            <Checkboxes
-              dimension={filterDimensions.occ_category}
-              onChange={this.handleFilterDimensionChange.bind(this, 'occ_category')}
-              legendCircleType={'none'}
-            />
-          </ListItem> */}
-
           <Subheader>
             Total New Units
             <InfoIcon text="Net change in units resulting from development. Negative values occur from demolitions and/or alterations that reduce the number of units." />

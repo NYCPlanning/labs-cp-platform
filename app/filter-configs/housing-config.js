@@ -50,12 +50,6 @@ const defaultFilterDimensions = {
         color: '#238b45',
       },
       {
-        label: 'Complete (demolition)',
-        value: 'Complete (demolition)',
-        checked: true,
-        color: '#238b45',
-      },
-      {
         label: 'In progress',
         value: 'In progress',
         checked: true,
@@ -100,22 +94,6 @@ const defaultFilterDimensions = {
     ],
   },
 
-  occ_category: {
-    type: 'multiSelect',
-    values: [
-      {
-        label: 'Residential',
-        value: 'Residential',
-        checked: true,
-      },
-      {
-        label: 'Other Accommodations',
-        value: 'Other Accommodations',
-        checked: true,
-      },
-    ],
-  },
-
   units_net: {
     type: 'numberRange',
     values: [-800, 1800],
@@ -123,13 +101,13 @@ const defaultFilterDimensions = {
 
   co_earliest_effectivedate: {
     type: 'cofoDateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2018-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
   status_q: {
     type: 'dateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2018-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 };
@@ -155,8 +133,7 @@ const circleColors = {
       ['Filed', getColor('status', 'Filed')],
       ['Permit issued', getColor('status', 'Permit issued')],
       ['In progress', getColor('status', 'In progress')],
-      ['Complete', getColor('status', 'Complete')],
-      ['Complete (demolition)', getColor('status', 'Complete (demolition)')],
+      ['Complete', getColor('status', 'Complete')]
     ],
   },
 };
