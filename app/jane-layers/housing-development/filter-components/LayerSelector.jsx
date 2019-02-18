@@ -63,13 +63,12 @@ class LayerSelector extends React.Component {
     // Geographic filtering dimensions
     const {
       radiusfilter,
-      admin_cd,
-      admin_borocode,
-      admin_nta,
-      admin_censtract,
-      admin_council,
-      admin_policeprecinct,
-      admin_schooldistrict,
+      geo_cd,
+      geo_boro,
+      geo_ntacode2010,
+      geo_censustract2010,
+      geo_council,
+      geo_csd,
     } = filterDimensions;
 
     const PinSelect = (props) => {
@@ -130,22 +129,20 @@ class LayerSelector extends React.Component {
             <AreaFilterSelect
               updateFilterDimension={this.handleFilterDimensionChange}
               filterDimensions={{
-                admin_cd,
-                admin_borocode,
-                admin_nta,
-                admin_censtract,
-                admin_council,
-                admin_policeprecinct,
-                admin_schooldistrict,
+                geo_cd,
+                geo_boro,
+                geo_ntacode2010,
+                geo_censustract2010,
+                geo_council,
+                geo_csd,
               }}
               options={[
-                { value: 'admin_cd', label: 'Community District' },
-                { value: 'admin_borocode', label: 'Borough' },
-                { value: 'admin_nta', label: 'Neighborhood Tabulation Area' },
-                { value: 'admin_council', label: 'City Council District' },
-                { value: 'admin_censtract', label: 'Census Tract' },
-                { value: 'admin_policeprecinct', label: 'Police Precinct' },
-                { value: 'admin_schooldistrict', label: 'School District' },
+                { value: 'geo_cd', label: 'Community District' },
+                { value: 'geo_boro', label: 'Borough' },
+                { value: 'geo_ntacode2010', label: 'Neighborhood Tabulation Area' },
+                { value: 'geo_censustract2010', label: 'Census Tract' },
+                { value: 'geo_council', label: 'City Council District' },
+                { value: 'geo_csd', label: 'School District' },
               ]}
             />
           </ListItem>
@@ -154,8 +151,8 @@ class LayerSelector extends React.Component {
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('dcp_status'); }}
-              selected={symbologyDimension === 'dcp_status'}
+              onClick={() => { this.handleSymbologyDimensionChange('status'); }}
+              selected={symbologyDimension === 'status'}
             />
           </Subheader>
           <ListItem
@@ -163,9 +160,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_status}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_status')}
-              legendCircleType={symbologyDimension === 'dcp_status' ? 'fill' : 'none'}
+              dimension={filterDimensions.status}
+              onChange={this.handleFilterDimensionChange.bind(this, 'status')}
+              legendCircleType={symbologyDimension === 'status' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -173,8 +170,8 @@ class LayerSelector extends React.Component {
             Permit Type
             <InfoIcon text="Categorizes developments based on the permit type, determined using DOB data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('dcp_dev_category'); }}
-              selected={symbologyDimension === 'dcp_dev_category'}
+              onClick={() => { this.handleSymbologyDimensionChange('job_type'); }}
+              selected={symbologyDimension === 'job_type'}
             />
           </Subheader>
           <ListItem
@@ -182,24 +179,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.dcp_dev_category}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_dev_category')}
-              legendCircleType={symbologyDimension === 'dcp_dev_category' ? 'fill' : 'none'}
-            />
-          </ListItem>
-
-          <Subheader>
-            Development Type
-            <InfoIcon text="Categorizes developments based on the construction and housing types, determined using DOB Permit data" />
-          </Subheader>
-          <ListItem
-            disabled
-            style={listItemStyle}
-          >
-            <Checkboxes
-              dimension={filterDimensions.dcp_occ_category}
-              onChange={this.handleFilterDimensionChange.bind(this, 'dcp_occ_category')}
-              legendCircleType={'none'}
+              dimension={filterDimensions.job_type}
+              onChange={this.handleFilterDimensionChange.bind(this, 'job_type')}
+              legendCircleType={symbologyDimension === 'job_type' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -212,13 +194,13 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <SimpleRangeInputs
-              data={filterDimensions.u_net.values}
-              onChange={this.handleSliderChange.bind(this, 'u_net')}
+              data={filterDimensions.units_net.values}
+              onChange={this.handleSliderChange.bind(this, 'units_net')}
             />
             <RangeSlider
-              data={filterDimensions.u_net.values}
+              data={filterDimensions.units_net.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'u_net')}
+              onChange={this.handleSliderChange.bind(this, 'units_net')}
               grid
               keyboard
               force_edges
@@ -252,9 +234,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.c_date_earliest.values}
+              data={filterDimensions.co_earliest_effectivedate.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'c_date_earliest')}
+              onChange={this.handleSliderChange.bind(this, 'co_earliest_effectivedate')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges

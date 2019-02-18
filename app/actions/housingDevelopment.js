@@ -6,7 +6,7 @@ import db_tables from '../config/db_tables';
 export const fetchDetails = cartodbId =>
   cartoActions.getFeature({
     tableName: sqlConfig.tablename,
-    column: 'dob_job_number',
+    column: 'job_number',
     value: cartodbId,
   }, AT.FETCH_HOUSING_DEVELOPMENT_DETAILS);
 

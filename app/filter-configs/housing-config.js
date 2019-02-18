@@ -10,42 +10,37 @@ const defaultFilterDimensions = {
       radius: 0,
     },
   },
-  admin_cd: {
+  geo_cd: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('commboard'),
   },
-  admin_borocode: {
+  geo_boro: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
   },
-  admin_nta: {
+  geo_ntacode2010: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('nta'),
   },
-  admin_censtract: {
+  geo_censustract2010: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),
   },
-  admin_council: {
+  geo_council: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('council'),
   },
-  admin_policeprecinct: {
-    type: 'multiSelect',
-    disabled: true,
-    values: LabelHelper.get_labels('policeprecinct'),
-  },
-  admin_schooldistrict: {
+  geo_csd: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('schooldistrict'),
   },
-  dcp_status: {
+  status: {
     type: 'statusMultiSelect',
     values: [
       {
@@ -55,8 +50,8 @@ const defaultFilterDimensions = {
         color: '#238b45',
       },
       {
-        label: 'Partial complete',
-        value: 'Partial complete',
+        label: 'In progress',
+        value: 'In progress',
         checked: true,
         color: '#74c476',
       },
@@ -67,15 +62,15 @@ const defaultFilterDimensions = {
         color: '#bae4b3',
       },
       {
-        label: 'Application filed',
-        value: 'Application filed',
+        label: 'Filed',
+        value: 'Filed',
         checked: true,
         color: '#edf8e9',
       },
     ],
   },
 
-  dcp_dev_category: {
+  job_type: {
     type: 'multiSelect',
     values: [
       {
@@ -99,36 +94,20 @@ const defaultFilterDimensions = {
     ],
   },
 
-  dcp_occ_category: {
-    type: 'multiSelect',
-    values: [
-      {
-        label: 'Residential',
-        value: 'Residential',
-        checked: true,
-      },
-      {
-        label: 'Other Accommodations',
-        value: 'Other Accommodations',
-        checked: true,
-      },
-    ],
-  },
-
-  u_net: {
+  units_net: {
     type: 'numberRange',
     values: [-800, 1800],
   },
 
-  c_date_earliest: {
+  co_earliest_effectivedate: {
     type: 'cofoDateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2018-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
   status_q: {
     type: 'dateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2018-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 };
@@ -138,23 +117,23 @@ function getColor(key, value) {
 }
 
 const circleColors = {
-  dcp_dev_category: {
-    property: 'dcp_dev_category',
+  job_type: {
+    property: 'job_type',
     type: 'categorical',
     stops: [
-      ['New Building', getColor('dcp_dev_category', 'New Building')],
-      ['Alteration', getColor('dcp_dev_category', 'Alteration')],
-      ['Demolition', getColor('dcp_dev_category', 'Demolition')],
+      ['New Building', getColor('job_type', 'New Building')],
+      ['Alteration', getColor('job_type', 'Alteration')],
+      ['Demolition', getColor('job_type', 'Demolition')],
     ],
   },
-  dcp_status: {
-    property: 'dcp_status',
+  status: {
+    property: 'status',
     type: 'categorical',
     stops: [
-      ['Application filed', getColor('dcp_status', 'Application filed')],
-      ['Permit issued', getColor('dcp_status', 'Permit issued')],
-      ['Partial complete', getColor('dcp_status', 'Partial complete')],
-      ['Complete', getColor('dcp_status', 'Complete')],
+      ['Filed', getColor('status', 'Filed')],
+      ['Permit issued', getColor('status', 'Permit issued')],
+      ['In progress', getColor('status', 'In progress')],
+      ['Complete', getColor('status', 'Complete')]
     ],
   },
 };

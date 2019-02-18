@@ -36,8 +36,8 @@ const Results = (props) => {
       case 'housing-development': {
         return (<HousingDevelopmentListItem
           feature={feature}
-          selected={feature.properties.dob_job_number.toString() === props.detailPageId.toString()}
-          key={`dev${feature.properties.dob_job_number}`}
+          selected={feature.properties.job_number.toString() === props.detailPageId.toString()}
+          key={`dev${feature.properties.job_number}`}
         />);
       }
       case 'cb-budgetrequests': {

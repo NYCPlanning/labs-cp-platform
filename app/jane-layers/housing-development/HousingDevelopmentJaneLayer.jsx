@@ -9,7 +9,7 @@ import appConfig from '../../config/appConfig';
 class HousingDevelopmentJaneLayer extends React.Component {
   render() {
     const legend = () => {
-      if (this.props.symbologyDimension === 'dcp_dev_category') {
+      if (this.props.symbologyDimension === 'job_type') {
         return (
           <div>
             <div className="legendSection">Housing Development</div>
@@ -29,13 +29,13 @@ class HousingDevelopmentJaneLayer extends React.Component {
         );
       }
 
-      if (this.props.symbologyDimension === 'dcp_status') {
+      if (this.props.symbologyDimension === 'status') {
         return (
           <div>
             <div className="legendSection">Housing Development</div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#edf8e9' }} />
-              <div className="legendItemText">Application filed</div>
+              <div className="legendItemText">Filed</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#bae4b3' }} />
@@ -57,9 +57,9 @@ class HousingDevelopmentJaneLayer extends React.Component {
     };
 
     const circleColor = () => {
-      if (this.props.symbologyDimension === 'dcp_dev_category') {
+      if (this.props.symbologyDimension === 'job_type') {
         return {
-          property: 'dcp_dev_category',
+          property: 'job_type',
           type: 'categorical',
           stops: [
             ['New Building', 'rgba(0, 228, 14, 0.7)'],
@@ -69,12 +69,12 @@ class HousingDevelopmentJaneLayer extends React.Component {
         };
       }
 
-      if (this.props.symbologyDimension === 'dcp_status') {
+      if (this.props.symbologyDimension === 'status') {
         return {
-          property: 'dcp_status',
+          property: 'status',
           type: 'categorical',
           stops: [
-            ['Application filed', '#edf8e9'],
+            ['Filed', '#edf8e9'],
             ['Permit issued', '#bae4b3'],
             ['Partial complete', '#74c476'],
             ['Complete', '#238b45'],
@@ -87,7 +87,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
 
     const pointsLayerPaint = {
       'circle-radius': {
-        property: 'u_net',
+        property: 'units_net',
         stops: [
           [{ zoom: 10, value: -12 }, 1],
           [{ zoom: 10, value: 1669 }, 2],

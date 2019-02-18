@@ -6,17 +6,17 @@ import cx from 'classnames';
 import { getColor } from '../filter-configs/housing-config';
 
 const Item = ({ feature, selected }) => {
-  const { dob_job_number,
-          dcp_dev_category,
+  const { job_number,
+          job_type,
           address,
-          dcp_status,
-          u_net } = feature.properties;
+          status,
+          units_net } = feature.properties;
 
   return (
-    <Link to={{ pathname: `/development/${dob_job_number}` }}>
+    <Link to={{ pathname: `/development/${job_number}` }}>
       <div
         className={cx('facilities-list-item', { selected })}
-        style={{ borderLeft: `5px solid ${getColor('dcp_dev_category', dcp_dev_category)}` }}
+        style={{ borderLeft: `5px solid ${getColor('job_type', job_type)}` }}
       >
 
         <div className="title">
@@ -24,7 +24,7 @@ const Item = ({ feature, selected }) => {
         </div>
 
         <div className="subtitle">
-          { dcp_status } | { u_net } units
+          { status } | { units_net } units
         </div>
       </div>
     </Link>
