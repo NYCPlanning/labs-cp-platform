@@ -214,6 +214,21 @@ class HousingDetailPage extends React.Component {
             </div>
           </div>
 
+          {
+            d.job_description.length && (
+              <div className="row">
+                <div className={'col-md-12'}>
+                  <div className="panel panel-default">
+                    <div className="panel-heading">DOB Job Description</div>
+                    <div className="panel-body">
+                      {d.job_description}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+
           <FeedbackForm
             displayUnit="Development"
             ref_type="development"
