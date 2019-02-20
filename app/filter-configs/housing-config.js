@@ -106,7 +106,7 @@ const defaultFilterDimensions = {
   },
 
   status_q: {
-    type: 'dateRange',
+    type: 'statusDateRange',
     values: [moment('2000-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },

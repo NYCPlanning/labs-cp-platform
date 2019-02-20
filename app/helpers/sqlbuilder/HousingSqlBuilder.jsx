@@ -17,7 +17,18 @@ class HousingSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `NOT (co_earliest_effectivedate >= '${dateRangeFormatted.to}' OR co_earliest_effectivedate <= '${dateRangeFormatted.from}')`;
+    return `((co_earliest_effectivedate >= '${dateRangeFormatted.from}' AND co_earliest_effectivedate <= '${dateRangeFormatted.to}') OR co_earliest_effectivedate IS NULL)`;
+  }
+
+  statusDateRange(dimension, filters) {
+    const range = filters[dimension].values;
+
+    const dateRangeFormatted = {
+      from: moment(range[0], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+      to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+    };
+
+    return `((status_q >= '${dateRangeFormatted.from}' AND status_q <= '${dateRangeFormatted.to}') OR status_q IS NULL)`;
   }
 
   // SQL WHERE partial builder for Checkboxes
