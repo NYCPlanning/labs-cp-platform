@@ -21,15 +21,7 @@ const sql = {
   FROM ${db_tables.housingdevdb}
   WHERE 
     (
-      status = 'Complete'
-      OR status = 'In progress'
-      OR status = 'Permit issued'
-      OR status = 'Filed'
-      OR status = 'Complete (demolition)'
-    ) AND (
-      job_type = 'New Building'
-      OR job_type = 'Alteration'
-      OR job_type = 'Demolition'
+      x_inactive = false
     ) AND (
       units_net >= '-800'
       AND units_net <= '1800'

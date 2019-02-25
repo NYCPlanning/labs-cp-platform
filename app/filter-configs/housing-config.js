@@ -101,13 +101,13 @@ const defaultFilterDimensions = {
 
   co_earliest_effectivedate: {
     type: 'cofoDateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    values: [moment('2010-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
   status_q: {
-    type: 'dateRange',
-    values: [moment('2010-12-31T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    type: 'statusDateRange',
+    values: [moment('2000-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 };
