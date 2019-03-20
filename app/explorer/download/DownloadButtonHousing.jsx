@@ -26,7 +26,7 @@ class DownloadButton extends React.Component {
             title={<span>{'Developments (cleaned) '}
               <InfoIcon
                 placement="left"
-                text="Dataset cleaned by DCP that excludes ungeocoded records, duplicates, outliers, and withdrawn and suspended developments."
+                text="Full processed dataset excluding withdrawn, inactive, and alterations where net change in units could not be calculated."
               />
               <Badge>{counts.total}</Badge></span>}
             id={`${layerID}-cleaned`}
@@ -82,7 +82,7 @@ class DownloadButton extends React.Component {
             title={<span>{'Developments (raw) '}
               <InfoIcon
                 placement="left"
-                text="Full, raw dataset including ungeocoded records, duplicates, outliers, and withdrawn and suspended developments."
+                text="Full processed dataset including withdrawn, inactive, and alterations where net change in units could not be calculated."
               />
               <Badge>{counts.raw}</Badge></span>}
             id={`${layerID}-raw`}
