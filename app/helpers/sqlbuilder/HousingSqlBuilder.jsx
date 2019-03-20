@@ -13,8 +13,8 @@ class HousingSqlBuilder extends SqlBuilder {
     const range = filters[dimension].values;
 
     const dateRangeFormatted = {
-      from: moment(range[0], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
-      to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+      from: moment(range[0], 'X').startOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+      to: moment(range[1], 'X').endOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
     return `((co_earliest_effectivedate >= '${dateRangeFormatted.from}' AND co_earliest_effectivedate <= '${dateRangeFormatted.to}') OR co_earliest_effectivedate IS NULL)`;
@@ -24,8 +24,8 @@ class HousingSqlBuilder extends SqlBuilder {
     const range = filters[dimension].values;
 
     const dateRangeFormatted = {
-      from: moment(range[0], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
-      to: moment(range[1], 'X').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+      from: moment(range[0], 'X').startOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
+      to: moment(range[1], 'X').endOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
     return `((status_q >= '${dateRangeFormatted.from}' AND status_q <= '${dateRangeFormatted.to}') OR status_q IS NULL)`;
