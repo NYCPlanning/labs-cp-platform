@@ -222,10 +222,38 @@ class FacilityDetailPage extends React.Component {
                   <div className="panel-heading">Required Amenities</div>
                   <table className="table datasource-table" key={d.cartodb_id}>
                     <tbody>
+                      { p.artwork &&
+                        <tr>
+                          <td>Artwork</td>
+                          <td><strong>{p.artwork}</strong></td>
+                        </tr>
+                      }
+
                       { p.bicycle_parking &&
                         <tr>
                           <td>Bicycle Parking</td>
                           <td><strong>{p.bicycle_parking}</strong></td>
+                        </tr>
+                      }
+
+                      { p.climate_control &&
+                        <tr>
+                          <td>Climate Control</td>
+                          <td><strong>{p.climate_control}</strong></td>
+                        </tr>
+                      }
+
+                      { p.escalator &&
+                        <tr>
+                          <td>Escalator</td>
+                          <td><strong>{p.escalator}</strong></td>
+                        </tr>
+                      }
+
+                      { p.food_service &&
+                        <tr>
+                          <td>Food Service</td>
+                          <td><strong>{p.food_service}</strong></td>
                         </tr>
                       }
 
@@ -254,6 +282,20 @@ class FacilityDetailPage extends React.Component {
                         <tr>
                           <td>Plaque Sign</td>
                           <td><strong>{p.plaque_sign}</strong></td>
+                        </tr>
+                      }
+
+                      { p.restrooms &&
+                        <tr>
+                          <td>Restrooms</td>
+                          <td><strong>{p.restrooms}</strong></td>
+                        </tr>
+                      }
+
+                      { p.retail_frontage &&
+                        <tr>
+                          <td>Retail Frontage</td>
+                          <td><strong>{p.retail_frontage}</strong></td>
                         </tr>
                       }
 
