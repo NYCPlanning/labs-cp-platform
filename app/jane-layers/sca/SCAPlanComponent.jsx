@@ -19,7 +19,7 @@ const SCAPlanComponent = () => {
           <div className="scroll-container padded">
             <h4>Product Overview</h4>
             <p>
-              <b>The SCA Capital Plan Map’s</b> reports data from and maps school projects reported in the SCA Capital Plan published by the School Construction Authority in February 2017.  The main purpose of this tool is to be a starting point for exploring potential, planned, and ongoing SCA capital projects to better understand and communicate New York City’s capital project portfolio within and across particular agencies. This view provides a broad understanding of what projects are taking place within a certain area, and opportunities for strategic neighborhood planning.
+              <b>The SCA Capital Plan Map’s</b> reports data from and maps school projects reported in the SCA Capital Plan published by the School Construction Authority.  The main purpose of this tool is to be a starting point for exploring potential, planned, and ongoing SCA capital projects to better understand and communicate New York City’s capital project portfolio within and across particular agencies. This view provides a broad understanding of what projects are taking place within a certain area, and opportunities for strategic neighborhood planning.
             </p>
 
             <h4>Limitations and Disclaimers</h4>
