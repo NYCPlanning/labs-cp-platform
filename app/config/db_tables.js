@@ -18,7 +18,7 @@ const db_tables = {
     pops: 'pops_v201808',
   },
   housingdevdb: 'devdb_housing_pts_19v1',
-  sca: 'sca_pts_201807_v1',
+  sca: 'sca_capital_projects_v2019',
   support: {
     nta: 'nta_boundaries_v0',
     ih: 'inclusionary_housing_v201709',
