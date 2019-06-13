@@ -1,12 +1,12 @@
 const db_tables = {
   cpdb: {
-    budgets: 'cpdb_budgets_201902',
-    commitments: 'cpdb_commitments_201902',
-    projects: 'cpdb_projects_201902',
-    projects_combined: 'cpdb_projects_combined_201902',
-    adminbounds: 'cpdb_adminbounds_201902',
-    points: 'cpdb_dcpattributes_pts_201902',
-    polygons: 'cpdb_dcpattributes_poly_201902',
+    budgets: 'cpdb_budgets_201905',
+    commitments: 'cpdb_commitments_201905',
+    projects: 'cpdb_projects_201905',
+    projects_combined: 'cpdb_projects_combined_201905',
+    adminbounds: 'cpdb_adminbounds_201905',
+    points: 'cpdb_dcpattributes_pts_201905',
+    polygons: 'cpdb_dcpattributes_poly_201905',
   },
   cb_budget_requests: {
     points: 'cbbr_fy19_pts_v1',
