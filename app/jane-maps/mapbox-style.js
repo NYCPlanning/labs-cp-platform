@@ -14,7 +14,7 @@ const mapboxStyle = {
   'sources': {
     'openmaptiles': {
       'type': 'vector',
-      'url': 'https:\/\/layers-api.planninglabs.nyc\/static\/v3.json'
+      'url': 'https:\/\/layers-api-staging.planninglabs.nyc\/static\/v3.json'
     },
     'aerials-2016': {
       'id': 'aerials-2016',
@@ -183,7 +183,7 @@ const mapboxStyle = {
       'minzoom': 0
     }
   },
-  'sprite': 'https:\/\/layers-api.planninglabs.nyc\/static\/sprite',
+  'sprite': 'https:\/\/layers-api-staging.planninglabs.nyc\/static\/sprite',
   'glyphs': 'https:\/\/tiles.planninglabs.nyc\/fonts\/{fontstack}\/{range}.pbf',
   'layers': [
     {
