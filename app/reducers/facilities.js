@@ -3,6 +3,7 @@ import getDefaultFilterDimensions from '../facilities/config';
 import { getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 
 const totalcounts = require('../config/totalcounts.json');
+
 const defaultFilterDimensions = getDefaultFilterDimensions({ selected: 'all' });
 
 const initialState = {
@@ -64,11 +65,11 @@ const facilitiesReducer = (state = initialState, action) => {
         'proptype',
         'nta',
         'commboard',
-        'admin_censtract',
-        'admin_council',
+        'censtract',
+        'council',
         'admin_policeprecinct',
         'admin_schooldistrict',
-        'admin_borocode',
+        'borocode',
       ];
 
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)

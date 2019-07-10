@@ -58,17 +58,17 @@ const getDefaultFilterDimensions = ({ selected, values }) => ({
     disabled: true,
     values: LabelHelper.get_labels('nta'),
   },
-  admin_borocode: {
+  borocode: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
   },
-  admin_censtract: {
+  censtract: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),
   },
-  admin_council: {
+  council: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('council'),

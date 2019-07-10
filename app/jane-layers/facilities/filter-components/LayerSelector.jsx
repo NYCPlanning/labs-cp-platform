@@ -142,9 +142,9 @@ class LayerSelector extends React.Component {
       radiusfilter,
       commboard,
       nta,
-      admin_borocode,
-      admin_censtract,
-      admin_council,
+      borocode,
+      censtract,
+      council,
       admin_policeprecinct,
       admin_schooldistrict,
     } = filterDimensions;
@@ -188,20 +188,20 @@ class LayerSelector extends React.Component {
               filterDimensions={{
                 commboard,
                 nta,
-                admin_borocode,
-                admin_censtract,
-                admin_council,
+                borocode,
+                censtract,
+                council,
                 admin_policeprecinct,
                 admin_schooldistrict,
               }}
               options={[
                 { value: 'commboard', label: 'Community District' },
-                { value: 'admin_borocode', label: 'Borough' },
+                { value: 'borocode', label: 'Borough' },
                 { value: 'nta', label: 'Neighborhood Tabulation Area' },
-                { value: 'admin_council', label: 'City Council District' },
-                { value: 'admin_censtract', label: 'Census Tract' },
-                { value: 'admin_policeprecinct', label: 'Police Precinct' },
-                { value: 'admin_schooldistrict', label: 'School District' },
+                { value: 'council', label: 'City Council District' },
+                // { value: 'censtract', label: 'Census Tract' },
+                // { value: 'admin_policeprecinct', label: 'Police Precinct' },
+                // { value: 'admin_schooldistrict', label: 'School District' },
               ]}
             />
           </ListItem>
