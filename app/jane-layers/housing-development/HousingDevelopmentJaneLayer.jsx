@@ -43,7 +43,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#74c476' }} />
-              <div className="legendItemText">Partial complete</div>
+              <div className="legendItemText">Partial complete / In progress</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#238b45' }} />

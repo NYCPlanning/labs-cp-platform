@@ -50,6 +50,12 @@ const defaultFilterDimensions = {
         color: '#238b45',
       },
       {
+        label: 'Partial complete',
+        value: 'Partial complete',
+        checked: true,
+        color: '#74c476',
+      },
+      {
         label: 'In progress',
         value: 'In progress',
         checked: true,
