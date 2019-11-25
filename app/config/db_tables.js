@@ -13,9 +13,9 @@ const db_tables = {
     polygons: 'cbbr_fy19_poly_v1',
   },
   facdb: {
-    datasources: 'facdb_datasources_v201811',
-    facilities: 'facdb_v201811',
-    pops: 'pops_v201808',
+    datasources: 'facdb_datasources_v2019_11',
+    facilities: 'facdb_v2019_11',
+    pops: 'pops_v201909',
   },
   housingdevdb: 'devdb_housing_pts_19v3',
   sca: 'sca_capital_projects_v2019',
