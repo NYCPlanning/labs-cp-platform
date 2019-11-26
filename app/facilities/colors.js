@@ -12,7 +12,7 @@ const colors = {
       property: 'facdomain',
       type: 'categorical',
       stops: defaultLayers.map(layer => [
-        layer.name,
+        layer.name.toUpperCase(),
         layer.color,
       ]),
     };

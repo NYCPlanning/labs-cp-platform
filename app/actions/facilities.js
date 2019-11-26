@@ -4,20 +4,11 @@ import { sqlConfig, getSql } from '../helpers/sqlbuilder/FacilitiesSqlBuilder';
 import db_tables from '../config/db_tables';
 
 export const fetchFacilityDetails = (facilityId, facilityRoute = 'facility') => {
-  if (facilityRoute === 'facility') {
-    return cartoActions.getFeature({
-      tableName: sqlConfig.tablename,
-      column: 'uid',
-      value: facilityId,
-    }, AT.FETCH_FACILITY_DETAILS);
-  }
-
-  if (facilityRoute === 'pops') {
-    return cartoActions.getPops({
-      tableName: sqlConfig.tablename,
-      value: facilityId,
-    }, AT.FETCH_FACILITY_DETAILS);
-  }
+  return cartoActions.getFeature({
+    tableName: sqlConfig.tablename,
+    column: 'uid',
+    value: facilityId,
+  }, AT.FETCH_FACILITY_DETAILS);
 };
 
 export const fetchPopsDetails = popsId =>

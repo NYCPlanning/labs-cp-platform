@@ -8,7 +8,6 @@ import _ from 'lodash';
 
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
-import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
 
 import './PopsDetailPage.scss';
 
@@ -43,76 +42,45 @@ class FacilityDetailPage extends React.Component {
     const d = facilityDetails.properties;
     const p = popsDetails.properties;
 
-    const wrapInLink = (link, text) => {
-      // The database stores 'NA' for links that do not exist
-      if (link && link !== 'NA') {
-        return <a href={link}>{text}</a>;
-      }
-      return text;
-    };
-
     const sourceDataDetails = () => {
-      const sourceDetails = sources.map((s) => {
-        const idAgency = dbStringAgencyLookup(d.idagency, s.datasource);
-        return (
-          <table className="table datasource-table" key={s.datasourcefull}>
-            <thead>
-              <tr>
-                <td colSpan="2"><h4>{s.datasourcefull}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{s.datasource}</span></h4></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Source Dataset</td>
-                <td><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></td>
-              </tr>
-              <tr>
-                <td>Facility ID in Source Data</td>
-                <td><h5>{idAgency ? idAgency.value : 'None Provided'}</h5></td>
-              </tr>
-              <tr>
-                <td>Last Updated</td>
-                <td><h5>{s.datadate}</h5></td>
-              </tr>
-            </tbody>
-          </table>
-        );
-      });
-
-      return sourceDetails;
-    };
-
-    const bblList = (string) => {
-      const array = dbStringToArray(string);
+      const s = sources[0];
 
       return (
-        <ul>
-          { array.map(item => <li key={item}><a href={`https://zola.planning.nyc.gov/bbl/${item}`} target="_blank">{item}</a></li>) }
-        </ul>
+        <table className="table datasource-table" key={s.common_name}>
+          <thead>
+            <tr>
+              <td colSpan="2"><h4>{s.common_name}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{s.data_source}</span></h4></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Source Index</td>
+              <td><h5><a href={s.source_index_page}>source</a></h5></td>
+            </tr>
+            <tr>
+              <td>Source Download</td>
+              <td><h5><a href={s.source_url}>download</a></h5></td>
+            </tr>
+            <tr>
+              <td>Last Updated</td>
+              <td><h5>{s.date_data_source_updated}</h5></td>
+            </tr>
+          </tbody>
+        </table>
       );
     };
 
-    const binList = (string) => {
-      const array = dbStringToArray(string);
+    // const popsTooltip = () => {
+    //   if (d.facsubgrp === 'PRIVATELY OWNED PUBLIC SPACE') {
+    //     return (
+    //       <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP issues POPS approvals, and DOB is responsible for POPS enforcement.</Tooltip>}>
+    //         <i className="fa fa-info-circle" aria-hidden="true" />
+    //       </OverlayTrigger>
+    //     );
+    //   }
 
-      return (
-        <ul>
-          { array.map(item => <li key={item}><a href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${item}&go4=+GO+&requestid=0`} target="_blank">{item}</a></li>) }
-        </ul>
-      );
-    };
-
-    const popsTooltip = () => {
-      if (d.facsubgrp === 'Privately Owned Public Space') {
-        return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DCP issues POPS approvals, and DOB is responsible for POPS enforcement.</Tooltip>}>
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
-        );
-      }
-
-      return null;
-    };
+    //   return null;
+    // };
 
     const facilityAddress = () => {
       if (d.address && d.zipcode) return `${d.address}, ${d.city}, NY ${d.zipcode}`;
@@ -172,13 +140,13 @@ class FacilityDetailPage extends React.Component {
                         <td>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
                           <i className="fa fa-info-circle" aria-hidden="true" />
                         </OverlayTrigger></td>
-                        <td><strong>{d.bbl ? bblList(d.bbl) : 'Not Available'}</strong></td>
+                        <td><strong>{d.bbl ? d.bbl : 'Not Available'}</strong></td>
                       </tr>
                       <tr>
                         <td>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
                           <i className="fa fa-info-circle" aria-hidden="true" />
                         </OverlayTrigger></td>
-                        <td><strong>{d.bin ? binList(d.bin) : 'Not Available'}</strong></td>
+                        <td><strong>{d.bin ? d.bin : 'Not Available'}</strong></td>
                       </tr>
                       <tr>
                         <td>Property Type</td>
