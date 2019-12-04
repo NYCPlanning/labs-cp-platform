@@ -3,7 +3,7 @@ import * as AT from '../constants/actionTypes';
 import * as authActions from '../actions/auth';
 import Auth from '../helpers/Auth';
 
-const authMiddleware = ({ getState, dispatch }) => next => (action) => {
+const authMiddleware = ({ dispatch }) => next => (action) => {
   const auth = new Auth();
 
   if (action.type === AT.LOAD_CREDENTIALS) {
@@ -13,9 +13,9 @@ const authMiddleware = ({ getState, dispatch }) => next => (action) => {
     }
   }
 
-  if (action.type === AT.AUTH0_LOGIN) {
+  if (action.type === AT.AUTH0_LOGIN) {  
     auth.login({
-      redirectUri: action.payload.targetPath ? action.payload.targetPath : location.pathname,
+      redirectUri: action.payload.targetPath ? action.payload.targetPath : '/', // previously pointed to location.pathname
     });
   }
 
