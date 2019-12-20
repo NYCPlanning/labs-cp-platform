@@ -200,9 +200,8 @@ class Explorer extends React.Component {
       case 'housing-development':
         return `/development/${feature.properties.job_number}`;
       case 'facilities': {
-        if (feature.properties.factype === 'Privately Owned Public Space') {
-          const pops_id = feature.properties.idagency.match(/: (\w+)/)[1];
-          return `/pops/${pops_id}`;
+        if (feature.properties.factype === 'PRIVATELY OWNED PUBLIC SPACE') {
+          return `/pops/${feature.properties.uid}`;
         }
         return `/facility/${feature.properties.uid}`;
       }

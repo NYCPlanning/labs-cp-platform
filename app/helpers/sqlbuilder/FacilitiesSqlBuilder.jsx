@@ -29,7 +29,7 @@ class FacilitiesSqlBuilder extends SqlBuilder {
 
     selectedLayers.forEach((name, i) => {
       if (i > 0) layersChunk += ' OR ';
-      layersChunk += `facsubgrp = '${name}'`;
+      layersChunk += `facsubgrp = '${name.toUpperCase()}'`;
     });
 
     return (layersChunk.length > 0) ? `(${layersChunk})` : 'false';

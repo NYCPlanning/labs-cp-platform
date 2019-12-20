@@ -8,7 +8,6 @@ import _ from 'lodash';
 
 import FeedbackForm from '../common/FeedbackForm';
 import * as facilitiesActions from '../actions/facilities';
-import { dbStringToArray, dbStringAgencyLookup, dbStringToObject } from '../helpers/dbStrings';
 
 import './FacilityDetailPage.scss';
 
@@ -44,126 +43,38 @@ class FacilityDetailPage extends React.Component {
     }
 
     const d = facilityDetails.properties;
-    const isPublicSchool = d.facsubgrp === 'Public K-12 Schools';
-
-    const wrapInLink = (link, text) => {
-      // The database stores 'NA' for links that do not exist
-      if (link && link !== 'NA') {
-        return <a href={link}>{text}</a>;
-      }
-      return text;
-    };
+    const isPublicSchool = d.facsubgrp === 'PUBLIC K-12 SCHOOLS';
 
     const sourceDataDetails = () => {
-      const sourceDetails = sources.map((s) => {
-        const idAgency = dbStringAgencyLookup(d.idagency, s.datasource);
-        return (
-          <table className="table datasource-table" key={s.datasourcefull}>
-            <thead>
-              <tr>
-                <td colSpan="2"><h4>{s.datasourcefull}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{s.datasource}</span></h4></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Source Dataset</td>
-                <td><h5>{wrapInLink(s.dataurl, s.dataname)}</h5></td>
-              </tr>
-              <tr>
-                <td>Facility ID in Source Data</td>
-                <td><h5>{idAgency ? idAgency.value : 'None Provided'}</h5></td>
-              </tr>
-              <tr>
-                <td>Last Updated</td>
-                <td><h5>{s.datadate}</h5></td>
-              </tr>
-            </tbody>
-          </table>
-        );
-      });
-
-      return sourceDetails;
-    };
-
-    const targetCapacity = (data) => {
-      const capacity = dbStringToObject(data)[0].value.split(',');
+      const s = sources[0];
 
       return (
-        <ul>
-          <li key={0} className="usage-list">
-            <h3>{capacity[0]} <small>PS Seats</small></h3>
-          </li>
-          <li key={1} className="usage-list">
-            <h3>{capacity[1]} <small>IS Seats</small></h3>
-          </li>
-          <li key={2} className="usage-list">
-            <h3>{capacity[2]} <small>HS Seats</small></h3>
-          </li>
-        </ul>
+        <table className="table datasource-table" key={s.common_name}>
+          <thead>
+            <tr>
+              <td colSpan="2"><h4>{s.common_name}<span style={{ lineHeight: 2.5, marginLeft: '10px', bottom: '4px' }} className="label label-default">{s.data_source}</span></h4></td>
+            </tr>
+          </thead>
+          <tbody>
+            {(s.source_index_page) &&
+            <tr>
+              <td>Source Index</td>
+              <td><h5><a href={s.source_index_page}>source</a></h5></td>
+            </tr>
+            }
+            {(s.source_url) &&
+              <tr>
+                <td>Source Download</td>
+                <td><h5><a href={s.source_url}>download</a></h5></td>
+              </tr>
+            }
+            <tr>
+              <td>Last Updated</td>
+              <td><h5>{s.date_data_source_updated}</h5></td>
+            </tr>
+          </tbody>
+        </table>
       );
-    };
-
-    const usageList = (data, type, subtext = null) => {
-      if (data && type) {
-        const sizes = dbStringToObject(data);
-
-        const list = sizes.map(size =>
-          (
-            <li key={size.index} className="usage-list">
-              <h3>{size.value} <small>{subtext ? subtext : dbStringAgencyLookup(type, size.agency).value}</small></h3>
-              <h4><span className="label label-default">{size.agency}</span></h4>
-            </li>
-          ),
-        );
-
-        return (
-          <ul>{list}</ul>
-        );
-      }
-
-      return (<div><h3>Not Available</h3></div>);
-    };
-
-    const asList = (string) => {
-      const array = dbStringToArray(string);
-
-      return (
-        <ul>
-          { array.map(item => <li key={item}>{item}</li>) }
-        </ul>
-      );
-    };
-
-    const bblList = (string) => {
-      const array = dbStringToArray(string);
-
-      return (
-        <ul>
-          { array.map(item => <li key={item}><a href={`https://zola.planning.nyc.gov/bbl/${item}`} target="_blank">{item}</a></li>) }
-        </ul>
-      );
-    };
-
-    const binList = (string) => {
-      const array = dbStringToArray(string);
-
-      return (
-        <ul>
-          { array.map(item => <li key={item}><a href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${item}&go4=+GO+&requestid=0`} target="_blank">{item}</a></li>) }
-        </ul>
-      );
-    };
-
-    const childcareTooltip = () => {
-      if (d.facgroup === 'Child Care and Pre-Kindergarten') {
-        return (
-          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Please note that DOE, ACS, and DOHMH capacity numbers for DOE Universal Pre-K and Child Care sites do not match up, because they are all calculated and tracked for different purposes. DOE and ACS each track the number of program seats their agency oversees or funds at a facility based on their respective contracts. DOHMH determines capacity as the maximum capacity the space will allow based on square footage.</Tooltip>}>
-            <i className="fa fa-info-circle" aria-hidden="true" />
-          </OverlayTrigger>
-        );
-      }
-
-      return null;
     };
 
     const facilityAddress = () => {
@@ -208,27 +119,18 @@ class FacilityDetailPage extends React.Component {
               <div className={'col-md-6'}>
                 <div>
                 Overseen By
-                  <h3>{asList(d.overagency)}</h3>
+                  <h3>{d.overagency}</h3>
                 </div>
               </div>
             </div>
 
-            {(d.capacity.length > 0 || d.util.length > 0 || d.area.length > 0) && // hide capacity &util information boxes if the record has neither
+            {(d.capacity) && // hide capacity &util information boxes if the record has neither
               (
                 <div className="row equal" style={{ marginBottom: '15px' }}>
                   <div className={'col-md-6'}>
                     <div>
-                      { isPublicSchool ? 'Target Capacity' : 'Facility Size' } {childcareTooltip()}
-                      { isPublicSchool ?
-                        targetCapacity(d.capacity) :
-                        (d.capacity ? usageList(d.capacity, d.captype) : usageList(d.area, d.areatype))
-                      }
-                    </div>
-                  </div>
-                  <div className={'col-md-6'}>
-                    <div>
-                      { isPublicSchool ? 'Enrollment' : 'Utilization' }
-                      {usageList(d.util, d.captype, 'Total Students (PS, MS, HS)')}
+                      { isPublicSchool ? 'Target Capacity' : 'Facility Size' }
+                      <h3>{d.capacity} <small>{d.captype}</small></h3>
                     </div>
                   </div>
                 </div>
@@ -242,11 +144,11 @@ class FacilityDetailPage extends React.Component {
                     <div className="property-detail-blocks"><h4><small>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
                       <i className="fa fa-info-circle" aria-hidden="true" />
                     </OverlayTrigger>
-                    </small></h4><h4>{d.bbl ? bblList(d.bbl) : 'Not Available'}</h4></div>
+                    </small></h4><h4>{d.bbl ? d.bbl : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>BIN (Building ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BIN hyperlink to get more infomation about this building from the NYC Dept. of Buildings.</Tooltip>}>
                       <i className="fa fa-info-circle" aria-hidden="true" />
                     </OverlayTrigger>
-                    </small></h4><h4>{d.bin ? binList(d.bin) : 'Not Available'}</h4></div>
+                    </small></h4><h4>{d.bin ? d.bin : 'Not Available'}</h4></div>
                     <div className="property-detail-blocks"><h4><small>Property Type</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                   </div>
                 </div>

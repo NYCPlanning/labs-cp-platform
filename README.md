@@ -11,16 +11,6 @@ At the time of writing, the app is "backendless", and is using an in-house carto
 
 We are not storing carto api keys in the client-side code, so all interactions with the carto server are read-only. 
 
-### React-Router
-React router handles
-
-### Leaflet (cartodb.js)
-
-### MapboxGL
-
-### Auth0
-
-
 
 ## Main Products
 
@@ -81,3 +71,9 @@ To deploy to staging:
 `git push staging staging:master` (This is because dokku only works with a branch called master, so we are calling staging master when pushing to the staging dokku app)
 
 Update readme
+
+#### Updating data
+
+Carto table names are stored in `app/config/db_tables.js`. To update a dataset, simply point to the latest table, making sure the schema is the same.
+
+After pointing to a new table, run `yarn generate-totalcounts`. This script queries Carto, getting total counts of rows and other metadata used by the app.

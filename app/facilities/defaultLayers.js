@@ -44,10 +44,6 @@ const defaultLayers = [
             description: 'NYC DOE designated Universal Pre-K center',
           },
           {
-            name: 'Dual Child Care and Universal Pre-K',
-            description: 'Center that offers both a NYC DOE desgiated Universal Pre-K services and other child care services',
-          },
-          {
             name: 'Day Care',
             description: 'Group and school-based child care centers for infants, toddlers, and preschoolers',
           },
@@ -67,10 +63,6 @@ const defaultLayers = [
             description: 'Foster care services and juvenile non-secure placement',
           },
           {
-            name: 'Preventative Care, Evaluation Services, and Respite',
-            description: 'Preventative care and intervention services',
-          },
-          {
             name: 'Child Nutrition',
             description: 'Summer and year-round child feeding centers, either based at NYC Dept of Education schools or tracked by New York State Education Department',
           },
@@ -82,8 +74,23 @@ const defaultLayers = [
         color: '#b67eb7',
         children: [
           {
-            name: 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
-            description: 'Youth Centers, Literacy Programs, Job Training, and Immigrant Services',
+            name: 'Youth Centers, Literacy Programs, and Job Training Services',
+            description: 'Youth Centers, Literacy Programs, and Job Training Services',
+          },
+          {
+            name: 'After-School Programs',
+            description: 'After-School Programs',
+          },
+        ],
+      },
+      {
+        name: 'Adult Services',
+        description: '',
+        color: '#b67eb7',
+        children: [
+          {
+            name: 'Adult and Immigrant Literacy',
+            description: 'Adult and Immigrant Literacy',
           },
         ],
       },
@@ -326,6 +333,10 @@ const defaultLayers = [
             description: 'Neighborhood senior centers, meal delivery programs, and other services for seniors',
           },
           {
+            name: 'Immigrant Services',
+            description: 'Immigrant Services',
+          },
+          {
             name: 'Community Centers and Community School Programs',
             description: 'Community centers that provide multiple social services at one site',
           },
@@ -344,10 +355,6 @@ const defaultLayers = [
           {
             name: 'Programs for People with Disabilities',
             description: 'Specialized child care, caregiver support, and recreational services',
-          },
-          {
-            name: 'Permanent Supportive SRO Housing',
-            description: 'Permanent supportive SRO housing contracted by DHS',
           },
           {
             name: 'Non-residential Housing and Homeless Services',

@@ -9,9 +9,8 @@ const Item = (props) => {
   const d = props.feature.properties;
 
   function pathname() {
-    if (d.facsubgrp === 'Privately Owned Public Space') {
-      const pops_id = d.idagency.match(/: (\w+)/)[1];
-      return `/pops/${pops_id}`;
+    if (d.facsubgrp === 'PRIVATELY OWNED PUBLIC SPACE') {
+      return `/pops/${d.uid}`;
     }
     return `/facility/${d.uid}`;
   }
