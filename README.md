@@ -1,6 +1,8 @@
 # The Capital Planning Platform
 
-A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team
+> A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team
+
+[![](docs/landing.png)](capitalplanning.nyc.gov)
 
 ## Architecture
 As an SPA, all of the business logic and routing are done client-side.  The app is comprised of various React.js Components and makes use of React-Router for client-side routing. The React JSX files are built with webpack to create a single `bundle.js` file.
@@ -10,7 +12,6 @@ The app makes heavy use of various web mapping technologies, including raster ma
 At the time of writing, the app is "backendless", and is using an in-house carto server as both its datastore and tiler.  The carto SQL api allows us to pass in SQL statements using AJAX and getting back JSON or geoJSON results for use in the app.  The carto maps api allows for the on-demand creation of custom vector and raster tiles, which can be displayed in the app using carto.js (leaflet) or mapboxGL.js
 
 We are not storing carto api keys in the client-side code, so all interactions with the carto server are read-only. 
-
 
 ## Main Products
 
@@ -26,51 +27,36 @@ Facilities DB is a new dataset of government-related facilities.  The map applic
 Shows locations of new housing units compiled primarily from DOB permit records and certificates of occupancy.
 
 
-###Development Environment
-
-We use `webpack-dev-server` to serve the app locally, which takes care of building the bundle and hot-reloading the browser when changes are saved to the code.
+## Develop
+Since `staging` will likely be ahead of `master`, do work in feature branches off of `staging`, incorporate/publish to production by creating PRs from `staging` into `master`.  
 
 To get serve the project locally:
 
- - Clone this repository 
- `git clone https://github.com/NYCPlanning/capital-planning-platform.git`
+1. Clone this repository 
+    ```sh
+    git clone https://github.com/NYCPlanning/capital-planning-platform.git
+    ```
+2. Navigate to the directory
+    ```sh
+    cd capital-planning-platform
+    ```
+3. Install dependencies
+   ```sh
+   npm install
+   ```
+4. Serve locally
+   ```sh
+   # uses webpack dev server to bundle and hot reload
+   npm run devserve
+   ```
+5. Go to `localhost:8080` in your web browser
 
- - Navigate to the directory
- `cd capital-planning-platform`
+## Deploy  
+The SPA is hosted on Netlify.  
+- `master` branch is automatically deployed to capitalplanning.nyc.gov.  
+- `staging` branch is automatically deployed to 
+  - each pull request will get a preview deploy for viewing before merge.  See the PR for details on the URL for this preview deploy, or head to the application on Netlify.
 
- -Install dependencies
- `npm install`
-
- -Serve the application
- `npm run devserve`
- This command uses webpack dev server to build the bundle and serve the app.
-
- -Load the app
- You should be able to access the app at `http://localhost:8080`
-
-
-
-### Development Workflow
-
-#### Letsencrypt
-Traffic to the various Dokku apps is encrypted with SSL, using the [dokku letsencrypt plugin](https://github.com/dokku/dokku-letsencrypt).  When a certificate expires, a simple command `dokku letsencrypt:auto-renew` can be run on the server to automatically renew old certificates.
-
-### Deploying
-By using dokku, the app can be deployed simply by pushing the repo to a different remote:
-
-To set up the production app:
-`git remote add dokku dokku@capitalplanning.nyc:cpp`
-
-To set up the staging app:
-`git remote add staging dokku@capitalplanning.nyc:staging`
-
-To deploy to production:
-`git push dokku master`
-
-To deploy to staging:
-`git push staging staging:master` (This is because dokku only works with a branch called master, so we are calling staging master when pushing to the staging dokku app)
-
-Update readme
 
 #### Updating data
 
