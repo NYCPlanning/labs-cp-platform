@@ -13,7 +13,7 @@ const db_tables = {
     polygons: 'cbbr_fy19_poly_v1',
   },
   facdb: {
-    datasources: 'facdb_datasources_v2019_11',
+    datasources: 'facdb_datasources_v2019_12',
     facilities: 'facdb_v2019_12',
     pops: 'pops_v201912_1',
   },
