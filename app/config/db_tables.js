@@ -1,23 +1,23 @@
 const db_tables = {
   cpdb: {
-    budgets: 'cpdb_budgets_19nov',
-    commitments: 'cpdb_commitments_19nov',
-    projects: 'cpdb_projects_19nov',
-    projects_combined: 'cpdb_projects_combined_19nov',
-    adminbounds: 'cpdb_adminbounds_19nov',
-    points: 'cpdb_dcpattributes_pts_19nov',
-    polygons: 'cpdb_dcpattributes_poly_19nov',
+    budgets: 'cpdb_budgets_20apr',
+    commitments: 'cpdb_commitments_20apr',
+    projects: 'cpdb_projects_20apr',
+    projects_combined: 'cpdb_projects_combined_20apr',
+    adminbounds: 'cpdb_adminbounds_20apr',
+    points: 'cpdb_dcpattributes_pts_20apr',
+    polygons: 'cpdb_dcpattributes_poly_20apr',
   },
   cb_budget_requests: {
-    points: 'cbbr_fy19_pts_v1',
-    polygons: 'cbbr_fy19_poly_v1',
+    points: 'cbbr_fy20_pts_v2',
+    polygons: 'cbbr_fy20_poly_v2',
   },
   facdb: {
     datasources: 'facdb_datasources_v2019_12',
     facilities: 'facdb_v2019_12',
     pops: 'pops_v201912_1',
   },
-  housingdevdb: 'devdb_housing_pts_19v3',
+  housingdevdb: 'devdb_housing_pts_20v1',
   sca: 'sca_capital_projects_v2019',
   support: {
     nta: 'nta_boundaries_v0',

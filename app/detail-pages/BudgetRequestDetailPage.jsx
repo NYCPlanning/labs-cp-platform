@@ -34,7 +34,7 @@ class BudgetRequestDetailPage extends React.Component {
               <h1>{d.need}</h1>
               <h2 style={{ marginBottom: '5px' }}>
                 <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
-                <small>{d.sitename} {d.addressnum} {d.streename}</small>
+                <small>{d.sitename} {d.address}</small>
               </h2>
             </div>
           </div>
