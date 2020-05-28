@@ -64,7 +64,7 @@ class HousingSqlBuilder extends SqlBuilder {
 
   housingBuildSql(filterDimensions) {
     const sql = this.buildSql(filterDimensions);
-    return `${sql} AND x_inactive IS NOT true`;
+    return `${sql} AND x_inactive <> 'Inactive'`;
   }
 }
 
