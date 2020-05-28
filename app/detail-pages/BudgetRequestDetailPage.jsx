@@ -24,7 +24,7 @@ class BudgetRequestDetailPage extends React.Component {
   renderContent = (data) => {
     const d = data.properties;
     const inTopTen = () => parseInt(d.priority) <= 10;
-    const budgetCategoryColor = d.budgetcategory === 'Capital' ? '#b2df8a' : '#a6cee3';
+    const type_brColor = d.type_br === 'Capital' ? '#b2df8a' : '#a6cee3';
 
     return (
       <div className="cb-budget-request-page">
@@ -33,7 +33,7 @@ class BudgetRequestDetailPage extends React.Component {
             <div className="col-md-12">
               <h1>{d.need}</h1>
               <h2 style={{ marginBottom: '5px' }}>
-                <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
+                <span className={'badge'} style={{ backgroundColor: type_brColor }}>{d.type_br}</span>
                 <small>{d.sitename} {d.address}</small>
               </h2>
             </div>

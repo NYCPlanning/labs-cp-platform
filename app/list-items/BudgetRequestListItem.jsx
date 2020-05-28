@@ -11,7 +11,7 @@ const Item = (props) => {
       <div
         className={cx('budget-request-list-item', { selected: props.selected })}
         style={{
-          borderLeft: `5px solid ${d.budgetcategory === 'Expense' ? '#a6cee3' : '#b2df8a'}`,
+          borderLeft: `5px solid ${d.type_br === 'E' ? '#a6cee3' : '#b2df8a'}`,
         }}
       >
         <div className={'title'}>{d.need}</div>

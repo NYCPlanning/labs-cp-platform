@@ -36,11 +36,11 @@ const CBBudgetRequestsJaneLayer = props => (
       onClick={props.handleMapLayerClick}
       paint={{
         'fill-color': {
-          property: 'budgetcategory',
+          property: 'type_br',
           type: 'categorical',
           stops: [
-            ['Expense', '#a6cee3'],
-            ['Capital', '#b2df8a'],
+            ['E', '#a6cee3'],
+            ['C', '#b2df8a'],
           ],
         },
         'fill-opacity': 0.7,
@@ -65,7 +65,7 @@ const CBBudgetRequestsJaneLayer = props => (
         'circle-color': [
           'case',
           // Capital except Top 10
-          ['all', ['==', 'Capital', ['string', ['get', 'budgetcategory']]], [
+          ['all', ['==', 'C', ['string', ['get', 'type_br']]], [
             'any',
             ['!', ['has', 'priority']],
             ['<', 10, ['number', ['get', 'priority']]],
@@ -73,7 +73,7 @@ const CBBudgetRequestsJaneLayer = props => (
           '#b2df8a',
 
           // Expense except Top 10
-          ['all', ['==', 'Expense', ['string', ['get', 'budgetcategory']]], [
+          ['all', ['==', 'E', ['string', ['get', 'type_br']]], [
             'any',
             ['!', ['has', 'priority']],
             ['<', 10, ['number', ['get', 'priority']]],
@@ -81,10 +81,10 @@ const CBBudgetRequestsJaneLayer = props => (
           '#a6cee3',
 
           // Top 10 Capital
-          ['all', ['==', 'Capital', ['string', ['get', 'budgetcategory']]], ['>=', 10, ['number', ['get', 'priority']]]],
+          ['all', ['==', 'C', ['string', ['get', 'type_br']]], ['>=', 10, ['number', ['get', 'priority']]]],
           '#33a02c',
           // Top 10 Expense
-          ['all', ['==', 'Expense', ['string', ['get', 'budgetcategory']]], ['>=', 10, ['number', ['get', 'priority']]]],
+          ['all', ['==', 'E', ['string', ['get', 'type_br']]], ['>=', 10, ['number', ['get', 'priority']]]],
           '#1f78b4',
 
           // Default
