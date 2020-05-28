@@ -19,9 +19,9 @@ const sql = {
   facilities: `SELECT COUNT(*) FROM ${db_tables.facdb.facilities}`,
   housing: `SELECT COUNT(*)
   FROM ${db_tables.housingdevdb}
-  WHERE 
+  WHERE
     (
-      x_inactive = false
+      x_inactive <> 'Inactive'
     ) AND (
       units_net >= '-800'
       AND units_net <= '1800'
