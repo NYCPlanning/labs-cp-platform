@@ -196,7 +196,7 @@ class Explorer extends React.Component {
       case 'capital-projects':
         return `/capitalproject/${feature.properties.maprojid}`;
       case 'cb-budgetrequests':
-        return `/budgetrequest/${feature.properties.regid}`;
+        return `/budgetrequest/${feature.properties.unique_id}`;
       case 'housing-development':
         return `/development/${feature.properties.job_number}`;
       case 'facilities': {

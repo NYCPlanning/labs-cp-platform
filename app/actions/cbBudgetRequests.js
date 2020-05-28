@@ -5,7 +5,7 @@ import { unionSql } from '../helpers/sqlbuilder/CBBudgetRequestsSqlBuilder';
 export const fetchDetails = requestId =>
   cartoActions.getFeature({
     tableName: unionSql(),
-    column: 'regid',
+    column: 'unique_id',
     value: requestId,
   }, AT.FETCH_CB_BUDGET_REQUEST_DETAILS);
 

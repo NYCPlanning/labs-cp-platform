@@ -7,7 +7,7 @@ const Item = (props) => {
   const d = props.feature.properties;
 
   return (
-    <Link to={{ pathname: `/budgetrequest/${d.regid}` }} >
+    <Link to={{ pathname: `/budgetrequest/${d.unique_id}` }} >
       <div
         className={cx('budget-request-list-item', { selected: props.selected })}
         style={{

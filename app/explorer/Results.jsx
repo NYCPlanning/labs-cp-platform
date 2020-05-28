@@ -43,8 +43,8 @@ const Results = (props) => {
       case 'cb-budgetrequests': {
         return (<BudgetRequestLineItem
           feature={feature}
-          selected={feature.properties.regid.toString() === props.detailPageId.toString()}
-          key={`cbbr${feature.properties.regid}`}
+          selected={feature.properties.unique_id.toString() === props.detailPageId.toString()}
+          key={`cbbr${feature.properties.unique_id}`}
         />);
       }
       default:
