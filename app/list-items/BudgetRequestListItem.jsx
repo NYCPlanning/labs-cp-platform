@@ -15,7 +15,6 @@ const Item = (props) => {
         }}
       >
         <div className={'title'}>{d.need}</div>
-        <div className={'subtitle'}><strong>{d.name}</strong></div>
         <div className={'subtitle'}>{d.agency}</div>
       </div>
     </Link>
