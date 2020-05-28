@@ -24,7 +24,7 @@ class BudgetRequestDetailPage extends React.Component {
   renderContent = (data) => {
     const d = data.properties;
     const inTopTen = () => parseInt(d.priority) <= 10;
-    const type_brColor = d.type_br === 'Capital' ? '#b2df8a' : '#a6cee3';
+    const type_brColor = d.type_br === 'C' ? '#b2df8a' : '#a6cee3';
 
     return (
       <div className="cb-budget-request-page">
@@ -54,7 +54,7 @@ class BudgetRequestDetailPage extends React.Component {
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Total Requests <br /> (mapped and unmapped)</Tooltip>}>
                   <div>
                     Priority
-                    <h4>{d.priority} of {d.denominator} { inTopTen() && <span className={'label label-success'}>Top Ten</span> }</h4>
+                    <h4>{d.priority} { inTopTen() && <span className={'label label-success'}>Top Ten</span> }</h4>
                   </div>
                 </OverlayTrigger>
               }
