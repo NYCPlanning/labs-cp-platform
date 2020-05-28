@@ -34,7 +34,7 @@ class BudgetRequestDetailPage extends React.Component {
               <h1>{d.need}</h1>
               <h2 style={{ marginBottom: '5px' }}>
                 <span className={'badge'} style={{ backgroundColor: budgetCategoryColor }}>{d.budgetcategory}</span>
-                <small>{d.sitename} {d.addressnum} {d.streename}</small>
+                <small>{d.sitename} {d.address}</small>
               </h2>
             </div>
           </div>
@@ -98,20 +98,6 @@ class BudgetRequestDetailPage extends React.Component {
                     <div>{d.supporters2}</div>
                   </div>
                 </div> }
-            </div>
-
-            <div className={'col-md-6'}>
-              { d.cilast &&
-                <div className="panel panel-default">
-                  <div className="panel-heading">Community Contact</div>
-                  <div className="panel-body">
-                    <div><strong>{d.cifirst} {d.cilast}</strong></div>
-                    <div><em>{d.cititle}</em></div>
-                    <div><a href={`mailto:${d.ciemail}`}>{d.ciemail}</a></div>
-                    <div>{d.ciphone}</div>
-                  </div>
-                </div>
-              }
             </div>
           </div>
         </div>
