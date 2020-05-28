@@ -99,20 +99,6 @@ class BudgetRequestDetailPage extends React.Component {
                   </div>
                 </div> }
             </div>
-
-            <div className={'col-md-6'}>
-              { d.cilast &&
-                <div className="panel panel-default">
-                  <div className="panel-heading">Community Contact</div>
-                  <div className="panel-body">
-                    <div><strong>{d.cifirst} {d.cilast}</strong></div>
-                    <div><em>{d.cititle}</em></div>
-                    <div><a href={`mailto:${d.ciemail}`}>{d.ciemail}</a></div>
-                    <div>{d.ciphone}</div>
-                  </div>
-                </div>
-              }
-            </div>
           </div>
         </div>
       </div>
