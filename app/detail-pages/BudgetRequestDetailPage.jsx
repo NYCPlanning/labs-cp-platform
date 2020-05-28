@@ -44,7 +44,7 @@ class BudgetRequestDetailPage extends React.Component {
               <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Community District</Tooltip>}>
                 <div>
                   Community District
-                  <h4>{d.borough} {d.commdist.substr(1)}</h4>
+                  <h4>{d.borough} {d.cd}</h4>
                 </div>
               </OverlayTrigger>
             </div>
