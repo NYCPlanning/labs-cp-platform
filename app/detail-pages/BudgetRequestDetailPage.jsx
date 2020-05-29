@@ -82,7 +82,7 @@ class BudgetRequestDetailPage extends React.Component {
                 </div>
                 <div className="panel-body">
                   <h4 style={{ marginBottom: '5px' }}>{d.request}</h4>
-                  {d.description}
+                  {d.explanation}
                 </div>
               </div>
             </div>
