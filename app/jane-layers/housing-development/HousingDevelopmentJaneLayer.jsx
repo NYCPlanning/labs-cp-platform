@@ -89,9 +89,11 @@ class HousingDevelopmentJaneLayer extends React.Component {
       'circle-radius': {
         property: 'units_net',
         stops: [
+          [{ zoom: 10, value: null }, 1],
           [{ zoom: 10, value: -12 }, 1],
           [{ zoom: 10, value: 1669 }, 2],
           [{ zoom: 10, value: 1669 }, 4],
+          [{ zoom: 14, value: null }, 5],
           [{ zoom: 14, value: -12 }, 5],
           [{ zoom: 14, value: 100 }, 10],
           [{ zoom: 14, value: 1669 }, 20],
