@@ -7,13 +7,14 @@ import { getSql } from '../helpers/sqlbuilder/HousingSqlBuilder';
 const totalcounts = require('../config/totalcounts.json');
 const getDefaultFilters = () => JSON.parse(JSON.stringify(defaultFilterDimensions));
 
+// NOTE: how are these going to change with the new schema?
 const isIssueDateDisabled = filterDimensions =>
-filterDimensions.status.values
+filterDimensions.job_status.values
   .filter(value => value.checked && value.value === 'Filed')
   .length > 0;
 
 const isCompletionDateDisabled = filterDimensions =>
-filterDimensions.status.values
+filterDimensions.job_status.values
   .filter(value => value.checked && (value.value === 'Permit issued' || value.value === 'Filed'))
   .length > 0;
 
@@ -67,20 +68,20 @@ const housingReducer = (state = initialState, action) => {
       }
 
       // if dimension is status, check which items are included and disable/reset date dimensions accordingly
-      if (filterDimension === 'status') {
+      if (filterDimension === 'job_status') {
         // Completion Slider
         if (isCompletionDateDisabled(dimensions)) {
-          dimensions.co_earliest_effectivedate = getDefaultFilters().co_earliest_effectivedate;
-          dimensions.co_earliest_effectivedate.disabled = true;
+          dimensions.date_complete = getDefaultFilters().date_complete;
+          dimensions.date_complete.disabled = true;
         } else {
-          dimensions.co_earliest_effectivedate.disabled = false;
+          dimensions.date_complete.disabled = false;
         }
         // issued slider
         if (isIssueDateDisabled(dimensions)) {
-          dimensions.status_q = getDefaultFilters().status_q;
-          dimensions.status_q.disabled = true;
+          dimensions.date_permittd = getDefaultFilters().date_permittd;
+          dimensions.date_permittd.disabled = true;
         } else {
-          dimensions.status_q.disabled = false;
+          dimensions.date_permittd.disabled = false;
         }
       }
 

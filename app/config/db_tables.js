@@ -17,7 +17,7 @@ const db_tables = {
     facilities: 'facdb_v2019_12',
     pops: 'pops_v201912_1',
   },
-  housingdevdb: 'devdb_housing_pts_20v1',
+  housingdevdb: 'export_housing',
   sca: 'sca_capital_projects_v2019',
   support: {
     nta: 'nta_boundaries',

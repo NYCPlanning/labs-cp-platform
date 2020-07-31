@@ -21,10 +21,10 @@ const sql = {
   FROM ${db_tables.housingdevdb}
   WHERE
     (
-      x_inactive <> 'Inactive'
+      job_inactive <> 'Inactive'
     ) AND (
-      units_net >= '-800'
-      AND units_net <= '1800'
+      classa_net >= '-800'
+      AND classa_net <= '1800'
     )`,
   housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
   cbbr: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cb_budget_requests.points} UNION SELECT * FROM ${db_tables.cb_budget_requests.polygons}) a`,

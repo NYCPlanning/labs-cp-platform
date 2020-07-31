@@ -40,36 +40,30 @@ const defaultFilterDimensions = {
     disabled: true,
     values: LabelHelper.get_labels('schooldistrict'),
   },
-  status: {
+  job_status: {
     type: 'statusMultiSelect',
     values: [
       {
-        label: 'Complete',
-        value: 'Complete',
+        label: 'Completed Construction',
+        value: '5. Completed Construction',
         checked: true,
         color: '#238b45',
       },
       {
-        label: 'Partial complete',
-        value: 'Partial complete',
+        label: 'Permitted for Construction',
+        value: '3. Permitted for Construction',
         checked: true,
         color: '#74c476',
       },
       {
-        label: 'In progress',
-        value: 'In progress',
-        checked: true,
-        color: '#74c476',
-      },
-      {
-        label: 'Permit issued',
-        value: 'Permit issued',
+        label: 'Approved Application',
+        value: '2. Approved Application',
         checked: true,
         color: '#bae4b3',
       },
       {
-        label: 'Filed',
-        value: 'Filed',
+        label: 'Filed Application',
+        value: '1. Filed Application',
         checked: true,
         color: '#edf8e9',
       },
@@ -100,18 +94,18 @@ const defaultFilterDimensions = {
     ],
   },
 
-  units_net: {
+  classa_net: {
     type: 'numberRange',
     values: [-800, 1800],
   },
 
-  co_earliest_effectivedate: {
+  date_complete: {
     type: 'cofoDateRange',
     values: [moment('2010-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
-  status_q: {
+  date_permittd: {
     type: 'statusDateRange',
     values: [moment('2000-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
@@ -132,14 +126,14 @@ const circleColors = {
       ['Demolition', getColor('job_type', 'Demolition')],
     ],
   },
-  status: {
-    property: 'status',
+  job_status: {
+    property: 'job_status',
     type: 'categorical',
     stops: [
-      ['Filed', getColor('status', 'Filed')],
-      ['Permit issued', getColor('status', 'Permit issued')],
-      ['In progress', getColor('status', 'In progress')],
-      ['Complete', getColor('status', 'Complete')]
+      ['1. Filed Application', getColor('job_status', '1. Filed Application')],
+      ['2. Approved Application', getColor('job_status', '2. Approved Application')],
+      ['3. Permitted for Construction', getColor('job_status', '3. Permitted for Construction')],
+      ['5. Completed Construction', getColor('job_status', '5. Completed Construction')]
     ],
   },
 };
