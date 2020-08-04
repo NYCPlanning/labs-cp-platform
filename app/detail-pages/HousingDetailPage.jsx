@@ -178,8 +178,14 @@ class HousingDetailPage extends React.Component {
           <div className="row">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading">Development Milestones</div>
+                <div className="panel-heading">DOB Development Milestones</div>
                 <div className="panel-body">
+                  <div className={'col-md-4'}>
+                    <div className="dev-status">
+                      <h4>Application Filed</h4>
+                      <h3>{permitDate(d.date_filed)}</h3>
+                    </div>
+                  </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Permit Issued</h4>
@@ -188,15 +194,8 @@ class HousingDetailPage extends React.Component {
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
-                      <h4>Initial CofO*</h4>
+                      <h4>Initial CofO</h4>
                       <h3>{permitDate(d.co_earliest_effectivedate)}</h3>
-                    </div>
-                  </div>
-                  <div className={'col-md-4'}>
-                    <div className="dev-status">
-                      <h4>Latest CofO</h4>
-                      <h3>{permitDate(d.co_latest_effectivedate)}</h3>
-                      <p className="subtext">{d.co_latest_certtype !== '' ? (`${d.co_latest_certtype},`) : ''} {d.co_latest_units != null ? (`${d.co_latest_units} units`) : ''}</p>
                     </div>
                   </div>
                   {
