@@ -151,8 +151,8 @@ class LayerSelector extends React.Component {
             Development Status
             <InfoIcon text="Categorizes developments based on construction status, determined using DOB Permit and Certificate of Occupancy data" />
             <PinSelect
-              onClick={() => { this.handleSymbologyDimensionChange('status'); }}
-              selected={symbologyDimension === 'status'}
+              onClick={() => { this.handleSymbologyDimensionChange('job_status'); }}
+              selected={symbologyDimension === 'job_status'}
             />
           </Subheader>
           <ListItem
@@ -160,9 +160,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <Checkboxes
-              dimension={filterDimensions.status}
-              onChange={this.handleFilterDimensionChange.bind(this, 'status')}
-              legendCircleType={symbologyDimension === 'status' ? 'fill' : 'none'}
+              dimension={filterDimensions.job_status}
+              onChange={this.handleFilterDimensionChange.bind(this, 'job_status')}
+              legendCircleType={symbologyDimension === 'job_status' ? 'fill' : 'none'}
             />
           </ListItem>
 
@@ -194,13 +194,13 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <SimpleRangeInputs
-              data={filterDimensions.units_net.values}
-              onChange={this.handleSliderChange.bind(this, 'units_net')}
+              data={filterDimensions.classa_net.values}
+              onChange={this.handleSliderChange.bind(this, 'classa_net')}
             />
             <RangeSlider
-              data={filterDimensions.units_net.values}
+              data={filterDimensions.classa_net.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'units_net')}
+              onChange={this.handleSliderChange.bind(this, 'classa_net')}
               grid
               keyboard
               force_edges
@@ -216,9 +216,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.status_q.values}
+              data={filterDimensions.date_permittd.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'status_q')}
+              onChange={this.handleSliderChange.bind(this, 'date_permittd')}
               disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
@@ -234,9 +234,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.co_earliest_effectivedate.values}
+              data={filterDimensions.date_complete.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'co_earliest_effectivedate')}
+              onChange={this.handleSliderChange.bind(this, 'date_complete')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
