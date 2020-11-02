@@ -109,7 +109,7 @@ class SqlBuilder {
     const coordinates = filters[dimension].values.coordinates;
     const radius = filters[dimension].values.radius;
 
-    return `(ST_Distance_Sphere(the_geom, ST_MakePoint(${coordinates[0]},${coordinates[1]})) <= ${radius})`;
+    return `(st_distancesphere(the_geom, ST_MakePoint(${coordinates[0]},${coordinates[1]})) <= ${radius})`;
   }
 }
 

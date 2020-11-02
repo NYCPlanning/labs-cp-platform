@@ -29,25 +29,25 @@ class HousingDevelopmentJaneLayer extends React.Component {
         );
       }
 
-      if (this.props.symbologyDimension === 'status') {
+      if (this.props.symbologyDimension === 'job_status') {
         return (
           <div>
             <div className="legendSection">Housing Development</div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#edf8e9' }} />
-              <div className="legendItemText">Filed</div>
+              <div className="legendItemText">Filed Application</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#bae4b3' }} />
-              <div className="legendItemText">Permit issued</div>
+              <div className="legendItemText">Approved Application</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#74c476' }} />
-              <div className="legendItemText">Partial complete / In progress</div>
+              <div className="legendItemText">Permitted for Construction</div>
             </div>
             <div className="legendItem">
               <div className="colorCircle" style={{ backgroundColor: '#238b45' }} />
-              <div className="legendItemText">Complete</div>
+              <div className="legendItemText">Completed Construction</div>
             </div>
           </div>
         );
@@ -69,15 +69,15 @@ class HousingDevelopmentJaneLayer extends React.Component {
         };
       }
 
-      if (this.props.symbologyDimension === 'status') {
+      if (this.props.symbologyDimension === 'job_status') {
         return {
-          property: 'status',
+          property: 'job_status',
           type: 'categorical',
           stops: [
-            ['Filed', '#edf8e9'],
-            ['Permit issued', '#bae4b3'],
-            ['Partial complete', '#74c476'],
-            ['Complete', '#238b45'],
+            ['1. Filed Application', '#edf8e9'],
+            ['2. Approved Application', '#bae4b3'],
+            ['3. Permitted for Construction', '#74c476'],
+            ['5. Completed Construction', '#238b45'],
           ],
         };
       }
@@ -87,7 +87,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
 
     const pointsLayerPaint = {
       'circle-radius': {
-        property: 'units_net',
+        property: 'classa_net',
         stops: [
           [{ zoom: 10, value: -12 }, 1],
           [{ zoom: 10, value: 1669 }, 2],

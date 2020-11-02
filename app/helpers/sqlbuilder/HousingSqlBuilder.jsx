@@ -17,7 +17,7 @@ class HousingSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').endOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `((co_earliest_effectivedate >= '${dateRangeFormatted.from}' AND co_earliest_effectivedate <= '${dateRangeFormatted.to}') OR co_earliest_effectivedate IS NULL)`;
+    return `((date_complete >= '${dateRangeFormatted.from}' AND date_complete <= '${dateRangeFormatted.to}') OR date_complete IS NULL)`;
   }
 
   statusDateRange(dimension, filters) {
@@ -28,7 +28,7 @@ class HousingSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').endOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `((status_q >= '${dateRangeFormatted.from}' AND status_q <= '${dateRangeFormatted.to}') OR status_q IS NULL)`;
+    return `((date_permittd >= '${dateRangeFormatted.from}' AND date_permittd <= '${dateRangeFormatted.to}') OR date_permittd IS NULL)`;
   }
 
   // SQL WHERE partial builder for Checkboxes
@@ -38,6 +38,7 @@ class HousingSqlBuilder extends SqlBuilder {
     // demolitions where permit is issued should also show up under searches for complete.
     const demolitionIsSelected = filters.job_type.values.filter(d => (d.value === 'Demolition' && d.checked === true)).length > 0;
 
+    // NOTE: how will these change with the new schema?
     const completeIsSelected = values.filter(d => (d.value === 'Complete' && d.checked === true)).length > 0;
     const inProgressIsSelected = values.filter(d => (d.value === 'In progress' && d.checked === true)).length > 0;
     const permitIssuedIsSelected = values.filter(d => (d.value === 'Permit issued' && d.checked === true)).length > 0;
@@ -47,11 +48,11 @@ class HousingSqlBuilder extends SqlBuilder {
     const subChunks = checkedValues.map(value => `${dimension} = '${value.value}'`);
 
     if (demolitionIsSelected && (completeIsSelected || permitIssuedIsSelected)) {
-      subChunks.push('status = \'Complete (demolition)\'');
+      subChunks.push('job_status = \'Complete (demolition)\'');
     }
 
     if (inProgressIsSelected) {
-      subChunks.push('status = \'In progress (last plan disapproved)\'');
+      subChunks.push('job_status = \'In progress (last plan disapproved)\'');
     }
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
@@ -64,7 +65,7 @@ class HousingSqlBuilder extends SqlBuilder {
 
   housingBuildSql(filterDimensions) {
     const sql = this.buildSql(filterDimensions);
-    return `${sql} AND x_inactive <> 'Inactive'`;
+    return `${sql} AND job_inactive <> 'Inactive'`;
   }
 }
 

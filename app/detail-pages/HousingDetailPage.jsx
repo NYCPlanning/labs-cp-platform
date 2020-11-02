@@ -47,16 +47,16 @@ class HousingDetailPage extends React.Component {
     // const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
 
     function unitChange() {
-      if (d.units_net > 0) {
-        return `${d.units_complete ? d.units_complete : 0} of ${d.units_net}`;
-      } else if (d.units_net <= 0) {
-        return `${Math.abs(d.units_complete ? d.units_complete : 0)} of ${Math.abs(d.units_net)}`;
+      if (d.classa_net > 0) {
+        return `${d.classa_complt ? d.classa_complt : 0} of ${d.classa_net}`;
+      } else if (d.classa_net <= 0) {
+        return `${Math.abs(d.classa_complt ? d.classa_complt : 0)} of ${Math.abs(d.classa_net)}`;
       }
 
       return '';
     }
 
-    const netUnitsStyle = getNetUnitsStyle(d.units_net);
+    const netUnitsStyle = getNetUnitsStyle(d.classa_net);
 
     /* eslint-disable */
     const permitDate = (date) => {
@@ -72,19 +72,19 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.units_init != null ? d.units_init : 'Not reported'}</h3>
+                <h3>{d.classa_init != null ? d.classa_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.units_prop != null ? d.units_prop : 'Not reported'}</h3>
+                <h3>{d.ClassA_Prop != null ? d.ClassA_Prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.classa_net)}</h3>
               </div>
             </div>
           </div>
@@ -101,13 +101,13 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.units_prop != null ? d.units_prop : 'Not reported'}</h3>
+                <h3>{d.ClassA_Prop != null ? d.ClassA_Prop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.classa_net)}</h3>
               </div>
             </div>
           </div>
@@ -118,13 +118,13 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.units_init != null ? d.units_init : 'Not reported'}</h3>
+                <h3>{d.classa_init != null ? d.classa_init : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.units_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.classa_net)}</h3>
               </div>
             </div>
           </div>
@@ -142,8 +142,8 @@ class HousingDetailPage extends React.Component {
             <div className="col-md-12">
               <h1>{d.address}, {d.boro}</h1>
               <span className={'badge'} style={{ backgroundColor }}>{d.job_type}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.occ_category}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.status}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.resid_flag}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.job_status}</span>
             </div>
           </div>
 
@@ -178,50 +178,39 @@ class HousingDetailPage extends React.Component {
           <div className="row">
             <div className={'col-md-12'}>
               <div className="panel panel-default">
-                <div className="panel-heading">Development Milestones</div>
+                <div className="panel-heading">DOB Development Milestones</div>
                 <div className="panel-body">
                   <div className={'col-md-4'}>
                     <div className="dev-status">
+                      <h4>Application Filed</h4>
+                      <h3>{permitDate(d.date_filed)}</h3>
+                    </div>
+                  </div>
+                  <div className={'col-md-4'}>
+                    <div className="dev-status">
                       <h4>Permit Issued</h4>
-                      <h3>{permitDate(d.status_q)}</h3>
+                      <h3>{permitDate(d.date_permittd)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
-                      <h4>Initial CofO*</h4>
-                      <h3>{permitDate(d.co_earliest_effectivedate)}</h3>
+                      <h4>Initial CofO</h4>
+                      <h3>{permitDate(d.date_complete)}</h3>
                     </div>
                   </div>
-                  <div className={'col-md-4'}>
-                    <div className="dev-status">
-                      <h4>Latest CofO</h4>
-                      <h3>{permitDate(d.co_latest_effectivedate)}</h3>
-                      <p className="subtext">{d.co_latest_certtype !== '' ? (`${d.co_latest_certtype},`) : ''} {d.co_latest_units != null ? (`${d.co_latest_units} units`) : ''}</p>
-                    </div>
-                  </div>
-                  {
-                    d.status === 'Partial complete' && (
-                      <div className={'col-md-12'}>
-                        <div className="dev-status">
-                          <h4>Net Units Completed</h4>
-                          <h3 style={netUnitsStyle}>{unitChange()}</h3>
-                        </div>
-                      </div>
-                    )
-                  }
                 </div>
               </div>
             </div>
           </div>
 
           {
-            d.job_description.length && (
+            d.job_desc.length && (
               <div className="row">
                 <div className={'col-md-12'}>
                   <div className="panel panel-default">
                     <div className="panel-heading">DOB Job Description</div>
                     <div className="panel-body">
-                      {d.job_description}
+                      {d.job_desc}
                     </div>
                   </div>
                 </div>
