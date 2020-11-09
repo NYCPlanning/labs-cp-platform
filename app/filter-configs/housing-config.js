@@ -94,18 +94,18 @@ const defaultFilterDimensions = {
     ],
   },
 
-  classa_net: {
+  classanet: {
     type: 'numberRange',
     values: [-800, 1800],
   },
 
-  date_complete: {
+  datecomplt: {
     type: 'cofoDateRange',
     values: [moment('2010-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,
   },
 
-  date_permittd: {
+  datepermit: {
     type: 'statusDateRange',
     values: [moment('2000-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
     disabled: true,

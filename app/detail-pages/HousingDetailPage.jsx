@@ -47,16 +47,16 @@ class HousingDetailPage extends React.Component {
     // const biswebBinLink = `http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=${d.dob_permit_bin}&go4=+GO+&requestid=0`;
 
     function unitChange() {
-      if (d.classa_net > 0) {
-        return `${d.classa_complt ? d.classa_complt : 0} of ${d.classa_net}`;
-      } else if (d.classa_net <= 0) {
-        return `${Math.abs(d.classa_complt ? d.classa_complt : 0)} of ${Math.abs(d.classa_net)}`;
+      if (d.classanet > 0) {
+        return `${d.classa_complt ? d.classa_complt : 0} of ${d.classanet}`;
+      } else if (d.classanet <= 0) {
+        return `${Math.abs(d.classa_complt ? d.classa_complt : 0)} of ${Math.abs(d.classanet)}`;
       }
 
       return '';
     }
 
-    const netUnitsStyle = getNetUnitsStyle(d.classa_net);
+    const netUnitsStyle = getNetUnitsStyle(d.classanet);
 
     /* eslint-disable */
     const permitDate = (date) => {
@@ -84,7 +84,7 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.classa_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.classanet)}</h3>
               </div>
             </div>
           </div>
@@ -107,7 +107,7 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.classa_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.classanet)}</h3>
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Net Change in Units</h4>
-                <h3 style={netUnitsStyle}>{addSign(d.classa_net)}</h3>
+                <h3 style={netUnitsStyle}>{addSign(d.classanet)}</h3>
               </div>
             </div>
           </div>
@@ -189,13 +189,13 @@ class HousingDetailPage extends React.Component {
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Permit Issued</h4>
-                      <h3>{permitDate(d.date_permittd)}</h3>
+                      <h3>{permitDate(d.datepermit)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Initial CofO</h4>
-                      <h3>{permitDate(d.date_complete)}</h3>
+                      <h3>{permitDate(d.datecomplt)}</h3>
                     </div>
                   </div>
                 </div>

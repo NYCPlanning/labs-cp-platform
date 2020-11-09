@@ -71,17 +71,17 @@ const housingReducer = (state = initialState, action) => {
       if (filterDimension === 'job_status') {
         // Completion Slider
         if (isCompletionDateDisabled(dimensions)) {
-          dimensions.date_complete = getDefaultFilters().date_complete;
-          dimensions.date_complete.disabled = true;
+          dimensions.datecomplt = getDefaultFilters().datecomplt;
+          dimensions.datecomplt.disabled = true;
         } else {
-          dimensions.date_complete.disabled = false;
+          dimensions.datecomplt.disabled = false;
         }
         // issued slider
         if (isIssueDateDisabled(dimensions)) {
-          dimensions.date_permittd = getDefaultFilters().date_permittd;
-          dimensions.date_permittd.disabled = true;
+          dimensions.datepermit = getDefaultFilters().datepermit;
+          dimensions.datepermit.disabled = true;
         } else {
-          dimensions.date_permittd.disabled = false;
+          dimensions.datepermit.disabled = false;
         }
       }
 

@@ -87,7 +87,7 @@ class HousingDevelopmentJaneLayer extends React.Component {
 
     const pointsLayerPaint = {
       'circle-radius': {
-        property: 'classa_net',
+        property: 'classanet',
         stops: [
           [{ zoom: 10, value: -12 }, 1],
           [{ zoom: 10, value: 1669 }, 2],

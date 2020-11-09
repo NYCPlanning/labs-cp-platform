@@ -10,7 +10,7 @@ const Item = ({ feature, selected }) => {
           job_type,
           address,
           job_status,
-          classa_net } = feature.properties;
+          classanet } = feature.properties;
 
   return (
     <Link to={{ pathname: `/development/${job_number}` }}>
@@ -24,7 +24,7 @@ const Item = ({ feature, selected }) => {
         </div>
 
         <div className="subtitle">
-          { job_status } | { classa_net } units
+          { job_status } | { classanet } units
         </div>
       </div>
     </Link>

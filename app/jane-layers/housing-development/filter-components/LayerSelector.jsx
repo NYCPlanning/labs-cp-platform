@@ -194,13 +194,13 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <SimpleRangeInputs
-              data={filterDimensions.classa_net.values}
-              onChange={this.handleSliderChange.bind(this, 'classa_net')}
+              data={filterDimensions.classanet.values}
+              onChange={this.handleSliderChange.bind(this, 'classanet')}
             />
             <RangeSlider
-              data={filterDimensions.classa_net.values}
+              data={filterDimensions.classanet.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'classa_net')}
+              onChange={this.handleSliderChange.bind(this, 'classanet')}
               grid
               keyboard
               force_edges
@@ -216,9 +216,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.date_permittd.values}
+              data={filterDimensions.datepermit.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'date_permittd')}
+              onChange={this.handleSliderChange.bind(this, 'datepermit')}
               disable={issueDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
@@ -234,9 +234,9 @@ class LayerSelector extends React.Component {
             style={listItemStyle}
           >
             <RangeSlider
-              data={filterDimensions.date_complete.values}
+              data={filterDimensions.datecomplt.values}
               type={'double'}
-              onChange={this.handleSliderChange.bind(this, 'date_complete')}
+              onChange={this.handleSliderChange.bind(this, 'datecomplt')}
               disable={completionDateFilterDisabled}
               prettify={date => moment(date, 'X').format('MMM YYYY')} // eslint-disable-line no-undef
               force_edges
