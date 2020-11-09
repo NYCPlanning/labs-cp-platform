@@ -17,7 +17,7 @@ class HousingSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').endOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `((date_complete >= '${dateRangeFormatted.from}' AND date_complete <= '${dateRangeFormatted.to}') OR date_complete IS NULL)`;
+    return `((datecomplt >= '${dateRangeFormatted.from}' AND datecomplt <= '${dateRangeFormatted.to}') OR datecomplt IS NULL)`;
   }
 
   statusDateRange(dimension, filters) {
@@ -28,7 +28,7 @@ class HousingSqlBuilder extends SqlBuilder {
       to: moment(range[1], 'X').endOf('month').format('YYYY-MM-DD'), // eslint-disable-line no-undef
     };
 
-    return `((date_permittd >= '${dateRangeFormatted.from}' AND date_permittd <= '${dateRangeFormatted.to}') OR date_permittd IS NULL)`;
+    return `((datepermit >= '${dateRangeFormatted.from}' AND datepermit <= '${dateRangeFormatted.to}') OR datepermit IS NULL)`;
   }
 
   // SQL WHERE partial builder for Checkboxes
@@ -65,7 +65,7 @@ class HousingSqlBuilder extends SqlBuilder {
 
   housingBuildSql(filterDimensions) {
     const sql = this.buildSql(filterDimensions);
-    return `${sql} AND job_inactive <> 'Inactive'`;
+    return `${sql} AND job_inactv IS DISTINCT FROM 'Inactive'`;
   }
 }
 
