@@ -2,6 +2,7 @@ import * as AT from '../constants/actionTypes';
 import db_tables from '../config/db_tables';
 
 export const getFeature = ({ tableName, column, value }, nextType) => {
+  console.log(typeof value);
   const requestFormat = 'geojson';
   const sql = typeof value === 'number'
     ? `SELECT * FROM ${tableName} WHERE ${column} = ${value}`

@@ -7,7 +7,7 @@ export const fetchDetails = cartodbId =>
   cartoActions.getFeature({
     tableName: sqlConfig.tablename,
     column: 'job_number',
-    value: cartodbId,
+    value: `${cartodbId}`, // housing dev requires a string now
   }, AT.FETCH_HOUSING_DEVELOPMENT_DETAILS);
 
 export const fetchSelectedCount = filterDimensions => ({
