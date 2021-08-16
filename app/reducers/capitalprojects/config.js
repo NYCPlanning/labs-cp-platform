@@ -463,7 +463,7 @@ const defaultFilterDimensions = {
 
   activeyears: {
     type: 'capitalProjectsDateRange',
-    values: [2010, 2030],
+    values: [2010, 2040],
   },
 };
 
