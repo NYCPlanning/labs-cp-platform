@@ -222,8 +222,6 @@ class Explorer extends React.Component {
 
   render() {
     const setStartingLayer = () => {
-      if (!this.props.currentUser.sitewideAccess) { return 'facilities'; }
-
       if (this.props.children) {
         switch (this.props.children.props.route.type) {
           case 'capitalproject': return 'capitalprojects';
