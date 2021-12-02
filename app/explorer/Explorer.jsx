@@ -222,8 +222,6 @@ class Explorer extends React.Component {
 
   render() {
     const setStartingLayer = () => {
-      if (!this.props.currentUser.sitewideAccess) { return 'facilities'; }
-
       if (this.props.children) {
         switch (this.props.children.props.route.type) {
           case 'capitalproject': return 'capitalprojects';
@@ -291,51 +289,43 @@ class Explorer extends React.Component {
             locationState={startingLayer === 'pops' ? popsLocationState : this.props.location.state}
           />
 
-          { this.props.currentUser.sitewideAccess &&
-            <HousingDevelopmentJaneLayer
-              selectedPointType={this.state.selectedPointType}
-              selectedPointCoordinates={this.state.selectedPointCoordinates}
-              handleMapLayerClick={this.handleMapLayerClick}
-              handleRadiusFilter={this.handleRadiusFilter}
-              sql={this.props.housingDevelopmentSql}
-              symbologyDimension={this.props.housingDevelopmentSymbology}
-              enabled={startingLayer === 'housing'}
-              selected={startingLayer === 'housing'}
-            />
-          }
+          <HousingDevelopmentJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            handleRadiusFilter={this.handleRadiusFilter}
+            sql={this.props.housingDevelopmentSql}
+            symbologyDimension={this.props.housingDevelopmentSymbology}
+            enabled={startingLayer === 'housing'}
+            selected={startingLayer === 'housing'}
+          />
 
-          { this.props.currentUser.sitewideAccess &&
-            <SCAJaneLayer
-              handleMapLayerClick={this.handleMapLayerClick}
-              enabled={startingLayer === 'sca'}
-              selected={startingLayer === 'sca'}
-            />
-          }
+          <SCAJaneLayer
+            handleMapLayerClick={this.handleMapLayerClick}
+            enabled={startingLayer === 'sca'}
+            selected={startingLayer === 'sca'}
+          />
 
-          { this.props.currentUser.sitewideAccess &&
-            <CBBudgetRequestsJaneLayer
-              selectedPointType={this.state.selectedPointType}
-              selectedPointCoordinates={this.state.selectedPointCoordinates}
-              handleMapLayerClick={this.handleMapLayerClick}
-              pointsSql={this.props.cbBudgetRequestsPointsSql}
-              polygonsSql={this.props.cbBudgetRequestsPolygonSql}
-              enabled={startingLayer === 'budgetrequests'}
-              selected={startingLayer === 'budgetrequests'}
-            />
-          }
+          <CBBudgetRequestsJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            pointsSql={this.props.cbBudgetRequestsPointsSql}
+            polygonsSql={this.props.cbBudgetRequestsPolygonSql}
+            enabled={startingLayer === 'budgetrequests'}
+            selected={startingLayer === 'budgetrequests'}
+          />
 
-          { this.props.currentUser.sitewideAccess &&
-            <CapitalProjectsJaneLayer
-              selectedPointType={this.state.selectedPointType}
-              selectedPointCoordinates={this.state.selectedPointCoordinates}
-              handleMapLayerClick={this.handleMapLayerClick}
-              handleRadiusFilter={this.handleRadiusFilter}
-              pointsSql={this.props.pointsSql}
-              polygonsSql={this.props.polygonsSql}
-              enabled={startingLayer === 'capitalprojects'}
-              selected={startingLayer === 'capitalprojects'}
-            />
-          }
+          <CapitalProjectsJaneLayer
+            selectedPointType={this.state.selectedPointType}
+            selectedPointCoordinates={this.state.selectedPointCoordinates}
+            handleMapLayerClick={this.handleMapLayerClick}
+            handleRadiusFilter={this.handleRadiusFilter}
+            pointsSql={this.props.pointsSql}
+            polygonsSql={this.props.polygonsSql}
+            enabled={startingLayer === 'capitalprojects'}
+            selected={startingLayer === 'capitalprojects'}
+          />
         </Jane>
       </div>
     );
