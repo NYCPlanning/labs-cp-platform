@@ -26,7 +26,7 @@ Facilities DB is a new dataset of government-related facilities.  The map applic
 Shows locations of new housing units compiled primarily from DOB permit records and certificates of occupancy.
 
 
-###Development Environment
+### Development Environment
 
 We use `webpack-dev-server` to serve the app locally, which takes care of building the bundle and hot-reloading the browser when changes are saved to the code.
 
