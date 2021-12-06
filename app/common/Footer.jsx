@@ -22,14 +22,6 @@ const Footer = () => (
             <dd><a href="http://www1.nyc.gov/site/planning/data-maps/nyc-population.page">Population</a></dd>
           </dl>
         </div>
-        <div
-          className="col-md-3 col-sm-3 col-xs-6 column"
-        >
-          <dl>
-            <dt><h4>Capital Planning Team</h4></dt>
-            <dd><a href="http://docs.capitalplanning.nyc" target="_blank" rel="noreferrer noopener">Data Documentation</a></dd>
-          </dl>
-        </div>
         <div className="col-md-3 col-sm-3 col-xs-6 column">
           <div className="row">
             <div className="col-xs-12">
