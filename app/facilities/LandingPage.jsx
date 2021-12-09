@@ -26,7 +26,7 @@ class FacilitiesLandingPage extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#777', padding: '40px' }}>
-                <h1 className="section-heading">NYC Facilities Explorer</h1>
+                <h1 className="section-heading">NYC Facilities</h1>
                 <p className="subtitle">The most comprehensive dataset of public and private facilities and program sites that shape the quality of New York City neighborhoods</p>
                 <p className="learn-more"><Link to="/about/facilities">Learn More</Link></p>
 
