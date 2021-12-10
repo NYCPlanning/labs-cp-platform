@@ -130,7 +130,7 @@ class DetailPage extends React.Component {
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-12'}>
               <Card style={CardStyles}>
-                <CardHeader title="Years Active" />
+                <CardHeader title="Years Included in Capital Commitment Plan" />
                 <CardText className={'text-center'}>
                   <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
                   {/* eslint-disable no-undef */}
