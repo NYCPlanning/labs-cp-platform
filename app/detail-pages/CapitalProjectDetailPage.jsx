@@ -144,13 +144,6 @@ class CapitalProjectsDetailPage extends React.Component {
                 <div className="panel-body">
                   <div className={'row'}>
                     <div className={'col-lg-6'}>
-                      <div style={{ padding: '7px 0' }}>
-                        <div>Spent to Date</div>
-                        <h2>{formatCost(d.totalspend)}</h2>
-                      </div>
-                    </div>
-
-                    <div className={'col-lg-6'}>
                       <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">See itemized commitments</Tooltip>}>
                         <div
                           type="button"
