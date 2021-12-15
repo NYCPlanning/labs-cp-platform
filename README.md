@@ -1,4 +1,4 @@
-# The Capital Planning Platform
+# The Capital Planning Explorer
 
 A Single Page Application(SPA) for the various front-end map and data tools produced by the NYC DCP Capital Planning Team
 

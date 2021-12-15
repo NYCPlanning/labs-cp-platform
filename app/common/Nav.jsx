@@ -30,7 +30,7 @@ const Nav = (props) => {
         </button>
         <Link className="navbar-brand" to="/">&#8291;</Link>
         <div className="navbar-title">
-          Capital Planning Platform
+          Capital Planning Explorer
         </div>
       </div>
       <div id="navbar" className="navbar-collapse collapse">
