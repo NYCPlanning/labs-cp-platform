@@ -157,25 +157,6 @@ class Filter extends React.Component {
           </ListItem>
 
           <Subheader>
-            Spent to Date
-            <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
-          </Subheader>
-
-          <ListItem
-            disabled
-            style={{
-              paddingTop: '0px',
-              zIndex: '0',
-              position: 'initial',
-            }}
-          >
-            <RangeInputs
-              data={filterDimensions.totalspend.values}
-              onChange={this.handleSliderChange.bind(this, 'totalspend')}
-            />
-          </ListItem>
-
-          <Subheader>
             Planned Commitment
             <InfoIcon text="Sum of all commitments in the latest capital commitment plan" />
           </Subheader>

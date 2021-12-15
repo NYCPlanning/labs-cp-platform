@@ -287,19 +287,6 @@ class CPTable extends React.Component { // eslint-disable-line
               width={200}
             />
             <Column
-              columnKey="totalspend"
-              header={
-                <SortHeaderCell
-                  onSortChange={this.handleSortChange}
-                  sortDir={colSortDirs.totalspend}
-                >
-                  Spent to Date <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
-                </SortHeaderCell>
-              }
-              cell={<MoneyCell data={filteredSortedData} col="totalspend" style={{ textAlign: 'right' }} />}
-              width={130}
-            />
-            <Column
               columnKey="totalcommit"
               header={
                 <SortHeaderCell
