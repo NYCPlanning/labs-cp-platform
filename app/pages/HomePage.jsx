@@ -46,7 +46,7 @@ class HomePage extends React.Component {
                 <div className="portfolio-image" style={{ backgroundImage: 'url(img/buildings.png)' }} />
                 <div className="title"><h3>New Housing Developments</h3></div>
                 <div className="hover-panel">
-                  <h4>New residential development is reshaping NYC neighborhoods - explore the map and see how this growth can inform planning and investment priorities.</h4>
+                  <h4>New residential development is reshaping NYC neighborhoods – explore supplemental housing information on the map and see how this growth can inform planning and investment priorities.</h4>
                   <h4 className="hover-panel-explore">Explore <i className="fa fa-angle-right" aria-hidden="true" /></h4>
                 </div>
               </div>
