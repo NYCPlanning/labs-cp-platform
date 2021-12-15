@@ -21,7 +21,7 @@ class LandingPage extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#777', padding: '40px' }}>
-                <h1 className="section-heading">NYC Capital Projects Explorer</h1>
+                <h1 className="section-heading">NYC Capital Projects</h1>
                 <p className="subtitle">A new way to explore NYC&apos;s Capital Commitment Plan and Capital Spending</p>
                 <p className="learn-more"><Link to="/about/capitalprojects">Learn More</Link></p>
                 <div className="splash-button-section">
