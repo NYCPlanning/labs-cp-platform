@@ -9,7 +9,7 @@ const NotFound = () => (
         <div className="row">
           <div className="col-lg-8 col-lg-offset-2 text-center">
             <i className="fa fa-smile-o fa-5" style={{ fontSize: '80px' }} />
-            <h1>Welcome to the Capital Planning Platform</h1>
+            <h1>Welcome to the Capital Planning Explorer</h1>
             <p>Thanks for signing up!</p>
             <p>
               {`We need one more thing from you! A confirmation email has been sent to the address you signed up with.
