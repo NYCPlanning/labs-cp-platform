@@ -121,7 +121,7 @@ class CapitalProjectsDetailPage extends React.Component {
                 }
               >
                 <div>
-                  <div>Years Active</div>
+                  <div>Years Included in Capital Commitment Plan</div>
                   <h2>{displayFY()}</h2>
                 </div>
               </OverlayTrigger>

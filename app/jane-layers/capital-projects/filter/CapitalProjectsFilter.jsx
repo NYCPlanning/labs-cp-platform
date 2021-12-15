@@ -175,7 +175,7 @@ class Filter extends React.Component {
           </ListItem>
 
           <Subheader>
-            Active Years
+              Years Included in Capital Commitment Plan
             <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
           </Subheader>
           <ListItem

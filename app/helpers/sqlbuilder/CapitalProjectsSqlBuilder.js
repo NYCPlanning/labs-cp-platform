@@ -25,7 +25,7 @@ export const tableSqlConfig = {
 };
 
 class CapitalProjectsSqlBuilder extends SqlBuilder {
-  // chunker for "active years"
+  // chunker for "Years Included in Capital Commitment Plan"
   capitalProjectsDateRange(dimension, filters) {
     const range = filters[dimension].values;
     return `NOT (maxdate <= to_date('${range[0] - 1}-07-01', 'YYYY-MM-DD') OR mindate >= to_date('${range[1]}-06-30', 'YYYY-MM-DD'))`;
