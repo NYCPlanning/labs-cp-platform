@@ -96,8 +96,8 @@ const labels = [
     label: 'Office of Management and Budget - OMB',
   },
   {
-    value: 'SBS',
-    label: 'Department of Small Business Services - SBS',
+    value: 'EDC',
+    label: 'Economic Development Corporation - EDC',
   },
   {
     value: 'SCA',

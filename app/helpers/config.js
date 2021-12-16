@@ -115,8 +115,8 @@ const config = {
       label: 'Queens Borough Public Library - QBPL',
     },
     {
-      value: 'SBS',
-      label: 'Department of Small Business Services - SBS',
+      value: 'EDC',
+      label: 'Economic Development Corporation - EDC',
     },
     {
       value: 'SCA',
@@ -309,8 +309,8 @@ const config = {
       label: 'Queens Borough Public Library - QBPL',
     },
     {
-      value: 'SBS',
-      label: 'Department of Small Business Services - SBS',
+      value: 'EDC',
+      label: 'Economic Development Corporation - EDC',
     },
     {
       value: 'SCA',

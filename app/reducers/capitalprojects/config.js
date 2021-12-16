@@ -123,8 +123,8 @@ const defaultFilterDimensions = {
         label: 'Department of Sanitation - DNSY',
       },
       {
-        value: 'SBS',
-        label: 'Department of Small Business Services - SBS',
+        value: 'EDC',
+        label: 'Economic Development Corporation - EDC',
       },
       {
         value: 'DOT',
@@ -230,8 +230,8 @@ const defaultFilterDimensions = {
         label: 'Department of Sanitation - DNSY',
       },
       {
-        value: 'SBS',
-        label: 'Department of Small Business Services - SBS',
+        value: 'EDC',
+        label: 'Economic Development Corporation - EDC',
       },
       {
         value: 'DOT',

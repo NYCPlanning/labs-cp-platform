@@ -304,8 +304,8 @@ const getDefaultFilterDimensions = ({ selected, values }) => ({
         label: 'NYC Department of Sanitation',
       },
       {
-        value: 'NYCSBS',
-        label: 'NYC Department of Small Business Services',
+        value: 'NYCEDC',
+        label: 'NYC Economic Development Corporation',
       },
       {
         value: 'NYCDOT',
