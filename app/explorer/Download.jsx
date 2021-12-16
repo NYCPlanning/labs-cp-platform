@@ -41,7 +41,7 @@ class Download extends React.Component {
 
   render() {
     const { counts, sql } = this.props;
-    const layers = this.props.isLoggedIn ? this.layers : ['facilities'];
+    const layers = this.layers;
 
     return (<div>
       {
