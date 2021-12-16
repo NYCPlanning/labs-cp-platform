@@ -20,7 +20,6 @@ import {
   HighlightJaneLayer,
   RadiusHighlightJaneLayer,
   HousingDevelopmentJaneLayer,
-  CBBudgetRequestsJaneLayer,
   SCAJaneLayer,
   CapitalProjectsJaneLayer,
 } from '../jane-layers';
@@ -74,10 +73,6 @@ class Explorer extends React.Component {
       'capital-projects': [
         'capital-projects-polygons',
         'capital-projects-points',
-      ],
-      'cb-budgetrequests': [
-        'cb-budgetrequests-polygons',
-        'cb-budgetrequests-points',
       ],
       scaplan: ['sca-points-points'],
       facilities: ['facilities-points'],
@@ -195,8 +190,6 @@ class Explorer extends React.Component {
     switch (feature.layer.source) {
       case 'capital-projects':
         return `/capitalproject/${feature.properties.maprojid}`;
-      case 'cb-budgetrequests':
-        return `/budgetrequest/${feature.properties.unique_id}`;
       case 'housing-development':
         return `/development/${feature.properties.job_number}`;
       case 'facilities': {
@@ -304,16 +297,6 @@ class Explorer extends React.Component {
             handleMapLayerClick={this.handleMapLayerClick}
             enabled={startingLayer === 'sca'}
             selected={startingLayer === 'sca'}
-          />
-
-          <CBBudgetRequestsJaneLayer
-            selectedPointType={this.state.selectedPointType}
-            selectedPointCoordinates={this.state.selectedPointCoordinates}
-            handleMapLayerClick={this.handleMapLayerClick}
-            pointsSql={this.props.cbBudgetRequestsPointsSql}
-            polygonsSql={this.props.cbBudgetRequestsPolygonSql}
-            enabled={startingLayer === 'budgetrequests'}
-            selected={startingLayer === 'budgetrequests'}
           />
 
           <CapitalProjectsJaneLayer

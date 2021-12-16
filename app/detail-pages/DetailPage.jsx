@@ -50,12 +50,6 @@ class DetailPage extends React.Component {
           />
         }
 
-        { this.props.route.type === 'budgetrequest' &&
-          <BudgetRequestDetailPage
-            id={this.props.params.id}
-          />
-        }
-
         {
           this.props.route.type === 'sca' &&
           <SCADetailPage

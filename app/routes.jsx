@@ -122,12 +122,6 @@ export default (
         type="capitalproject"
       />
       <Route
-        path="budgetrequest/:id"
-        component={DetailPage}
-        about={'/about/capitalprojects'}
-        type="budgetrequest"
-      />
-      <Route
         path="development/:id"
         component={DetailPage}
         about={'/about/pipeline'}
