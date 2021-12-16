@@ -21,6 +21,12 @@ export default {
     return this.generateUrlString(this.getCompleteSql(sql), fileType, `${filePrefix}_complete_${date}`);
   },
 
+  completeCommitmentsDownloadUrlString(sql, filePrefix, fileType) {
+    const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
+    const sqlCommitments = 'SELECT * FROM '.concat(sql);
+    return this.generateUrlString(sqlCommitments, fileType, `${filePrefix}_complete_${date}`);
+  },
+
   filteredDownloadUrlString(sql, filePrefix, fileType) {
     const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
     return this.generateUrlString(this.getFilteredSql(sql), fileType, `${filePrefix}_filtered_${date}`);

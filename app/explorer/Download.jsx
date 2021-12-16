@@ -26,11 +26,6 @@ class Download extends React.Component {
       noun: 'Developments',
       icon: 'cubes',
     },
-    'cb-budgetrequests': {
-      title: 'Budget Requests',
-      noun: 'Budget Requests',
-      icon: 'book',
-    },
     'facilities': {
       title: 'Facilities',
       noun: 'Facilities',
@@ -42,13 +37,12 @@ class Download extends React.Component {
     'capital-projects',
     // 'scaplan',
     'housing-development',
-    'cb-budgetrequests',
     'facilities',
   ];
 
   render() {
     const { counts, sql } = this.props;
-    const layers = this.props.isLoggedIn ? this.layers : ['facilities'];
+    const layers = this.layers;
 
     return (<div>
       {
@@ -70,19 +64,6 @@ class Download extends React.Component {
                   tableFiltered: counts.filtered['capital-projects-table'],
                   mapFiltered: counts.filtered['capital-projects'],
                 }}
-              />
-            }
-
-            { layerID === 'cb-budgetrequests' &&
-              <DownloadButtonBudgetRequests
-                layerID={'cb-budgetrequests'}
-                noun={this.layerMap['cb-budgetrequests'].noun}
-                sql={sql['cb-budgetrequests']}
-                counts={{
-                  total: counts.total['cb-budgetrequests'],
-                  filtered: counts.filtered['cb-budgetrequests'],
-                }}
-                filtered={counts.total['cb-budgetrequests'] !== counts.filtered['cb-budgetrequests']}
               />
             }
 
