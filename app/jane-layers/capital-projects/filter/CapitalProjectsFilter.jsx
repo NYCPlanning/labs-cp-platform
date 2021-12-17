@@ -157,25 +157,6 @@ class Filter extends React.Component {
           </ListItem>
 
           <Subheader>
-            Spent to Date
-            <InfoIcon text="Sum of spending for this capital project from Checkbook NYC data" />
-          </Subheader>
-
-          <ListItem
-            disabled
-            style={{
-              paddingTop: '0px',
-              zIndex: '0',
-              position: 'initial',
-            }}
-          >
-            <RangeInputs
-              data={filterDimensions.totalspend.values}
-              onChange={this.handleSliderChange.bind(this, 'totalspend')}
-            />
-          </ListItem>
-
-          <Subheader>
             Planned Commitment
             <InfoIcon text="Sum of all commitments in the latest capital commitment plan" />
           </Subheader>
@@ -194,7 +175,7 @@ class Filter extends React.Component {
           </ListItem>
 
           <Subheader>
-            Active Years
+              Years Included in Capital Commitment Plan
             <InfoIcon text="Active period is the date of a project's earliest spending or commitment to the date of its latest spending or commitment " />
           </Subheader>
           <ListItem

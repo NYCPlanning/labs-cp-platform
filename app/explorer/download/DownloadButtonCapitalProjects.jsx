@@ -29,7 +29,7 @@ class DownloadButton extends React.Component {
             >Project Level (csv)</MenuItem>
 
             <MenuItem
-              href={carto.completeDownloadUrlString(commitmentsSql, 'commitments', 'csv')}
+              href={carto.completeCommitmentsDownloadUrlString(commitmentsSql, 'commitments', 'csv')}
               onClick={this.logDownloadStat('capital-project_all', 'commitments')}
               eventKey="2"
             >

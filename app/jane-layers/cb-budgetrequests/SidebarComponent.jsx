@@ -20,16 +20,16 @@ const SidebarComponent = () => (
           <div>
             <h4>Community Board Budget Requests</h4>
             <p>Every year, New York City’s 59 Community Boards submit their capital and expense priorities to City
-              agencies for their consideration in their departmental estimates.  The Capital Planning Platform maps
+              agencies for their consideration in their departmental estimates.  The Capital Planning Explorer maps
               the budget priorities that contain specific location information, including specific sites, facilities,
               or street segments.</p>
 
             <p>Each mapped budget request contains the following information: request type, responsible agency,
               accompanying explanation, location and contact information for the community board.
               Community board budget priorities that are not site-specific and apply to the community more generally
-              have not been mapped on this platform.</p>
+              have not been mapped on this explorer.</p>
 
-            <p>City agencies can use this platform to view the mapped budget priorities in relation to ongoing
+            <p>City agencies can use this explorer to view the mapped budget priorities in relation to ongoing
               citywide capital projects; this will help agencies to evaluate the community board’s budget priorities,
               plan for future projects and in community outreach activities.</p>
 

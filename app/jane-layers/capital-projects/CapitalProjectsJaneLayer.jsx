@@ -35,13 +35,7 @@ const CapitalProjectsJaneLayer = props => (
       onClick={props.handleMapLayerClick}
       type="fill"
       paint={{
-        'fill-color': {
-          property: 'totalspend',
-          stops: [
-            [0, '#8B8C98'],
-            [1, '#d98127'],
-          ],
-        },
+        'fill-color': '#d98127',
         'fill-opacity': 0.75,
         'fill-antialias': true,
       }}
@@ -60,13 +54,7 @@ const CapitalProjectsJaneLayer = props => (
             [15, 6],
           ],
         },
-        'circle-color': {
-          property: 'totalspend',
-          stops: [
-            [0, '#8B8C98'],
-            [1, '#d98127'],
-          ],
-        },
+        'circle-color': '#d98127',
         'circle-opacity': 0.7,
       }}
     />
@@ -87,20 +75,6 @@ const CapitalProjectsJaneLayer = props => (
         'circle-opacity': 0.7,
       }}
     />
-
-    <Legend id="capital-projects-legend">
-      <div>
-        <div className="legendSection">Capital Projects</div>
-        <div className="legendItem">
-          <div className="colorCircle" style={{ backgroundColor: '#8B8C98' }} />
-          <div className="legendItemText">Planned Projects</div>
-        </div>
-        <div className="legendItem">
-          <div className="colorCircle" style={{ backgroundColor: '#d98127' }} />
-          <div className="legendItemText">Ongoing Projects</div>
-        </div>
-      </div>
-    </Legend>
   </JaneLayer>
 );
 

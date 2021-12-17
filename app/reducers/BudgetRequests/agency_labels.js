@@ -32,8 +32,8 @@ const labels = [
     label: 'Department of Buildings - DOB',
   },
   {
-    value: 'DOE',
-    label: 'Department of Education - DOE',
+    value: 'DOE/SCA',
+    label: 'Department of Education - DOE/School Construction Authority - SCA',
   },
   {
     value: 'DOHMH',
@@ -96,8 +96,8 @@ const labels = [
     label: 'Office of Management and Budget - OMB',
   },
   {
-    value: 'SBS',
-    label: 'Department of Small Business Services - SBS',
+    value: 'EDC',
+    label: 'Economic Development Corporation - EDC',
   },
   {
     value: 'SCA',

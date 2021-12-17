@@ -40,13 +40,6 @@ const Results = (props) => {
           key={`dev${feature.properties.job_number}`}
         />);
       }
-      case 'cb-budgetrequests': {
-        return (<BudgetRequestLineItem
-          feature={feature}
-          selected={feature.properties.unique_id.toString() === props.detailPageId.toString()}
-          key={`cbbr${feature.properties.unique_id}`}
-        />);
-      }
       default:
         return null;
     }

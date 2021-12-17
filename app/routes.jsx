@@ -72,7 +72,7 @@ const ensureSitewideAccess = ensureAccess('sitewide_access');
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={ensureSitewideAccess(HomePage)} />
+    <IndexRoute component={HomePage} />
 
     { /* About Pages */ }
     <Route path="about" component={About} title={'About'} />
@@ -101,13 +101,13 @@ export default (
     <Redirect from="capitalprojects/explorer" to="map/capitalprojects" />
 
     { /* Landing Pages */ }
-    <Route path="capitalprojects" component={ensureSitewideAccess(CapitalProjectsLanding)} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects" component={CapitalProjectsLanding} title={'Capital Projects Explorer'} about={'/about/capitalprojects'} />
     <Route path="facilities" component={FacilitiesLanding} title={'Facilities Explorer'} about={'/about/facilities'} />
 
     { /* Table */ }
-    <Route path="/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
-    <Route path="capitalprojects/table" component={ensureSitewideAccess(CapitalProjectsTable)} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
-    <Route path="/table/capitalproject/:id" component={ensureSitewideAccess(TableDetailPage)} title={'Capital Project'} about={'/about/capitalprojects'} />
+    <Route path="/table" component={CapitalProjectsTable} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="capitalprojects/table" component={CapitalProjectsTable} title={'Capital Projects Table'} about={'/about/capitalprojects'} />
+    <Route path="/table/capitalproject/:id" component={TableDetailPage} title={'Capital Project'} about={'/about/capitalprojects'} />
 
     { /* Map */ }
     <Route path="/map" component={Explorer} about={'/about/capitalprojects'} />
@@ -117,19 +117,13 @@ export default (
     <Route component={Explorer}>
       <Route
         path="capitalproject/:id"
-        component={ensureSitewideAccess(DetailPage)}
+        component={DetailPage}
         about={'/about/capitalprojects'}
         type="capitalproject"
       />
       <Route
-        path="budgetrequest/:id"
-        component={ensureSitewideAccess(DetailPage)}
-        about={'/about/capitalprojects'}
-        type="budgetrequest"
-      />
-      <Route
         path="development/:id"
-        component={ensureSitewideAccess(DetailPage)}
+        component={DetailPage}
         about={'/about/pipeline'}
         type="development"
       />

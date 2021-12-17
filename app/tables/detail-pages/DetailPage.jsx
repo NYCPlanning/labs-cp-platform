@@ -118,16 +118,6 @@ class DetailPage extends React.Component {
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-6'}>
               <Card style={CardStyles}>
-                <CardHeader title="Spent to Date" />
-                <CardText className={'text-center'}>
-                  <h2>{formatCost(d.totalspend)}</h2>
-                  <p className="subtext">spent to date</p>
-                </CardText>
-              </Card>
-            </div>
-
-            <div className={'col-md-6'}>
-              <Card style={CardStyles}>
                 <CardHeader title="Planned Commitment" />
                 <CardText className={'text-center'}>
                   <h2>{formatCost(d.totalcommit)}</h2>
@@ -140,7 +130,7 @@ class DetailPage extends React.Component {
           <div className={'row'} style={{ marginBottom: '15px' }}>
             <div className={'col-md-12'}>
               <Card style={CardStyles}>
-                <CardHeader title="Years Active" />
+                <CardHeader title="Years Included in Capital Commitment Plan" />
                 <CardText className={'text-center'}>
                   <h2>FY{getFY(d.mindate)} - FY{getFY(d.maxdate)}</h2>
                   {/* eslint-disable no-undef */}
@@ -184,12 +174,6 @@ class DetailPage extends React.Component {
             {
               geometryExists && <ModalMap feature={this.props.details} label={d.description} />
             }
-          </div>
-          <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
-            <FeedbackForm
-              ref_type="capitalproject"
-              ref_id={this.props.params.id}
-            />
           </div>
         </div>
       </div>

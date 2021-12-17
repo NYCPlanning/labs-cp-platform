@@ -14,6 +14,7 @@ class HomePage extends React.Component {
             <div className="row">
               <div className="col-lg-8 col-lg-offset-2 ">
                 <h2 className="section-heading">An online resource for better, more collaborative planning through data and technology.</h2>
+                <h2 className="section-heading">This is a Beta product. <a href="mailto:capital@planning.nyc.gov">Reach out to us</a> with feedback or suggestions.</h2>
                 <h3><Link to="/about">Read more here</Link> or <a href="mailto:capital@planning.nyc.gov">collaborate with us</a>.</h3>
               </div>
             </div>
@@ -46,7 +47,7 @@ class HomePage extends React.Component {
                 <div className="portfolio-image" style={{ backgroundImage: 'url(img/buildings.png)' }} />
                 <div className="title"><h3>New Housing Developments</h3></div>
                 <div className="hover-panel">
-                  <h4>New residential development is reshaping NYC neighborhoods - explore the map and see how this growth can inform planning and investment priorities.</h4>
+                  <h4>New residential development is reshaping NYC neighborhoods – explore supplemental housing information on the map and see how this growth can inform planning and investment priorities.</h4>
                   <h4 className="hover-panel-explore">Explore <i className="fa fa-angle-right" aria-hidden="true" /></h4>
                 </div>
               </div>

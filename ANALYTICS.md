@@ -1,6 +1,6 @@
 #Google Analytics
 
-The platform uses google analytics to track page loads and custom events.  This document is a place to log new custom events for consistent naming.
+The explorer uses google analytics to track page loads and custom events.  This document is a place to log new custom events for consistent naming.
 
 ## GA helper
 `app/helpers/ga.js` is a helper class that sets up the `React-GA` package with our tracking code.  It has a single method, `event()`, that passes the `args` object along to `React-GA`.  

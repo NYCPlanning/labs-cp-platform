@@ -121,7 +121,7 @@ class CapitalProjectsDetailPage extends React.Component {
                 }
               >
                 <div>
-                  <div>Years Active</div>
+                  <div>Years Included in Capital Commitment Plan</div>
                   <h2>{displayFY()}</h2>
                 </div>
               </OverlayTrigger>
@@ -143,13 +143,6 @@ class CapitalProjectsDetailPage extends React.Component {
                 <div className="panel-heading">As of {db_info.cpdb.date}</div>
                 <div className="panel-body">
                   <div className={'row'}>
-                    <div className={'col-lg-6'}>
-                      <div style={{ padding: '7px 0' }}>
-                        <div>Spent to Date</div>
-                        <h2>{formatCost(d.totalspend)}</h2>
-                      </div>
-                    </div>
-
                     <div className={'col-lg-6'}>
                       <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">See itemized commitments</Tooltip>}>
                         <div
@@ -183,15 +176,6 @@ class CapitalProjectsDetailPage extends React.Component {
                   }
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className={'row'}>
-            <div className={'col-md-12'}>
-              <FeedbackForm
-                ref_type="capitalproject"
-                ref_id={this.props.id}
-              />
             </div>
           </div>
         </div>

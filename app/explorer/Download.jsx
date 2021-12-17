@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DownloadButton from './download/DownloadButton';
 import DownloadButtonCapitalProjects from './download/DownloadButtonCapitalProjects';
-import DownloadButtonBudgetRequests from './download/DownloadButtonBudgetRequests';
 import DownloadButtonHousing from './download/DownloadButtonHousing';
 
 class Download extends React.Component {
@@ -26,11 +25,6 @@ class Download extends React.Component {
       noun: 'Developments',
       icon: 'cubes',
     },
-    'cb-budgetrequests': {
-      title: 'Budget Requests',
-      noun: 'Budget Requests',
-      icon: 'book',
-    },
     'facilities': {
       title: 'Facilities',
       noun: 'Facilities',
@@ -42,13 +36,12 @@ class Download extends React.Component {
     'capital-projects',
     // 'scaplan',
     'housing-development',
-    'cb-budgetrequests',
     'facilities',
   ];
 
   render() {
     const { counts, sql } = this.props;
-    const layers = this.props.isLoggedIn ? this.layers : ['facilities'];
+    const layers = this.layers;
 
     return (<div>
       {
@@ -70,19 +63,6 @@ class Download extends React.Component {
                   tableFiltered: counts.filtered['capital-projects-table'],
                   mapFiltered: counts.filtered['capital-projects'],
                 }}
-              />
-            }
-
-            { layerID === 'cb-budgetrequests' &&
-              <DownloadButtonBudgetRequests
-                layerID={'cb-budgetrequests'}
-                noun={this.layerMap['cb-budgetrequests'].noun}
-                sql={sql['cb-budgetrequests']}
-                counts={{
-                  total: counts.total['cb-budgetrequests'],
-                  filtered: counts.filtered['cb-budgetrequests'],
-                }}
-                filtered={counts.total['cb-budgetrequests'] !== counts.filtered['cb-budgetrequests']}
               />
             }
 
@@ -127,13 +107,12 @@ Download.propTypes = {
 };
 
 
-const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cbBudgetRequests, housingDevelopment, currentUser }) => ({
+const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, housingDevelopment, currentUser }) => ({
   counts: {
     total: {
       'capital-projects': capitalProjects.totalCount,
       'capital-projects-table': capitalProjectsTable.totalCount,
       'facilities': facilities.totalCount,
-      'cb-budgetrequests': cbBudgetRequests.totalCount,
       'housing-development': housingDevelopment.totalCount,
       'housing-development-raw': housingDevelopment.totalCountRaw,
     },
@@ -141,7 +120,6 @@ const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cb
       'capital-projects': capitalProjects.selectedCount,
       'capital-projects-table': capitalProjectsTable.selectedCount,
       'facilities': facilities.selectedCount,
-      'cb-budgetrequests': cbBudgetRequests.selectedCount,
       'housing-development': housingDevelopment.selectedCount,
     },
   },
@@ -153,10 +131,6 @@ const mapStateToProps = ({ facilities, capitalProjects, capitalProjectsTable, cb
     'capital-projects-table': capitalProjectsTable.sql,
     'capital-projects-commitments': capitalProjectsTable.commitmentsSql,
     facilities: facilities.sql,
-    'cb-budgetrequests': {
-      points: cbBudgetRequests.pointsSql,
-      polygons: cbBudgetRequests.polygonsSql,
-    },
     'housing-development': housingDevelopment.sql,
   },
   isLoggedIn: currentUser.isLoggedIn,
