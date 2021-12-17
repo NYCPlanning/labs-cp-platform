@@ -178,15 +178,6 @@ class CapitalProjectsDetailPage extends React.Component {
               </div>
             </div>
           </div>
-
-          <div className={'row'}>
-            <div className={'col-md-12'}>
-              <FeedbackForm
-                ref_type="capitalproject"
-                ref_id={this.props.id}
-              />
-            </div>
-          </div>
         </div>
       </div>
     );

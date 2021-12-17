@@ -217,12 +217,6 @@ class HousingDetailPage extends React.Component {
               </div>
             )
           }
-
-          <FeedbackForm
-            displayUnit="Development"
-            ref_type="development"
-            ref_id={this.props.id}
-          />
         </div>
       </div>
     );
