@@ -14,6 +14,7 @@ class HomePage extends React.Component {
             <div className="row">
               <div className="col-lg-8 col-lg-offset-2 ">
                 <h2 className="section-heading">An online resource for better, more collaborative planning through data and technology.</h2>
+                <h2 className="section-heading">This is a Beta product. <a href="mailto:capital@planning.nyc.gov">Reach out to us</a> with feedback or suggestions.</h2>
                 <h3><Link to="/about">Read more here</Link> or <a href="mailto:capital@planning.nyc.gov">collaborate with us</a>.</h3>
               </div>
             </div>
