@@ -40,10 +40,11 @@ export const About = () => (
               <li><b><a href="https://zola.planning.nyc.gov/">Zoning and Land use Application (ZoLA)</a></b> – A tool to research zoning districts and associated information for any lot in New York City.</li>
             </ul>
 
-             <b>Limitations </b>
+             <b>Known Issues</b>
             <br />
             <ul type={'disc'}>
-              <li>The boundaries for geographic features are out of date and do not reflect changes made with the 2020 decennial census.</li>
+              <li>The boundaries for geographic features are out of date and do not reflect changes made with the 2020 Decennial Census.</li>
+              <li>Supplemental contextual layers for Zoning, Administrative Boundaries, Flood Hazards, Transportation, and Aerial Imagery are out of date and do not reflect recent changes.</li>
             </ul>
             <p>A new and improved version of Capital Planning Explorer will be released in 2022 addressing these issues.</p>
 
