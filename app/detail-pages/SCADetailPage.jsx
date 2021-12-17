@@ -62,13 +62,6 @@ class SCADetailPage extends React.Component {
           </div>
 
         </div>
-
-        <FeedbackForm
-          ref_type="sca"
-          ref_id={this.props.id}
-          location={this.props.location}
-          auth={this.props.auth}
-        />
       </div>
     );
   }

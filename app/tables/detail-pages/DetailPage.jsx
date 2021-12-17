@@ -175,12 +175,6 @@ class DetailPage extends React.Component {
               geometryExists && <ModalMap feature={this.props.details} label={d.description} />
             }
           </div>
-          <div className={'row'} style={{ marginBottom: '15px', padding: '15px' }}>
-            <FeedbackForm
-              ref_type="capitalproject"
-              ref_id={this.props.params.id}
-            />
-          </div>
         </div>
       </div>
     );
