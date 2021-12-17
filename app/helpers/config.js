@@ -51,8 +51,8 @@ const config = {
       label: 'Department of Correction',
     },
     {
-      value: 'DOE',
-      label: 'Department of Education',
+      value: 'DOE/SCA',
+      label: 'Department of Education/School Construction Authority',
     },
     {
       value: 'DOHMH',
@@ -115,8 +115,8 @@ const config = {
       label: 'Queens Borough Public Library - QBPL',
     },
     {
-      value: 'SBS',
-      label: 'Department of Small Business Services - SBS',
+      value: 'EDC',
+      label: 'Economic Development Corporation - EDC',
     },
     {
       value: 'SCA',
@@ -233,8 +233,8 @@ const config = {
       label: 'Department of Corrections - DOC',
     },
     {
-      value: 'DOE',
-      label: 'Department of Education - DOE',
+      value: 'DOE/SCA',
+      label: 'Department of Education - DOE/School Construction Authority - SCA',
     },
     {
       value: 'DOHMH',
@@ -309,8 +309,8 @@ const config = {
       label: 'Queens Borough Public Library - QBPL',
     },
     {
-      value: 'SBS',
-      label: 'Department of Small Business Services - SBS',
+      value: 'EDC',
+      label: 'Economic Development Corporation - EDC',
     },
     {
       value: 'SCA',

@@ -12,3 +12,5 @@ yarn-error.log
 /public/bundle.*
 
 /coverage
+
+js/bundle.js
