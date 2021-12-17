@@ -91,8 +91,8 @@ const defaultFilterDimensions = {
         label: 'Department of Design and Construction - DDC',
       },
       {
-        value: 'DOE',
-        label: 'Department of Education - DOE',
+        value: 'DOE/SCA',
+        label: 'Department of Education - DOE/School Construction Authority - SCA',
       },
       {
         value: 'DEP',
@@ -198,8 +198,8 @@ const defaultFilterDimensions = {
         label: 'Department of Cultural Affairs - DCLA',
       },
       {
-        value: 'DOE',
-        label: 'Department of Education - DOE',
+        value: 'DOE/SCA',
+        label: 'Department of Education - DOE/School Construction Authority - SCA',
       },
       {
         value: 'DEP',

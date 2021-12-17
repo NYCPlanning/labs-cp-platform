@@ -32,8 +32,8 @@ const labels = [
     label: 'Department of Buildings - DOB',
   },
   {
-    value: 'DOE',
-    label: 'Department of Education - DOE',
+    value: 'DOE/SCA',
+    label: 'Department of Education - DOE/School Construction Authority - SCA',
   },
   {
     value: 'DOHMH',

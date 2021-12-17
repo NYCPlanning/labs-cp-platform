@@ -256,8 +256,8 @@ const getDefaultFilterDimensions = ({ selected, values }) => ({
         label: 'NYC Department of Design and Construction',
       },
       {
-        value: 'NYCDOE',
-        label: 'NYC Department of Education',
+        value: 'NYCDOE/SCA',
+        label: 'NYC Department of Education/School Construction Authority',
       },
       {
         value: 'NYCDEP',
