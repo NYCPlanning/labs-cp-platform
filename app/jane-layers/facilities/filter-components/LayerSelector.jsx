@@ -137,7 +137,6 @@ class LayerSelector extends React.Component {
     const {
       overabbrev,
       optype,
-      proptype,
       facsubgrp,
       radiusfilter,
       commboard,

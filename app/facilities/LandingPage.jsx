@@ -41,48 +41,6 @@ class FacilitiesLandingPage extends React.Component {
                       to={{
                         pathname: '/map/facilities',
                         state: {
-                          mergeFilterDimensions: {
-                            proptype: {
-                              type: 'multiSelect',
-                              disabled: false,
-                              values: [
-                                {
-                                  value: 'City Owned',
-                                  label: 'City Owned',
-                                  checked: true,
-                                },
-                                {
-                                  value: 'City Leased',
-                                  label: 'City Leased',
-                                  checked: true,
-                                },
-                                {
-                                  value: '',
-                                  label: 'Not Owned or Leased by City',
-                                  checked: false,
-                                },
-                              ],
-                            },
-                          },
-                        },
-                      }}
-                      onClick={() => ga.event({
-                        category: 'facilities-entry',
-                        action: 'frequently-used',
-                        label: 'City Owned and Leased Sites',
-                      })}
-                    >
-                      City Owned and Leased Sites <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">All facilities and program sites that are on property is that owned or leased by the City of New York.</Tooltip>}>
-                        <i className="fa fa-info-circle" aria-hidden="true" />
-                      </OverlayTrigger>
-                    </Link>
-                  </div>
-                  <div className="box preset-link ">
-                    <Link
-                      className="btn btn-default"
-                      to={{
-                        pathname: '/map/facilities',
-                        state: {
                           filterDimensions: getDefaultFilterDimensions({ selected: {
                             'Health and Human Services': { 'Health Care': null },
                             'Education, Child Welfare, and Youth': {
