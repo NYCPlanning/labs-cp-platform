@@ -149,7 +149,6 @@ class FacilityDetailPage extends React.Component {
                       <i className="fa fa-info-circle" aria-hidden="true" />
                     </OverlayTrigger>
                     </small></h4><h4>{d.bin ? d.bin : 'Not Available'}</h4></div>
-                    <div className="property-detail-blocks"><h4><small>Property Type</small></h4><h4>{d.proptype ? d.proptype : 'Privately Owned'}</h4></div>
                   </div>
                 </div>
               </div>

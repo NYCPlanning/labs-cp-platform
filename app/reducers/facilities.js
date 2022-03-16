@@ -62,7 +62,6 @@ const facilitiesReducer = (state = initialState, action) => {
       const shouldChangeDisabledValue = [
         'overabbrev',
         'optype',
-        'proptype',
         'nta',
         'commboard',
         'censtract',

@@ -137,7 +137,6 @@ class LayerSelector extends React.Component {
     const {
       overabbrev,
       optype,
-      proptype,
       facsubgrp,
       radiusfilter,
       commboard,
@@ -207,7 +206,7 @@ class LayerSelector extends React.Component {
           </ListItem>
 
           <Subheader>
-            Operators, Oversight, and Property Types
+            Operators and Oversight
           </Subheader>
 
           <ListItem
@@ -235,19 +234,6 @@ class LayerSelector extends React.Component {
               onChange={this.updateFilterDimension.bind(this, 'optype')}
             />
             <InfoIcon text="The type of entity operating the facility" />
-          </ListItem>
-
-          <ListItem
-            disabled
-            style={listItemStyle}
-          >
-            <MultiSelect
-              placeholder="Property Types"
-              name="form-field-name"
-              options={proptype.values}
-              onChange={this.updateFilterDimension.bind(this, 'proptype')}
-            />
-            <InfoIcon text="Indicates whether the City owns or directly leases the property. This property type data is sourced from the Department of Citywide Administrative Services." />
           </ListItem>
 
           <Subheader>

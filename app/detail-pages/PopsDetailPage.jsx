@@ -148,10 +148,6 @@ class FacilityDetailPage extends React.Component {
                         </OverlayTrigger></td>
                         <td><strong>{d.bin ? d.bin : 'Not Available'}</strong></td>
                       </tr>
-                      <tr>
-                        <td>Property Type</td>
-                        <td><strong>{d.proptype ? d.proptype : 'Privately Owned'}</strong></td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
