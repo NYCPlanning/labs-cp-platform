@@ -55,7 +55,7 @@ const mapLayers = {
     minzoom: 13,
     paint: paint.labels,
     layout: {
-      'text-field': '{ct_2010}',
+      'text-field': '{label}',
       'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
       'text-size': {
         stops: [
