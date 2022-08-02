@@ -45,7 +45,7 @@ class Search extends React.Component {
   }
 
   onSuggestionsFetchRequested = ({ value }) => {
-    const apiCall = `https://geosearch.planninglabs.nyc/v1/autocomplete?text=${value}`;
+    const apiCall = `https://geosearch.planninglabs.nyc/v2/autocomplete?text=${value}`;
 
     $.getJSON(apiCall, (data) => {
       // eslint-disable-line no-undef
