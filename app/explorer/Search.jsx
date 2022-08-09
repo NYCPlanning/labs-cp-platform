@@ -1,19 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
-import _ from 'lodash';
-import ga from '../helpers/ga';
+import React from "react";
+import PropTypes from "prop-types";
+import Autosuggest from "react-autosuggest";
+import _ from "lodash";
+import ga from "../helpers/ga";
 
 const streetName = (street) => {
-  if (street.match(/^(.*[a-z]{3})[a-z0-9]+$/i)) return street.toLowerCase().replace(/[^']\b\w/g, l => l.toUpperCase());
+  if (street.match(/^(.*[a-z]{3})[a-z0-9]+$/i))
+    return street.toLowerCase().replace(/[^']\b\w/g, (l) => l.toUpperCase());
   return street;
 };
 
-const addressString = s => `${streetName(s.properties.name)}, ${s.properties.borough}`;
+const addressString = (s) =>
+  `${streetName(s.properties.name)}, ${s.properties.borough}`;
 
 function renderSuggestion(s) {
   return (
-    <div><i className="fa fa-map-marker" aria-hidden="true" /><span>{addressString(s)}</span></div>
+    <div>
+      <i className="fa fa-map-marker" aria-hidden="true" />
+      <span>{addressString(s)}</span>
+    </div>
   );
 }
 
@@ -22,44 +27,45 @@ function shouldRenderSuggestions(value) {
 }
 
 class Search extends React.Component {
-
-  static displayName = 'Search';
+  static displayName = "Search";
 
   constructor(props) {
     super(props);
 
     this.state = {
-      value: '',
+      value: "",
       suggestions: [],
     };
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !_.isEqual(this.props, nextProps) ||
-           !_.isEqual(this.state, nextState);
+    return (
+      !_.isEqual(this.props, nextProps) || !_.isEqual(this.state, nextState)
+    );
   }
 
   onSuggestionsFetchRequested = ({ value }) => {
-    const apiCall = `https://geosearch.planninglabs.nyc/v1/autocomplete?text=${value}`;
+    const apiCall = `https://geosearch.planninglabs.nyc/v2/autocomplete?text=${value}`;
 
-    $.getJSON(apiCall, (data) => { // eslint-disable-line no-undef
+    $.getJSON(apiCall, (data) => {
+      // eslint-disable-line no-undef
       this.setState({
         suggestions: data.features,
       });
     });
-  }
+  };
 
   onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
     });
-  }
+  };
 
   onChange = (e, obj) => {
     this.setState({
       value: obj.newValue,
     });
-  }
+  };
 
   onSuggestionSelected = (e, o) => {
     this.setState({
@@ -67,36 +73,34 @@ class Search extends React.Component {
     });
 
     ga.event({
-      category: 'search',
-      action: 'search-term-selected',
+      category: "search",
+      action: "search-term-selected",
       label: o.suggestion.properties.name,
     });
 
     // pass up to Jane to create/update Marker
     this.props.onGeocoderSelection(o.suggestion, o.suggestion.properties.name);
-  }
+  };
 
-  clearInput= () => {
+  clearInput = () => {
     // tell Jane to hide Marker
     this.props.onClear();
 
     // set the input field to ''
     this.setState({
-      value: '',
+      value: "",
     });
-  }
+  };
 
   render() {
     const inputProps = {
-      placeholder: 'Search for an address',
+      placeholder: "Search for an address",
       value: this.state.value,
       onChange: this.onChange,
     };
 
     return (
-      <div
-        className={'search'}
-      >
+      <div className={"search"}>
         <Autosuggest
           suggestions={this.state.suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -107,10 +111,15 @@ class Search extends React.Component {
           inputProps={inputProps}
           onSuggestionSelected={this.onSuggestionSelected}
         />
-        {this.props.selectionActive ?
-          <span className={'fa fa-times'} style={{ cursor: 'pointer' }} onClick={this.clearInput} /> :
-          <span className={'fa fa-search'} style={{ cursor: 'pointer' }} />
-        }
+        {this.props.selectionActive ? (
+          <span
+            className={"fa fa-times"}
+            style={{ cursor: "pointer" }}
+            onClick={this.clearInput}
+          />
+        ) : (
+          <span className={"fa fa-search"} style={{ cursor: "pointer" }} />
+        )}
       </div>
     );
   }
