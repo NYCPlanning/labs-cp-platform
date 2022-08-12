@@ -23,8 +23,7 @@ export default {
 
   completeCommitmentsDownloadUrlString(sql, filePrefix, fileType) {
     const date = moment().format('YYYY-MM-DD'); // eslint-disable-line no-undef
-    const sqlCommitments = 'SELECT * FROM '.concat(sql);
-    return this.generateUrlString(sqlCommitments, fileType, `${filePrefix}_complete_${date}`);
+    return this.generateUrlString(sql, fileType, `${filePrefix}_complete_${date}`);
   },
 
   filteredDownloadUrlString(sql, filePrefix, fileType) {
