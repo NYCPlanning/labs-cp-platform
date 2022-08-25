@@ -66,28 +66,6 @@ class LayerSelector extends React.Component {
     this.state = { expanded: null };
   }
 
-  componentDidMount() {
-    const {
-      locationState,
-      filterDimensions,
-      setFilters,
-      fetchSelectedFacilitiesCount,
-    } = this.props;
-
-    if (locationState && locationState.filterDimensions) {
-      setFilters(locationState.filterDimensions);
-      fetchSelectedFacilitiesCount(locationState.filterDimensions);
-      return;
-    }
-
-    const updatedFilterDimensions = locationState && locationState.mergeFilterDimensions
-      ? Object.assign({}, filterDimensions, locationState.mergeFilterDimensions)
-      : filterDimensions;
-
-    setFilters(updatedFilterDimensions);
-    fetchSelectedFacilitiesCount(updatedFilterDimensions);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.sql !== nextProps.sql) {
       this.props.fetchSelectedFacilitiesCount(nextProps.filterDimensions);
@@ -139,8 +117,8 @@ class LayerSelector extends React.Component {
       optype,
       facsubgrp,
       radiusfilter,
-      commboard,
-      nta,
+      cd,
+      nta2020,
       borocode,
       censtract,
       council,
@@ -185,8 +163,8 @@ class LayerSelector extends React.Component {
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
               filterDimensions={{
-                commboard,
-                nta,
+                cd,
+                nta2020,
                 borocode,
                 censtract,
                 council,
@@ -194,9 +172,9 @@ class LayerSelector extends React.Component {
                 admin_schooldistrict,
               }}
               options={[
-                { value: 'commboard', label: 'Community District' },
+                { value: 'cd', label: 'Community District' },
                 { value: 'borocode', label: 'Borough' },
-                { value: 'nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'nta2020', label: 'Neighborhood Tabulation Area' },
                 { value: 'council', label: 'City Council District' },
                 // { value: 'censtract', label: 'Census Tract' },
                 // { value: 'admin_policeprecinct', label: 'Police Precinct' },
@@ -301,6 +279,7 @@ const mapStateToProps = ({ facilities }) => ({
   sql: facilities.sql,
   totalCount: facilities.totalCount,
   selectedCount: facilities.selectedCount,
+  setFilterDimension: facilities.setFilterDimension,
 });
 
 export default connect(mapStateToProps, {

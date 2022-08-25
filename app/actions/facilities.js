@@ -45,7 +45,7 @@ export const resetFilter = () => ({
 export const fetchNYCBounds = id => ({
   type: AT.CARTO_REQUEST,
   payload: {
-    sql: `SELECT ST_Extent(the_geom) FROM ${db_tables.support.nta} WHERE ntacode = '${id}'`,
+    sql: `SELECT ST_Extent(the_geom) FROM ${db_tables.support.nta2020} WHERE ntacode = '${id}'`,
     requestFormat: 'json',
     nextType: AT.FETCH_NYC_BOUNDS,
   },

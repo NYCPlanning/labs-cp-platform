@@ -6,7 +6,7 @@ test('getGeomConfig returns correct geom type', () => {
     dataset: 'support_admin_cdboundaries',
   });
 
-  expect(NycGeom.getGeomConfig('nta')).toEqual({
+  expect(NycGeom.getGeomConfig('nta2020')).toEqual({
     column: 'ntacode',
     dataset: 'support_admin_ntaboundries',
   });
@@ -16,7 +16,7 @@ test('getGeomConfig returns correct geom type', () => {
 
 test('getGeomName returns human readable geometry name', () => {
   expect(NycGeom.getGeomName('cd', '101')).toBe('Manhattan Community District 1');
-  expect(NycGeom.getGeomName('nta', 'BX98')).toBe('Rikers Island (BX98)');
+  expect(NycGeom.getGeomName('nta2020', 'BX98')).toBe('Rikers Island (BX98)');
   expect(NycGeom.getGeomName('wat', 'BX98')).toBe('notfound');
 });
 

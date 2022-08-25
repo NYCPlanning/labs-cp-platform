@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, browserHistory } from 'react-router';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import { connect } from 'react-redux';
 
 import ga from '../helpers/ga';
+import * as facilitiesActions from '../actions/facilities';
 
 class SplashDuo extends React.Component {
   constructor(props) {
@@ -11,7 +14,11 @@ class SplashDuo extends React.Component {
     this.state = {
       selectedGeography: null,
       ntaSelectionValues: [],
-      neighborhoodPlacholder: 'Explore a Neighborhood',
+      setFilterDimension: {},
+      neighborhoodPlaceholder: 'Explore a Neighborhood',
+      ntaSelection: null,
+      values: [],
+      dimension: 'nta2020',
     };
   }
 
@@ -26,7 +33,7 @@ class SplashDuo extends React.Component {
       pathname: '/map/facilities',
       state: {
         adminboundaries: {
-          type: 'nta',
+          type: 'nta2020',
           value: selected.value,
         },
       },
@@ -37,13 +44,37 @@ class SplashDuo extends React.Component {
       action: 'neighborhood',
       label: selected.label,
     });
+
+    this.handleSelectChange(selected.value);
+
+    this.updateFilterDimension(this.state.dimension, this.state.ntaSelectionValues);
   }
 
   handleNeighborhoodBoxClick = () => {
     this.setState({
-      neighborhoodPlacholder: 'Type to search',
+      neighborhoodPlaceholder: 'Type to search',
     });
   }
+
+  updateFilterDimension = (dimension='nta2020', values) => {
+    setFilterDimension(dimension, values);
+  };
+
+  handleSelectChange = (ntaSelection) => {
+    this.state.ntaSelectionValues.forEach(nta => {
+      if (nta.value !== ntaSelection) {
+        nta['checked'] = false;
+      } else {
+        nta['checked'] = true;
+      }
+    });
+
+    this.setState({ ntaSelection });
+  }
+
+   updateFilterDimension = (dimension, values) => {
+      this.props.setFilterDimension(dimension, values);
+    };
 
   render() {
     return (
@@ -68,7 +99,7 @@ class SplashDuo extends React.Component {
         <div className="box neighborhood-link" onClick={this.handleNeighborhoodBoxClick}>
           <Select
             multi={false}
-            placeholder={this.state.neighborhoodPlacholder}
+            placeholder={this.state.neighborhoodPlaceholder}
             value={this.state.selectedGeography}
             name="form-field-name"
             options={this.state.ntaSelectionValues}
@@ -80,4 +111,16 @@ class SplashDuo extends React.Component {
   }
 }
 
-export default SplashDuo;
+SplashDuo.PropTypes = {
+  setFilterDimension: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = ({ facilities }) => ({
+  filterDimensions: facilities.filterDimensions,
+  setFilterDimension: facilities.setFilterDimension,
+});
+
+export default connect(mapStateToProps, {
+  setFilterDimension: facilitiesActions.setFilterDimension,
+})(SplashDuo);
+

@@ -12,10 +12,10 @@ const defaultFilterDimensions = {
       radius: 0,
     },
   },
-  commboard: {
+  cd: {
     type: 'joinMultiSelect',
     disabled: true,
-    values: LabelHelper.get_labels('commboard'),
+    values: LabelHelper.get_labels('cd'),
     lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
@@ -26,10 +26,10 @@ const defaultFilterDimensions = {
     lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },
-  nta: {
+  nta2020: {
     type: 'joinMultiSelect',
     disabled: true,
-    values: LabelHelper.get_labels('nta'),
+    values: LabelHelper.get_labels('nta2020'),
     lookupTable: db_tables.cpdb.adminbounds,
     idColumn: 'maprojid',
   },

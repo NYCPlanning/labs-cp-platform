@@ -27,14 +27,14 @@ class AdminBoundariesJaneLayer extends React.Component {
   }
 
   renderNTA() {
-    if (this.state.selected !== 'nta') {
+    if (this.state.selected !== 'nta2020') {
       return null;
     }
 
     return [
       <Source id="nta" type="geojson" data="/data/ntaboundaries.geojson" />,
-      <MapLayer id="ntaboundaries" source="nta" {...mapLayers.ntaboundaries} />,
-      <MapLayer id="ntaboundaries_labels" source="nta" {...mapLayers.ntaboundaries_labels} />,
+      <MapLayer id="ntaboundaries" source="nta2020" {...mapLayers.ntaboundaries} />,
+      <MapLayer id="ntaboundaries_labels" source="nta2020" {...mapLayers.ntaboundaries_labels} />,
     ].map((child, index) => ({ ...child, key: index }));
   }
 
