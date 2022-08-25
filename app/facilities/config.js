@@ -48,15 +48,15 @@ const getDefaultFilterDimensions = ({ selected, values }) => ({
       radius: 0,
     },
   },
-  commboard: {
+  cd: {
     type: 'multiSelect',
     disabled: true,
-    values: LabelHelper.get_labels('commboard'),
+    values: LabelHelper.get_labels('cd'),
   },
-  nta: {
+  nta2020: {
     type: 'multiSelect',
     disabled: true,
-    values: LabelHelper.get_labels('nta'),
+    values: LabelHelper.get_labels('nta2020'),
   },
   borocode: {
     type: 'multiSelect',

@@ -4,4 +4,4 @@ Directory of label data and helper files
 ## Todo:
 Consolidate other labeling files into this one:
 - `config.js`
-- `nta.js`
+- `nta2020.js`

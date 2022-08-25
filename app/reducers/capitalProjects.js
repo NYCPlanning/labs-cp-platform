@@ -63,7 +63,7 @@ const capitalProjectsReducer = (state = initialState, action) => {
         'sagencyacro',
         'projecttype',
         'censtract',
-        'nta',
+        'nta2020',
         'taz',
         'council',
         'firediv',
@@ -76,7 +76,7 @@ const capitalProjectsReducer = (state = initialState, action) => {
         'statesenatedistrict',
         'congdist',
         'borocode',
-        'commboard',
+        'cd',
       ];
 
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)

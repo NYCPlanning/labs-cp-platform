@@ -1,4 +1,4 @@
-// nta.js - helper methods for Neighborhood Tabulation Areas
+// nta2020.js - helper methods for Neighborhood Tabulation Areas
 // use getNtaName(ntacode) to get an NTA neighborhood name for a given ntacode
 
 const ntas = [

@@ -30,7 +30,7 @@ class FacilitiesLandingPage extends React.Component {
                 <p className="subtitle">The most comprehensive dataset of public and private facilities and program sites that shape the quality of New York City neighborhoods</p>
                 <p className="learn-more"><Link to="/about/facilities">Learn More</Link></p>
 
-                <SplashDuo />
+                <SplashDuo setFilterDimension={this.props.setFilterDimension} />
 
                 <div className="splash-button-section hide-mobile">
                   <hr className="light" />
@@ -187,6 +187,12 @@ FacilitiesLandingPage.propTypes = {
   resetFilter: PropTypes.func.isRequired,
 };
 
-export default connect(() => {}, {
+const mapStateToProps = ({ facilities }) => ({
   resetFilter: facilitiesActions.resetFilter,
+  setFilterDimension: facilitiesActions.setFilterDimension,
+});
+
+export default connect(mapStateToProps, {
+  resetFilter: facilitiesActions.resetFilter,
+  setFilterDimension: facilitiesActions.setFilterDimension,
 })(FacilitiesLandingPage);

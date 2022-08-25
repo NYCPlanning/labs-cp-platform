@@ -20,7 +20,7 @@ const db_tables = {
   housingdevdb: "devdb_housing_pts_20v2",
   sca: "sca_capital_projects_v2019",
   support: {
-    nta: "nta_boundaries",
+    nta2020: "nta_boundaries",
     ih: "inclusionary_housing",
     mih: "mandatory_inclusionary_housing",
     dcp_studyareas: "support_dcp_studyareas",
