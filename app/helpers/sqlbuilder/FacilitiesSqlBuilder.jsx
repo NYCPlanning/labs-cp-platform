@@ -47,6 +47,4 @@ Object.assign(FacilitiesSqlBuilder, SqlBuilder);
 
 const sqlBuilder = new FacilitiesSqlBuilder(sqlConfig.columns, sqlConfig.tablename);
 
-export const getSql = filterDimensions => {
-  return sqlBuilder.buildSql(filterDimensions);
-};
+export const getSql = filterDimensions => sqlBuilder.buildSql(filterDimensions);
