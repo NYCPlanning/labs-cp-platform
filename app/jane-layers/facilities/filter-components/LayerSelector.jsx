@@ -63,7 +63,19 @@ function processChecked(layers) {
 class LayerSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expanded: null };
+    this.state = { expanded: null, };
+  }
+
+  componentDidMount() {
+    const {
+      locationState,
+      filterDimensions,
+      setFilters,
+      fetchSelectedFacilitiesCount,
+    } = this.props;
+
+    setFilters(filterDimensions);
+    fetchSelectedFacilitiesCount(filterDimensions);
   }
 
   componentWillReceiveProps(nextProps) {

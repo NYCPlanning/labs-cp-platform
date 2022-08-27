@@ -11,13 +11,11 @@ import * as facilitiesActions from '../actions/facilities';
 class SplashDuo extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       selectedGeography: null,
       ntaSelectionValues: [],
-      setFilterDimension: {},
       neighborhoodPlaceholder: 'Explore a Neighborhood',
-      ntaSelection: null,
-      values: [],
       dimension: 'nta2020',
     };
   }
@@ -29,12 +27,19 @@ class SplashDuo extends React.Component {
   }
 
   handleGeographySelection = (selected) => {
+    this.handleSelectChange(selected.value);
+
+    this.updateFilterDimension(this.state.dimension, this.state.ntaSelectionValues);
+
+    const ntaDimension = this.state.ntaSelectionValues;
+
     browserHistory.push({
       pathname: '/map/facilities',
       state: {
         adminboundaries: {
           type: 'nta2020',
           value: selected.value,
+          ntaDimension: ntaDimension,
         },
       },
     });
@@ -44,10 +49,6 @@ class SplashDuo extends React.Component {
       action: 'neighborhood',
       label: selected.label,
     });
-
-    this.handleSelectChange(selected.value);
-
-    this.updateFilterDimension(this.state.dimension, this.state.ntaSelectionValues);
   }
 
   handleNeighborhoodBoxClick = () => {
@@ -56,9 +57,9 @@ class SplashDuo extends React.Component {
     });
   }
 
-  updateFilterDimension = (dimension='nta2020', values) => {
-    setFilterDimension(dimension, values);
-  };
+updateFilterDimension = (dimension, values) => {
+  this.props.setFilterDimension(dimension, values);
+};
 
   handleSelectChange = (ntaSelection) => {
     this.state.ntaSelectionValues.forEach(nta => {
@@ -68,13 +69,7 @@ class SplashDuo extends React.Component {
         nta['checked'] = true;
       }
     });
-
-    this.setState({ ntaSelection });
   }
-
-   updateFilterDimension = (dimension, values) => {
-      this.props.setFilterDimension(dimension, values);
-    };
 
   render() {
     return (
@@ -116,7 +111,6 @@ SplashDuo.PropTypes = {
 }
 
 const mapStateToProps = ({ facilities }) => ({
-  filterDimensions: facilities.filterDimensions,
   setFilterDimension: facilities.setFilterDimension,
 });
 
