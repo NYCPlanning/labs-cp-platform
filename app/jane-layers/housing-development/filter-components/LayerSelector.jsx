@@ -65,7 +65,7 @@ class LayerSelector extends React.Component {
       radiusfilter,
       geo_cd,
       geo_boro,
-      geo_ntacode2010,
+      geo_ntacode2020,
       geo_censustract2010,
       geo_council,
       geo_csd,
@@ -131,7 +131,7 @@ class LayerSelector extends React.Component {
               filterDimensions={{
                 geo_cd,
                 geo_boro,
-                geo_ntacode2010,
+                geo_ntacode2020,
                 geo_censustract2010,
                 geo_council,
                 geo_csd,
@@ -139,7 +139,7 @@ class LayerSelector extends React.Component {
               options={[
                 { value: 'geo_cd', label: 'Community District' },
                 { value: 'geo_boro', label: 'Borough' },
-                { value: 'geo_ntacode2010', label: 'Neighborhood Tabulation Area' },
+                { value: 'geo_ntacode2020', label: 'Neighborhood Tabulation Area' },
                 { value: 'geo_censustract2010', label: 'Census Tract' },
                 { value: 'geo_council', label: 'City Council District' },
                 { value: 'geo_csd', label: 'School District' },
