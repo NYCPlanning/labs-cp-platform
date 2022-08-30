@@ -77,9 +77,6 @@ class LayerSelector extends React.Component {
       fetchSelectedFacilitiesCount,
     } = this.props;
 
-    console.log('STATESTATESTATE', this.state);
-    console.log('PROPSPROPS', this.props);
-
     if (this.props.locationState) {
       this.state.exploreANeighborhoodSelected = true;
     }
