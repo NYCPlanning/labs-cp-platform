@@ -65,7 +65,7 @@ class LayerSelector extends React.Component {
     super(props);
     this.state = {
       expanded: null,
-      initialComponentMount: false,
+      exploreANeighborhoodSelected: false,
       ntaSelection: null,
     };
   }
@@ -78,7 +78,13 @@ class LayerSelector extends React.Component {
       fetchSelectedFacilitiesCount,
     } = this.props;
 
-    this.state.initialComponentMount = true;
+    console.log('STATESTATESTATE', this.state);
+    console.log('PROPSPROPS', this.props);
+
+    if (this.props.locationState) {
+      this.state.exploreANeighborhoodSelected = true;
+    }
+
     setFilters(filterDimensions);
     fetchSelectedFacilitiesCount(filterDimensions);
   }
@@ -94,7 +100,7 @@ class LayerSelector extends React.Component {
   }
 
   updateFilterDimension = (dimension, values) => {
-    this.state.initialComponentMount = false;
+    this.state.exploreANeighborhoodSelected = false;
     this.props.setFilterDimension(dimension, values);
   };
 
@@ -144,7 +150,7 @@ class LayerSelector extends React.Component {
       admin_schooldistrict,
     } = filterDimensions;
 
-    const { initialComponentMount } = this.state;
+    const { exploreANeighborhoodSelected } = this.state;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -182,7 +188,7 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
-              initialComponentMount={this.state.initialComponentMount}
+              exploreANeighborhoodSelected={this.state.exploreANeighborhoodSelected}
               filterDimensions={{
                 cd,
                 nta2020,
