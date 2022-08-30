@@ -39,7 +39,6 @@ class SplashDuo extends React.Component {
         adminboundaries: {
           type: 'nta2020',
           value: selected.value,
-          ntaDimension: ntaDimension,
         },
       },
     });
