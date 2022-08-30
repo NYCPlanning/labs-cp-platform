@@ -63,7 +63,11 @@ function processChecked(layers) {
 class LayerSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expanded: null, };
+    this.state = {
+      expanded: null,
+      initialComponentMount: false,
+      ntaSelection: null,
+    };
   }
 
   componentDidMount() {
@@ -74,6 +78,7 @@ class LayerSelector extends React.Component {
       fetchSelectedFacilitiesCount,
     } = this.props;
 
+    this.state.initialComponentMount = true;
     setFilters(filterDimensions);
     fetchSelectedFacilitiesCount(filterDimensions);
   }
@@ -89,6 +94,7 @@ class LayerSelector extends React.Component {
   }
 
   updateFilterDimension = (dimension, values) => {
+    this.state.initialComponentMount = false;
     this.props.setFilterDimension(dimension, values);
   };
 
@@ -138,6 +144,8 @@ class LayerSelector extends React.Component {
       admin_schooldistrict,
     } = filterDimensions;
 
+    const { initialComponentMount } = this.state;
+
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
       paddingTop: '0px',
@@ -174,6 +182,7 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
+              initialComponentMount={this.state.initialComponentMount}
               filterDimensions={{
                 cd,
                 nta2020,

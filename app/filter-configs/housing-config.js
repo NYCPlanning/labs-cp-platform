@@ -20,7 +20,7 @@ const defaultFilterDimensions = {
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
   },
-  geo_ntacode2010: {
+  geo_ntacode2020: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('nta2020'),
