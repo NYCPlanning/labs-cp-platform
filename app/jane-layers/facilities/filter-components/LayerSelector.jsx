@@ -66,7 +66,6 @@ class LayerSelector extends React.Component {
     this.state = {
       expanded: null,
       exploreANeighborhoodSelected: false,
-      ntaSelection: null,
     };
   }
 
