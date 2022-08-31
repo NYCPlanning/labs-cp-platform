@@ -42,10 +42,7 @@ class AreaFilterSelect extends React.Component {
       return null;
     };
 
-    const {
-      exploreANeighborhoodSelected,
-      ntaSelection,
-    } = this.props;
+    const { exploreANeighborhoodSelected } = this.props;
 
     if (exploreANeighborhoodSelected) {
       this.state.selectedLayer = { value: 'nta2020', label: 'Neighborhood Tabulation Area' };
