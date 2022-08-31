@@ -31,8 +31,6 @@ class SplashDuo extends React.Component {
 
     this.updateFilterDimension(this.state.dimension, this.state.ntaSelectionValues);
 
-    const ntaDimension = this.state.ntaSelectionValues;
-
     browserHistory.push({
       pathname: '/map/facilities',
       state: {
