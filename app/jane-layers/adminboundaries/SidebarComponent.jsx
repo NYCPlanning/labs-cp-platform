@@ -26,7 +26,7 @@ const SidebarComponent = props => (
               valueSelected={props.selected}
             >
               <RadioButton
-                value="nta"
+                value="nta2020"
                 label="Neighborhood Tabulation Areas"
               />
               <RadioButton

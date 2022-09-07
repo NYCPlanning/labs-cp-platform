@@ -44,7 +44,7 @@ describe('SQL generation', () => {
   });
 
   test('getNYCBounds() generates SQL for bounds', () => {
-    carto.getNYCBounds('nta', 'BK88');
+    carto.getNYCBounds('nta2020', 'BK88');
     expect(carto.SQL).toHaveBeenCalledWith('SELECT ST_Extent(the_geom) FROM support_admin_ntaboundaries WHERE ntacode = \'BK88\'', 'json');
   });
 

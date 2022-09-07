@@ -63,7 +63,10 @@ function processChecked(layers) {
 class LayerSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { expanded: null };
+    this.state = {
+      expanded: null,
+      exploreANeighborhoodSelected: false,
+    };
   }
 
   componentDidMount() {
@@ -74,18 +77,12 @@ class LayerSelector extends React.Component {
       fetchSelectedFacilitiesCount,
     } = this.props;
 
-    if (locationState && locationState.filterDimensions) {
-      setFilters(locationState.filterDimensions);
-      fetchSelectedFacilitiesCount(locationState.filterDimensions);
-      return;
+    if (this.props.locationState) {
+      this.state.exploreANeighborhoodSelected = true;
     }
 
-    const updatedFilterDimensions = locationState && locationState.mergeFilterDimensions
-      ? Object.assign({}, filterDimensions, locationState.mergeFilterDimensions)
-      : filterDimensions;
-
-    setFilters(updatedFilterDimensions);
-    fetchSelectedFacilitiesCount(updatedFilterDimensions);
+    setFilters(filterDimensions);
+    fetchSelectedFacilitiesCount(filterDimensions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,6 +96,7 @@ class LayerSelector extends React.Component {
   }
 
   updateFilterDimension = (dimension, values) => {
+    this.state.exploreANeighborhoodSelected = false;
     this.props.setFilterDimension(dimension, values);
   };
 
@@ -139,14 +137,16 @@ class LayerSelector extends React.Component {
       optype,
       facsubgrp,
       radiusfilter,
-      commboard,
-      nta,
+      cd,
+      nta2020,
       borocode,
       censtract,
       council,
       admin_policeprecinct,
       admin_schooldistrict,
     } = filterDimensions;
+
+    const { exploreANeighborhoodSelected } = this.state;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -184,9 +184,10 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
+              exploreANeighborhoodSelected={this.state.exploreANeighborhoodSelected}
               filterDimensions={{
-                commboard,
-                nta,
+                cd,
+                nta2020,
                 borocode,
                 censtract,
                 council,
@@ -194,9 +195,9 @@ class LayerSelector extends React.Component {
                 admin_schooldistrict,
               }}
               options={[
-                { value: 'commboard', label: 'Community District' },
+                { value: 'cd', label: 'Community District' },
                 { value: 'borocode', label: 'Borough' },
-                { value: 'nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'nta2020', label: 'Neighborhood Tabulation Area' },
                 { value: 'council', label: 'City Council District' },
                 // { value: 'censtract', label: 'Census Tract' },
                 // { value: 'admin_policeprecinct', label: 'Police Precinct' },
@@ -301,6 +302,7 @@ const mapStateToProps = ({ facilities }) => ({
   sql: facilities.sql,
   totalCount: facilities.totalCount,
   selectedCount: facilities.selectedCount,
+  setFilterDimension: facilities.setFilterDimension,
 });
 
 export default connect(mapStateToProps, {

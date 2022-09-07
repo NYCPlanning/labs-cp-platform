@@ -42,18 +42,37 @@ class AreaFilterSelect extends React.Component {
       return null;
     };
 
-    return (
-      <div className="area-filter-select">
-        <Select
-          name="area-filter-select"
-          placeholder="Filter by Administrative Boundary"
-          value={this.state.selectedLayer}
-          options={this.props.options}
-          onChange={this.handleSelectChange}
-        />
-        { polygonSelectorComponent() }
-      </div>
-    );
+    const { exploreANeighborhoodSelected } = this.props;
+
+    if (exploreANeighborhoodSelected) {
+      this.state.selectedLayer = { value: 'nta2020', label: 'Neighborhood Tabulation Area' };
+
+      return (
+        <div className="area-filter-select">
+          <Select
+            name="area-filter-select"
+            placeholder="Filter by Administrative Boundary"
+            value={this.state.selectedLayer}
+            options={this.props.options}
+            onChange={this.handleSelectChange}
+          />
+          { polygonSelectorComponent() }
+        </div>
+      );
+    } else {
+      return (
+        <div className="area-filter-select">
+          <Select
+            name="area-filter-select"
+            placeholder="Filter by Administrative Boundary"
+            value={this.state.selectedLayer}
+            options={this.props.options}
+            onChange={this.handleSelectChange}
+          />
+          { polygonSelectorComponent() }
+        </div>
+      );
+    }
   }
 }
 

@@ -87,7 +87,7 @@ const housingReducer = (state = initialState, action) => {
 
       const shouldChangeDisabledValue = [
         'geo_boro',
-        'geo_ntacode2010',
+        'geo_ntacode2020',
         'geo_cd',
         'geo_censustract2010',
         'geo_council',

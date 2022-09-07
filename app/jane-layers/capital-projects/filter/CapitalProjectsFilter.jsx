@@ -43,9 +43,9 @@ class Filter extends React.Component {
     // Geographic filtering dimensions
     const {
       radiusfilter,
-      commboard,
+      cd,
       borocode,
-      nta,
+      nta2020,
       censtract,
       council,
       schooldistrict,
@@ -80,17 +80,17 @@ class Filter extends React.Component {
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
               filterDimensions={{
-                commboard,
+                cd,
                 borocode,
-                nta,
+                nta2020,
                 censtract,
                 council,
                 schooldistrict,
               }}
               options={[
-                { value: 'commboard', label: 'Community District' },
+                { value: 'cd', label: 'Community District' },
                 { value: 'borocode', label: 'Borough' },
-                { value: 'nta', label: 'Neighborhood Tabulation Area' },
+                { value: 'nta2020', label: 'Neighborhood Tabulation Area' },
                 { value: 'council', label: 'City Council District' },
                 { value: 'censtract', label: 'Census Tract' },
                 { value: 'schooldistrict', label: 'School District' },

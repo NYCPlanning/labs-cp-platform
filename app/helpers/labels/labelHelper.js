@@ -1,7 +1,7 @@
 import boroughs from './boroughs';
 import community_districts from './community_districts';
 import council from './council';
-import nta from './nta';
+import nta2020  from './nta2020';
 import censtract from './censtract';
 import congdist from './congdist';
 import policeprecinct from './policeprecinct';
@@ -10,12 +10,12 @@ import schooldistrict from './schooldistrict';
 class LabelHelper {
   static get_labels(label_category) {
     switch (label_category) {
-      case 'commboard':
+      case 'cd':
         return community_districts;
       case 'borocode':
         return boroughs;
-      case 'nta':
-        return nta;
+      case 'nta2020':
+        return nta2020;
       case 'censtract':
         return censtract;
       // case 'taz':

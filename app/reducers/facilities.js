@@ -62,8 +62,8 @@ const facilitiesReducer = (state = initialState, action) => {
       const shouldChangeDisabledValue = [
         'overabbrev',
         'optype',
-        'nta',
-        'commboard',
+        'nta2020',
+        'cd',
         'censtract',
         'council',
         'admin_policeprecinct',
@@ -74,6 +74,7 @@ const facilitiesReducer = (state = initialState, action) => {
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
         ? values.filter(value => value.checked === true).length <= 0
         : dimension.disabled;
+
 
       const filterDimensions = Object.assign({}, state.filterDimensions, {
         [filterDimension]: Object.assign({}, dimension, { values, disabled: newDisabledValue }),
