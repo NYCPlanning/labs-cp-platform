@@ -29,12 +29,17 @@ class AreaFilterSelect extends React.Component {
     const polygonSelectorComponent = () => {
       if (this.state.selectedLayer !== null) {
         const placeholderName = `Select ${this.state.selectedLayer.label}`;
+        const sortedValues = this.props.filterDimensions[this.state.selectedLayer.value].values.sort((a,b) => {
+          if(a.value > b.value) return 1
+          if(a.value < b.value) return -1
+          return
+        })
         return (
           <MultiSelect
             placeholder={placeholderName}
             displayValues
             valueRenderer={option => option.label}
-            options={this.props.filterDimensions[this.state.selectedLayer.value].values}
+            options={sortedValues}
             onChange={this.handleMultiSelectChange.bind(this)}
           />
         );
