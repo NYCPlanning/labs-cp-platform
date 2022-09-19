@@ -65,7 +65,7 @@ class LayerSelector extends React.Component {
     super(props);
     this.state = {
       expanded: null,
-      exploreANeighborhoodSelected: false,
+      exploreNeighborhoodSelected: false,
     };
   }
 
@@ -77,12 +77,26 @@ class LayerSelector extends React.Component {
       fetchSelectedFacilitiesCount,
     } = this.props;
 
-    if (this.props.locationState) {
-      this.state.exploreANeighborhoodSelected = true;
+    // handles NTA selections
+    if (this.props.locationState && this.props.locationState.adminboundaries) {
+      this.state.exploreNeighborhoodSelected = true;
     }
 
-    setFilters(filterDimensions);
-    fetchSelectedFacilitiesCount(filterDimensions);
+    // handles frequently used/custom map selections
+    if (locationState && locationState.filterDimensions) {
+      setFilters(locationState.filterDimensions);
+      fetchSelectedFacilitiesCount(locationState.filterDimensions);
+      return;
+    }
+
+    const mapsFilterDimensions = locationState && locationState.mergeFilterDimensions
+      ? Object.assign({}, filterDimensions, locationState.mergeFilterDimensions)
+      : filterDimensions;
+
+    const updatedFilterDimensions =  this.state.exploreNeighborhoodSelected ? filterDimensions : mapsFilterDimensions;
+
+    setFilters(updatedFilterDimensions);
+    fetchSelectedFacilitiesCount(updatedFilterDimensions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -96,7 +110,7 @@ class LayerSelector extends React.Component {
   }
 
   updateFilterDimension = (dimension, values) => {
-    this.state.exploreANeighborhoodSelected = false;
+    this.state.exploreNeighborhoodSelected = false;
     this.props.setFilterDimension(dimension, values);
   };
 
@@ -146,7 +160,7 @@ class LayerSelector extends React.Component {
       admin_schooldistrict,
     } = filterDimensions;
 
-    const { exploreANeighborhoodSelected } = this.state;
+    const { exploreNeighborhoodSelected } = this.state;
 
     // override material ui ListItem spacing and react-select component font size
     const listItemStyle = {
@@ -184,7 +198,7 @@ class LayerSelector extends React.Component {
           >
             <AreaFilterSelect
               updateFilterDimension={this.updateFilterDimension}
-              exploreANeighborhoodSelected={this.state.exploreANeighborhoodSelected}
+              exploreNeighborhoodSelected={this.state.exploreNeighborhoodSelected}
               filterDimensions={{
                 cd,
                 nta2020,
