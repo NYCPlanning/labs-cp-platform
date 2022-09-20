@@ -27,12 +27,15 @@ class SqlBuilder {
         chunks.push(chunker(dimension, filters)); // pass the current dimension AND the entire filters object to each chunker
       }
     });
-
+    
     // build the final sql string
     const sqlTemplate = `SELECT ${this.columns} FROM ${this.tablename} WHERE `;
+    console.log('chunks', chunks) //eslint-disable-line
     // if there are no chunks, use 'WHERE TRUE' to select all
     const chunksString = chunks.length > 0 ? chunks.join(' AND ') : 'TRUE';
     const sql = sqlTemplate + chunksString;
+
+
 
     return sql;
   }
@@ -80,6 +83,10 @@ class SqlBuilder {
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
       const chunk = `(${subChunks.join(' OR ')})`;
+      // these changes to dimension are made to reflect the current columns on carto
+      if (dimension === 'cd') dimension = 'commboard';
+      if (dimension === 'nta2020') dimension = 'nta';
+      console.log('dimension', dimension) //eslint-disable-line
       return `${idColumn} IN (SELECT feature_id FROM ${lookupTable} WHERE admin_boundary_type = '${dimension}' AND ${chunk})`;
     }
 
