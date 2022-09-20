@@ -26,16 +26,12 @@ class SqlBuilder {
         const chunker = this[filter.type].bind(this);
         chunks.push(chunker(dimension, filters)); // pass the current dimension AND the entire filters object to each chunker
       }
-    });
-    
+    });    
     // build the final sql string
     const sqlTemplate = `SELECT ${this.columns} FROM ${this.tablename} WHERE `;
-    console.log('chunks', chunks) //eslint-disable-line
     // if there are no chunks, use 'WHERE TRUE' to select all
     const chunksString = chunks.length > 0 ? chunks.join(' AND ') : 'TRUE';
     const sql = sqlTemplate + chunksString;
-
-
 
     return sql;
   }
