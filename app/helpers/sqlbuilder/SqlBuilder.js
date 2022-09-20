@@ -82,7 +82,6 @@ class SqlBuilder {
       // these changes to dimension are made to reflect the current columns on carto
       if (dimension === 'cd') dimension = 'commboard';
       if (dimension === 'nta2020') dimension = 'nta';
-      console.log('dimension', dimension) //eslint-disable-line
       return `${idColumn} IN (SELECT feature_id FROM ${lookupTable} WHERE admin_boundary_type = '${dimension}' AND ${chunk})`;
     }
 
