@@ -15,6 +15,7 @@ class TopBar extends React.Component {
   }
 
   selectDropdown = (dropdown) => {
+    console.log('dropdown', dropdown);
     if (this.state.dropdown === dropdown) {
       this.setState({ dropdown: null });
     } else {
