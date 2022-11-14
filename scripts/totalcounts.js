@@ -21,7 +21,7 @@ const sql = {
   FROM ${db_tables.housingdevdb}
   WHERE
     (
-      job_inactv <> 'Inactive'
+      job_inactv IS NULL
     ) AND (
       classanet >= '-800'
       AND classanet <= '1800'

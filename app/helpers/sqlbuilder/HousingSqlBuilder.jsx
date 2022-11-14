@@ -65,7 +65,7 @@ class HousingSqlBuilder extends SqlBuilder {
 
   housingBuildSql(filterDimensions) {
     const sql = this.buildSql(filterDimensions);
-    return `${sql} AND job_inactv IS DISTINCT FROM 'Inactive'`;
+    return `${sql} AND job_inactv IS NULL`;
   }
 }
 
