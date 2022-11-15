@@ -25,6 +25,9 @@ const sql = {
     ) AND (
       classanet >= '-800'
       AND classanet <= '1800'
+    ) AND (
+      CAST(compltyear as int) >= '2010'
+      OR compltyear IS NULL
     )`,
   housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
   cbbr: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cb_budget_requests.points} UNION SELECT * FROM ${db_tables.cb_budget_requests.polygons}) a`,
