@@ -63,12 +63,12 @@ class LayerSelector extends React.Component {
     // Geographic filtering dimensions
     const {
       radiusfilter,
-      geo_cd,
-      geo_boro,
-      geo_ntacode2020,
-      geo_censustract2010,
-      geo_council,
-      geo_csd,
+      commntydst,
+      boro,
+      nta2020,
+      bct2010,
+      councildst,
+      schcommnty,
     } = filterDimensions;
 
     const PinSelect = (props) => {
@@ -129,20 +129,20 @@ class LayerSelector extends React.Component {
             <AreaFilterSelect
               updateFilterDimension={this.handleFilterDimensionChange}
               filterDimensions={{
-                geo_cd,
-                geo_boro,
-                geo_ntacode2020,
-                geo_censustract2010,
-                geo_council,
-                geo_csd,
+                commntydst,
+                boro,
+                nta2020,
+                bct2010,
+                councildst,
+                schcommnty,
               }}
               options={[
-                { value: 'geo_cd', label: 'Community District' },
-                { value: 'geo_boro', label: 'Borough' },
-                { value: 'geo_ntacode2020', label: 'Neighborhood Tabulation Area' },
-                { value: 'geo_censustract2010', label: 'Census Tract' },
-                { value: 'geo_council', label: 'City Council District' },
-                { value: 'geo_csd', label: 'School District' },
+                { value: 'commntydst', label: 'Community District' },
+                { value: 'boro', label: 'Borough' },
+                { value: 'nta2020', label: 'Neighborhood Tabulation Area' },
+                { value: 'bct2010', label: 'Census Tract' },
+                { value: 'councildst', label: 'City Council District' },
+                { value: 'schcommnty', label: 'School District' },
               ]}
             />
           </ListItem>

@@ -86,12 +86,12 @@ const housingReducer = (state = initialState, action) => {
       }
 
       const shouldChangeDisabledValue = [
-        'geo_boro',
-        'geo_ntacode2020',
-        'geo_cd',
-        'geo_censustract2010',
-        'geo_council',
-        'geo_csd',
+        'boro',
+        'nta2020',
+        'commntydst',
+        'bct2010',
+        'councildst',
+        'schcommnty',
       ];
 
       const newDisabledValue = shouldChangeDisabledValue.includes(filterDimension)
