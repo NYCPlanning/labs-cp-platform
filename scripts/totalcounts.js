@@ -19,16 +19,22 @@ const sql = {
   facilities: `SELECT COUNT(*) FROM ${db_tables.facdb.facilities}`,
   housing: `SELECT COUNT(*)
   FROM ${db_tables.housingdevdb}
-  WHERE
-    (
-      job_inactv IS NULL
-    ) AND (
-      classanet >= '-800'
-      AND classanet <= '1800'
-    ) AND (
-      CAST(compltyear as int) >= '2010'
-      OR compltyear IS NULL
-    )`,
+  WHERE  ( job_status = '5. Completed Construction'
+            OR job_status = '3. Permitted for Construction'
+            OR job_status = '2. Approved Application'
+            OR job_status = '1. Filed Application' )
+          AND ( job_type = 'New Building'
+                OR job_type = 'Alteration'
+                OR job_type = 'Demolition' )
+          AND ( classanet >= '-800'
+                AND classanet <= '1800' )
+          AND ( ( datecomplt >= '2010-01-01'
+                  AND datecomplt <= '2022-07-31' )
+                OR datecomplt IS NULL )
+          AND ( ( datepermit >= '2000-01-01'
+                  AND datepermit <= '2022-07-31' )
+                OR datepermit IS NULL )
+          AND job_inactv IS NULL`,
   housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
   cbbr: `SELECT COUNT(a.*) FROM (SELECT * FROM ${db_tables.cb_budget_requests.points} UNION SELECT * FROM ${db_tables.cb_budget_requests.polygons}) a`,
   cpdbTotalCommitMin: `SELECT min(totalcommit) FROM ${db_tables.cpdb.projects_combined}`,
