@@ -10,35 +10,35 @@ const defaultFilterDimensions = {
       radius: 0,
     },
   },
-  geo_cd: {
+  commntydst: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('cd'),
   },
-  geo_boro: {
+  boro: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('borocode'),
   },
-  geo_ntacode2020: {
+  nta2020: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('nta2020'),
   },
-  geo_censustract2010: {
+  bct2010: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('censtract'),
   },
-  geo_council: {
+  councildst: {
     type: 'multiSelect',
     disabled: true,
     values: LabelHelper.get_labels('council'),
   },
-  geo_csd: {
+  schcommnty: {
     type: 'multiSelect',
     disabled: true,
-    values: LabelHelper.get_labels('schooldistrict'),
+    values: LabelHelper.get_labels('schooldistricthousing'),
   },
   job_status: {
     type: 'statusMultiSelect',
@@ -101,14 +101,14 @@ const defaultFilterDimensions = {
 
   datecomplt: {
     type: 'cofoDateRange',
-    values: [moment('2010-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
-    disabled: true,
+    values: [moment('2010-01-01T19:00:00-05:00').format('X'), moment('2022-07-02T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    disabled: false,
   },
 
   datepermit: {
     type: 'statusDateRange',
-    values: [moment('2000-01-01T19:00:00-05:00').format('X'), moment('2020-01-01T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
-    disabled: true,
+    values: [moment('2000-01-01T19:00:00-05:00').format('X'), moment('2022-07-02T19:00:00-05:00').format('X')], // eslint-disable-line no-undef
+    disabled: false,
   },
 };
 
