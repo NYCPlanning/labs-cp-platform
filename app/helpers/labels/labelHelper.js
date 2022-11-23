@@ -6,6 +6,7 @@ import censtract from './censtract';
 import congdist from './congdist';
 import policeprecinct from './policeprecinct';
 import schooldistrict from './schooldistrict';
+import schooldistricthousing from './schooldistricthousing';
 
 class LabelHelper {
   static get_labels(label_category) {
@@ -38,6 +39,8 @@ class LabelHelper {
         return policeprecinct;
       case 'schooldistrict':
         return schooldistrict;
+      case 'schooldistricthousing':
+        return schooldistricthousing;
       // case 'stateassemblydistrict':
       //   return stateassemblydistrict;
       // case 'statesenatedistrict':

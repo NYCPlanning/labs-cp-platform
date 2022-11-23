@@ -72,13 +72,13 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.classa_init != null ? d.classa_init : 'Not reported'}</h3>
+                <h3>{d.classainit != null ? d.classainit : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.ClassA_Prop != null ? d.ClassA_Prop : 'Not reported'}</h3>
+                <h3>{d.classaprop != null ? d.classaprop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
@@ -101,7 +101,7 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-4'}>
               <div className="dev-pipeline">
                 <h4>Proposed Units</h4>
-                <h3>{d.ClassA_Prop != null ? d.ClassA_Prop : 'Not reported'}</h3>
+                <h3>{d.classaprop != null ? d.classaprop : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-4'}>
@@ -118,7 +118,7 @@ class HousingDetailPage extends React.Component {
             <div className={'col-md-6'}>
               <div className="dev-pipeline">
                 <h4>Initial Number of Units</h4>
-                <h3>{d.classa_init != null ? d.classa_init : 'Not reported'}</h3>
+                <h3>{d.classainit != null ? d.classainit : 'Not reported'}</h3>
               </div>
             </div>
             <div className={'col-md-6'}>
@@ -142,7 +142,7 @@ class HousingDetailPage extends React.Component {
             <div className="col-md-12">
               <h1>{d.address}, {d.boro}</h1>
               <span className={'badge'} style={{ backgroundColor }}>{d.job_type}</span>
-              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.resid_flag}</span>
+              <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.residflag}</span>
               <span className={'badge'} style={{ backgroundColor: 'grey' }}>{d.job_status}</span>
             </div>
           </div>
@@ -158,7 +158,7 @@ class HousingDetailPage extends React.Component {
               <div className={'col-md-6'}>
                 <div className="dev-status">
                   <h4>BBL</h4>
-                  <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.geo_bbl}`} target="_blank">{d.geo_bbl}</a></h3>
+                  <h3><a href={`https://zola.planning.nyc.gov/bbl/${d.bbl}`} target="_blank">{d.bbl}</a></h3>
                 </div>
               </div>
             </div>
@@ -183,7 +183,7 @@ class HousingDetailPage extends React.Component {
                   <div className={'col-md-4'}>
                     <div className="dev-status">
                       <h4>Application Filed</h4>
-                      <h3>{permitDate(d.date_filed)}</h3>
+                      <h3>{permitDate(d.datefiled)}</h3>
                     </div>
                   </div>
                   <div className={'col-md-4'}>

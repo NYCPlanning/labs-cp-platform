@@ -77,3 +77,6 @@ Update readme
 Carto table names are stored in `app/config/db_tables.js`. To update a dataset, simply point to the latest table, making sure the schema is the same.
 
 After pointing to a new table, run `yarn generate-totalcounts`. This script queries Carto, getting total counts of rows and other metadata used by the app.
+
+NOTE - New addition to the process beginning 2022-11-16:
+After running the script, please make sure that all of the values are correct by checking that when no filters are enabled, the UI shows `Showing all XXXXX records`, and not `XXXXX of YYYYY records`.  This should be true for each map (`/capitalprojects`, `/facilities`, and `housing`).

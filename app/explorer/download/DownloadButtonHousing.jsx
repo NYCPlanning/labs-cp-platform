@@ -33,19 +33,19 @@ class DownloadButton extends React.Component {
           >
             <MenuItem
               href={carto.generateUrlString(sql, 'csv', 'housing-development_cleaned')}
-              onClick={this.logDownloadStat('housing-development_cleaned', 'csv')}
+              onClick={() => this.logDownloadStat('housing-development_cleaned', 'csv')}
               eventKey="1"
             >CSV</MenuItem>
 
             <MenuItem
               href={carto.generateUrlString(sql, 'geojson', 'housing-development_cleaned')}
-              onClick={this.logDownloadStat('housing-development_cleaned', 'geojson')}
+              onClick={() => this.logDownloadStat('housing-development_cleaned', 'geojson')}
               eventKey="2"
             >GeoJSON</MenuItem>
 
             <MenuItem
               href={carto.generateUrlString(sql, 'shp', 'housing-development_cleaned')}
-              onClick={this.logDownloadStat('housing-development_cleaned', 'shapefile')}
+              onClick={() => this.logDownloadStat('housing-development_cleaned', 'shapefile')}
               eventKey="3"
             >Shapefile</MenuItem>
           </DropdownButton>
@@ -58,19 +58,19 @@ class DownloadButton extends React.Component {
             >
               <MenuItem
                 href={carto.filteredDownloadUrlString(sql, layerID, 'csv')}
-                onClick={this.logDownloadStat('housing-development_filtered', 'csv')}
+                onClick={() => this.logDownloadStat('housing-development_filtered', 'csv')}
                 eventKey="1"
               >CSV</MenuItem>
 
               <MenuItem
                 href={carto.filteredDownloadUrlString(sql, layerID, 'geojson')}
-                onClick={this.logDownloadStat('housing-development_filtered', 'geojson')}
+                onClick={() => this.logDownloadStat('housing-development_filtered', 'geojson')}
                 eventKey="2"
               >GeoJSON</MenuItem>
 
               <MenuItem
                 href={carto.filteredDownloadUrlString(sql, layerID, 'shp')}
-                onClick={this.logDownloadStat('housing-development_filtered', 'shapefile')}
+                onClick={() => this.logDownloadStat('housing-development_filtered', 'shapefile')}
                 eventKey="3"
               >Shapefile</MenuItem>
             </DropdownButton>
@@ -89,19 +89,19 @@ class DownloadButton extends React.Component {
           >
             <MenuItem
               href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb}`, layerID, 'csv')}
-              onClick={this.logDownloadStat('housing-development_raw', 'csv')}
+              onClick={() => this.logDownloadStat('housing-development_raw', 'csv')}
               eventKey="1"
             >CSV</MenuItem>
 
             <MenuItem
               href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb}`, layerID, 'geojson')}
-              onClick={this.logDownloadStat('housing-development_raw', 'geojson')}
+              onClick={() => this.logDownloadStat('housing-development_raw', 'geojson')}
               eventKey="2"
             >GeoJSON</MenuItem>
 
             <MenuItem
               href={carto.filteredDownloadUrlString(`SELECT * FROM ${db_tables.housingdevdb}`, layerID, 'shp')}
-              onClick={this.logDownloadStat('housing-development_raw', 'shapefile')}
+              onClick={() => this.logDownloadStat('housing-development_raw', 'shapefile')}
               eventKey="3"
             >Shapefile</MenuItem>
           </DropdownButton>

@@ -26,8 +26,7 @@ class SqlBuilder {
         const chunker = this[filter.type].bind(this);
         chunks.push(chunker(dimension, filters)); // pass the current dimension AND the entire filters object to each chunker
       }
-    });
-
+    });    
     // build the final sql string
     const sqlTemplate = `SELECT ${this.columns} FROM ${this.tablename} WHERE `;
     // if there are no chunks, use 'WHERE TRUE' to select all
@@ -80,6 +79,9 @@ class SqlBuilder {
 
     if (subChunks.length > 0) { // don't set sqlChunks if nothing is selected
       const chunk = `(${subChunks.join(' OR ')})`;
+      // these changes to dimension are made to reflect the current columns on carto
+      if (dimension === 'cd') dimension = 'commboard';
+      if (dimension === 'nta2020') dimension = 'nta';
       return `${idColumn} IN (SELECT feature_id FROM ${lookupTable} WHERE admin_boundary_type = '${dimension}' AND ${chunk})`;
     }
 
