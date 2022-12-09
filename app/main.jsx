@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import ReactGA from 'react-ga';
+import ReactGA4 from "react-ga4";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Provider } from 'react-redux';
@@ -13,10 +14,13 @@ import appConfig from './config/appConfig';
 
 // initialize google analytics
 ReactGA.initialize(appConfig.ga_tracking_code);
+ReactGA4.initialize(appConfig.ga4_tracking_code);
 
 function fireTracking() {
   ReactGA.set({ page: window.location.pathname });
   ReactGA.pageview(window.location.pathname);
+  ReactGA4.set({ page: window.location.pathname });
+  ReactGA4.pageview(window.location.pathname);
 }
 
 // set material ui default styles
