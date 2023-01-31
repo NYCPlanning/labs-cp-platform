@@ -32,7 +32,7 @@ class AdminBoundariesJaneLayer extends React.Component {
     }
 
     return [
-      <Source id="nta" type="geojson" data="/data/ntaboundaries.geojson" />,
+      <Source id="nta2020" type="geojson" data="/data/ntaboundaries.geojson" />,
       <MapLayer id="ntaboundaries" source="nta2020" {...mapLayers.ntaboundaries} />,
       <MapLayer id="ntaboundaries_labels" source="nta2020" {...mapLayers.ntaboundaries_labels} />,
     ].map((child, index) => ({ ...child, key: index }));
