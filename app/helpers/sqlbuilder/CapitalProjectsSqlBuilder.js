@@ -15,8 +15,8 @@ export const sqlConfig = {
       ) b ON a.maprojid = b.projid
     )x`,
   tableName: 'tablenameplaceholder',
-  pointsTablename: `(SELECT a.the_geom, a.the_geom_webmercator, a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM ${db_tables.cpdb.points} a LEFT JOIN ${db_tables.cpdb.projects_combined} b ON a.maprojid = b.maprojid) x`,
-  polygonsTablename: `(SELECT a.the_geom, a.the_geom_webmercator, a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype FROM ${db_tables.cpdb.polygons} a LEFT JOIN ${db_tables.cpdb.projects_combined} b ON a.maprojid = b.maprojid) x`,
+  pointsTablename: `(SELECT a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype, a.the_geom_webmercator, a.the_geom FROM ${db_tables.cpdb.points} a LEFT JOIN ${db_tables.cpdb.projects_combined} b ON a.maprojid = b.maprojid) x`,
+  polygonsTablename: `(SELECT a.magency, magencyacro, description, totalcommit, b.maprojid, totalspend, sagencyacro, maxdate, mindate, projecttype, a.the_geom_webmercator, a.the_geom FROM ${db_tables.cpdb.polygons} a LEFT JOIN ${db_tables.cpdb.projects_combined} b ON a.maprojid = b.maprojid) x`,
 };
 
 export const tableSqlConfig = {
