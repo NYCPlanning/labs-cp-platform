@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactGA4 from "react-ga4";
 import _ from 'lodash';
 import centroid from 'turf-centroid';
 
@@ -68,6 +69,15 @@ class Explorer extends React.Component {
   }
 
   onLayerToggle = (layerId, wasEnabled) => {
+    ReactGA4.gtag('event', 'toggle-layer', {
+      'action': `toggle-layer-${layerId}`,
+      'layer_view_value': !wasEnabled,
+    });
+    FS.event('capitalPlanningExplorerLayerToggle', {
+      layer_id: layerId,
+      layer_enabled: !wasEnabled
+    });
+
     const janeLayerIdsMap = {
       'housing-development': ['housing-development-points'],
       'capital-projects': [
