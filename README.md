@@ -38,7 +38,7 @@ To get serve the project locally:
  - Navigate to the directory
  `cd capital-planning-platform`
 
- -Install dependencies (ensuring your locally installed node version is `8.17.0`)
+ -Install dependencies **version listed in .nvmrc**
  `npm install`
 
  -Serve the application
