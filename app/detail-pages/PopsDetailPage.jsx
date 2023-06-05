@@ -96,10 +96,10 @@ class FacilityDetailPage extends React.Component {
           <div className="col-md-12">
             <div className="row" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">
-                <h1>{p.building_name ? p.building_name : d.facname}</h1>
+                <h1>{p.bldg_name ? p.bldg_name : d.facname}</h1>
                 <h2 style={{ margin: '5px 0', lineHeight: '1px' }}><small>
                   {facilityAddress()}
-                  { p.public_space_location && <em><br />{p.public_space_location}</em> }
+                  { p.bldg_code && <em><br />{p.bldg_code}</em> }
                 </small></h2>
 
                 <ol className="breadcrumb">
@@ -126,15 +126,15 @@ class FacilityDetailPage extends React.Component {
                     <tbody>
                       <tr>
                         <td>Architect</td>
-                        <td><strong>{p.building_architect}</strong></td>
+                        <td><strong>{p.architect}</strong></td>
                       </tr>
                       <tr>
                         <td>Public Space Designer</td>
-                        <td><strong>{p.principal_public_space_designer}</strong></td>
+                        <td><strong>{p.designer}</strong></td>
                       </tr>
                       <tr>
                         <td>Year Built</td>
-                        <td><strong>{p.year_completed}</strong></td>
+                        <td><strong>{p.year_comp}</strong></td>
                       </tr>
                       <tr>
                         <td>BBL (Tax Lot ID) <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip"> Click the BBL hyperlink to get more infomation about this tax lot and its zoning.</Tooltip>}>
@@ -160,19 +160,19 @@ class FacilityDetailPage extends React.Component {
                     <tbody>
                       <tr>
                         <td>Hours of Access</td>
-                        <td><strong>{p.hour_of_access_required}</strong></td>
+                        <td><strong>{p.houraccess}</strong></td>
                       </tr>
                       <tr>
                         <td>ADA Accessibility</td>
-                        <td><strong>{p.physically_disabled}</strong></td>
+                        <td><strong>{p.phys_dis}</strong></td>
                       </tr>
                       <tr>
                         <td>Space Type</td>
-                        <td><strong>{p.public_space_type}</strong></td>
+                        <td><strong>{p.ps_type}</strong></td>
                       </tr>
                       <tr>
                         <td>Required Size</td>
-                        <td><strong>{p.size_required}</strong></td>
+                        <td><strong>{p.size_reqd}</strong></td>
                       </tr>
                     </tbody>
                   </table>
@@ -183,139 +183,27 @@ class FacilityDetailPage extends React.Component {
             <div className="row equal" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">
                 <div className="panel panel-default">
-                  <div className="panel-heading">Required Amenities</div>
+                  <div className="panel-heading">Amenities</div>
                   <table className="table datasource-table" key={d.cartodb_id}>
                     <tbody>
-                      { p.artwork &&
+                      { p.amen_reqd &&
                         <tr>
-                          <td>Artwork</td>
-                          <td><strong>{p.artwork}</strong></td>
+                          <td>Amenities Required</td>
+                          <td><strong>{p.amen_reqd}</strong></td>
                         </tr>
                       }
 
-                      { p.bicycle_parking &&
-                        <tr>
-                          <td>Bicycle Parking</td>
-                          <td><strong>{p.bicycle_parking}</strong></td>
-                        </tr>
-                      }
-
-                      { p.climate_control &&
-                        <tr>
-                          <td>Climate Control</td>
-                          <td><strong>{p.climate_control}</strong></td>
-                        </tr>
-                      }
-
-                      { p.escalator &&
-                        <tr>
-                          <td>Escalator</td>
-                          <td><strong>{p.escalator}</strong></td>
-                        </tr>
-                      }
-
-                      { p.food_service &&
-                        <tr>
-                          <td>Food Service</td>
-                          <td><strong>{p.food_service}</strong></td>
-                        </tr>
-                      }
-
-                      { p.lighting &&
-                        <tr>
-                          <td>Lighting</td>
-                          <td><strong>{p.lighting}</strong></td>
-                        </tr>
-                      }
-
-                      { p.litter_recepticles &&
-                        <tr>
-                          <td>Litter Recepticles</td>
-                          <td><strong>{p.litter_recepticles}</strong></td>
-                        </tr>
-                      }
-
-                      { p.planting &&
-                        <tr>
-                          <td>Planting</td>
-                          <td><strong>{p.planting}</strong></td>
-                        </tr>
-                      }
-
-                      { p.plaque_sign &&
-                        <tr>
-                          <td>Plaque Sign</td>
-                          <td><strong>{p.plaque_sign}</strong></td>
-                        </tr>
-                      }
-
-                      { p.restrooms &&
-                        <tr>
-                          <td>Restrooms</td>
-                          <td><strong>{p.restrooms}</strong></td>
-                        </tr>
-                      }
-
-                      { p.retail_frontage &&
-                        <tr>
-                          <td>Retail Frontage</td>
-                          <td><strong>{p.retail_frontage}</strong></td>
-                        </tr>
-                      }
-
-                      { p.seating &&
-                        <tr>
-                          <td>Seating</td>
-                          <td><strong>{p.seating}</strong></td>
-                        </tr>
-                      }
-
-                      { p.subway &&
-                        <tr>
-                          <td>Subway</td>
-                          <td><strong>{p.subway}</strong></td>
-                        </tr>
-                      }
-
-                      { p.tables &&
-                        <tr>
-                          <td>Tables</td>
-                          <td><strong>{p.tables}</strong></td>
-                        </tr>
-                      }
-
-                      { p.trees_on_street &&
-                        <tr>
-                          <td>Trees on the Street</td>
-                          <td><strong>{p.trees_on_street}</strong></td>
-                        </tr>
-                      }
-
-                      { p.trees_within_space &&
-                        <tr>
-                          <td>Trees within the Space</td>
-                          <td><strong>{p.trees_within_space}</strong></td>
-                        </tr>
-                      }
-
-                      { p.water_feature &&
-                        <tr>
-                          <td>Water Feature</td>
-                          <td><strong>{p.water_feature}</strong></td>
-                        </tr>
-                      }
-
-                      { p.permitted_amenities &&
+                      { p.amen_perm &&
                         <tr>
                           <td>Permitted Amenities</td>
-                          <td><strong>{p.permitted_amenities}</strong></td>
+                          <td><strong>{p.amen_perm}</strong></td>
                         </tr>
                       }
 
-                      { p.other_required &&
+                      { p.other_reqd &&
                         <tr>
                           <td>Other Amenities</td>
-                          <td><strong>{p.other_required}</strong></td>
+                          <td><strong>{p.other_reqd}</strong></td>
                         </tr>
                       }
                     </tbody>
