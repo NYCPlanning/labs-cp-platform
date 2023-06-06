@@ -99,7 +99,7 @@ class FacilityDetailPage extends React.Component {
                 <h1>{p.bldg_name ? p.bldg_name : d.facname}</h1>
                 <h2 style={{ margin: '5px 0', lineHeight: '1px' }}><small>
                   {facilityAddress()}
-                  { p.bldg_code && <em><br />{p.bldg_code}</em> }
+                  { p.bldg_loc && <em><br />{p.bldg_loc}</em> }
                 </small></h2>
 
                 <ol className="breadcrumb">
@@ -193,10 +193,10 @@ class FacilityDetailPage extends React.Component {
                         </tr>
                       }
 
-                      { p.amen_perm &&
+                      { p.perm_amen &&
                         <tr>
                           <td>Permitted Amenities</td>
-                          <td><strong>{p.amen_perm}</strong></td>
+                          <td><strong>{p.perm_amen}</strong></td>
                         </tr>
                       }
 
