@@ -31,7 +31,7 @@ const db_tables = {
     path_rail_routes: "path_rail_routes_v0",
     mta_bus_stops: "mta_bus_stops_v0",
     commerical_overlays: "commercial_overlays",
-    zoning_districts: "zoning_districts",
+    zoning_districts: "dcp_zoning_districts",
     bike_routes: "bike_routes",
   },
 };
