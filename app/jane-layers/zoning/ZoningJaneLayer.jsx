@@ -82,7 +82,7 @@ class ZoningJaneLayer extends React.Component {
             ['C6', '#FDBDBB'],
             ['C7', '#FDBDBB'],
             ['C8', '#FDBDBB'],
-            ['M1', '#B7D6FD'],
+            ['M1', '#EDB7FD'],
             ['M2', '#EDB7FD'],
             ['M3', '#EDB7FD'],
             ['PA', '#E7FDDC'],
