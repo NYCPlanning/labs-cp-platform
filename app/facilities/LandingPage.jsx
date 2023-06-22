@@ -134,7 +134,7 @@ class FacilitiesLandingPage extends React.Component {
                                 'Hospitals and Clinics': null,
                                 'Mental Health': null,
                                 'Residential Health Care': null,
-                                'Chemical Dependency': null },
+                                'Substance Use Disorder Treatment Programs': null },
                               'Human Services': null,
                             },
                             'Education, Child Welfare, and Youth': {
