@@ -21,8 +21,8 @@ const db_tables = {
   sca: "sca_capital_projects_v2019",
   support: {
     nta2020: "nta_boundaries",
-    ih: "inclusionary_housing",
-    mih: "mandatory_inclusionary_housing",
+    ih: "dcp_inclusionary_housing",
+    mih: "dcp_mandatory_inclusionary_housing",
     dcp_studyareas: "support_dcp_studyareas",
     waterfront_pfirm15: "floodplain_pfirm2015",
     mta_subway_stops: "mta_subway_stops",
@@ -30,8 +30,8 @@ const db_tables = {
     path_rail_stops: "path_rail_stops_v0",
     path_rail_routes: "path_rail_routes_v0",
     mta_bus_stops: "mta_bus_stops_v0",
-    commerical_overlays: "commercial_overlays",
-    zoning_districts: "zoning_districts",
+    commerical_overlays: "dcp_commercial_overlays",
+    zoning_districts: "dcp_zoning_districts",
     bike_routes: "bike_routes",
   },
 };

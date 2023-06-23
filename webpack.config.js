@@ -82,6 +82,7 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         DEV_TABLES: JSON.stringify(process.env.DEV_TABLES),
+        CARTO_DOMAIN: JSON.stringify(process.env.CARTO_DOMAIN),
       },
     }),
     new HtmlWebpackPlugin({

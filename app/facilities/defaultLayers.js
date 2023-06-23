@@ -330,7 +330,7 @@ const defaultLayers = [
       {
         name: "Health Care",
         description:
-          "Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Alcoholism and Substance Abuse Services",
+          "Health facilities overseen by NYC Health and Hospitals Corporation, NYC Health and Human Services, NYS Dept. of Health, NYS Office of Mental Health, and NYS Office of Addiction Services and Supports",
         color: "#b67eb7",
         children: [
           {
@@ -348,7 +348,7 @@ const defaultLayers = [
             description: "Nursing homes, hospice care, and supportive housing",
           },
           {
-            name: "Chemical Dependency",
+            name: "Substance Use Disorder Treatment Programs",
             description:
               "Monitored support, inpatient, outpatient, and crisis services",
           },

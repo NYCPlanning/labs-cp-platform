@@ -475,7 +475,7 @@ const getDefaultFilterDimensions = ({ selected, values }) => ({
       },
       {
         value: 'NYSOASAS',
-        label: 'NYS Office of Alcoholism and Substance Abuse Services',
+        label: 'NYS Office of Addiction Services and Supports',
       },
       {
         value: 'NYSOCFS',

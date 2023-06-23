@@ -38,7 +38,7 @@ To get serve the project locally:
  - Navigate to the directory
  `cd capital-planning-platform`
 
- -Install dependencies (ensuring your locally installed node version is `8.17.0`)
+ -Install dependencies **version listed in .nvmrc**
  `npm install`
 
  -Serve the application
@@ -80,3 +80,5 @@ After pointing to a new table, run `yarn generate-totalcounts`. This script quer
 
 NOTE - New addition to the process beginning 2022-11-16:
 After running the script, please make sure that all of the values are correct by checking that when no filters are enabled, the UI shows `Showing all XXXXX records`, and not `XXXXX of YYYYY records`.  This should be true for each map (`/capitalprojects`, `/facilities`, and `housing`).
+
+To run a local instance which uses the staging server instead of production, add a .env file to the root directory with `CARTO_DOMAIN=dcpadmin.carto.com`
