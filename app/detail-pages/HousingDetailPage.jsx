@@ -65,6 +65,24 @@ class HousingDetailPage extends React.Component {
     };
     /* eslint-enable */
 
+    const descriptionPipeline = () => {
+      if(d.job_desc) {
+        return (
+          <div className="row">
+            <div className={'col-md-12'}>
+              <div className="panel panel-default">
+                <div className="panel-heading">DOB Job Description</div>
+                <div className="panel-body">
+                  {d.job_desc}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
+      return null;
+    }
+
     const unitPipeline = () => {
       if (d.job_type === 'Alteration') {
         return (
@@ -203,20 +221,7 @@ class HousingDetailPage extends React.Component {
             </div>
           </div>
 
-          {
-            d.job_desc.length && (
-              <div className="row">
-                <div className={'col-md-12'}>
-                  <div className="panel panel-default">
-                    <div className="panel-heading">DOB Job Description</div>
-                    <div className="panel-body">
-                      {d.job_desc}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          }
+          {descriptionPipeline()}
         </div>
       </div>
     );
