@@ -124,18 +124,14 @@ class FacilityDetailPage extends React.Component {
               </div>
             </div>
 
-            {(d.capacity) && // hide capacity &util information boxes if the record has neither
-              (
-                <div className="row equal" style={{ marginBottom: '15px' }}>
-                  <div className={'col-md-6'}>
-                    <div>
-                      { isPublicSchool ? 'Target Capacity' : 'Facility Size' }
-                      <h3>{d.capacity} <small>{d.captype}</small></h3>
-                    </div>
-                  </div>
+            <div className="row equal" style={{ marginBottom: '15px', display: ((d.capacity) > 0) ? 'block' : 'none'  }}>
+              <div className={'col-md-6'}>
+                <div>
+                  { isPublicSchool ? 'Target Capacity' : 'Facility Size' }
+                  <h3>{d.capacity} <small>{d.captype}</small></h3>
                 </div>
-              )
-            }
+              </div>
+            </div>
 
             <div className="row equal" style={{ marginBottom: '15px' }}>
               <div className="col-md-12">

@@ -29,10 +29,10 @@ const sql = {
           AND ( classanet >= '-800'
                 AND classanet <= '1800' )
           AND ( ( datecomplt >= '2010-01-01'
-                  AND datecomplt <= '2022-07-31' )
+                  AND datecomplt <= '2023-07-31' )
                 OR datecomplt IS NULL )
           AND ( ( datepermit >= '2000-01-01'
-                  AND datepermit <= '2022-07-31' )
+                  AND datepermit <= '2023-07-31' )
                 OR datepermit IS NULL )
           AND job_inactv IS NULL`,
   housingRaw: `SELECT COUNT(*) FROM ${db_tables.housingdevdb}`,
