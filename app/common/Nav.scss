@@ -45,8 +45,39 @@
   }
 }
 
+.info-banner {
+  background-color: #2C7A7B;
+  color: white;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  padding: 0 16px;
+  font-size: 16px;
+  height: 100px;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    text-decoration: underline;
+  }
+}
+
+@media (min-width: 992px) {
+  .info-banner {
+    height: 48px;
+  }
+}
+
 nav {
-  height: 50px;
   font-family: 'Oswald', sans-serif;
 }
 
