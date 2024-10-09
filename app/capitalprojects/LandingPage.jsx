@@ -4,36 +4,74 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import Footer from '../common/Footer';
+import AdvisoryModal from '../common/AdvisoryModal';
 
 import * as capitalProjectsActions from '../actions/capitalProjects';
 
 import './LandingPage.scss';
 
 class LandingPage extends React.Component {
-  componentWillMount() {
-    this.props.resetFilter();
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: true,
+    };
   }
 
+  componentWillMount() {
+    this.props.resetFilter();
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+
+  handleClose = () => {
+    this.setState({ showModal: false });
+  };
+
+  handleEscKey = (event) => {
+    if (event.key === 'Escape') {
+      this.handleClose();
+    }
+  };
+
   render() {
+    const { showModal } = this.state;
+
     return (
       <div className="capitalprojects-landing">
+        {showModal && <AdvisoryModal handleClose={this.handleClose} />}
         <section className="header-area" id="about">
           <div className="container">
             <div className="row">
-              <div className="col-lg-10 col-lg-offset-1 text-center" style={{ background: '#777', padding: '40px' }}>
+              <div
+                className="col-lg-10 col-lg-offset-1 text-center"
+                style={{ background: '#777', padding: '40px' }}
+              >
                 <h1 className="section-heading">NYC Capital Projects</h1>
-                <p className="subtitle">A new way to explore NYC&apos;s Capital Commitment Plan and Capital Spending</p>
-                <p className="learn-more"><Link to="/about/capitalprojects">Learn More</Link></p>
+                <p className="subtitle">
+                  A new way to explore NYC&apos;s Capital Commitment Plan and
+                  Capital Spending
+                </p>
+                <p className="learn-more">
+                  <Link to="/about/capitalprojects">Learn More</Link>
+                </p>
                 <div className="splash-button-section">
                   <div className="box all-link">
                     <Link
                       to="/capitalprojects/table"
                       className="btn btn-default"
                     >
-                      <div className="vertical-align">Search the <br /> Capital Commitment Plan</div>
+                      <div className="vertical-align">
+                        Search the <br /> Capital Commitment Plan
+                      </div>
                     </Link>
                     <div className="blurb">
-                      Raw data for all capital projects within the most recent Capital Commitment Plan published by the Mayor’s Office of Management and Budget.
+                      Raw data for all capital projects within the most recent
+                      Capital Commitment Plan published by the Mayor&apos;s
+                      Office of Management and Budget.
                     </div>
                   </div>
 
@@ -46,10 +84,14 @@ class LandingPage extends React.Component {
                       to="/capitalprojects/explorer"
                       className="btn btn-default"
                     >
-                      <div className="vertical-align">Explore <br /> Capital Projects on a Map</div>
+                      <div className="vertical-align">
+                        Explore <br /> Capital Projects on a Map
+                      </div>
                     </Link>
                     <div className="blurb">
-                      Capital projects within the Capital Commitment Plan that NYC Planning has worked with agencies to map - a subset of total planned spending.
+                      Capital projects within the Capital Commitment Plan that
+                      NYC Planning has worked with agencies to map - a subset of
+                      total planned spending.
                     </div>
                   </div>
                 </div>
