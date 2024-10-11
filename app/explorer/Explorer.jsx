@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReactGA4 from "react-ga4";
+import ReactGA4 from 'react-ga4';
 import _ from 'lodash';
 import centroid from 'turf-centroid';
 
@@ -9,6 +9,7 @@ import getDefaultFilterDimensions from '../facilities/config';
 import { Jane } from '../jane-maps';
 
 import * as selectedActions from '../actions/selected';
+import { showModal, hideModal } from '../actions/advisoryModalActions';
 
 import {
   AerialsJaneLayer,
@@ -27,7 +28,7 @@ import {
 
 import appConfig from '../config/appConfig';
 
-import AdvisoryModal from "../common/AdvisoryModal";
+import AdvisoryModal from '../common/AdvisoryModal';
 
 const { mapbox_accessToken, searchConfig } = appConfig;
 
@@ -54,13 +55,13 @@ class Explorer extends React.Component {
         inKilometers: 0,
         centerPointCoordinates: [],
       },
-      showModal: true,
     };
     this.selectedFeaturesCache = [];
     this.mapClicked = false;
   }
 
   componentWillMount() {
+    this.props.showModal();
     document.addEventListener('keydown', this.handleEscKey);
   }
 
@@ -249,11 +250,11 @@ class Explorer extends React.Component {
   }, 50);
 
   handleClose = () => {
-    this.setState({ showModal: false });
+    this.props.hideModal();
   };
 
   handleEscKey = (event) => {
-    if (event.key === "Escape") {
+    if (event.key === 'Escape') {
       this.handleClose();
     }
   };
@@ -281,7 +282,8 @@ class Explorer extends React.Component {
       return this.props.params.layer || 'capitalprojects';
     };
 
-    const { selectedFeatures } = this.props;
+    const { selectedFeatures, showAdvisoryModal } = this.props;
+
     const startingLayer = setStartingLayer();
 
     const popsLocationState = {
@@ -296,11 +298,9 @@ class Explorer extends React.Component {
       }),
     };
 
-    const { showModal } = this.state;
-
     return (
-      <div className='full-screen cp-explorer'>
-        {showModal && <AdvisoryModal handleClose={this.handleClose} />}
+      <div className="full-screen cp-explorer">
+        {showAdvisoryModal && <AdvisoryModal handleClose={this.handleClose} />}
         <Jane
           mapboxGLOptions={mapboxGLOptions}
           search
@@ -404,6 +404,9 @@ Explorer.propTypes = {
   params: PropTypes.shape({
     layer: PropTypes.string,
   }),
+  showModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showAdvisoryModal: PropTypes.bool.isRequired,
 };
 
 Explorer.defaultProps = {
@@ -422,6 +425,7 @@ const mapStateToProps = ({
   selected,
   currentUser,
   map,
+  advisoryModal,
 }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
@@ -435,9 +439,14 @@ const mapStateToProps = ({
   map,
 
   currentUser,
+  showAdvisoryModal: advisoryModal.showAdvisoryModal,
 });
 
-export default connect(mapStateToProps, {
+const mapDispatchToProps = {
+  showModal,
+  hideModal,
   setSelectedFeatures: selectedActions.setSelectedFeatures,
   resetSelectedFeatures: selectedActions.resetSelectedFeatures,
-})(Explorer);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Explorer);

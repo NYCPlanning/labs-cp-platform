@@ -7,17 +7,12 @@ import Footer from '../common/Footer';
 import AdvisoryModal from '../common/AdvisoryModal';
 
 import * as capitalProjectsActions from '../actions/capitalProjects';
+import { hideModal } from '../actions/advisoryModalActions';
+
 
 import './LandingPage.scss';
 
 class LandingPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: true,
-    };
-  }
-
   componentWillMount() {
     this.props.resetFilter();
     document.addEventListener('keydown', this.handleEscKey);
@@ -28,7 +23,7 @@ class LandingPage extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({ showModal: false });
+    this.props.hideModal();
   };
 
   handleEscKey = (event) => {
@@ -38,11 +33,11 @@ class LandingPage extends React.Component {
   };
 
   render() {
-    const { showModal } = this.state;
+    const { showAdvisoryModal } = this.props;
 
     return (
       <div className="capitalprojects-landing">
-        {showModal && <AdvisoryModal handleClose={this.handleClose} />}
+        {showAdvisoryModal && <AdvisoryModal handleClose={this.handleClose} />}
         <section className="header-area" id="about">
           <div className="container">
             <div className="row">
@@ -107,8 +102,18 @@ class LandingPage extends React.Component {
 
 LandingPage.propTypes = {
   resetFilter: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showAdvisoryModal: PropTypes.bool.isRequired,
 };
 
-export default connect(() => {}, {
+const mapStateToProps = state => ({
+  showAdvisoryModal: state.advisoryModal.showAdvisoryModal,
+});
+
+const mapDispatchToProps = {
   resetFilter: capitalProjectsActions.resetFilter,
-})(LandingPage);
+  hideModal,
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

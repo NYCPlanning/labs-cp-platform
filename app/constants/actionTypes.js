@@ -11,6 +11,8 @@ export const FETCH_NYC_BOUNDS = asyncType('FETCH_NYC_BOUNDS');
 // Modals
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
 
 // Auth
 export const AUTH0_LOGIN = 'AUTH0_LOGIN';
