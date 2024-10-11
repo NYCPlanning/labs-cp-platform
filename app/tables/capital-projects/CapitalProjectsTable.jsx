@@ -14,6 +14,7 @@ import cx from 'classnames';
 import InfoIcon from '../../common/InfoIcon';
 import TableFilter from './CapitalProjectsTableFilter';
 import * as capitalProjectsTableActions from '../../actions/capitalProjectsTable';
+import { showModal, hideModal } from '../../actions/advisoryModalActions';
 import SortHeaderCell from './SortHeaderCell';
 import ga from '../../helpers/ga';
 import Download from '../../explorer/Download';
@@ -65,7 +66,6 @@ const filterAndSortData = (data, filterBy, colSortDirs) => {
 
 
 class CPTable extends React.Component {
-  // eslint-disable-line
   constructor(props) {
     super(props);
 
@@ -76,11 +76,11 @@ class CPTable extends React.Component {
         props.colSortDirs,
       ),
       downloadOpen: false,
-      showModal: true,
     };
   }
 
   componentWillMount() {
+    this.props.showModal();
     document.addEventListener('keydown', this.handleEscKey);
   }
 
@@ -148,7 +148,8 @@ class CPTable extends React.Component {
     );
 
   handleClose = () => {
-    this.setState({ showModal: false });
+    this.props.hideModal();
+
   };
 
   handleEscKey = (event) => {
@@ -158,8 +159,6 @@ class CPTable extends React.Component {
   };
 
   render() {
-    const { showModal } = this.state;
-
     const TextCell = ({ rowIndex, data, col, ...props }) =>
       this.linkToProject(data[rowIndex])(
         <Cell {...props}>{data[rowIndex][col]}</Cell>,
@@ -177,7 +176,13 @@ class CPTable extends React.Component {
         </Cell>,
       );
 
-    const { colSortDirs, containerHeight, containerWidth } = this.props;
+    const {
+      colSortDirs,
+      containerHeight,
+      containerWidth,
+      showAdvisoryModal,
+    } =
+      this.props;
     const { filteredSortedData } = this.state;
 
     const tabTemplateStyle = {
@@ -188,7 +193,7 @@ class CPTable extends React.Component {
 
     return (
       <div className="full-screen projects-table">
-        {showModal && <AdvisoryModal handleClose={this.handleClose} />}
+        {showAdvisoryModal && <AdvisoryModal handleClose={this.handleClose} />}
         <div className="sidebar">
           <Tabs className="sidebar-tabs" tabTemplateStyle={tabTemplateStyle}>
             <Tab label="Filters">
@@ -311,7 +316,8 @@ class CPTable extends React.Component {
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.magencyacro}
                 >
-                  Man. Agency <InfoIcon text="The city agency managing the project." />
+                  Man. Agency{' '}
+                  <InfoIcon text="The city agency managing the project." />
                 </SortHeaderCell>
               }
               cell={<TextCell data={filteredSortedData} col="magencyacro" />}
@@ -324,7 +330,8 @@ class CPTable extends React.Component {
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.sagencyacro}
                 >
-                  Spon. Agency <InfoIcon text="The city agency funding the project." />
+                  Spon. Agency{' '}
+                  <InfoIcon text="The city agency funding the project." />
                 </SortHeaderCell>
               }
               cell={
@@ -339,7 +346,8 @@ class CPTable extends React.Component {
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.projecttype}
                 >
-                  Project Type <InfoIcon text="Project Types associated with the project in FMS" />
+                  Project Type{' '}
+                  <InfoIcon text="Project Types associated with the project in FMS" />
                 </SortHeaderCell>
               }
               cell={
@@ -354,7 +362,8 @@ class CPTable extends React.Component {
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.totalcommit}
                 >
-                  Planned Commitment <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
+                  Planned Commitment{' '}
+                  <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
                 </SortHeaderCell>
               }
               cell={
@@ -386,24 +395,35 @@ CPTable.propTypes = {
   filterBy: PropTypes.string.isRequired,
   capitalProjectDetails: PropTypes.array.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showAdvisoryModal: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjectsTable }) => ({
+const mapStateToProps = ({
+  capitalProjectsTable,
+  advisoryModal,
+}) => ({
   filterDimensions: capitalProjectsTable.filterDimensions,
   sql: capitalProjectsTable.sql,
   commitmentsSql: capitalProjectsTable.commitmentsSql,
   colSortDirs: capitalProjectsTable.colSortDirs,
   filterBy: capitalProjectsTable.filterBy,
   capitalProjectDetails: capitalProjectsTable.capitalProjectDetails,
+  showAdvisoryModal: advisoryModal.showAdvisoryModal,
 });
 
-const ConnectedTable = connect(mapStateToProps, {
+const mapDispatchToProps = {
+  showModal,
+  hideModal,
   fetchDetails: capitalProjectsTableActions.fetchDetails,
   resetFilter: capitalProjectsTableActions.resetFilter,
   setFilterBy: capitalProjectsTableActions.setTableFilterBy,
   setSort: capitalProjectsTableActions.setTableSort,
   fetchSelectedCount: capitalProjectsTableActions.fetchSelectedCount,
-})(CPTable);
+};
+
+const ConnectedTable = connect(mapStateToProps, mapDispatchToProps)(CPTable);
 
 export default Dimensions({
   getHeight() {
