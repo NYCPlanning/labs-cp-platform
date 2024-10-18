@@ -12,6 +12,7 @@ import cbBudgetRequests from './reducers/cbBudgetRequests';
 import selected from './reducers/selected';
 import sca from './reducers/sca';
 import map from './reducers/map';
+import advisoryModal from './reducers/advisoryModalReducer';
 
 // Middleware
 import auth from './middleware/auth';
@@ -37,13 +38,11 @@ const store = createStore(
     selected,
     sca,
     map,
+    advisoryModal,
   }),
   applyMiddleware(...middleware),
 );
 
-// if (process.env.NODE_ENV === 'development') {
-// Why? This should be removed
 window.store = store;
-// }
 
 export default store;

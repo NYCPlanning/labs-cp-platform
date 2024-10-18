@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ReactGA4 from "react-ga4";
+import ReactGA4 from 'react-ga4';
 import _ from 'lodash';
 import centroid from 'turf-centroid';
 
@@ -9,6 +9,7 @@ import getDefaultFilterDimensions from '../facilities/config';
 import { Jane } from '../jane-maps';
 
 import * as selectedActions from '../actions/selected';
+import { showModal, hideModal } from '../actions/advisoryModalActions';
 
 import {
   AerialsJaneLayer,
@@ -26,6 +27,8 @@ import {
 } from '../jane-layers';
 
 import appConfig from '../config/appConfig';
+
+import AdvisoryModal from '../common/AdvisoryModal';
 
 const { mapbox_accessToken, searchConfig } = appConfig;
 
@@ -57,15 +60,31 @@ class Explorer extends React.Component {
     this.mapClicked = false;
   }
 
+  componentWillMount() {
+    this.props.showModal();
+    document.addEventListener('keydown', this.handleEscKey);
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (!this.mapClicked && (this.props.map.centerOnGeometry !== nextProps.map.centerOnGeometry)) {
+    if (
+      !this.mapClicked &&
+      this.props.map.centerOnGeometry !== nextProps.map.centerOnGeometry
+    ) {
       this.centerFromGeometry(nextProps.map.centerOnGeometry);
       this.setState({
         selectedPointType: 'point',
-        selectedPointCoordinates: this.centroidFromGeometry(nextProps.map.centerOnGeometry),
-        highlightPointCoordinates: this.centroidFromGeometry(nextProps.map.centerOnGeometry),
+        selectedPointCoordinates: this.centroidFromGeometry(
+          nextProps.map.centerOnGeometry,
+        ),
+        highlightPointCoordinates: this.centroidFromGeometry(
+          nextProps.map.centerOnGeometry,
+        ),
       });
     }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEscKey);
   }
 
   onLayerToggle = (layerId, wasEnabled) => {
@@ -75,7 +94,7 @@ class Explorer extends React.Component {
     });
     FS.event('capitalPlanningExplorerLayerToggle', {
       layer_id: layerId,
-      layer_enabled: !wasEnabled
+      layer_enabled: !wasEnabled,
     });
 
     const janeLayerIdsMap = {
@@ -96,7 +115,7 @@ class Explorer extends React.Component {
         }
       });
     }
-  }
+  };
 
   // Nasty debounces cause I suck at async
   setSelectedFeatures = _.debounce(() => {
@@ -114,7 +133,10 @@ class Explorer extends React.Component {
       });
     }
 
-    if (payload.action === 'clear' && this.state.selectedPointType === 'address') {
+    if (
+      payload.action === 'clear' &&
+      this.state.selectedPointType === 'address'
+    ) {
       this.setState({
         selectedPointType: '',
         selectedPointCoordinates: [],
@@ -152,7 +174,10 @@ class Explorer extends React.Component {
       });
     }
 
-    if (features[0].geometry.type === 'Polygon' || features[0].geometry.type === 'MultiPolygon') {
+    if (
+      features[0].geometry.type === 'Polygon' ||
+      features[0].geometry.type === 'MultiPolygon'
+    ) {
       this.setState({
         selectedPointType: 'point',
         selectedPointCoordinates: [event.lngLat.lng, event.lngLat.lat],
@@ -175,7 +200,7 @@ class Explorer extends React.Component {
         centerPointCoordinates: this.state.selectedPointCoordinates,
       },
     });
-  }
+  };
 
   clearSelectedFeatures = () => {
     this.props.resetSelectedFeatures();
@@ -192,9 +217,10 @@ class Explorer extends React.Component {
 
     this.props.resetSelectedFeatures();
     this.props.router.push('/map');
-  }
+  };
 
-  layerIdsInSelectedFeatures = () => _.uniq(this.props.selectedFeatures.map(f => f.layer.id));
+  layerIdsInSelectedFeatures = () =>
+    _.uniq(this.props.selectedFeatures.map(f => f.layer.id));
 
   featureRoute = (feature) => {
     switch (feature.layer.source) {
@@ -213,7 +239,7 @@ class Explorer extends React.Component {
       default:
         return null;
     }
-  }
+  };
 
   centerMap = _.debounce((lnglat) => {
     this.Jane.GLMap.map.easeTo({
@@ -223,16 +249,32 @@ class Explorer extends React.Component {
     });
   }, 50);
 
+  handleClose = () => {
+    this.props.hideModal();
+  };
+
+  handleEscKey = (event) => {
+    if (event.key === 'Escape') {
+      this.handleClose();
+    }
+  };
+
   render() {
     const setStartingLayer = () => {
       if (this.props.children) {
         switch (this.props.children.props.route.type) {
-          case 'capitalproject': return 'capitalprojects';
-          case 'facility': return 'facilities';
-          case 'pops': return 'pops';
-          case 'development': return 'housing';
-          case 'sca': return 'sca';
-          case 'budgetrequest': return 'budgetrequests';
+          case 'capitalproject':
+            return 'capitalprojects';
+          case 'facility':
+            return 'facilities';
+          case 'pops':
+            return 'pops';
+          case 'development':
+            return 'housing';
+          case 'sca':
+            return 'sca';
+          case 'budgetrequest':
+            return 'budgetrequests';
           default:
             return this.props.params.layer || 'capitalprojects';
         }
@@ -240,20 +282,25 @@ class Explorer extends React.Component {
       return this.props.params.layer || 'capitalprojects';
     };
 
-    const { selectedFeatures } = this.props;
+    const { selectedFeatures, showAdvisoryModal } = this.props;
+
     const startingLayer = setStartingLayer();
 
     const popsLocationState = {
-      filterDimensions: getDefaultFilterDimensions({ selected: {
-        'Parks, Gardens, and Historical Sites': {
-          'Parks and Plazas': {
-            'Privately Owned Public Space': null },
+      filterDimensions: getDefaultFilterDimensions({
+        selected: {
+          'Parks, Gardens, and Historical Sites': {
+            'Parks and Plazas': {
+              'Privately Owned Public Space': null,
+            },
+          },
         },
-      } }),
+      }),
     };
 
     return (
       <div className="full-screen cp-explorer">
+        {showAdvisoryModal && <AdvisoryModal handleClose={this.handleClose} />}
         <Jane
           mapboxGLOptions={mapboxGLOptions}
           search
@@ -265,7 +312,9 @@ class Explorer extends React.Component {
           selectedFeatures={selectedFeatures}
           setBottomOffset={this.setBottomOffset}
           onLayerToggle={this.onLayerToggle}
-          ref={(jane) => { this.Jane = jane; }}
+          ref={(jane) => {
+            this.Jane = jane;
+          }}
         >
           <HighlightJaneLayer
             coordinates={this.state.highlightPointCoordinates}
@@ -288,8 +337,14 @@ class Explorer extends React.Component {
             handleRadiusFilter={this.handleRadiusFilter}
             sql={this.props.facilitiesSql}
             enabled={startingLayer === 'facilities' || startingLayer === 'pops'}
-            selected={startingLayer === 'facilities' || startingLayer === 'pops'}
-            locationState={startingLayer === 'pops' ? popsLocationState : this.props.location.state}
+            selected={
+              startingLayer === 'facilities' || startingLayer === 'pops'
+            }
+            locationState={
+              startingLayer === 'pops'
+                ? popsLocationState
+                : this.props.location.state
+            }
           />
 
           <HousingDevelopmentJaneLayer
@@ -349,6 +404,9 @@ Explorer.propTypes = {
   params: PropTypes.shape({
     layer: PropTypes.string,
   }),
+  showModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showAdvisoryModal: PropTypes.bool.isRequired,
 };
 
 Explorer.defaultProps = {
@@ -367,6 +425,7 @@ const mapStateToProps = ({
   selected,
   currentUser,
   map,
+  advisoryModal,
 }) => ({
   pointsSql: capitalProjects.pointsSql,
   polygonsSql: capitalProjects.polygonsSql,
@@ -380,9 +439,14 @@ const mapStateToProps = ({
   map,
 
   currentUser,
+  showAdvisoryModal: advisoryModal.showAdvisoryModal,
 });
 
-export default connect(mapStateToProps, {
+const mapDispatchToProps = {
+  showModal,
+  hideModal,
   setSelectedFeatures: selectedActions.setSelectedFeatures,
   resetSelectedFeatures: selectedActions.resetSelectedFeatures,
-})(Explorer);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Explorer);

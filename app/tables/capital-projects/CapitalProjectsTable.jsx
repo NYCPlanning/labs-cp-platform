@@ -14,9 +14,13 @@ import cx from 'classnames';
 import InfoIcon from '../../common/InfoIcon';
 import TableFilter from './CapitalProjectsTableFilter';
 import * as capitalProjectsTableActions from '../../actions/capitalProjectsTable';
+import { showModal, hideModal } from '../../actions/advisoryModalActions';
 import SortHeaderCell from './SortHeaderCell';
 import ga from '../../helpers/ga';
 import Download from '../../explorer/Download';
+
+import AdvisoryModal from '../../common/AdvisoryModal';
+
 
 import './CapitalProjectsTable.scss';
 
@@ -61,7 +65,7 @@ const filterAndSortData = (data, filterBy, colSortDirs) => {
 };
 
 
-class CPTable extends React.Component { // eslint-disable-line
+class CPTable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -73,6 +77,11 @@ class CPTable extends React.Component { // eslint-disable-line
       ),
       downloadOpen: false,
     };
+  }
+
+  componentWillMount() {
+    this.props.showModal();
+    document.addEventListener('keydown', this.handleEscKey);
   }
 
   componentDidMount() {
@@ -87,9 +96,12 @@ class CPTable extends React.Component { // eslint-disable-line
       this.props.fetchSelectedCount(nextProps.filterDimensions);
     }
 
-    if (!_.isEqual(this.props.filterBy, nextProps.filterBy) ||
-        !_.isEqual(this.props.colSortDirs, nextProps.colSortDirs) ||
-        this.props.capitalProjectDetails.length !== nextProps.capitalProjectDetails.length) {
+    if (
+      !_.isEqual(this.props.filterBy, nextProps.filterBy) ||
+      !_.isEqual(this.props.colSortDirs, nextProps.colSortDirs) ||
+      this.props.capitalProjectDetails.length !==
+        nextProps.capitalProjectDetails.length
+    ) {
       this.setState({
         filteredSortedData: filterAndSortData(
           nextProps.capitalProjectDetails,
@@ -100,6 +112,10 @@ class CPTable extends React.Component { // eslint-disable-line
     }
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEscKey);
+  }
+
   handleDownload = (label) => {
     ga.event({
       category: 'capitalprojects-table',
@@ -108,10 +124,9 @@ class CPTable extends React.Component { // eslint-disable-line
     });
   };
 
-  handleFilterBy = (e) => {  // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
-    const filterBy = e.target.value
-      ? e.target.value.toLowerCase()
-      : null;
+  handleFilterBy = (e) => {
+    // onFilterChange, update the state to reflect the filter term, then execute this.filterAndSortData()
+    const filterBy = e.target.value ? e.target.value.toLowerCase() : null;
 
     this.props.setFilterBy(filterBy);
   };
@@ -120,37 +135,54 @@ class CPTable extends React.Component { // eslint-disable-line
     this.props.setSort(columnKey, sortDir);
   };
 
-  linkToProject = rowData => content => (
-    <Link
-      to={{
-        pathname: `/table/capitalproject/${rowData.maprojid}`,
-        state: { modal: true, returnTo: '/capitalprojects' },
-      }}
-    >
-      { content }
-    </Link>
-  );
+  linkToProject = rowData => content =>
+    (
+      <Link
+        to={{
+          pathname: `/table/capitalproject/${rowData.maprojid}`,
+          state: { modal: true, returnTo: '/capitalprojects' },
+        }}
+      >
+        {content}
+      </Link>
+    );
+
+  handleClose = () => {
+    this.props.hideModal();
+
+  };
+
+  handleEscKey = (event) => {
+    if (event.key === 'Escape') {
+      this.handleClose();
+    }
+  };
 
   render() {
-    const TextCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
-      <Cell {...props}>
-        {data[rowIndex][col]}
-      </Cell>,
-    );
+    const TextCell = ({ rowIndex, data, col, ...props }) =>
+      this.linkToProject(data[rowIndex])(
+        <Cell {...props}>{data[rowIndex][col]}</Cell>,
+      );
 
-    const ArrayTextCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
-      <Cell {...props}>
-        {data[rowIndex][col].join(', ')}
-      </Cell>,
-    );
+    const ArrayTextCell = ({ rowIndex, data, col, ...props }) =>
+      this.linkToProject(data[rowIndex])(
+        <Cell {...props}>{data[rowIndex][col].join(', ')}</Cell>,
+      );
 
-    const MoneyCell = ({ rowIndex, data, col, ...props }) => this.linkToProject(data[rowIndex])(
-      <Cell {...props}>
-        {Numeral(data[rowIndex][col]).format('($ 0.00 a)')}
-      </Cell>,
-    );
+    const MoneyCell = ({ rowIndex, data, col, ...props }) =>
+      this.linkToProject(data[rowIndex])(
+        <Cell {...props}>
+          {Numeral(data[rowIndex][col]).format('($ 0.00 a)')}
+        </Cell>,
+      );
 
-    const { colSortDirs, containerHeight, containerWidth } = this.props;
+    const {
+      colSortDirs,
+      containerHeight,
+      containerWidth,
+      showAdvisoryModal,
+    } =
+      this.props;
     const { filteredSortedData } = this.state;
 
     const tabTemplateStyle = {
@@ -161,35 +193,64 @@ class CPTable extends React.Component { // eslint-disable-line
 
     return (
       <div className="full-screen projects-table">
+        {showAdvisoryModal && <AdvisoryModal handleClose={this.handleClose} />}
         <div className="sidebar">
-          <Tabs
-            className="sidebar-tabs"
-            tabTemplateStyle={tabTemplateStyle}
-          >
+          <Tabs className="sidebar-tabs" tabTemplateStyle={tabTemplateStyle}>
             <Tab label="Filters">
-              <TableFilter
-                onFilterBy={this.handleFilterBy}
-              />
+              <TableFilter onFilterBy={this.handleFilterBy} />
             </Tab>
             <Tab label="About">
               <div className="sidebar-tab-content">
                 <div className="scroll-container padded">
                   <h4>Product Overview</h4>
                   <p>
-                    <b>The Capital Project Table</b> is a way to quickly and easily explore and learn about ongoing and planned capital projects within in the most recent Capital Commitment Plan published by OMB.  It’s main purpose is to be a starting point for exploring potential, planned, and ongoing capital projects to better understand and communicate New York City’s capital project portfolio within and across particular agencies.
+                    <b>The Capital Project Table</b> is a way to quickly and
+                    easily explore and learn about ongoing and planned capital
+                    projects within in the most recent Capital Commitment Plan
+                    published by OMB. It’s main purpose is to be a starting
+                    point for exploring potential, planned, and ongoing capital
+                    projects to better understand and communicate New York
+                    City’s capital project portfolio within and across
+                    particular agencies.
                   </p>
                   <h4>Limitations and Disclaimers</h4>
                   <p>
-                    <li>This is not a project management system, so data on project timeline or budget may be incorrect</li>
-                    <li>All monies committed to or spent on a project may not be captured</li>
-                    <li>Planned projects that may never come to fruition are captured</li>
+                    <li>
+                      This is not a project management system, so data on
+                      project timeline or budget may be incorrect
+                    </li>
+                    <li>
+                      All monies committed to or spent on a project may not be
+                      captured
+                    </li>
+                    <li>
+                      Planned projects that may never come to fruition are
+                      captured
+                    </li>
                   </p>
                   <p>
-                  As a result of these limitations and inconsistencies, the Capital Projects Map is not an analysis tool, it does not report any metrics, and the data should not be used for quantitative analyses, - it is built for planning coordination and information purposes only.  Please consult <a href="http://docs.capitalplanning.nyc/cpdb/" target="_blank" rel="noreferrer noopener">NYC Planning’s Capital Planning Docs</a> for more details about the limitations.
+                    As a result of these limitations and inconsistencies, the
+                    Capital Projects Map is not an analysis tool, it does not
+                    report any metrics, and the data should not be used for
+                    quantitative analyses, - it is built for planning
+                    coordination and information purposes only. Please consult{' '}
+                    <a
+                      href="http://docs.capitalplanning.nyc/cpdb/"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      NYC Planning’s Capital Planning Docs
+                    </a>{' '}
+                    for more details about the limitations.
                   </p>
                   <h4>Feedback</h4>
                   <p>
-                  We are constantly looking for ways to improve this product.  Please <a href="mailto:capital@planning.nyc.gov">share your feedback and suggestions</a> with Capital Planning.
+                    We are constantly looking for ways to improve this product.
+                    Please{' '}
+                    <a href="mailto:capital@planning.nyc.gov">
+                      share your feedback and suggestions
+                    </a>{' '}
+                    with Capital Planning.
                   </p>
                 </div>
               </div>
@@ -198,17 +259,18 @@ class CPTable extends React.Component { // eslint-disable-line
         </div>
 
         <div className="top-bar">
-          <button onClick={() => this.setState({ downloadOpen: !this.state.downloadOpen })} className={cx({ active: this.state.downloadOpen })}>
+          <button
+            onClick={() =>
+              this.setState({ downloadOpen: !this.state.downloadOpen })
+            }
+            className={cx({ active: this.state.downloadOpen })}
+          >
             <span className={'fa fa-download'} /> Download
           </button>
         </div>
 
         <div className="top-bar-dropdown">
-          { this.state.downloadOpen &&
-            <Download
-              layers={['capitalprojects']}
-            />
-          }
+          {this.state.downloadOpen && <Download layers={['capitalprojects']} />}
         </div>
 
         {filteredSortedData && (
@@ -254,7 +316,8 @@ class CPTable extends React.Component { // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.magencyacro}
                 >
-                  Man. Agency <InfoIcon text="The city agency managing the project." />
+                  Man. Agency{' '}
+                  <InfoIcon text="The city agency managing the project." />
                 </SortHeaderCell>
               }
               cell={<TextCell data={filteredSortedData} col="magencyacro" />}
@@ -267,10 +330,13 @@ class CPTable extends React.Component { // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.sagencyacro}
                 >
-                  Spon. Agency <InfoIcon text="The city agency funding the project." />
+                  Spon. Agency{' '}
+                  <InfoIcon text="The city agency funding the project." />
                 </SortHeaderCell>
               }
-              cell={<ArrayTextCell data={filteredSortedData} col="sagencyacro" />}
+              cell={
+                <ArrayTextCell data={filteredSortedData} col="sagencyacro" />
+              }
               width={130}
             />
             <Column
@@ -280,10 +346,13 @@ class CPTable extends React.Component { // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.projecttype}
                 >
-                  Project Type <InfoIcon text="Project Types associated with the project in FMS" />
+                  Project Type{' '}
+                  <InfoIcon text="Project Types associated with the project in FMS" />
                 </SortHeaderCell>
               }
-              cell={<ArrayTextCell data={filteredSortedData} col="projecttype" />}
+              cell={
+                <ArrayTextCell data={filteredSortedData} col="projecttype" />
+              }
               width={200}
             />
             <Column
@@ -293,11 +362,17 @@ class CPTable extends React.Component { // eslint-disable-line
                   onSortChange={this.handleSortChange}
                   sortDir={colSortDirs.totalcommit}
                 >
-                  Planned Commitment <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
-
+                  Planned Commitment{' '}
+                  <InfoIcon text="Sum of commitments in the latest capital commitment plan" />
                 </SortHeaderCell>
               }
-              cell={<MoneyCell data={filteredSortedData} col="totalcommit" style={{ textAlign: 'right' }} />}
+              cell={
+                <MoneyCell
+                  data={filteredSortedData}
+                  col="totalcommit"
+                  style={{ textAlign: 'right' }}
+                />
+              }
               width={180}
             />
           </Table>
@@ -320,24 +395,35 @@ CPTable.propTypes = {
   filterBy: PropTypes.string.isRequired,
   capitalProjectDetails: PropTypes.array.isRequired,
   fetchSelectedCount: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showAdvisoryModal: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ capitalProjectsTable }) => ({
+const mapStateToProps = ({
+  capitalProjectsTable,
+  advisoryModal,
+}) => ({
   filterDimensions: capitalProjectsTable.filterDimensions,
   sql: capitalProjectsTable.sql,
   commitmentsSql: capitalProjectsTable.commitmentsSql,
   colSortDirs: capitalProjectsTable.colSortDirs,
   filterBy: capitalProjectsTable.filterBy,
   capitalProjectDetails: capitalProjectsTable.capitalProjectDetails,
+  showAdvisoryModal: advisoryModal.showAdvisoryModal,
 });
 
-const ConnectedTable = connect(mapStateToProps, {
+const mapDispatchToProps = {
+  showModal,
+  hideModal,
   fetchDetails: capitalProjectsTableActions.fetchDetails,
   resetFilter: capitalProjectsTableActions.resetFilter,
   setFilterBy: capitalProjectsTableActions.setTableFilterBy,
   setSort: capitalProjectsTableActions.setTableSort,
   fetchSelectedCount: capitalProjectsTableActions.fetchSelectedCount,
-})(CPTable);
+};
+
+const ConnectedTable = connect(mapStateToProps, mapDispatchToProps)(CPTable);
 
 export default Dimensions({
   getHeight() {
