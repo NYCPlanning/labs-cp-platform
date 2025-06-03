@@ -23,7 +23,7 @@ const AdvisoryModal = ({ handleClose }) => (
           NYC Open Data
         </a>
         &nbsp;or&nbsp;
-        <a href="https://www.nyc.gov/site/planning/data-maps/open-data.page">
+        <a href="https://www.nyc.gov/content/planning/pages/resources#datasets">
           Bytes of the Big Apple
         </a>
         . Other sections of the Capital Planning Explorer are still being
