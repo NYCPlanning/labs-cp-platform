@@ -145,7 +145,7 @@ const SidebarComponent = props => (
         <div className="sidebar-tab-content">
           <div className="padded">
             <h4>Administrative Boundaries</h4>
-            <p>This data layer contains several Administrative Boundary types relevant to New York City.  Most are available from The Department of City Planning&apos;s <a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Bytes of the Big Apple Open Data Site</a>.</p>
+            <p>This data layer contains several Administrative Boundary types relevant to New York City.  Most are available from The Department of City Planning&apos;s <a href="https://www.nyc.gov/content/planning/pages/resources#datasets">Bytes of the Big Apple Open Data Site</a>.</p>
           </div>
         </div>
       </Tab>

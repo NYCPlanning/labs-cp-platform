@@ -218,7 +218,7 @@ class FacilityDetailPage extends React.Component {
                   <div className="panel-heading">Additional Resources</div>
                   <div className="panel-body">
                     <ul>
-                      <li><a href="https://www1.nyc.gov/site/planning/plans/pops/pops.page" target="_blank" rel="noopener noreferrer">NYC Planning POPS Website</a></li>
+                      <li><a href="https://www.nyc.gov/content/planning/pages/our-work/plans/citywide/privately-owned-public-spaces" target="_blank" rel="noopener noreferrer">NYC Planning POPS Website</a></li>
                       <li><a href="https://apops.mas.org/" target="_blank" rel="noopener noreferrer">Advocates for Privately Owned Open Space Website</a></li>
                       <li><a href="https://www1.nyc.gov/apps/311universalintake/form.htm?serviceName=DOB+Privately+Owned+Public+Space" target="_blank" rel="noopener noreferrer">311 Complaint Form for POPS</a></li>
                     </ul>

@@ -18,8 +18,8 @@ const Footer = () => (
           <dl>
             <dt><h4>DCP</h4></dt>
             <dd><a href="http://www1.nyc.gov/site/planning/index.page">DCP Website</a></dd>
-            <dd><a href="http://www1.nyc.gov/site/planning/data-maps/open-data.page">Open Data</a></dd>
-            <dd><a href="http://www1.nyc.gov/site/planning/data-maps/nyc-population.page">Population</a></dd>
+            <dd><a href="https://www.nyc.gov/content/planning/pages/resources#datasets">Open Data</a></dd>
+            <dd><a href="https://www.nyc.gov/content/planning/pages/planning/population">Population</a></dd>
           </dl>
         </div>
         <div className="col-md-3 col-sm-3 col-xs-6 column">
