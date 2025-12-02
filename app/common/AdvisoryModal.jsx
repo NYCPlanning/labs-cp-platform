@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
 
@@ -15,20 +14,13 @@ const AdvisoryModal = ({ handleClose }) => (
 
     <Modal.Body>
       <div style={{ margin: '0 3em', fontSize: '18px' }}>
-        The Capital Projects section of the Capital Planning Explorer is no
-        longer being updated with the latest data (the most recent data
-        available in this application are from April 2023). To download the
-        latest Capital Projects data, please refer to&nbsp;
-        <a href="https://data.cityofnewyork.us/City-Government/Capital-Projects-Database-CPDB-Projects/fi59-268w/about_data">
-          NYC Open Data
-        </a>
-        &nbsp;or&nbsp;
-        <a href="https://www.nyc.gov/content/planning/pages/resources#datasets">
-          Bytes of the Big Apple
-        </a>
-        . Other sections of the Capital Planning Explorer are still being
-        actively updated, and we encourage you to stay tuned for future
-        enhancements to this platform.
+        <b>Important Update December 2025</b>: The Capital Planning Explorer is no longer being updated with the following datasets:
+        <ul style={{ marginTop: '10px' }}>
+          <li>Capital Projects and Plans</li>
+          <li>Facilities and Program Sites</li>
+          <li>New Housing Developments</li>
+        </ul>
+        The Department of City Planning will be decommissioning this data explorer in the coming months. For the most up-to-date information on Capital Projects and Plans, please visit our new <a href="https://capitalprojects.nycplanningdigital.com/" target="_blank">Capital Projects Portal</a>. For recent releases of <a href="https://data.cityofnewyork.us/City-Government/Facilities-Database/ji82-xba5/about_data" target="_blank">Facilities and Program Sites</a> or <a href="https://data.cityofnewyork.us/Housing-Development/Housing-Database/6umk-irkx/about_data" target="_blank">New Housing Developments</a> data, please refer to <a href="https://opendata.cityofnewyork.us/" target="_blank">NYC Open Data</a> or <a href="https://www.nyc.gov/content/planning/pages/resources" target="_blank">NYC Planning's Website</a>. Please feel free to contact us with any questions at <a href="mailto:CAPS@planning.nyc.gov" target="_blank">CAPS@planning.nyc.gov</a>.
       </div>
     </Modal.Body>
 
